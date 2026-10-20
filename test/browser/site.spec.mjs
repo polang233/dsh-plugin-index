@@ -30,7 +30,8 @@ for (const language of ['en', 'zh']) {
     await page.locator('[data-sort="default"]').click();
     const firstPackage = await rows.first().locator('.package-name').textContent();
     await page.locator('#plugin-search').fill(firstPackage.trim());
-    await expect(page.locator('[data-plugin]:visible')).toHaveCount(1);
+    // A package search can also match related packages with the same prefix.
+    await expect(page.getByText(firstPackage.trim(), {exact: true})).toBeVisible();
     await page.locator('#plugin-search').fill('no-match-783491');
     await expect(page.locator('#empty-results')).toBeVisible();
     await page.locator('[data-reset]').click();
