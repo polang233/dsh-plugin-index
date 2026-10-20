@@ -34,7 +34,7 @@ DeepSeek Harness（DSH）的社区插件市场，数据为主、推荐为主，�
 
 在 DSH 中任选一种方式：
 
-**方式一：**在 **插件 → 实验性插件** 中打开 **自定义插件市场 → 发现 → 添加索引源** 中粘贴 `https://dshopen.org/index.json`。
+**方式一：添加索引源**。在 **插件 → 实验性插件** 中打开 **自定义插件市场 → 发现 → 添加索引源**，粘贴 `https://dshopen.org/index.json`。
 
 <table>
   <tr>
