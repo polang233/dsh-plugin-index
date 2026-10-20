@@ -16,7 +16,10 @@
   },
   "scripts": {
     "build": "node scripts/build.mjs",
+    "build:copy": "node scripts/refresh-copy.mjs",
     "build:site": "node scripts/build-site.mjs",
+    "build:recommendations": "node scripts/rotate-recommendations.mjs",
+    "preview:recommendations": "node scripts/preview-recommendations.mjs",
     "build:metadata": "node scripts/refresh-metadata.mjs",
     "validate": "node scripts/validate.mjs",
     "check:published": "node scripts/check-published.mjs",

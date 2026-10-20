@@ -127,7 +127,7 @@ function pluginRow(plugin, language, categories, text, snapshot, root, downloads
   const avatar = icon ? `<img src="${esc(icon)}" alt="" width="44" height="44" loading="lazy" decoding="async">` : `<img class="avatar-placeholder" style="--peek-delay: -${(position % 7) * 0.45}" src="${root}assets/placeholder-whale.webp" alt="" width="54" height="54" loading="lazy" decoding="async">`;
   // Sort values mirror the index's sort keys so the website offers the same orders as DSH.
   const keys = plugin.metadata?.sortKeys ?? {};
-  const sortData = [['order', position], ['recommended', keys.recommended], ['stars', keys['github-stars']], ['stars-week', keys['stars-week']], ['published', version?.publishTimestamp]]
+  const sortData = [['order', position], ['recommended', keys.recommended], ['random', keys['random-resources']], ['stars', keys['github-stars']], ['stars-week', keys['stars-week']], ['published', version?.publishTimestamp]]
     .filter(([, value]) => Number.isFinite(value)).map(([key, value]) => ` data-sort-${key}="${value}"`).join('');
   return `<li class="plugin" data-plugin data-tone="${tone}" data-category="${esc(categoryId)}" data-search="${esc(search)}"${sortData}>
     <article class="plugin-main" aria-label="${esc(title || name)}">

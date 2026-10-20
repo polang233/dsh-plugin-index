@@ -3,6 +3,7 @@ import {readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {LABELS} from './labels.mjs';
+import {checkRecommendationSnapshot} from './recommendation-state.mjs';
 
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 
@@ -76,9 +77,15 @@ export async function checkPublished(indexUrl, {expectedNames, expectedTitle, ve
     market = checkMarketDisplay(index, ...snapshots, publishers);
   }
   const status = JSON.parse((await readUrl(new URL('status.json', indexUrl), fetchImpl)).bytes);
+  if (status.market?.recommendations) {
+    const recommendations = JSON.parse((await readUrl(new URL('recommendations.json', indexUrl), fetchImpl)).bytes);
+    checkRecommendationSnapshot(index, recommendations);
+  }
   for (const plugin of index.plugins) {
     const record = status.packages?.find(item => item.name === plugin.name);
     if (!record || record.version !== plugin.versions?.[0]?.version || !record.checks?.includes('sha512-integrity') || !record.checks.includes('bundle-patch-present')) throw new Error('Missing package evidence: ' + plugin.name);
+    const source = plugin.versions[0].source;
+    if (source.type === 'git' && (!record.checks.includes('git-commit-pinned') || record.source?.url !== source.url || record.source?.commit !== source.commit)) throw new Error('Git source evidence mismatch: ' + plugin.name);
   }
   const icons = [...new Set(index.plugins.map(plugin => plugin.icon).filter(Boolean))];
   let next = 0;

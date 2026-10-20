@@ -19,12 +19,29 @@
 
 DSH 的排序菜单固定包含「默认排序」和「发布时间」，索引无法去掉；索引声明的排序项按标题的字母或拼音顺序排在后面。
 
-- **默认排序**（DSH 打开时的顺序，即索引顺序）：偏重热度和可信度。下载量 32%、star 28%、有 Logo 15%、经过验证 10%（只被大列表收录记 5%）、近期维护 10%、每周轮换 5%。同一开发者连续出现会降权。
-- **✨ 智能推荐**：以增长和活跃为主。近期维护 25%、下载增长 12%、star 增长 10%、发版频率 8%、新上架 7%、最近发布 7%、经过验证 8%、下载量 10%、star 8%、每周轮换 5%。同一开发者、同一分类连续出现会降权。标题带 ✨，排在自定义排序项的第一位。
+- **默认排序**（DSH 打开时的顺序，即索引顺序）：每周建立 70 个插件的候选池，每天从中轮换 10 个上首页。同一周展示过的前十会移到尚未展示的候选后面；下周重新混排，并避开昨天的前十。
+- **✨ 智能推荐**：先从质量排序前 140 个合格插件中选出每周的 70 个候选，再每天轮换前十。周内不重复，跨周重新组合。每日混排以随机性为主，保留 20% 的综合评分权重，略偏向最近维护、最近发布、下载与 star 增长；同一作者和分类仍会分散展示。标题带 ✨，排在自定义排序项的第一位。
 - **近 7 天新增 star**：需要至少 6 天的 star 历史。
 - **GitHub 星标数**。
-- **随机资源**：每次构建（约 6 小时）重新打乱一次。索引是静态文件，DSH 按其中的数值排序，所以做不到每次切换都换一批。
-- 归档的仓库在所有排序里都沉底。
+- **随机资源**：独立于推荐评分，按日重新打乱全部插件。网站和 DSH 使用同一组随机排序值，同一天刷新、切换排序或多次构建不会反复变动。
+
+### 候选门槛与权重
+
+候选需满足至少一项：经过其他市场验证、npm 近 30 天下载量 ≥ 300、GitHub star ≥ 5。归档仓库不进入推荐池，在默认排序和智能推荐中沉底。没有指标基础的插件保留在完整目录和随机资源中，不会仅凭随机数进入首屏候选。
+
+默认候选的质量评分继续参考下载量 32%、star 28%、有 Logo 15%、经过验证 10%（只被大列表收录记 5%）、近期维护 10%。这些权重用于选择候选，首页展示机会则由每日轮换决定。同一作者的多个插件会降权，分散曝光。
+
+智能推荐的综合评分参考近期维护 25%、最近发布 7%、下载增长 12%、star 增长 10%、发版频率 8%、新上架 7%、经过验证 8%、下载量 10%、star 8%；每日混排只保留这个分数的 20%。每周候选选择也使用独立的周随机数和 20% 综合分数。随机资源不使用这些权重。
+
+### 日期与曝光记录
+
+按 `Asia/Taipei` 的自然日计算，周一开启新一轮。定时构建计划在当地 00:17、06:17、12:17、18:17 运行；新排序在当天第一次成功构建并部署后生效。GitHub 调度可能延迟，构建失败时继续提供上一版。
+
+`recommendations.json` 保存本周的两个候选池、当前日期和最近 14 天实际生成的前十名单。完整构建和指标刷新都读取上一次已发布的记录，本地 `public/` 快照作为读取失败时的备用。PR、构建失败或部署失败不会提前消耗下一批曝光机会；同一天重跑保留当天名单，移除或归档的插件除外。
+
+池中不足 70 个合格插件时，先展示本周未出现过的，再按最早曝光时间回补。小目录不足十个合格插件时，其余条目维持基础排序；记录仍对应实际前十，不会漏掉或重复目录条目。
+
+`pnpm build:recommendations` 可离线重排已校验的本地快照并重建网站，不重新读取所有 npm 发布包，也不添加新来源或升级版本。`pnpm preview:recommendations` 用真实目录生成 14 天轮换预览，写入 `.local/recommendation-preview.json`，不改公开文件。
 
 ## 验证来源
 
@@ -48,4 +65,4 @@ npm 下载量包含 CI 和镜像等自动请求，只能反映趋势，不等于
 
 ---
 
-**English.** Rows show `★ stars │ description` plus a fixed set of native labels: Verified, Rising (downloads or stars), Frequent updates, four update-age buckets, seven download tiers, and verified publishers. The *Default* (index) order favors downloads, stars, a logo and verification. *✨ Smart picks* weights momentum (maintenance, download and star growth, releases, newness) most, then verification by other markets, downloads and stars, and spreads exposure across developers and categories. Exact readings live in `downloads.json`, `github.json` and `display.json`. Fallback readings never add cache dates to labels.
+**English.** Rows show `★ stars │ description` plus a fixed set of native labels: Verified, Rising (downloads or stars), Frequent updates, four update-age buckets, seven download tiers, and verified publishers. The *Default* order rotates ten entries daily from a weekly pool of seventy qualified plugins. *✨ Smart picks* builds its own seventy-entry pool from the top 140 quality candidates, with mostly random daily ordering and a 20% momentum/quality score. Entries do not repeat within a week; a new week reshuffles the pools while avoiding yesterday's front page. Daily random resources use the same published ranks on the website and in DSH. Dates use Asia/Taipei. Pools and fourteen days of exposure history live in `recommendations.json`. Exact readings live in `downloads.json`, `github.json` and `display.json`. Fallback readings never add cache dates to labels.

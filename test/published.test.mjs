@@ -10,7 +10,7 @@ function fixture({wrongIcon = false, pageRows = 1} = {}) {
     assert.equal(options.redirect, 'error');
     assert.equal(options.headers['user-agent'], 'dshopen-check');
     const path = new URL(url).pathname;
-    if (path.endsWith('index.json')) return Response.json({format: 1, plugins: [{name: 'example', icon: 'icons/' + hash + '.svg', versions: [{version: '1.0.0'}]}]});
+    if (path.endsWith('index.json')) return Response.json({format: 1, plugins: [{name: 'example', icon: 'icons/' + hash + '.svg', versions: [{version: '1.0.0', source: {type: 'npm'}}]}]});
     if (path.endsWith('status.json')) return Response.json({packages: [{name: 'example', version: '1.0.0', checks: ['sha512-integrity', 'bundle-patch-present']}]});
     if (path.includes('/icons/')) return new Response(wrongIcon ? 'changed' : bytes, {headers: {'content-type': 'image/svg+xml'}});
     return new Response('<img src="assets/logo-256.png">' + '<li data-plugin>'.repeat(pageRows), {headers: {'content-type': 'text/html'}});

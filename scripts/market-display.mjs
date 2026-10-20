@@ -4,7 +4,7 @@ import { endorsementsFor } from './endorsements.mjs';
 import { LABELS, TIERS } from './labels.mjs';
 
 export { LABELS };
-import { recommendIndex, orderByDefault } from './recommendations.mjs';
+import { rotateRecommendations } from './recommendations.mjs';
 
 const DAY = 86_400_000;
 const measured = value => value && ['ok', 'stale'].includes(value.status);
@@ -92,7 +92,7 @@ export function validatePublishers(publishers) {
   }
 }
 
-export function applyMarketDisplay(index, { github = {}, downloads = {}, releases = {}, endorsements = {}, publishers = { schema: 1, entries: [] }, now = Date.now() } = {}) {
+export function applyMarketDisplay(index, { github = {}, downloads = {}, releases = {}, endorsements = {}, publishers = { schema: 1, entries: [] }, previousRecommendations, now = Date.now() } = {}) {
   validatePublishers(publishers);
   const starred = applyGitHubStars(index, github);
   const metadata = { ...starred.metadata, labels: { ...starred.metadata?.labels }, sortKeys: { ...starred.metadata?.sortKeys } };
@@ -135,7 +135,7 @@ export function applyMarketDisplay(index, { github = {}, downloads = {}, release
   for (const id of Object.keys(LABELS)) if (used.has(id)) metadata.labels[id] = { title: LABELS[id] };
   if (withStarGrowth) metadata.sortKeys[STARS_WEEK] = { title: { en: 'New stars (7 days)', zh: '近 7 天新增 star' }, order: 'desc' };
   const signals = Object.fromEntries(Object.entries(display.plugins).map(([name, value]) => [name, value.signals]));
-  const result = orderByDefault(recommendIndex({ ...starred, metadata, plugins }, { github, signals, now }), { github, signals, now });
+  const {index: result, recommendations} = rotateRecommendations({ ...starred, metadata, plugins }, { github, signals, now, previous: previousRecommendations });
   parseMarketIndex(result, 'https://polang233.github.io/dsh-plugin-index/index.json');
-  return { index: result, display };
+  return { index: result, display, recommendations };
 }

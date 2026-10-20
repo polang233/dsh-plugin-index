@@ -42407,7 +42407,8 @@
     "generatedAt": "2026-10-19T19:41:34.670Z",
     "downloads": "downloads.json",
     "display": "display.json",
-    "publisherEvidence": "https://github.com/polang233/dsh-plugin-index/blob/main/data/publishers.json"
+    "publisherEvidence": "https://github.com/polang233/dsh-plugin-index/blob/main/data/publishers.json",
+    "recommendations": "recommendations.json"
   },
   "github": {
     "snapshot": "github.json",

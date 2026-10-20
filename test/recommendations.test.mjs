@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {recommendIndex, orderByDefault} from '../scripts/recommendations.mjs';
+import {recommendIndex, orderByDefault, rotateRecommendations, recommendationDay, checkRecommendationSnapshot} from '../scripts/recommendations.mjs';
 
 const now = Date.parse('2026-10-18T12:00:00Z');
 const plugin = (name, developer, category = 'tools') => ({name, repository:{url:`https://github.com/${developer}/${name}`}, metadata:{category}, versions:[{version:'1.0.0',publishTimestamp:(now-86400000)/1000,source:{type:'npm'}}]});
@@ -14,7 +14,7 @@ test('default recommendations spread exposure across developers and retain every
   assert.equal(result.plugins[0].metadata.sortKeys.recommended,10);
   assert.equal(result.metadata.sortKeys.recommended.order,'desc');
 });
-test('recommendations are reproducible within a week and independent of input order',()=>{
+test('recommendations are reproducible within a day and independent of input order',()=>{
   const plugins=['one','two','three'].map(name=>plugin(name,name));
   const names=value=>value.plugins.map(p=>p.name);
   assert.deepEqual(names(recommendIndex({plugins},{now})),names(recommendIndex({plugins:[...plugins].reverse()},{now})));
@@ -26,17 +26,14 @@ test('recently maintained projects can precede an archived high-star repository'
   assert.equal(recommendIndex({plugins:[old,fresh]},{github,now}).plugins[0].name,'fresh');
 });
 
-test('random resources use a complete independent shuffle without changing default recommendations',()=>{
-  const plugins=['a','b','c','d'].map(name=>plugin(name,name));
-  const bounds=[];
-  const first=recommendIndex({plugins},{now,randomIntImpl:bound=>{bounds.push(bound);return 0;}});
-  const second=recommendIndex({plugins},{now,randomIntImpl:bound=>bound-1});
-  assert.deepEqual(bounds,[4,3,2]);
-  assert.deepEqual(first.plugins.map(p=>p.name),second.plugins.map(p=>p.name));
-  const ranks=result=>result.plugins.map(p=>p.metadata.sortKeys['random-resources']);
-  assert.deepEqual([...ranks(first)].sort((a,b)=>a-b),[1,2,3,4]);
-  assert.notDeepEqual(ranks(first),ranks(second));
-  assert.equal(first.metadata.sortKeys['random-resources'].title.zh,'随机资源');
+test('random resources change by Taipei date, stay stable on retries, and ignore quality signals',()=>{
+  const plugins=Array.from({length:30},(_,i)=>plugin('random-'+i,'author-'+i));
+  const ranks=result=>Object.fromEntries(result.plugins.map(p=>[p.name,p.metadata.sortKeys['random-resources']]));
+  const first=recommendIndex({plugins},{now});
+  const same=recommendIndex({plugins:[...plugins].reverse()},{now:now+60000, signals:{'random-1':{downloads:500000}}});
+  assert.deepEqual(ranks(first),ranks(same));
+  assert.notDeepEqual(ranks(first),ranks(recommendIndex({plugins},{now:now+86400000})));
+  assert.deepEqual(Object.values(ranks(first)).sort((a,b)=>a-b),Array.from({length:30},(_,i)=>i+1));
 });
 test('growing, frequently released projects outrank a quiet high-star one',()=>{
   const quiet=plugin('quiet','big'),rising=plugin('rising','small');
@@ -61,4 +58,60 @@ test('smart picks title sorts ahead of the other declared keys',()=>{
   const titles=recommendIndex({plugins:[plugin('a','a')]},{now}).metadata.sortKeys;
   assert.equal(titles.recommended.title.zh,'✨ 智能推荐');
   for (const lang of ['zh','en']) assert.equal(['GitHub 星标数','随机资源','近 7 天新增 star',titles.recommended.title[lang]].sort(new Intl.Collator(lang).compare)[0],titles.recommended.title[lang]);
+});
+
+const catalog = () => {
+  const plugins=Array.from({length:160},(_,i)=>plugin('choice-'+i,'author-'+i,i%2?'tools':'skills'));
+  return {index:{plugins},signals:Object.fromEntries(plugins.map(p=>[p.name,{downloads:1000}]))};
+};
+test('daily front pages cover seventy plugins per week, mix again next week, and survive retries',()=>{
+  const {index,signals}=catalog();
+  const monday=Date.parse('2026-10-19T00:00:00+08:00');
+  let previous;
+  const seen={default:new Set(),recommended:new Set()}, priorFront={};
+  for(let day=0;day<14;day++) {
+    const options={signals,previous,now:monday+day*86400000};
+    const result=rotateRecommendations(index,options),state=result.recommendations;
+    checkRecommendationSnapshot(result.index,state);
+    assert.equal(result.index.plugins.length,160);
+    assert.equal(new Set(result.index.plugins.map(p=>p.name)).size,160);
+    const today=state.history.at(-1);
+    for(const mode of ['default','recommended']) {
+      if(day===7) {assert.equal(seen[mode].size,70);seen[mode].clear();}
+      assert.equal(today[mode].length,10);
+      assert.equal(today[mode].some(name=>seen[mode].has(name)),false);
+      assert.equal(today[mode].some(name=>priorFront[mode]?.includes(name)),false);
+      today[mode].forEach(name=>seen[mode].add(name));
+      priorFront[mode]=today[mode];
+    }
+    const retry=rotateRecommendations({...index,plugins:[...index.plugins].reverse()},{...options,previous:state,now:options.now+1000});
+    assert.deepEqual(retry.recommendations,state);
+    previous=state;
+  }
+  for(const mode of ['default','recommended']) assert.equal(seen[mode].size,70);
+});
+test('Taipei midnight changes the recommendation date',()=>{
+  assert.equal(recommendationDay(Date.parse('2026-10-20T15:59:59Z')),'2026-10-20');
+  assert.equal(recommendationDay(Date.parse('2026-10-20T16:00:00Z')),'2026-10-21');
+});
+test('removed and archived plugins leave the pool without promoting an unknown low-reach entry',()=>{
+  const {index,signals}=catalog();
+  const initial=rotateRecommendations(index,{signals,now});
+  const removed=initial.recommendations.pools.default[0];
+  const archived=initial.recommendations.pools.recommended[0];
+  const github={repositories:{['author-'+archived.split('-').at(-1)+'/'+archived]:{status:'ok',archived:true,stars:5000}}};
+  const plugins=[...index.plugins.filter(p=>p.name!==removed),plugin('unknown','unknown')];
+  const result=rotateRecommendations({plugins},{signals,github,previous:initial.recommendations,now:now+86400000});
+  for(const mode of ['default','recommended']) {
+    assert.equal(result.recommendations.pools[mode].includes(removed),false);
+    assert.equal(result.recommendations.pools[mode].includes(archived),false);
+    assert.equal(result.recommendations.pools[mode].includes('unknown'),false);
+  }
+  checkRecommendationSnapshot(result.index,result.recommendations);
+});
+test('small pools preserve complete ranks and record actual front pages',()=>{
+  const index={plugins:[plugin('only','one'),plugin('other','two')]};
+  const result=rotateRecommendations(index,{now});
+  assert.equal(result.index.plugins.length,2);
+  checkRecommendationSnapshot(result.index,result.recommendations);
 });

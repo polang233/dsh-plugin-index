@@ -1,0 +1,24 @@
+import {readFile, writeFile} from 'node:fs/promises';
+import {parseMarketIndex} from '@deepseek-ai/dsh-plugin-market-index';
+import {applyCatalogCopy, validateBrandNames} from './catalog-copy.mjs';
+import {checkMarketDisplay} from './check-published.mjs';
+import {checkRecommendationSnapshot} from './recommendation-state.mjs';
+import {writeSite} from './site.mjs';
+
+const read = async path => JSON.parse(await readFile(new URL('../' + path, import.meta.url), 'utf8'));
+const config = await read('data/sources.json');
+validateBrandNames(config, await read('data/brand-names.json'));
+const current = await read('public/index.json');
+const originalDisplay = await read('public/display.json');
+const github = await read('public/github.json');
+const downloads = await read('public/downloads.json');
+const evidence = await read('public/status.json');
+const {index, display} = applyCatalogCopy(current, originalDisplay, config, github);
+parseMarketIndex(index, 'https://polang233.github.io/dsh-plugin-index/index.json');
+checkMarketDisplay(index, github, downloads, display, await read('data/publishers.json'));
+if (evidence.market?.recommendations) checkRecommendationSnapshot(index, await read('public/recommendations.json'));
+await writeFile(new URL('../public/index.json', import.meta.url), JSON.stringify(index, null, 2) + '\n');
+await writeFile(new URL('../public/display.json', import.meta.url), JSON.stringify(display, null, 2) + '\n');
+await writeSite(index, evidence, github, downloads, display);
+const existing = new Set(index.plugins.map(plugin => plugin.name));
+console.log(JSON.stringify({updatedCopy: index.plugins.length, pendingFullBuild: config.packages.filter(plugin => !existing.has(plugin.name)).map(plugin => plugin.name)}));

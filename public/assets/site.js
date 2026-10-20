@@ -136,17 +136,12 @@ if (controls && search && chips.length && moreWrap) {
   });
   // Each click reveals one more batch; the list never grows on its own.
   moreButton.addEventListener('click', showMore);
-  // Same orders as the DSH sort menu. Random reshuffles on every click, which a static index cannot do inside DSH.
+  // Use the same published daily orders as DSH, including random resources.
   const value = (row, key) => { const number = Number(row.dataset[key]); return Number.isFinite(number) && row.dataset[key] !== undefined ? number : -Infinity; };
   const sortBy = id => {
     sortChips.forEach(chip => chip.setAttribute('aria-pressed', String(chip.dataset.sort === id)));
-    const key = { recommended: 'sortRecommended', stars: 'sortStars', starsWeek: 'sortStarsWeek', published: 'sortPublished' }[id];
-    if (id === 'random') {
-      ordered = [...rows];
-      for (let i = ordered.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [ordered[i], ordered[j]] = [ordered[j], ordered[i]]; }
-    } else {
-      ordered = [...rows].sort((a, b) => (key ? value(b, key) - value(a, key) : 0) || value(a, 'sortOrder') - value(b, 'sortOrder'));
-    }
+    const key = { recommended: 'sortRecommended', stars: 'sortStars', starsWeek: 'sortStarsWeek', published: 'sortPublished', random: 'sortRandom' }[id];
+    ordered = [...rows].sort((a, b) => (key ? value(b, key) - value(a, key) : 0) || value(a, 'sortOrder') - value(b, 'sortOrder'));
     list.append(...ordered);
     filter();
   };

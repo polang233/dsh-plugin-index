@@ -27,11 +27,15 @@ pnpm test:browser
 
 ## 更新收录
 
-未指定 `version` 时跟踪 npm `latest`；指定后固定为该版本。生成器最多并发读取四个来源，并重试临时网络错误。包下载限于公共 npm registry，审核仓库图片使用下文独立的图标读取边界，不执行被收录插件的代码。全部来源与官方校验器通过后才允许发布。
+未指定 `version` 时跟踪 npm `latest`；指定后固定为该版本。生成器最多并发读取四个来源，并重试临时网络错误。npm 包下载限于公共 npm registry，固定 Git 来源仅使用下文的 GitHub 提交归档；审核仓库图片使用独立的图标读取边界，不执行被收录插件的代码。全部来源与官方校验器通过后才允许发布。
 
 目前每个插件提供一个版本。兼容范围来自 `engines.dsh`，缺失时取 DSH peer dependencies 的交集。没有约束表示作者未声明范围，不代表已验证兼容。
 
 构建失败时查看 Actions 日志，修正来源或连接问题后重新运行。撤回或停止维护的插件通过修改收录列表移除，不会在生成过程中被悄悄跳过。
+
+## 固定 Git 来源
+
+经维护者确认的 Git 条目通过 `source` 声明固定 GitHub 仓库、完整提交 SHA、源码归档 SHA-512 和发行时间，并固定 `version`。生成器从 `codeload.github.com` 下载该提交的归档，禁止重定向，沿用下载与解压预算，检查包名、版本、补丁和入口文件。安装源写为官方 `git` 类型，DSH 按固定提交安装根目录插件。Git 条目不请求 npm 下载量，也不生成 npm 发版活跃数据。升级需要更新提交与哈希。不执行插件安装或生命周期脚本。
 
 ## 经核查的源码补充
 
@@ -106,3 +110,15 @@ npx wrangler deploy --config cloudflare/wrangler.jsonc
 ## 图片
 
 原图放在 `site/originals/` 和 `docs/images/originals/`，网站和 README 实际加载的是同名的无损 WebP（按显示尺寸缩放）。替换或新增原图后运行 `node scripts/optimize-images.mjs` 重新生成（需要 `sharp`，可用 `npm i --no-save sharp` 临时安装）。
+
+## 每日推荐轮换
+
+`public/recommendations.json` 随索引一同发布，保存每周候选池和近 14 天前十曝光记录。完整构建和指标刷新优先读取 GitHub Pages 已发布快照，失败时读取本地公开快照；不将尚未部署的记录写入 CI 缓存。规则见 [指标说明](market-display.md)。只重排本地已校验版本可运行 `pnpm build:recommendations`，新收录或版本变化仍需完整构建。运行 `pnpm preview:recommendations` 可生成 `.local/recommendation-preview.json` 查看连续 14 天的两组首屏名单。
+
+## 文案与品牌名称
+
+收录文案以 `data/sources.json` 为准。品牌身份记录在 `data/brand-names.json`，构建时检查中英文名称保留原名；作者提供的中文别名可并列展示。审核记录见 [2026-10-20 文案复核](reviews/localization-2026-10-20.md)。
+
+仅改名称和描述时运行 `pnpm build:copy`。它更新 `public/index.json`、`public/display.json` 和双语网页，保留包版本、校验时间、指标、排序和推荐曝光记录，不访问网络。尚未写入公开快照的新收录会列在输出中，等待完整构建。
+
+结构化复核记录可用 `node scripts/apply-copy-review.mjs docs/reviews/localization-2026-10-20.json` 重放。重复执行不重复修改；源文案已被其他改动修改时会停止，要求重新复核。

@@ -25,7 +25,7 @@ Use `pnpm build:site` for website-only changes and `pnpm preview` to open the re
 
 ## Updates
 
-The generator follows npm `latest`, unless an entry pins `version`. It reads up to four sources concurrently and retries temporary network errors. Package downloads are limited to the public npm registry; reviewed repository artwork uses the separate icon boundary described below. Third-party package code is never executed. All sources and the official format validator must pass before the build can publish.
+The generator follows npm `latest`, unless an entry pins `version`. It reads up to four sources concurrently and retries temporary network errors. npm downloads are limited to the public npm registry; pinned Git sources use the GitHub commit archives described below. Reviewed repository artwork uses a separate icon boundary. Third-party package code is never executed. All sources and the official format validator must pass before the build can publish.
 
 The build lists one version per package. DSH reads compatibility from `engines.dsh`, or from the intersection of DSH peer dependencies when that field is absent. Missing constraints mean the author supplied no range; they do not prove compatibility.
 
@@ -97,3 +97,17 @@ The Worker in `cloudflare/` serves `public/` as static assets and counts reads o
 ## Images
 
 Full-size originals live in `site/originals/` and `docs/images/originals/`; the site and README load lossless WebP copies scaled to display size. After changing an original, run `node scripts/optimize-images.mjs` (needs `sharp`, e.g. `npm i --no-save sharp`).
+
+## Pinned Git sources
+
+Maintainer-approved Git entries pin `version` and declare `source: {type: "git", url, commit, integrity, publishedAt}`. The source must be a canonical GitHub repository URL with a full commit SHA, SHA-512 of that commit archive, and a release date. The repository root must contain the complete installable package. The generator downloads from `codeload.github.com` without redirects and applies the existing archive limits, identity, patch and entry-point checks. DSH installs the root package at that commit through the official Git source type. Git entries have no npm download or release-activity data. Updating requires reviewing the new commit and archive hash. No installation or lifecycle scripts run during generation.
+
+## Daily recommendation rotation
+
+`public/recommendations.json` ships with the index and stores weekly candidate pools and fourteen days of front-page exposure. Full builds and metadata refreshes prefer the deployed GitHub Pages state, with the local public snapshot as fallback. Unpublished state is not saved to the CI cache. See [recommendation rules](market-display.md). `pnpm build:recommendations` reorders already checked local versions offline; new sources and versions still require a full build. `pnpm preview:recommendations` writes a fourteen-day preview to `.local/recommendation-preview.json`.
+
+## Editorial copy and product names
+
+`data/sources.json` owns display names and bilingual descriptions. `data/brand-names.json` records reviewed product names; builds check that both display titles retain them. Author-provided Chinese aliases may appear alongside the original name. See the [2026-10-20 copy review](reviews/localization-2026-10-20.md).
+
+`pnpm build:copy` refreshes the existing index, display snapshot and bilingual pages offline. It retains package versions, validation timestamps, metrics, ranks and exposure history. New entries absent from the checked snapshot still need a full build. Structured reviews can be replayed with `node scripts/apply-copy-review.mjs docs/reviews/localization-2026-10-20.json`; already-applied edits are skipped, and conflicting copy requires another review.

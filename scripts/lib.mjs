@@ -16,11 +16,15 @@ export const VALIDATOR_VERSION = '0.2.1-rc.2';
 const PACKAGE = /^(?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*$/;
 
 export async function download(url, { fetchImpl = fetch, maxBytes = 64 * 1024 * 1024, retryDelayMs = 500, timeoutMs = DEFAULT_DOWNLOAD_TIMEOUT } = {}) {
-  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > MAX_DOWNLOAD_TIMEOUT) throw new Error('Download timeout must be between 1 and 120000 ms');
   const parsed = new URL(url);
   if (parsed.origin !== new URL(REGISTRY).origin || parsed.username || parsed.password) {
     throw new Error(`Only the public npm registry is supported: ${url}`);
   }
+  return downloadArchive(url, {fetchImpl, maxBytes, retryDelayMs, timeoutMs});
+}
+
+async function downloadArchive(url, { fetchImpl = fetch, maxBytes = 64 * 1024 * 1024, retryDelayMs = 500, timeoutMs = DEFAULT_DOWNLOAD_TIMEOUT } = {}) {
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > MAX_DOWNLOAD_TIMEOUT) throw new Error('Download timeout must be between 1 and 120000 ms');
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const response = await fetchImpl(url, {
@@ -58,7 +62,7 @@ export function verifyIntegrity(bytes, integrity) {
   if (!hashes.includes(actual)) throw new Error('Published tarball has no matching SHA-512 integrity');
 }
 
-export async function inspectArchive(bytes, { maxUnpackedBytes = DEFAULT_ARCHIVE_BYTES, readFiles = [] } = {}) {
+export async function inspectArchive(bytes, { maxUnpackedBytes = DEFAULT_ARCHIVE_BYTES, readFiles = [], archiveRoot = 'package' } = {}) {
   if (!Number.isSafeInteger(maxUnpackedBytes) || maxUnpackedBytes < 1 || maxUnpackedBytes > MAX_ARCHIVE_BYTES) throw new Error('Archive budget must be between 1 byte and 256 MiB');
   const files = new Set();
   const requested = new Set(readFiles);
@@ -68,12 +72,13 @@ export async function inspectArchive(bytes, { maxUnpackedBytes = DEFAULT_ARCHIVE
   const parser = new Parser({ strict: true, maxMetaEntrySize: 1024 * 1024, onReadEntry(entry) {
     try {
     if (entry.type !== 'File' && entry.type !== 'OldFile') { entry.resume(); return; }
-    if (!entry.path.startsWith('package/') || entry.path.includes('\\') || entry.path.split('/').includes('..')) {
+    if (!entry.path.startsWith(archiveRoot + '/') || entry.path.includes('\\') || entry.path.split('/').includes('..')) {
       throw new Error(`Unexpected archive path: ${entry.path}`);
     }
-    if (files.has(entry.path)) throw new Error(`Duplicate archive entry: ${entry.path}`);
-    files.add(entry.path);
-    if (entry.path === 'package/package.json') {
+    const path = 'package/' + entry.path.slice(archiveRoot.length + 1);
+    if (files.has(path)) throw new Error(`Duplicate archive entry: ${entry.path}`);
+    files.add(path);
+    if (path === 'package/package.json') {
       if (entry.size > 1024 * 1024) throw new Error('Package manifest is too large');
       const chunks = [];
       let manifestBytes = 0;
@@ -83,7 +88,7 @@ export async function inspectArchive(bytes, { maxUnpackedBytes = DEFAULT_ARCHIVE
         chunks.push(chunk);
       });
       entry.on('end', () => { manifest = Buffer.concat(chunks).toString('utf8'); });
-    } else if (requested.has(entry.path) && entry.size <= MAX_DISPLAY_FILE_BYTES) {
+    } else if (requested.has(path) && entry.size <= MAX_DISPLAY_FILE_BYTES) {
       const chunks = [];
       let length = 0;
       entry.on('data', chunk => {
@@ -91,7 +96,7 @@ export async function inspectArchive(bytes, { maxUnpackedBytes = DEFAULT_ARCHIVE
         if (length > MAX_DISPLAY_FILE_BYTES) { parser.abort(new Error('Display file is too large')); return; }
         chunks.push(chunk);
       });
-      entry.on('end', () => { contents.set(entry.path, Buffer.concat(chunks)); });
+      entry.on('end', () => { contents.set(path, Buffer.concat(chunks)); });
     } else entry.resume();
     } catch (error) { parser.abort(error); }
   } });
@@ -194,8 +199,21 @@ export function releaseActivity(metadata, now) {
 
 export const releasesOf = evidence => Object.fromEntries((evidence?.packages ?? []).filter(record => record.releases).map(record => [record.name, record.releases]));
 
-export async function collectPackage(input, { fetchImpl = fetch, now = Date.now() } = {}) {
-  if (!PACKAGE.test(input.name) || input.name.length > 214) throw new Error('Invalid npm package name');
+async function packageRelease(input, {fetchImpl, now}) {
+  if (input.source !== undefined) {
+    const source = input.source;
+    if (!source || typeof source !== 'object' || Object.keys(source).some(key => !['type', 'url', 'commit', 'integrity', 'publishedAt'].includes(key))) throw new Error('Unsupported Git source fields');
+    const match = typeof source.url === 'string' && /^https:\/\/github\.com\/([A-Za-z0-9_-]+)\/([A-Za-z0-9_.-]+)$/.exec(source.url);
+    if (source.type !== 'git' || !match || !/^[0-9a-f]{40}$/.test(source.commit)) throw new Error('Git source requires a canonical GitHub URL and immutable commit');
+    if (!semver.valid(input.version) || semver.valid(input.version) !== input.version || !/^sha512-[A-Za-z0-9+/]{86}==$/.test(source.integrity)) throw new Error('Git source requires an exact version and SHA-512 integrity');
+    const time = Date.parse(source.publishedAt);
+    if (!Number.isFinite(time) || time < 0 || time > now) throw new Error('Invalid Git release publication date');
+    const tarball = `https://codeload.github.com/${match[1]}/${match[2]}/tar.gz/${source.commit}`;
+    const budget = {...archiveBudget(input, input.version, source.integrity), archiveRoot: `${match[2]}-${source.commit}`};
+    const bytes = await downloadArchive(tarball, {fetchImpl, timeoutMs: budget.timeoutMs});
+    verifyIntegrity(bytes, source.integrity);
+    return {version: input.version, time, budget, bytes, published: {dist: {tarball, integrity: source.integrity}, gitHead: source.commit}, source: {type: 'git', url: source.url, commit: source.commit}};
+  }
   const metadataUrl = `${REGISTRY}${encodeURIComponent(input.name)}`;
   const metadata = JSON.parse((await download(metadataUrl, { fetchImpl })).toString('utf8'));
   const version = input.version ?? metadata['dist-tags']?.latest;
@@ -207,6 +225,12 @@ export async function collectPackage(input, { fetchImpl = fetch, now = Date.now(
   const budget = archiveBudget(input, version, published.dist?.integrity);
   const bytes = await download(published.dist?.tarball, { fetchImpl, timeoutMs: budget.timeoutMs });
   verifyIntegrity(bytes, published.dist?.integrity);
+  return {version, time, budget, bytes, published, metadataUrl, releases: releaseActivity(metadata, now), source: {type: 'npm', registry: REGISTRY}};
+}
+
+export async function collectPackage(input, { fetchImpl = fetch, now = Date.now() } = {}) {
+  if (!PACKAGE.test(input.name) || input.name.length > 214) throw new Error('Invalid npm package name');
+  const {version, time, budget, bytes, published, metadataUrl, releases, source} = await packageRelease(input, {fetchImpl, now});
   const { manifest, files, unpackedBytes, decodedBytes, entryCount } = await inspectArchive(bytes, budget);
   const patch = checkBundle(manifest, files, input.name, version);
   const resolved = displayFiles(manifest, files);
@@ -215,6 +239,7 @@ export async function collectPackage(input, { fetchImpl = fetch, now = Date.now(
   const display = packageDisplay(manifest, resolved, contents);
   const repositoryInfo = resolveRepository(manifest, input, version, published.dist.integrity);
   const repository = repositoryInfo.repository;
+  if (source.type === 'git' && repository?.url !== source.url) throw new Error('Git source differs from declared repository');
   const reviewed = await reviewedIcon(input, { version, integrity: published.dist.integrity, repository: repositoryFrom(manifest), fetchImpl });
   if (reviewed) {
     display.evidence.publishedIcon = display.evidence.icon;
@@ -237,7 +262,7 @@ export async function collectPackage(input, { fetchImpl = fetch, now = Date.now(
       ...(input.category ? { category: input.category } : {}),
       keywords: Array.isArray(manifest.keywords) ? manifest.keywords.filter(x => typeof x === 'string') : []
     },
-    versions: [{ version, publishTimestamp: Math.floor(time / 1000), source: { type: 'npm', registry: REGISTRY }, engines: dshEngines(manifest) }]
+    versions: [{ version, publishTimestamp: Math.floor(time / 1000), source, engines: dshEngines(manifest) }]
   };
   const lifecycleScripts = Object.keys(manifest.scripts ?? {}).filter(key => ['preinstall', 'install', 'postinstall'].includes(key));
   return {
@@ -249,12 +274,12 @@ export async function collectPackage(input, { fetchImpl = fetch, now = Date.now(
       repository: repository?.url ?? null, repositorySource: repositoryInfo.provenance,
       ...(repositoryInfo.review ? {repositoryReview: repositoryInfo.review} : {}),
       ...(typeof published.gitHead === 'string' && /^[0-9a-f]{40}$/.test(published.gitHead) ? {sourceCommit: published.gitHead} : {}),
-      metadataUrl, tarball: published.dist.tarball, integrity: published.dist.integrity,
+      ...(metadataUrl ? {metadataUrl} : {source}), tarball: published.dist.tarball, integrity: published.dist.integrity,
       patch, filesChecked: files.size, display: display.evidence,
       archive: {compressedBytes: bytes.length, unpackedBytes, decodedBytes, entries: entryCount, maxUnpackedBytes: budget.maxUnpackedBytes, downloadTimeoutMs: budget.timeoutMs, reviewedBudget: input.archiveReview !== undefined},
       lifecycleScripts,
-      releases: releaseActivity(metadata, now),
-      checks: ['registry-identity', 'sha512-integrity', 'archive-manifest-identity', 'bundle-patch-present', ...(manifest.main ? ['main-file-present'] : [])],
+      ...(releases ? {releases} : {}),
+      checks: [source.type === 'git' ? 'git-commit-pinned' : 'registry-identity', 'sha512-integrity', 'archive-manifest-identity', 'bundle-patch-present', ...(manifest.main ? ['main-file-present'] : [])],
       limitations: ['No runtime installation test', 'No code audit', 'Patch references and transitive dependencies are not validated']
     }
   };

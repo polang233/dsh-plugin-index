@@ -1,0 +1,455 @@
+{
+  "schema": 1,
+  "entries": [
+    {
+      "name": "@changfenhuang/dsh-genui",
+      "brand": "GenUI",
+      "source": "https://github.com/omdsh-dev/dsh-genui"
+    },
+    {
+      "name": "@geml/dsh-plugin",
+      "brand": "GEML",
+      "source": "https://github.com/geml-spec/geml"
+    },
+    {
+      "name": "@liustack/pptwise",
+      "brand": "PPTwise",
+      "source": "https://github.com/liustack/pptwise"
+    },
+    {
+      "name": "@openma/deepseek-harness-tui",
+      "brand": "Martty",
+      "source": "https://github.com/openma-ai/Martty"
+    },
+    {
+      "name": "@shengsheng/dsh-taskboard",
+      "brand": "DSH Taskboard",
+      "source": "https://github.com/shengsheng90/DSH-taskboard"
+    },
+    {
+      "name": "@smalltailqwq/dsh-client-ui-skin-maid-atelier",
+      "brand": "Maid Atelier",
+      "source": "https://github.com/Small-tailqwq/dsh-deep-whale"
+    },
+    {
+      "name": "@wenaixi/dsh-ponytail",
+      "brand": "ponytail",
+      "source": "https://github.com/Wenaixi/dsh-ponytail"
+    },
+    {
+      "name": "@zseven-w/dsh-harbor",
+      "brand": "DSH Harbor",
+      "source": "https://github.com/ZSeven-W/dsh-harbor"
+    },
+    {
+      "name": "dsh-advisor",
+      "brand": "Advisor",
+      "source": "https://github.com/omdsh-dev/dsh-advisor"
+    },
+    {
+      "name": "dsh-agent-studio",
+      "brand": "Agent Studio",
+      "source": "https://github.com/thissensen/dsh-agent-studio"
+    },
+    {
+      "name": "dsh-agnes-studio",
+      "brand": "Agnes Studio",
+      "source": "https://github.com/zmm863-commits/dsh-agnes-studio"
+    },
+    {
+      "name": "dsh-better-sidebar",
+      "brand": "Better Sidebar",
+      "source": "https://github.com/omdsh-dev/DSH-better-sidebar"
+    },
+    {
+      "name": "dsh-deepcanary",
+      "brand": "DeepCanary",
+      "source": "https://github.com/Oscar-Williams/dsh-deepcanary"
+    },
+    {
+      "name": "dsh-defend",
+      "brand": "Defend",
+      "source": "https://github.com/PerryLink/dsh-defend"
+    },
+    {
+      "name": "dsh-doublecheck",
+      "brand": "dsh-doublecheck",
+      "source": "https://github.com/PerryLink/dsh-doublecheck"
+    },
+    {
+      "name": "dsh-drawai",
+      "brand": "dsh-drawai",
+      "source": "https://github.com/fourzkw/dsh-drawai"
+    },
+    {
+      "name": "dsh-echocat-skill-panel",
+      "brand": "EchoCat Skill Panel",
+      "source": "https://github.com/VDERR/dsh-echocat-skill-panel"
+    },
+    {
+      "name": "dsh-flowglass",
+      "brand": "Flowglass",
+      "source": "https://github.com/Iwctwbh/dsh-flowglass"
+    },
+    {
+      "name": "dsh-fonttune",
+      "brand": "FontTune",
+      "source": "https://github.com/LyaxZ/dsh-fonttune"
+    },
+    {
+      "name": "dsh-genui",
+      "brand": "GenUI",
+      "source": "https://github.com/lhuans/dsh-genui"
+    },
+    {
+      "name": "dsh-harmony",
+      "brand": "Harmony",
+      "source": "https://github.com/memorax-ai/dsh-harmony"
+    },
+    {
+      "name": "dsh-im-companion",
+      "brand": "IM Companion",
+      "source": "https://github.com/FeatherHunter/dsh-im-companion"
+    },
+    {
+      "name": "dsh-knit",
+      "brand": "Knit",
+      "source": "https://github.com/PolinniZhong/dsh-knit"
+    },
+    {
+      "name": "dsh-maze",
+      "brand": "Maze",
+      "source": "https://github.com/lamost423/dsh-maze"
+    },
+    {
+      "name": "dsh-model-fusion",
+      "brand": "Fusion",
+      "source": "https://github.com/aa2246740/dsh-model-fusion"
+    },
+    {
+      "name": "dsh-plugin-lookatstudy",
+      "brand": "LookAtStudy",
+      "source": "https://github.com/Kaiji-Z/dsh-plugin-lookatstudy"
+    },
+    {
+      "name": "dsh-plugin-ramify",
+      "brand": "Ramify",
+      "source": "https://github.com/yanglongyun/ramify-dsh"
+    },
+    {
+      "name": "dsh-plugin-subagent-director",
+      "brand": "Subagent Director",
+      "source": "https://github.com/SeverusZh/dsh-plugin-subagent-director"
+    },
+    {
+      "name": "dsh-plugin-tether",
+      "brand": "DSH Tether",
+      "source": "https://github.com/zexadev/dsh-tether"
+    },
+    {
+      "name": "dsh-plugin-yolo",
+      "brand": "YOLO",
+      "source": "https://github.com/hanshanyike/dsh-yolo"
+    },
+    {
+      "name": "dsh-pocket",
+      "brand": "DSH Pocket",
+      "source": "https://github.com/shaobeichen/dsh-pocket"
+    },
+    {
+      "name": "dsh-skills-anywhere",
+      "brand": "Skills Anywhere",
+      "source": "https://github.com/noteflowai/dsh-skills-anywhere"
+    },
+    {
+      "name": "dsh-thoughtdag",
+      "brand": "ThoughtDAG",
+      "source": "https://github.com/chenxiachan/thoughtdag"
+    },
+    {
+      "name": "dsh-vibe-math",
+      "brand": "Vibe Mathematics",
+      "source": "https://github.com/ChongCyrus/Vibe-Mathematics"
+    },
+    {
+      "name": "dsh-watcher",
+      "brand": "Watcher",
+      "source": "https://github.com/aa2246740/dsh-watcher"
+    },
+    {
+      "name": "dsh-xdpool",
+      "brand": "DSH XD Pool",
+      "source": "https://github.com/XDTrees/dsh-xdpool"
+    },
+    {
+      "name": "dshmarket",
+      "brand": "DSH Market",
+      "source": "https://github.com/dsh-market/dsh-market"
+    },
+    {
+      "name": "memory-eternal",
+      "brand": "Memory Eternal",
+      "source": "https://github.com/EternalNight996/memory-eternal"
+    },
+    {
+      "name": "meow-cachebilling",
+      "brand": "Meow Cache Billing",
+      "source": "https://github.com/Phant0Meow/dsh-meow-cachebilling"
+    },
+    {
+      "name": "meow-smooth",
+      "brand": "Meow Smooth",
+      "source": "https://github.com/Phant0Meow/dsh-meow-smooth"
+    },
+    {
+      "name": "scientific-figure-library",
+      "brand": "ScientificFigureLibrary",
+      "source": "https://github.com/xuzhougeng/ScientificFigureLibrary"
+    },
+    {
+      "name": "@tnnevol/dsh-fnos",
+      "brand": "fnOS",
+      "source": "https://github.com/FNOSP/fnos-dsh"
+    },
+    {
+      "name": "@viztor/dsh-tinyfish",
+      "brand": "TinyFish",
+      "source": "https://github.com/viztor/dsh-tinyfish"
+    },
+    {
+      "name": "dsh-gitbar-lite",
+      "brand": "GitBar Lite",
+      "source": "https://github.com/Ckarefulon/dsh-gitbar-lite"
+    },
+    {
+      "name": "dsh-plugin-control-your-development",
+      "brand": "control-your-development",
+      "source": "https://github.com/HaoyanZhang123/dsh-plugin-control-your-development"
+    },
+    {
+      "name": "@klarkxy/dsh-fusion",
+      "brand": "Sidekick",
+      "source": "https://github.com/klarkxy/dsh-plugins"
+    },
+    {
+      "name": "dsh-wonder-tools",
+      "brand": "Wonder Tools",
+      "source": "https://github.com/apherchin/dsh-wonder-tools"
+    },
+    {
+      "name": "@kolmopdf/dsh-zpdf",
+      "brand": "ZPDF",
+      "source": "https://github.com/komoai2026/dsh-zpdf"
+    },
+    {
+      "name": "dsh-plugin-builder-hud",
+      "brand": "BuilderHUD",
+      "source": "https://github.com/tony1duan/builder-hud"
+    },
+    {
+      "name": "@lytharalab/dsh-cons-auto-review",
+      "brand": "DCAR",
+      "source": "https://github.com/LytharaLab/DSH-Cons-Auto-Review"
+    },
+    {
+      "name": "@purezhi/dsh-plugin-pando",
+      "brand": "Pando",
+      "source": "https://github.com/purezhi/dsh-plugin-pando"
+    },
+    {
+      "name": "@deepblend/dsh-blender-bundle",
+      "brand": "DeepBlend Studio",
+      "source": "https://github.com/pearjelly/deep-blend"
+    },
+    {
+      "name": "@evomap/dsh-evolver",
+      "brand": "Evolver",
+      "source": "https://github.com/EvoMap/evolver-dsh-plugin"
+    },
+    {
+      "name": "@louisremi/dsh-always-on",
+      "brand": "Always On",
+      "source": "https://github.com/louisremi/dsh-always-on"
+    },
+    {
+      "name": "@mrweicodes/dsh-permgate",
+      "brand": "PermGate",
+      "source": "https://github.com/MrWeiCodes/dsh-permgate"
+    },
+    {
+      "name": "@qomob/dsh-madrank",
+      "brand": "MADRank",
+      "source": "https://github.com/qomob/dsh-madrank"
+    },
+    {
+      "name": "@v587d/capital-generation",
+      "brand": "Capital Generation",
+      "source": "https://github.com/v587d/capital-generation"
+    },
+    {
+      "name": "cc-safety-net",
+      "brand": "CC Safety Net",
+      "source": "https://github.com/kenryu42/cc-safety-net"
+    },
+    {
+      "name": "ds-bot",
+      "brand": "DeepSeek Bot",
+      "source": "https://github.com/Fei2411/DeepSeek-Bot"
+    },
+    {
+      "name": "dsh-attention",
+      "brand": "Attention",
+      "source": "https://github.com/AnLifeX/dsh-attention"
+    },
+    {
+      "name": "dsh-brewreel",
+      "brand": "BrewReel",
+      "source": "https://github.com/Finderchangchang/brewreel"
+    },
+    {
+      "name": "dsh-chat-plus",
+      "brand": "Chat Plus",
+      "source": "https://github.com/Kr-ATG/dsh-chat-plus"
+    },
+    {
+      "name": "dsh-credits",
+      "brand": "Credits",
+      "source": "https://github.com/AnLifeX/dsh-credits"
+    },
+    {
+      "name": "dsh-duck-fleet",
+      "brand": "DuckFleet",
+      "source": "https://github.com/new-sailfish/duck-fleet"
+    },
+    {
+      "name": "dsh-jot",
+      "brand": "Jot",
+      "source": "https://github.com/Totoro-qaq/dsh-jot"
+    },
+    {
+      "name": "dsh-later",
+      "brand": "Later",
+      "source": "https://github.com/dsh-plugin-collection/dsh-later"
+    },
+    {
+      "name": "dsh-liao-usage",
+      "brand": "Liao Usage",
+      "source": "https://github.com/oliblue-evan/dsh-liao-usage"
+    },
+    {
+      "name": "dsh-mimo-quota",
+      "brand": "MIMO Quota Panel",
+      "source": "https://github.com/hbgdjb/dsh-mimo-quota"
+    },
+    {
+      "name": "dsh-oh-my-claude",
+      "brand": "Oh My Claude",
+      "source": "https://github.com/lcestou/dsh-oh-my-claude"
+    },
+    {
+      "name": "dsh-pharos",
+      "brand": "Pharos",
+      "source": "https://github.com/Leo-Cjw/dsh-pharos"
+    },
+    {
+      "name": "dsh-plugin-scout",
+      "brand": "DSH Plugin Scout",
+      "source": "https://github.com/fegnze/dsh-plugin-scout"
+    },
+    {
+      "name": "dsh-ppt-maker",
+      "brand": "PPT Maker",
+      "source": "https://github.com/OMSociety/dsh-ppt-maker"
+    },
+    {
+      "name": "dsh-project-guard",
+      "brand": "Project Guard",
+      "source": "https://github.com/Inceptzws/dsh-project-guard"
+    },
+    {
+      "name": "dsh-pulse",
+      "brand": "Pulse",
+      "source": "https://github.com/Enc-hanted/dsh-pulse"
+    },
+    {
+      "name": "dsh-scout",
+      "brand": "Scout",
+      "source": "https://github.com/MaxHou-infinity/dsh-scout"
+    },
+    {
+      "name": "dsh-showcase",
+      "brand": "Showcase",
+      "source": "https://github.com/DoveLi-Gu/dsh-showcase"
+    },
+    {
+      "name": "dsh-sidenote",
+      "brand": "Sidenote",
+      "source": "https://github.com/g-yixuan/dsh-sidenote"
+    },
+    {
+      "name": "dsh-switchman",
+      "brand": "Switchman",
+      "source": "https://github.com/mrzturn/dsh-switchman"
+    },
+    {
+      "name": "dsh-system1",
+      "brand": "System One",
+      "source": "https://github.com/exoticknight/dsh-system1"
+    },
+    {
+      "name": "dsh-tower",
+      "brand": "Tower",
+      "source": "https://github.com/louifinn/dsh-tower"
+    },
+    {
+      "name": "dsh-vertex-argon",
+      "brand": "Vertex Argon",
+      "source": "https://github.com/higekibaka/dsh-vertex-argon"
+    },
+    {
+      "name": "dsh-webui-studio",
+      "brand": "WebUI Studio",
+      "source": "https://github.com/memorax-ai/dsh-webui-studio"
+    },
+    {
+      "name": "dsh-zen-remote",
+      "brand": "Zen Remote",
+      "source": "https://github.com/KyoMio/dsh-zen-remote"
+    },
+    {
+      "name": "dsh-advanced-human-writing",
+      "brand": "Advanced Human Writing",
+      "source": "https://github.com/whh110112/human-writing-skills"
+    },
+    {
+      "name": "dsh-streamfold",
+      "brand": "Stream Fold",
+      "source": "https://github.com/rezon-aki/dsh-streamfold"
+    },
+    {
+      "name": "@smalltailqwq/dsh-client-ui-skin-deep-whale-manager",
+      "brand": "Deep Whale Skin Manager",
+      "source": "https://github.com/Small-tailqwq/dsh-deep-whale"
+    },
+    {
+      "name": "@smalltailqwq/dsh-client-ui-skin-orca-link",
+      "brand": "Orca Link",
+      "source": "https://github.com/Small-tailqwq/dsh-deep-whale"
+    },
+    {
+      "name": "@wenaixi/cfbridge",
+      "brand": "cfbridge",
+      "source": "https://github.com/Wenaixi/dsh-cfbridge"
+    },
+    {
+      "name": "dsh-packycode-api",
+      "brand": "PackyCode API",
+      "source": "https://github.com/BaronCyrus/dsh-packycode-api"
+    },
+    {
+      "name": "@jayyuen66/dsh-ocr-review",
+      "brand": "open-code-review",
+      "source": "https://github.com/JayYuen666/dsh-ocr-review"
+    }
+  ]
+}
