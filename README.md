@@ -11,7 +11,7 @@ https://dshopen.org/index.json
 [![插件](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Findex.json&query=%24.plugins.length&label=%E6%8F%92%E4%BB%B6&color=2563eb)](https://dshopen.org/zh/)
 [![索引使用量](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.total&label=%E7%B4%A2%E5%BC%95%E4%BD%BF%E7%94%A8%E9%87%8F&color=16a34a)](https://dshopen.org/stats.json)
 [![今日使用](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.today.reads&label=%E4%BB%8A%E6%97%A5%E4%BD%BF%E7%94%A8&color=0d9488)](https://dshopen.org/stats.json)
-[![Star](https://img.shields.io/github/stars/polang233/dsh-plugin-index?label=Star&color=f59e0b)](https://github.com/polang233/dsh-plugin-index/stargazers)
+[![Star](https://img.shields.io/github/stars/polang233/dsh-plugin-index?style=flat&label=Star&color=f59e0b)](https://github.com/polang233/dsh-plugin-index/stargazers)
 
 DeepSeek Harness（DSH）的社区插件市场，数据为主、推荐为主，界面保持简洁。
 
@@ -19,19 +19,33 @@ DeepSeek Harness（DSH）的社区插件市场，数据为主、推荐为主，�
 
 [浏览目录](https://dshopen.org/zh/) · [English](README.en.md) · [提交插件](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin.yml)
 
-![在 DSH「发现」里浏览开放插件市场](docs/images/dsh-discover-zh.webp)
-
-[![开放插件市场网站](docs/images/home-zh.webp)](https://dshopen.org/zh/)
-
-![开放插件市场网页插件目录](docs/images/catalog-zh.png)
+<table>
+  <tr>
+    <th width="50%">网页首页</th>
+    <th width="50%">网页插件目录</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="https://dshopen.org/zh/"><img src="docs/images/home-zh.webp" alt="开放插件市场网站首页" width="100%"></a></td>
+    <td valign="top"><a href="docs/images/catalog-zh.png"><img src="docs/images/catalog-zh.png" alt="开放插件市场网页插件目录" width="100%"></a></td>
+  </tr>
+</table>
 
 ## 使用
 
-先在 DSH ，然后任选一种方式：
+在 DSH 中任选一种方式：
 
 **方式一：**在 **插件 → 实验性插件** 中打开 **自定义插件市场 → 发现 → 添加索引源** 中粘贴 `https://dshopen.org/index.json`。
 
-<img src="docs/images/add-index.webp" alt="在「发现 → 索引源」中添加 dshopen.org 的索引地址" width="560">
+<table>
+  <tr>
+    <th width="50%">添加索引源</th>
+    <th width="50%">DSH 内实际效果</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="docs/images/add-index.webp"><img src="docs/images/add-index.webp" alt="在「发现 → 索引源」中添加 dshopen.org 的索引地址" width="100%"></a></td>
+    <td valign="top"><a href="docs/images/dsh-discover-zh.webp"><img src="docs/images/dsh-discover-zh.webp" alt="在 DSH「发现」里浏览开放插件市场" width="100%"></a></td>
+  </tr>
+</table>
 
 **方式二：安装插件**。运行下面的命令安装 `dsh-open-market`，它会自动把索引加入「发现」的索引源。并加载我们的市场插件，显示信息会更全一点
 
@@ -61,34 +75,14 @@ star 是开发者最直接的鼓励，也是这里的推荐参考之一。用到
 
 每次构建都会核对发布包的完整性、包名、版本和组合包声明，再用官方校验器检查索引格式。包检查不代表代码审计或安装测试。[检查记录](https://dshopen.org/status.json)
 
-## 使用统计
+## Star 趋势
 
-**索引使用量**是 DSH 读取索引的总次数，每次在「发现」里打开或刷新这个市场都会读取一次（DSH 会缓存约 10 分钟）；**今日使用**是今天的次数。读取者按「IP + 浏览器标识」的加盐哈希按天去重，不保存 IP，明细见 [stats.json](https://dshopen.org/stats.json)。只统计 dshopen.org，旧的 github.io 地址无法统计。
-
-## 目录结构
-
-```text
-data/       收录列表 sources.json 与发布者身份 publishers.json
-scripts/    索引、指标、推荐和网站的生成脚本
-packages/   dsh-open-market 插件
-site/       网站样式与品牌素材
-public/     构建产物，发布到 dshopen.org 和 GitHub Pages
-cloudflare/ dshopen.org 的 Worker：静态页与读取统计
-docs/       维护说明、指标说明、核查记录
-test/       单元测试与浏览器测试
-```
-
-## 开发
-
-需要 Node.js 24+ 和 pnpm 11。
-
-```bash
-pnpm install --frozen-lockfile --ignore-scripts
-```
-
-```bash
-pnpm test && pnpm build && pnpm validate
-```
+<a href="https://www.star-history.com/#polang233/dsh-plugin-index&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=polang233/dsh-plugin-index&amp;type=Date&amp;theme=dark">
+    <img src="https://api.star-history.com/svg?repos=polang233/dsh-plugin-index&amp;type=Date" alt="polang233/dsh-plugin-index 的 GitHub Star 数趋势" width="800">
+  </picture>
+</a>
 
 [维护说明](docs/maintenance.zh-CN.md) · [GPL-3.0 许可证](LICENSE)
 

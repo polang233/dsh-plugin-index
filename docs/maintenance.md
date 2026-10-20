@@ -2,7 +2,26 @@
 
 [简体中文](maintenance.zh-CN.md)
 
+## Usage stats
+
+*Index usage* counts every time DSH loads this market from dshopen.org, which happens when Discover opens or refreshes (DSH caches it for about ten minutes). *Usage today* is today's share. Readers are deduplicated per day with a salted hash of IP and user agent; IPs are never stored. Details live in [stats.json](https://dshopen.org/stats.json). Only dshopen.org is counted; the earlier github.io endpoint has no usage statistics.
+
+## Directory structure
+
+```text
+data/       sources.json listings and publishers.json identities
+scripts/    Index, metrics, recommendation, and website generators
+packages/   The dsh-open-market plugin
+site/       Website styles and branding
+public/     Build output for dshopen.org and GitHub Pages
+cloudflare/ The dshopen.org Worker for static files and usage stats
+docs/       Maintenance notes, metrics, and review records
+test/       Unit tests and browser tests
+```
+
 ## Build and test
+
+Requires Node.js 24+ and pnpm 11.
 
 ```sh
 pnpm install --frozen-lockfile --ignore-scripts

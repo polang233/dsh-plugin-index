@@ -11,7 +11,7 @@ https://dshopen.org/index.json
 [![Plugins](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Findex.json&query=%24.plugins.length&label=plugins&color=2563eb)](https://dshopen.org/)
 [![Index usage](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.total&label=index%20usage&color=16a34a)](https://dshopen.org/stats.json)
 [![Usage today](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.today.reads&label=usage%20today&color=0d9488)](https://dshopen.org/stats.json)
-[![Stars](https://img.shields.io/github/stars/polang233/dsh-plugin-index?label=stars&color=f59e0b)](https://github.com/polang233/dsh-plugin-index/stargazers)
+[![Stars](https://img.shields.io/github/stars/polang233/dsh-plugin-index?style=flat&label=stars&color=f59e0b)](https://github.com/polang233/dsh-plugin-index/stargazers)
 
 A community plugin market for DeepSeek Harness (DSH): driven by data and recommendations, with nothing extra in the way.
 
@@ -19,20 +19,35 @@ A community plugin market for DeepSeek Harness (DSH): driven by data and recomme
 
 [Browse plugins](https://dshopen.org/) · [简体中文](README.md) · [Suggest a plugin](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin.yml)
 
-![Open Plugin Market in the DSH Discover tab](docs/images/dsh-discover-en.webp)
-
-[![The Open Plugin Market website](docs/images/home-en.webp)](https://dshopen.org/)
-
-![Open Plugin Market catalog in Chinese](docs/images/catalog-zh.png)
+<table>
+  <tr>
+    <th width="50%">Website home</th>
+    <th width="50%">Plugin catalog</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="https://dshopen.org/"><img src="docs/images/home-en.webp" alt="The Open Plugin Market website home" width="100%"></a></td>
+    <td valign="top"><a href="docs/images/catalog-zh.png"><img src="docs/images/catalog-zh.png" alt="Open Plugin Market catalog in Chinese" width="100%"></a></td>
+  </tr>
+</table>
 
 ## Use it
 
 Switch on **Custom plugin markets** under **Plugins → Experimental plugins**, then pick one:
 
-- **Add the source by hand.** Paste `https://dshopen.org/index.json` into **Discover → Add index source**. The earlier `https://polang233.github.io/dsh-plugin-index/index.json` still works.
-- **Install the plugin.** `dsh plugin --profile desktop add "git+https://github.com/polang233/dsh-plugin-index.git#main&path:/packages/dsh-open-market"` installs `dsh-open-market`, which adds the source for you once. Remove it later and it stays removed.
+**Add the source by hand.** Paste `https://dshopen.org/index.json` into **Discover → Add index source**. The earlier `https://polang233.github.io/dsh-plugin-index/index.json` still works.
 
-<img src="docs/images/add-index.webp" alt="Adding the dshopen.org index URL under Discover → Index sources" width="560">
+<table>
+  <tr>
+    <th width="50%">Add the index source</th>
+    <th width="50%">Inside DSH</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="docs/images/add-index.webp"><img src="docs/images/add-index.webp" alt="Adding the dshopen.org index URL under Discover → Index sources" width="100%"></a></td>
+    <td valign="top"><a href="docs/images/dsh-discover-en.webp"><img src="docs/images/dsh-discover-en.webp" alt="Open Plugin Market in the DSH Discover tab" width="100%"></a></td>
+  </tr>
+</table>
+
+**Install the plugin.** `dsh plugin --profile desktop add "git+https://github.com/polang233/dsh-plugin-index.git#main&path:/packages/dsh-open-market"` installs `dsh-open-market`, which adds the source for you once. Remove it later and it stays removed.
 
 ## Labels and sorting
 
@@ -42,16 +57,19 @@ Switch on **Custom plugin markets** under **Plugins → Experimental plugins**, 
 
 A star is the simplest thank-you a developer gets, and it feeds the recommendations here too. If a plugin earns a place in your setup, star its repo. The next star could be someone starring yours.
 
-## Usage stats
-
-*Index usage* counts every time DSH loads this market from dshopen.org, which happens when Discover opens or refreshes (DSH caches it for about ten minutes). *Usage today* is today's share. Readers are deduplicated per day with a salted hash of IP and user agent; IPs are never stored. Details live in [stats.json](https://dshopen.org/stats.json).
-
 ## Submit a plugin
 
 [Open a request](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin.yml), or add an entry to [`data/sources.json`](data/sources.json) and open a PR. Plugins need public source code, an installable npm release and a declared license. Maintainers may also accept a pinned Git commit. Plugins that ship their own logo are reviewed first.
 
-## Development
+## Star history
 
-Node.js 24+ and pnpm 11: `pnpm install --frozen-lockfile --ignore-scripts`, then `pnpm test`, `pnpm build` and `pnpm validate`. See [maintenance](docs/maintenance.md). Licensed under [GPL-3.0](LICENSE).
+<a href="https://www.star-history.com/#polang233/dsh-plugin-index&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=polang233/dsh-plugin-index&amp;type=Date&amp;theme=dark">
+    <img src="https://api.star-history.com/svg?repos=polang233/dsh-plugin-index&amp;type=Date" alt="GitHub star history for polang233/dsh-plugin-index" width="800">
+  </picture>
+</a>
+
+[Maintenance](docs/maintenance.md) · [GPL-3.0 license](LICENSE)
 
 Independent community project, not affiliated with DeepSeek. Plugins retain their authors' copyrights and licenses.

@@ -2,7 +2,26 @@
 
 [English](maintenance.md)
 
+## 使用统计
+
+**索引使用量**是 DSH 读取索引的总次数，每次在「发现」里打开或刷新这个市场都会读取一次（DSH 会缓存约 10 分钟）；**今日使用**是今天的次数。读取者按「IP + 浏览器标识」的加盐哈希按天去重，不保存 IP，明细见 [stats.json](https://dshopen.org/stats.json)。只统计 dshopen.org，旧的 github.io 地址无法统计。
+
+## 目录结构
+
+```text
+data/       收录列表 sources.json 与发布者身份 publishers.json
+scripts/    索引、指标、推荐和网站的生成脚本
+packages/   dsh-open-market 插件
+site/       网站样式与品牌素材
+public/     构建产物，发布到 dshopen.org 和 GitHub Pages
+cloudflare/ dshopen.org 的 Worker：静态页与读取统计
+docs/       维护说明、指标说明、核查记录
+test/       单元测试与浏览器测试
+```
+
 ## 构建与测试
+
+需要 Node.js 24+ 和 pnpm 11。
 
 ```sh
 pnpm install --frozen-lockfile --ignore-scripts
