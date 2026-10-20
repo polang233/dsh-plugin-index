@@ -28,4 +28,3 @@ export function checkRecommendationSnapshot(index, state) {
     if (JSON.stringify(actual[mode]) !== JSON.stringify(today?.[mode])) throw new Error('Recommendation exposure mismatch: ' + mode);
   }
 }
-

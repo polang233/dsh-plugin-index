@@ -126,6 +126,14 @@ export function checkBundle(manifest, files, expectedName, expectedVersion) {
   return patches;
 }
 
+function minimalRanges(ranges) {
+  const unique = [...new Set(ranges)];
+  const options = {includePrerelease: true};
+  return unique.filter((range, position) => !unique.some((other, index) => index !== position
+    && semver.subset(range, other, options)
+    && (index < position || !semver.subset(other, range, options))));
+}
+
 export function dshEngines(manifest) {
   const explicit = manifest.engines && Object.hasOwn(manifest.engines, 'dsh');
   if (explicit) {
@@ -139,10 +147,10 @@ export function dshEngines(manifest) {
   let combinations = [''];
   for (const value of used) {
     if (typeof value !== 'string' || !value || !semver.validRange(value)) throw new Error('Invalid DSH compatibility range');
-    const sets = new semver.Range(value, { includePrerelease: true }).set.map(set => set.map(comparator => comparator.value).filter(Boolean).join(' '));
+    const sets = minimalRanges(new semver.Range(value, { includePrerelease: true }).set.map(set => set.map(comparator => comparator.value).filter(Boolean).join(' ')));
     if (combinations.length * sets.length > 256) throw new Error('DSH compatibility range is too complex');
-    combinations = combinations.flatMap(left => sets.map(right => [...new Set(`${left} ${right}`.trim().split(/\s+/))].join(' ')))
-      .filter(range => semver.minVersion(new semver.Range(range, { includePrerelease: true })) !== null);
+    combinations = minimalRanges(combinations.flatMap(left => sets.map(right => [...new Set(`${left} ${right}`.trim().split(/\s+/))].join(' ')))
+      .filter(range => semver.minVersion(new semver.Range(range, { includePrerelease: true })) !== null));
   }
   if (!combinations.length) throw new Error('DSH peer compatibility ranges have no intersection');
   if (!used.length) return {};
