@@ -1,6 +1,6 @@
 # Open Plugin Market
 
-<img src="site/logo-256.png" alt="Open Plugin Market" width="96" align="right">
+<img src="site/logo-256.png" alt="Open Plugin Market" width="144" align="right">
 
 In DeepSeek Harness, switch on **Plugins → Experimental plugins → Custom plugin markets**, then go to **Discover → Add index source** and paste:
 
@@ -19,16 +19,9 @@ A community plugin market for DeepSeek Harness (DSH): driven by data and recomme
 
 [Browse plugins](https://dshopen.org/) · [简体中文](README.md) · [Suggest a plugin](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin.yml)
 
-<table>
-  <tr>
-    <th width="50%">Website home</th>
-    <th width="50%">Plugin catalog</th>
-  </tr>
-  <tr>
-    <td valign="top"><a href="https://dshopen.org/"><img src="docs/images/home-en.webp" alt="The Open Plugin Market website home" width="100%"></a></td>
-    <td valign="top"><a href="docs/images/catalog-zh.png"><img src="docs/images/catalog-zh.png" alt="Open Plugin Market catalog in Chinese" width="100%"></a></td>
-  </tr>
-</table>
+<a href="docs/images/add-index.webp"><img src="docs/images/add-index.webp" alt="Adding the dshopen.org index URL under Discover → Index sources" width="560"></a>
+
+![Open Plugin Market in the DSH Discover tab](docs/images/dsh-discover-en.webp)
 
 ## Use it
 
@@ -36,18 +29,11 @@ Switch on **Custom plugin markets** under **Plugins → Experimental plugins**, 
 
 **Add the source by hand.** Paste `https://dshopen.org/index.json` into **Discover → Add index source**. The earlier `https://polang233.github.io/dsh-plugin-index/index.json` still works.
 
-<table>
-  <tr>
-    <th width="50%">Add the index source</th>
-    <th width="50%">Inside DSH</th>
-  </tr>
-  <tr>
-    <td valign="top"><a href="docs/images/add-index.webp"><img src="docs/images/add-index.webp" alt="Adding the dshopen.org index URL under Discover → Index sources" width="100%"></a></td>
-    <td valign="top"><a href="docs/images/dsh-discover-en.webp"><img src="docs/images/dsh-discover-en.webp" alt="Open Plugin Market in the DSH Discover tab" width="100%"></a></td>
-  </tr>
-</table>
-
 **Install the plugin.** `dsh plugin --profile desktop add "git+https://github.com/polang233/dsh-plugin-index.git#main&path:/packages/dsh-open-market"` installs `dsh-open-market`, which adds the source for you once. Remove it later and it stays removed.
+
+[![The Open Plugin Market website home](docs/images/home-en.webp)](https://dshopen.org/)
+
+![Open Plugin Market catalog in Chinese](docs/images/catalog-zh.png)
 
 ## Labels and sorting
 

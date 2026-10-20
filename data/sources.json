@@ -9533,6 +9533,110 @@
         "zh": "润色多语言写作，分块协作长文并检查上下文一致性，需要 Python 3.9+。"
       },
       "category": "skills"
+    },
+    {
+      "name": "dsh-plugin-session-fulltext",
+      "title": {
+        "en": "Session Full-text Search",
+        "zh": "会话全文搜索"
+      },
+      "description": {
+        "en": "Search session messages with Chinese-friendly substring matching, jump to highlighted results and move between matches.",
+        "zh": "按字词搜索会话正文，支持中文短词匹配、结果定位高亮和命中跳转。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-deepseek-workbench",
+      "version": "0.1.0-dsh.0.2.1-rc.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-deepseek-workbench",
+        "commit": "24b3de5ca54c0516487f8de1ef0a8ae2fadde400",
+        "integrity": "sha512-IZh2Op6EiqjMQWTpn6+6K/nu1ajIIJDG64AxGbq3/qBunLOP8wjI2N68m9+iHPJ5UwN7nigRVIKwKCbGA0jb2g==",
+        "publishedAt": "2026-10-20T13:26:37Z"
+      },
+      "title": {
+        "en": "DeepSeek Workbench",
+        "zh": "DeepSeek Workbench"
+      },
+      "description": {
+        "en": "Use DeepSeek web chat and its API platform in DSH, and continue web chats as DSH sessions. Requires DSH 0.2.1-rc.2 desktop; persistent sign-in and downloads need the companion host adapter.",
+        "zh": "在 DSH 桌面内使用 DeepSeek 网页聊天与 API 平台，将网页会话转为 DSH 会话继续。仅适配 DSH 0.2.1-rc.2，持久登录与官网下载需配套宿主适配。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-colorlab",
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/ruegg114514/dsh-colorlab",
+        "commit": "b973f6bdd44b0bc3267f52b55115cc0e55fff889",
+        "integrity": "sha512-OpdkQGuztUPiK7Po/twNzux4vVL33lHzQ/21VCDiwS89xiFedKROZPv6CX3DQdUlq2n+HwFQ3LKonouZA1vcuA==",
+        "publishedAt": "2026-10-20T15:21:36Z"
+      },
+      "title": {
+        "en": "ColorLab",
+        "zh": "ColorLab 配色主题"
+      },
+      "description": {
+        "en": "Customize DSH colors with the Mariana palette, saved presets and contrast hints. The package does not declare a DSH compatibility range.",
+        "zh": "以 Mariana 为默认配色，调整界面与正文颜色、保存配色方案并查看对比度提示。包内未声明适用的 DSH 版本。"
+      },
+      "category": "appearance"
+    },
+    {
+      "name": "@gulagala001/dsh-btw",
+      "version": "0.1.0-dsh.0.2.1-rc.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-btw",
+        "commit": "f53d5291bd8e252ab04290f8d9040f158a9f0c81",
+        "integrity": "sha512-jPKof4BUNeNChfbbB39/eYaXDwPKmkOdshyg2VNtmSlgwvWYVae2QJhJ+KlK7pa22XeAC9g+GOZt6Fhg1jLSyw==",
+        "publishedAt": "2026-10-20T14:18:29Z"
+      },
+      "title": {
+        "en": "DSH BTW",
+        "zh": "DSH BTW"
+      },
+      "description": {
+        "en": "Ask side questions using the current conversation while the main task continues. Requires DSH 0.2.1-rc.2; side history disappears on reload and side requests cannot run tools.",
+        "zh": "借助当前会话上下文旁聊，主任务可继续运行。仅适配 DSH 0.2.1-rc.2，刷新后旁聊历史清空，旁聊不能执行工具。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@gulagala001/dsh-theme-plugin",
+      "version": "0.1.0-dsh.0.2.1-rc.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-theme-plugin",
+        "commit": "d5093a8895f9303c73cda716ee80bfcf143ff3ba",
+        "integrity": "sha512-KRlZFypD1kb5UKsS4CBmzTEqoReVHTbl5hl9wIjToB20+JcRQtjO7BhEF4vAj3eQ2onqMehCBSs3s05NnDzDqA==",
+        "publishedAt": "2026-10-20T14:55:03Z"
+      },
+      "title": {
+        "en": "DSH Themes and Appearance",
+        "zh": "DSH 主题与外观"
+      },
+      "description": {
+        "en": "Manage appearance and themes, browse a visual community market, and check themes before applying them. Requires DSH 0.2.1-rc.2; some checks need a Chromium download.",
+        "zh": "管理外观与主题，浏览带预览图的社区市场，安装检查通过后应用主题。仅适配 DSH 0.2.1-rc.2，部分检查需要下载 Chromium。"
+      },
+      "category": "appearance"
+    },
+    {
+      "name": "dsh-global-todo",
+      "title": {
+        "en": "Global Todo",
+        "zh": "全局待办"
+      },
+      "description": {
+        "en": "Keep a shared cross-session todo list, hand tasks to a conversation and confirm agent-reported completion. The panel requires the DSH Web client.",
+        "zh": "跨会话管理人和 Agent 共用的待办清单，一键交给对话继续处理，并由人确认完成。界面需使用 DSH Web 客户端。"
+      },
+      "category": "workflow"
     }
   ]
 }

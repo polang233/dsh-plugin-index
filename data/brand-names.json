@@ -450,6 +450,21 @@
       "name": "@jayyuen66/dsh-ocr-review",
       "brand": "open-code-review",
       "source": "https://github.com/JayYuen666/dsh-ocr-review"
+    },
+    {
+      "name": "dsh-deepseek-workbench",
+      "brand": "DeepSeek Workbench",
+      "source": "https://github.com/gulagala001/dsh-deepseek-workbench"
+    },
+    {
+      "name": "dsh-colorlab",
+      "brand": "ColorLab",
+      "source": "https://github.com/ruegg114514/dsh-colorlab"
+    },
+    {
+      "name": "@gulagala001/dsh-btw",
+      "brand": "DSH BTW",
+      "source": "https://github.com/gulagala001/dsh-btw"
     }
   ]
 }

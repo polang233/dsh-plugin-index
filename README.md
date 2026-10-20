@@ -1,8 +1,8 @@
 # Open Plugin Market · 开放插件市场
 
-<img src="site/logo-256.png" alt="Open Plugin Market" width="96" align="right">
+<img src="site/logo-256.png" alt="Open Plugin Market" width="144" align="right">
 
-DeepSeek Harness 中打开 **插件 → 自定义插件市场**，再到 **发现 → 添加索引源** 粘贴这个地址就能用：
+DeepSeek Harness 中打开 **插件 → 自定义插件市场**，再到 **发现 → 添加索引源** 粘贴：
 
 ```text
 https://dshopen.org/index.json
@@ -19,16 +19,9 @@ DeepSeek Harness（DSH）的社区插件市场，数据为主、推荐为主，�
 
 [浏览目录](https://dshopen.org/zh/) · [English](README.en.md) · [提交插件](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin.yml)
 
-<table>
-  <tr>
-    <th width="50%">网页首页</th>
-    <th width="50%">网页插件目录</th>
-  </tr>
-  <tr>
-    <td valign="top"><a href="https://dshopen.org/zh/"><img src="docs/images/home-zh.webp" alt="开放插件市场网站首页" width="100%"></a></td>
-    <td valign="top"><a href="docs/images/catalog-zh.png"><img src="docs/images/catalog-zh.png" alt="开放插件市场网页插件目录" width="100%"></a></td>
-  </tr>
-</table>
+<a href="docs/images/add-index.webp"><img src="docs/images/add-index.webp" alt="在「发现 → 索引源」中添加 dshopen.org 的索引地址" width="560"></a>
+
+![在 DSH「发现」里浏览开放插件市场](docs/images/dsh-discover-zh.webp)
 
 ## 使用
 
@@ -36,22 +29,15 @@ DeepSeek Harness（DSH）的社区插件市场，数据为主、推荐为主，�
 
 **方式一：添加索引源**。在 **插件 → 实验性插件** 中打开 **自定义插件市场 → 发现 → 添加索引源**，粘贴 `https://dshopen.org/index.json`。
 
-<table>
-  <tr>
-    <th width="50%">添加索引源</th>
-    <th width="50%">DSH 内实际效果</th>
-  </tr>
-  <tr>
-    <td valign="top"><a href="docs/images/add-index.webp"><img src="docs/images/add-index.webp" alt="在「发现 → 索引源」中添加 dshopen.org 的索引地址" width="100%"></a></td>
-    <td valign="top"><a href="docs/images/dsh-discover-zh.webp"><img src="docs/images/dsh-discover-zh.webp" alt="在 DSH「发现」里浏览开放插件市场" width="100%"></a></td>
-  </tr>
-</table>
-
 **方式二：安装插件**。运行下面的命令安装 `dsh-open-market`，它会自动把索引加入「发现」的索引源。并加载我们的市场插件，显示信息会更全一点
 
 ```bash
 dsh plugin --profile desktop add "git+https://github.com/polang233/dsh-plugin-index.git#main&path:/packages/dsh-open-market"
 ```
+
+[![开放插件市场网站首页](docs/images/home-zh.webp)](https://dshopen.org/zh/)
+
+![开放插件市场网页插件目录](docs/images/catalog-zh.png)
 
 ## 推荐与标签
 

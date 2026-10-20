@@ -44,6 +44,10 @@ Use `pnpm build:site` for website-only changes and `pnpm preview` to open the re
 
 ## Updates
 
+Keep acceptance replies to one short, friendly sentence: `感谢！将在下个提交后收录 😊` for Chinese-speaking developers, or `Thanks! It'll be added in the next commit 😊` for other developers. Vary the smiling emoji. Reply and close accepted issues as authorized by the maintainer.
+
+For a batch review, record `schema: 1` and `entries: [{issue, name, replyLanguage, reply}]` in a JSON file. Run `node scripts/preview-submissions.mjs <review.json>` to inspect only those release archives and write the index, evidence, and reply preview under `.local/submission-preview/`. It does not install plugins, change public snapshots, or post comments.
+
 The generator follows npm `latest`, unless an entry pins `version`. It reads up to four sources concurrently and retries temporary network errors. npm downloads are limited to the public npm registry; pinned Git sources use the GitHub commit archives described below. Reviewed repository artwork uses a separate icon boundary. Third-party package code is never executed. All sources and the official format validator must pass before the build can publish.
 
 The build lists one version per package. DSH reads compatibility from `engines.dsh`, or from the intersection of DSH peer dependencies when that field is absent. Missing constraints mean the author supplied no range; they do not prove compatibility.
@@ -93,6 +97,8 @@ If GitHub is unavailable, a verified snapshot up to seven days old is kept with 
 The workflow runs unit tests, builds the catalog, checks both website languages in Chromium and validates the official format before uploading the Pages artifact. After deployment it checks the complete source allowlist, package evidence, both language pages, every referenced icon hash and the project branding assets. All requests reject redirects. Pull requests never deploy.
 
 Scheduled runs are set to every six hours; GitHub may delay or suspend schedules in inactive repositories. The timestamp in the live `status.json` is the source of truth. Scheduled artifacts are deployed directly and do not create repository commits; a checked-in snapshot changes only when a maintainer includes it in a commit.
+
+Pushes and pull requests that change only `README*.md`, `docs/`, or top-level Markdown files in `.github/` skip the full build and deployment. Scheduled and manual runs still execute. A commit that also changes listings, scripts, website assets, or workflows runs the full pipeline.
 
 The public endpoint must return 200 JSON without redirects:
 

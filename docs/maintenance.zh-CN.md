@@ -46,6 +46,10 @@ pnpm test:browser
 
 ## 更新收录
 
+回复收录申请时保持一句话、自然简短。中文示例：`感谢！将在下个提交后收录 😊`，可换用不同的微笑表情。非中文开发者用英文：`Thanks! It'll be added in the next commit 😊`。接纳后按维护者授权回复并关闭 issue。
+
+批量收录可先将 issue、包名和回复草稿记录为 `schema: 1`、`entries: [{issue, name, replyLanguage, reply}]` 的 JSON。运行 `node scripts/preview-submissions.mjs <复核记录.json>`，仅检查这批发布归档并生成 `.local/submission-preview/` 下的索引、证据和回复预览，不安装插件、不改写已发布快照、不发评论。
+
 未指定 `version` 时跟踪 npm `latest`；指定后固定为该版本。生成器最多并发读取四个来源，并重试临时网络错误。npm 包下载限于公共 npm registry，固定 Git 来源仅使用下文的 GitHub 提交归档；审核仓库图片使用独立的图标读取边界，不执行被收录插件的代码。全部来源与官方校验器通过后才允许发布。
 
 目前每个插件提供一个版本。兼容范围来自 `engines.dsh`，缺失时取 DSH peer dependencies 的交集。没有约束表示作者未声明范围，不代表已验证兼容。
@@ -97,6 +101,8 @@ GitHub Actions 使用只读 `GITHUB_TOKEN`。本地可设置 `GITHUB_TOKEN` 或 
 工作流先运行单元测试、构建目录、使用 Chromium 检查中英文网站并校验官方格式，再上传 Pages 产物。部署后核对完整收录集合、逐包检查记录、两种语言页面、所有引用图标的内容哈希与项目品牌图片，全部请求禁止重定向。PR 不触发部署。
 
 定时任务每六小时触发，GitHub 可能延迟任务或暂停不活跃仓库的计划；实际更新时间以线上 `status.json` 为准。定时任务直接部署产物，不自动提交代码；仓库内快照由维护者随改动提交。
+
+仅修改 `README*.md`、`docs/` 或 `.github/` 顶层 Markdown 文档时，推送和 PR 不触发完整构建与部署。定时任务和手动运行照常执行；同次提交包含收录、脚本、网站素材或工作流修改时，仍执行完整流程。
 
 公开索引必须直接返回 200 JSON，不能依赖重定向：
 
