@@ -17,7 +17,7 @@ A community plugin market for DeepSeek Harness (DSH): driven by data and recomme
 
 **Stars aren't everything.** The default picks refresh every day and put fast-growing, actively shipped, genuinely good plugins first, with verification, downloads and stars as supporting signals. No single author can flood the list, so a newcomer's plugin can make the first screen and find its audience.
 
-[Browse plugins](https://dshopen.org/) · [简体中文](README.md) · [Suggest a plugin](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin.yml)
+[Browse plugins](https://dshopen.org/) · [简体中文](README.md) · [Suggest a plugin](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml)
 
 <a href="docs/images/add-index.webp"><img src="docs/images/add-index.webp" alt="Adding the dshopen.org index URL under Discover → Index sources" width="560"></a>
 
@@ -45,7 +45,9 @@ A star is the simplest thank-you a developer gets, and it feeds the recommendati
 
 ## Submit a plugin
 
-[Open a request](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin.yml), or add an entry to [`data/sources.json`](data/sources.json) and open a PR. Plugins need public source code, an installable npm release and a declared license. Maintainers may also accept a pinned Git commit. Plugins that ship their own logo are reviewed first.
+[Open a request](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml), or add an entry to [`data/sources.json`](data/sources.json) and open a PR. Plugins need public source code, an installable npm release and a declared license. Maintainers may also accept a pinned Git commit. Plugins that ship their own logo are reviewed first.
+
+To take down your own plugin, [request removal](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-remove.yml). Removed plugins are recorded in [`data/withdrawn.json`](data/withdrawn.json) and stay out unless the author asks to relist.
 
 ## Star history
 

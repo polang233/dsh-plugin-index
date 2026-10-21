@@ -6,7 +6,7 @@ const ORIGIN = 'https://dshopen.org/';
 const INDEX_URL = `${ORIGIN}index.json`;
 const REPOSITORY = 'https://github.com/polang233/dsh-plugin-index';
 const DOCS = `${REPOSITORY}/blob/main/README.en.md`;
-const SUBMIT = `${REPOSITORY}/issues/new?template=plugin.yml`;
+const SUBMIT = `${REPOSITORY}/issues/new?template=plugin-add.yml`;
 const source = new URL('../site/', import.meta.url);
 const output = new URL('../public/', import.meta.url);
 

@@ -17,7 +17,7 @@ DeepSeek Harness（DSH）的社区插件市场，数据为主、推荐为主，�
 
 **不只看 star🌟 数** 默认推荐每天会更新，以最近增长快、更新勤、优质的插件为主，同时参考验证、下载量和 star，同一作者不会霸榜。小开发者的新作品也能出现在首屏，被更多人看到。
 
-[浏览目录](https://dshopen.org/zh/) · [English](README.en.md) · [提交插件](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin.yml)
+[浏览目录](https://dshopen.org/zh/) · [English](README.en.md) · [提交插件](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml)
 
 <a href="docs/images/add-index.webp"><img src="docs/images/add-index.webp" alt="在「发现 → 索引源」中添加 dshopen.org 的索引地址" width="560"></a>
 
@@ -57,7 +57,9 @@ star 是开发者最直接的鼓励，也是这里的推荐参考之一。用到
 
 ## 提交插件
 
-[填写收录申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin.yml)，或在 [`data/sources.json`](data/sources.json) 中添加条目后提交 PR。插件需要公开源码、可安装的 npm 版本和明确的许可证；经维护者确认也可使用固定 Git 提交，详见 [贡献指南](.github/CONTRIBUTING.md)。在 npm 包中附带自己的 Logo 会优先审核。
+[填写收录申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml)，或在 [`data/sources.json`](data/sources.json) 中添加条目后提交 PR。插件需要公开源码、可安装的 npm 版本和明确的许可证；经维护者确认也可使用固定 Git 提交，详见 [贡献指南](.github/CONTRIBUTING.md)。在 npm 包中附带自己的 Logo 会优先审核。
+
+作者想下架自己的插件，请[填写下架申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-remove.yml)。下架的插件记入 [`data/withdrawn.json`](data/withdrawn.json)，之后不会再被收录，除非作者本人重新申请。
 
 每次构建都会核对发布包的完整性、包名、版本和组合包声明，再用官方校验器检查索引格式。包检查不代表代码审计或安装测试。[检查记录](https://dshopen.org/status.json)
 

@@ -1,6 +1,6 @@
-name: 插件收录 / Plugin submission
-description: 推荐插件、更正信息或申请移除 / Suggest, correct or remove a listing
-title: "[Plugin] "
+name: 插件收录 / Add a plugin
+description: 推荐新插件或更正已收录信息 / Suggest a plugin or correct a listing
+title: "[plugin-add] "
 body:
   - type: input
     id: plugin
@@ -14,7 +14,7 @@ body:
     id: description
     attributes:
       label: 简短说明 / Summary
-      description: 用一句话介绍用途，或说明需要更正、移除的内容。中文或英文均可。 / Briefly describe the plugin or requested change in Chinese or English.
+      description: 用一句话介绍用途，或说明需要更正的内容。中文或英文均可。申请下架请改用「插件下架」模板。 / Briefly describe the plugin or the correction in Chinese or English. To remove a listing, use the "Remove a plugin" form instead.
     validations:
       required: true
   - type: textarea

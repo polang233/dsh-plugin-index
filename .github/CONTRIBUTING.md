@@ -2,7 +2,7 @@
 
 ## 推荐插件
 
-提交[插件收录申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin.yml)，提供 npm 包名或源码仓库地址，以及一句功能介绍，中文或英文均可。作者也可以通过同一表单申请更正或移除。
+提交[插件收录申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml)，提供 npm 包名或源码仓库地址，以及一句功能介绍，中文或英文均可。作者也可以通过同一表单申请更正信息。
 
 目前收录的插件需要：
 
@@ -16,6 +16,17 @@
 ### Git 来源
 
 尚未发布 npm 的插件可经维护者确认后按固定 GitHub 提交收录。条目需要固定 `version`，并提供 `source: {type: "git", url, commit, integrity, publishedAt}`。`commit` 为完整提交 SHA，`integrity` 为对应 GitHub 源码归档的 SHA-512，`publishedAt` 为发行时间。根目录必须包含可安装的完整插件与 `package.json`。更新提交后需重新核查归档哈希；建议作者同时发布 npm 包。
+
+## 申请下架
+
+作者或维护者可以提交[插件下架申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-remove.yml)，issue 标题以 `[plugin-remove]` 开头。请用发布该包或拥有源码仓库的 GitHub 账号提交，否则需附上能证明身份的链接。也可以直接提交 PR，同时修改下面两个文件。
+
+维护者确认身份后：
+
+1. 从 `data/sources.json` 删除该条目，并重新生成 `public/` 中的索引与页面。
+2. 在 `data/withdrawn.json` 记录包名、仓库、申请人、日期和申请链接。
+
+构建、收录预览和候选扫描都会读取下架名单：名单中的包出现在收录列表里会让构建失败，候选扫描会直接跳过它们。作者本人再次申请收录时，先从下架名单删除该记录，再按正常流程收录。
 
 ## 提交 PR
 

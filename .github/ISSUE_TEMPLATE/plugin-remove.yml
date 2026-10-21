@@ -1,0 +1,38 @@
+name: 插件下架 / Remove a plugin
+description: 作者或维护者申请从市场移除插件 / Authors or maintainers ask to remove a listing
+title: "[plugin-remove] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        下架后插件会记入下架名单，后续扫描和收录申请都不会再把它加回来，除非作者本人再次申请收录。
+        Removed plugins go on the withdrawn list, so later scans and submissions will not add them back unless the author asks to relist.
+  - type: input
+    id: plugin
+    attributes:
+      label: 插件包名 / Package name
+      description: 填写 npm 包名，或 Git 来源插件的仓库地址。 / The npm package name, or the repository URL for a Git-sourced plugin.
+      placeholder: "@owner/dsh-plugin"
+    validations:
+      required: true
+  - type: dropdown
+    id: relation
+    attributes:
+      label: 你与插件的关系 / Your relation to the plugin
+      options:
+        - 作者或维护者 / Author or maintainer
+        - 其他（请在下方说明） / Other (explain below)
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: 下架原因 / Reason
+      description: 简单说明即可，例如停止维护、已改名或不希望公开推荐。 / A short reason, such as no longer maintained, renamed, or not wanted in public listings.
+    validations:
+      required: true
+  - type: textarea
+    id: proof
+    attributes:
+      label: 身份说明 / Ownership
+      description: 请用发布该包或拥有源码仓库的 GitHub 账号提交；否则请附上能证明身份的链接，例如仓库里的说明或 npm 维护者信息。 / Submit from the GitHub account that owns the package or repository, or link something that shows you maintain it.
