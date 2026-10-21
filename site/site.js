@@ -141,7 +141,7 @@ if (controls && search && chips.length && moreWrap) {
   const value = (row, key) => { const number = Number(row.dataset[key]); return Number.isFinite(number) && row.dataset[key] !== undefined ? number : -Infinity; };
   const sortBy = id => {
     sortChips.forEach(chip => chip.setAttribute('aria-pressed', String(chip.dataset.sort === id)));
-    const key = { recommended: 'sortRecommended', stars: 'sortStars', starsWeek: 'sortStarsWeek', added: 'sortAdded', published: 'sortPublished', random: 'sortRandom' }[id];
+    const key = { recommended: 'sortRecommended', stars: 'sortStars', starsWeek: 'sortStarsWeek', published: 'sortPublished', random: 'sortRandom' }[id];
     ordered = [...rows].sort((a, b) => (key ? value(b, key) - value(a, key) : 0) || value(a, 'sortOrder') - value(b, 'sortOrder'));
     list.append(...ordered);
     filter();

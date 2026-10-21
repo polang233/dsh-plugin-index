@@ -14,7 +14,7 @@ const output = new URL('../public/', import.meta.url);
 const COPY = {
   en: {
     brand: 'Open Plugin Market', lang: 'en', locale: 'en_US', title: 'Open Plugin Market — DeepSeek Harness (DSH) plugin index', keywords: 'DeepSeek Harness plugins, DSH plugins, DSH plugin market, dsh plugin, DeepSeek Harness plugin index, Open Plugin Market', socialImage: 'social.png',
-    statPlugins: 'plugins', statCategories: 'categories', more: 'Show more', sort: 'Sort', sorts: { default: 'Default', recommended: '✨ Smart picks', stars: 'Most stars', starsWeek: 'New stars (7 days)', added: 'Recently added', published: 'Recently updated', random: 'Random' }, shown: 'Showing {shown} of {count}',
+    statPlugins: 'plugins', statCategories: 'categories', more: 'Show more', sort: 'Sort', sorts: { default: 'Default', recommended: '✨ Smart picks', stars: 'Most stars', starsWeek: 'New stars (7 days)', published: 'Recently updated', random: 'Random' }, shown: 'Showing {shown} of {count}',
     description: 'Community plugin market for DeepSeek Harness (DSH): tools, skills, memory, UI and more, recommended by growth, updates and downloads. Add one URL to browse and install them in DSH.',
     skip: 'Skip to content', plugins: 'Plugins', docs: 'Docs', language: 'Language',
     headline: 'Everything can be a plugin.<br><em>Find them here.</em>',
@@ -40,7 +40,7 @@ const COPY = {
   },
   zh: {
     brand: '开放插件市场', lang: 'zh-CN', locale: 'zh_CN', title: 'DSH 插件市场 · 开放插件市场 — DeepSeek Harness 社区插件索引', keywords: 'DeepSeek Harness 插件, DSH 插件, DSH 插件市场, dsh plugin, DeepSeek 插件, 插件索引, 开放插件市场', socialImage: 'social-zh.png',
-    statPlugins: '个插件', statCategories: '个分类', more: '查看更多', sort: '排序', sorts: { default: '默认排序', recommended: '✨ 智能推荐', stars: 'star 最多', starsWeek: '近 7 天新增 star', added: '最近新增', published: '最近更新', random: '随机' }, shown: '已显示 {shown} / {count}',
+    statPlugins: '个插件', statCategories: '个分类', more: '查看更多', sort: '排序', sorts: { default: '默认排序', recommended: '✨ 智能推荐', stars: 'star 最多', starsWeek: '近 7 天新增 star', published: '最近更新', random: '随机' }, shown: '已显示 {shown} / {count}',
     description: 'DeepSeek Harness（DSH）社区插件市场：工具、技能、记忆、界面等社区插件，按增长、更新和下载推荐。复制索引地址，在 DSH「发现」里浏览和安装。',
     skip: '跳到正文', plugins: '插件目录', docs: '文档', language: '语言',
     headline: '万物皆可插件，<br><em>插件来这里找。</em>',
@@ -127,8 +127,10 @@ function pluginRow(plugin, language, categories, text, snapshot, root, downloads
   // Plugins without their own logo get the market's whale girl, peeking side to side.
   const avatar = icon ? `<img src="${esc(icon)}" alt="" width="44" height="44" loading="lazy" decoding="async">` : `<img class="avatar-placeholder" style="--peek-delay: -${(position % 7) * 0.45}" src="${root}assets/placeholder-whale.webp" alt="" width="54" height="54" loading="lazy" decoding="async">`;
   // Sort values mirror the index's sort keys so the website offers the same orders as DSH.
+  // "Recently updated" also surfaces new listings: whichever is later, the release or the day it joined the catalog.
+  const recency = Math.max(...[version?.publishTimestamp, addedTimestamp(added, plugin.name)].filter(Number.isFinite));
   const keys = plugin.metadata?.sortKeys ?? {};
-  const sortData = [['order', position], ['recommended', keys.recommended], ['random', keys['random-resources']], ['stars', keys['github-stars']], ['stars-week', keys['stars-week']], ['added', addedTimestamp(added, plugin.name)], ['published', version?.publishTimestamp]]
+  const sortData = [['order', position], ['recommended', keys.recommended], ['random', keys['random-resources']], ['stars', keys['github-stars']], ['stars-week', keys['stars-week']], ['published', recency]]
     .filter(([, value]) => Number.isFinite(value)).map(([key, value]) => ` data-sort-${key}="${value}"`).join('');
   return `<li class="plugin" data-plugin data-tone="${tone}" data-category="${esc(categoryId)}" data-search="${esc(search)}"${sortData}>
     <article class="plugin-main" aria-label="${esc(title || name)}">
@@ -161,7 +163,7 @@ function page(index, evidence, language, snapshot, downloads, display, added = {
     + (hasUncategorized ? chip('__uncategorized__', text.other, countBy(''), ' data-uncategorized') : '');
   const updated = evidence?.generatedAt ? dateLabel(evidence.generatedAt, language) : undefined;
   const verifiedCount = plugins.filter(plugin => plugin.metadata?.labels?.includes('verified')).length;
-  const sortIds = ['default', 'recommended', 'stars', ...(plugins.some(plugin => Number.isFinite(plugin.metadata?.sortKeys?.['stars-week'])) ? ['starsWeek'] : []), ...(plugins.some(plugin => addedTimestamp(added, plugin.name) !== undefined) ? ['added'] : []), 'published', 'random'];
+  const sortIds = ['default', 'recommended', 'stars', ...(plugins.some(plugin => Number.isFinite(plugin.metadata?.sortKeys?.['stars-week'])) ? ['starsWeek'] : []), 'published', 'random'];
   const sortChips = sortIds.map((id, at) => `<button type="button" class="chip" data-sort="${id}" aria-pressed="${at === 0}">${esc(text.sorts[id])}</button>`).join('');
   const stickers = ['tools', 'skills', 'memory'].filter(id => usedCategories.includes(id))
     .map((id, at) => `<span class="sticker sticker-${at + 1}">${esc(localize(categories[id]?.title, language, id))}</span>`).join('');

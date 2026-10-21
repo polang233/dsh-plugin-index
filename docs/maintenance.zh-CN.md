@@ -142,9 +142,9 @@ npx wrangler deploy --config cloudflare/wrangler.jsonc
 
 原图放在 `site/originals/` 和 `docs/images/originals/`，网站和 README 实际加载的是同名的无损 WebP（按显示尺寸缩放）。替换或新增原图后运行 `node scripts/optimize-images.mjs` 重新生成（需要 `sharp`，可用 `npm i --no-save sharp` 临时安装）。
 
-## 最近新增
+## 收录日期
 
-`public/added.json` 记录每个插件首次进入索引的日期（UTC），网站的「最近新增」排序按它倒序排列。完整构建优先读取 GitHub Pages 上已发布的记录，失败时读取本地快照，已有日期保持不变，新出现的包记为构建当天。移除后再收录的包按重新收录日期计算。2026-10-19 之前的记录来自 `data/sources.json` 的 Git 历史，因此首批插件日期相同。
+`public/added.json` 记录每个插件首次进入索引的日期（UTC），网站的「最近更新」排序取发布日期与收录日期中较晚的一个，新收录的插件也会排在前面。完整构建优先读取 GitHub Pages 上已发布的记录，失败时读取本地快照，已有日期保持不变，新出现的包记为构建当天。移除后再收录的包按重新收录日期计算。2026-10-19 之前的记录来自 `data/sources.json` 的 Git 历史，因此首批插件日期相同。
 
 ## 每日推荐轮换
 

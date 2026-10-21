@@ -133,9 +133,9 @@ Authors ask for removal through a `[plugin-remove]` issue or a PR. After confirm
 
 `pnpm build` and `preview-submissions.mjs` fail when a withdrawn package is listed. `review-candidates.mjs` records withdrawn candidates with `stage: "withdrawn"` and skips downloading them, and a unit test checks that the source list contains none. Remove a record from the withdrawn list only when the author asks to relist.
 
-## Recently added
+## Listing dates
 
-`public/added.json` records the first UTC day each plugin entered the index; the website's *Recently added* order sorts by it, newest first. Full builds prefer the deployed GitHub Pages record and fall back to the local snapshot, keep existing dates and stamp new packages with the build day. A package removed and listed again counts from its new listing. Dates before 2026-10-19 come from the Git history of `data/sources.json`, so the initial import shares one date.
+`public/added.json` records the first UTC day each plugin entered the index; the website's *Recently updated* order uses the later of the release date and this listing date, so new listings rise to the top too. Full builds prefer the deployed GitHub Pages record and fall back to the local snapshot, keep existing dates and stamp new packages with the build day. A package removed and listed again counts from its new listing. Dates before 2026-10-19 come from the Git history of `data/sources.json`, so the initial import shares one date.
 
 ## Daily recommendation rotation
 
