@@ -9693,6 +9693,26 @@
         "zh": "通过 DSH 工具启动本地 TensorBoard 标量监控页，可选主要和辅助指标、改善方向与 EMA 平滑，查看已有训练日志。只读取日志，需要 Python 3.10+ 和 TensorBoard。"
       },
       "category": "development"
+    },
+    {
+      "name": "dsh-plugin-android-preview",
+      "version": "0.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/skyjjgw/dsh-plugin-android-preview",
+        "commit": "c4f5006cbd87e9f2c1464ee7953f1142974addbc",
+        "integrity": "sha512-VNkvjgyAP85hLr07EH6/KA7+ejuM8GaHPId9zdOZUkAlVifR+kOKa9AFhQrcWum83zRUAk2vETEzt7UAzekc4A==",
+        "publishedAt": "2026-10-21T11:33:34Z"
+      },
+      "title": {
+        "en": "Android App Preview",
+        "zh": "手机预览"
+      },
+      "description": {
+        "zh": "在原生侧栏操作 Android 模拟器；APK、包名、Activity 与 monorepo 源码目录可配置，Flutter 调试 APK 支持保存 Dart 热重载，普通 APK 可关闭 Flutter。需已有 APK、运行中的模拟器、Android SDK 与 scrcpy 3.3.3，热重载另需匹配的 Flutter SDK；三平台启动支持，真实模拟器在 Windows 验证。",
+        "en": "Operate an Android emulator in a native sidebar with configurable APK, package, activity and monorepo paths; Flutter debug APKs support Dart-save hot reload, or disable Flutter for plain APKs. Requires an existing APK, running emulator, Android SDK and scrcpy 3.3.3, plus matching Flutter SDK for reload; portable launch support, Windows emulator verified."
+      },
+      "category": "development"
     }
   ]
 }

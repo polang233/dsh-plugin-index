@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bv-icon-vessel" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#101F55"/>
+      <stop offset="1" stop-color="#1D3AA8"/>
+    </linearGradient>
+    <linearGradient id="bv-icon-water" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#3D5AF1"/>
+      <stop offset="1" stop-color="#9FBAFF"/>
+    </linearGradient>
+    <clipPath id="bv-icon-frame">
+      <rect x="3" y="3" width="58" height="58" rx="17"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#bv-icon-frame)">
+    <rect x="3" y="3" width="58" height="58" fill="url(#bv-icon-vessel)"/>
+    <path d="M3 37q7.25-4.5 14.5 0t14.5 0 14.5 0 14.5 0V61H3Z" fill="url(#bv-icon-water)"/>
+    <path d="M3 43q7.25-3.4 14.5 0t14.5 0 14.5 0 14.5 0V61H3Z" fill="#4D6BFE" fill-opacity="0.55"/>
+    <path d="M3 37q7.25-4.5 14.5 0t14.5 0 14.5 0 14.5 0" fill="none" stroke="#D7E3FF" stroke-opacity="0.65" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M30 26.5c1.8-4.6 6-7.6 11.2-8.1-2.1 2.4-3.2 5-3.1 7.8-2.8-1-5.5-.9-8.1.3Z" fill="#E6EEFF" fill-opacity="0.9"/>
+  </g>
+  <rect x="3" y="3" width="58" height="58" rx="17" fill="none" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="1.5"/>
+</svg>
