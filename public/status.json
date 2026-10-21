@@ -12526,63 +12526,6 @@
       ]
     },
     {
-      "name": "@zhiqiangme/dsh-autostart-workbuddy",
-      "version": "26.10.19",
-      "license": "MIT",
-      "repository": "https://github.com/zhiqiangme/dsh-plugins",
-      "repositorySource": "package",
-      "metadataUrl": "https://registry.npmjs.org/%40zhiqiangme%2Fdsh-autostart-workbuddy",
-      "tarball": "https://registry.npmjs.org/@zhiqiangme/dsh-autostart-workbuddy/-/dsh-autostart-workbuddy-26.10.19.tgz",
-      "integrity": "sha512-dAA1RfzENy4efN9lTpGV7cC6zcKqVJZGE5MYxdOxKfbW2rB8t82bIUA2/XwPYU4WZtAm50FM1u6QzDuoGiGjDQ==",
-      "patch": [
-        "package/cordis.patch.yml"
-      ],
-      "filesChecked": 24,
-      "display": {
-        "icon": {
-          "status": "included",
-          "source": "published-package",
-          "path": "icons/workbuddy.png",
-          "url": "icons/a9458cd204c63be1274800bd34dc350c94fed6c045114cfae303037fb3428a87.png",
-          "mime": "image/png",
-          "bytes": 79102,
-          "sha256": "a9458cd204c63be1274800bd34dc350c94fed6c045114cfae303037fb3428a87"
-        },
-        "localized": [
-          "en",
-          "zh"
-        ],
-        "warnings": []
-      },
-      "archive": {
-        "compressedBytes": 183738,
-        "unpackedBytes": 385883,
-        "decodedBytes": 404992,
-        "entries": 24,
-        "maxUnpackedBytes": 104857600,
-        "downloadTimeoutMs": 30000,
-        "reviewedBudget": false
-      },
-      "lifecycleScripts": [],
-      "releases": {
-        "firstPublished": "2026-10-11T11:05:07.250Z",
-        "last30Days": 9,
-        "last90Days": 9
-      },
-      "checks": [
-        "registry-identity",
-        "sha512-integrity",
-        "archive-manifest-identity",
-        "bundle-patch-present",
-        "main-file-present"
-      ],
-      "limitations": [
-        "No runtime installation test",
-        "No code audit",
-        "Patch references and transitive dependencies are not validated"
-      ]
-    },
-    {
       "name": "@zhiqiangme/dsh-opencode2api",
       "version": "26.10.19",
       "license": "MIT",

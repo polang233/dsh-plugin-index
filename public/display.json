@@ -5196,28 +5196,6 @@
         "updatedDays": 2
       }
     },
-    "@zhiqiangme/dsh-autostart-workbuddy": {
-      "description": {
-        "en": "Start a local WorkBuddy Panel backend with DSH and sync selected backend models into a provider.",
-        "zh": "随 DSH 启动本地 WorkBuddy Panel 后端，并把选定后端模型同步为模型提供方。"
-      },
-      "labels": [
-        "updated-recent",
-        "downloads-1k"
-      ],
-      "signals": {
-        "listedBy": [
-          "awesome-dsh-plugin"
-        ],
-        "logo": true,
-        "stars": 2,
-        "downloads": 1098,
-        "ageDays": 8,
-        "releases30": 9,
-        "releases90": 9,
-        "updatedDays": 0
-      }
-    },
     "@zhiqiangme/dsh-opencode2api": {
       "description": {
         "en": "Start a local OpenCode2API backend with DSH and manage backend releases from Settings on Windows.",

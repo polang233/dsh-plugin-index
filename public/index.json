@@ -12195,54 +12195,6 @@
       ]
     },
     {
-      "name": "@zhiqiangme/dsh-autostart-workbuddy",
-      "title": {
-        "en": "WorkBuddy Autostart",
-        "zh": "WorkBuddy 后端管理"
-      },
-      "icon": "icons/a9458cd204c63be1274800bd34dc350c94fed6c045114cfae303037fb3428a87.png",
-      "description": {
-        "en": "★ 2 │ Start a local WorkBuddy Panel backend with DSH and sync selected backend models into a provider.",
-        "zh": "★ 2 │ 随 DSH 启动本地 WorkBuddy Panel 后端，并把选定后端模型同步为模型提供方。"
-      },
-      "author": "zhiqiangme",
-      "repository": {
-        "url": "https://github.com/zhiqiangme/dsh-plugins",
-        "directory": "dsh-autostart-workbuddy"
-      },
-      "homepage": "https://github.com/zhiqiangme/dsh-plugins/tree/main/dsh-autostart-workbuddy#readme",
-      "metadata": {
-        "category": "providers",
-        "keywords": [
-          "dsh",
-          "deepseek-harness",
-          "dsh-plugin",
-          "workbuddy",
-          "wb2api"
-        ],
-        "sortKeys": {
-          "github-stars": 2,
-          "recommended": 489,
-          "random-resources": 185
-        },
-        "labels": [
-          "updated-recent",
-          "downloads-1k"
-        ]
-      },
-      "versions": [
-        {
-          "version": "26.10.19",
-          "publishTimestamp": 1792381973,
-          "source": {
-            "type": "npm",
-            "registry": "https://registry.npmjs.org/"
-          },
-          "engines": {}
-        }
-      ]
-    },
-    {
       "name": "dsh-todos",
       "title": {
         "en": "Todos",
