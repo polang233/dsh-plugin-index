@@ -7598,18 +7598,6 @@
       "category": "appearance"
     },
     {
-      "name": "@zhiqiangme/dsh-autostart-workbuddy",
-      "title": {
-        "en": "WorkBuddy Autostart",
-        "zh": "WorkBuddy 后端管理"
-      },
-      "description": {
-        "en": "Start a local WorkBuddy Panel backend with DSH and sync selected backend models into a provider.",
-        "zh": "随 DSH 启动本地 WorkBuddy Panel 后端，并把选定后端模型同步为模型提供方。"
-      },
-      "category": "providers"
-    },
-    {
       "name": "@zhiqiangme/dsh-opencode2api",
       "title": {
         "en": "OpenCode2API Backend",

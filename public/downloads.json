@@ -2467,17 +2467,6 @@
       "status": "ok",
       "fetchedAt": "2026-10-19T19:41:34.670Z"
     },
-    "@zhiqiangme/dsh-autostart-workbuddy": {
-      "package": "@zhiqiangme/dsh-autostart-workbuddy",
-      "downloads": 1098,
-      "start": "2026-09-19",
-      "end": "2026-10-18",
-      "fetchedAt": "2026-10-19T14:03:44.606Z",
-      "source": "https://api.npmjs.org/downloads/range/last-month/%40zhiqiangme/dsh-autostart-workbuddy",
-      "status": "stale",
-      "attemptedAt": "2026-10-19T19:41:34.670Z",
-      "error": "HTTP 429"
-    },
     "@zhiqiangme/dsh-opencode2api": {
       "package": "@zhiqiangme/dsh-opencode2api",
       "downloads": 474,
