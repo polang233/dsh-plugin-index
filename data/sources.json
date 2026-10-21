@@ -10507,6 +10507,38 @@
         "zh": "通过 Apify MCP 服务器和技能，在 DSH 中搜索、运行和开发 Apify Actor。运行 Actor 需要 APIFY_TOKEN，开发类技能需要 Apify CLI。"
       },
       "category": "integrations"
+    },
+    {
+      "name": "dsh-plugin-android-preview",
+      "version": "0.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/skyjjgw/dsh-plugin-android-preview",
+        "commit": "c4f5006cbd87e9f2c1464ee7953f1142974addbc",
+        "integrity": "sha512-VNkvjgyAP85hLr07EH6/KA7+ejuM8GaHPId9zdOZUkAlVifR+kOKa9AFhQrcWum83zRUAk2vETEzt7UAzekc4A==",
+        "publishedAt": "2026-10-21T11:33:34Z"
+      },
+      "title": {
+        "en": "Android App Preview",
+        "zh": "手机预览"
+      },
+      "description": {
+        "en": "Operate an Android emulator in a native DSH sidebar, with configurable APK, package, activity and monorepo paths. Flutter debug APKs hot-reload on Dart save; plain APKs can turn Flutter off. Requires an existing APK, a running emulator, the Android SDK and scrcpy 3.3.3; verified on a Windows emulator.",
+        "zh": "在 DSH 原生侧栏中操作 Android 模拟器，可配置 APK、包名、Activity 与 monorepo 源码目录。Flutter 调试包保存 Dart 文件即热重载，普通 APK 可关闭 Flutter 模式。需已有 APK、运行中的模拟器、Android SDK 与 scrcpy 3.3.3，已在 Windows 模拟器上验证。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-prompt-predict",
+      "title": {
+        "en": "Prompt Predict",
+        "zh": "输入联想"
+      },
+      "description": {
+        "en": "Predicts your next message after each reply and shows it as gray ghost text in the composer: Tab accepts, Alt+→ accepts piece by piece, ↻ suggests another and Esc dismisses. Uses the session model by default and sends only recent conversation text.",
+        "zh": "每轮回复结束后预测你的下一句话，以灰色提示文字显示在输入框中：Tab 采纳、Alt+→ 逐段采纳、↻ 换一条、Esc 忽略。默认使用当前会话的模型，只发送最近的对话文本。"
+      },
+      "category": "interface"
     }
   ]
 }
