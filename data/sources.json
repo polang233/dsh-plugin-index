@@ -653,6 +653,14 @@
     },
     {
       "name": "@michengai/dsh-agency-agents",
+      "title": {
+        "en": "DSH Agency Agents",
+        "zh": "DSH Agency Agents"
+      },
+      "description": {
+        "en": "Summon any of 331 domain experts or five built-in expert teams in DSH for reviews, design, operations and research, with the main session pulling the results together.",
+        "zh": "在 DSH 中召唤 331 位专业智能体或 5 个内置专家团，协助代码审查、设计、运营和研究，由主会话汇总结果。"
+      },
       "category": "skills"
     },
     {
@@ -669,6 +677,14 @@
     },
     {
       "name": "@michengai/dsh-automation",
+      "title": {
+        "en": "DSH Automation",
+        "zh": "DSH Automation"
+      },
+      "description": {
+        "en": "Schedule one-off or recurring coding tasks that run in their own DSH sessions with a chosen workspace, model, skills and permissions, and review each run afterwards.",
+        "zh": "按计划在独立的 DSH 会话中执行一次性或周期性编码任务，可设置工作目录、模型、技能和权限，并回看每次运行的结果。"
+      },
       "category": "workflow"
     },
     {
@@ -681,14 +697,38 @@
     },
     {
       "name": "@michengai/dsh-codex-ui",
+      "title": {
+        "en": "DSH Codex UI",
+        "zh": "DSH Codex UI"
+      },
+      "description": {
+        "en": "A Codex-style sidebar for DSH Web with a workspace session tree, global search and turn navigation, in light and dark themes. Do not enable it together with ds-bot.",
+        "zh": "为 DSH Web 提供 Codex 风格的侧栏、工作区会话树、全局搜索和轮次导航，支持浅色和深色主题。不要与 ds-bot 同时启用。"
+      },
       "category": "interface"
     },
     {
       "name": "@michengai/dsh-im-connect",
+      "title": {
+        "en": "DSH IM Connect",
+        "zh": "DSH IM Connect"
+      },
+      "description": {
+        "en": "Hand tasks to your local DSH from Feishu, Lark, DingTalk, WeCom, WeChat, QQ, Telegram, Discord or Slack, and get replies, answer questions and approve tools in the same chat.",
+        "zh": "通过飞书、Lark、钉钉、企业微信、微信、QQ、Telegram、Discord 或 Slack 把任务交给本机 DSH，并在同一聊天里接收回复、回答问题和审批工具。"
+      },
       "category": "integrations"
     },
     {
       "name": "@michengai/dsh-pua",
+      "title": {
+        "en": "DSH PUA",
+        "zh": "DSH PUA"
+      },
+      "description": {
+        "en": "Bring PUA to DSH: push the agent to change approach and verify results instead of giving up or declaring done too early, with persona styles, acceptance loops and status cards. Results depend on the model.",
+        "zh": "把 PUA 带到 DSH：在 Agent 反复失败、过早放弃或草率宣告完成时，引导它换方法、拿证据，提供多种风格、验收循环和状态卡片。效果取决于所用模型。"
+      },
       "category": "workflow"
     },
     {
@@ -1384,6 +1424,14 @@
     },
     {
       "name": "dsh-better-reasoning-effort",
+      "title": {
+        "en": "Better Reasoning Effort",
+        "zh": "Better Reasoning Effort（思考强度与输入模态）"
+      },
+      "description": {
+        "en": "Set reasoning effort and image-input support for third-party models right in the official Models page, with suggested settings from a built-in model knowledge base.",
+        "zh": "在官方「模型」页直接为第三方模型设置思考强度和图片输入支持，可根据内置模型知识库一键填入推荐配置。"
+      },
       "category": "providers"
     },
     {
@@ -1520,6 +1568,14 @@
     },
     {
       "name": "dsh-chat-manager",
+      "title": {
+        "en": "Chat Manager",
+        "zh": "Chat Manager（聊天管理）"
+      },
+      "description": {
+        "en": "Search archived chats, restore conversations and delete sessions safely.",
+        "zh": "搜索已归档的聊天、恢复会话，并安全地删除会话。"
+      },
       "category": "interface"
     },
     {
@@ -1904,6 +1960,14 @@
     },
     {
       "name": "dsh-emoji",
+      "title": {
+        "en": "DSH Emoji",
+        "zh": "DSH Emoji（行内表情）"
+      },
+      "description": {
+        "en": "Add switchable inline emoji packs to agent replies, mapped from 40 semantic emoji without extra model calls, with adjustable frequency and size.",
+        "zh": "为 Agent 回复加入可切换的行内表情包，由 40 个语义表情映射而来，不额外调用模型，可调整出现频率和大小。"
+      },
       "category": "appearance"
     },
     {
@@ -2304,6 +2368,14 @@
     },
     {
       "name": "dsh-mcp-studio",
+      "title": {
+        "en": "MCP Studio",
+        "zh": "MCP Studio"
+      },
+      "description": {
+        "en": "Manage MCP servers and skills in one panel: add, edit and remove MCP entries, import settings from other agents, and embed the plugin market when dshmarket is installed. Works in Web and Desktop.",
+        "zh": "在一个面板里管理 MCP 服务和技能：增删改 MCP 条目、导入其他 Agent 的配置；安装 dshmarket 时内嵌插件市场。Web 和桌面端通用。"
+      },
       "category": "tools"
     },
     {
@@ -2932,6 +3004,14 @@
     },
     {
       "name": "dsh-rewind-plugin",
+      "title": {
+        "en": "DSH Rewind",
+        "zh": "DSH Rewind（对话回退）"
+      },
+      "description": {
+        "en": "Rewind a conversation in place to any earlier user message and optionally restore the files the agent changed, without creating a branch.",
+        "zh": "在原窗口内把对话回退到任意更早的用户消息，可同时还原 Agent 改过的文件，不新建分支。"
+      },
       "category": "interface"
     },
     {
@@ -3008,6 +3088,14 @@
     },
     {
       "name": "dsh-share",
+      "title": {
+        "en": "DSH Share",
+        "zh": "DSH Share（对话分享）"
+      },
+      "description": {
+        "en": "Share one or several Q&A rounds as PNG images, Markdown or HTML, with adjustable width, font size and whether to show the process.",
+        "zh": "把单轮或多轮问答导出为 PNG 图片、Markdown 或 HTML 分享，可调整宽度、字号以及是否显示过程。"
+      },
       "category": "interface"
     },
     {
