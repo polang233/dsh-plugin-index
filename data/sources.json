@@ -3522,18 +3522,6 @@
       "category": "interface"
     },
     {
-      "name": "dsh-workbuddy-connect",
-      "title": {
-        "en": "WorkBuddy Connect",
-        "zh": "WorkBuddy 模型接入"
-      },
-      "description": {
-        "en": "Connect models available in the local WorkBuddy desktop application to DSH.",
-        "zh": "将本机 WorkBuddy 桌面应用中可用的模型接入 DSH。"
-      },
-      "category": "providers"
-    },
-    {
       "name": "dsh-wsl-workspace",
       "title": {
         "en": "WSL Workspace",
@@ -7338,7 +7326,7 @@
       }
     },
     {
-      "name": "@moon16u/dsh-plugin-mcp-console",
+      "name": "@moon16u/dsh-mcp-console",
       "title": {
         "en": "MCP Console by Moon16u",
         "zh": "MCP 连接控制台"
@@ -7351,7 +7339,7 @@
       "version": "0.3.7",
       "iconReview": {
         "version": "0.3.7",
-        "integrity": "sha512-id1GKXYkHWlOXftNKoJ+yDTQ1hIxTFwPjG8IrPx/3EVuHWeB4uXvFZkwda5kGNk7lt1F5QVjiRgVqmEJuBza8A==",
+        "integrity": "sha512-1hPl6huFB2P20qTy6ZMxoFPZlQwImU+J/KTeraxQ7xTyfEIlbNUTo0vQytHeQ6WTB7k5VeyFXcUZoTYSE2y/kA==",
         "commit": "5ac9f823c311c8f80f51bf8aab74c8a143168060",
         "path": "assets/logo.png",
         "sha256": "58cb52f77cb55358a37d868d37425e8c909e07ac2eecf5308868878b61553693"
