@@ -9693,6 +9693,355 @@
         "zh": "通过 DSH 工具启动本地 TensorBoard 标量监控页，可选主要和辅助指标、改善方向与 EMA 平滑，查看已有训练日志。只读取日志，需要 Python 3.10+ 和 TensorBoard。"
       },
       "category": "development"
+    },
+    {
+      "name": "@linxin666/dsh-client-ui-web-ui-settings",
+      "category": "interface"
+    },
+    {
+      "name": "@wxg-prc-cpg/browser-skill-dsh-plugin",
+      "category": "tools"
+    },
+    {
+      "name": "@michengai/dsh-simplify",
+      "category": "development"
+    },
+    {
+      "name": "dsh-working-activity",
+      "category": "interface"
+    },
+    {
+      "name": "dsh-mnemon-strategy-light-context",
+      "category": "memory"
+    },
+    {
+      "name": "dsh-mnemon-strategy-scoped",
+      "category": "memory"
+    },
+    {
+      "name": "@dfy-plugins/dsh-bundle",
+      "category": "interface"
+    },
+    {
+      "name": "ds-harness-remote",
+      "category": "integrations"
+    },
+    {
+      "name": "@iasiv5/dsh-obmc-web",
+      "category": "development"
+    },
+    {
+      "name": "@ethanyoq/dsh-invoice-downloader",
+      "category": "tools"
+    },
+    {
+      "name": "dsh-mattpocock-skills-deck",
+      "category": "skills"
+    },
+    {
+      "name": "dsh-thinking-levels",
+      "category": "providers"
+    },
+    {
+      "name": "dsh-prime-memory",
+      "category": "memory"
+    },
+    {
+      "name": "pi2dsh",
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-life-pack",
+      "category": "tools"
+    },
+    {
+      "name": "dsh-task-progress",
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-ppt",
+      "category": "tools"
+    },
+    {
+      "name": "dsh-tiddlywiki",
+      "category": "knowledge"
+    },
+    {
+      "name": "@lolkda/dsh-skills-manager",
+      "category": "skills"
+    },
+    {
+      "name": "@goodandready/dsh-image-gen",
+      "category": "tools"
+    },
+    {
+      "name": "@ayanehana/dsh-reasoning-effort",
+      "category": "interface"
+    },
+    {
+      "name": "dsh-engramory",
+      "category": "memory"
+    },
+    {
+      "name": "dsh-custom-mode",
+      "category": "workflow"
+    },
+    {
+      "name": "@twinsearth/w2m-dsh-plugin",
+      "category": "development"
+    },
+    {
+      "name": "@morlay/better-session",
+      "category": "workflow"
+    },
+    {
+      "name": "@yottameta/yotta-skills-plugin",
+      "category": "skills"
+    },
+    {
+      "name": "kiokuko-dsh",
+      "category": "memory"
+    },
+    {
+      "name": "@lovedolove/veyra",
+      "category": "development"
+    },
+    {
+      "name": "@shgroup/dsh-serenity-hooks",
+      "category": "workflow"
+    },
+    {
+      "name": "rolebox",
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-task-ledger",
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-theme-endfield",
+      "category": "appearance"
+    },
+    {
+      "name": "@lmzhen/dsh-evolution-host",
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-home-hosted",
+      "category": "development"
+    },
+    {
+      "name": "@exagone313/dsh-podman",
+      "category": "development"
+    },
+    {
+      "name": "dsh-notification",
+      "category": "integrations"
+    },
+    {
+      "name": "@vizuh/sabi-deepseek-harness",
+      "category": "providers"
+    },
+    {
+      "name": "dsh-plugin-mission-control",
+      "category": "workflow"
+    },
+    {
+      "name": "@dsh-agentic-roleplay/state",
+      "category": "tools"
+    },
+    {
+      "name": "dsh-tmux-cc",
+      "category": "development"
+    },
+    {
+      "name": "@dsh-ai-providers/jina-cohere",
+      "category": "providers"
+    },
+    {
+      "name": "dsh-plugin-codegraph",
+      "category": "development"
+    },
+    {
+      "name": "dsh-slides",
+      "category": "tools"
+    },
+    {
+      "name": "@dexthemes/deepseek-harness-plugin",
+      "category": "appearance"
+    },
+    {
+      "name": "deepseek-idesign",
+      "category": "tools"
+    },
+    {
+      "name": "deepseek-ippt",
+      "category": "tools"
+    },
+    {
+      "name": "dsh-codex-connect",
+      "category": "providers"
+    },
+    {
+      "name": "seektty",
+      "category": "development"
+    },
+    {
+      "name": "dsh-win32",
+      "category": "development"
+    },
+    {
+      "name": "dsh-usage",
+      "category": "usage"
+    },
+    {
+      "name": "jacky-creator",
+      "category": "tools"
+    },
+    {
+      "name": "dsh-plugin-genui",
+      "category": "tools"
+    },
+    {
+      "name": "dsh-git-memory",
+      "category": "memory"
+    },
+    {
+      "name": "rsi-gear",
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-project-brain",
+      "category": "memory"
+    },
+    {
+      "name": "dsh-balance-plugin",
+      "category": "usage"
+    },
+    {
+      "name": "dsh-synapse",
+      "version": "0.4.3",
+      "category": "interface",
+      "repositoryReview": {
+        "url": "https://github.com/liangmianya/dsh-synapse",
+        "version": "0.4.3",
+        "commit": "cd302ba6cf0ce109407d09e70fa18b569698d442",
+        "integrity": "sha512-UH9MRWYpgWdS0s6f5gWMRKulnyftumP8/JsF6/fpTJLs0MD7dsn1mSTZ3ezll9Ef4CXNHL/KevFXcLh9p8wEzQ=="
+      }
+    },
+    {
+      "name": "dsh-codex-effort-slider",
+      "version": "1.1.3",
+      "category": "interface",
+      "repositoryReview": {
+        "url": "https://github.com/Microqian2th/dsh-codex-effort-slider",
+        "version": "1.1.3",
+        "commit": "d1bb67b20bc19d44be7d7694ffca92a6f2fcbe9b",
+        "integrity": "sha512-9ncA5ciOReVoBQ7n6/79M/YKdtfe8n0m9i6aBB106NG/93CIYgX8Ww6m6BWlczdkKXsSdY9Sr+JaDb1nZggJUQ=="
+      }
+    },
+    {
+      "name": "@icelily/dsh-gitbash-preset",
+      "version": "0.1.2",
+      "category": "development",
+      "repositoryReview": {
+        "url": "https://github.com/liceses/dsh-gitbash-preset",
+        "version": "0.1.2",
+        "commit": "db21575b52e249f6a2eeeef0eb9ff92dc72943c8",
+        "integrity": "sha512-GOlfDPOM4Vz8PJZqpl+ayD1Wd3h3fpxY4ycwjLLD7ICVYhJRX2H38LwzXkfdz6J6FKEBUCbiooBDL5g4yNN+1Q=="
+      }
+    },
+    {
+      "name": "@dhicoc/dsh-chinese-traditional-wisdom-skill",
+      "version": "1.3.0",
+      "category": "skills",
+      "repositoryReview": {
+        "url": "https://github.com/dhicoc/dsh-chinese-traditional-wisdom-skill",
+        "version": "1.3.0",
+        "commit": "0e0804ff96f0b3021147b5d52f45f77c2d8eb33b",
+        "integrity": "sha512-UAZN7JsA/9a0tGi9EB5zNJG7nNV9G4hdyH5wCGAQW/trpMT6HpI+nzgce3+kCuKK+gbTPYiFpH+jA/ymlwHcvA=="
+      }
+    },
+    {
+      "name": "dsh-im-gateway",
+      "version": "0.3.1",
+      "category": "integrations",
+      "repositoryReview": {
+        "url": "https://github.com/zhuiyueya/dsh-im-gateway",
+        "version": "0.3.1",
+        "commit": "415fb7cd23750c166c8d464f3782f6a0cd4ccb14",
+        "integrity": "sha512-K9gmGun8ZuvoGrOpV5DggvUy6yjxzqJOBI6ODXqp4eZsNoxIEBwScimAzXctxHDlau5XklVLHMBclxns+/Z30g=="
+      }
+    },
+    {
+      "name": "@nagi-ovo/dsh-ads",
+      "version": "0.1.2",
+      "category": "appearance",
+      "archiveReview": {
+        "version": "0.1.2",
+        "integrity": "sha512-wgnMUzIiPY9ircpEKJ0HuwQLOAo7cxMt+kwCeQe4/J0DJz0iu2WMt4zVGHJYLvdt4m2xeKf3JT+HW5dYxorRlA==",
+        "maxUnpackedBytes": 268435456,
+        "timeoutMs": 120000
+      }
+    },
+    {
+      "name": "dsh-mobile",
+      "version": "0.6.14",
+      "category": "integrations",
+      "archiveReview": {
+        "version": "0.6.14",
+        "integrity": "sha512-ibcg5E9tyRvKEyrQXtJct+wqwdrFcUaOvpvwotXbI2d4Op41j/3jww/KNK6hHBZqoeIgi0utpKJklfBuF/2cCQ==",
+        "maxUnpackedBytes": 268435456,
+        "timeoutMs": 120000
+      }
+    },
+    {
+      "name": "dsh-dafeiyu",
+      "version": "0.1.18",
+      "category": "interface",
+      "archiveReview": {
+        "version": "0.1.18",
+        "integrity": "sha512-t2QLubj8ocqQYIqtKoQp6+AppHZFMKLSuBbWVbcQXoN4TlGl83BxsXfQH6VDwAZrLAHd04SnXzpuFlk8ob9l6A==",
+        "maxUnpackedBytes": 268435456,
+        "timeoutMs": 120000
+      }
+    },
+    {
+      "name": "dsh-damage-pulse",
+      "version": "4.2.8",
+      "category": "usage",
+      "archiveReview": {
+        "version": "4.2.8",
+        "integrity": "sha512-w5fr26zWy1Cn4FDPQllYqNk0qo2o1NESN6PS+R1NhTFvzJPQLKdngyNXUdxqRo0rIzjEJzP/8b6Upy6G/2rjag==",
+        "maxUnpackedBytes": 268435456,
+        "timeoutMs": 120000
+      }
+    },
+    {
+      "name": "dsh-nexttavern",
+      "version": "0.2.9-rc.4",
+      "category": "tools",
+      "archiveReview": {
+        "version": "0.2.9-rc.4",
+        "integrity": "sha512-cid347M3bhytQ5MGTURBBCpVC+3CpEYaJ/qXllxMlui8IvKVFgr2ofup9Z22D9Swloozgo+4O+eLEfvEAWj2pA==",
+        "maxUnpackedBytes": 268435456,
+        "timeoutMs": 120000
+      }
+    },
+    {
+      "name": "dsh-notifier",
+      "version": "0.13.1",
+      "category": "integrations",
+      "archiveReview": {
+        "version": "0.13.1",
+        "integrity": "sha512-wpw8Y7FWJ5gaODIzrHEXTO9d57eBqRDOPY/oUMVcCk0Wmbp7ItpuDDDIhlgt8WbiZAabUWF3ZwAvxkAigouGYA==",
+        "maxUnpackedBytes": 268435456,
+        "timeoutMs": 120000
+      }
+    },
+    {
+      "name": "dsh-apify-plugin",
+      "category": "integrations"
     }
   ]
 }
