@@ -9681,6 +9681,18 @@
         "zh": "在输入框上方显示当前会话的仓库、分支、改动数和短 SHA，可切换或新建分支、查看工作树，并在侧栏逐文件查看差异。"
       },
       "category": "development"
+    },
+    {
+      "name": "dsh-training-lens",
+      "title": {
+        "en": "Training Lens",
+        "zh": "Training Lens 训练视窗"
+      },
+      "description": {
+        "en": "Start a local TensorBoard scalar dashboard from a DSH tool: pick primary and secondary metrics, set the improvement direction and optional EMA smoothing for existing training logs. Read-only; requires Python 3.10+ and TensorBoard.",
+        "zh": "通过 DSH 工具启动本地 TensorBoard 标量监控页，可选主要和辅助指标、改善方向与 EMA 平滑，查看已有训练日志。只读取日志，需要 Python 3.10+ 和 TensorBoard。"
+      },
+      "category": "development"
     }
   ]
 }
