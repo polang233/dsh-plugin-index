@@ -31,7 +31,7 @@ for (const language of ['en', 'zh']) {
     const firstPackage = await rows.first().locator('.package-name').textContent();
     await page.locator('#plugin-search').fill(firstPackage.trim());
     // A package search can also match related packages with the same prefix.
-    await expect(page.getByText(firstPackage.trim(), {exact: true})).toBeVisible();
+    await expect(page.locator('.plugin-heading').getByText(firstPackage.trim(), {exact: true})).toBeVisible();
     await page.locator('#plugin-search').fill('no-match-783491');
     await expect(page.locator('#empty-results')).toBeVisible();
     await page.locator('[data-reset]').click();
@@ -77,9 +77,21 @@ for (const language of ['en', 'zh']) {
     await expect(page.locator('[data-publisher]')).toHaveCount(index.plugins.filter(plugin => plugin.metadata.labels.some(id => id.startsWith('publisher-'))).length);
     await expect(page.locator('.brand')).toContainText(language === 'en' ? 'Open Plugin Market' : '开放插件市场');
     await expect(rows.first().locator('.version')).toBeHidden();
-    await rows.first().locator('.plugin-facts summary').click();
+    const below = rows.nth(1);
+    await rows.first().locator('[data-more-toggle]').click();
     await expect(rows.first().locator('.version')).toBeVisible();
-    await rows.first().locator('.plugin-facts summary').click();
+    await expect(rows.first().locator('[data-more-toggle]')).toHaveAttribute('aria-expanded', 'true');
+    await expect(rows.first().locator('[data-get]')).toHaveAttribute('data-get', /\S/);
+    await rows.first().locator('[data-more-toggle]').click();
+    await expect(rows.first().locator('.version')).toBeHidden();
+    // Blank card space opens the details too; clicking the title text does not.
+    await rows.first().locator('.plugin-main').click({ position: { x: 6, y: 6 } });
+    await expect(rows.first().locator('.version')).toBeVisible();
+    await rows.first().locator('.plugin-main').click({ position: { x: 6, y: 6 } });
+    await expect(rows.first().locator('.version')).toBeHidden();
+    await rows.first().locator('h3').click({ position: { x: 4, y: 8 } });
+    await expect(rows.first().locator('.version')).toBeHidden();
+    expect(await below.isVisible()).toBe(true);
     expect(await downloadLinks.first().textContent()).not.toContain('/30');
     expect(await page.locator('.plugin-detail time').allTextContents()).toEqual(expect.arrayContaining([expect.stringMatching(language === 'en' ? /Updated/ : /更新/)]));
     const icons = page.locator('.plugin-avatar img:not(.avatar-placeholder)');

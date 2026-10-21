@@ -149,11 +149,15 @@ h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); letter-spacing: -.03em; lin
 .plugin[data-tone="3"] { --tone: var(--lilac); }
 .plugin[data-tone="4"] { --tone: #fff0b8; }
 .plugin[data-tone="5"] { --tone: #ffd9e8; }
-.plugin-main { display: flex; flex-direction: column; width: 100%; min-width: 0; padding: 16px 18px 14px; background: var(--paper); border: 2px solid var(--ink); border-radius: 24px; box-shadow: var(--pop); transition: transform .18s cubic-bezier(.3, 1.5, .5, 1), box-shadow .18s; }
-.plugin-main:hover { transform: translate(-2px, -4px); box-shadow: 6px 8px 0 var(--ink); }
+.plugin-main { display: flex; flex-direction: column; width: 100%; min-width: 0; padding: 16px 18px 14px; background: var(--paper); border: 2px solid var(--ink); border-radius: 24px; box-shadow: var(--pop); transition: transform .34s cubic-bezier(.3, 1.6, .45, 1), box-shadow .34s cubic-bezier(.3, 1.6, .45, 1), background-color .25s; }
+/* Hover lifts the card off the page: bigger, tilted, a deep ink shadow and a wash of its category tone. */
+.plugin:hover { position: relative; z-index: 3; }
+.plugin-main:hover { transform: translate(-5px, -9px) scale(1.035) rotate(-.6deg); box-shadow: 10px 14px 0 var(--ink); background-color: color-mix(in srgb, var(--tone) 28%, var(--paper)); }
+.plugin-main:hover .plugin-avatar { transform: rotate(6deg) scale(1.12); }
+@media (prefers-reduced-motion: reduce) { .plugin-main:hover { transform: translate(-3px, -5px); } .plugin-main:hover .plugin-avatar { transform: rotate(-4deg); } }
 .plugin-heading { display: flex; align-items: center; gap: 14px; }
 .plugin-heading > div { min-width: 0; }
-.plugin-avatar { display: flex; align-items: center; justify-content: center; width: 54px; height: 54px; flex-shrink: 0; overflow: hidden; border: 2px solid var(--ink); border-radius: 18px; background: var(--tone); color: var(--ink); font-size: 24px; font-weight: 900; transform: rotate(-4deg); }
+.plugin-avatar { display: flex; align-items: center; justify-content: center; width: 54px; height: 54px; flex-shrink: 0; overflow: hidden; border: 2px solid var(--ink); border-radius: 18px; background: var(--tone); color: var(--ink); font-size: 24px; font-weight: 900; transform: rotate(-4deg); transition: transform .34s cubic-bezier(.3, 1.6, .45, 1); }
 .plugin-avatar img { display: block; width: 100%; height: 100%; object-fit: contain; padding: 4px; }
 .plugin-title { margin: 0; font-size: 19px; letter-spacing: -.02em; line-height: 1.3; font-weight: 800; overflow-wrap: anywhere; }
 .package-name { margin: 2px 0 0; font-size: 12px; font-family: var(--mono); font-weight: 600; color: var(--slate); overflow-wrap: anywhere; }
@@ -166,12 +170,13 @@ h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); letter-spacing: -.03em; lin
 .signal-badge[data-signal="active"] { background: var(--lilac); }
 .plugin-description { margin: 8px 0 12px; color: var(--slate); font-size: 15px; font-weight: 600; line-height: 1.6; overflow-wrap: anywhere; }
 .plugin-detail { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; }
-.github-stars, .npm-downloads, .plugin-detail time { display: inline-flex; align-items: center; gap: 5px; min-height: 0; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; line-height: 20px; font-variant-numeric: tabular-nums; text-decoration: none; }
-.github-stars { background: #fff0b8; color: #6b4a00; }
-.npm-downloads { background: var(--mint); color: #0d5a38; }
-.plugin-detail time { background: var(--lilac); color: #4a3a85; }
-.github-stars:hover, .npm-downloads:hover { text-decoration: underline; color: inherit; }
-.github-stars svg { width: 14px; height: 14px; fill: currentColor; }
+/* Metrics use the tags' ink-outlined pills; the linked ones carry a small offset shadow and lift like buttons. */
+.github-stars, .npm-downloads, .plugin-detail time { display: inline-flex; align-items: center; gap: 5px; min-height: 0; padding: 1px 10px 1px 8px; border: 2px solid var(--ink); border-radius: 999px; color: var(--ink); font-size: 12px; font-weight: 800; line-height: 19px; font-variant-numeric: tabular-nums; text-decoration: none; transition: transform .15s, box-shadow .15s, background-color .15s; }
+.github-stars { background: #fff0b8; box-shadow: 2px 2px 0 var(--ink); }
+.npm-downloads { background: var(--mint); box-shadow: 2px 2px 0 var(--ink); }
+.plugin-detail time { background: var(--paper); border-style: dashed; color: var(--slate); }
+.github-stars:hover, .npm-downloads:hover { color: var(--ink); background: var(--sun); transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink); }
+.github-stars svg { width: 14px; height: 14px; fill: var(--sun); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
 .npm-downloads svg, .plugin-detail time svg { width: 14px; height: 14px; flex-shrink: 0; }
 .stars-group { display: inline-flex; flex-direction: column; }
 .stars-label { display: none; }
@@ -342,23 +347,43 @@ h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); letter-spacing: -.03em; lin
 @media (min-width: 1001px) and (min-height: 1060px) { .step-shot { aspect-ratio: 16 / 10.5; } }
 @media (prefers-reduced-motion: reduce) { .steps li[data-zoom-card]:hover, .steps li[data-zoom-card] .step-shot:hover img, .steps li[data-zoom-card]:hover .step-shot img { transform: none; } }
 
-/* "Details" sits with the metrics as an info chip; hovering (or tapping) opens a floating card over the text below without moving anything. */
-.plugin-facts { position: relative; margin-left: auto; }
-.plugin-facts summary { display: inline-flex; align-items: center; gap: 5px; padding: 3px 12px 3px 9px; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper); color: var(--ink); font-size: 13px; font-weight: 800; line-height: 20px; list-style: none; cursor: pointer; user-select: none; box-shadow: 2px 2px 0 var(--ink); transition: background .2s, transform .2s, box-shadow .2s; }
-.plugin-facts summary::-webkit-details-marker { display: none; }
-.plugin-facts summary svg { width: 16px; height: 16px; }
-.plugin-facts summary:hover, .plugin-facts[open] summary { background: var(--sun); transform: translateY(-1px); box-shadow: 3px 3px 0 var(--ink); }
-.facts-pop { position: absolute; right: -6px; top: calc(100% + 12px); z-index: 6; width: max-content; min-width: 250px; max-width: 300px; padding: 14px 16px; border: 2px solid var(--ink); border-radius: 16px; background: var(--paper); box-shadow: 5px 5px 0 var(--ink); color: var(--slate); font-size: 14px; font-weight: 700; transform-origin: top right; animation: facts-in .28s ease; }
-.facts-pop::before { content: ""; position: absolute; top: -9px; right: 26px; width: 14px; height: 14px; background: var(--paper); border-left: 2px solid var(--ink); border-top: 2px solid var(--ink); transform: rotate(45deg); }
-.facts-pop dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; margin: 0; }
-.facts-pop dt { color: var(--slate); font-weight: 700; }
-.facts-pop dd { margin: 0; color: var(--ink); font-weight: 800; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
-.facts-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 2px dashed var(--soft-line); }
-.facts-links a { padding: 4px 12px; border: 2px solid var(--ink); border-radius: 10px; background: var(--sky); color: var(--ink); font-size: 13px; font-weight: 800; text-decoration: none; transition: transform .15s, background .15s; }
-.facts-links a:hover { background: var(--sun); color: var(--ink); transform: translateY(-1px); }
-.plugin:has(.plugin-facts[open]) { position: relative; z-index: 4; }
-@keyframes facts-in { from { opacity: 0; transform: translateY(-6px) scale(.94); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .facts-pop { animation: none; } }
+/* "Details" ends the metrics row and unfolds the facts in place, pushing the cards below down; inside, one button copies the plugin name and opens DSH. */
+.plugin-actions { display: inline-flex; align-items: center; margin-left: auto; }
+.more-toggle { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px 3px 9px; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper); color: var(--ink); font-size: 13px; font-weight: 800; line-height: 20px; white-space: nowrap; box-shadow: 2px 2px 0 var(--ink); transition: background-color .2s, transform .2s cubic-bezier(.3, 1.6, .45, 1), box-shadow .2s; }
+.more-toggle[hidden] { display: none; }
+.more-toggle svg { width: 16px; height: 16px; flex-shrink: 0; }
+.more-toggle .chevron { width: 14px; height: 14px; transition: transform .35s cubic-bezier(.3, 1.6, .45, 1); }
+.more-toggle:hover { background: var(--sun); transform: translate(-1px, -2px); box-shadow: 3px 4px 0 var(--ink); }
+.more-toggle:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--ink); }
+.more-toggle[aria-expanded="true"] { background: var(--sun); }
+.more-toggle[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+.get-copy { display: inline-flex; flex: 1 0 auto; align-items: center; justify-content: center; gap: 6px; padding: 4px 12px; border: 2px solid var(--ink); border-radius: 10px; color: var(--ink); font-size: 13px; font-weight: 800; line-height: 20px; white-space: nowrap; text-decoration: none; box-shadow: 2px 2px 0 var(--ink); transition: background-color .2s, transform .2s cubic-bezier(.3, 1.6, .45, 1), box-shadow .2s; }
+.get-copy[hidden] { display: none; }
+.get-copy { background: var(--sun); }
+.get-copy span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.get-copy svg { width: 16px; height: 16px; flex-shrink: 0; }
+.get-copy:hover { background: #ff9084; color: var(--ink); transform: translate(-1px, -2px); box-shadow: 4px 5px 0 var(--ink); }
+.get-copy:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink); }
+.get-copy.is-done { background: var(--mint); }
+.get-copy.is-error, .get-copy.is-missed { background: var(--peach); }
+.plugin-list[data-expandable] .plugin-main { cursor: pointer; }
+.plugin-list[data-expandable] .plugin-main :is(h3, p, .package-name, .plugin-tag, .publisher-badge, .signal-badge, time) { cursor: auto; }
+.plugin-list[data-expandable] .plugin-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s cubic-bezier(.3, 1.15, .45, 1); }
+.plugin-list[data-expandable] .plugin.is-open .plugin-more { grid-template-rows: 1fr; }
+.plugin-list[data-expandable] .plugin-more-inner { visibility: hidden; transition: visibility 0s .38s; }
+.plugin-list[data-expandable] .plugin.is-open .plugin-more-inner { visibility: visible; transition: none; }
+.plugin-more-inner { min-height: 0; overflow: hidden; padding-right: 4px; color: var(--slate); font-size: 14px; font-weight: 700; }
+.plugin-more dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; margin: 14px 0 0; padding-top: 14px; border-top: 2px dashed var(--soft-line); }
+.plugin-more dt { color: var(--slate); font-weight: 700; }
+.plugin-more dd { margin: 0; color: var(--ink); font-weight: 800; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.plugin-more .get-name { font-family: var(--mono); font-size: 13px; user-select: all; }
+.facts-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0 3px; }
+.facts-links a { padding: 4px 12px; border: 2px solid var(--ink); border-radius: 10px; background: var(--sky); color: var(--ink); font-size: 13px; font-weight: 800; text-decoration: none; box-shadow: 2px 2px 0 var(--ink); transition: transform .15s, background .15s, box-shadow .15s; }
+.facts-links a:hover { background: var(--sun); color: var(--ink); transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink); }
+/* An open card keeps its tone wash and lifts gently instead of tilting a tall block of text. */
+.plugin.is-open .plugin-main { background-color: color-mix(in srgb, var(--tone) 28%, var(--paper)); box-shadow: 6px 8px 0 var(--ink); transform: translate(-2px, -4px); }
+.plugin.is-open .plugin-main:hover { transform: translate(-3px, -6px); box-shadow: 8px 10px 0 var(--ink); }
+@media (prefers-reduced-motion: reduce) { .plugin-list[data-expandable] .plugin-more, .more-toggle .chevron { transition: none; } }
 
 /* The plugin count sits at the end of the stats row instead of on its own line. */
 .directory-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 18px; }

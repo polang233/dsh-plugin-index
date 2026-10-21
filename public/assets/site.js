@@ -72,7 +72,8 @@ const masonry = () => {
   const gap = rows.length ? parseFloat(getComputedStyle(rows[0]).paddingBottom) || 0 : 0;
   // Read every height first, then write, so the browser lays out once instead of once per card.
   const shown = rows.filter(row => !row.hidden);
-  const spans = shown.map(row => Math.ceil((row.firstElementChild.getBoundingClientRect().height + gap) / unit));
+  // offsetHeight ignores the hover lift and scale, so hovering never reflows the grid.
+  const spans = shown.map(row => Math.ceil((row.firstElementChild.offsetHeight + gap) / unit));
   shown.forEach((row, at) => { const value = `span ${spans[at]}`; if (row.style.gridRowEnd !== value) row.style.gridRowEnd = value; });
 };
 if ('ResizeObserver' in window && list) {
@@ -184,18 +185,88 @@ if ('IntersectionObserver' in window) {
   revealed.forEach(node => seen.observe(node));
 } else revealed.forEach(node => node.classList.add('is-visible'));
 
-// Details popovers: one open at a time, closed when the pointer leaves or focus moves away.
-const facts = [...document.querySelectorAll('[data-facts]')];
-facts.forEach(item => {
-  item.addEventListener('toggle', () => { if (item.open) facts.forEach(other => { if (other !== item) other.open = false; }); });
-  // Pointer devices open on hover; touch keeps the tap toggle from <details>.
-  let hoverOpened = false;
-  item.addEventListener('mouseenter', () => { if (matchMedia('(hover: hover)').matches && !item.open) { item.open = true; hoverOpened = true; } });
-  item.addEventListener('mouseleave', () => { item.open = false; hoverOpened = false; });
-  // A click right after the hover opened it keeps it open; the next click closes it as usual.
-  item.querySelector('summary').addEventListener('click', event => { if (hoverOpened) { event.preventDefault(); hoverOpened = false; } });
-  item.addEventListener('focusout', event => { if (!item.contains(event.relatedTarget)) item.open = false; });
-});
+// "Details" unfolds the card in place: the panel grows, the ResizeObserver above re-spans the row, and the cards below move down.
+const setOpen = (row, open) => {
+  row.classList.toggle('is-open', open);
+  row.querySelector('[data-more-toggle]')?.setAttribute('aria-expanded', String(open));
+  const panel = row.querySelector('[data-more-panel]');
+  if (panel) panel.inert = !open;
+};
+// Whether a point sits on an actual glyph, not just inside a text element's box (a short line's trailing space counts as blank).
+const onText = (x, y) => {
+  const position = document.caretPositionFromPoint?.(x, y);
+  const caret = position ? { node: position.offsetNode, offset: position.offset } : (range => range && { node: range.startContainer, offset: range.startOffset })(document.caretRangeFromPoint?.(x, y));
+  if (caret?.node?.nodeType !== Node.TEXT_NODE) return false;
+  const glyph = document.createRange();
+  return [caret.offset - 1, caret.offset].some(at => {
+    if (at < 0 || at >= caret.node.length) return false;
+    glyph.setStart(caret.node, at); glyph.setEnd(caret.node, at + 1);
+    return [...glyph.getClientRects()].some(box => x >= box.left && x <= box.right && y >= box.top && y <= box.bottom);
+  });
+};
+if (list) {
+  list.dataset.expandable = '';
+  rows.forEach(row => {
+    setOpen(row, false);
+    const toggle = row.querySelector('[data-more-toggle]');
+    if (!toggle) return;
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => setOpen(row, !row.classList.contains('is-open')));
+    // A click on the card's blank space works like "Details"; text stays selectable and links, buttons and the open panel keep their own clicks.
+    row.firstElementChild.addEventListener('click', event => {
+      if (event.target.closest('a, button, .plugin-more-inner') || String(getSelection()).trim() || onText(event.clientX, event.clientY)) return;
+      setOpen(row, !row.classList.contains('is-open'));
+    });
+  });
+}
+
+// Copy the plugin name, then hand off to DSH. It only registers dsh://open, so the user pastes the name into Discover search.
+for (const button of document.querySelectorAll('[data-get]')) {
+  button.hidden = false;
+  const label = button.querySelector('span');
+  const idle = label.textContent;
+  let resetTimer;
+  button.addEventListener('click', async () => {
+    clearTimeout(resetTimer);
+    // Hold the idle width so status text never shrinks the button or wraps it onto its own line.
+    if (!button.style.minWidth) button.style.minWidth = `${button.offsetWidth}px`;
+    let copied = true;
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(button.dataset.get);
+    } catch {
+      copied = false;
+      // Select the name so a manual copy is one keystroke away.
+      const name = button.closest('[data-plugin]')?.querySelector('.get-name');
+      if (name) getSelection()?.selectAllChildren(name);
+    }
+    button.classList.toggle('is-done', copied);
+    button.classList.toggle('is-error', !copied);
+    label.textContent = copied ? text.nameCopied : text.getFailure;
+    const reset = delay => { resetTimer = setTimeout(() => { button.classList.remove('is-done', 'is-error', 'is-missed'); label.textContent = idle; }, delay); };
+    if (!copied) return reset(5000);
+    // The page cannot see whether DSH launched; losing focus soon after the hand-off is the signal. A declined prompt or a missing app keeps focus here.
+    let settled = false;
+    const opened = () => {
+      if (settled) return;
+      settled = true; clearTimeout(resetTimer);
+      label.textContent = text.dshOpened;
+      reset(4000);
+    };
+    window.addEventListener('blur', opened, { once: true });
+    document.addEventListener('visibilitychange', opened, { once: true });
+    location.href = 'dsh://open';
+    resetTimer = setTimeout(() => {
+      window.removeEventListener('blur', opened);
+      document.removeEventListener('visibilitychange', opened);
+      if (settled) return;
+      settled = true;
+      button.classList.replace('is-done', 'is-missed');
+      label.textContent = text.dshMissed;
+      reset(5000);
+    }, 3000);
+  });
+}
 
 // Coming back from the page cache should never leave the page faded out.
 window.addEventListener('pageshow', () => document.body.classList.remove('is-leaving'));
