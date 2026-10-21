@@ -1,4 +1,5 @@
 import { mkdir, readFile, writeFile, copyFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { githubRepository } from './github.mjs';
 import { releaseAge } from './market-display.mjs';
 import { addedTimestamp } from './added.mjs';
@@ -147,7 +148,7 @@ function pluginRow(plugin, language, categories, text, snapshot, root, downloads
     </article>
   </li>`;
 }
-function page(index, evidence, language, snapshot, downloads, display, added = {}) {
+function page(index, evidence, language, snapshot, downloads, display, added = {}, socialImages = {}) {
   const text = COPY[language];
   const docsUrl = language === 'zh' ? `${REPOSITORY}/blob/main/README.md` : DOCS;
   const root = language === 'zh' ? '../' : './';
@@ -194,12 +195,14 @@ function page(index, evidence, language, snapshot, downloads, display, added = {
   <meta property="og:title" content="${esc(text.title)}">
   <meta property="og:description" content="${esc(text.description)}">
   <meta property="og:url" content="${canonical}">
-  <meta property="og:image" content="${ORIGIN}assets/${text.socialImage}">
+  <meta property="og:image" content="${ORIGIN}assets/${socialImages[text.socialImage] ?? text.socialImage}">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="${esc(text.title)}">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="${ORIGIN}assets/${socialImages[text.socialImage] ?? text.socialImage}">
+  <meta name="twitter:image:alt" content="${esc(text.title)}">
   <script type="application/ld+json">${structured}</script>
   ${language === 'en' ? `<script>try{var l=localStorage.getItem('opm-lang');if(l==='zh'||(!l&&/^zh/i.test(navigator.language||'')))location.replace('zh/'+location.search+location.hash)}catch(e){}</script>` : ''}
   <script>document.documentElement.classList.replace('no-js', 'js')</script>
@@ -284,11 +287,18 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
   for (const asset of ['site.css', 'site.js', 'logo.webp', 'logo-256.png', 'favicon.png', 'apple-touch-icon.png', 'placeholder-whale.webp', 'social.png', 'social-zh.png', ...['zh', 'en'].flatMap(lang => ['', '-light', '-narrow', '-narrow-light'].map(kind => `dsh-discover-${lang}${kind}.webp`)), ...[1, 2, 3].flatMap(n => ['zh', 'en'].flatMap(lang => ['light', 'dark'].map(theme => `guide-${n}-${lang}-${theme}.webp`)))]) {
     await copyFile(new URL(asset, source), new URL(`assets/${asset}`, output));
   }
+  // X and other link previews cache card images by URL, so name each card after its content.
+  const socialImages = {};
+  for (const name of ['social.png', 'social-zh.png']) {
+    const bytes = await readFile(new URL(name, source));
+    socialImages[name] = name.replace(/\.png$/, `-${createHash('sha256').update(bytes).digest('hex').slice(0, 10)}.png`);
+    await writeFile(new URL(`assets/${socialImages[name]}`, output), bytes);
+  }
   // Full builds refresh added.json first; the offline rebuilds reuse whatever is already published.
   let added = {};
   try { added = JSON.parse(await readFile(new URL('added.json', output), 'utf8')); } catch { /* No record yet. */ }
-  await writeFile(new URL('index.html', output), page(index, evidence, 'en', snapshot, downloads, display, added).replace(/[\t ]+$/gm, ''), 'utf8');
-  await writeFile(new URL('zh/index.html', output), page(index, evidence, 'zh', snapshot, downloads, display, added).replace(/[\t ]+$/gm, ''), 'utf8');
+  await writeFile(new URL('index.html', output), page(index, evidence, 'en', snapshot, downloads, display, added, socialImages).replace(/[\t ]+$/gm, ''), 'utf8');
+  await writeFile(new URL('zh/index.html', output), page(index, evidence, 'zh', snapshot, downloads, display, added, socialImages).replace(/[\t ]+$/gm, ''), 'utf8');
   await writeFile(new URL('sitemap.xml', output), sitemap(evidence?.generatedAt), 'utf8');
   await writeFile(new URL('robots.txt', output), `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}sitemap.xml\n`, 'utf8');
   await writeFile(new URL('404.html', output), notFound(await readFile(new URL('site.css', source), 'utf8')), 'utf8');
