@@ -107,6 +107,34 @@ test('temporary HTTP failures retry but missing packages fail immediately', asyn
   await assert.rejects(download('https://registry.npmjs.org/test', { retryDelayMs: 0, fetchImpl: async () => { calls++; return new Response('missing', { status: 404 }); } }), /404/);
   assert.equal(calls, 1);
 });
+test('with a previous snapshot, a transient failure keeps the last release and a vanished package is left out', async () => {
+  const good = fixture();
+  const iconBytes = Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"/>');
+  const icon = `icons/${createHash('sha256').update(iconBytes).digest('hex')}.svg`;
+  const flaky = { name: '@example/flaky', icon, versions: [{ version: '0.9.0', publishTimestamp: 1767225600, source: { type: 'npm' } }] };
+  const previous = {
+    base: 'https://example.org/catalog/',
+    index: { plugins: [flaky] },
+    evidence: { packages: [{ name: '@example/flaky', version: '0.9.0' }], failures: [{ name: '@example/flaky', since: '2026-01-01T00:00:00.000Z' }] }
+  };
+  const fetchImpl = async (url, options) => {
+    if (String(url) === previous.base + icon) return new Response(iconBytes);
+    if (String(url).includes('flaky')) throw new Error('The operation was aborted due to timeout');
+    if (String(url).includes('gone')) return new Response('missing', { status: 404 });
+    return good.fetchImpl(url, options);
+  };
+  const catalog = { ...config, packages: [{ name: '@example/dsh-plugin' }, { name: '@example/flaky' }, { name: '@example/gone' }] };
+  const { index, evidence, assets } = await buildIndex(catalog, { fetchImpl, retryDelayMs: 0, previous, now: Date.parse('2026-02-01') });
+  assert.deepEqual(index.plugins.map(plugin => plugin.name), ['@example/dsh-plugin', '@example/flaky']);
+  assert.deepEqual(index.plugins[1], flaky);
+  assert.ok(assets.some(asset => asset.path === icon));
+  assert.deepEqual(evidence.failures.map(({ name, retained, since }) => ({ name, retained, since })), [
+    { name: '@example/flaky', retained: true, since: '2026-01-01T00:00:00.000Z' },
+    { name: '@example/gone', retained: false, since: '2026-02-01T00:00:00.000Z' }
+  ]);
+  await assert.rejects(buildIndex(catalog, { fetchImpl, retryDelayMs: 0, previous, maxFailures: 1 }), /2 packages failed, more than 1/);
+  await assert.rejects(buildIndex(catalog, { fetchImpl, retryDelayMs: 0 }), /Cannot publish index/);
+});
 test('source policy prevents a package without repository and license from publishing', async () => {
   await assert.rejects(buildIndex({ ...config, requireSourceMetadata: true }, fixture()), /repository and declared license/);
 });

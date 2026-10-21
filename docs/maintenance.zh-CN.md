@@ -54,7 +54,9 @@ pnpm test:browser
 
 目前每个插件提供一个版本。兼容范围来自 `engines.dsh`，缺失时取 DSH peer dependencies 的交集。没有约束表示作者未声明范围，不代表已验证兼容。
 
-构建失败时查看 Actions 日志，修正来源或连接问题后重新运行。撤回或停止维护的插件通过修改收录列表移除，不会在生成过程中被悄悄跳过。
+完整构建会读取上一次已发布的 `index.json` 和 `status.json`。单个插件检查失败时不再阻塞整站：超时、网络错误、HTTP 429/5xx 或新版本超出归档上限时保留上次发布的版本和图标；已撤包、弃用、被 npm 下架或身份、哈希不符时移出索引。两种情况都写入 `status.json` 的 `failures`，记录开始失败的时间，构建日志也会给出警告。同时失败超过 10 个或 5% 时仍中止构建，按系统性问题处理。
+
+定时构建之后，`maintenance` 任务运行 `node scripts/check-pins.mjs --issue`，把失败的插件和落后于上游的固定条目（npm 版本与 Git 来源）汇总到同一个 issue「Index maintenance: pinned entries and failing packages」，连续失败 7 天以上的标为 **[long]**；问题都处理完后自动关闭该 issue。撤回或停止维护的插件仍需通过修改收录列表移除。
 
 ## 固定 Git 来源
 

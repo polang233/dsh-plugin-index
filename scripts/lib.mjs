@@ -312,10 +312,12 @@ export async function buildIndex(config, options = {}) {
         }
         results.push(result);
       }
-      catch (error) { errors.push(`${input.name}: ${error.message}`); }
+      catch (error) { errors.push({ name: input.name, message: error.message }); }
     }
   }));
-  if (errors.length) throw new Error(`Cannot publish index: ${errors.join('; ')}`);
+  const failures = options.previous ? await settleFailures(errors, config.packages.length, options) : [];
+  if (!options.previous && errors.length) throw new Error(`Cannot publish index: ${errors.map(error => `${error.name}: ${error.message}`).join('; ')}`);
+  results.push(...failures.filter(failure => failure.result).map(failure => failure.result));
   results.sort((a, b) => a.entry.name.localeCompare(b.entry.name, 'en'));
   const index = {
     format: 1, title: config.title, description: config.description,
@@ -328,7 +330,55 @@ export async function buildIndex(config, options = {}) {
     evidence: {
       generatedAt: new Date(options.now ?? Date.now()).toISOString(),
       validator: { name: '@deepseek-ai/dsh-plugin-market-index', version: VALIDATOR_VERSION },
-      packages: results.map(x => x.evidence)
+      packages: results.map(x => x.evidence),
+      ...(options.previous ? { failures: failures.map(({ result, ...record }) => record) } : {})
     }
   };
+}
+
+// Transient trouble keeps the last published release; a vanished, deprecated or mismatched package is dropped.
+const RETAINABLE = /timeout|aborted|fetch failed|socket|ECONN|ENOTFOUND|EAI_AGAIN|HTTP (?:429|5\d\d)|exceeds|inspection limits/i;
+
+/**
+ * With the previous published snapshot, one broken package no longer blocks the whole catalog.
+ * Each failure is recorded with the time it started failing; too many at once still stops the build.
+ */
+async function settleFailures(errors, total, { previous, now = Date.now(), fetchImpl = fetch, maxFailures = Math.max(10, Math.ceil(total * 0.05)) }) {
+  if (errors.length > maxFailures) {
+    throw new Error(`Cannot publish index: ${errors.length} packages failed, more than ${maxFailures}: ${errors.map(error => `${error.name}: ${error.message}`).join('; ')}`);
+  }
+  const plugins = new Map((previous.index?.plugins ?? []).map(plugin => [plugin.name, plugin]));
+  const records = new Map((previous.evidence?.packages ?? []).map(record => [record.name, record]));
+  const since = new Map((previous.evidence?.failures ?? []).map(failure => [failure.name, failure.since]));
+  const failures = [];
+  for (const { name, message } of errors) {
+    const failure = { name, error: message, since: since.get(name) ?? new Date(now).toISOString(), retained: false };
+    const entry = plugins.get(name), record = records.get(name);
+    if (RETAINABLE.test(message) && entry && record) {
+      const assets = [];
+      let kept = entry;
+      if (entry.icon) {
+        const icon = await previousIcon(entry.icon, previous.base, fetchImpl);
+        if (icon) assets.push(icon);
+        else { const { icon: missing, ...rest } = entry; kept = rest; }
+      }
+      failure.retained = true;
+      failure.version = record.version;
+      failure.result = { entry: kept, evidence: { ...record, retained: { since: failure.since, error: message } }, assets };
+    }
+    failures.push(failure);
+  }
+  return failures.sort((a, b) => a.name.localeCompare(b.name, 'en'));
+}
+
+/** Icons are named by their SHA-256, so a fetched copy is accepted only when its bytes still match the name. */
+async function previousIcon(path, base, fetchImpl) {
+  const match = typeof path === 'string' && path.match(/^icons\/([a-f0-9]{64})\.(?:svg|png|jpg|webp)$/);
+  if (!match || !base) return undefined;
+  try {
+    const response = await fetchImpl(new URL(path, base), { redirect: 'error', signal: AbortSignal.timeout(20_000) });
+    if (!response.ok) return undefined;
+    const bytes = Buffer.from(await response.arrayBuffer());
+    return bytes.length <= 256 * 1024 && createHash('sha256').update(bytes).digest('hex') === match[1] ? { path, bytes } : undefined;
+  } catch { return undefined; }
 }

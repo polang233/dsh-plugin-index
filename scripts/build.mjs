@@ -23,8 +23,15 @@ async function readSnapshot(url) {
 const config = JSON.parse(await readFile(new URL('../data/sources.json', import.meta.url), 'utf8'));
 validateBrandNames(config, JSON.parse(await readFile(new URL('../data/brand-names.json', import.meta.url), 'utf8')));
 assertNotWithdrawn(config.packages.map(entry => entry.name), await readWithdrawn());
-const built = await buildIndex(config);
 const output = new URL('../public/', import.meta.url);
+// The last published catalog lets a package that fails today keep its last good release instead of blocking everyone.
+const PUBLISHED = 'https://polang233.github.io/dsh-plugin-index/';
+const previousIndex = await publishedSnapshot('index.json', { base: PUBLISHED }) ?? await readJson(new URL('index.json', output));
+const previousEvidence = await publishedSnapshot('status.json', { base: PUBLISHED }) ?? await readJson(new URL('status.json', output));
+const built = await buildIndex(config, { previous: { index: previousIndex, evidence: previousEvidence, base: PUBLISHED } });
+for (const failure of built.evidence.failures) {
+  console.warn(`::warning title=Package check failed::${failure.name} ${failure.retained ? `kept at ${failure.version}` : 'left out'} since ${failure.since}: ${failure.error}`);
+}
 const cache = new URL('../.cache/', import.meta.url);
 const previous = await readSnapshot(new URL('github.json', cache)) ?? await publishedSnapshot('github.json') ?? await readSnapshot(new URL('github.json', output));
 const github = await collectGitHub(built.index, { previous });
@@ -68,5 +75,5 @@ await writeFile(new URL('recommendations.json', output), `${JSON.stringify(recom
 const previousAdded = await publishedSnapshot('added.json') ?? await readJson(new URL('added.json', output));
 await writeFile(new URL('added.json', output), `${JSON.stringify(trackAdded(index.plugins.map(plugin => plugin.name), previousAdded), null, 2)}\n`);
 await writeSite(index, evidence, github, downloads, display);
-console.log(`Generated format-1 index: ${index.plugins.length} plugins; official validator ${evidence.validator.version}.`);
+console.log(`Generated format-1 index: ${index.plugins.length} plugins; official validator ${evidence.validator.version}; ${built.evidence.failures.length} failing packages.`);
 console.log(`GitHub metadata: ${evidence.github.fetched} fetched, ${evidence.github.cached} cached, ${evidence.github.unavailable} unavailable.`);

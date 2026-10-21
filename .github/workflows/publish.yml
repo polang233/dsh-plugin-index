@@ -95,6 +95,28 @@ jobs:
         run: |
           for attempt in 1 2 3; do node scripts/check-published.mjs "${PAGE_URL%/}/index.json" && exit 0; sleep 60; done; exit 1
 
+  maintenance:
+    # Keeps one issue listing failing packages and pins that fell behind upstream.
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@v4
+        with:
+          name: validated-index
+          path: public/
+      - run: node scripts/check-pins.mjs --issue
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
   cloudflare:
     needs: build
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

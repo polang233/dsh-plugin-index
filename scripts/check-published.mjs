@@ -117,6 +117,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
   const config = JSON.parse(await readFile(new URL('../data/sources.json', import.meta.url), 'utf8'));
   const brandAssets = await Promise.all(['logo.webp', 'logo-256.png', 'favicon.png', 'apple-touch-icon.png', 'social.png', 'social-zh.png'].map(async name => ({name, bytes: await readFile(new URL('../site/' + name, import.meta.url))})));
   const publishers = JSON.parse(await readFile(new URL('../data/publishers.json', import.meta.url), 'utf8'));
-  const result = await checkPublished(indexUrl, {expectedNames: config.packages.map(input => input.name), expectedTitle: config.title, verifyMarket: true, publishers, brandAssets});
+  // Packages the build had to leave out are listed in status.json; every other source must be published.
+  const status = await fetch(new URL('status.json', indexUrl), {redirect: 'error', signal: AbortSignal.timeout(30_000)}).then(response => response.ok ? response.json() : {}).catch(() => ({}));
+  const leftOut = new Set((status.failures ?? []).filter(failure => !failure.retained).map(failure => failure.name));
+  const result = await checkPublished(indexUrl, {expectedNames: config.packages.map(input => input.name).filter(name => !leftOut.has(name)), expectedTitle: config.title, verifyMarket: true, publishers, brandAssets});
   console.log(JSON.stringify(result));
 }
