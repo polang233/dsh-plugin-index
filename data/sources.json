@@ -9543,13 +9543,13 @@
     },
     {
       "name": "@gulagala001/dsh-theme-plugin",
-      "version": "0.1.0-dsh.0.2.1-rc.2",
+      "version": "0.2.0-dsh.0.2.1-rc.2",
       "source": {
         "type": "git",
         "url": "https://github.com/gulagala001/dsh-theme-plugin",
-        "commit": "d5093a8895f9303c73cda716ee80bfcf143ff3ba",
-        "integrity": "sha512-KRlZFypD1kb5UKsS4CBmzTEqoReVHTbl5hl9wIjToB20+JcRQtjO7BhEF4vAj3eQ2onqMehCBSs3s05NnDzDqA==",
-        "publishedAt": "2026-10-20T14:55:03Z"
+        "commit": "e217a682789d81a656157a89f57506f446059294",
+        "integrity": "sha512-87KSuuO5oFCw/VEaMJUNTMLSeo65vZRKtfXzV1SvopVAoTfl5p/T7rUlu6R9yQW+fdT7B2p/Zk3RJmYAw0/Chg==",
+        "publishedAt": "2026-10-21T02:55:32Z"
       },
       "title": {
         "en": "DSH Themes and Appearance",
@@ -10441,7 +10441,7 @@
     },
     {
       "name": "dsh-mobile",
-      "version": "0.6.14",
+      "version": "0.6.15",
       "title": {
         "en": "DSH Mobile",
         "zh": "DSH Mobile"
@@ -10452,8 +10452,8 @@
       },
       "category": "integrations",
       "archiveReview": {
-        "version": "0.6.14",
-        "integrity": "sha512-ibcg5E9tyRvKEyrQXtJct+wqwdrFcUaOvpvwotXbI2d4Op41j/3jww/KNK6hHBZqoeIgi0utpKJklfBuF/2cCQ==",
+        "version": "0.6.15",
+        "integrity": "sha512-1rm5bp6C0LsgHTWb5c5wRTSOcaRg0fwMauKefUvZ5q4b91WrkDK+AQzCSL03LQn/Mqe2z5FBlEypyKHjBu/V8g==",
         "maxUnpackedBytes": 268435456,
         "timeoutMs": 120000
       }
