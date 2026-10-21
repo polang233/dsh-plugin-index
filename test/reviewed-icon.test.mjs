@@ -43,6 +43,16 @@ test('review requires the exact pinned version and npm SHA-512 before any artwor
   assert.throws(() => reviewedIconSource(inputFor(), { ...binding, integrity: 'sha512-not-a-hash' }), /SHA-512/);
 });
 
+test('a review without version and integrity follows the latest release and still pins the artwork', async () => {
+  const { version, integrity, ...artwork } = inputFor().iconReview;
+  const latest = { ...binding, version: '1.4.0', integrity: sha512('newer archive') };
+  const result = await reviewedIcon({ iconReview: artwork }, { ...latest, fetchImpl: fetchBytes(svg) });
+  assert.equal(result.evidence.review.version, '1.4.0');
+  assert.equal(result.evidence.review.integrity, latest.integrity);
+  await assert.rejects(reviewedIcon({ iconReview: artwork }, { ...latest, fetchImpl: fetchBytes(Buffer.from('<svg/>')) }), /SHA-256 does not match/);
+  await assert.rejects(reviewedIcon({ iconReview: { ...artwork, version: '1.2.3' } }, { ...latest, fetchImpl: () => assert.fail('must not fetch') }), /pinned package version/);
+});
+
 test('review cannot introduce another repository or an arbitrary source URL', async () => {
   for (const repository of [undefined, { url: 'https://example.org/example/plugin' }, { url: 'http://github.com/example/plugin' }, { url: 'https://github.com/example/plugin/tree/main' }, { url: 'https://github.com/example/plugin?download=1' }, { url: 'https://github.com/example/plugin#artwork' }, { url: 'https://user@github.com/example/plugin' }]) {
     await assert.rejects(reviewedIcon(inputFor(), { ...binding, repository, fetchImpl: () => assert.fail('must not fetch') }), /published GitHub repository/);

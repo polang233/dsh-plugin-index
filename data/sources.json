@@ -6892,10 +6892,7 @@
         "zh": "将完成的对话保存为 Markdown 记忆，提供检索和长期记忆整理。"
       },
       "category": "memory",
-      "version": "0.1.2",
       "iconReview": {
-        "version": "0.1.2",
-        "integrity": "sha512-dZQSyknARE76fjYnNqK63Kai8MS6QSZ+bUNNG8fwl1syWb3BptyngweQkphxfYtE6sonzXK5MVwxbLgf0c7+qg==",
         "commit": "d6b02a20bacf613703375b0dcb0eb5b25bf6d668",
         "path": "docs/figure/reme-icon.svg",
         "sha256": "70586ef52d6362833114b2340f92804818d7faf9e5845b7d74dd74f96a90ec1a"
@@ -6984,10 +6981,7 @@
         "zh": "记录模型 Token 用量和费用估算，在设置页查询历史统计。"
       },
       "category": "usage",
-      "version": "1.9.6",
       "iconReview": {
-        "version": "1.9.6",
-        "integrity": "sha512-sC2o+dUvSJHgXrEvtb9iw+Bo65HCGSkmh0j2tpMZQrmkU23WmgGhePrOcUPe4awyz0GfWCHXJFFdNjI+zGrnew==",
         "commit": "a0ddc943eadb41c292cb0fe1e8d2a6f939d24081",
         "path": "docs/icon-mark.svg",
         "sha256": "84afa6adcab40801013a47ff53bbf36bead4a4466d0398b589bbf0ad0475c5f2"
@@ -7040,10 +7034,7 @@
         "zh": "创建和修改 Blender 场景、导入模型，并预览或导出图片与视频。"
       },
       "category": "tools",
-      "version": "0.15.0",
       "iconReview": {
-        "version": "0.15.0",
-        "integrity": "sha512-teJZOfWaoQJqMkZ0YY6dfGHXzMlVOuGuoQqNOdzvoJDSFE+LAH5vtdZCGu0yq2GCkMo1w2/P0+KdDj10Eme6AQ==",
         "commit": "7e4779338952cc1342d7cf076161eeae8615e6a6",
         "path": "packages/deepblend/bundle/assets/logo.png",
         "sha256": "9153f6a0bace3df66d6119301b61ae9c69c67e4d193687c19316c1780b2bb7f3"
@@ -7072,10 +7063,7 @@
         "zh": "检索 DBLP 和 arXiv，获取 BibTeX 引用及可用的论文全文。"
       },
       "category": "knowledge",
-      "version": "0.1.3",
       "iconReview": {
-        "version": "0.1.3",
-        "integrity": "sha512-kPg5lMqYOHtsXiVOlIoTzauTgh1yAVN86znu4hq9X5LOJY4tQSal4ZaBVQ8FYx4pVnBBIhQ0jrmDqJIIP6dbzQ==",
         "commit": "2b6c0e3b976a57cd5c907e8a871ae22ca1620aa0",
         "path": "assets/eduwork/icon-red.svg",
         "sha256": "dd1c390a494e0f448c73bc491b572b702e00dfe1767aa8043478baff723fe92f"
@@ -7092,10 +7080,7 @@
         "zh": "提供交互式终端界面，支持表格、图表、Mermaid 和旁支会话。"
       },
       "category": "interface",
-      "version": "0.1.3-rc.2",
       "iconReview": {
-        "version": "0.1.3-rc.2",
-        "integrity": "sha512-Zrs3EM4L5tba3UcShQmGDYbKs1dRTQgcES7itGOgPDtS0h/kMQDZP6ZPwBXNC0ehFGNEBtkaF1hAnZ1ZPXzTVw==",
         "commit": "4765ec546faecc3e7632b05263f32053bb2eeb58",
         "path": "website/public/brand/logo-dark.svg",
         "sha256": "e95e58cd53e4f98904e93e0025b7e54530268bec8a37a1d9284b4fc264661f48"
@@ -7112,10 +7097,7 @@
         "zh": "在侧边工作台管理本地小说项目、修订记录和创作预设。"
       },
       "category": "workflow",
-      "version": "0.1.0",
       "iconReview": {
-        "version": "0.1.0",
-        "integrity": "sha512-5wROPW61UGWTWGuZDk2dbNXECPZnk2w3bjpUlAuhSWKCPeqVQg/BXnzTJGW1Wc8SUS8I4ao8Iaeq8yF/xVhdlg==",
         "commit": "d21207c856b6d70b1f54215d39f8ae423bb17273",
         "path": "docs/assets/brand/pagekin-icon-256.png",
         "sha256": "966eb8531152c200a247eec85aa16d0518d14898470586a34c33ea24a2be1546"
@@ -7132,10 +7114,7 @@
         "zh": "在任务前召回经验策略，根据检查结果和后续反馈记录评价。"
       },
       "category": "memory",
-      "version": "0.2.1",
       "iconReview": {
-        "version": "0.2.1",
-        "integrity": "sha512-XDA8STn5WvNqIpcuvQzgY2lpRpTdhii9VHjjHHhnJ818zw1bFGtjIPrq4/1qKNlcKP59Ii4Ex2vi72KZfVPeDA==",
         "commit": "bba59d18292e5386bd3a37b85631e77a4e47b2f5",
         "path": "assets/logo.png",
         "sha256": "2476e47c676c9c340ec9761689da21fa853bc3d71a20c2db013e9722f67c90b7"
@@ -7284,10 +7263,7 @@
         "zh": "在工具执行前结合允许、拒绝规则和分类器处理权限审批。"
       },
       "category": "development",
-      "version": "0.17.0",
       "iconReview": {
-        "version": "0.17.0",
-        "integrity": "sha512-jQvq55vcORCZ/wwvIRQbuJCCxDRYTkuV1x90+XslmdIych1v2tVsU/vVqC9m/b5JK6j0xe5moKqBLXbeDD0nXA==",
         "commit": "b122e9a4ed4ace3c0b21f837cccaefbe21108bd4",
         "path": "docs/auto-mode-icon.png",
         "sha256": "632d76e4e50cbf677125dde705aa12814bf733cfef33b93e8c6ddd57b61d04f3"
@@ -7316,10 +7292,7 @@
         "zh": "接入多家供应商生成图片、视频、音乐和语音，并提供转写与视觉分析工具。"
       },
       "category": "tools",
-      "version": "0.2.6",
       "iconReview": {
-        "version": "0.2.6",
-        "integrity": "sha512-po1NJcrZKEiWnsdEj1I+cKT1FjM45pwNCYH8K25D6q3sxeHwb/eTbxWbwaMMYNYNjLDGiRFo5fXmJepMDpGw7Q==",
         "commit": "41bb40b63442a59a1e3493d1ddcb398cd9b27a23",
         "path": "docs/assets/logo/iris-logo.svg",
         "sha256": "fc1c36bf5f1a50aa6c5eb37897fd6b368f75ed5a73b559414c0094f3f00d6bfc"
@@ -7336,10 +7309,7 @@
         "zh": "管理 MCP 服务器配置、启停、重连和工具开关，并导入 JSON 配置。"
       },
       "category": "integrations",
-      "version": "0.3.7",
       "iconReview": {
-        "version": "0.3.7",
-        "integrity": "sha512-1hPl6huFB2P20qTy6ZMxoFPZlQwImU+J/KTeraxQ7xTyfEIlbNUTo0vQytHeQ6WTB7k5VeyFXcUZoTYSE2y/kA==",
         "commit": "5ac9f823c311c8f80f51bf8aab74c8a143168060",
         "path": "assets/logo.png",
         "sha256": "58cb52f77cb55358a37d868d37425e8c909e07ac2eecf5308868878b61553693"
@@ -7644,10 +7614,7 @@
         "zh": "在多个编程 Agent 间共享 Markdown 记忆，支持自动记录、检索和技能候选审阅。"
       },
       "category": "memory",
-      "version": "0.1.6",
       "iconReview": {
-        "version": "0.1.6",
-        "integrity": "sha512-bbGaGVFxPLu93Jxv7ZxPZJF3h0SQiqp+5ps0B/U5InZbeMiZxBeeVX244vhukSnvIrdyv9lv6wunG02BjY2iaw==",
         "commit": "2e64124920130ebf1fea30d05f405a9131f8db83",
         "path": "assets/logo-icon.jpg",
         "sha256": "ed536b14545ff913a1289317cc343a3fc07a22bbeda0b37b7fe092854d4ee24a"
@@ -7664,10 +7631,7 @@
         "zh": "为网页端和桌面端设置本地图片或视频背景。"
       },
       "category": "appearance",
-      "version": "1.0.30",
       "iconReview": {
-        "version": "1.0.30",
-        "integrity": "sha512-M3t+W8ob/5SBZc5+00sVx7wgFURSxgKI1eTiesLJJIh6mZrvHCWed37HYzTVNz6AEIx0QKWNPBRmsQ9jTXJAcQ==",
         "commit": "35730da179021eaaa1f6f9f3094bb5fefb536cce",
         "path": "assets/beauticode-icon-borderless.png",
         "sha256": "34c40984fc5564177ce834633bee4fb10d8c6c2ccb16aec9848a6f27c0d8cb5a"
@@ -7696,10 +7660,7 @@
         "zh": "压缩会话上下文，保留后续工作需要的历史信息。"
       },
       "category": "memory",
-      "version": "0.1.202",
       "iconReview": {
-        "version": "0.1.202",
-        "integrity": "sha512-vCouVcX40Qbo+RdO8vo8F+cV/cutbuoflBpLu0aFpZRxJtygSN743GGQET7jqRCLoT4KzqaQQqQOywjOaBDx0Q==",
         "commit": "85c27f0ebadbeae6b2c976e8b1752c56a1b8833a",
         "path": "docs/logo.svg",
         "sha256": "0dd17836cc529d9a497eb15f896b43b502f39576069bb216e76024a82f600e91"
@@ -7716,10 +7677,7 @@
         "zh": "在工具执行前检查破坏性命令及对密钥等敏感文件的访问。"
       },
       "category": "development",
-      "version": "2.6.16",
       "iconReview": {
-        "version": "2.6.16",
-        "integrity": "sha512-a1kHFof385Jy0qzHPYKds0NlIc+NSAyW5u7jDUpf6c06zCWfW6fpTeyUTFTRYIxWdUZOnPaAf47qFeeJNcWnjg==",
         "commit": "c2526afe39744f65281304687ba6e41de02559c4",
         "path": "assets/logo.png",
         "sha256": "cb3a55878bdd9e4bf6f45d4d4735eaa41754614770c193e66c1478a735464aa3"
@@ -7736,10 +7694,7 @@
         "zh": "提供终端编码界面和 /ship 工作流，分阶段完成需求说明、测试与验收。"
       },
       "category": "development",
-      "version": "0.27.0",
       "iconReview": {
-        "version": "0.27.0",
-        "integrity": "sha512-hBLj9/I3J6eawqoTTaQCuz9K/r7ESKPRzEQAH0oNOzhcgHtmudBKlt8pQOPLgpO8fUy7JIn/oZI1bF84JWd8RA==",
         "commit": "972d36f894f935c9a4bcf60bb870508b4460a419",
         "path": "assets/logo.svg",
         "sha256": "9a1ec46ad328586f125c3913a2e067525c574f30b301f2fcd3776e46e84053b8"
@@ -7756,10 +7711,7 @@
         "zh": "创建带记忆的长期 Bot，通过私聊和群聊交流，并让多个 Bot 分工协作。"
       },
       "category": "workflow",
-      "version": "0.1.7",
       "iconReview": {
-        "version": "0.1.7",
-        "integrity": "sha512-xRiXIpDfemkZ2l6lDwu7ZKSnn0a2c26BsZ7e+eEOkQ1AknXOKretK52Yuq1yfG6p4XCObmUiXR1tdGo7EQIStw==",
         "commit": "e13bc3419d2695a509520d850a07e63f05c34e07",
         "path": "docs/images/logo.svg",
         "sha256": "3821ef353358a66cbfa764730ba31ce4085c38a39d126e8d5c16124316b82a27"
@@ -7788,10 +7740,7 @@
         "zh": "汇总多家模型供应商余额，估算会话与子 Agent 费用，并区分 DeepSeek 峰谷计价。"
       },
       "category": "usage",
-      "version": "1.7.0",
       "iconReview": {
-        "version": "1.7.0",
-        "integrity": "sha512-3CenzXY1ap30Q/MF8rlFqrNiO43/qU7HcyS5h1IZlkGfnTHT8LkoMJvu4q7FHwUXMNeEwGI4jP/+FBK4lHuhNw==",
         "commit": "b57f9535c55aa39026931813e09834fa9f4f4d82",
         "path": "assets/icon.png",
         "sha256": "e8561b4639f6c5a1e145053ce84f90c98b9d0e96581b86674386057dc185da1b"
@@ -7868,10 +7817,7 @@
         "zh": "配置多个按量计费账号或 Token 套餐，在同一看板查询余额。"
       },
       "category": "usage",
-      "version": "0.5.1",
       "iconReview": {
-        "version": "0.5.1",
-        "integrity": "sha512-h9CgebGSu9zaKyLKl0SgfI7BnAi3KLXnPkklo8OMXsxrlTrZZ6TzATx9NGPg/G5XKJyIkr3ztxDaDnTLrTFAnQ==",
         "commit": "6aef671aefc41f97fa207282de398e55da2f722e",
         "path": "icon.svg",
         "sha256": "55306774f11cc92bbbe51e70a3750a3d85df3300062780e5dfd8b1a138209c78"
@@ -7888,10 +7834,7 @@
         "zh": "校验分镜 JSON，并通过 Remotion 在本地渲染竖版宣传视频。"
       },
       "category": "tools",
-      "version": "0.6.0",
       "iconReview": {
-        "version": "0.6.0",
-        "integrity": "sha512-UBwI1rkQcoolzdBpRQ+ydYD+Bn2ID1iPT7QkOXD1/wmPmSSVLxafq6t6Hir6CjnSt0O5itqSJRRMu5qTIduDfQ==",
         "commit": "217eb1f9c6c047b908bfa95ec03f729bec1247ce",
         "path": "docs/images/logo.png",
         "sha256": "90f6a9b47af76405b9118a822e600376ae42ac286e07366ab06c603a8d5ce364"
@@ -8028,10 +7971,7 @@
         "zh": "在子进程执行代码并返回精简结果，或把长材料存入本地 SQLite FTS5 供检索。"
       },
       "category": "tools",
-      "version": "0.3.12",
       "iconReview": {
-        "version": "0.3.12",
-        "integrity": "sha512-SdoOI3rdHeiF3RuFF2nXMeo0Gf5Zb6iQr+lUYfGjIkbXxrv3cx/X082WVohBSH40bGNPeDTqAjilurhKQDpixg==",
         "commit": "34caec47e2a67908b82e60cc4bf09dc3dccf4c8a",
         "path": "icon.svg",
         "sha256": "3b292a1c904303c33a30157dad9acbcfde5f291a8947884bb47c78560b5cf502"
@@ -8372,10 +8312,7 @@
         "zh": "编辑和搜索笔记、待办与文档，支持表格、附件、导出和 Agent 协作。"
       },
       "category": "knowledge",
-      "version": "0.2.14",
       "iconReview": {
-        "version": "0.2.14",
-        "integrity": "sha512-CftQJZobkzo/D6WHa54dN2jHI2/S2JjXE4AXd52VdiE531/p5/5Bn3gJ+JLQIvDwbi53YDEw3ngbesUyjXtXrA==",
         "commit": "cf2fbf0266f747a5a6ec8ea59e9dc5d03ceb5463",
         "path": "assets/readme/jot-icon.svg",
         "sha256": "f52bdf86469e584e50ed7269d3f85815a093cf1740d18dfd1e0aa6af2bd550bb"
@@ -8416,10 +8353,7 @@
         "zh": "通过 Labnana 生成或编辑图片，并查看订阅余额和积分用量估算。"
       },
       "category": "tools",
-      "version": "0.3.5",
       "iconReview": {
-        "version": "0.3.5",
-        "integrity": "sha512-xKDBOdVL5LmY8tSJyl74S7IMIXGk6LNxG7pgupbIOjaC32+/6vVvZ7nCQyZid9ZLVYz6QTQUXZH//zbb40tJHw==",
         "commit": "268b7cccdd67236ddebf9ce8ddb295ec8bf33635",
         "path": "images/logo.webp",
         "sha256": "fc7428fa6004ff0a18490d6695d828091f323b644d4e8cb5414a9971316e8eb9"
@@ -8556,10 +8490,7 @@
         "zh": "解析电机设计需求，初筛候选参数并生成后续计算工具所需数据。"
       },
       "category": "tools",
-      "version": "0.6.3",
       "iconReview": {
-        "version": "0.6.3",
-        "integrity": "sha512-7mDij9DUVYM1IG8BTpLj76IPnwgQMGRnMre3H5XOl3sRRZOmKCYiot9hgMFfyIrIzodu+KwO71DA9PNY3QUIIw==",
         "commit": "f434e3d8b06adfd9507607dc891524d7b4528148",
         "path": "assets/icons/icon-512.png",
         "sha256": "555067dc7d6ae3ea23c18f8ae0e48d484704ab432b9d9484a1414842609fb25f"
@@ -8636,10 +8567,7 @@
         "zh": "管理小说大纲、人物、正文批注和审稿流程，提供创作预设及本地 Python 后端。"
       },
       "category": "workflow",
-      "version": "0.2.23",
       "iconReview": {
-        "version": "0.2.23",
-        "integrity": "sha512-YL8/bkzZfOzwto4hwi1MBCtAFGyDqrxxYl8JI+r5NTxEUmUAcUfiKLLRr37wWDBiTdWx086lyGR+HjoWKItSVw==",
         "commit": "c662440f351436e666b6f996d3bdb3274f351b31",
         "path": "assets/logo-light.svg",
         "sha256": "ecef0887dd747fc7ce13e550a5938d0b7436dfa6dd5a1ecd069706ac2ba99d3d"
@@ -8776,10 +8704,7 @@
         "zh": "通过 MCP 连接 Postiz，查询渠道与发帖规则、管理草稿，并立即或定时发布。"
       },
       "category": "integrations",
-      "version": "0.1.0",
       "iconReview": {
-        "version": "0.1.0",
-        "integrity": "sha512-F1ap9VL2V88NaOPiAu5FOiYzxixnL2uW/zhQ0pVlL8Z9P+ElHaB7l0hUYZRQePsnHvmpNMroIVIIhUlaQo5gxA==",
         "commit": "86e02524377cc60a6cd6ef67fd10a3caeade8d2c",
         "path": "assets/logo.svg",
         "sha256": "0f49b14acb967866aba5f85c7728aa18c61b03b85c512e0a6bdcef4903dbc66f"
@@ -8904,10 +8829,7 @@
         "zh": "通过令牌网关从移动客户端访问会话、审批和文件，支持服务器切换及聊天离线缓存。"
       },
       "category": "integrations",
-      "version": "0.8.0-rc.4",
       "iconReview": {
-        "version": "0.8.0-rc.4",
-        "integrity": "sha512-Szd6ej4j6Myv1aR5EA8k4IQ4BBS+4FSMB419KsKW+VT41w0reSE6Ca66Fu7L1LJkQ/NoxJNvJgFx/AKucAjeHw==",
         "commit": "24ae6490094f2362bf8a5dcee85a17921d2407b1",
         "path": "packages/plugin/public/icon.svg",
         "sha256": "c5fe40566342a665dac6e382a118c8a0ab1a8b0181123600dfc2962868dbc92c"
@@ -9056,10 +8978,7 @@
         "zh": "在回复下方显示可点击的后续建议，选中后作为用户消息发送。"
       },
       "category": "interface",
-      "version": "0.1.9",
       "iconReview": {
-        "version": "0.1.9",
-        "integrity": "sha512-HOHmsEOwQ9dVV8Z/uj5tv3KIfQQDSpqEovxtt2ozB8wzHc80pcFtrlJhgxdXjaa/B2cqy6QCLQXLs1FYylT2EQ==",
         "commit": "8e1d69b7440b8c5627fbf2ab76f7f9fdac253c56",
         "path": "assets/icon.svg",
         "sha256": "0b2e82671c3a0d286926595c4d259055020172f0e2f551dd76df2d31a2e0ef77",
@@ -9113,10 +9032,7 @@
         "zh": "按项目整理媒体素材，在内嵌画布中运行 TongFlow 图片、配音、音乐和视频流程。"
       },
       "category": "workflow",
-      "version": "0.8.4",
       "iconReview": {
-        "version": "0.8.4",
-        "integrity": "sha512-/bRRHKSXHvDd9kqok0p7Rug9m/00bfIL8jV76IdMzMnxMhPr421fOtifnWZy+6r9liFYvaF0vkcb+sZUYJWm9A==",
         "commit": "fce4987200e8ae44db2830e0a2fa2985275d6d36",
         "path": "public/logo.svg",
         "sha256": "b8fc012f11717fe29fbc7efb48f33359df292889883ae7a87225f248ec771095"
@@ -9193,10 +9109,7 @@
         "zh": "让 Agent 发起语音来电，可接听、拒绝或稍后处理，接听后通过本地语音合成播放。"
       },
       "category": "tools",
-      "version": "0.3.12",
       "iconReview": {
-        "version": "0.3.12",
-        "integrity": "sha512-9Gtb0kp6dmcAyfUNp7sABNJ2EYVMZHoI5sg+7IH8w5qXHAyAgFJ3NK66iaJLujU1Ih2ErPQempTs3/1EBHFjyA==",
         "commit": "d50d1734c01112d2efbe19980309d56458db49da",
         "path": "docs/logo.svg",
         "sha256": "856db8bba6f53803878c3d8cdf5f0810a9bca831de30b072b529f5764d1266c7"
@@ -9225,10 +9138,7 @@
         "zh": "通过 SSH 把 DSH 部署到 VPS，并管理 HTTPS 网关、服务状态和升级。"
       },
       "category": "development",
-      "version": "1.16.1",
       "iconReview": {
-        "version": "1.16.1",
-        "integrity": "sha512-VHR3bVYBf/LAObF6oM6tm4ZnesyReYegHC7/e810pTwskUzTJxRRX60D6KmxplLUzmerISeHYBg8f/MXWSp6Nw==",
         "commit": "d4223e07717dce3832d0233a6a12edfceb3fde27",
         "path": "assets/logo.png",
         "sha256": "c326a497cc4693d39b36785370780a1fe631f73058f36834c49843b0a151f0ee"
@@ -9245,10 +9155,7 @@
         "zh": "通过 SSH 管理已登记的 VPS，提供终端、状态命令、操作确认和文件备份。"
       },
       "category": "development",
-      "version": "0.6.8",
       "iconReview": {
-        "version": "0.6.8",
-        "integrity": "sha512-klAxyCKdxL4IfleI+rT55/IqcXmpznms5AHdiLZulMQWtekw8qjkdKB03PugfVqdnnJzC+V3QAbt1/4iYNmzhQ==",
         "commit": "00d77a49b4fcda988e28a489a5ab42e0a4fa78c2",
         "path": "assets/logo.png",
         "sha256": "a3eb19f1ff71e9d02bb013293c28a510e3f130fee08b99b99c6d64ecc44761d8"
@@ -9277,10 +9184,7 @@
         "zh": "在 DSH 中提供文件浏览、Monaco 编辑器、搜索和本地 Git 操作面板。"
       },
       "category": "development",
-      "version": "0.1.9",
       "iconReview": {
-        "version": "0.1.9",
-        "integrity": "sha512-qmr/cpqhFygdVi4demV3autrw4f0NFMJTsQk1EUOoR6Nr5uM5rO8DF5zvsiDsSb38wTpPKG9VcWu1XUkJKFMFg==",
         "commit": "3adfa5644ece6ec933b472087b8f8e003066160e",
         "path": "assets/dsh-neon-workbench-core.svg",
         "sha256": "59b42b57b68d3fa6339a91e340933d2dc5acf9764bd57fc828d18fb6ca3ead59"
@@ -9309,10 +9213,7 @@
         "zh": "在工作台编辑网页插件源码、预览改动，并运行补丁检查和构建。"
       },
       "category": "development",
-      "version": "0.3.5",
       "iconReview": {
-        "version": "0.3.5",
-        "integrity": "sha512-2zUaA97D3nzrLNf2lHZZYoD8dfVlWIhn0X9kfEUFqdmjhQVxxy8khWkmNj4XiA4pAbZBfd+3dMd1eX+kVUIltQ==",
         "commit": "99fc12eab9185dabf0cac47f68f01efef75e96ca",
         "path": "assets/harmony-icon.png",
         "sha256": "ca88b9d2ba70f54aabd2fc1a4fb82af5bad175ccf0b066d105cae1524baacf8c"
@@ -9389,10 +9290,7 @@
         "zh": "通过手机或其他电脑远程访问 DSH，支持配对、PWA 和推送通知，需自行配置代理或隧道。"
       },
       "category": "integrations",
-      "version": "2.2.5",
       "iconReview": {
-        "version": "2.2.5",
-        "integrity": "sha512-yck1lP9SUgLwX+jOsFbjHaNNksRdybkK0dqX2m/SwObwmPVEYgR8FC4e5Ae4Br6C7HnWP370PXICdo+okA/jjg==",
         "commit": "b9a9588afbe746d3444b7a1eff5aaa20b2732fb1",
         "path": "pwa/icons/icon.svg",
         "sha256": "d0c275a711a0434e210e58007dbc5dceb4b9520ed463019f697e1be2be3d621f"
@@ -9409,10 +9307,7 @@
         "zh": "通过各用户独立的 OAuth 授权接入 FitMeet，查找人员、管理活动、提醒和消息，并在写入前预览。"
       },
       "category": "integrations",
-      "version": "0.3.2",
       "iconReview": {
-        "version": "0.3.2",
-        "integrity": "sha512-y1ya1E3WZeamDYVJvk/DrHpWu2eY+bcju90bw5S/b4Dzc5S9xNt6/0kniW96dcWAfQgJTPTDCve6osWAaQ0J9w==",
         "commit": "4ad3e1eabb7d2c365771050b19fbfc62f9db3568",
         "path": "assets/fitmeet-icon.png",
         "sha256": "b8b11724d46bc88fbd2485bb3361c9f964704b76d43ee6c6f847a77d380200b7"

@@ -50,7 +50,7 @@ pnpm test:browser
 
 批量收录可先将 issue、包名和回复草稿记录为 `schema: 1`、`entries: [{issue, name, replyLanguage, reply}]` 的 JSON。运行 `node scripts/preview-submissions.mjs <复核记录.json>`，仅检查这批发布归档并生成 `.local/submission-preview/` 下的索引、证据和回复预览，不安装插件、不改写已发布快照、不发评论。
 
-未指定 `version` 时跟踪 npm `latest`；指定后固定为该版本。生成器最多并发读取四个来源，并重试临时网络错误。npm 包下载限于公共 npm registry，固定 Git 来源仅使用下文的 GitHub 提交归档；审核仓库图片使用独立的图标读取边界，不执行被收录插件的代码。全部来源与官方校验器通过后才允许发布。
+未指定 `version` 时跟踪 npm `latest`，索引每 6 小时构建一次；指定后固定为该版本。仓库核查和大包预算会固定版本，运行 `pnpm check:pins` 可列出已落后于 npm `latest` 的固定条目，需重新核查后升级。生成器最多并发读取四个来源，并重试临时网络错误。npm 包下载限于公共 npm registry，固定 Git 来源仅使用下文的 GitHub 提交归档；审核仓库图片使用独立的图标读取边界，不执行被收录插件的代码。全部来源与官方校验器通过后才允许发布。
 
 目前每个插件提供一个版本。兼容范围来自 `engines.dsh`，缺失时取 DSH peer dependencies 的交集。没有约束表示作者未声明范围，不代表已验证兼容。
 
@@ -82,7 +82,7 @@ pnpm test:browser
 
 构建读取已通过 SHA-512 校验的发布包，从清单的 `icon` 或导出的 `./icon` 查找 SVG、PNG、JPEG 或 WebP，最多 256 KiB。图片保存在 `public/icons/`，以内容哈希命名；官方 `icon` 字段使用相对路径，DSH 按索引地址解析。网页使用同一图片。没有图标时显示名称首字，缺失、过大或不支持的图标记入 `status.json` 的 `display.warnings`。
 
-维护者可通过 `iconReview: {version, integrity, commit, path, sha256, normalization?}` 明确选用发布清单所声明 GitHub 仓库中的作品。条目必须固定 `version`，审核记录绑定相同 npm 版本与 SHA-512。`commit` 为完整的 40 位小写提交 SHA，`path` 为仓库根目录下的相对作品路径，`sha256` 对应原始文件字节。构建只根据该仓库和提交生成不可变的 `raw.githubusercontent.com` 地址，禁止自定义 URL、重定向、路径穿越、主动 SVG 内容及外部资源，并沿用包内图片的 256 KiB 限制和格式检查。审核记录不匹配会中止构建。显式审核图标优先于可用的包内图标；`display.publishedIcon` 保留包内图标证据，`display.icon` 记录 `source: "reviewed-repository"`、固定源码地址、原始哈希和审核内容。该例外不改变 npm 下载地址限制。
+维护者可通过 `iconReview: {commit, path, sha256, normalization?}` 明确选用发布清单所声明 GitHub 仓库中的作品。不写 `version` 和 `integrity` 时条目继续跟随 npm `latest`：每次构建都核对当前版本仍声明同一 GitHub 仓库，作品本身由提交和哈希固定。确需绑定某个发布包时，可同时写入 `version`、`integrity` 并固定条目 `version`。`commit` 为完整的 40 位小写提交 SHA，`path` 为仓库根目录下的相对作品路径，`sha256` 对应原始文件字节。构建只根据该仓库和提交生成不可变的 `raw.githubusercontent.com` 地址，禁止自定义 URL、重定向、路径穿越、主动 SVG 内容及外部资源，并沿用包内图片的 256 KiB 限制和格式检查。审核记录不匹配会中止构建。显式审核图标优先于可用的包内图标；`display.publishedIcon` 保留包内图标证据，`display.icon` 记录 `source: "reviewed-repository"`、固定源码地址、原始哈希和审核内容。该例外不改变 npm 下载地址限制。
 
 只有显式设置 `normalization: "remove-xml-comments"` 才会移除审核 SVG 的 XML 注释，否则保留原始字节。构建先检查原始哈希，再按处理后的字节生成图片路径与最终 `sha256`。版本或完整性哈希变化需要重新审核；构建不从本地审核页或调研目录读取图片。
 

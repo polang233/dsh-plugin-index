@@ -4,14 +4,20 @@ import { packageDisplay, MAX_ICON_BYTES } from './package-display.mjs';
 const REVIEW_KEYS = new Set(['version', 'integrity', 'commit', 'path', 'sha256', 'normalization']);
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 
-/** A reviewed exception stays bound to an exact npm archive and its declared upstream. */
+/**
+ * A reviewed exception stays bound to immutable artwork in the package's declared upstream.
+ * Without `version` and `integrity` the review follows npm `latest`: every build re-checks that the
+ * current release still declares the same GitHub repository, and the artwork hash pins the image itself.
+ */
 export function reviewedIconSource(input, { version, integrity, repository } = {}) {
   const review = input.iconReview;
   if (review === undefined) return undefined;
   if (!review || typeof review !== 'object' || Array.isArray(review) || Object.keys(review).some(key => !REVIEW_KEYS.has(key))) {
     throw new Error('Icon review contains unsupported fields');
   }
-  if (typeof version !== 'string' || !/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.test(version) || input.version !== version || review.version !== version || review.integrity !== integrity || typeof integrity !== 'string' || !integrity.split(/\s+/).some(hash => /^sha512-[A-Za-z0-9+/]{86}==$/.test(hash))) {
+  const followsLatest = review.version === undefined && review.integrity === undefined;
+  if (typeof version !== 'string' || !/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.test(version) || typeof integrity !== 'string' || !integrity.split(/\s+/).some(hash => /^sha512-[A-Za-z0-9+/]{86}==$/.test(hash))
+    || (!followsLatest && (input.version !== version || review.version !== version || review.integrity !== integrity))) {
     throw new Error('Icon review must match the pinned package version and SHA-512 integrity');
   }
   if (typeof review.commit !== 'string' || !/^[0-9a-f]{40}$/.test(review.commit)) throw new Error('Icon review requires an immutable commit');

@@ -25,7 +25,8 @@
     "check:published": "node scripts/check-published.mjs",
     "test": "node --test test/*.test.mjs packages/*/*.test.js",
     "test:browser": "playwright test --config test/playwright.config.mjs",
-    "preview": "node scripts/preview.mjs"
+    "preview": "node scripts/preview.mjs",
+    "check:pins": "node scripts/check-pins.mjs"
   },
   "dependencies": {
     "@deepseek-ai/dsh-plugin-market-index": "0.2.1-rc.2",
