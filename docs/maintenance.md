@@ -127,6 +127,12 @@ Full-size originals live in `site/originals/` and `docs/images/originals/`; the 
 
 Maintainer-approved Git entries pin `version` and declare `source: {type: "git", url, commit, integrity, publishedAt}`. The source must be a canonical GitHub repository URL with a full commit SHA, SHA-512 of that commit archive, and a release date. The repository root must contain the complete installable package. The generator downloads from `codeload.github.com` without redirects and applies the existing archive limits, identity, patch and entry-point checks. DSH installs the root package at that commit through the official Git source type. Git entries have no npm download or release-activity data. Updating requires reviewing the new commit and archive hash. No installation or lifecycle scripts run during generation.
 
+## Author withdrawals
+
+Authors ask for removal through a `[plugin-remove]` issue or a PR. After confirming the requester maintains the npm package or owns the source repository, delete the entry from `data/sources.json`, regenerate `public/`, and record `{name, repository, requestedBy, requestedAt, request}` in `data/withdrawn.json`, where `request` links to the request.
+
+`pnpm build` and `preview-submissions.mjs` fail when a withdrawn package is listed. `review-candidates.mjs` records withdrawn candidates with `stage: "withdrawn"` and skips downloading them, and a unit test checks that the source list contains none. Remove a record from the withdrawn list only when the author asks to relist.
+
 ## Daily recommendation rotation
 
 `public/recommendations.json` ships with the index and stores weekly candidate pools and fourteen days of front-page exposure. Full builds and metadata refreshes prefer the deployed GitHub Pages state, with the local public snapshot as fallback. Unpublished state is not saved to the CI cache. See [recommendation rules](market-display.md). `pnpm build:recommendations` reorders already checked local versions offline; new sources and versions still require a full build. `pnpm preview:recommendations` writes a fourteen-day preview to `.local/recommendation-preview.json`.

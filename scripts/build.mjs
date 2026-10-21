@@ -6,6 +6,7 @@ import { applyMarketDisplay } from './market-display.mjs';
 import { writeSite } from './site.mjs';
 import { buildIndex, releasesOf } from './lib.mjs';
 import { collectEndorsements } from './endorsements.mjs';
+import { assertNotWithdrawn, readWithdrawn } from './withdrawn.mjs';
 
 async function readJson(url) {
   try { return JSON.parse(await readFile(url, 'utf8')); } catch { return undefined; }
@@ -20,6 +21,7 @@ async function readSnapshot(url) {
 
 const config = JSON.parse(await readFile(new URL('../data/sources.json', import.meta.url), 'utf8'));
 validateBrandNames(config, JSON.parse(await readFile(new URL('../data/brand-names.json', import.meta.url), 'utf8')));
+assertNotWithdrawn(config.packages.map(entry => entry.name), await readWithdrawn());
 const built = await buildIndex(config);
 const output = new URL('../public/', import.meta.url);
 const cache = new URL('../.cache/', import.meta.url);

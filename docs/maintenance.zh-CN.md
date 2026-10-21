@@ -60,6 +60,12 @@ pnpm test:browser
 
 经维护者确认的 Git 条目通过 `source` 声明固定 GitHub 仓库、完整提交 SHA、源码归档 SHA-512 和发行时间，并固定 `version`。生成器从 `codeload.github.com` 下载该提交的归档，禁止重定向，沿用下载与解压预算，检查包名、版本、补丁和入口文件。安装源写为官方 `git` 类型，DSH 按固定提交安装根目录插件。Git 条目不请求 npm 下载量，也不生成 npm 发版活跃数据。升级需要更新提交与哈希。不执行插件安装或生命周期脚本。
 
+## 作者下架
+
+作者通过 `[plugin-remove]` issue 或 PR 申请下架。确认申请人是 npm 维护者或源码仓库所有者后，从 `data/sources.json` 删除条目，重新生成 `public/`，并在 `data/withdrawn.json` 记录 `{name, repository, requestedBy, requestedAt, request}`，`request` 为申请链接。
+
+`pnpm build` 与 `preview-submissions.mjs` 遇到下架名单中的包会直接失败，`review-candidates.mjs` 会把它们记为 `stage: "withdrawn"` 并跳过下载与检查，单元测试也会核对收录列表中没有已下架的包。只有作者本人再次申请收录时，才从下架名单删除记录。
+
 ## 经核查的源码补充
 
 发布包缺少 `repository` 时，维护者只有在确认该 npm 归档与上游发行对应后，才能添加 `repositoryReview`。条目必须固定 `version`，核查记录绑定相同版本、npm SHA-512、规范 GitHub 地址和不可变源码提交。版本或哈希变化、发布包声明的仓库冲突都会让构建失败。`status.json` 用 `repositorySource: "review"` 与 `"package"` 区分来源，并链接核查的源码清单。这类插件升级需要重新核查，不自动跟随 `latest`。

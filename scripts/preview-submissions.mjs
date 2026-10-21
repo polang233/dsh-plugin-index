@@ -1,6 +1,7 @@
 import {mkdir, readFile, writeFile} from 'node:fs/promises';
 import {validateBrandNames} from './catalog-copy.mjs';
 import {buildIndex} from './lib.mjs';
+import {assertNotWithdrawn, readWithdrawn} from './withdrawn.mjs';
 
 // Inspect only the accepted submissions. Never install plugins or overwrite public/.
 const reviewPath = process.argv[2];
@@ -13,6 +14,7 @@ if (review.schema !== 1 || !Array.isArray(review.entries) || !review.entries.len
   throw new Error('Review must contain issue numbers, package names and reply drafts');
 }
 const config = JSON.parse(await readFile(new URL('../data/sources.json', import.meta.url), 'utf8'));
+assertNotWithdrawn(review.entries.map(({name}) => name), await readWithdrawn());
 const byName = new Map(config.packages.map(entry => [entry.name, entry]));
 const packages = review.entries.map(({name}) => {
   const entry = byName.get(name);

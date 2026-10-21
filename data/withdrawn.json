@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "packages": [
+    {
+      "name": "@zhiqiangme/dsh-autostart-workbuddy",
+      "repository": "https://github.com/zhiqiangme/dsh-plugins",
+      "requestedBy": "zhiqiangme",
+      "requestedAt": "2026-10-21",
+      "request": "https://github.com/polang233/dsh-plugin-index/pull/22"
+    }
+  ]
+}

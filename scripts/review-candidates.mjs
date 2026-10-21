@@ -4,20 +4,24 @@ import { pathToFileURL } from 'node:url';
 import { collectPackage } from './lib.mjs';
 import { collectGitHub, githubRepository } from './github.mjs';
 import semver from 'semver';
+import { readWithdrawn } from './withdrawn.mjs';
 
 /** Keep package checks, source activity and author CI as separate evidence. */
 export async function reviewCandidates(candidates, {
   concurrency = 8, now = Date.now(), maxInactiveDays = 90,
-  targetDsh, checkpointDirectory, resume = false, onProgress = () => {}
+  targetDsh, checkpointDirectory, resume = false, withdrawn = new Set(), onProgress = () => {}
 } = {}) {
   if (!Array.isArray(candidates) || !candidates.length) throw new Error('Provide a nonempty candidate list');
   if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 8) throw new Error('Concurrency must be between 1 and 8');
-  const inputs = [...new Map(candidates.map(value => {
+  let inputs = [...new Map(candidates.map(value => {
     const input = typeof value === 'string' ? {name: value} : value;
     return [input.name, input];
   })).values()];
-  if (checkpointDirectory) await mkdir(checkpointDirectory, {recursive: true});
   const packages = [], rejected = [];
+  // Authors who asked to leave stay out of every scan, before any package is fetched.
+  for (const input of inputs.filter(value => withdrawn.has(value.name))) rejected.push({name: input.name, stage: 'withdrawn', reason: 'Withdrawn at author request'});
+  inputs = inputs.filter(value => !withdrawn.has(value.name));
+  if (checkpointDirectory) await mkdir(checkpointDirectory, {recursive: true});
   let next = 0, completed = 0;
   await Promise.all(Array.from({length: Math.min(concurrency, inputs.length)}, async () => {
     while (next < inputs.length) {
@@ -79,6 +83,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
     ...(!Array.isArray(input) ? {targetDsh: input.targetDsh, maxInactiveDays: input.maxInactiveDays ?? 90} : {}),
     checkpointDirectory: resolve(dirname(outputFile), 'checks'),
     resume: flags.includes('--resume'),
+    withdrawn: await readWithdrawn(),
     onProgress: progress => { if (progress.completed % 20 === 0 || progress.completed === progress.total) console.log(JSON.stringify(progress)); }
   });
   await writeFile(outputFile, JSON.stringify(report, null, 2) + '\n');
