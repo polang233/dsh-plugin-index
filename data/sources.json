@@ -9581,7 +9581,7 @@
       "name": "dsh-training-lens",
       "title": {
         "en": "Training Lens",
-        "zh": "Training Lens 训练视窗"
+        "zh": "Training Lens（训练视窗）"
       },
       "description": {
         "en": "Start a local TensorBoard scalar dashboard from a DSH tool: pick primary and secondary metrics, set the improvement direction and optional EMA smoothing for existing training logs. Read-only; requires Python 3.10+ and TensorBoard.",
@@ -9591,231 +9591,687 @@
     },
     {
       "name": "@linxin666/dsh-client-ui-web-ui-settings",
+      "title": {
+        "en": "DSH Web Settings",
+        "zh": "DSH Web 设置"
+      },
+      "description": {
+        "en": "Gather the switches and settings of the dsh-web plugin family into one section of the DSH settings page.",
+        "zh": "把 dsh-web 系列插件的开关和配置表单集中到 DSH 设置页的一个分区里。"
+      },
       "category": "interface"
     },
     {
       "name": "@wxg-prc-cpg/browser-skill-dsh-plugin",
+      "title": {
+        "en": "BrowserSkill",
+        "zh": "BrowserSkill"
+      },
+      "description": {
+        "en": "Let the agent browse websites, fill forms and take screenshots in your real, signed-in Chrome or Edge through Tencent BrowserSkill, with a live view in DSH Web. Requires the bsk CLI and browser extension.",
+        "zh": "通过腾讯 BrowserSkill，让 Agent 在你已登录的 Chrome 或 Edge 中浏览网页、填写表单和截图，并在 DSH Web 里实时查看。需要安装 bsk 命令行和浏览器扩展。"
+      },
       "category": "tools"
     },
     {
       "name": "@michengai/dsh-simplify",
+      "title": {
+        "en": "DSH Simplify",
+        "zh": "DSH Simplify"
+      },
+      "description": {
+        "en": "Run /simplify to have the agent tidy code within the current Git changes, the staged files, a commit or a path, keeping behavior unchanged. Prompts are in Simplified Chinese.",
+        "zh": "输入 /simplify，让 Agent 在当前 Git 改动、暂存区、指定提交或路径范围内整理代码，保持原有功能。提示词为简体中文。"
+      },
       "category": "development"
     },
     {
       "name": "dsh-working-activity",
+      "title": {
+        "en": "Working Activity",
+        "zh": "Working Activity（工作状态行）"
+      },
+      "description": {
+        "en": "Show a live status line while the agent works: current phase, the tool actually running, elapsed time and a summary when the turn ends. Works in the TUI, Web UI and desktop app.",
+        "zh": "Agent 工作时显示一行实时状态：当前阶段、正在运行的工具、已用时间和回合结束摘要，终端、网页和桌面端通用。"
+      },
       "category": "interface"
     },
     {
       "name": "dsh-mnemon-strategy-light-context",
+      "title": {
+        "en": "Mnemon Light Context",
+        "zh": "Mnemon Light Context（轻量上下文）"
+      },
+      "description": {
+        "en": "Cap how many characters Mnemon memory may add to each turn. An optional add-on for Mnemon strategies; a very small cap can hide memories.",
+        "zh": "限制 Mnemon 记忆每轮注入上下文的字符数，是 Mnemon 主策略的可选扩展。上限设得过小可能漏掉记忆。"
+      },
       "category": "memory"
     },
     {
       "name": "dsh-mnemon-strategy-scoped",
+      "title": {
+        "en": "Mnemon Scoped Sources",
+        "zh": "Mnemon Scoped Sources（限定来源）"
+      },
+      "description": {
+        "en": "Choose which Mnemon memory sources a strategy reads and which ones it may write. An optional add-on for Mnemon strategies.",
+        "zh": "指定 Mnemon 主策略读取哪些记忆来源、允许写入哪些，是 Mnemon 的可选扩展。"
+      },
       "category": "memory"
     },
     {
       "name": "@dfy-plugins/dsh-bundle",
+      "title": {
+        "en": "DFY Bundle",
+        "zh": "DFY 插件组合包"
+      },
+      "description": {
+        "en": "Install eight DFY plugins at once: wallpaper, appearance, archive management, media, image generation, interactive visuals, task guard and Codex connection, each with its own switch.",
+        "zh": "一次安装 DFY 的 8 个插件：壁纸、外观、归档管理、媒体内容、图像生成、交互可视化、任务守卫和 Codex 连接，可分别启停。"
+      },
       "category": "interface"
     },
     {
       "name": "ds-harness-remote",
+      "title": {
+        "en": "DeepSeek Harness Remote",
+        "zh": "DeepSeek Harness Remote"
+      },
+      "description": {
+        "en": "Continue DSH sessions from another computer, the web or Android over an end-to-end encrypted connection, with experimental support for Codex, Cursor and Antigravity workspaces.",
+        "zh": "通过端到端加密连接，在另一台电脑、网页或 Android 上继续使用 DSH 会话，另有 Codex、Cursor 和 Antigravity 工作区的实验支持。"
+      },
       "category": "integrations"
     },
     {
       "name": "@iasiv5/dsh-obmc-web",
+      "title": {
+        "en": "OpenBMC Console",
+        "zh": "OpenBMC Console（BMC 控制台）"
+      },
+      "description": {
+        "en": "Open an OpenBMC web console from DSH settings through an SSH-forwarded same-origin proxy that follows BMC IP changes. Requires an SSH jump host that can reach the BMC.",
+        "zh": "在 DSH 设置里经 SSH 转发的同源代理打开 OpenBMC 网页控制台，BMC IP 变化时自动重新连接。需要能访问 BMC 的 SSH 跳板机。"
+      },
       "category": "development"
     },
     {
       "name": "@ethanyoq/dsh-invoice-downloader",
+      "title": {
+        "en": "Invoice Downloader",
+        "zh": "Invoice Downloader（发票下载）"
+      },
+      "description": {
+        "en": "Download invoice attachments from QQ or 163 mail over IMAP, run OCR locally, file them by rule and produce an Excel summary. Requires Python 3.10+ on Windows x64 or Apple Silicon.",
+        "zh": "通过 IMAP 从 QQ 或 163 邮箱下载发票附件，本地 OCR 识别后按规则归档，并生成 Excel 汇总。需要 Python 3.10+，支持 Windows x64 和 Apple Silicon。"
+      },
       "category": "tools"
     },
     {
       "name": "dsh-mattpocock-skills-deck",
+      "title": {
+        "en": "MattSkillsDeck",
+        "zh": "MattSkillsDeck"
+      },
+      "description": {
+        "en": "Bundle the 27 engineering and productivity skills from mattpocock/skills and turn the work into a task board backed by GitHub issues. Managing labels needs write access to the repository.",
+        "zh": "内置 mattpocock/skills 的 27 个工程与效率技能，并把任务做成基于 GitHub Issue 的看板。创建和流转标签需要仓库写权限。"
+      },
       "category": "skills"
     },
     {
       "name": "dsh-thinking-levels",
+      "title": {
+        "en": "Thinking Levels",
+        "zh": "Thinking Levels（思考强度）"
+      },
+      "description": {
+        "en": "Adjust reasoning effort automatically for each tool round, with an optional manual lock and per-tool timing.",
+        "zh": "按每轮工具调用自动调整推理强度，也可以手动锁定档位，并记录各工具的耗时。"
+      },
       "category": "providers"
     },
     {
       "name": "dsh-prime-memory",
+      "title": {
+        "en": "Prime Memory",
+        "zh": "Prime Memory（分层记忆）"
+      },
+      "description": {
+        "en": "Layered memory that captures conversations, extracts facts, consolidates scenes and distills a profile, then recalls what is relevant before each model step. The pipeline is adapted from TencentDB Agent Memory.",
+        "zh": "分层蒸馏记忆：自动记录对话、抽取原子记忆、整合场景并提炼画像，在每次模型调用前召回相关内容。管线设计移植自 TencentDB Agent Memory。"
+      },
       "category": "memory"
     },
     {
       "name": "pi2dsh",
+      "title": {
+        "en": "pi2dsh",
+        "zh": "pi2dsh"
+      },
+      "description": {
+        "en": "Run unmodified Pi extensions as native DSH plugins, with compatibility checks and translation of Pi MCP settings.",
+        "zh": "让 Pi 扩展不经修改就作为 DSH 原生插件运行，并提供兼容性检查和 Pi MCP 配置转换。"
+      },
       "category": "integrations"
     },
     {
       "name": "dsh-life-pack",
+      "title": {
+        "en": "iLife",
+        "zh": "iLife（爱生活）"
+      },
+      "description": {
+        "en": "One settings card for the iLife suite (memo, calories, cooking, home, schedule and bookkeeping), with a read-only config check and an update panel. Each skill is installed separately.",
+        "zh": "爱生活系列的统一设置卡，汇集备忘录、卡路里、私家大厨、居家管家、作息管家和记账六个技能，附只读配置体检和更新面板。各技能需单独安装。"
+      },
       "category": "tools"
     },
     {
       "name": "dsh-task-progress",
+      "title": {
+        "en": "Task Progress",
+        "zh": "Task Progress（任务进度）"
+      },
+      "description": {
+        "en": "Let long-running scripts report structured progress that DSH Web shows in a floating panel and a sidebar tab, without waiting for the command to finish.",
+        "zh": "长时间运行的脚本可以上报结构化进度，在 DSH Web 的悬浮窗和右侧栏实时显示，不用等命令结束。"
+      },
       "category": "workflow"
     },
     {
       "name": "dsh-ppt",
+      "title": {
+        "en": "DSH PPT",
+        "zh": "DSH PPT（演示文稿）"
+      },
+      "description": {
+        "en": "Turn material into an HTML slideshow, an editable PPTX and a project file, with charts, light editing, undo and quality checks. Final PPTX rendering can use LibreOffice.",
+        "zh": "把材料做成 HTML 放映稿、可编辑的 PPTX 和工程文件，支持图表、轻量编辑、撤销与质量检查。最终 PPTX 渲染可选用 LibreOffice。"
+      },
       "category": "tools"
     },
     {
       "name": "dsh-tiddlywiki",
+      "title": {
+        "en": "TiddlyWiki",
+        "zh": "TiddlyWiki（知识库）"
+      },
+      "description": {
+        "en": "Turn TiddlyWiki 5 into a local, plain-text knowledge base under Git that you and the agent read and write together. It is not an automatic memory plugin; publishing to WeChat Official Account drafts is optional.",
+        "zh": "把 TiddlyWiki 5 变成你和 Agent 共用的本地知识库，纯文本并用 Git 管理。不在后台自动记忆，可选发布到微信公众号草稿箱。"
+      },
       "category": "knowledge"
     },
     {
       "name": "@lolkda/dsh-skills-manager",
+      "title": {
+        "en": "Skills Manager",
+        "zh": "Skills Manager（技能管理）"
+      },
+      "description": {
+        "en": "Manage the skills DSH actually loads from Settings: see where each comes from, enable or disable it without touching its files, edit SKILL.md, and import or delete skills. Deletion is permanent.",
+        "zh": "在设置页管理 DSH 实际会加载的技能：查看来源和覆盖关系，不改文件即可启停，编辑 SKILL.md，导入或删除技能。删除后无法恢复。"
+      },
       "category": "skills"
     },
     {
       "name": "@goodandready/dsh-image-gen",
+      "title": {
+        "en": "Image Gen",
+        "zh": "Image Gen（图像生成）"
+      },
+      "description": {
+        "en": "Add a generate_image tool backed by FAL, any OpenAI-compatible image API or a ChatGPT/Grok subscription, with results shown inline and optional approval and budget limits.",
+        "zh": "提供 generate_image 工具，可接 FAL、OpenAI 兼容的图像接口或 ChatGPT/Grok 订阅，图片直接显示在对话中，可设置审批和预算上限。"
+      },
       "category": "tools"
     },
     {
       "name": "@ayanehana/dsh-reasoning-effort",
+      "title": {
+        "en": "Reasoning Effort Slider",
+        "zh": "Reasoning Effort Slider（思考强度滑块）"
+      },
+      "description": {
+        "en": "Add a reasoning-effort slider with an animated runner to the native model selector, using each model's own levels.",
+        "zh": "在原生模型选择器中加入带跑步动画的推理强度滑块，档位取自各模型自身的定义。"
+      },
       "category": "interface"
     },
     {
       "name": "dsh-engramory",
+      "title": {
+        "en": "Engramory",
+        "zh": "Engramory"
+      },
+      "description": {
+        "en": "Curated long-term memory kept as plain Markdown notes and shared across hosts, with the index size limit enforced by a tool guard. Keep the store git-ignored when it sits inside a project repository.",
+        "zh": "以纯 Markdown 笔记保存的策展式长期记忆，多个宿主共用一个记忆库，索引上限由工具守卫强制执行。记忆库放在项目仓库内时需加入 git-ignore。"
+      },
       "category": "memory"
     },
     {
       "name": "dsh-custom-mode",
+      "title": {
+        "en": "Custom Mode",
+        "zh": "Custom Mode（自定义模式）"
+      },
+      "description": {
+        "en": "Edit DSH custom modes, including the system prompt, base mode and plugin switches, and keep several assistants.",
+        "zh": "编辑 DSH 自定义模式的系统提示词、基础模式和插件开关，可以创建多个助手。"
+      },
       "category": "workflow"
     },
     {
       "name": "@twinsearth/w2m-dsh-plugin",
+      "title": {
+        "en": "Windows2MacOS",
+        "zh": "Windows2MacOS"
+      },
+      "description": {
+        "en": "Run one project across your own Windows and macOS machines from a single DeepSeek account, with replicate, split, broadcast and pipeline modes.",
+        "zh": "用同一个 DeepSeek 账号在你自己的 Windows 和 macOS 机器上运行同一个项目，支持复制、拆分、广播和流水线四种协同方式。"
+      },
       "category": "development"
     },
     {
       "name": "@morlay/better-session",
+      "title": {
+        "en": "Better Session",
+        "zh": "Better Session"
+      },
+      "description": {
+        "en": "A bundle of session plugins that adds in-place edit, retry, recall and fork to conversations in DSH Web.",
+        "zh": "组合多个会话插件，为 DSH Web 的对话提供就地编辑、重试、撤回和分支。"
+      },
       "category": "workflow"
     },
     {
       "name": "@yottameta/yotta-skills-plugin",
+      "title": {
+        "en": "YuanGe",
+        "zh": "YuanGe（元阁）"
+      },
+      "description": {
+        "en": "Install and route the YottaMeta skill family, packaged with an MCP server.",
+        "zh": "安装并调度 YottaMeta 技能家族，内置 MCP 服务器。"
+      },
       "category": "skills"
     },
     {
       "name": "kiokuko-dsh",
+      "title": {
+        "en": "Kiokuko",
+        "zh": "Kiokuko（記憶庫）"
+      },
+      "description": {
+        "en": "Add project memory, task planning and verification to DSH, plus AgenticReplay to record and export model and tool activity.",
+        "zh": "为 DSH 添加项目记忆、任务规划和验证支持，并可用 AgenticReplay 记录、导出模型和工具活动。"
+      },
       "category": "memory"
     },
     {
       "name": "@lovedolove/veyra",
+      "title": {
+        "en": "Veyra",
+        "zh": "Veyra"
+      },
+      "description": {
+        "en": "Persistent engineering memory for coding agents, isolated per project, backed by evidence and checked against the current repository, with optional code intelligence and hybrid search.",
+        "zh": "为编程 Agent 提供按项目隔离、附带证据并对照当前仓库校验的工程记忆，可选代码结构分析和混合检索。"
+      },
       "category": "development"
     },
     {
       "name": "@shgroup/dsh-serenity-hooks",
+      "title": {
+        "en": "Serenity ACC",
+        "zh": "Serenity ACC（宁静号）"
+      },
+      "description": {
+        "en": "Turn a directory into an AI workspace with its own memory, rules, tools and boundaries, so work resumes where it stopped after model switches and restarts. Requires Node 20+.",
+        "zh": "把普通目录变成 AI 工作区，自带记忆、规范、工具和边界，换模型或重启后都能接着做。需要 Node 20 以上。"
+      },
       "category": "workflow"
     },
     {
       "name": "rolebox",
+      "title": {
+        "en": "rolebox",
+        "zh": "rolebox"
+      },
+      "description": {
+        "en": "Define specialist agent roles in YAML, each with its own prompt, model, skills and permissions, run them together as multi-agent graphs, and keep what they learn across sessions. Also works with OpenCode, Pi and Codex.",
+        "zh": "用 YAML 定义专职 Agent 角色，各自配置提示词、模型、技能和权限，按多 Agent 流程协作，并跨会话保留经验。也支持 OpenCode、Pi 和 Codex。"
+      },
       "category": "workflow"
     },
     {
       "name": "dsh-task-ledger",
+      "title": {
+        "en": "Task Ledger",
+        "zh": "Task Ledger（任务台账）"
+      },
+      "description": {
+        "en": "A read-only board over task-ledger workspaces, with the task-ledger skill bundled for global use.",
+        "zh": "只读查看 task-ledger 工作区的任务看板，并附带可全局使用的 task-ledger 技能。"
+      },
       "category": "workflow"
     },
     {
       "name": "dsh-theme-endfield",
+      "title": {
+        "en": "Endfield Theme",
+        "zh": "Endfield Theme（终末地主题）"
+      },
+      "description": {
+        "en": "A DSH Web theme in the style of the Arknights: Endfield website: cream paper, ink text, signal-yellow accents and square corners, with optional animated backgrounds.",
+        "zh": "参考《明日方舟：终末地》官网风格的 DSH Web 主题：奶油纸底、墨黑文字、信号黄强调色和直角，可选动态背景。"
+      },
       "category": "appearance"
     },
     {
       "name": "@lmzhen/dsh-evolution-host",
+      "title": {
+        "en": "Evolution Host",
+        "zh": "Evolution Host"
+      },
+      "description": {
+        "en": "Infrastructure for the self-evolution automation family, without the memory and skill tools. Pair it with the Evolution agent preset and do not install it alongside the preset bundle. Validated on DSH 0.2.0-rc.2.",
+        "zh": "自我进化自动化系列的基础设施包，不含记忆和技能工具，需搭配 Evolution 智能体预设使用，不要与一键预设包同时安装。已在 DSH 0.2.0-rc.2 上验证。"
+      },
       "category": "workflow"
     },
     {
       "name": "dsh-home-hosted",
+      "title": {
+        "en": "Home Hosted",
+        "zh": "Home Hosted"
+      },
+      "description": {
+        "en": "Ask DSH to set up home services such as Gitea or Jellyfin in home-hosted, and manage the panel, entries and boot autostart. Nothing is installed or started until you confirm.",
+        "zh": "让 DSH 在 home-hosted 中搭建 Gitea、Jellyfin 等家庭服务，并管理面板、服务条目和开机自启。确认之前不会安装或启动任何服务。"
+      },
       "category": "development"
     },
     {
       "name": "@exagone313/dsh-podman",
+      "title": {
+        "en": "DSH Podman",
+        "zh": "DSH Podman"
+      },
+      "description": {
+        "en": "Route shell commands and file access into disposable, per-project Podman containers, with approval-aware privilege escalation.",
+        "zh": "把命令执行和文件访问都放进按项目隔离的一次性 Podman 容器，并支持需审批的权限提升。"
+      },
       "category": "development"
     },
     {
       "name": "dsh-notification",
+      "title": {
+        "en": "DSH Notification",
+        "zh": "DSH Notification（通知）"
+      },
+      "description": {
+        "en": "Desktop, browser and webhook notifications when the agent finishes a turn, hits an error or waits for approval.",
+        "zh": "Agent 完成回合、出错或等待审批时，通过桌面、浏览器或 Webhook 提醒你。"
+      },
       "category": "integrations"
     },
     {
       "name": "@vizuh/sabi-deepseek-harness",
+      "title": {
+        "en": "Sabi",
+        "zh": "Sabi"
+      },
+      "description": {
+        "en": "Send DSH model requests through Sabi's local proxy, which picks the configured upstream model. Written against DSH 0.1.6-alpha.2.",
+        "zh": "把 DSH 的模型请求交给 Sabi 本地代理，由它按配置选择上游模型。基于 DSH 0.1.6-alpha.2 开发。"
+      },
       "category": "providers"
     },
     {
       "name": "dsh-plugin-mission-control",
+      "title": {
+        "en": "Mission Control",
+        "zh": "Mission Control"
+      },
+      "description": {
+        "en": "Mirror DSH sessions, messages and tool activity to a JARVIS Mission Control board, where finished turns wait for human review.",
+        "zh": "把 DSH 会话、消息和工具活动同步到 JARVIS Mission Control 看板，完成的回合交给人工审核。"
+      },
       "category": "workflow"
     },
     {
       "name": "@dsh-agentic-roleplay/state",
+      "title": {
+        "en": "Agentic Roleplay State",
+        "zh": "Agentic Roleplay State"
+      },
+      "description": {
+        "en": "The state service of DSH Agentic Roleplay: one SQLite database per session, used by other plugins. Most users should install the complete @dsh-agentic-roleplay/all instead.",
+        "zh": "DSH Agentic Roleplay 的状态服务，每个会话一个 SQLite 数据库，供其他插件调用。一般用户建议安装完整的 @dsh-agentic-roleplay/all。"
+      },
       "category": "tools"
     },
     {
       "name": "dsh-tmux-cc",
+      "title": {
+        "en": "tmux Control Mode",
+        "zh": "tmux Control Mode（tmux 工作台）"
+      },
+      "description": {
+        "en": "A persistent tmux control-mode panel in DSH Web that attaches to existing tmux sessions, stays visible across chats and adapts to phones.",
+        "zh": "在 DSH Web 中常驻的 tmux 控制模式工作台，连接已有的 tmux 会话，切换聊天时保持可见，并适配手机。"
+      },
       "category": "development"
     },
     {
       "name": "@dsh-ai-providers/jina-cohere",
+      "title": {
+        "en": "Jina / Cohere Reranking",
+        "zh": "Jina / Cohere Reranking（重排序）"
+      },
+      "description": {
+        "en": "Provide reranking through Jina- or Cohere-compatible /rerank APIs for plugins that use the shared dsh-ai-providers service. It does nothing on its own.",
+        "zh": "通过 Jina 或 Cohere 兼容的 /rerank 接口提供重排序，供使用 dsh-ai-providers 共享服务的插件调用，单独安装不起作用。"
+      },
       "category": "providers"
     },
     {
       "name": "dsh-plugin-codegraph",
+      "title": {
+        "en": "CodeGraph",
+        "zh": "CodeGraph"
+      },
+      "description": {
+        "en": "Give the agent tools to find where a symbol is declared, what calls it and what a change reaches, from a local tree-sitter index.",
+        "zh": "基于本地 tree-sitter 索引，让 Agent 查询符号在哪里定义、被谁调用，以及改动会影响到哪里。"
+      },
       "category": "development"
     },
     {
       "name": "dsh-slides",
+      "title": {
+        "en": "Slides",
+        "zh": "Slides（演示文稿）"
+      },
+      "description": {
+        "en": "Give the agent a make_slides tool that writes a self-contained HTML deck with speaker notes, which presents offline and prints to PDF, plus an optional editable PPTX.",
+        "zh": "提供 make_slides 工具，生成可离线放映、带演讲备注并可打印为 PDF 的单文件 HTML 演示稿，也可导出可编辑的 PPTX。"
+      },
       "category": "tools"
     },
     {
       "name": "@dexthemes/deepseek-harness-plugin",
+      "title": {
+        "en": "DexThemes",
+        "zh": "DexThemes"
+      },
+      "description": {
+        "en": "Browse, preview, apply and revert color themes in DSH, including a palette matched to the default DSH colors. Sends limited usage events.",
+        "zh": "在 DSH 中浏览、预览、应用和还原配色主题，包含与 DSH 默认配色一致的方案。会发送有限的使用统计。"
+      },
       "category": "appearance"
     },
     {
       "name": "deepseek-idesign",
+      "title": {
+        "en": "iPolloWork Design Studio",
+        "zh": "iPolloWork Design Studio（设计工作室）"
+      },
+      "description": {
+        "en": "Use iPolloWork Design Studio and its curated templates as a conversation view in DSH. Declares support only for DSH versions before 0.2.",
+        "zh": "在 DSH 的对话视图中使用 iPolloWork 设计工作室及其精选模板。仅声明支持 0.2 之前的 DSH。"
+      },
       "category": "tools"
     },
     {
       "name": "deepseek-ippt",
+      "title": {
+        "en": "iPolloWork PPT Studio",
+        "zh": "iPolloWork PPT Studio（PPT 工作室）"
+      },
+      "description": {
+        "en": "Use iPolloWork PPT Studio and its curated slide templates as a conversation view in DSH. Declares support only for DSH versions before 0.2.",
+        "zh": "在 DSH 的对话视图中使用 iPolloWork PPT 工作室及其精选幻灯片模板。仅声明支持 0.2 之前的 DSH。"
+      },
       "category": "tools"
     },
     {
       "name": "dsh-codex-connect",
+      "title": {
+        "en": "Codex Connect",
+        "zh": "Codex Connect"
+      },
+      "description": {
+        "en": "Sign in with a ChatGPT account to use Codex models in DSH. Declares support up to DSH 0.2.0-rc.2.",
+        "zh": "用 ChatGPT 账号登录，在 DSH 中使用 Codex 模型。声明支持到 DSH 0.2.0-rc.2。"
+      },
       "category": "providers"
     },
     {
       "name": "seektty",
+      "title": {
+        "en": "SeekTTY",
+        "zh": "SeekTTY"
+      },
+      "description": {
+        "en": "A terminal workspace for DSH: run deepseek in a project to use Harness agents, sessions, models and plugins from the terminal. Tested with DSH 0.2.0-rc.2.",
+        "zh": "DSH 的终端工作台，在项目目录运行 deepseek，即可在终端里使用 Harness 的 Agent、会话、模型和插件。已在 DSH 0.2.0-rc.2 上测试。"
+      },
       "category": "development"
     },
     {
       "name": "dsh-win32",
+      "title": {
+        "en": "DSH Win32",
+        "zh": "DSH Win32"
+      },
+      "description": {
+        "en": "Diagnose and fix DSH on native Windows without WSL: PowerShell, Workspace Write, shortcuts and legacy preset repair. Declares support only for DSH 0.1.",
+        "zh": "在原生 Windows 上诊断并修复 DSH，无需 WSL，涵盖 PowerShell、工作区写入、快捷方式和旧预设修复。仅声明支持 DSH 0.1。"
+      },
       "category": "development"
     },
     {
       "name": "dsh-usage",
+      "title": {
+        "en": "DSH Usage",
+        "zh": "DSH Usage（用量统计）"
+      },
+      "description": {
+        "en": "Per-turn token usage and cost estimates, a usage page by model and session, and a 52-week activity heatmap for DSH Web. Costs are estimates; community sharing is off by default.",
+        "zh": "为 DSH Web 显示每轮 Token 用量和费用估算，按模型和会话查看统计，并提供 52 周活动热力图。费用为估算值，社区数据分享默认关闭。"
+      },
       "category": "usage"
     },
     {
       "name": "jacky-creator",
+      "title": {
+        "en": "Jacky Creator",
+        "zh": "Jacky Creator"
+      },
+      "description": {
+        "en": "A local workspace for content creators that carries ideas, scripts, production, publishing and reviews, keeping each piece as an ordinary folder. Built for DSH 0.2.0-rc.2.",
+        "zh": "面向内容创作者的本地工作台，从灵感、脚本到制作、发布和复盘集中推进，每条内容都是普通文件夹。适配 DSH 0.2.0-rc.2。"
+      },
       "category": "tools"
     },
     {
       "name": "dsh-plugin-genui",
+      "title": {
+        "en": "GenUI",
+        "zh": "GenUI"
+      },
+      "description": {
+        "en": "Let the agent build a focused React page for the task at hand and carry the user's choices into the next turn. Web profile only.",
+        "zh": "让 Agent 为当前任务生成专用的 React 页面，并把用户在页面上的选择带入下一轮。仅支持 Web。"
+      },
       "category": "tools"
     },
     {
       "name": "dsh-git-memory",
+      "title": {
+        "en": "DSH Memory",
+        "zh": "DSH Memory（Git 记忆）"
+      },
+      "description": {
+        "en": "Long-term memory stored in a local Git repository, with a settings row to check its status and clear memories. Declares support only for DSH 0.1.",
+        "zh": "把长期记忆保存在本地 Git 仓库中，可在设置页查看状态并清除记忆。仅声明支持 DSH 0.1。"
+      },
       "category": "memory"
     },
     {
       "name": "rsi-gear",
+      "title": {
+        "en": "Gear",
+        "zh": "Gear"
+      },
+      "description": {
+        "en": "An open optimization framework that iteratively improves an agent's model, instructions, tools and workflow against a benchmark you provide.",
+        "zh": "开源优化框架，根据你提供的基准任务迭代改进 Agent 的模型、指令、工具和工作流程。"
+      },
       "category": "workflow"
     },
     {
       "name": "dsh-project-brain",
+      "title": {
+        "en": "Project Brain",
+        "zh": "Project Brain（项目大脑）"
+      },
+      "description": {
+        "en": "Analyze the workspace, explain its architecture, keep decisions and TODOs, and restore project context in later sessions, with optional hybrid retrieval.",
+        "zh": "分析当前工作区、讲解项目架构、保存开发决策和待办，并在后续会话中恢复项目上下文，可选混合检索。"
+      },
       "category": "memory"
     },
     {
       "name": "dsh-balance-plugin",
+      "title": {
+        "en": "DeepSeek Balance",
+        "zh": "DeepSeek Balance（余额）"
+      },
+      "description": {
+        "en": "Show your DeepSeek wallet balance at the foot of the sidebar, refreshed after each turn, with an animated change. Requires DEEPSEEK_API_KEY; supports DSH 0.1.7 and 0.2.0 only.",
+        "zh": "在侧栏底部显示 DeepSeek 账户余额，每轮结束后刷新，金额变化时有动画。需要 DEEPSEEK_API_KEY，仅支持 DSH 0.1.7 和 0.2.0。"
+      },
       "category": "usage"
     },
     {
       "name": "dsh-synapse",
       "version": "0.4.3",
+      "title": {
+        "en": "Synapse",
+        "zh": "Synapse（会话地图）"
+      },
+      "description": {
+        "en": "Lay out the sessions, follow-ups and forks of a workspace as a draggable, zoomable map, keeping native DSH sessions as the only source of truth.",
+        "zh": "把同一工作区的会话、追问和分支排成可拖拽、可缩放的地图，DSH 原生会话仍是唯一的数据来源。"
+      },
       "category": "interface",
       "repositoryReview": {
         "url": "https://github.com/liangmianya/dsh-synapse",
@@ -9827,6 +10283,14 @@
     {
       "name": "dsh-codex-effort-slider",
       "version": "1.1.3",
+      "title": {
+        "en": "Codex Effort Slider",
+        "zh": "Codex Effort Slider（推理强度滑条）"
+      },
+      "description": {
+        "en": "Replace the reasoning-effort levels in the composer with a continuous Codex-style slider, colored by level.",
+        "zh": "把输入框里的推理档位换成 Codex 风格的连续滑条，每一档配色不同。"
+      },
       "category": "interface",
       "repositoryReview": {
         "url": "https://github.com/Microqian2th/dsh-codex-effort-slider",
@@ -9838,6 +10302,14 @@
     {
       "name": "@icelily/dsh-gitbash-preset",
       "version": "0.1.2",
+      "title": {
+        "en": "Minimal (Git Bash)",
+        "zh": "Minimal (Git Bash)（极简模式）"
+      },
+      "description": {
+        "en": "Install a Windows variant of the minimal agent preset that runs bash through Git for Windows. Commands run only under the full-access policy.",
+        "zh": "安装极简模式的 Windows 版预设，通过 Git for Windows 的 bash 执行命令。仅在完全访问权限下运行命令。"
+      },
       "category": "development",
       "repositoryReview": {
         "url": "https://github.com/liceses/dsh-gitbash-preset",
@@ -9849,6 +10321,14 @@
     {
       "name": "@dhicoc/dsh-chinese-traditional-wisdom-skill",
       "version": "1.3.0",
+      "title": {
+        "en": "Chinese Traditional Wisdom",
+        "zh": "玄枢 · 中华传统智慧"
+      },
+      "description": {
+        "en": "A local-first consultation skill on traditional Chinese culture, with BaZi, Zi Wei, Liu Yao, feng shui and more computed by a local engine. For cultural reference, not prediction.",
+        "zh": "本地优先的中国传统文化咨询技能，八字、紫微、六爻、风水等由本地引擎计算，分层给出事实、文化解释和现实建议。仅供传统文化参考，不作预测。"
+      },
       "category": "skills",
       "repositoryReview": {
         "url": "https://github.com/dhicoc/dsh-chinese-traditional-wisdom-skill",
@@ -9860,6 +10340,14 @@
     {
       "name": "dsh-im-gateway",
       "version": "0.3.1",
+      "title": {
+        "en": "IM Gateway",
+        "zh": "IM Gateway（聊天网关）"
+      },
+      "description": {
+        "en": "Connect DSH to WeChat, Feishu, DingTalk, WeCom, QQ, Telegram, Discord, Slack, WhatsApp and more than 25 channels, with unified sessions, remote approvals and interactive questions.",
+        "zh": "把 DSH 接入微信、飞书、钉钉、企业微信、QQ、Telegram、Discord、Slack、WhatsApp 等 25 个以上渠道，统一会话路由，支持远程审批和交互提问。"
+      },
       "category": "integrations",
       "repositoryReview": {
         "url": "https://github.com/zhuiyueya/dsh-im-gateway",
@@ -9871,6 +10359,14 @@
     {
       "name": "@nagi-ovo/dsh-ads",
       "version": "0.1.2",
+      "title": {
+        "en": "DSH Ads",
+        "zh": "DSH Ads"
+      },
+      "description": {
+        "en": "A parody that dresses DSH up as a 2005 web portal with fake ads, pop-ups and a jackpot wheel. Answers keep generating in the background but wait for the ad to finish; ad slots link to real dsh-plugin repositories.",
+        "zh": "恶搞插件：把 DSH 变成 2005 年风格的门户网站，塞满假广告、弹窗和抽奖转盘。回答在后台照常生成，只是要等广告播完才显示；广告位会推荐真实的 dsh-plugin 仓库。"
+      },
       "category": "appearance",
       "archiveReview": {
         "version": "0.1.2",
@@ -9882,6 +10378,14 @@
     {
       "name": "dsh-mobile",
       "version": "0.6.14",
+      "title": {
+        "en": "DSH Mobile",
+        "zh": "DSH Mobile"
+      },
+      "description": {
+        "en": "Use DSH on your computer from a phone browser or the Android app over LAN or optional remote tunnels (Tailscale, cpolar, cloudflared, FRP), with HTTPS and device pairing.",
+        "zh": "通过局域网或可选的远程通道（Tailscale、cpolar、cloudflared、FRP），用手机浏览器或 Android App 安全地使用电脑上的 DSH，支持 HTTPS 和设备配对。"
+      },
       "category": "integrations",
       "archiveReview": {
         "version": "0.6.14",
@@ -9893,6 +10397,14 @@
     {
       "name": "dsh-dafeiyu",
       "version": "0.1.18",
+      "title": {
+        "en": "DSH BigFish",
+        "zh": "DSH BigFish（大肥鱼）"
+      },
+      "description": {
+        "en": "A desktop companion that shows the agent's status, progress and DeepSeek balance in an always-on-top window outside DSH, starting and quitting with DSH.",
+        "zh": "常驻桌面的伴侣角色，在 DSH 之外的置顶窗口里显示 Agent 状态、进度和 DeepSeek 余额，随 DSH 启动和退出。"
+      },
       "category": "interface",
       "archiveReview": {
         "version": "0.1.18",
@@ -9904,6 +10416,14 @@
     {
       "name": "dsh-damage-pulse",
       "version": "4.2.8",
+      "title": {
+        "en": "Damage Pulse",
+        "zh": "Damage Pulse"
+      },
+      "description": {
+        "en": "Track DeepSeek usage, costs and balance per call, session and account, with a whale-girl companion and damage-number animations for every charge.",
+        "zh": "按单次、会话和账户三层统计 DeepSeek 用量、费用和余额，每次扣费都有鲸娘和伤害数字式的动画反馈。"
+      },
       "category": "usage",
       "archiveReview": {
         "version": "4.2.8",
@@ -9915,6 +10435,14 @@
     {
       "name": "dsh-nexttavern",
       "version": "0.2.9-rc.4",
+      "title": {
+        "en": "NextTavern",
+        "zh": "NextTavern"
+      },
+      "description": {
+        "en": "Long-form roleplay for DSH with character cards, world lines, long-term memory, hybrid retrieval and SillyTavern card import.",
+        "zh": "面向 DSH 的长篇角色扮演，支持角色卡、世界线、长期记忆、混合检索和 SillyTavern 角色卡导入。"
+      },
       "category": "tools",
       "archiveReview": {
         "version": "0.2.9-rc.4",
@@ -9926,6 +10454,14 @@
     {
       "name": "dsh-notifier",
       "version": "0.13.1",
+      "title": {
+        "en": "DSH Notifier",
+        "zh": "DSH Notifier（通知与控制）"
+      },
+      "description": {
+        "en": "Send notifications through 28 outbound channels and handle approvals, questions and session control from your phone through 6 inbound channels.",
+        "zh": "通过 28 个出站渠道推送通知，并经 6 个入站渠道在手机上处理审批、回答提问和控制会话。"
+      },
       "category": "integrations",
       "archiveReview": {
         "version": "0.13.1",
@@ -9936,6 +10472,14 @@
     },
     {
       "name": "dsh-apify-plugin",
+      "title": {
+        "en": "Apify",
+        "zh": "Apify"
+      },
+      "description": {
+        "en": "Search, run and build Apify Actors from DSH through the Apify MCP server and skills. Running Actors needs APIFY_TOKEN; the development skills need the Apify CLI.",
+        "zh": "通过 Apify MCP 服务器和技能，在 DSH 中搜索、运行和开发 Apify Actor。运行 Actor 需要 APIFY_TOKEN，开发类技能需要 Apify CLI。"
+      },
       "category": "integrations"
     }
   ]
