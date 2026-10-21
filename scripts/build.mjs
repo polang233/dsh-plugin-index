@@ -7,6 +7,7 @@ import { writeSite } from './site.mjs';
 import { buildIndex, releasesOf } from './lib.mjs';
 import { collectEndorsements } from './endorsements.mjs';
 import { assertNotWithdrawn, readWithdrawn } from './withdrawn.mjs';
+import { trackAdded } from './added.mjs';
 
 async function readJson(url) {
   try { return JSON.parse(await readFile(url, 'utf8')); } catch { return undefined; }
@@ -64,6 +65,8 @@ await writeFile(new URL('endorsements.json', output), `${JSON.stringify(endorsem
 await writeFile(new URL('endorsements.json', cache), `${JSON.stringify(endorsements, null, 2)}\n`);
 await writeFile(new URL('display.json', output), `${JSON.stringify(display, null, 2)}\n`);
 await writeFile(new URL('recommendations.json', output), `${JSON.stringify(recommendations, null, 2)}\n`);
+const previousAdded = await publishedSnapshot('added.json') ?? await readJson(new URL('added.json', output));
+await writeFile(new URL('added.json', output), `${JSON.stringify(trackAdded(index.plugins.map(plugin => plugin.name), previousAdded), null, 2)}\n`);
 await writeSite(index, evidence, github, downloads, display);
 console.log(`Generated format-1 index: ${index.plugins.length} plugins; official validator ${evidence.validator.version}.`);
 console.log(`GitHub metadata: ${evidence.github.fetched} fetched, ${evidence.github.cached} cached, ${evidence.github.unavailable} unavailable.`);

@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile, copyFile } from 'node:fs/promises';
 import { githubRepository } from './github.mjs';
 import { releaseAge } from './market-display.mjs';
+import { addedTimestamp } from './added.mjs';
 
 const ORIGIN = 'https://dshopen.org/';
 const INDEX_URL = `${ORIGIN}index.json`;
@@ -13,7 +14,7 @@ const output = new URL('../public/', import.meta.url);
 const COPY = {
   en: {
     brand: 'Open Plugin Market', lang: 'en', locale: 'en_US', title: 'Open Plugin Market — DeepSeek Harness (DSH) plugin index', keywords: 'DeepSeek Harness plugins, DSH plugins, DSH plugin market, dsh plugin, DeepSeek Harness plugin index, Open Plugin Market', socialImage: 'social.png',
-    statPlugins: 'plugins', statCategories: 'categories', more: 'Show more', sort: 'Sort', sorts: { default: 'Default', recommended: '✨ Smart picks', stars: 'Most stars', starsWeek: 'New stars (7 days)', published: 'Recently updated', random: 'Random' }, shown: 'Showing {shown} of {count}',
+    statPlugins: 'plugins', statCategories: 'categories', more: 'Show more', sort: 'Sort', sorts: { default: 'Default', recommended: '✨ Smart picks', stars: 'Most stars', starsWeek: 'New stars (7 days)', added: 'Recently added', published: 'Recently updated', random: 'Random' }, shown: 'Showing {shown} of {count}',
     description: 'Community plugin market for DeepSeek Harness (DSH): tools, skills, memory, UI and more, recommended by growth, updates and downloads. Add one URL to browse and install them in DSH.',
     skip: 'Skip to content', plugins: 'Plugins', docs: 'Docs', language: 'Language',
     headline: 'Everything can be a plugin.<br><em>Find them here.</em>',
@@ -39,7 +40,7 @@ const COPY = {
   },
   zh: {
     brand: '开放插件市场', lang: 'zh-CN', locale: 'zh_CN', title: 'DSH 插件市场 · 开放插件市场 — DeepSeek Harness 社区插件索引', keywords: 'DeepSeek Harness 插件, DSH 插件, DSH 插件市场, dsh plugin, DeepSeek 插件, 插件索引, 开放插件市场', socialImage: 'social-zh.png',
-    statPlugins: '个插件', statCategories: '个分类', more: '查看更多', sort: '排序', sorts: { default: '默认排序', recommended: '✨ 智能推荐', stars: 'star 最多', starsWeek: '近 7 天新增 star', published: '最近更新', random: '随机' }, shown: '已显示 {shown} / {count}',
+    statPlugins: '个插件', statCategories: '个分类', more: '查看更多', sort: '排序', sorts: { default: '默认排序', recommended: '✨ 智能推荐', stars: 'star 最多', starsWeek: '近 7 天新增 star', added: '最近新增', published: '最近更新', random: '随机' }, shown: '已显示 {shown} / {count}',
     description: 'DeepSeek Harness（DSH）社区插件市场：工具、技能、记忆、界面等社区插件，按增长、更新和下载推荐。复制索引地址，在 DSH「发现」里浏览和安装。',
     skip: '跳到正文', plugins: '插件目录', docs: '文档', language: '语言',
     headline: '万物皆可插件，<br><em>插件来这里找。</em>',
@@ -96,7 +97,7 @@ export function renderStars(plugin, snapshot, language) {
   const tooltip = `${repo.stars} GitHub stars · ${zh ? '获取于' : 'Fetched'} ${date}`;
   return `<span class="stars-group"><a class="github-stars" data-stars="${repo.stars}" href="${esc(repository.url)}/stargazers" title="${esc(tooltip)}" aria-label="${esc(tooltip)}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></svg>${count}<span class="stars-label">GitHub</span></a></span>`;
 }
-function pluginRow(plugin, language, categories, text, snapshot, root, downloads, display, labels, position = 0) {
+function pluginRow(plugin, language, categories, text, snapshot, root, downloads, display, labels, position = 0, added = {}) {
   const name = localize(plugin.name, language);
   const packageName = localize(plugin.name, 'en', name);
   const title = localize(plugin.title, language, name);
@@ -127,7 +128,7 @@ function pluginRow(plugin, language, categories, text, snapshot, root, downloads
   const avatar = icon ? `<img src="${esc(icon)}" alt="" width="44" height="44" loading="lazy" decoding="async">` : `<img class="avatar-placeholder" style="--peek-delay: -${(position % 7) * 0.45}" src="${root}assets/placeholder-whale.webp" alt="" width="54" height="54" loading="lazy" decoding="async">`;
   // Sort values mirror the index's sort keys so the website offers the same orders as DSH.
   const keys = plugin.metadata?.sortKeys ?? {};
-  const sortData = [['order', position], ['recommended', keys.recommended], ['random', keys['random-resources']], ['stars', keys['github-stars']], ['stars-week', keys['stars-week']], ['published', version?.publishTimestamp]]
+  const sortData = [['order', position], ['recommended', keys.recommended], ['random', keys['random-resources']], ['stars', keys['github-stars']], ['stars-week', keys['stars-week']], ['added', addedTimestamp(added, plugin.name)], ['published', version?.publishTimestamp]]
     .filter(([, value]) => Number.isFinite(value)).map(([key, value]) => ` data-sort-${key}="${value}"`).join('');
   return `<li class="plugin" data-plugin data-tone="${tone}" data-category="${esc(categoryId)}" data-search="${esc(search)}"${sortData}>
     <article class="plugin-main" aria-label="${esc(title || name)}">
@@ -144,7 +145,7 @@ function pluginRow(plugin, language, categories, text, snapshot, root, downloads
     </article>
   </li>`;
 }
-function page(index, evidence, language, snapshot, downloads, display) {
+function page(index, evidence, language, snapshot, downloads, display, added = {}) {
   const text = COPY[language];
   const docsUrl = language === 'zh' ? `${REPOSITORY}/blob/main/README.md` : DOCS;
   const root = language === 'zh' ? '../' : './';
@@ -160,7 +161,7 @@ function page(index, evidence, language, snapshot, downloads, display) {
     + (hasUncategorized ? chip('__uncategorized__', text.other, countBy(''), ' data-uncategorized') : '');
   const updated = evidence?.generatedAt ? dateLabel(evidence.generatedAt, language) : undefined;
   const verifiedCount = plugins.filter(plugin => plugin.metadata?.labels?.includes('verified')).length;
-  const sortIds = ['default', 'recommended', 'stars', ...(plugins.some(plugin => Number.isFinite(plugin.metadata?.sortKeys?.['stars-week'])) ? ['starsWeek'] : []), 'published', 'random'];
+  const sortIds = ['default', 'recommended', 'stars', ...(plugins.some(plugin => Number.isFinite(plugin.metadata?.sortKeys?.['stars-week'])) ? ['starsWeek'] : []), ...(plugins.some(plugin => addedTimestamp(added, plugin.name) !== undefined) ? ['added'] : []), 'published', 'random'];
   const sortChips = sortIds.map((id, at) => `<button type="button" class="chip" data-sort="${id}" aria-pressed="${at === 0}">${esc(text.sorts[id])}</button>`).join('');
   const stickers = ['tools', 'skills', 'memory'].filter(id => usedCategories.includes(id))
     .map((id, at) => `<span class="sticker sticker-${at + 1}">${esc(localize(categories[id]?.title, language, id))}</span>`).join('');
@@ -240,7 +241,7 @@ function page(index, evidence, language, snapshot, downloads, display) {
         <div class="field chips-field"><span class="field-label visually-hidden" id="category-label">${esc(text.category)}</span><div class="chips" role="group" aria-labelledby="category-label">${categoriesHtml}</div></div>
       </form>
       <noscript><p class="no-js">${esc(text.noJs)}</p></noscript>
-      <ul class="plugin-list">${plugins.map((plugin, position) => pluginRow(plugin, language, categories, text, snapshot, root, downloads, display, index.metadata?.labels ?? {}, position)).join('\n')}</ul>
+      <ul class="plugin-list">${plugins.map((plugin, position) => pluginRow(plugin, language, categories, text, snapshot, root, downloads, display, index.metadata?.labels ?? {}, position, added)).join('\n')}</ul>
       <div class="more" data-more-wrap hidden><p class="more-progress" data-progress role="status" aria-live="polite"></p><span class="more-bar" aria-hidden="true"><i data-bar></i></span><button type="button" class="more-button" data-more></button></div>
       <div class="empty" id="empty-results" ${plugins.length ? 'hidden' : ''}><h3>${esc(text.noResults)}</h3><p>${esc(text.noResultsHelp)}</p><button type="button" class="text-button" data-reset hidden>${esc(text.reset)}</button></div>
     </div>
@@ -281,8 +282,11 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
   for (const asset of ['site.css', 'site.js', 'logo.webp', 'logo-256.png', 'favicon.png', 'apple-touch-icon.png', 'placeholder-whale.webp', 'social.png', 'social-zh.png', ...['zh', 'en'].flatMap(lang => ['', '-light', '-narrow', '-narrow-light'].map(kind => `dsh-discover-${lang}${kind}.webp`)), ...[1, 2, 3].flatMap(n => ['zh', 'en'].flatMap(lang => ['light', 'dark'].map(theme => `guide-${n}-${lang}-${theme}.webp`)))]) {
     await copyFile(new URL(asset, source), new URL(`assets/${asset}`, output));
   }
-  await writeFile(new URL('index.html', output), page(index, evidence, 'en', snapshot, downloads, display).replace(/[\t ]+$/gm, ''), 'utf8');
-  await writeFile(new URL('zh/index.html', output), page(index, evidence, 'zh', snapshot, downloads, display).replace(/[\t ]+$/gm, ''), 'utf8');
+  // Full builds refresh added.json first; the offline rebuilds reuse whatever is already published.
+  let added = {};
+  try { added = JSON.parse(await readFile(new URL('added.json', output), 'utf8')); } catch { /* No record yet. */ }
+  await writeFile(new URL('index.html', output), page(index, evidence, 'en', snapshot, downloads, display, added).replace(/[\t ]+$/gm, ''), 'utf8');
+  await writeFile(new URL('zh/index.html', output), page(index, evidence, 'zh', snapshot, downloads, display, added).replace(/[\t ]+$/gm, ''), 'utf8');
   await writeFile(new URL('sitemap.xml', output), sitemap(evidence?.generatedAt), 'utf8');
   await writeFile(new URL('robots.txt', output), `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}sitemap.xml\n`, 'utf8');
   await writeFile(new URL('404.html', output), notFound(await readFile(new URL('site.css', source), 'utf8')), 'utf8');

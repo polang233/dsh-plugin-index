@@ -133,6 +133,10 @@ Authors ask for removal through a `[plugin-remove]` issue or a PR. After confirm
 
 `pnpm build` and `preview-submissions.mjs` fail when a withdrawn package is listed. `review-candidates.mjs` records withdrawn candidates with `stage: "withdrawn"` and skips downloading them, and a unit test checks that the source list contains none. Remove a record from the withdrawn list only when the author asks to relist.
 
+## Recently added
+
+`public/added.json` records the first UTC day each plugin entered the index; the website's *Recently added* order sorts by it, newest first. Full builds prefer the deployed GitHub Pages record and fall back to the local snapshot, keep existing dates and stamp new packages with the build day. A package removed and listed again counts from its new listing. Dates before 2026-10-19 come from the Git history of `data/sources.json`, so the initial import shares one date.
+
 ## Daily recommendation rotation
 
 `public/recommendations.json` ships with the index and stores weekly candidate pools and fourteen days of front-page exposure. Full builds and metadata refreshes prefer the deployed GitHub Pages state, with the local public snapshot as fallback. Unpublished state is not saved to the CI cache. See [recommendation rules](market-display.md). `pnpm build:recommendations` reorders already checked local versions offline; new sources and versions still require a full build. `pnpm preview:recommendations` writes a fourteen-day preview to `.local/recommendation-preview.json`.
