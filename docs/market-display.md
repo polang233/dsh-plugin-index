@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | `verified` | ✅ 经过验证 / Verified | 被其他市场的人工或源码级验证收录，见下文 |
 | `trending` | 🔥 增长快 / Rising | 近 7 天下载 ≥ 30 且达到此前周均值的 1.5 倍；或近 7 天新增 star ≥ 5 且增幅 ≥ 10% |
-| `active` | ⚡ 更新勤 / Frequent updates | 近 30 天发版 ≥ 15 次（约前 20%） |
+| `active` | ⚡ 更新勤 / Frequent updates | 近 30 天发版 ≥ 10 次（约前三分之一） |
 | `updated-recent` / `-week` / `-month` / `-quarter` | ◷ 最近 / 本周 / 本月 / 三个月内更新 | 收录版本发布于 3 / 7 / 30 / 90 天内 |
 | `downloads-100k` … `downloads-100` | ↓ 10万+ / 5万+ / 1万+ / 5000+ / 1000+ / 500+ / 100+ | npm 近 30 天下载量档位 |
 | `publisher-*` | 官方身份 | 经核查的发布者，见 `data/publishers.json` |

@@ -58,8 +58,8 @@ export function labelsFor(signals) {
   if (signals.verifiedBy?.length) labels.push('verified');
   // Rising: downloads clearly up on the prior weekly average, or a meaningful jump in stars.
   if (signals.growth >= 1.5 || (signals.starsWeek >= 5 && signals.starsWeek >= 0.1 * Math.max(signals.stars - signals.starsWeek, 10))) labels.push('trending');
-  // Thresholds sit near the top fifth of the current catalog; young DSH plugins release often.
-  if (signals.releases30 >= 15) labels.push('active');
+  // Ten releases in 30 days marks roughly the top third of the catalog; young DSH plugins release often.
+  if (signals.releases30 >= 10) labels.push('active');
   const age = [[3, 'recent'], [7, 'week'], [30, 'month'], [90, 'quarter']].find(([days]) => signals.updatedDays <= days);
   if (age) labels.push('updated-' + age[1]);
   const tier = TIERS.find(([floor]) => signals.downloads >= floor);

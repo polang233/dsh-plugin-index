@@ -1,3 +1,6 @@
+# dsh-chat-import local test log
+
+```text
 ✔ convertClaudeJsonl: 简单问答合成平衡回合 (3.078ms)
 ✔ convertClaudeJsonl: 工具历史（tool/call + tool/result + thinking + 多步） (0.8021ms)
 ✔ convertClaudeJsonl: 多步回合（一步一个 assistant 消息） (0.5239ms)
@@ -106,3 +109,4 @@
 ℹ skipped 0
 ℹ todo 0
 ℹ duration_ms 249.656
+```

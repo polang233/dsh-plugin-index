@@ -13,9 +13,9 @@ https://dshopen.org/index.json
 [![Usage today](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.today.reads&label=usage%20today&color=0d9488)](https://dshopen.org/stats.json)
 [![Stars](https://img.shields.io/github/stars/polang233/dsh-plugin-index?style=flat&label=stars&color=f59e0b)](https://github.com/polang233/dsh-plugin-index/stargazers)
 
-A community plugin market for DeepSeek Harness (DSH): driven by data and recommendations, with nothing extra in the way.
+A community **plugin market index** for DeepSeek Harness (DSH). Add it as an official **index source**, or use the standalone market plugin.
 
-**Stars aren't everything.** The default picks refresh every day and put fast-growing, actively shipped, genuinely good plugins first, with verification, downloads and stars as supporting signals. No single author can flood the list, so a newcomer's plugin can make the first screen and find its audience.
+**Stars aren't everything.** The default picks refresh every day and put fast-growing, actively shipped, genuinely good plugins first, with verification, downloads and stars as supporting signals. Established favourites can't hog the list, so new projects and newcomers' plugins get a chance at the first screen and a wider audience.
 
 [Browse plugins](https://dshopen.org/) · [简体中文](README.md) · [Suggest a plugin](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml)
 
@@ -33,23 +33,21 @@ Switch on **Custom plugin markets** under **Plugins → Experimental plugins**, 
 
 [![The Open Plugin Market website home](docs/images/home-en.webp)](https://dshopen.org/)
 
-![Open Plugin Market catalog in Chinese](docs/images/catalog-zh.png)
+![Open Plugin Market website catalog](docs/images/catalog-en.webp)
 
 ## Labels and sorting
 
-✅ Verified · 🔥 Rising · ⚡ Frequent updates · ◷ four update-age buckets · ↓ seven download tiers. *Default* rotates ten front-page plugins daily from a weekly pool of about seventy qualified entries. *✨ Smart picks* also changes daily, with mostly random rotation and a small preference for recent updates and growth. Entries shown this week move down, and next week reshuffles the pool. *Random resources* reshuffles independently each day. The index rebuilds every six hours; rotation dates use Asia/Taipei. See [metrics and exposure history](docs/market-display.md).
+✅ Verified · 🔥 Rising · ⚡ Frequent updates (10+ releases in 30 days) · ◷ four update-age buckets · ↓ seven download tiers. *Default* rotates ten front-page plugins daily from a weekly pool of about seventy qualified entries. *✨ Smart picks* also changes daily, with mostly random rotation and a small preference for recent updates and growth. Entries shown this week move down, and next week reshuffles the pool. *Random resources* reshuffles independently each day. The index rebuilds every six hours; rotation follows calendar days in UTC+8. See [metrics and exposure history](docs/market-display.md).
+
+## Submit a plugin
+
+[Open a request](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml). Plugins need public source code, an installable npm release and a declared license. Maintainers may also accept a pinned Git commit; see the [contributing guide](.github/CONTRIBUTING.md). Plugins with their own logo and a complete description are reviewed first.
+
+To take down a plugin, [request removal](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-remove.yml). Removed plugins are recorded in [`data/withdrawn.json`](data/withdrawn.json) and stay out unless the author asks to relist.
 
 ## Spare a star ⭐
 
 A star is the simplest thank-you a developer gets, and it feeds the recommendations here too. If a plugin earns a place in your setup, star its repo. The next star could be someone starring yours.
-
-## Submit a plugin
-
-[Open a request](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml), or add an entry to [`data/sources.json`](data/sources.json) and open a PR. Plugins need public source code, an installable npm release and a declared license. Maintainers may also accept a pinned Git commit. Plugins that ship their own logo are reviewed first.
-
-To take down your own plugin, [request removal](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-remove.yml). Removed plugins are recorded in [`data/withdrawn.json`](data/withdrawn.json) and stay out unless the author asks to relist.
-
-## Star history
 
 <a href="https://www.star-history.com/#polang233/dsh-plugin-index&Date">
   <picture>

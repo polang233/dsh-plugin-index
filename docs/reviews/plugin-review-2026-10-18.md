@@ -20,7 +20,7 @@ The suites cover Claude/Codex conversation conversion, tool-call pairing, compre
 
 测试覆盖 Claude/Codex 会话转换、工具调用配对、压缩边界和异常输入，未覆盖全部导入格式或真实 DSH 集成。
 
-[Local test log / 本地测试日志](chat-import-converters.txt) · [Author CI / 作者 CI](https://github.com/Nwflower/dsh-chat-import/actions/runs/39034536342)
+[Local test log / 本地测试日志](chat-import-converters.md) · [Author CI / 作者 CI](https://github.com/Nwflower/dsh-chat-import/actions/runs/39034536342)
 
 The tested commit matches the npm release's declared gitHead. The published archive also passed identity, SHA-512, bundle patch and main-file checks; no reproducible-build comparison was performed.
 

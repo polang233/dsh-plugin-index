@@ -19,6 +19,7 @@ const widths = [
   [/^logo$/, 720],
   [/^home-/, 1440],
   [/^add-index/, 1120],
+  [/^catalog-/, 1440],
 ];
 
 for (const [from, to] of [['site/originals', 'site'], ['docs/images/originals', 'docs/images']]) {
