@@ -9625,6 +9625,74 @@
         "zh": "跨会话管理人和 Agent 共用的待办清单，一键交给对话继续处理，并由人确认完成。界面需使用 DSH Web 客户端。"
       },
       "category": "workflow"
+    },
+    {
+      "name": "dsh-coding-sound",
+      "title": {
+        "en": "Coding Sound",
+        "zh": "Coding Sound"
+      },
+      "description": {
+        "en": "Hear what the agent is doing: generative background music while the model writes, plus adjustable cues for thinking, answering, tool runs, completion and waiting. Sounds are synthesized in the browser.",
+        "zh": "用声音盯住 Agent：模型输出时播放生成式背景音乐，思考、回答、工具执行以及完成、等待的提示音可分别调节。声音由浏览器实时合成。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-split-workspace",
+      "title": {
+        "en": "Split Workspace",
+        "zh": "分屏工作区"
+      },
+      "description": {
+        "en": "Split the conversation area into native panes (side by side, stacked, 2×2 or auto grid), each an independent session. Layout is remembered. Desktop profile.",
+        "zh": "把对话区拆成原生窗格（左右、上下、2×2 或自动网格），每个窗格是独立会话，布局会被记住。适用于桌面版。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@dippingorange/dsh-conductor",
+      "title": {
+        "en": "Conductor",
+        "zh": "Conductor"
+      },
+      "description": {
+        "en": "Keep the flagship model in the conversation and let it dispatch scoped tasks to cheaper executor models you configure, then collect and review their reports. Pair with dsh-conductor-ui for the task board.",
+        "zh": "让主力模型留在对话中，把范围明确的任务分派给你配置的低成本执行模型，再收集并审阅报告。任务看板需搭配 dsh-conductor-ui。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "@dippingorange/dsh-conductor-ui",
+      "title": {
+        "en": "Conductor Task Board",
+        "zh": "Conductor 任务看板"
+      },
+      "description": {
+        "en": "Web task board for Conductor in the right sidebar and a full page: executor and publisher roles, follow-ups, cancellation and per-session filtering. Requires @dippingorange/dsh-conductor.",
+        "zh": "Conductor 的网页任务看板，提供右侧栏标签页和完整页面，支持执行者与发布者角色、追问、取消和按会话筛选。需先安装 @dippingorange/dsh-conductor。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-git-bar",
+      "version": "0.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/mjnhmd/dsh-git-bar",
+        "commit": "4ddea34405119668a7a60a45b327cf5e244ec76e",
+        "integrity": "sha512-TuU2h3yw7lZE3LZ3aCV+eYUXkII600J6MnmVNwHY9J/1ep+XMBbIQoGgf+1KOvy99UtfS0AuMiCj8iLQNjDH0g==",
+        "publishedAt": "2026-10-21T06:18:00Z"
+      },
+      "title": {
+        "en": "Git Bar",
+        "zh": "Git Bar"
+      },
+      "description": {
+        "en": "Show the session's repository, branch, change count and short SHA above the composer; switch or create branches, list worktrees and open a per-file diff panel.",
+        "zh": "在输入框上方显示当前会话的仓库、分支、改动数和短 SHA，可切换或新建分支、查看工作树，并在侧栏逐文件查看差异。"
+      },
+      "category": "development"
     }
   ]
 }
