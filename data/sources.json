@@ -5014,18 +5014,6 @@
       "category": "development"
     },
     {
-      "name": "dsh-gitbar-lite",
-      "title": {
-        "en": "GitBar Lite",
-        "zh": "GitBar Lite"
-      },
-      "description": {
-        "en": "A GitHub Desktop-style Git panel for DSH in the built-in right sidebar. It offers changed files with tick-to-stage, summary and description, Commit and Commit and Push, discard-to-trash, and diff preview.",
-        "zh": "在右侧栏查看 Git 改动、勾选暂存、提交和推送，支持差异预览及将丢弃内容移入回收站。"
-      },
-      "category": "development"
-    },
-    {
       "name": "dsh-plugin-control-your-development",
       "title": {
         "en": "control-your-development",
@@ -9344,18 +9332,6 @@
       "category": "providers"
     },
     {
-      "name": "dsh-workbuddy-hub",
-      "title": {
-        "en": "WorkBuddy Hub",
-        "zh": "WorkBuddy 模型中枢"
-      },
-      "description": {
-        "en": "Register a WorkBuddy model provider and manage account quotas, daily check-ins, rate-limit cooldowns and switching.",
-        "zh": "注册 WorkBuddy 模型提供方，管理账号额度、每日签到、限流冷却和切换。"
-      },
-      "category": "providers"
-    },
-    {
       "name": "dsh-zed-provider",
       "title": {
         "en": "Zed Provider",
@@ -10483,25 +10459,6 @@
       }
     },
     {
-      "name": "dsh-dafeiyu",
-      "version": "0.1.18",
-      "title": {
-        "en": "DSH BigFish",
-        "zh": "DSH BigFish（大肥鱼）"
-      },
-      "description": {
-        "en": "A desktop companion that shows the agent's status, progress and DeepSeek balance in an always-on-top window outside DSH, starting and quitting with DSH.",
-        "zh": "常驻桌面的伴侣角色，在 DSH 之外的置顶窗口里显示 Agent 状态、进度和 DeepSeek 余额，随 DSH 启动和退出。"
-      },
-      "category": "interface",
-      "archiveReview": {
-        "version": "0.1.18",
-        "integrity": "sha512-t2QLubj8ocqQYIqtKoQp6+AppHZFMKLSuBbWVbcQXoN4TlGl83BxsXfQH6VDwAZrLAHd04SnXzpuFlk8ob9l6A==",
-        "maxUnpackedBytes": 268435456,
-        "timeoutMs": 120000
-      }
-    },
-    {
       "name": "dsh-damage-pulse",
       "version": "4.2.8",
       "title": {
@@ -10516,25 +10473,6 @@
       "archiveReview": {
         "version": "4.2.8",
         "integrity": "sha512-w5fr26zWy1Cn4FDPQllYqNk0qo2o1NESN6PS+R1NhTFvzJPQLKdngyNXUdxqRo0rIzjEJzP/8b6Upy6G/2rjag==",
-        "maxUnpackedBytes": 268435456,
-        "timeoutMs": 120000
-      }
-    },
-    {
-      "name": "dsh-nexttavern",
-      "version": "0.2.9-rc.4",
-      "title": {
-        "en": "NextTavern",
-        "zh": "NextTavern"
-      },
-      "description": {
-        "en": "Long-form roleplay for DSH with character cards, world lines, long-term memory, hybrid retrieval and SillyTavern card import.",
-        "zh": "面向 DSH 的长篇角色扮演，支持角色卡、世界线、长期记忆、混合检索和 SillyTavern 角色卡导入。"
-      },
-      "category": "tools",
-      "archiveReview": {
-        "version": "0.2.9-rc.4",
-        "integrity": "sha512-cid347M3bhytQ5MGTURBBCpVC+3CpEYaJ/qXllxMlui8IvKVFgr2ofup9Z22D9Swloozgo+4O+eLEfvEAWj2pA==",
         "maxUnpackedBytes": 268435456,
         "timeoutMs": 120000
       }
