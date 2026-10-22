@@ -11,6 +11,8 @@ const SITE = {
 for (const language of Object.keys(SITE)) {
   const route = SITE[language].route;
   test(`${language}: directory filters, language navigation and layout`, async ({ page }) => {
+    // The home page carries every plugin card; shared CI runners need more than the default 30 seconds for it.
+    test.slow();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     page.on('response', response => { if (response.status() >= 400) errors.push(`${response.status()}: ${response.url()}`); });
@@ -59,6 +61,7 @@ for (const language of Object.keys(SITE)) {
     expect(errors).toEqual([]);
   });
   test(`${language}: catalog metadata, icons and screenshots`, async ({ page }, info) => {
+    test.slow();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     page.on('response', response => { if (response.status() >= 400) errors.push(`${response.status()}: ${response.url()}`); });
