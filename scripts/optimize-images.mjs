@@ -42,7 +42,8 @@ for (const [from, to] of [['site/originals', 'site'], ['docs/images/originals', 
 
 // Every small brand asset comes from the same master, including the DSH package icon.
 if (!selected.size || selected.has('logo')) {
-  const icon = size => sharp(join(root, 'site/originals/logo.png'))
+  const master = join(root, 'site/originals/logo.png');
+  const icon = size => sharp(master)
     .resize({ width: size, height: size, fit: 'contain', background: '#00000000', withoutEnlargement: true })
     .png({ compressionLevel: 9, adaptiveFiltering: true });
   // Bing only shows favicons whose size is a multiple of 48.
@@ -71,4 +72,15 @@ if (!selected.size || selected.has('logo')) {
   console.log(`site/favicon.ico  16/32/48  ${Math.round(offset / 1024)} KB`);
   await copyFile(join(root, 'site/logo-256.png'), join(root, 'packages/dsh-open-market/icon.png'));
   console.log('packages/dsh-open-market/icon.png  copied from site/logo-256.png');
+  // Keep the directory's fallback portrait in the same character design as the logo.
+  const { width, height } = await sharp(master).metadata();
+  const portrait = sharp(master).extract({
+    left: Math.round(width * .075), top: Math.round(height * .055),
+    width: Math.round(width * .68), height: Math.round(height * .68),
+  });
+  await portrait.clone().webp({ lossless: true, effort: 6 })
+    .toFile(join(root, 'site/originals/placeholder-whale.webp'));
+  await portrait.resize({ width: 192 }).webp({ lossless: true, effort: 6 })
+    .toFile(join(root, 'site/placeholder-whale.webp'));
+  console.log('site/placeholder-whale.webp  192px portrait from the logo master');
 }

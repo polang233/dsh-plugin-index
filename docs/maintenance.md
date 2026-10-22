@@ -157,14 +157,14 @@ npx wrangler secret put CF_ZONE_ID --config cloudflare/wrangler.jsonc
 
 Full-size originals live in `site/originals/` and `docs/images/originals/`; the site and README load lossless WebP copies scaled to display size. After changing an original, run `node scripts/optimize-images.mjs` (needs `sharp`, e.g. `npm i --no-save sharp`).
 
-`site/originals/logo.png` is the brand master. `node scripts/optimize-images.mjs logo` exports the 720px lossless WebP, 256px PNG, 180px Apple touch icon, 96px favicon, an ICO with 16/32/48px frames and the matching DSH package icon. Originals and exports with an `-old` suffix are retained as backups and skipped by the optimizer.
+`site/originals/logo.png` is the brand master. `node scripts/optimize-images.mjs logo` exports the 720px lossless WebP, 256px PNG, 180px Apple touch icon, 96px favicon, an ICO with 16/32/48px frames and the matching DSH package icon. It also crops the character's head for the directory's 192px fallback avatar, `placeholder-whale.webp`. Originals and exports with an `-old` suffix are retained as backups and skipped by the optimizer.
 
-After replacing the logo, refresh the two README home screenshots and the three 1200×630 sharing cards (English, Simplified and Traditional Chinese) from the local pages. The capture script needs Playwright Chromium, or a browser path in `BROWSER_EXECUTABLE`, plus `sharp` or `SHARP_PATH`:
+After replacing the logo, refresh the README home and catalog screenshots in English and Simplified Chinese, plus the three 1200×630 sharing cards (English, Simplified and Traditional Chinese), from the local pages. The capture script needs Playwright Chromium, or a browser path in `BROWSER_EXECUTABLE`, plus `sharp` or `SHARP_PATH`:
 
 ```sh
 pnpm build:site
 node scripts/capture-brand-images.mjs
-node scripts/optimize-images.mjs home-en home-zh
+node scripts/optimize-images.mjs home-en home-zh catalog-en catalog-zh
 pnpm build:site
 ```
 

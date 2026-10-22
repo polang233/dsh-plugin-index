@@ -174,14 +174,14 @@ npx wrangler secret put CF_ZONE_ID --config cloudflare/wrangler.jsonc
 
 原图放在 `site/originals/` 和 `docs/images/originals/`，网站和 README 实际加载的是同名的无损 WebP（按显示尺寸缩放）。替换或新增原图后运行 `node scripts/optimize-images.mjs` 重新生成（需要 `sharp`，可用 `npm i --no-save sharp` 临时安装）。
 
-`site/originals/logo.png` 是品牌原图。运行 `node scripts/optimize-images.mjs logo`，统一导出 720px 无损 WebP、256px PNG、180px Apple 图标、96px favicon、含 16/32/48px 帧的 ICO 和 DSH 插件包图标。原图和导出图的 `-old` 后缀文件作为备份保留，压缩脚本会跳过它们。
+`site/originals/logo.png` 是品牌原图。运行 `node scripts/optimize-images.mjs logo`，统一导出 720px 无损 WebP、256px PNG、180px Apple 图标、96px favicon、含 16/32/48px 帧的 ICO 和 DSH 插件包图标，同时裁出人物头像，生成目录里的 192px 默认头像 `placeholder-whale.webp`。原图和导出图的 `-old` 后缀文件作为备份保留，压缩脚本会跳过它们。
 
-更换 Logo 后，从本地页面重新导出两张 README 首页截图和三张 1200×630 分享图（英文、简体、繁体）。截图脚本需要 Playwright Chromium，或通过 `BROWSER_EXECUTABLE` 指定浏览器路径；同时需要 `sharp`，也可用 `SHARP_PATH` 指定其模块入口：
+更换 Logo 后，从本地页面重新导出中英文 README 的首页、目录截图，以及三张 1200×630 分享图（英文、简体、繁体）。截图脚本需要 Playwright Chromium，或通过 `BROWSER_EXECUTABLE` 指定浏览器路径；同时需要 `sharp`，也可用 `SHARP_PATH` 指定其模块入口：
 
 ```sh
 pnpm build:site
 node scripts/capture-brand-images.mjs
-node scripts/optimize-images.mjs home-en home-zh
+node scripts/optimize-images.mjs home-en home-zh catalog-en catalog-zh
 pnpm build:site
 ```
 

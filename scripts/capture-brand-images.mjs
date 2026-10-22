@@ -73,10 +73,27 @@ try {
     });
     assert.equal(await page.locator('.hero-art img').evaluate(image => image.naturalWidth), 720);
     assert.equal(await page.locator('.brand img').evaluate(image => image.naturalWidth), 256);
-    if (target.readme) await page.screenshot({
-      path: fileURLToPath(new URL(`../docs/images/originals/home-${language}.png`, import.meta.url)),
-      animations: 'disabled',
-    });
+    if (target.readme) {
+      await page.screenshot({
+        path: fileURLToPath(new URL(`../docs/images/originals/home-${language}.png`, import.meta.url)),
+        animations: 'disabled',
+      });
+      await page.setViewportSize({ width: 1440, height: 1020 });
+      await page.addStyleTag({ content: '.site-header { visibility: hidden !important; }' });
+      await page.locator('.filters').waitFor({ state: 'visible' });
+      await page.locator('.filters').evaluate(element => element.scrollIntoView({ block: 'start' }));
+      await page.locator('.directory img').evaluateAll(async images => {
+        await Promise.all(images.filter(image => {
+          const bounds = image.getBoundingClientRect();
+          return bounds.width > 0 && bounds.bottom > 0 && bounds.top < window.innerHeight;
+        }).map(image => image.decode()));
+      });
+      await page.screenshot({
+        path: fileURLToPath(new URL(`../docs/images/originals/catalog-${language}.png`, import.meta.url)),
+        animations: 'disabled',
+      });
+      await page.evaluate(() => window.scrollTo(0, 0));
+    }
     await page.setViewportSize({ width: 1200, height: 630 });
     await page.addStyleTag({ content: socialStyles });
     const copy = await page.locator('.hero-copy').boundingBox();
@@ -85,7 +102,7 @@ try {
     const social = target.social;
     await sharp(screenshot).png({ compressionLevel: 9, adaptiveFiltering: true })
       .toFile(fileURLToPath(new URL(`../site/${social}`, import.meta.url)));
-    console.log(target.readme ? `Captured docs/images/originals/home-${language}.png and site/${social}` : `Captured site/${social}`);
+    console.log(target.readme ? `Captured home-${language}.png, catalog-${language}.png and site/${social}` : `Captured site/${social}`);
     await page.close();
   }
 } finally {
