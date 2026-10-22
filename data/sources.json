@@ -10529,14 +10529,14 @@
       "category": "interface"
     },
     {
-      "name": "dsh-subagent-fold",
+      "name": "dsh-subagent-toolkit",
       "title": {
-        "en": "Subagent Fold",
-        "zh": "子代理折叠"
+        "en": "Subagent Toolkit",
+        "zh": "子代理工具箱"
       },
       "description": {
-        "en": "Groups the built-in subagent dropdown by usage batch into History, Today, Previous and Current. The current batch stays expanded and the others can be collapsed; the original header is left untouched.",
-        "zh": "把原生「子代理」下拉按使用批次分为历史、今日、上次、本次四组，本次始终展开，其余可折叠；不改动原有头部。"
+        "en": "Group subagents by usage batch, delete individual agents or groups with confirmation, and select models from the current catalog. Requires DSH 0.2.1-rc.1 or later.",
+        "zh": "按使用批次分组子代理，支持二次确认后单个或整组删除，并从实时目录选择模型。需要 DSH 0.2.1-rc.1 或更高版本。"
       },
       "category": "interface"
     },
