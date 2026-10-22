@@ -9439,21 +9439,21 @@
     },
     {
       "name": "dsh-advanced-human-writing",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "source": {
         "type": "git",
         "url": "https://github.com/whh110112/human-writing-skills",
-        "commit": "9753d3ce9a8e7ac3c16ded0a69066e9a77dd8dcf",
-        "integrity": "sha512-aMajKb53jp1cTq1uPfGG3AWrneoU2v5gG/DxsYO8KxqRg1B9/t3hL2+75gSSqAt/7Vs5rhb+gfFjCClzS6LdTw==",
-        "publishedAt": "2026-10-20T02:28:12Z"
+        "commit": "cda711072bd43da7498157769e78709220385518",
+        "integrity": "sha512-w7RQ3CCXR+m78dYkPQERbdRY+GhBeJkuviFvrqL1GXwirSsEwT6l1APQwUkFiPj0LIRcUTd0DzG+IcxqARwdeQ==",
+        "publishedAt": "2026-10-22T16:39:59Z"
       },
       "title": {
         "en": "Advanced Human Writing",
         "zh": "Advanced Human Writing"
       },
       "description": {
-        "en": "Edit multilingual writing and coordinate long-form drafts with continuity checks. Requires Python 3.9+.",
-        "zh": "润色多语言写作，分块协作长文并检查上下文一致性，需要 Python 3.9+。"
+        "en": "Edit multilingual writing, coordinate long-form drafts and inspect DSH delegation tools on demand. Requires Python 3.9+.",
+        "zh": "多语言润色、长文分块协作与上下文一致性审查，按需检查 DSH 智能体委派工具。需要 Python 3.9+。"
       },
       "category": "skills"
     },
