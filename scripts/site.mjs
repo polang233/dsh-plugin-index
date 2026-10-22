@@ -118,7 +118,8 @@ const COPY = {
     statsLoading: '正在加载使用统计…', statsFailed: '暂时无法获取使用统计，请稍后再试。'
   }
 };
-COPY.tw = COPY.zh;
+// Traditional pages share the Simplified copy (converted when written) but have their own sharing card.
+COPY.tw = { ...COPY.zh, socialImage: 'social-tw.png' };
 
 // Real DSH screenshots for the three steps, each cropped around the highlighted control. DSH itself is Simplified, so Traditional reuses those.
 const GUIDE_SIZES = { zh: [[768, 472], [800, 476], [900, 446]], en: [[768, 508], [874, 476], [900, 446]] };
@@ -484,12 +485,12 @@ async function write(path, html) {
 export async function writeSite(index, evidence, snapshot = {}, downloads = {}, display = {}) {
   if (index?.format !== 1 || !Array.isArray(index.plugins)) throw new Error('writeSite expects a format-1 plugin index');
   await mkdir(new URL('assets/', output), { recursive: true });
-  for (const asset of ['site.css', 'site.js', 'logo.webp', 'logo-256.png', 'favicon.png', 'apple-touch-icon.png', 'placeholder-whale.webp', 'social.png', 'social-zh.png', ...['zh', 'en'].flatMap(lang => ['', '-light', '-narrow', '-narrow-light'].map(kind => `dsh-discover-${lang}${kind}.webp`)), ...[1, 2, 3].flatMap(n => ['zh', 'en'].flatMap(lang => ['light', 'dark'].map(theme => `guide-${n}-${lang}-${theme}.webp`)))]) {
+  for (const asset of ['site.css', 'site.js', 'logo.webp', 'logo-256.png', 'favicon.png', 'apple-touch-icon.png', 'placeholder-whale.webp', 'social.png', 'social-zh.png', 'social-tw.png', ...['zh', 'en'].flatMap(lang => ['', '-light', '-narrow', '-narrow-light'].map(kind => `dsh-discover-${lang}${kind}.webp`)), ...[1, 2, 3].flatMap(n => ['zh', 'en'].flatMap(lang => ['light', 'dark'].map(theme => `guide-${n}-${lang}-${theme}.webp`)))]) {
     await copyFile(new URL(asset, source), new URL(`assets/${asset}`, output));
   }
   // X and other link previews cache card images by URL, so name each card after its content.
   const socialImages = {};
-  for (const name of ['social.png', 'social-zh.png']) {
+  for (const name of ['social.png', 'social-zh.png', 'social-tw.png']) {
     const bytes = await readFile(new URL(name, source));
     socialImages[name] = name.replace(/\.png$/, `-${createHash('sha256').update(bytes).digest('hex').slice(0, 10)}.png`);
     await writeFile(new URL(`assets/${socialImages[name]}`, output), bytes);

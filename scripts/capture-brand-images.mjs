@@ -1,4 +1,4 @@
-// Rebuild the bilingual sharing cards and README home screenshots from the local site.
+// Rebuild the sharing cards (English, Simplified and Traditional Chinese) and the README home screenshots from the local site.
 // Run build:site first; needs sharp and Playwright's Chromium, or BROWSER_EXECUTABLE.
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
@@ -26,7 +26,7 @@ const socialStyles = `
     grid-template-rows: 1fr; gap: 32px;
   }
   .hero h1 { font-size: 60px; line-height: 1.1; }
-  html[lang="zh-CN"] .hero h1 { font-size: 56px; line-height: 1.2; }
+  html[lang^="zh"] .hero h1 { font-size: 56px; line-height: 1.2; }
   .hero-lead { font-size: 20px; line-height: 1.7; max-width: none; }
   .hero-art { max-width: 300px; }
   .copy-status { display: none; }
@@ -54,22 +54,26 @@ try {
     colorScheme: 'light',
     locale: 'en-US',
   });
-  for (const language of ['en', 'zh']) {
+  // Traditional Chinese only needs a sharing card; the README shows the English and Simplified pages.
+  const pages = { en: { path: './', lang: 'en', social: 'social.png', readme: true }, zh: { path: 'zh/', lang: 'zh-CN', social: 'social-zh.png', readme: true }, tw: { path: 'zh-tw/', lang: 'zh-TW', social: 'social-tw.png', readme: false } };
+  for (const [language, target] of Object.entries(pages)) {
     const page = await context.newPage();
     await page.addInitScript(language => localStorage.setItem('opm-lang', language), language);
-    await page.goto(new URL(language === 'zh' ? 'zh/' : './', base).href);
-    assert.equal(await page.locator('html').getAttribute('lang'), language === 'zh' ? 'zh-CN' : 'en');
+    await page.goto(new URL(target.path, base).href);
+    assert.equal(await page.locator('html').getAttribute('lang'), target.lang);
     await page.evaluate(() => document.fonts.ready);
     await page.addStyleTag({ content: `
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       [data-reveal] { opacity: 1 !important; transform: none !important; }
+      /* Today's live count would date the images, so it stays out of them. */
+      .usage { display: none !important; }
     ` });
     await page.locator('.hero img, .brand img').evaluateAll(async images => {
       await Promise.all(images.map(image => image.decode()));
     });
     assert.equal(await page.locator('.hero-art img').evaluate(image => image.naturalWidth), 720);
     assert.equal(await page.locator('.brand img').evaluate(image => image.naturalWidth), 256);
-    await page.screenshot({
+    if (target.readme) await page.screenshot({
       path: fileURLToPath(new URL(`../docs/images/originals/home-${language}.png`, import.meta.url)),
       animations: 'disabled',
     });
@@ -78,10 +82,10 @@ try {
     const copy = await page.locator('.hero-copy').boundingBox();
     assert(copy.y >= 0 && copy.y + copy.height <= 630, `${language} sharing-card copy is clipped`);
     const screenshot = await page.screenshot({ animations: 'disabled' });
-    const social = language === 'zh' ? 'social-zh.png' : 'social.png';
+    const social = target.social;
     await sharp(screenshot).png({ compressionLevel: 9, adaptiveFiltering: true })
       .toFile(fileURLToPath(new URL(`../site/${social}`, import.meta.url)));
-    console.log(`Captured docs/images/originals/home-${language}.png and site/${social}`);
+    console.log(target.readme ? `Captured docs/images/originals/home-${language}.png and site/${social}` : `Captured site/${social}`);
     await page.close();
   }
 } finally {

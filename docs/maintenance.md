@@ -148,7 +148,7 @@ Full-size originals live in `site/originals/` and `docs/images/originals/`; the 
 
 `site/originals/logo.png` is the brand master. `node scripts/optimize-images.mjs logo` exports the 720px lossless WebP, 256px PNG, 180px Apple touch icon, 64px favicon and the matching DSH package icon. Originals and exports with an `-old` suffix are retained as backups and skipped by the optimizer.
 
-After replacing the logo, refresh the two README home screenshots and 1200×630 sharing cards from the local pages. The capture script needs Playwright Chromium, or a browser path in `BROWSER_EXECUTABLE`, plus `sharp` or `SHARP_PATH`:
+After replacing the logo, refresh the two README home screenshots and the three 1200×630 sharing cards (English, Simplified and Traditional Chinese) from the local pages. The capture script needs Playwright Chromium, or a browser path in `BROWSER_EXECUTABLE`, plus `sharp` or `SHARP_PATH`:
 
 ```sh
 pnpm build:site

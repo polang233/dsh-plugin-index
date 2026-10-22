@@ -165,7 +165,7 @@ npx wrangler secret put CF_ZONE_ID --config cloudflare/wrangler.jsonc
 
 `site/originals/logo.png` 是品牌原图。运行 `node scripts/optimize-images.mjs logo`，统一导出 720px 无损 WebP、256px PNG、180px Apple 图标、64px favicon 和 DSH 插件包图标。原图和导出图的 `-old` 后缀文件作为备份保留，压缩脚本会跳过它们。
 
-更换 Logo 后，从本地页面重新导出两张 README 首页截图和 1200×630 分享图。截图脚本需要 Playwright Chromium，或通过 `BROWSER_EXECUTABLE` 指定浏览器路径；同时需要 `sharp`，也可用 `SHARP_PATH` 指定其模块入口：
+更换 Logo 后，从本地页面重新导出两张 README 首页截图和三张 1200×630 分享图（英文、简体、繁体）。截图脚本需要 Playwright Chromium，或通过 `BROWSER_EXECUTABLE` 指定浏览器路径；同时需要 `sharp`，也可用 `SHARP_PATH` 指定其模块入口：
 
 ```sh
 pnpm build:site
