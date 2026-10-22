@@ -107,7 +107,8 @@ export async function checkPublished(indexUrl, {expectedNames, expectedTitle, ve
     if (rows.length !== index.plugins.length || !page.includes('assets/logo-256.png')) throw new Error('Website does not match published index: ' + language);
     const first = index.plugins[0]?.name;
     if (first) {
-      const pluginPage = (await readUrl(new URL(`${language}plugins/${first}/`, indexUrl), fetchImpl)).bytes.toString('utf8');
+      const packagePath = first.split('/').map(encodeURIComponent).join('/');
+      const pluginPage = (await readUrl(new URL(`${language}plugins/${packagePath}/`, indexUrl), fetchImpl)).bytes.toString('utf8');
       if (!pluginPage.includes(`data-get="${first}"`)) throw new Error('Plugin page does not match published index: ' + language + first);
     }
   }
