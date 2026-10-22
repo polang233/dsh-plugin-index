@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "timeZone": "Asia/Taipei",
-  "day": "2026-10-20",
+  "day": "2026-10-22",
   "cycle": "2026-10-19",
   "pools": {
     "default": [
@@ -53,7 +53,6 @@
       "dsh-gitbash-shell",
       "@anionex/dsh-vision-toolkit",
       "@deepblend/dsh-blender-bundle",
-      "dsh-workbuddy-connect",
       "dsh-better-reasoning-effort",
       "dsh-vision-router",
       "@eduwork/dsh-literature",
@@ -74,7 +73,8 @@
       "dsh-run2skill",
       "@wenaixi/dsh-ponytail",
       "dsh-univer-office",
-      "dsh-plugin-tool-management"
+      "dsh-plugin-tool-management",
+      "dsh-qoder-connect"
     ],
     "recommended": [
       "@falling-ts/dsh-force-compact",
@@ -175,6 +175,60 @@
         "dsh-context",
         "@v587d/capital-generation",
         "dsh-zotero"
+      ]
+    },
+    {
+      "day": "2026-10-21",
+      "default": [
+        "billion-context",
+        "@deepseek-harness-tui/dsh-tui",
+        "@eddyskywalker/dsh-chatgpt-subscription",
+        "dsh-recall-plugin",
+        "@anionex/dsh-vision-toolkit",
+        "@agentscope-ai/reme-dsh-plugin",
+        "@deepblend/dsh-blender-bundle",
+        "dsh-run2skill",
+        "dsh-zotero",
+        "clearai-dsh"
+      ],
+      "recommended": [
+        "@tt-a1i/archify-dsh",
+        "@linxin666/dsh-client-ui-git-graph",
+        "dsh-meme",
+        "dsh-lark-link",
+        "dsh-oh-my-claude",
+        "dsh-univer-office",
+        "dsh-image-gen",
+        "dsh-run2skill",
+        "dsh-context-zip",
+        "dsh-vscode-workbench"
+      ]
+    },
+    {
+      "day": "2026-10-22",
+      "default": [
+        "dsh-image-gen",
+        "ds-bot",
+        "@linxin666/dsh-client-ui-git-graph",
+        "dsh-univer-office",
+        "beauticode-dsh",
+        "dsh-plugin-wallpaper-engine",
+        "dsh-vision-router",
+        "dsh-claude-style",
+        "@openviking/dsh-memory-plugin",
+        "dsh-codex-subscription"
+      ],
+      "recommended": [
+        "dsh-auth-gate",
+        "dsh-ssh-ops",
+        "dsh-remote-plugin",
+        "dsh-recall-plugin",
+        "dsh-agent-plugins-market",
+        "dsh-tongflow",
+        "better-model-provider",
+        "dsh-api-dashboard",
+        "dsh-vscode-mode",
+        "@kenz1117/dsh-engram"
       ]
     }
   ]

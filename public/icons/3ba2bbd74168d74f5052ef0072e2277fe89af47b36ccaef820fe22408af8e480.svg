@@ -1,0 +1,17 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="16" cy="16" r="10" stroke="url(#wte-globe)" stroke-width="2.2"/>
+  <ellipse cx="16" cy="16" rx="4.2" ry="10" stroke="url(#wte-globe)" stroke-width="2.2"/>
+  <path d="M6.2 16h19.6" stroke="url(#wte-globe)" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="26" cy="26" r="7" fill="url(#wte-badge)"/>
+  <path d="M23 26h6M26.6 23.4L29.2 26l-2.6 2.6" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="wte-globe" x1="6" y1="6" x2="26" y2="26" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67C7FE"/>
+      <stop offset="1" stop-color="#3F77D8"/>
+    </linearGradient>
+    <linearGradient id="wte-badge" x1="26" y1="19" x2="26" y2="33" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#45E7A4"/>
+      <stop offset="1" stop-color="#05909D"/>
+    </linearGradient>
+  </defs>
+</svg>

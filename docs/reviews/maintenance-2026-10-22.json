@@ -1,0 +1,2150 @@
+{
+  "schema": 1,
+  "issue": 30,
+  "checkedAt": "2026-10-22T13:28:03.809Z",
+  "packages": [
+    {
+      "schema": 1,
+      "checkedAt": "2026-10-22T13:27:11.154Z",
+      "name": "dsh-deepseek-workbench",
+      "previousVersion": "0.1.0-dsh.0.2.1-rc.2",
+      "version": "0.1.1-dsh.0.2.1-rc.2",
+      "repository": "https://github.com/gulagala001/dsh-deepseek-workbench",
+      "commit": "59cdaf8765f671625fda237470e9046692968de7",
+      "committedAt": "2026-10-22T12:36:24Z",
+      "commits": [
+        {
+          "sha": "59cdaf8765f671625fda237470e9046692968de7",
+          "message": "release: prepare DeepSeek Workbench 0.1.1 for formal distribution"
+        },
+        {
+          "sha": "6e8cd25c23988d2a071cd4ac14538474faf4b543",
+          "message": "fix: use native window drag semantics for web chat headers"
+        },
+        {
+          "sha": "3143e2f3a576ecd8a4ac5db94bd5526cd30ac601",
+          "message": "fix: keep standalone page scripts under minified builds and use the oh-my-dsh identity"
+        }
+      ],
+      "sourceArchive": "https://codeload.github.com/gulagala001/dsh-deepseek-workbench/tar.gz/59cdaf8765f671625fda237470e9046692968de7",
+      "sourceIntegrity": "sha512-xQNDKNXw32N67cHW0pJ1ijBsjAUPRDBOyY5mOrK9AynB+977osZrpHz7q4PKc7X4yann1vwztjW6lEA2r2izww==",
+      "input": {
+        "name": "dsh-deepseek-workbench",
+        "version": "0.1.1-dsh.0.2.1-rc.2",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gulagala001/dsh-deepseek-workbench",
+          "commit": "59cdaf8765f671625fda237470e9046692968de7",
+          "integrity": "sha512-xQNDKNXw32N67cHW0pJ1ijBsjAUPRDBOyY5mOrK9AynB+977osZrpHz7q4PKc7X4yann1vwztjW6lEA2r2izww==",
+          "publishedAt": "2026-10-22T12:36:24Z"
+        },
+        "title": {
+          "en": "DeepSeek Workbench",
+          "zh": "DeepSeek Workbench"
+        },
+        "description": {
+          "en": "Use DeepSeek web chat and its API platform in DSH, and continue web chats as DSH sessions. Requires DSH 0.2.1-rc.2 desktop; persistent sign-in and downloads need the companion host adapter.",
+          "zh": "在 DSH 桌面内使用 DeepSeek 网页聊天与 API 平台，将网页会话转为 DSH 会话继续。仅适配 DSH 0.2.1-rc.2，持久登录与官网下载需配套宿主适配。"
+        },
+        "category": "integrations"
+      },
+      "evidence": {
+        "name": "dsh-deepseek-workbench",
+        "version": "0.1.1-dsh.0.2.1-rc.2",
+        "license": "MIT",
+        "repository": "https://github.com/gulagala001/dsh-deepseek-workbench",
+        "repositorySource": "package",
+        "sourceCommit": "59cdaf8765f671625fda237470e9046692968de7",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gulagala001/dsh-deepseek-workbench",
+          "commit": "59cdaf8765f671625fda237470e9046692968de7"
+        },
+        "tarball": "https://codeload.github.com/gulagala001/dsh-deepseek-workbench/tar.gz/59cdaf8765f671625fda237470e9046692968de7",
+        "integrity": "sha512-xQNDKNXw32N67cHW0pJ1ijBsjAUPRDBOyY5mOrK9AynB+977osZrpHz7q4PKc7X4yann1vwztjW6lEA2r2izww==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 46,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 160749,
+          "unpackedBytes": 337815,
+          "decodedBytes": 389120,
+          "entries": 57,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      }
+    },
+    {
+      "schema": 1,
+      "checkedAt": "2026-10-22T13:27:14.874Z",
+      "name": "@gulagala001/dsh-btw",
+      "previousVersion": "0.1.0-dsh.0.2.1-rc.2",
+      "version": "0.1.1-dsh.0.2.1-rc.2",
+      "repository": "https://github.com/gulagala001/dsh-btw",
+      "commit": "c043ac09eaf0febbe9de75cf29cbf970600b1da5",
+      "committedAt": "2026-10-22T12:36:25Z",
+      "commits": [
+        {
+          "sha": "c043ac09eaf0febbe9de75cf29cbf970600b1da5",
+          "message": "release: prepare DSH BTW 0.1.1 for formal distribution"
+        },
+        {
+          "sha": "ea253e45e03ab14bdc0fdaadb594d196dc681186",
+          "message": "docs: display cumulative GitHub downloads"
+        },
+        {
+          "sha": "3540ee578554a30d73785c205fe2b31419256847",
+          "message": "docs: remove screenshot and download badge disclaimers"
+        }
+      ],
+      "sourceArchive": "https://codeload.github.com/gulagala001/dsh-btw/tar.gz/c043ac09eaf0febbe9de75cf29cbf970600b1da5",
+      "sourceIntegrity": "sha512-UT+3pRUich1cV6rfpzzfJGJqlfa7TbshlamiljHHyIJ/saofhx1+EloHUA9IHwaUPrYkzQJHAK5EmTIpsQUrkg==",
+      "input": {
+        "name": "@gulagala001/dsh-btw",
+        "version": "0.1.1-dsh.0.2.1-rc.2",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gulagala001/dsh-btw",
+          "commit": "c043ac09eaf0febbe9de75cf29cbf970600b1da5",
+          "integrity": "sha512-UT+3pRUich1cV6rfpzzfJGJqlfa7TbshlamiljHHyIJ/saofhx1+EloHUA9IHwaUPrYkzQJHAK5EmTIpsQUrkg==",
+          "publishedAt": "2026-10-22T12:36:25Z"
+        },
+        "title": {
+          "en": "DSH BTW",
+          "zh": "DSH BTW"
+        },
+        "description": {
+          "en": "Ask side questions using the current conversation while the main task continues. Requires DSH 0.2.1-rc.2; side history disappears on reload and side requests cannot run tools.",
+          "zh": "借助当前会话上下文旁聊，主任务可继续运行。仅适配 DSH 0.2.1-rc.2，刷新后旁聊历史清空，旁聊不能执行工具。"
+        },
+        "category": "interface"
+      },
+      "evidence": {
+        "name": "@gulagala001/dsh-btw",
+        "version": "0.1.1-dsh.0.2.1-rc.2",
+        "license": "MIT",
+        "repository": "https://github.com/gulagala001/dsh-btw",
+        "repositorySource": "package",
+        "sourceCommit": "c043ac09eaf0febbe9de75cf29cbf970600b1da5",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gulagala001/dsh-btw",
+          "commit": "c043ac09eaf0febbe9de75cf29cbf970600b1da5"
+        },
+        "tarball": "https://codeload.github.com/gulagala001/dsh-btw/tar.gz/c043ac09eaf0febbe9de75cf29cbf970600b1da5",
+        "integrity": "sha512-UT+3pRUich1cV6rfpzzfJGJqlfa7TbshlamiljHHyIJ/saofhx1+EloHUA9IHwaUPrYkzQJHAK5EmTIpsQUrkg==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 25,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 134061,
+          "unpackedBytes": 195631,
+          "decodedBytes": 225280,
+          "entries": 36,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      }
+    },
+    {
+      "schema": 1,
+      "checkedAt": "2026-10-22T13:27:20.288Z",
+      "name": "@gulagala001/dsh-theme-plugin",
+      "previousVersion": "0.2.0-dsh.0.2.1-rc.2",
+      "version": "0.2.1-dsh.0.2.1-rc.2",
+      "repository": "https://github.com/gulagala001/dsh-theme-plugin",
+      "commit": "d0abfd142dff121cf75f5a823eff36d7da182eda",
+      "committedAt": "2026-10-22T12:36:24Z",
+      "commits": [
+        {
+          "sha": "d0abfd142dff121cf75f5a823eff36d7da182eda",
+          "message": "release: prepare DSH Theme 0.2.1 for formal distribution"
+        },
+        {
+          "sha": "9c5de8245df59105cfd92eadd80ff2702fa8b6e7",
+          "message": "fix(glyph): sync workbench coverage and effect cleanup"
+        },
+        {
+          "sha": "d69800fc08c4d4480e42f370ac1426a8e11dd89c",
+          "message": "perf(glyph): group opaque icon text in the appearance renderer"
+        }
+      ],
+      "sourceArchive": "https://codeload.github.com/gulagala001/dsh-theme-plugin/tar.gz/d0abfd142dff121cf75f5a823eff36d7da182eda",
+      "sourceIntegrity": "sha512-bAl5wHpbKpxkgyTdonZ2o6IgTkUuCBbQntJ/1WNY8OE3ZESTVwE39t77/7O5emQ4ledTtX1pTtYiqzoSYVX60A==",
+      "input": {
+        "name": "@gulagala001/dsh-theme-plugin",
+        "version": "0.2.1-dsh.0.2.1-rc.2",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gulagala001/dsh-theme-plugin",
+          "commit": "d0abfd142dff121cf75f5a823eff36d7da182eda",
+          "integrity": "sha512-bAl5wHpbKpxkgyTdonZ2o6IgTkUuCBbQntJ/1WNY8OE3ZESTVwE39t77/7O5emQ4ledTtX1pTtYiqzoSYVX60A==",
+          "publishedAt": "2026-10-22T12:36:24Z"
+        },
+        "title": {
+          "en": "DSH Themes and Appearance",
+          "zh": "DSH 主题与外观"
+        },
+        "description": {
+          "en": "Manage appearance and themes, browse a visual community market, and check themes before applying them. Requires DSH 0.2.1-rc.2; some checks need a Chromium download.",
+          "zh": "管理外观与主题，浏览带预览图的社区市场，安装检查通过后应用主题。仅适配 DSH 0.2.1-rc.2，部分检查需要下载 Chromium。"
+        },
+        "category": "appearance"
+      },
+      "evidence": {
+        "name": "@gulagala001/dsh-theme-plugin",
+        "version": "0.2.1-dsh.0.2.1-rc.2",
+        "license": "MIT",
+        "repository": "https://github.com/gulagala001/dsh-theme-plugin",
+        "repositorySource": "package",
+        "sourceCommit": "d0abfd142dff121cf75f5a823eff36d7da182eda",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gulagala001/dsh-theme-plugin",
+          "commit": "d0abfd142dff121cf75f5a823eff36d7da182eda"
+        },
+        "tarball": "https://codeload.github.com/gulagala001/dsh-theme-plugin/tar.gz/d0abfd142dff121cf75f5a823eff36d7da182eda",
+        "integrity": "sha512-bAl5wHpbKpxkgyTdonZ2o6IgTkUuCBbQntJ/1WNY8OE3ZESTVwE39t77/7O5emQ4ledTtX1pTtYiqzoSYVX60A==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 141,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 5741240,
+          "unpackedBytes": 7488235,
+          "decodedBytes": 7618560,
+          "entries": 174,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      }
+    },
+    {
+      "schema": 1,
+      "checkedAt": "2026-10-22T13:27:36.933Z",
+      "name": "dsh-im-gateway",
+      "previousVersion": "0.3.1",
+      "version": "0.3.3",
+      "repository": "https://github.com/zhuiyueya/dsh-im-gateway",
+      "commit": "8e8fbca125dda15b5cdd2ae79ac63a91e21f7c37",
+      "committedAt": "2026-09-27T07:13:37Z",
+      "commits": [
+        {
+          "sha": "8e8fbca125dda15b5cdd2ae79ac63a91e21f7c37",
+          "message": "Merge pull request #6 from vshencc/fix/windows-build-copy\n\nfix: update build script to use node for file copying (The cp command…"
+        },
+        {
+          "sha": "1fa417a9b16b1d061425dc032b17489e00b02184",
+          "message": "fix: update build script to use node for file copying (The cp command does not exist in Windows)"
+        },
+        {
+          "sha": "c907dd55876230f1cb69687844cbc2e5d3ff4b2f",
+          "message": "0.3.3"
+        }
+      ],
+      "sourceArchive": "https://codeload.github.com/zhuiyueya/dsh-im-gateway/tar.gz/8e8fbca125dda15b5cdd2ae79ac63a91e21f7c37",
+      "sourceIntegrity": "sha512-j3ew3A5bUsHD4GgvBsprkYyFPhWYQA0XcXJ5agWFDwRlwdmk/6rGNKYGs4IgmlUVZgGiSX0NMdEKSxyMs9LwwQ==",
+      "comparisons": [
+        {
+          "path": "package/LICENSE",
+          "matches": true,
+          "npmSha256": "7d6204c45615c57f750e40ae258535d4ec2c85e9e54160e979d733a9bb10e8d8",
+          "sourceSha256": "7d6204c45615c57f750e40ae258535d4ec2c85e9e54160e979d733a9bb10e8d8",
+          "captured": true
+        },
+        {
+          "path": "package/docs/screenshots/feishu-chat.jpg",
+          "matches": true,
+          "npmSha256": "6c2e756d37e92f429367ab66817c54a094d21a010788b5875fee611d03ba0f49",
+          "sourceSha256": "6c2e756d37e92f429367ab66817c54a094d21a010788b5875fee611d03ba0f49",
+          "captured": true
+        },
+        {
+          "path": "package/docs/screenshots/qq-chat.jpg",
+          "matches": true,
+          "npmSha256": "33a7bf7f8e12b0f8e58b593e9e111dabbdc2c1e824d0229b2b1b7af274a6a3a9",
+          "sourceSha256": "33a7bf7f8e12b0f8e58b593e9e111dabbdc2c1e824d0229b2b1b7af274a6a3a9",
+          "captured": true
+        },
+        {
+          "path": "package/docs/screenshots/wechat-chat.jpg",
+          "matches": true,
+          "npmSha256": "732253a4b49e726ef0c05df04bce7faaf19098439a1b0891b00b5b15a734d07b",
+          "sourceSha256": "732253a4b49e726ef0c05df04bce7faaf19098439a1b0891b00b5b15a734d07b",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/approval.js",
+          "matches": true,
+          "npmSha256": "3b9a5dde76ae94e4546b63630efadbc14fce1452a1a8dfb11b9f3b033ac69c81",
+          "sourceSha256": "3b9a5dde76ae94e4546b63630efadbc14fce1452a1a8dfb11b9f3b033ac69c81",
+          "captured": true
+        },
+        {
+          "path": "package/client.js",
+          "matches": true,
+          "npmSha256": "a4adc68f2877fc072447c9120f8d2d9d4032d5d1e6f856b09740e251d79b7d9d",
+          "sourceSha256": "a4adc68f2877fc072447c9120f8d2d9d4032d5d1e6f856b09740e251d79b7d9d",
+          "captured": true
+        },
+        {
+          "path": "package/lib/client.js",
+          "matches": true,
+          "npmSha256": "a4adc68f2877fc072447c9120f8d2d9d4032d5d1e6f856b09740e251d79b7d9d",
+          "sourceSha256": "a4adc68f2877fc072447c9120f8d2d9d4032d5d1e6f856b09740e251d79b7d9d",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/cron-time.js",
+          "matches": true,
+          "npmSha256": "2fa2e9cd8c758a0ea3ccc05f806ad969501335e37ef4dfbde71f54c437e8c8d4",
+          "sourceSha256": "2fa2e9cd8c758a0ea3ccc05f806ad969501335e37ef4dfbde71f54c437e8c8d4",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/cron.js",
+          "matches": true,
+          "npmSha256": "9157d35ccc015b09af38c97664e30c2ba19c794afa16dedf51e8df31a31c4c20",
+          "sourceSha256": "9157d35ccc015b09af38c97664e30c2ba19c794afa16dedf51e8df31a31c4c20",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/dingtalk.js",
+          "matches": true,
+          "npmSha256": "8681c62d612f66c3c28ac9ff252a74896d65333e8dd12482df24890c950cf697",
+          "sourceSha256": "8681c62d612f66c3c28ac9ff252a74896d65333e8dd12482df24890c950cf697",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/discord.js",
+          "matches": true,
+          "npmSha256": "adc2ec78fb4a3b94b34ab6167f4f49f280af4ab82c60aec157b26fee3b7e2d17",
+          "sourceSha256": "adc2ec78fb4a3b94b34ab6167f4f49f280af4ab82c60aec157b26fee3b7e2d17",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/feishu.js",
+          "matches": true,
+          "npmSha256": "a37a28695cfbb5a93fe974addb8b00e240fe2c356d2e8da5a0c0335ca4d94c1f",
+          "sourceSha256": "a37a28695cfbb5a93fe974addb8b00e240fe2c356d2e8da5a0c0335ca4d94c1f",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/format.js",
+          "matches": true,
+          "npmSha256": "a98e4cf40c14532fc3efddb3cfd43f73f02a41a167aaa93458217f07eeb94484",
+          "sourceSha256": "a98e4cf40c14532fc3efddb3cfd43f73f02a41a167aaa93458217f07eeb94484",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/gateway.js",
+          "matches": true,
+          "npmSha256": "7e9c2efb69e4fb32c206780e4e148e8bb1fede55b3274f3446c1bfa4f4bba701",
+          "sourceSha256": "7e9c2efb69e4fb32c206780e4e148e8bb1fede55b3274f3446c1bfa4f4bba701",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/googlechat.js",
+          "matches": true,
+          "npmSha256": "185b95f5fd2b0d2b3f909f950f2e23335c902a523f9308a10370668d6a6b73fd",
+          "sourceSha256": "185b95f5fd2b0d2b3f909f950f2e23335c902a523f9308a10370668d6a6b73fd",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/imessage.js",
+          "matches": true,
+          "npmSha256": "5cc39486e70a733ae828e80e9f8f86f8a77b5c87c0a4bc71ff5f9e0192043e11",
+          "sourceSha256": "5cc39486e70a733ae828e80e9f8f86f8a77b5c87c0a4bc71ff5f9e0192043e11",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/index.js",
+          "matches": true,
+          "npmSha256": "c8c8f4f897f8f021867d0469e96f6e081fbe4b1c54003edbe87ac0254c3ff36d",
+          "sourceSha256": "c8c8f4f897f8f021867d0469e96f6e081fbe4b1c54003edbe87ac0254c3ff36d",
+          "captured": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "matches": true,
+          "npmSha256": "7f59f8ff0b1073cb372962056583389484ee63664e0bae28c3aadcb352f49c48",
+          "sourceSha256": "7f59f8ff0b1073cb372962056583389484ee63664e0bae28c3aadcb352f49c48",
+          "captured": true
+        },
+        {
+          "path": "package/lib/instance-lock.js",
+          "matches": true,
+          "npmSha256": "3f8e1cccbb1ab8453c2610c0cbff509819c3902e0b1e4c42489d60d6c0e5c006",
+          "sourceSha256": "3f8e1cccbb1ab8453c2610c0cbff509819c3902e0b1e4c42489d60d6c0e5c006",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/irc.js",
+          "matches": true,
+          "npmSha256": "1febabd92924f82cb40298377b22b958db1312e38503051b86d4b630fcd85f6b",
+          "sourceSha256": "1febabd92924f82cb40298377b22b958db1312e38503051b86d4b630fcd85f6b",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/line.js",
+          "matches": true,
+          "npmSha256": "8765d8ba213f5da8bd1d3b1c122e219262ee0b6cd0dd8688462b036b650a03b1",
+          "sourceSha256": "8765d8ba213f5da8bd1d3b1c122e219262ee0b6cd0dd8688462b036b650a03b1",
+          "captured": true
+        },
+        {
+          "path": "package/lib/manager.js",
+          "matches": true,
+          "npmSha256": "dabbca20c79196e850d991f30f83475f4f1e937b61c2de132459b6f19c769a3f",
+          "sourceSha256": "dabbca20c79196e850d991f30f83475f4f1e937b61c2de132459b6f19c769a3f",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/matrix.js",
+          "matches": true,
+          "npmSha256": "5189f81312dcde53f280782c1f12a56e8db99f09bd37b9113f411880074bee80",
+          "sourceSha256": "5189f81312dcde53f280782c1f12a56e8db99f09bd37b9113f411880074bee80",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/mattermost.js",
+          "matches": true,
+          "npmSha256": "f45a02603676c9c9b61e2c29221cc27b0c370cb9a9db7cc2c0081e5b0811174d",
+          "sourceSha256": "f45a02603676c9c9b61e2c29221cc27b0c370cb9a9db7cc2c0081e5b0811174d",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/merge.js",
+          "matches": true,
+          "npmSha256": "a3e21232bb31b2dd5f7380ce1718e7a008fb55fd8570d72fb5c62a30f39d9111",
+          "sourceSha256": "a3e21232bb31b2dd5f7380ce1718e7a008fb55fd8570d72fb5c62a30f39d9111",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/msteams.js",
+          "matches": true,
+          "npmSha256": "6095b47f48af464ddc4c660e836063903819931f6c388adbad11d90d4cc1d677",
+          "sourceSha256": "6095b47f48af464ddc4c660e836063903819931f6c388adbad11d90d4cc1d677",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/nextcloud.js",
+          "matches": true,
+          "npmSha256": "f799a51909a74fe6e3cf4713ac13153b3c1be95278482daae5c99edf7f158246",
+          "sourceSha256": "f799a51909a74fe6e3cf4713ac13153b3c1be95278482daae5c99edf7f158246",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/nostr.js",
+          "matches": true,
+          "npmSha256": "1e636d65e1316c78ed4911f3b79f1cf8fd204e2e96992549ab51384859f85084",
+          "sourceSha256": "1e636d65e1316c78ed4911f3b79f1cf8fd204e2e96992549ab51384859f85084",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/provisioning.js",
+          "matches": true,
+          "npmSha256": "067747ab6df0144f6d2b9431578745e1dc57774ed819d62dd55d9c071774d465",
+          "sourceSha256": "067747ab6df0144f6d2b9431578745e1dc57774ed819d62dd55d9c071774d465",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/qqbot.js",
+          "matches": true,
+          "npmSha256": "bfc967dd732c446d5be6c01b32de10eeeba33c60b29be0175e3996ab0374a993",
+          "sourceSha256": "bfc967dd732c446d5be6c01b32de10eeeba33c60b29be0175e3996ab0374a993",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/questions.js",
+          "matches": true,
+          "npmSha256": "0834ac0388be583297ef6134f6ef23c9c1447657182842c7ad5e9c5cba53ee23",
+          "sourceSha256": "0834ac0388be583297ef6134f6ef23c9c1447657182842c7ad5e9c5cba53ee23",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/router.js",
+          "matches": true,
+          "npmSha256": "b77cb06e67c68de74c5f24cfc4773e92fbbfbdf49acf605986cee3f2106b84e4",
+          "sourceSha256": "b77cb06e67c68de74c5f24cfc4773e92fbbfbdf49acf605986cee3f2106b84e4",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/signal.js",
+          "matches": true,
+          "npmSha256": "0e4457ec8beb3084626ae15e391d23429c2ef06c8223c076ec6eb58d0be643fd",
+          "sourceSha256": "0e4457ec8beb3084626ae15e391d23429c2ef06c8223c076ec6eb58d0be643fd",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/slack.js",
+          "matches": true,
+          "npmSha256": "43cf60c1d2226858ebf55679d93fe29c306fbe48ac590d6de747a8677a040268",
+          "sourceSha256": "43cf60c1d2226858ebf55679d93fe29c306fbe48ac590d6de747a8677a040268",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/split.js",
+          "matches": true,
+          "npmSha256": "76f452ffd77594805dc825889e84667da065a288fc4dfd8742ed6dbeca225148",
+          "sourceSha256": "76f452ffd77594805dc825889e84667da065a288fc4dfd8742ed6dbeca225148",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/stubs.js",
+          "matches": true,
+          "npmSha256": "c992385aa08ff31c4592eb5d0ee9ad25d99fe6f85b584fd135ce955c5e0f2532",
+          "sourceSha256": "c992385aa08ff31c4592eb5d0ee9ad25d99fe6f85b584fd135ce955c5e0f2532",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/synology.js",
+          "matches": true,
+          "npmSha256": "97605f9ca87a4be3097afcb7e98ee483fb71e6c44aa06d3e1e3d855fab0fe3f8",
+          "sourceSha256": "97605f9ca87a4be3097afcb7e98ee483fb71e6c44aa06d3e1e3d855fab0fe3f8",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/telegram.js",
+          "matches": true,
+          "npmSha256": "e27c6ad7c2600c0dfb04a690cd2c801d36bbd7b2f88aa25447fe0bca5d4da309",
+          "sourceSha256": "e27c6ad7c2600c0dfb04a690cd2c801d36bbd7b2f88aa25447fe0bca5d4da309",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/twitch.js",
+          "matches": true,
+          "npmSha256": "9f277cdc67d1e0595be5705e8964912685a30a6671cddd532757f9f58ecde06f",
+          "sourceSha256": "9f277cdc67d1e0595be5705e8964912685a30a6671cddd532757f9f58ecde06f",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/types.js",
+          "matches": true,
+          "npmSha256": "4f1285cde3f4cffe784cdde1a78bb901dbbebade48aecd289e38a6f7a987570e",
+          "sourceSha256": "4f1285cde3f4cffe784cdde1a78bb901dbbebade48aecd289e38a6f7a987570e",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/wechat.js",
+          "matches": true,
+          "npmSha256": "62caefe5a5a88276d1470e00aaa36706d104a5e76c0cc0f1dc038ab00a9e7b3b",
+          "sourceSha256": "62caefe5a5a88276d1470e00aaa36706d104a5e76c0cc0f1dc038ab00a9e7b3b",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/wecom.js",
+          "matches": true,
+          "npmSha256": "d452f753dda8b2e4b9cd70926af7a13c6271a75ffee092afea68ba17fbce2a07",
+          "sourceSha256": "d452f753dda8b2e4b9cd70926af7a13c6271a75ffee092afea68ba17fbce2a07",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/whatsapp.js",
+          "matches": true,
+          "npmSha256": "b26f40d4869430a2c90f00a4360f709ad3945558361b9309d3ffaf7537c0f8e2",
+          "sourceSha256": "b26f40d4869430a2c90f00a4360f709ad3945558361b9309d3ffaf7537c0f8e2",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/zalo.js",
+          "matches": true,
+          "npmSha256": "ca7d9d896b68e8f183e23f483275856638cecaad8b433ee502a85b79642e2e0d",
+          "sourceSha256": "ca7d9d896b68e8f183e23f483275856638cecaad8b433ee502a85b79642e2e0d",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/approval.d.ts.map",
+          "matches": true,
+          "npmSha256": "f95292e74ba0666303711ebb6a447c10793ff445ef1ca413cb04124298191337",
+          "sourceSha256": "f95292e74ba0666303711ebb6a447c10793ff445ef1ca413cb04124298191337",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/approval.js.map",
+          "matches": true,
+          "npmSha256": "edbe4d89d19bf74f1a4693dd1fa6f35891af6fd289a38b31058d6b14745b2a16",
+          "sourceSha256": "edbe4d89d19bf74f1a4693dd1fa6f35891af6fd289a38b31058d6b14745b2a16",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/cron-time.d.ts.map",
+          "matches": true,
+          "npmSha256": "73e9047ffc503e8b52e589d504a28ece94a1a00ce799b67ceb8f172a226bf3d4",
+          "sourceSha256": "73e9047ffc503e8b52e589d504a28ece94a1a00ce799b67ceb8f172a226bf3d4",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/cron-time.js.map",
+          "matches": true,
+          "npmSha256": "9b934a6e10afe594ed38427c884a8978999471b8037365f7ff367954396415c5",
+          "sourceSha256": "9b934a6e10afe594ed38427c884a8978999471b8037365f7ff367954396415c5",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/cron.d.ts.map",
+          "matches": true,
+          "npmSha256": "f85ab5108126a320cc95a08f8b8bdd5fb390be8ef0da4bd7f93fcc70ae46cdb7",
+          "sourceSha256": "f85ab5108126a320cc95a08f8b8bdd5fb390be8ef0da4bd7f93fcc70ae46cdb7",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/cron.js.map",
+          "matches": true,
+          "npmSha256": "25e13981836023f24d5e9d498eedc0373b77b0652af74f25d9f1b45b92a5b114",
+          "sourceSha256": "25e13981836023f24d5e9d498eedc0373b77b0652af74f25d9f1b45b92a5b114",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/dingtalk.d.ts.map",
+          "matches": true,
+          "npmSha256": "0cdfffd0850c0d76f7dc047b2ccf4ad9e727ba095af92838343213ed70561fbc",
+          "sourceSha256": "0cdfffd0850c0d76f7dc047b2ccf4ad9e727ba095af92838343213ed70561fbc",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/dingtalk.js.map",
+          "matches": true,
+          "npmSha256": "96387eb79cd8201c6f671215f21b1b1b9bbb3334856ef0b68c0c0a8199011d3c",
+          "sourceSha256": "96387eb79cd8201c6f671215f21b1b1b9bbb3334856ef0b68c0c0a8199011d3c",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/discord.d.ts.map",
+          "matches": true,
+          "npmSha256": "852f3265b3f5579aecf555ed5c45d879df1e3d02cc2cb28998e7efb42911d9a5",
+          "sourceSha256": "852f3265b3f5579aecf555ed5c45d879df1e3d02cc2cb28998e7efb42911d9a5",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/discord.js.map",
+          "matches": true,
+          "npmSha256": "b18f042513b737377bce1bfbc937fd60c9ad281fad3453b3d9804ece41fc6586",
+          "sourceSha256": "b18f042513b737377bce1bfbc937fd60c9ad281fad3453b3d9804ece41fc6586",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/feishu.d.ts.map",
+          "matches": true,
+          "npmSha256": "cdad588ecc24b7e0f8598a2a5936683d1782faa4116f77986ef4c070e177cdd1",
+          "sourceSha256": "cdad588ecc24b7e0f8598a2a5936683d1782faa4116f77986ef4c070e177cdd1",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/feishu.js.map",
+          "matches": true,
+          "npmSha256": "553d7531d02b9f2ad1c4ebebbac045434010a46af270430c4026d2df319d6261",
+          "sourceSha256": "553d7531d02b9f2ad1c4ebebbac045434010a46af270430c4026d2df319d6261",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/format.d.ts.map",
+          "matches": true,
+          "npmSha256": "13838c6f0a65abaa4e24ca97555e33e72819372b3191dbc49af8445c3c5c9f95",
+          "sourceSha256": "13838c6f0a65abaa4e24ca97555e33e72819372b3191dbc49af8445c3c5c9f95",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/format.js.map",
+          "matches": true,
+          "npmSha256": "6aee1da2f9d086668ca636085bcd32d5367c17fdd0e9bd64198ace8b6a731128",
+          "sourceSha256": "6aee1da2f9d086668ca636085bcd32d5367c17fdd0e9bd64198ace8b6a731128",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/gateway.d.ts.map",
+          "matches": true,
+          "npmSha256": "d81a18d4bb8d3e755ebe98c5dfeab1d2d53b9399eec70808f13dc4e41acd99b5",
+          "sourceSha256": "d81a18d4bb8d3e755ebe98c5dfeab1d2d53b9399eec70808f13dc4e41acd99b5",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/gateway.js.map",
+          "matches": true,
+          "npmSha256": "4d548f3ddd2c3fdf44296835e99cc54ffdf7b68d23370f097a2c40a9cd4ada95",
+          "sourceSha256": "4d548f3ddd2c3fdf44296835e99cc54ffdf7b68d23370f097a2c40a9cd4ada95",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/googlechat.d.ts.map",
+          "matches": true,
+          "npmSha256": "0d7544a92cbf7ca3b30fcf1fbf5cca01716a802c3081535a9c36d744977f964a",
+          "sourceSha256": "0d7544a92cbf7ca3b30fcf1fbf5cca01716a802c3081535a9c36d744977f964a",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/googlechat.js.map",
+          "matches": true,
+          "npmSha256": "3f5a92a0140a4d0c20941a0583abd2a2d3859df7dfc6fa99f74ea628df9f4715",
+          "sourceSha256": "3f5a92a0140a4d0c20941a0583abd2a2d3859df7dfc6fa99f74ea628df9f4715",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/imessage.d.ts.map",
+          "matches": true,
+          "npmSha256": "8a7b346a5bd3a9c9bf06997dba49311ff31cc264ecb9a805f9ed8c0241b7a90d",
+          "sourceSha256": "8a7b346a5bd3a9c9bf06997dba49311ff31cc264ecb9a805f9ed8c0241b7a90d",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/imessage.js.map",
+          "matches": true,
+          "npmSha256": "e5462b98013c10116a97bc0d82dec18710e196713d016c3efde68c1dc585a67f",
+          "sourceSha256": "e5462b98013c10116a97bc0d82dec18710e196713d016c3efde68c1dc585a67f",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/index.d.ts.map",
+          "matches": true,
+          "npmSha256": "b16ed6f455bd624d913c7627589658ba63e2e57a604a2d28ed12dcb673471920",
+          "sourceSha256": "b16ed6f455bd624d913c7627589658ba63e2e57a604a2d28ed12dcb673471920",
+          "captured": true
+        },
+        {
+          "path": "package/lib/index.d.ts.map",
+          "matches": true,
+          "npmSha256": "0de8769f74b30892e2c3826f2310d96103de93466a704afa185379a6217f4913",
+          "sourceSha256": "0de8769f74b30892e2c3826f2310d96103de93466a704afa185379a6217f4913",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/index.js.map",
+          "matches": true,
+          "npmSha256": "7a9ee31bda2f2818538d1782fd15b9a0c2245fe86946a165ffdf776f9eea078d",
+          "sourceSha256": "7a9ee31bda2f2818538d1782fd15b9a0c2245fe86946a165ffdf776f9eea078d",
+          "captured": true
+        },
+        {
+          "path": "package/lib/index.js.map",
+          "matches": true,
+          "npmSha256": "65ad924182977b09de1be3e5c10c5c4e33cdffac5f2616f179693e037cd5f072",
+          "sourceSha256": "65ad924182977b09de1be3e5c10c5c4e33cdffac5f2616f179693e037cd5f072",
+          "captured": true
+        },
+        {
+          "path": "package/lib/instance-lock.d.ts.map",
+          "matches": true,
+          "npmSha256": "d136f6604df40a0af455be03430fd2ce9f2981a955ccedc816264a87c7864446",
+          "sourceSha256": "d136f6604df40a0af455be03430fd2ce9f2981a955ccedc816264a87c7864446",
+          "captured": true
+        },
+        {
+          "path": "package/lib/instance-lock.js.map",
+          "matches": true,
+          "npmSha256": "3d15a0d7b7c1b0ae7ee41fc7f9bc66f370520553bb37f5c6ff84812ba760a43b",
+          "sourceSha256": "3d15a0d7b7c1b0ae7ee41fc7f9bc66f370520553bb37f5c6ff84812ba760a43b",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/irc.d.ts.map",
+          "matches": true,
+          "npmSha256": "f96a90d55479741823eca6704d3d0bfa61669ff15312f81ffa28a50720249dd2",
+          "sourceSha256": "f96a90d55479741823eca6704d3d0bfa61669ff15312f81ffa28a50720249dd2",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/irc.js.map",
+          "matches": true,
+          "npmSha256": "261a0c1f465d5afd2560c3dd6698d4b42c78fc9747eb7f8316d8bb1ff3b61196",
+          "sourceSha256": "261a0c1f465d5afd2560c3dd6698d4b42c78fc9747eb7f8316d8bb1ff3b61196",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/line.d.ts.map",
+          "matches": true,
+          "npmSha256": "470588822fb61a29f8fe37879044c71b7f5c6e69bab8ee70fa92f681a2368f92",
+          "sourceSha256": "470588822fb61a29f8fe37879044c71b7f5c6e69bab8ee70fa92f681a2368f92",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/line.js.map",
+          "matches": true,
+          "npmSha256": "17b0566bf68c0e8871bddd625bf9b2f36d11b6088da03a525fdbf200362a37c6",
+          "sourceSha256": "17b0566bf68c0e8871bddd625bf9b2f36d11b6088da03a525fdbf200362a37c6",
+          "captured": true
+        },
+        {
+          "path": "package/lib/manager.d.ts.map",
+          "matches": true,
+          "npmSha256": "8f7967732215f119ba7e5331ea639423a37d2bda33f2d55b07024110fa8b96d0",
+          "sourceSha256": "8f7967732215f119ba7e5331ea639423a37d2bda33f2d55b07024110fa8b96d0",
+          "captured": true
+        },
+        {
+          "path": "package/lib/manager.js.map",
+          "matches": true,
+          "npmSha256": "cfe4e3846e759085b28eae695bb71b8d971fdd9b3f257672dcf03eb825f104e6",
+          "sourceSha256": "cfe4e3846e759085b28eae695bb71b8d971fdd9b3f257672dcf03eb825f104e6",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/matrix.d.ts.map",
+          "matches": true,
+          "npmSha256": "3d4f759345c861fef15ed89a42fb93e13a69eef1e35f67c3718fcf55c2c6e85f",
+          "sourceSha256": "3d4f759345c861fef15ed89a42fb93e13a69eef1e35f67c3718fcf55c2c6e85f",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/matrix.js.map",
+          "matches": true,
+          "npmSha256": "918896a266c14bb71a58fb0140b2ee4991043adae32dfd3675c67d9135c89798",
+          "sourceSha256": "918896a266c14bb71a58fb0140b2ee4991043adae32dfd3675c67d9135c89798",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/mattermost.d.ts.map",
+          "matches": true,
+          "npmSha256": "4177746ec7968186d921be5a68da2229f288719aa68ef7bf1c57480b04ccdd8a",
+          "sourceSha256": "4177746ec7968186d921be5a68da2229f288719aa68ef7bf1c57480b04ccdd8a",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/mattermost.js.map",
+          "matches": true,
+          "npmSha256": "79ba8d103fafcefd41f65f2ceb6a79cb512d6ca261ef486575b06bb4914208ed",
+          "sourceSha256": "79ba8d103fafcefd41f65f2ceb6a79cb512d6ca261ef486575b06bb4914208ed",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/merge.d.ts.map",
+          "matches": true,
+          "npmSha256": "03653e8627179a0de029a8121bb125d69c526afe338cd0223a8f91f49461c4cc",
+          "sourceSha256": "03653e8627179a0de029a8121bb125d69c526afe338cd0223a8f91f49461c4cc",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/merge.js.map",
+          "matches": true,
+          "npmSha256": "3e17eed07c5ab63eb6a65fbc8658c815acf2e5c9994a9af6980a60fae0863055",
+          "sourceSha256": "3e17eed07c5ab63eb6a65fbc8658c815acf2e5c9994a9af6980a60fae0863055",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/msteams.d.ts.map",
+          "matches": true,
+          "npmSha256": "aedc91f8312883ef074d2bd5a519e95295b3d7e635897a17f98edad46b54eaaa",
+          "sourceSha256": "aedc91f8312883ef074d2bd5a519e95295b3d7e635897a17f98edad46b54eaaa",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/msteams.js.map",
+          "matches": true,
+          "npmSha256": "5e97a9f7e60af6c87fb434279f20a54c3d981f13e8e0bbe230e471b6c7b04bde",
+          "sourceSha256": "5e97a9f7e60af6c87fb434279f20a54c3d981f13e8e0bbe230e471b6c7b04bde",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/nextcloud.d.ts.map",
+          "matches": true,
+          "npmSha256": "3a3b4df0a8312fcd75b3391b9b6686665c5b959f4e0f082fc3acf2243de11445",
+          "sourceSha256": "3a3b4df0a8312fcd75b3391b9b6686665c5b959f4e0f082fc3acf2243de11445",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/nextcloud.js.map",
+          "matches": true,
+          "npmSha256": "383259c36e6d86bd9d50ae55b9b313fd4a48d800aa6a17c54ce521ed89721751",
+          "sourceSha256": "383259c36e6d86bd9d50ae55b9b313fd4a48d800aa6a17c54ce521ed89721751",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/nostr.d.ts.map",
+          "matches": true,
+          "npmSha256": "3e791fdec65682d1286aeed4a92fd20f6448ed783d39137f65a7893d8bd33842",
+          "sourceSha256": "3e791fdec65682d1286aeed4a92fd20f6448ed783d39137f65a7893d8bd33842",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/nostr.js.map",
+          "matches": true,
+          "npmSha256": "fc8deff128a412b7a93e226a8b8a638dc0d319f007fb8349b8d2d0f419559602",
+          "sourceSha256": "fc8deff128a412b7a93e226a8b8a638dc0d319f007fb8349b8d2d0f419559602",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/provisioning.d.ts.map",
+          "matches": true,
+          "npmSha256": "ecf23983e49d26cbcb26c6b8356edef8e62d3c304f662be2e96f8b9dd666dbdf",
+          "sourceSha256": "ecf23983e49d26cbcb26c6b8356edef8e62d3c304f662be2e96f8b9dd666dbdf",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/provisioning.js.map",
+          "matches": true,
+          "npmSha256": "27f80fe5d12e35bde45ce8c76eedda8dc32de3e0ca23e0431d2a5fbfdb71404f",
+          "sourceSha256": "27f80fe5d12e35bde45ce8c76eedda8dc32de3e0ca23e0431d2a5fbfdb71404f",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/qqbot.d.ts.map",
+          "matches": true,
+          "npmSha256": "76c28535609419b4629b84d5b5f58fb4f25b89ebf1d4e618e8ae547b7be75c29",
+          "sourceSha256": "76c28535609419b4629b84d5b5f58fb4f25b89ebf1d4e618e8ae547b7be75c29",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/qqbot.js.map",
+          "matches": true,
+          "npmSha256": "d222d57b9fa80527acf68ee8d6fdb0fcb7ef2e6d673d897d3c7ecf2b598031ee",
+          "sourceSha256": "d222d57b9fa80527acf68ee8d6fdb0fcb7ef2e6d673d897d3c7ecf2b598031ee",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/questions.d.ts.map",
+          "matches": true,
+          "npmSha256": "a015e73608447476ddffca9b611ca5b0a975ff515b7828593e5251e3b2896d47",
+          "sourceSha256": "a015e73608447476ddffca9b611ca5b0a975ff515b7828593e5251e3b2896d47",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/questions.js.map",
+          "matches": true,
+          "npmSha256": "db47b947e0bce1737cd0dded211903e85a594fda0aa4bab70502e12a25719e74",
+          "sourceSha256": "db47b947e0bce1737cd0dded211903e85a594fda0aa4bab70502e12a25719e74",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/router.d.ts.map",
+          "matches": true,
+          "npmSha256": "b7ee46a8eefbe2cefd3cf021821e4a0c41585f62315cfbc711dc7843bf0ff80a",
+          "sourceSha256": "b7ee46a8eefbe2cefd3cf021821e4a0c41585f62315cfbc711dc7843bf0ff80a",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/router.js.map",
+          "matches": true,
+          "npmSha256": "ebf9a374e9d561582ecca4c641b66e33d25582407aa7a75ade712d059278cc87",
+          "sourceSha256": "ebf9a374e9d561582ecca4c641b66e33d25582407aa7a75ade712d059278cc87",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/signal.d.ts.map",
+          "matches": true,
+          "npmSha256": "2485c9d8035325d496f3b024971f2d5ed388f033acfd44c26b4503503b835975",
+          "sourceSha256": "2485c9d8035325d496f3b024971f2d5ed388f033acfd44c26b4503503b835975",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/signal.js.map",
+          "matches": true,
+          "npmSha256": "07a123b7cbec7a588bc6069b825125fa93282ca5bfb2529af94a6b43d1eafedf",
+          "sourceSha256": "07a123b7cbec7a588bc6069b825125fa93282ca5bfb2529af94a6b43d1eafedf",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/slack.d.ts.map",
+          "matches": true,
+          "npmSha256": "c96b9a1c2c94954618ac8d923cb4babdd70498211bc6b02fb951f44a0ed24a76",
+          "sourceSha256": "c96b9a1c2c94954618ac8d923cb4babdd70498211bc6b02fb951f44a0ed24a76",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/slack.js.map",
+          "matches": true,
+          "npmSha256": "b78afb22cfa58b6eab19809b671774555a1ea3f63409de25e143bce0ab1949c6",
+          "sourceSha256": "b78afb22cfa58b6eab19809b671774555a1ea3f63409de25e143bce0ab1949c6",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/split.d.ts.map",
+          "matches": true,
+          "npmSha256": "82b958d95699cf07e44792d74ef369f481934efa61937483f485522cf550d38a",
+          "sourceSha256": "82b958d95699cf07e44792d74ef369f481934efa61937483f485522cf550d38a",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/split.js.map",
+          "matches": true,
+          "npmSha256": "d69b7f15e86b095f522bfc775122218e619d4886685d341f4c5103b885c76f1c",
+          "sourceSha256": "d69b7f15e86b095f522bfc775122218e619d4886685d341f4c5103b885c76f1c",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/stubs.d.ts.map",
+          "matches": true,
+          "npmSha256": "3a45846a5f6a767bf4a16027aa1c239929c1308f350dcc800f995025e8e11ee5",
+          "sourceSha256": "3a45846a5f6a767bf4a16027aa1c239929c1308f350dcc800f995025e8e11ee5",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/stubs.js.map",
+          "matches": true,
+          "npmSha256": "7c8db157a1a9bd38d454d2a4cb888322271d2581f69c8319ef63d1c03cb0e19a",
+          "sourceSha256": "7c8db157a1a9bd38d454d2a4cb888322271d2581f69c8319ef63d1c03cb0e19a",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/synology.d.ts.map",
+          "matches": true,
+          "npmSha256": "cd2614dae7791d8c4bca1dbf6e9ba48d18545651d3e98cc575702ce62dbab183",
+          "sourceSha256": "cd2614dae7791d8c4bca1dbf6e9ba48d18545651d3e98cc575702ce62dbab183",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/synology.js.map",
+          "matches": true,
+          "npmSha256": "b18df2d2802a13a908b0aa61d7615f37e246b76e352fec21b8b091f72d9620fa",
+          "sourceSha256": "b18df2d2802a13a908b0aa61d7615f37e246b76e352fec21b8b091f72d9620fa",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/telegram.d.ts.map",
+          "matches": true,
+          "npmSha256": "226548fd9a90a88f5b2cb5609747040e060587560f68358bd5e7c33dd7e2dc0b",
+          "sourceSha256": "226548fd9a90a88f5b2cb5609747040e060587560f68358bd5e7c33dd7e2dc0b",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/telegram.js.map",
+          "matches": true,
+          "npmSha256": "cb40b4638a613fc5a3bda7d87e6b5bb567eeb86ca3c1e6c4be71ce47bf2102df",
+          "sourceSha256": "cb40b4638a613fc5a3bda7d87e6b5bb567eeb86ca3c1e6c4be71ce47bf2102df",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/twitch.d.ts.map",
+          "matches": true,
+          "npmSha256": "50f4b1b3613172356f9f72c531f5cdafa6b5f2b64828af9ecd81db9b3c660546",
+          "sourceSha256": "50f4b1b3613172356f9f72c531f5cdafa6b5f2b64828af9ecd81db9b3c660546",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/twitch.js.map",
+          "matches": true,
+          "npmSha256": "b87c3272b285e328821eecbd77657bf1a41bba47dd09b02e6a7c74bcea14f7dc",
+          "sourceSha256": "b87c3272b285e328821eecbd77657bf1a41bba47dd09b02e6a7c74bcea14f7dc",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/types.d.ts.map",
+          "matches": true,
+          "npmSha256": "7280989ead424dae3b91cb8d75fe2153258d076022c700206f1d4ffee48b3b9c",
+          "sourceSha256": "7280989ead424dae3b91cb8d75fe2153258d076022c700206f1d4ffee48b3b9c",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/types.js.map",
+          "matches": true,
+          "npmSha256": "e67d2b4e1c444b9a8aa5b7f56bffb0c9355df97f56e26c121635dba64a18d37c",
+          "sourceSha256": "e67d2b4e1c444b9a8aa5b7f56bffb0c9355df97f56e26c121635dba64a18d37c",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/wechat.d.ts.map",
+          "matches": true,
+          "npmSha256": "f7738c6b75687e76d7a7e3c301805a54fcbbaa5ad89e3ea64f232e7fb6ed09fc",
+          "sourceSha256": "f7738c6b75687e76d7a7e3c301805a54fcbbaa5ad89e3ea64f232e7fb6ed09fc",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/wechat.js.map",
+          "matches": true,
+          "npmSha256": "77fa26d851fb9dc5483f7a95dee697ce1513db1b21c1e2ce3de3b21860224c5c",
+          "sourceSha256": "77fa26d851fb9dc5483f7a95dee697ce1513db1b21c1e2ce3de3b21860224c5c",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/wecom.d.ts.map",
+          "matches": true,
+          "npmSha256": "7e16ae3d318cd4ce49254478bf2b8e5911d7ed28adfe0d4575656a14ef60bbc4",
+          "sourceSha256": "7e16ae3d318cd4ce49254478bf2b8e5911d7ed28adfe0d4575656a14ef60bbc4",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/wecom.js.map",
+          "matches": true,
+          "npmSha256": "3d6df4f485a9ae4336325ec996530e65994af4a934c863c24f8cd813d139cf39",
+          "sourceSha256": "3d6df4f485a9ae4336325ec996530e65994af4a934c863c24f8cd813d139cf39",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/whatsapp.d.ts.map",
+          "matches": true,
+          "npmSha256": "41384a3619bfdefa640f698f1aca88e5e11f92029eb41683ab633bec7e805bdc",
+          "sourceSha256": "41384a3619bfdefa640f698f1aca88e5e11f92029eb41683ab633bec7e805bdc",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/whatsapp.js.map",
+          "matches": true,
+          "npmSha256": "3a603249aed133dcd24d9f8b460e0d578eb9f1df9b6df1e564f1f17f326a909f",
+          "sourceSha256": "3a603249aed133dcd24d9f8b460e0d578eb9f1df9b6df1e564f1f17f326a909f",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/zalo.d.ts.map",
+          "matches": true,
+          "npmSha256": "6e33c97a004054c658502ff6cf7884954cd57697040f56c77e8ca539a515c37a",
+          "sourceSha256": "6e33c97a004054c658502ff6cf7884954cd57697040f56c77e8ca539a515c37a",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/zalo.js.map",
+          "matches": true,
+          "npmSha256": "804dd13d26a0fe858a02746c9ac4e755d7898404125e270c92e0b030fcbc086a",
+          "sourceSha256": "804dd13d26a0fe858a02746c9ac4e755d7898404125e270c92e0b030fcbc086a",
+          "captured": true
+        },
+        {
+          "path": "package/docs/qr-login-matrix.md",
+          "matches": true,
+          "npmSha256": "df275766bdb1f2d38aaddc3fa6decb300cba7f85f2a6f64532a70241bb52e995",
+          "sourceSha256": "df275766bdb1f2d38aaddc3fa6decb300cba7f85f2a6f64532a70241bb52e995",
+          "captured": true
+        },
+        {
+          "path": "package/README.en.md",
+          "matches": true,
+          "npmSha256": "441b0d009df37e6823cbf9bb7e6e19bad857164a2586ba1e3c92f8bb7116bca0",
+          "sourceSha256": "441b0d009df37e6823cbf9bb7e6e19bad857164a2586ba1e3c92f8bb7116bca0",
+          "captured": true
+        },
+        {
+          "path": "package/README.md",
+          "matches": true,
+          "npmSha256": "a4e6e35c9b67115036624d4f359d3fc140dd3948cfb2c3261aa5f0c78c9efea6",
+          "sourceSha256": "a4e6e35c9b67115036624d4f359d3fc140dd3948cfb2c3261aa5f0c78c9efea6",
+          "captured": true
+        },
+        {
+          "path": "package/THIRD_PARTY_NOTICES.md",
+          "matches": true,
+          "npmSha256": "00334980fcf257a9775d874a3b237c9298e6af18ad245f0cc2f9378aad16cd19",
+          "sourceSha256": "00334980fcf257a9775d874a3b237c9298e6af18ad245f0cc2f9378aad16cd19",
+          "captured": true
+        },
+        {
+          "path": "package/docs/architecture.png",
+          "matches": true,
+          "npmSha256": "43634058d8c2cb82cf52dbb294204cf72faffc6968a243110e9fd20d559f870d",
+          "sourceSha256": "43634058d8c2cb82cf52dbb294204cf72faffc6968a243110e9fd20d559f870d",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/feishu.png",
+          "matches": true,
+          "npmSha256": "20d2166c9e55878227785ff42c6af042da5b95c081522f61134b8721e06f7b21",
+          "sourceSha256": "20d2166c9e55878227785ff42c6af042da5b95c081522f61134b8721e06f7b21",
+          "captured": true
+        },
+        {
+          "path": "package/docs/screenshots/im-gateway-settings.png",
+          "matches": true,
+          "npmSha256": "761f5d9bb9449cf0d1e9df3cf83944a11092a1e81b5fe8fba785b8521bb1b486",
+          "sourceSha256": "761f5d9bb9449cf0d1e9df3cf83944a11092a1e81b5fe8fba785b8521bb1b486",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/urbit.png",
+          "matches": true,
+          "npmSha256": "69502a2519b2609e5204af5a0c29cb825c15869772f5e2fdcc9e04fe8278d80e",
+          "sourceSha256": "69502a2519b2609e5204af5a0c29cb825c15869772f5e2fdcc9e04fe8278d80e",
+          "captured": true
+        },
+        {
+          "path": "package/docs/architecture.svg",
+          "matches": true,
+          "npmSha256": "3d68f18c69fbbd0e9ba85ce95c9385974557e9d7162b12269c31b7e5c6104c1b",
+          "sourceSha256": "3d68f18c69fbbd0e9ba85ce95c9385974557e9d7162b12269c31b7e5c6104c1b",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/dingtalk.svg",
+          "matches": true,
+          "npmSha256": "7be7656809cf8e2a5f18f94fa385475afe2eb624c079aa4f856e953542838b9c",
+          "sourceSha256": "7be7656809cf8e2a5f18f94fa385475afe2eb624c079aa4f856e953542838b9c",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/discord.svg",
+          "matches": true,
+          "npmSha256": "79a8105c2fc15d8caa6ee7b87b58597432e171386d22a2cc2237f0eb3bbbe7dd",
+          "sourceSha256": "79a8105c2fc15d8caa6ee7b87b58597432e171386d22a2cc2237f0eb3bbbe7dd",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/googlechat.svg",
+          "matches": true,
+          "npmSha256": "784f85daec18e10da339d589992be39f9bbe70db577ab166141d453c69172f53",
+          "sourceSha256": "784f85daec18e10da339d589992be39f9bbe70db577ab166141d453c69172f53",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/imessage.svg",
+          "matches": true,
+          "npmSha256": "222b75445f44c9eee73a776251f0f140db191fe00197fb397af0400b7dbc4a4b",
+          "sourceSha256": "222b75445f44c9eee73a776251f0f140db191fe00197fb397af0400b7dbc4a4b",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/irc.svg",
+          "matches": true,
+          "npmSha256": "3e27c578fea317f334b2d47636611c1af2fdae4e9de56870af845d0c098530be",
+          "sourceSha256": "3e27c578fea317f334b2d47636611c1af2fdae4e9de56870af845d0c098530be",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/line.svg",
+          "matches": true,
+          "npmSha256": "b33b86ee7c335abcccb12c08188823d40eb3ddc9521362ac94d9d9c55077db68",
+          "sourceSha256": "b33b86ee7c335abcccb12c08188823d40eb3ddc9521362ac94d9d9c55077db68",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/matrix.svg",
+          "matches": true,
+          "npmSha256": "a4b199b21f8ac8def0d5e6c20432e554b7bb45425064956d15f08ba815f784e2",
+          "sourceSha256": "a4b199b21f8ac8def0d5e6c20432e554b7bb45425064956d15f08ba815f784e2",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/mattermost.svg",
+          "matches": true,
+          "npmSha256": "647b8210deb8bedac4c625e67fadeedccc77e2ca64cbf7245d6b6267f80976c2",
+          "sourceSha256": "647b8210deb8bedac4c625e67fadeedccc77e2ca64cbf7245d6b6267f80976c2",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/msteams.svg",
+          "matches": true,
+          "npmSha256": "05a9700b771f7cd8932f8baefd5c21b41ea80a288374dd749635385efd141c37",
+          "sourceSha256": "05a9700b771f7cd8932f8baefd5c21b41ea80a288374dd749635385efd141c37",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/nextcloud.svg",
+          "matches": true,
+          "npmSha256": "c332ad568ebe57c5a177c16c153b1e2d87b1575485a4845222d8996092d74b01",
+          "sourceSha256": "c332ad568ebe57c5a177c16c153b1e2d87b1575485a4845222d8996092d74b01",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/qqbot.svg",
+          "matches": true,
+          "npmSha256": "17372d117ab2c56d3aeb9cd18cdac8b9bcec875872e89222aec8f90e31e31636",
+          "sourceSha256": "17372d117ab2c56d3aeb9cd18cdac8b9bcec875872e89222aec8f90e31e31636",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/signal.svg",
+          "matches": true,
+          "npmSha256": "72bf5e1052f7aa9605fd34139b6b6b0f5b8aeecbcec7d368375505a3be441f98",
+          "sourceSha256": "72bf5e1052f7aa9605fd34139b6b6b0f5b8aeecbcec7d368375505a3be441f98",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/slack.svg",
+          "matches": true,
+          "npmSha256": "85ea9e032e6e411e351744e5bc569b9c4b07a7a10821437fec372ef6da9479f5",
+          "sourceSha256": "85ea9e032e6e411e351744e5bc569b9c4b07a7a10821437fec372ef6da9479f5",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/synology.svg",
+          "matches": true,
+          "npmSha256": "330a540e2f1a021a539b8541a729cc472d7a5cdd004a25881142dda64cdd6cbc",
+          "sourceSha256": "330a540e2f1a021a539b8541a729cc472d7a5cdd004a25881142dda64cdd6cbc",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/telegram.svg",
+          "matches": true,
+          "npmSha256": "4435c9a57e165a1c3b7f27e0b5b11b82b10d674ea4fff7f6748cb67b7fcb994e",
+          "sourceSha256": "4435c9a57e165a1c3b7f27e0b5b11b82b10d674ea4fff7f6748cb67b7fcb994e",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/twitch.svg",
+          "matches": true,
+          "npmSha256": "9d0d871053b782a01d4ee1790281419fd3e9463dd2176d814fd80b810337ad81",
+          "sourceSha256": "9d0d871053b782a01d4ee1790281419fd3e9463dd2176d814fd80b810337ad81",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/voice.svg",
+          "matches": true,
+          "npmSha256": "317d10101b48dde6bd620e7474f72ccc1e00d48c8290ee8ab18df0428b64b12b",
+          "sourceSha256": "317d10101b48dde6bd620e7474f72ccc1e00d48c8290ee8ab18df0428b64b12b",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/wechat.svg",
+          "matches": true,
+          "npmSha256": "439de170dff232935f08357fbfb852bb302545d6125861ed6074fe6237b3f912",
+          "sourceSha256": "439de170dff232935f08357fbfb852bb302545d6125861ed6074fe6237b3f912",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/wecom.svg",
+          "matches": true,
+          "npmSha256": "e1c404bb6ad6c7911ac43feac17b56809ae93f80a2476f540bd42d2614263ec9",
+          "sourceSha256": "e1c404bb6ad6c7911ac43feac17b56809ae93f80a2476f540bd42d2614263ec9",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/whatsapp.svg",
+          "matches": true,
+          "npmSha256": "3e197e0e1f3e679ee09823c75e1c7bad3a19da9bd1ba01df395268b9ae91816f",
+          "sourceSha256": "3e197e0e1f3e679ee09823c75e1c7bad3a19da9bd1ba01df395268b9ae91816f",
+          "captured": true
+        },
+        {
+          "path": "package/assets/icons/zalo.svg",
+          "matches": true,
+          "npmSha256": "ce55da4db6a99d9d6659255affd855dca5417bb9733d8e7f33efb32af9739f6f",
+          "sourceSha256": "ce55da4db6a99d9d6659255affd855dca5417bb9733d8e7f33efb32af9739f6f",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/approval.d.ts",
+          "matches": true,
+          "npmSha256": "5461295a99c5dad96ee154a8c6836d3b749078d355e27e236738b327fee82752",
+          "sourceSha256": "5461295a99c5dad96ee154a8c6836d3b749078d355e27e236738b327fee82752",
+          "captured": true
+        },
+        {
+          "path": "package/src/core/approval.ts",
+          "matches": true,
+          "npmSha256": "f413f0e158e7e89b614b5432a1cb0e8926eba593856e8286de80c6956dafb840",
+          "sourceSha256": "f413f0e158e7e89b614b5432a1cb0e8926eba593856e8286de80c6956dafb840",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/cron-time.d.ts",
+          "matches": true,
+          "npmSha256": "c59d2fda2efc2029275164e6915eb3317c3ea547fba015138ce7fe03862322e2",
+          "sourceSha256": "c59d2fda2efc2029275164e6915eb3317c3ea547fba015138ce7fe03862322e2",
+          "captured": true
+        },
+        {
+          "path": "package/src/core/cron-time.ts",
+          "matches": true,
+          "npmSha256": "598b4f4ebd84e7523397b3fc712f0bf1154ea9eeb8942bba13809b5223f078ca",
+          "sourceSha256": "598b4f4ebd84e7523397b3fc712f0bf1154ea9eeb8942bba13809b5223f078ca",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/cron.d.ts",
+          "matches": true,
+          "npmSha256": "7db190a762bfdea4325e0f202542f877f33bf752febdfa25ca405ad99c9bbd4d",
+          "sourceSha256": "7db190a762bfdea4325e0f202542f877f33bf752febdfa25ca405ad99c9bbd4d",
+          "captured": true
+        },
+        {
+          "path": "package/src/core/cron.ts",
+          "matches": true,
+          "npmSha256": "5aaa621a453c7e0ff4da6f9fbc029cec5db7eec900024106e8a48f70d0bc59cb",
+          "sourceSha256": "5aaa621a453c7e0ff4da6f9fbc029cec5db7eec900024106e8a48f70d0bc59cb",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/dingtalk.d.ts",
+          "matches": true,
+          "npmSha256": "886669354afef7ef0ba002b91634c3a4a855330e309f6d0bfc269fe8c66f1a45",
+          "sourceSha256": "886669354afef7ef0ba002b91634c3a4a855330e309f6d0bfc269fe8c66f1a45",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/dingtalk.ts",
+          "matches": true,
+          "npmSha256": "ab4250bf56ca73d54e3b0697fd9b3e7f60779180220a8875572842d65e4a0fa2",
+          "sourceSha256": "ab4250bf56ca73d54e3b0697fd9b3e7f60779180220a8875572842d65e4a0fa2",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/discord.d.ts",
+          "matches": true,
+          "npmSha256": "60253653ba530df55d12ad0fc6aa8dda3be20b259715954809ca23f3ca5aacf7",
+          "sourceSha256": "60253653ba530df55d12ad0fc6aa8dda3be20b259715954809ca23f3ca5aacf7",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/discord.ts",
+          "matches": true,
+          "npmSha256": "6ad6063e7dca675a1d6524bc8eba52ab71be94ed4debc40a9bd3c4ff0f26e104",
+          "sourceSha256": "6ad6063e7dca675a1d6524bc8eba52ab71be94ed4debc40a9bd3c4ff0f26e104",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/feishu.d.ts",
+          "matches": true,
+          "npmSha256": "ae3c1b34271eb755ac92f47bebc9c240a1a8bd5d3c03b7ee4ab90db15e4aeac9",
+          "sourceSha256": "ae3c1b34271eb755ac92f47bebc9c240a1a8bd5d3c03b7ee4ab90db15e4aeac9",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/feishu.ts",
+          "matches": true,
+          "npmSha256": "98615699806ab297867d24467cf346fb38ef276f2d7ceb3c7b947c78ea2e88ce",
+          "sourceSha256": "98615699806ab297867d24467cf346fb38ef276f2d7ceb3c7b947c78ea2e88ce",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/format.d.ts",
+          "matches": true,
+          "npmSha256": "be844b3769f7bb66b4a5e748fa9677d70257c88332e63424736fe4dc43fd4ebf",
+          "sourceSha256": "be844b3769f7bb66b4a5e748fa9677d70257c88332e63424736fe4dc43fd4ebf",
+          "captured": true
+        },
+        {
+          "path": "package/src/core/format.ts",
+          "matches": true,
+          "npmSha256": "e0fc25220eda7f006872971a9f62e42192d00f231e2e37c2d4194dc5924fa86c",
+          "sourceSha256": "e0fc25220eda7f006872971a9f62e42192d00f231e2e37c2d4194dc5924fa86c",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/gateway.d.ts",
+          "matches": true,
+          "npmSha256": "cc49995154c89abd97ec4bfd2aa3fb66608ad8dad0949be766075550094e66ce",
+          "sourceSha256": "cc49995154c89abd97ec4bfd2aa3fb66608ad8dad0949be766075550094e66ce",
+          "captured": true
+        },
+        {
+          "path": "package/src/core/gateway.ts",
+          "matches": true,
+          "npmSha256": "711d9ebde5d9b5d99547a82fa55ea134887e67588efba6baf935b4d75d8e2fa6",
+          "sourceSha256": "711d9ebde5d9b5d99547a82fa55ea134887e67588efba6baf935b4d75d8e2fa6",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/googlechat.d.ts",
+          "matches": true,
+          "npmSha256": "19afae1ec785dc8653f53fe177a9335ec825976743d672111629fad217436761",
+          "sourceSha256": "19afae1ec785dc8653f53fe177a9335ec825976743d672111629fad217436761",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/googlechat.ts",
+          "matches": true,
+          "npmSha256": "f6b4525c36d529e3c42394d28171baf62fd5fabf0fdcd2122f4aab072db4c4fe",
+          "sourceSha256": "f6b4525c36d529e3c42394d28171baf62fd5fabf0fdcd2122f4aab072db4c4fe",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/imessage.d.ts",
+          "matches": true,
+          "npmSha256": "38ea9b5b2086dbe9c57378356f35b3c94f742e5940e95041335a6f357c6dd684",
+          "sourceSha256": "38ea9b5b2086dbe9c57378356f35b3c94f742e5940e95041335a6f357c6dd684",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/imessage.ts",
+          "matches": true,
+          "npmSha256": "ad41073871257c004385dcc2546c3697b6c8fb9c698ae1d89c65555edf193e29",
+          "sourceSha256": "ad41073871257c004385dcc2546c3697b6c8fb9c698ae1d89c65555edf193e29",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/index.d.ts",
+          "matches": true,
+          "npmSha256": "977faa1794a7e1b57615fef4b35fec8a3601eece0fcc319e2c5837b2ae345a69",
+          "sourceSha256": "977faa1794a7e1b57615fef4b35fec8a3601eece0fcc319e2c5837b2ae345a69",
+          "captured": true
+        },
+        {
+          "path": "package/lib/index.d.ts",
+          "matches": true,
+          "npmSha256": "e4ad2c6008f949a329f090d84b11fc96aaf68dcad86bcdaf0f797557ee13f39c",
+          "sourceSha256": "e4ad2c6008f949a329f090d84b11fc96aaf68dcad86bcdaf0f797557ee13f39c",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/index.ts",
+          "matches": true,
+          "npmSha256": "9a02d23b90f5a2f574d5da6df3df2895e2caa09e55028a9fb1a335213e55a35f",
+          "sourceSha256": "9a02d23b90f5a2f574d5da6df3df2895e2caa09e55028a9fb1a335213e55a35f",
+          "captured": true
+        },
+        {
+          "path": "package/src/index.ts",
+          "matches": true,
+          "npmSha256": "75e0c1c2282a9fce59238768b2ed44f3f492f9029fb2dcd5fe79af9ed0113331",
+          "sourceSha256": "75e0c1c2282a9fce59238768b2ed44f3f492f9029fb2dcd5fe79af9ed0113331",
+          "captured": true
+        },
+        {
+          "path": "package/lib/instance-lock.d.ts",
+          "matches": true,
+          "npmSha256": "2a0060874f25a71579a0c1ae685cc471d01ed5f1074d7fa000d4125040bc0e12",
+          "sourceSha256": "2a0060874f25a71579a0c1ae685cc471d01ed5f1074d7fa000d4125040bc0e12",
+          "captured": true
+        },
+        {
+          "path": "package/src/instance-lock.ts",
+          "matches": true,
+          "npmSha256": "5b178a3aefb1e20643cd8a0767a796d2afa3795ca186b6be3a8f371e5405083f",
+          "sourceSha256": "5b178a3aefb1e20643cd8a0767a796d2afa3795ca186b6be3a8f371e5405083f",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/irc.d.ts",
+          "matches": true,
+          "npmSha256": "111c6590456d043116cb315a4d72b7be488ea6f5d813d6a9aee6ad03f17e9f7d",
+          "sourceSha256": "111c6590456d043116cb315a4d72b7be488ea6f5d813d6a9aee6ad03f17e9f7d",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/irc.ts",
+          "matches": true,
+          "npmSha256": "5005f25241e25384822f6f60bb4df758f601bc3933370871d5787abf1a8fa63a",
+          "sourceSha256": "5005f25241e25384822f6f60bb4df758f601bc3933370871d5787abf1a8fa63a",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/line.d.ts",
+          "matches": true,
+          "npmSha256": "769ee027c17a1a22ed11ff37f7800b6b7a244a343dee510da167b1894b52baae",
+          "sourceSha256": "769ee027c17a1a22ed11ff37f7800b6b7a244a343dee510da167b1894b52baae",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/line.ts",
+          "matches": true,
+          "npmSha256": "4dd6615baf264ce0c1fed0eea57c4e1ca2d6d2c586a37872e6559c928872553e",
+          "sourceSha256": "4dd6615baf264ce0c1fed0eea57c4e1ca2d6d2c586a37872e6559c928872553e",
+          "captured": true
+        },
+        {
+          "path": "package/lib/manager.d.ts",
+          "matches": true,
+          "npmSha256": "0f6c2fe6e5b10852e571e65f70e7b1ed8391245a60ee8421391212634fd43640",
+          "sourceSha256": "0f6c2fe6e5b10852e571e65f70e7b1ed8391245a60ee8421391212634fd43640",
+          "captured": true
+        },
+        {
+          "path": "package/src/manager.ts",
+          "matches": true,
+          "npmSha256": "cf00dd4c8afb77cedf616f6a600affe4cd4a31566d4e68d4a22213663ba9b86c",
+          "sourceSha256": "cf00dd4c8afb77cedf616f6a600affe4cd4a31566d4e68d4a22213663ba9b86c",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/matrix.d.ts",
+          "matches": true,
+          "npmSha256": "0c71f552c98323bafb00454d253f54a86a2509ac50a401086eaaf2fbce444274",
+          "sourceSha256": "0c71f552c98323bafb00454d253f54a86a2509ac50a401086eaaf2fbce444274",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/matrix.ts",
+          "matches": true,
+          "npmSha256": "24c1c481d31b2d1f6cbd76aa850851abfd526b688958a61b7b9ba41def522b8d",
+          "sourceSha256": "24c1c481d31b2d1f6cbd76aa850851abfd526b688958a61b7b9ba41def522b8d",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/mattermost.d.ts",
+          "matches": true,
+          "npmSha256": "6126ce0f24b8648c8b1d4ff04d42159e5dfba20bd2ecbe00958608dcd5a7ebf1",
+          "sourceSha256": "6126ce0f24b8648c8b1d4ff04d42159e5dfba20bd2ecbe00958608dcd5a7ebf1",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/mattermost.ts",
+          "matches": true,
+          "npmSha256": "badc16d0097b8a4e2ce4022012902efe535ca63564165320c49949343602c478",
+          "sourceSha256": "badc16d0097b8a4e2ce4022012902efe535ca63564165320c49949343602c478",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/merge.d.ts",
+          "matches": true,
+          "npmSha256": "ae65d8bf6842be27cb91974af5ca55385ed6b2c2da938394db14ffee89b49a3c",
+          "sourceSha256": "ae65d8bf6842be27cb91974af5ca55385ed6b2c2da938394db14ffee89b49a3c",
+          "captured": true
+        },
+        {
+          "path": "package/src/core/merge.ts",
+          "matches": true,
+          "npmSha256": "6c0a6294b8b8b4c27c29dab97ed2f80af628fafc9102b36dabb27b760908d898",
+          "sourceSha256": "6c0a6294b8b8b4c27c29dab97ed2f80af628fafc9102b36dabb27b760908d898",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/msteams.d.ts",
+          "matches": true,
+          "npmSha256": "8f2c613a06ec2acff8cd15019e79446a70ce78ae8f444b831b62cfad2008c7f8",
+          "sourceSha256": "8f2c613a06ec2acff8cd15019e79446a70ce78ae8f444b831b62cfad2008c7f8",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/msteams.ts",
+          "matches": true,
+          "npmSha256": "31587296c559b98ebdd0eca650d80a51ce53ac08a70b780c879a404c6625f087",
+          "sourceSha256": "31587296c559b98ebdd0eca650d80a51ce53ac08a70b780c879a404c6625f087",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/nextcloud.d.ts",
+          "matches": true,
+          "npmSha256": "abcecce7c37b226b7c3ee5fce7483020d179e9ceaaa2b28213ff33b7443a6d88",
+          "sourceSha256": "abcecce7c37b226b7c3ee5fce7483020d179e9ceaaa2b28213ff33b7443a6d88",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/nextcloud.ts",
+          "matches": true,
+          "npmSha256": "4ac9cf6dd351f4c6cb83f29a18b19f0a55acd6336fc43ce7b904c76ba332fdea",
+          "sourceSha256": "4ac9cf6dd351f4c6cb83f29a18b19f0a55acd6336fc43ce7b904c76ba332fdea",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/nostr.d.ts",
+          "matches": true,
+          "npmSha256": "db13a1a3671e6cb8a9df432a7ffee314a4fb109af47a8e4a168f35bf7942a10b",
+          "sourceSha256": "db13a1a3671e6cb8a9df432a7ffee314a4fb109af47a8e4a168f35bf7942a10b",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/nostr.ts",
+          "matches": true,
+          "npmSha256": "6251f99c32a4cac5f9a5a73310b752c7aa7840c63e67ec48693a37e67d988303",
+          "sourceSha256": "6251f99c32a4cac5f9a5a73310b752c7aa7840c63e67ec48693a37e67d988303",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/provisioning.d.ts",
+          "matches": true,
+          "npmSha256": "177f791dda9f7aec527d12e1e5cc02d82a7ecae9d4583706c22bc4694e5ab8bc",
+          "sourceSha256": "177f791dda9f7aec527d12e1e5cc02d82a7ecae9d4583706c22bc4694e5ab8bc",
+          "captured": true
+        },
+        {
+          "path": "package/src/core/provisioning.ts",
+          "matches": true,
+          "npmSha256": "606a4a24ddacd3649f18fd9fb0b910b62e0b54623af1dc205bac95b266855d56",
+          "sourceSha256": "606a4a24ddacd3649f18fd9fb0b910b62e0b54623af1dc205bac95b266855d56",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/qqbot.d.ts",
+          "matches": true,
+          "npmSha256": "880c9212e0c90517eb6b168dfc85bf028753657b69c63e1dd3542e041efe91d5",
+          "sourceSha256": "880c9212e0c90517eb6b168dfc85bf028753657b69c63e1dd3542e041efe91d5",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/qqbot.ts",
+          "matches": true,
+          "npmSha256": "2938ae2410ccaa91a6388c0d9d60e450507a5c077c78b22500f21519ade43983",
+          "sourceSha256": "2938ae2410ccaa91a6388c0d9d60e450507a5c077c78b22500f21519ade43983",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/questions.d.ts",
+          "matches": true,
+          "npmSha256": "3c0838d4b4151d28cd07449435753bfce1ef5669d559bf55bb13460300c59a1f",
+          "sourceSha256": "3c0838d4b4151d28cd07449435753bfce1ef5669d559bf55bb13460300c59a1f",
+          "captured": true
+        },
+        {
+          "path": "package/src/core/questions.ts",
+          "matches": true,
+          "npmSha256": "f32e75983c9dd6d023b70a73c1fb3010aa1fedb7fadcb8420480fa88d57c3fa6",
+          "sourceSha256": "f32e75983c9dd6d023b70a73c1fb3010aa1fedb7fadcb8420480fa88d57c3fa6",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/router.d.ts",
+          "matches": true,
+          "npmSha256": "93d0efb8c9d5e046ce7e82316a4385bbf10f7993eba576b175694d2de5ffa953",
+          "sourceSha256": "93d0efb8c9d5e046ce7e82316a4385bbf10f7993eba576b175694d2de5ffa953",
+          "captured": true
+        },
+        {
+          "path": "package/src/core/router.ts",
+          "matches": true,
+          "npmSha256": "28a1a1b16293b0ae6333a5c109b98de0f0afb6a20d73381a54f9c8b69274f70d",
+          "sourceSha256": "28a1a1b16293b0ae6333a5c109b98de0f0afb6a20d73381a54f9c8b69274f70d",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/signal.d.ts",
+          "matches": true,
+          "npmSha256": "d008f2f32d3592bc81fc93c4e025ec8e2616f95b56a27c070f7c167c24f7a08d",
+          "sourceSha256": "d008f2f32d3592bc81fc93c4e025ec8e2616f95b56a27c070f7c167c24f7a08d",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/signal.ts",
+          "matches": true,
+          "npmSha256": "64a92b4edf87d0132413a44c3881725cc8531287156f1c002becce86e5da1f64",
+          "sourceSha256": "64a92b4edf87d0132413a44c3881725cc8531287156f1c002becce86e5da1f64",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/slack.d.ts",
+          "matches": true,
+          "npmSha256": "2fba58b25f0b186fb3b946e2a985f2209d5ff85242b9356f62998cc0d79496ee",
+          "sourceSha256": "2fba58b25f0b186fb3b946e2a985f2209d5ff85242b9356f62998cc0d79496ee",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/slack.ts",
+          "matches": true,
+          "npmSha256": "4852b6ea4ac43b5dcc4e2c69168f2304f3fa1543f41be0a90b1b3e36133d5169",
+          "sourceSha256": "4852b6ea4ac43b5dcc4e2c69168f2304f3fa1543f41be0a90b1b3e36133d5169",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/split.d.ts",
+          "matches": true,
+          "npmSha256": "8219c177211af7a3253e16fabd49bce3822ab84e9dcb87d30f4338f5e164b3e0",
+          "sourceSha256": "8219c177211af7a3253e16fabd49bce3822ab84e9dcb87d30f4338f5e164b3e0",
+          "captured": true
+        },
+        {
+          "path": "package/src/core/split.ts",
+          "matches": true,
+          "npmSha256": "1a348b7cf8d92d46e3a3d7817e71cbfc6db9f15399fc498c7fe28471ed9537ac",
+          "sourceSha256": "1a348b7cf8d92d46e3a3d7817e71cbfc6db9f15399fc498c7fe28471ed9537ac",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/stubs.d.ts",
+          "matches": true,
+          "npmSha256": "6ad98b1aab6b91cc9e609548a5f14e5c65bb06e720f99ac32d1b7cde00a00203",
+          "sourceSha256": "6ad98b1aab6b91cc9e609548a5f14e5c65bb06e720f99ac32d1b7cde00a00203",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/stubs.ts",
+          "matches": true,
+          "npmSha256": "89c054a6b8575ace75448d1b51e32207fc9cf8fe76f9b9d49a2508fb61f708b3",
+          "sourceSha256": "89c054a6b8575ace75448d1b51e32207fc9cf8fe76f9b9d49a2508fb61f708b3",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/synology.d.ts",
+          "matches": true,
+          "npmSha256": "ab45b4dd708770d554b51d083baf44f66b225bd486e32f4fdf3fb71e6a41e862",
+          "sourceSha256": "ab45b4dd708770d554b51d083baf44f66b225bd486e32f4fdf3fb71e6a41e862",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/synology.ts",
+          "matches": true,
+          "npmSha256": "63f2b03bc258e52f03af5a54801255a48d581a2a94c1bd7857ac7c783442e756",
+          "sourceSha256": "63f2b03bc258e52f03af5a54801255a48d581a2a94c1bd7857ac7c783442e756",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/telegram.d.ts",
+          "matches": true,
+          "npmSha256": "34a6eea904786347ea104a884fbc106d3021eff2af55894733ba68e28e0a6aaa",
+          "sourceSha256": "34a6eea904786347ea104a884fbc106d3021eff2af55894733ba68e28e0a6aaa",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/telegram.ts",
+          "matches": true,
+          "npmSha256": "941f73929facd5e9e4e78a55e9c2c98ccf114b167240abdbf30b7382d17cd0fe",
+          "sourceSha256": "941f73929facd5e9e4e78a55e9c2c98ccf114b167240abdbf30b7382d17cd0fe",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/twitch.d.ts",
+          "matches": true,
+          "npmSha256": "c90fbd85dc590e785d1576bb9fe68ee764c0a829ad53442654fafdead424fc87",
+          "sourceSha256": "c90fbd85dc590e785d1576bb9fe68ee764c0a829ad53442654fafdead424fc87",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/twitch.ts",
+          "matches": true,
+          "npmSha256": "87c627c91d4ff2e38a590da688268e010c26b790eef48a2b0b161aa50feb2f4e",
+          "sourceSha256": "87c627c91d4ff2e38a590da688268e010c26b790eef48a2b0b161aa50feb2f4e",
+          "captured": true
+        },
+        {
+          "path": "package/lib/core/types.d.ts",
+          "matches": true,
+          "npmSha256": "2e8341fe40523f26a6853133815bf093239d397fe67980757e289dc021c231c3",
+          "sourceSha256": "2e8341fe40523f26a6853133815bf093239d397fe67980757e289dc021c231c3",
+          "captured": true
+        },
+        {
+          "path": "package/src/core/types.ts",
+          "matches": true,
+          "npmSha256": "9bf7c4bc84d1a7fa9baa878cbee5f9fdf4895cde81a3209cd3a2521d9ded7f06",
+          "sourceSha256": "9bf7c4bc84d1a7fa9baa878cbee5f9fdf4895cde81a3209cd3a2521d9ded7f06",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/wechat.d.ts",
+          "matches": true,
+          "npmSha256": "9b22745a3af51f34a806c46364300417fb3737bc6469508e1dae6c1f1504ba34",
+          "sourceSha256": "9b22745a3af51f34a806c46364300417fb3737bc6469508e1dae6c1f1504ba34",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/wechat.ts",
+          "matches": true,
+          "npmSha256": "e5aec600858ccd772d04d8d3a4e9738077598b875eb56fed92d1f2c69d7a814b",
+          "sourceSha256": "e5aec600858ccd772d04d8d3a4e9738077598b875eb56fed92d1f2c69d7a814b",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/wecom.d.ts",
+          "matches": true,
+          "npmSha256": "077dedc8b2b0e6f690d18c8e8baa621e55837856ca9f45172c756e2dd9ed01a0",
+          "sourceSha256": "077dedc8b2b0e6f690d18c8e8baa621e55837856ca9f45172c756e2dd9ed01a0",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/wecom.ts",
+          "matches": true,
+          "npmSha256": "a78a3569758e83446469ba916444835feaff664a5e6913c4999119c68aae4e4d",
+          "sourceSha256": "a78a3569758e83446469ba916444835feaff664a5e6913c4999119c68aae4e4d",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/whatsapp.d.ts",
+          "matches": true,
+          "npmSha256": "556eceeefdc33966f592b88b30984a6928f950829de5eb2b7cfd1e6f814b9501",
+          "sourceSha256": "556eceeefdc33966f592b88b30984a6928f950829de5eb2b7cfd1e6f814b9501",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/whatsapp.ts",
+          "matches": true,
+          "npmSha256": "aa809422e051dc9101f92e61747a3816384f6c3d67407bf3fa3fcc6017913195",
+          "sourceSha256": "aa809422e051dc9101f92e61747a3816384f6c3d67407bf3fa3fcc6017913195",
+          "captured": true
+        },
+        {
+          "path": "package/lib/channels/zalo.d.ts",
+          "matches": true,
+          "npmSha256": "6c899a4796338c0148d8f772f1a44f04297d8e529f0b68f0715db68112c1a485",
+          "sourceSha256": "6c899a4796338c0148d8f772f1a44f04297d8e529f0b68f0715db68112c1a485",
+          "captured": true
+        },
+        {
+          "path": "package/src/channels/zalo.ts",
+          "matches": true,
+          "npmSha256": "89c4aea9603c2fdcfab391fea0c362b8012a985332ea82a6a3b8fb50a18c56f1",
+          "sourceSha256": "89c4aea9603c2fdcfab391fea0c362b8012a985332ea82a6a3b8fb50a18c56f1",
+          "captured": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "matches": true,
+          "npmSha256": "6831e45f8603fc6c13742a7c61e31404e20cef71a26c6bca40d7e15f1719d1e2",
+          "sourceSha256": "6831e45f8603fc6c13742a7c61e31404e20cef71a26c6bca40d7e15f1719d1e2",
+          "captured": true
+        }
+      ],
+      "manifest": {
+        "name": "dsh-im-gateway",
+        "version": "0.3.3",
+        "description": "聚合 IM 网关插件（DeepSeek Harness）：把 dsh agent 接入微信、飞书、钉钉、企业微信、QQ、Telegram、Discord、Slack、WhatsApp 等 25+ 渠道，统一会话路由、审批桥、交互提问、定时提醒、白名单与扫码接入。",
+        "type": "module",
+        "main": "lib/index.js",
+        "types": "lib/index.d.ts",
+        "exports": {
+          ".": {
+            "types": "./lib/index.d.ts",
+            "default": "./lib/index.js"
+          },
+          "./client": "./lib/client.js",
+          "./cordis.patch.yml": "./cordis.patch.yml",
+          "./package.json": "./package.json"
+        },
+        "files": [
+          "lib",
+          "src",
+          "client.js",
+          "cordis.patch.yml",
+          "README.md",
+          "README.en.md",
+          "THIRD_PARTY_NOTICES.md",
+          "docs",
+          "assets"
+        ],
+        "scripts": {
+          "build": "tsc -p tsconfig.json && node -e \"require('node:fs').copyFileSync('client.js','lib/client.js')\"",
+          "prepublishOnly": "npm run typecheck && npm test",
+          "prepack": "npm run build",
+          "typecheck": "tsc -p tsconfig.json --noEmit",
+          "test": "node --test tests/*.test.mjs"
+        },
+        "license": "MIT",
+        "dependencies": {
+          "@deepseek-ai/cordis": "^4.0.1",
+          "@deepseek-ai/schemastery": "^3.18.1",
+          "qrcode": "^1.5.4"
+        },
+        "optionalDependencies": {
+          "@larksuiteoapi/node-sdk": "^1.73.0",
+          "@tencent-connect/qqbot-connector": "^1.2.0",
+          "@wecom/aibot-node-sdk": "^1.0.7",
+          "@whiskeysockets/baileys": "^6.7.18",
+          "dingtalk-stream": "^2.1.4"
+        },
+        "peerDependencies": {
+          "@deepseek-ai/cordis": "^4.0.1",
+          "@deepseek-ai/dsh-agent": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-agent-presets": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-attachment": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-host-webserver": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-jobs": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-llm": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-session": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-session-query": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-tools": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-user-approval": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-user-questions": "^0.1.0-rc.6"
+        },
+        "devDependencies": {
+          "@larksuiteoapi/node-sdk": "^1.36.0",
+          "@noble/curves": "^1.6.0",
+          "@types/node": "^22.10.0",
+          "@types/qrcode": "^1.5.6",
+          "typescript": "^5.9.2"
+        },
+        "dsh": {
+          "bundle": {
+            "patch": "./cordis.patch.yml"
+          },
+          "client": {
+            "inject": [
+              "@deepseek-ai/dsh-client-runtime",
+              "@deepseek-ai/dsh-client-ui-settings-general"
+            ],
+            "platform": "web"
+          }
+        }
+      },
+      "sourceManifest": {
+        "name": "dsh-im-gateway",
+        "version": "0.3.3",
+        "description": "聚合 IM 网关插件（DeepSeek Harness）：把 dsh agent 接入微信、飞书、钉钉、企业微信、QQ、Telegram、Discord、Slack、WhatsApp 等 25+ 渠道，统一会话路由、审批桥、交互提问、定时提醒、白名单与扫码接入。",
+        "type": "module",
+        "main": "lib/index.js",
+        "types": "lib/index.d.ts",
+        "exports": {
+          ".": {
+            "types": "./lib/index.d.ts",
+            "default": "./lib/index.js"
+          },
+          "./client": "./lib/client.js",
+          "./cordis.patch.yml": "./cordis.patch.yml",
+          "./package.json": "./package.json"
+        },
+        "files": [
+          "lib",
+          "src",
+          "client.js",
+          "cordis.patch.yml",
+          "README.md",
+          "README.en.md",
+          "THIRD_PARTY_NOTICES.md",
+          "docs",
+          "assets"
+        ],
+        "scripts": {
+          "build": "tsc -p tsconfig.json && node -e \"require('node:fs').copyFileSync('client.js','lib/client.js')\"",
+          "prepublishOnly": "npm run typecheck && npm test",
+          "prepack": "npm run build",
+          "typecheck": "tsc -p tsconfig.json --noEmit",
+          "test": "node --test tests/*.test.mjs"
+        },
+        "license": "MIT",
+        "dependencies": {
+          "@deepseek-ai/cordis": "^4.0.1",
+          "@deepseek-ai/schemastery": "^3.18.1",
+          "qrcode": "^1.5.4"
+        },
+        "optionalDependencies": {
+          "@larksuiteoapi/node-sdk": "^1.73.0",
+          "@tencent-connect/qqbot-connector": "^1.2.0",
+          "@wecom/aibot-node-sdk": "^1.0.7",
+          "@whiskeysockets/baileys": "^6.7.18",
+          "dingtalk-stream": "^2.1.4"
+        },
+        "peerDependencies": {
+          "@deepseek-ai/cordis": "^4.0.1",
+          "@deepseek-ai/dsh-agent": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-agent-presets": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-attachment": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-host-webserver": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-jobs": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-llm": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-session": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-session-query": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-tools": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-user-approval": "^0.1.0-rc.6",
+          "@deepseek-ai/dsh-user-questions": "^0.1.0-rc.6"
+        },
+        "devDependencies": {
+          "@larksuiteoapi/node-sdk": "^1.36.0",
+          "@noble/curves": "^1.6.0",
+          "@types/node": "^22.10.0",
+          "@types/qrcode": "^1.5.6",
+          "typescript": "^5.9.2"
+        },
+        "dsh": {
+          "bundle": {
+            "patch": "./cordis.patch.yml"
+          },
+          "client": {
+            "inject": [
+              "@deepseek-ai/dsh-client-runtime",
+              "@deepseek-ai/dsh-client-ui-settings-general"
+            ],
+            "platform": "web"
+          }
+        }
+      },
+      "manifestsEqual": true,
+      "npm": {
+        "latest": "0.3.3",
+        "publishedAt": "2026-10-22T12:23:13.891Z",
+        "tarball": "https://registry.npmjs.org/dsh-im-gateway/-/dsh-im-gateway-0.3.3.tgz",
+        "integrity": "sha512-1ia8bbDVWgTcs1McggBSTVkfVa9rxIycjj2Ah1SGNY7CASfHfndXhczIlW46V2b9J/B/Pa6r7l99rTpk1SxXmg==",
+        "publisher": "chasemoon"
+      },
+      "input": {
+        "name": "dsh-im-gateway",
+        "version": "0.3.3",
+        "title": {
+          "en": "IM Gateway",
+          "zh": "IM Gateway（聊天网关）"
+        },
+        "description": {
+          "en": "Connect DSH to WeChat, Feishu, DingTalk, WeCom, QQ, Telegram, Discord, Slack, WhatsApp and more than 25 channels, with unified sessions, remote approvals and interactive questions.",
+          "zh": "把 DSH 接入微信、飞书、钉钉、企业微信、QQ、Telegram、Discord、Slack、WhatsApp 等 25 个以上渠道，统一会话路由，支持远程审批和交互提问。"
+        },
+        "category": "integrations",
+        "repositoryReview": {
+          "url": "https://github.com/zhuiyueya/dsh-im-gateway",
+          "version": "0.3.3",
+          "commit": "8e8fbca125dda15b5cdd2ae79ac63a91e21f7c37",
+          "integrity": "sha512-1ia8bbDVWgTcs1McggBSTVkfVa9rxIycjj2Ah1SGNY7CASfHfndXhczIlW46V2b9J/B/Pa6r7l99rTpk1SxXmg=="
+        }
+      },
+      "evidence": {
+        "name": "dsh-im-gateway",
+        "version": "0.3.3",
+        "license": "MIT",
+        "repository": "https://github.com/zhuiyueya/dsh-im-gateway",
+        "repositorySource": "review",
+        "repositoryReview": {
+          "version": "0.3.3",
+          "integrity": "sha512-1ia8bbDVWgTcs1McggBSTVkfVa9rxIycjj2Ah1SGNY7CASfHfndXhczIlW46V2b9J/B/Pa6r7l99rTpk1SxXmg==",
+          "commit": "8e8fbca125dda15b5cdd2ae79ac63a91e21f7c37",
+          "url": "https://github.com/zhuiyueya/dsh-im-gateway",
+          "evidence": "https://github.com/zhuiyueya/dsh-im-gateway/blob/8e8fbca125dda15b5cdd2ae79ac63a91e21f7c37/package.json"
+        },
+        "metadataUrl": "https://registry.npmjs.org/dsh-im-gateway",
+        "tarball": "https://registry.npmjs.org/dsh-im-gateway/-/dsh-im-gateway-0.3.3.tgz",
+        "integrity": "sha512-1ia8bbDVWgTcs1McggBSTVkfVa9rxIycjj2Ah1SGNY7CASfHfndXhczIlW46V2b9J/B/Pa6r7l99rTpk1SxXmg==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 228,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 2559210,
+          "unpackedBytes": 3606209,
+          "decodedBytes": 3781632,
+          "entries": 228,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-08-17T02:08:57.823Z",
+          "last30Days": 1,
+          "last90Days": 5
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      }
+    }
+  ]
+}

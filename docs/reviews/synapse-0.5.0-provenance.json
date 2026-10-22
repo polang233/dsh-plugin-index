@@ -1,0 +1,287 @@
+{
+  "schema": 1,
+  "checkedAt": "2026-10-22T13:22:04.235Z",
+  "package": "dsh-synapse",
+  "version": "0.5.0",
+  "repository": "https://github.com/liangmianya/dsh-synapse",
+  "commit": "265d7ff1f41c87e41f5648166e410cbf972c417f",
+  "registryLatest": "0.5.0",
+  "publishedAt": "2026-10-22T12:17:50.930Z",
+  "publisher": "liangmianya",
+  "npmTarball": "https://registry.npmjs.org/dsh-synapse/-/dsh-synapse-0.5.0.tgz",
+  "integrity": "sha512-9tOqqAmGG2E2gJhZTLRWGKl2jU0fTlUW+pkncm8iTOJu2sbM4GOH5Bj3UxTiVxKDIwxuO5WQgj0kjMAxUhMhfQ==",
+  "sourceArchive": "https://codeload.github.com/liangmianya/dsh-synapse/tar.gz/265d7ff1f41c87e41f5648166e410cbf972c417f",
+  "sourceSha512": "sha512-QNwwPlpzWiUeXauQHJh0xUWzjjEcUlrtJ6gG/TQz+Ju7yzCxW2kyufTYgIRALGQwVLrbKkRhsuLVbPj93TlasQ==",
+  "input": {
+    "name": "dsh-synapse",
+    "version": "0.5.0",
+    "repositoryReview": {
+      "url": "https://github.com/liangmianya/dsh-synapse",
+      "version": "0.5.0",
+      "commit": "265d7ff1f41c87e41f5648166e410cbf972c417f",
+      "integrity": "sha512-9tOqqAmGG2E2gJhZTLRWGKl2jU0fTlUW+pkncm8iTOJu2sbM4GOH5Bj3UxTiVxKDIwxuO5WQgj0kjMAxUhMhfQ=="
+    }
+  },
+  "manifest": {
+    "name": "dsh-synapse",
+    "version": "0.5.0",
+    "description": "A visual, non-linear conversation workspace plugin for DeepSeek Harness.",
+    "type": "module",
+    "main": "index.js",
+    "exports": {
+      ".": "./index.js",
+      "./client": "./client.js",
+      "./cordis.patch.yml": "./cordis.patch.yml",
+      "./package.json": "./package.json"
+    },
+    "files": [
+      "index.js",
+      "client.js",
+      "app.js",
+      "deepseek-mark.svg",
+      "styles.css",
+      "docs",
+      "cordis.patch.yml",
+      "README.md",
+      "LICENSE"
+    ],
+    "engines": {
+      "node": ">=22.19.0"
+    },
+    "license": "MIT",
+    "dsh": {
+      "bundle": {
+        "patch": "./cordis.patch.yml"
+      },
+      "client": {
+        "platform": "web",
+        "inject": [
+          "@deepseek-ai/dsh-api-session-controller",
+          "@deepseek-ai/dsh-api-workspace-controller",
+          "@deepseek-ai/dsh-client-ui-conversation",
+          "@deepseek-ai/dsh-client-ui-workspace"
+        ],
+        "immediately": false
+      }
+    },
+    "scripts": {
+      "build": "node --check index.js && node --check client.js && node --check app.js",
+      "test": "node --test test/*.test.js"
+    }
+  },
+  "sourceManifest": {
+    "name": "dsh-synapse",
+    "version": "0.5.0",
+    "description": "A visual, non-linear conversation workspace plugin for DeepSeek Harness.",
+    "type": "module",
+    "main": "index.js",
+    "exports": {
+      ".": "./index.js",
+      "./client": "./client.js",
+      "./cordis.patch.yml": "./cordis.patch.yml",
+      "./package.json": "./package.json"
+    },
+    "files": [
+      "index.js",
+      "client.js",
+      "app.js",
+      "deepseek-mark.svg",
+      "styles.css",
+      "docs",
+      "cordis.patch.yml",
+      "README.md",
+      "LICENSE"
+    ],
+    "scripts": {
+      "build": "node --check index.js && node --check client.js && node --check app.js",
+      "prepare": "pnpm run build",
+      "test": "node --test test/*.test.js"
+    },
+    "engines": {
+      "node": ">=22.19.0"
+    },
+    "license": "MIT",
+    "dsh": {
+      "bundle": {
+        "patch": "./cordis.patch.yml"
+      },
+      "client": {
+        "platform": "web",
+        "inject": [
+          "@deepseek-ai/dsh-api-session-controller",
+          "@deepseek-ai/dsh-api-workspace-controller",
+          "@deepseek-ai/dsh-client-ui-conversation",
+          "@deepseek-ai/dsh-client-ui-workspace"
+        ],
+        "immediately": false
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "path": "package/LICENSE",
+      "matches": true,
+      "npmSha256": "1126322e2cc8d165adc4c792eeb195717de2bcc7b39be1ce77959d78e87ef685",
+      "sourceSha256": "1126322e2cc8d165adc4c792eeb195717de2bcc7b39be1ce77959d78e87ef685",
+      "captured": true
+    },
+    {
+      "path": "package/styles.css",
+      "matches": true,
+      "npmSha256": "bb4f793f385794f7c8c3652b978d164dbc0007c59895c468463d54d4100abe9c",
+      "sourceSha256": "bb4f793f385794f7c8c3652b978d164dbc0007c59895c468463d54d4100abe9c",
+      "captured": true
+    },
+    {
+      "path": "package/docs/images/native-webui.jpg",
+      "matches": true,
+      "npmSha256": "6e6636cc642c26e6780db06bd9e58762baaf0f03db5de34a1c0b6eaefe382ece",
+      "sourceSha256": "6e6636cc642c26e6780db06bd9e58762baaf0f03db5de34a1c0b6eaefe382ece",
+      "captured": true
+    },
+    {
+      "path": "package/docs/images/synapse-map.jpg",
+      "matches": true,
+      "npmSha256": "c6173c3cd0bbbbde9b8363823c60c14a178379ac2a19aa1db905aa18357e7631",
+      "sourceSha256": "c6173c3cd0bbbbde9b8363823c60c14a178379ac2a19aa1db905aa18357e7631",
+      "captured": true
+    },
+    {
+      "path": "package/app.js",
+      "matches": true,
+      "npmSha256": "8ab38479a1b56d59bdf847ff57e30ef7e43359a9581b81c839a34fd4c3e778c0",
+      "sourceSha256": "8ab38479a1b56d59bdf847ff57e30ef7e43359a9581b81c839a34fd4c3e778c0",
+      "captured": true
+    },
+    {
+      "path": "package/client.js",
+      "matches": true,
+      "npmSha256": "caf062efc5208cd23f645958eb8ed4143685cf68b3da161cecf4dcf9b9bc34fd",
+      "sourceSha256": "caf062efc5208cd23f645958eb8ed4143685cf68b3da161cecf4dcf9b9bc34fd",
+      "captured": true
+    },
+    {
+      "path": "package/index.js",
+      "matches": true,
+      "npmSha256": "7ef44791dd5debc42adcf45b2e4c1c6bf1ad1198d8537e9f0126d1953ed83fd2",
+      "sourceSha256": "7ef44791dd5debc42adcf45b2e4c1c6bf1ad1198d8537e9f0126d1953ed83fd2",
+      "captured": true
+    },
+    {
+      "path": "package/package.json",
+      "matches": false,
+      "manifestComparison": true
+    },
+    {
+      "path": "package/docs/architecture.md",
+      "matches": true,
+      "npmSha256": "6804e84babb79615fd53182d1f661320ae3b1f1834c8042faafb1e89bfcee078",
+      "sourceSha256": "6804e84babb79615fd53182d1f661320ae3b1f1834c8042faafb1e89bfcee078",
+      "captured": true
+    },
+    {
+      "path": "package/docs/development.md",
+      "matches": true,
+      "npmSha256": "ad33681c56799b4cad5f7aee89764245ce763e93469fa6bbae124ac5b8bc1dfa",
+      "sourceSha256": "ad33681c56799b4cad5f7aee89764245ce763e93469fa6bbae124ac5b8bc1dfa",
+      "captured": true
+    },
+    {
+      "path": "package/docs/en/README.md",
+      "matches": true,
+      "npmSha256": "b89ead85b1d3bfa86368eebc8243cf640859bd7eeb686d01ad26f6d55a78420f",
+      "sourceSha256": "b89ead85b1d3bfa86368eebc8243cf640859bd7eeb686d01ad26f6d55a78420f",
+      "captured": true
+    },
+    {
+      "path": "package/docs/zh-CN/README.md",
+      "matches": true,
+      "npmSha256": "fa14bd4109c1058d1168a219e93ca9996d19e950ac99f98006b7b80dcc696828",
+      "sourceSha256": "fa14bd4109c1058d1168a219e93ca9996d19e950ac99f98006b7b80dcc696828",
+      "captured": true
+    },
+    {
+      "path": "package/README.md",
+      "matches": true,
+      "npmSha256": "0f948044334eb73e734110551399507d7884da2b42cbb8df501779dde526cc1c",
+      "sourceSha256": "0f948044334eb73e734110551399507d7884da2b42cbb8df501779dde526cc1c",
+      "captured": true
+    },
+    {
+      "path": "package/deepseek-mark.svg",
+      "matches": true,
+      "npmSha256": "cabe0643ae3282ee3d4b96bc364e49fadfbac02e767016b0b0ae98d2dec617be",
+      "sourceSha256": "cabe0643ae3282ee3d4b96bc364e49fadfbac02e767016b0b0ae98d2dec617be",
+      "captured": true
+    },
+    {
+      "path": "package/cordis.patch.yml",
+      "matches": true,
+      "npmSha256": "c67ac915bb1a77dd64767aaf2829a3bc502bbdf5c586c23eb95ec1de3e6e5bae",
+      "sourceSha256": "c67ac915bb1a77dd64767aaf2829a3bc502bbdf5c586c23eb95ec1de3e6e5bae",
+      "captured": true
+    }
+  ],
+  "manifestDifference": {
+    "omittedFromNpm": {
+      "prepare": "pnpm run build"
+    },
+    "otherwiseStructurallyEqual": true
+  },
+  "differences": [],
+  "evidence": {
+    "name": "dsh-synapse",
+    "version": "0.5.0",
+    "license": "MIT",
+    "repository": "https://github.com/liangmianya/dsh-synapse",
+    "repositorySource": "review",
+    "repositoryReview": {
+      "version": "0.5.0",
+      "integrity": "sha512-9tOqqAmGG2E2gJhZTLRWGKl2jU0fTlUW+pkncm8iTOJu2sbM4GOH5Bj3UxTiVxKDIwxuO5WQgj0kjMAxUhMhfQ==",
+      "commit": "265d7ff1f41c87e41f5648166e410cbf972c417f",
+      "url": "https://github.com/liangmianya/dsh-synapse",
+      "evidence": "https://github.com/liangmianya/dsh-synapse/blob/265d7ff1f41c87e41f5648166e410cbf972c417f/package.json"
+    },
+    "metadataUrl": "https://registry.npmjs.org/dsh-synapse",
+    "tarball": "https://registry.npmjs.org/dsh-synapse/-/dsh-synapse-0.5.0.tgz",
+    "integrity": "sha512-9tOqqAmGG2E2gJhZTLRWGKl2jU0fTlUW+pkncm8iTOJu2sbM4GOH5Bj3UxTiVxKDIwxuO5WQgj0kjMAxUhMhfQ==",
+    "patch": [
+      "package/cordis.patch.yml"
+    ],
+    "filesChecked": 15,
+    "display": {
+      "icon": {
+        "status": "absent"
+      },
+      "localized": [],
+      "warnings": []
+    },
+    "archive": {
+      "compressedBytes": 794682,
+      "unpackedBytes": 1057767,
+      "decodedBytes": 1071616,
+      "entries": 15,
+      "maxUnpackedBytes": 104857600,
+      "downloadTimeoutMs": 30000,
+      "reviewedBudget": false
+    },
+    "lifecycleScripts": [],
+    "releases": {
+      "firstPublished": "2026-08-26T02:44:43.521Z",
+      "last30Days": 5,
+      "last90Days": 7
+    },
+    "checks": [
+      "registry-identity",
+      "sha512-integrity",
+      "archive-manifest-identity",
+      "bundle-patch-present",
+      "main-file-present"
+    ],
+    "limitations": [
+      "No runtime installation test",
+      "No code audit",
+      "Patch references and transitive dependencies are not validated"
+    ]
+  }
+}

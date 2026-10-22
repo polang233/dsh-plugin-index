@@ -9471,13 +9471,13 @@
     },
     {
       "name": "dsh-deepseek-workbench",
-      "version": "0.1.0-dsh.0.2.1-rc.2",
+      "version": "0.1.1-dsh.0.2.1-rc.2",
       "source": {
         "type": "git",
         "url": "https://github.com/gulagala001/dsh-deepseek-workbench",
-        "commit": "24b3de5ca54c0516487f8de1ef0a8ae2fadde400",
-        "integrity": "sha512-IZh2Op6EiqjMQWTpn6+6K/nu1ajIIJDG64AxGbq3/qBunLOP8wjI2N68m9+iHPJ5UwN7nigRVIKwKCbGA0jb2g==",
-        "publishedAt": "2026-10-20T13:26:37Z"
+        "commit": "59cdaf8765f671625fda237470e9046692968de7",
+        "integrity": "sha512-xQNDKNXw32N67cHW0pJ1ijBsjAUPRDBOyY5mOrK9AynB+977osZrpHz7q4PKc7X4yann1vwztjW6lEA2r2izww==",
+        "publishedAt": "2026-10-22T12:36:24Z"
       },
       "title": {
         "en": "DeepSeek Workbench",
@@ -9511,13 +9511,13 @@
     },
     {
       "name": "@gulagala001/dsh-btw",
-      "version": "0.1.0-dsh.0.2.1-rc.2",
+      "version": "0.1.1-dsh.0.2.1-rc.2",
       "source": {
         "type": "git",
         "url": "https://github.com/gulagala001/dsh-btw",
-        "commit": "f53d5291bd8e252ab04290f8d9040f158a9f0c81",
-        "integrity": "sha512-jPKof4BUNeNChfbbB39/eYaXDwPKmkOdshyg2VNtmSlgwvWYVae2QJhJ+KlK7pa22XeAC9g+GOZt6Fhg1jLSyw==",
-        "publishedAt": "2026-10-20T14:18:29Z"
+        "commit": "c043ac09eaf0febbe9de75cf29cbf970600b1da5",
+        "integrity": "sha512-UT+3pRUich1cV6rfpzzfJGJqlfa7TbshlamiljHHyIJ/saofhx1+EloHUA9IHwaUPrYkzQJHAK5EmTIpsQUrkg==",
+        "publishedAt": "2026-10-22T12:36:25Z"
       },
       "title": {
         "en": "DSH BTW",
@@ -9531,13 +9531,13 @@
     },
     {
       "name": "@gulagala001/dsh-theme-plugin",
-      "version": "0.2.0-dsh.0.2.1-rc.2",
+      "version": "0.2.1-dsh.0.2.1-rc.2",
       "source": {
         "type": "git",
         "url": "https://github.com/gulagala001/dsh-theme-plugin",
-        "commit": "e217a682789d81a656157a89f57506f446059294",
-        "integrity": "sha512-87KSuuO5oFCw/VEaMJUNTMLSeo65vZRKtfXzV1SvopVAoTfl5p/T7rUlu6R9yQW+fdT7B2p/Zk3RJmYAw0/Chg==",
-        "publishedAt": "2026-10-21T02:55:32Z"
+        "commit": "d0abfd142dff121cf75f5a823eff36d7da182eda",
+        "integrity": "sha512-bAl5wHpbKpxkgyTdonZ2o6IgTkUuCBbQntJ/1WNY8OE3ZESTVwE39t77/7O5emQ4ledTtX1pTtYiqzoSYVX60A==",
+        "publishedAt": "2026-10-22T12:36:24Z"
       },
       "title": {
         "en": "DSH Themes and Appearance",
@@ -10315,7 +10315,7 @@
     },
     {
       "name": "dsh-synapse",
-      "version": "0.4.3",
+      "version": "0.5.0",
       "title": {
         "en": "Synapse",
         "zh": "Synapse（会话地图）"
@@ -10327,9 +10327,9 @@
       "category": "interface",
       "repositoryReview": {
         "url": "https://github.com/liangmianya/dsh-synapse",
-        "version": "0.4.3",
-        "commit": "cd302ba6cf0ce109407d09e70fa18b569698d442",
-        "integrity": "sha512-UH9MRWYpgWdS0s6f5gWMRKulnyftumP8/JsF6/fpTJLs0MD7dsn1mSTZ3ezll9Ef4CXNHL/KevFXcLh9p8wEzQ=="
+        "version": "0.5.0",
+        "commit": "265d7ff1f41c87e41f5648166e410cbf972c417f",
+        "integrity": "sha512-9tOqqAmGG2E2gJhZTLRWGKl2jU0fTlUW+pkncm8iTOJu2sbM4GOH5Bj3UxTiVxKDIwxuO5WQgj0kjMAxUhMhfQ=="
       }
     },
     {
@@ -10391,7 +10391,7 @@
     },
     {
       "name": "dsh-im-gateway",
-      "version": "0.3.1",
+      "version": "0.3.3",
       "title": {
         "en": "IM Gateway",
         "zh": "IM Gateway（聊天网关）"
@@ -10403,9 +10403,9 @@
       "category": "integrations",
       "repositoryReview": {
         "url": "https://github.com/zhuiyueya/dsh-im-gateway",
-        "version": "0.3.1",
-        "commit": "415fb7cd23750c166c8d464f3782f6a0cd4ccb14",
-        "integrity": "sha512-K9gmGun8ZuvoGrOpV5DggvUy6yjxzqJOBI6ODXqp4eZsNoxIEBwScimAzXctxHDlau5XklVLHMBclxns+/Z30g=="
+        "version": "0.3.3",
+        "commit": "8e8fbca125dda15b5cdd2ae79ac63a91e21f7c37",
+        "integrity": "sha512-1ia8bbDVWgTcs1McggBSTVkfVa9rxIycjj2Ah1SGNY7CASfHfndXhczIlW46V2b9J/B/Pa6r7l99rTpk1SxXmg=="
       }
     },
     {
@@ -10539,6 +10539,58 @@
         "zh": "把原生「子代理」下拉按使用批次分为历史、今日、上次、本次四组，本次始终展开，其余可折叠；不改动原有头部。"
       },
       "category": "interface"
+    },
+    {
+      "name": "dsh-enhance-prompt",
+      "version": "0.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/feiwell/dsh-enhance-prompt",
+        "commit": "f096352e48333880761c932f450c62dda5eeebea",
+        "integrity": "sha512-HSmaZMyK1Ct+uZKHLeCnJRAEvsUtSQc+jLQWYk22j9YC56ER3BHvsxGZJqd5W+ssCxVzsT3W9Ppecws1G/RFbw==",
+        "publishedAt": "2026-10-22T21:05:06+08:00"
+      },
+      "title": {
+        "en": "Prompt Enhancer",
+        "zh": "提示词增强"
+      },
+      "description": {
+        "en": "Rewrite the composer draft in the DeepSeek Harness desktop app with work, code and design modes, and restore the original text with one click.",
+        "zh": "在 DeepSeek Harness 桌面版的输入栏改写提示词，提供日常办公、代码开发和设计创意三种模式，支持一键还原原文。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-plugin-medical-literature",
+      "title": {
+        "en": "Medical Literature",
+        "zh": "医学文献"
+      },
+      "description": {
+        "en": "Search PubMed, Europe PMC, arXiv and preprints, format citations and read open-access full text. Claim checks retrieve matching passages for manual review.",
+        "zh": "检索 PubMed、Europe PMC、arXiv 及预印本，生成引用并读取开放获取全文；引用核对基于词面匹配，需阅读原文确认。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-shared-bash",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/snowy-yang/dsh-shared-bash",
+        "commit": "33cd1a00d814e286a5c51e34af6a1460fff26818",
+        "integrity": "sha512-8PhttAIZq/pCAAIPHQGZ6RBm2KCQq3nt0DbnAea4Ny4wtLFuCKI+g8T3xJKjeOnRJJgqenHOXYSDfnZIe1PoBA==",
+        "publishedAt": "2026-10-22T12:47:06Z"
+      },
+      "title": {
+        "en": "Shared Bash Sessions",
+        "zh": "共享 Bash 会话"
+      },
+      "description": {
+        "en": "Share persistent Bash sessions across agents in a DSH profile, preserving directories, variables and jobs. Requires Bash; commands run with the host user's permissions.",
+        "zh": "让同一 DSH profile 中的各个 Agent 共用持久 Bash 会话，保留目录、变量和作业。需要 Bash，命令以宿主用户权限运行。"
+      },
+      "category": "tools"
     }
   ]
 }

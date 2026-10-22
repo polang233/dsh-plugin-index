@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
+  <!-- Composer draft becoming a sharper prompt: a text caret on the left, a
+       spark on the right. Colours are literal because the Host renders this
+       file as an image, where currentColor and CSS variables do not resolve.
+       Amber matches the button the plugin draws in the composer.
+       Kept to three short rules so the mark still reads at 16-32px. -->
+  <path d="M2.1 3.2v9.6" stroke="#F0A03C" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M5.1 4.5h4.2M5.1 8h3" stroke="#8A94A6" stroke-width="1.35" stroke-linecap="round"/>
+  <path d="M11.9 7.4l.8 2.3 2.3.8-2.3.8-.8 2.3-.8-2.3-2.3-.8 2.3-.8z" fill="#F0A03C"/>
+</svg>

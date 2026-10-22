@@ -1,0 +1,31 @@
+<svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!--
+    记忆系统图标:年轮。
+
+    记忆是时间累积出来的东西 —— 一圈一圈长出来的年轮,比"内存条/芯片"更贴
+    "长期";金色年轮压在深咖底上,像一枚封蜡印章。配色刻意避开插件列表里大量
+    出现的蓝色 / 白底:深咖 #3B2D20 → #120E0A + 香槟金 #F8E2B4 → #BF8230。
+
+    沿用宿主插件美术的规范:36×36 画布、内缩 4 的 28×28 圆角瓦片(rx 8);
+    不写死 width/height,显示尺寸交给消费方(插件管理器行 30 / 卡片 36)。
+    记号是一条 2.55 描边的螺旋,用 7 段圆弧近似(而不是几百个点的折线):
+    30px 下就是一条完整的线,128px 下也不露折角。外圈再压一圈 0.9px 的
+    暖金内边,深色底不会整个糊成黑方块。
+
+    改名 / 换配色时的护栏:图标必须是包内文件、SVG/PNG/JPEG/WebP、≤256 KiB
+    (宿主 readPluginMeta 的读取条件),见 source/memory-plugin/test/packaged-artifact.test.ts。
+  -->
+  <rect x="4" y="4" width="28" height="28" rx="8" fill="url(#memory_tile)" />
+  <rect x="4.45" y="4.45" width="27.1" height="27.1" rx="7.6" fill="none" stroke="rgba(240,200,140,0.20)" stroke-width="0.9" />
+  <path d="M18.99 16.75 A2.19 2.19 0 0 1 19.99 19.95 A3.38 3.38 0 0 1 14.94 20.53 A4.56 4.56 0 0 1 15.15 13.71 A5.74 5.74 0 0 1 23.61 15.07 A6.92 6.92 0 0 1 20.76 24.99 A8.11 8.11 0 0 1 9.62 20.33" stroke="url(#memory_ring)" stroke-width="2.55" stroke-linecap="round" stroke-linejoin="round" />
+  <defs>
+    <linearGradient id="memory_tile" x1="18" y1="4" x2="18" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B2D20" />
+      <stop offset="1" stop-color="#120E0A" />
+    </linearGradient>
+    <linearGradient id="memory_ring" x1="18" y1="9" x2="18" y2="27" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8E2B4" />
+      <stop offset="1" stop-color="#BF8230" />
+    </linearGradient>
+  </defs>
+</svg>
