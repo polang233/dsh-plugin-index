@@ -10703,6 +10703,30 @@
         "zh": "生成一次性网页表单，将用户输入的密钥写入 DSH 凭据库或文件，支持链接过期与取消。"
       },
       "category": "tools"
+    },
+    {
+      "name": "@sunshaobei/dsh-mcp-manager",
+      "title": {
+        "en": "dsh-mcp-manager",
+        "zh": "dsh-mcp-manager"
+      },
+      "description": {
+        "en": "Manage MCP servers in DSH Web with connection forms, JSON import, status groups and tool access through middleware.",
+        "zh": "在 DSH Web 中管理 MCP 服务器，支持连接表单、JSON 导入、按状态分组，并通过中间层调用工具。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@sunshaobei/dsh-session-manager",
+      "title": {
+        "en": "dsh-session-manager",
+        "zh": "dsh-session-manager"
+      },
+      "description": {
+        "en": "Archive sessions to a recycle bin, restore them individually or in batches, and permanently delete archived logs, with protection for active sessions.",
+        "zh": "将会话放入回收站，支持单条或批量还原、彻底删除已归档日志，并保护活跃会话。"
+      },
+      "category": "interface"
     }
   ]
 }
