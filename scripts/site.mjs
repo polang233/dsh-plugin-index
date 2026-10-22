@@ -278,7 +278,8 @@ function layout({ language, path, title, description, body, site, structured = [
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="${canonical}">
   ${alternates}
-  <link rel="icon" href="${root}assets/favicon.png" type="image/png" sizes="64x64">
+  <link rel="icon" href="${root}favicon.ico" sizes="48x48">
+  <link rel="icon" href="${root}assets/favicon.png" type="image/png" sizes="96x96">
   <link rel="apple-touch-icon" href="${root}assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="${root}assets/site.css">
   <meta property="og:type" content="${type}">
@@ -472,7 +473,7 @@ function sitemap(paths, updated) {
 }
 
 function notFound(css) {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Page not found — Open Plugin Market</title><link rel="icon" href="${ORIGIN}assets/favicon.png" type="image/png" sizes="64x64"><style>${css}</style></head><body><header class="site-header shell"><a class="brand" href="${ORIGIN}"><img src="${ORIGIN}assets/logo-256.png" alt="" width="64" height="64"><span>Open Plugin Market</span></a></header><main class="shell hero"><h1>Page not found.</h1><p lang="zh-CN">页面不存在。</p><p lang="zh-TW">頁面不存在。</p><p>Open the plugin directory to continue.</p><p lang="zh-CN">返回插件目录，继续查找插件。</p><div class="contribute-links"><a class="submit-link" href="${ORIGIN}">English directory</a><a class="submit-link" href="${ORIGIN}zh/" lang="zh-CN">中文目录</a><a class="submit-link" href="${ORIGIN}zh-tw/" lang="zh-TW">繁體中文目錄</a></div></main></body></html>\n`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Page not found — Open Plugin Market</title><link rel="icon" href="${ORIGIN}favicon.ico" sizes="48x48"><link rel="icon" href="${ORIGIN}assets/favicon.png" type="image/png" sizes="96x96"><style>${css}</style></head><body><header class="site-header shell"><a class="brand" href="${ORIGIN}"><img src="${ORIGIN}assets/logo-256.png" alt="" width="64" height="64"><span>Open Plugin Market</span></a></header><main class="shell hero"><h1>Page not found.</h1><p lang="zh-CN">页面不存在。</p><p lang="zh-TW">頁面不存在。</p><p>Open the plugin directory to continue.</p><p lang="zh-CN">返回插件目录，继续查找插件。</p><div class="contribute-links"><a class="submit-link" href="${ORIGIN}">English directory</a><a class="submit-link" href="${ORIGIN}zh/" lang="zh-CN">中文目录</a><a class="submit-link" href="${ORIGIN}zh-tw/" lang="zh-TW">繁體中文目錄</a></div></main></body></html>\n`;
 }
 
 async function write(path, html) {
@@ -519,6 +520,7 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
     }
   }
   await writeFile(new URL('sitemap.xml', output), sitemap(['', 'stats/', ...plugins.map(plugin => pluginPath(plugin.name))], evidence?.generatedAt), 'utf8');
+  await copyFile(new URL('favicon.ico', source), new URL('favicon.ico', output));
   await writeFile(new URL('robots.txt', output), `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}sitemap.xml\n`, 'utf8');
   await writeFile(new URL('404.html', output), notFound(await readFile(new URL('site.css', source), 'utf8')), 'utf8');
 }

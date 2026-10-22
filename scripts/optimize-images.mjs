@@ -2,7 +2,7 @@
 // smaller lossless WebP files the site and README load. Originals stay in the repo.
 // Usage: node scripts/optimize-images.mjs [logo home-en home-zh ...]
 // Needs `sharp`; e.g. `npm i --no-save sharp`, or set SHARP_PATH.
-import { copyFile, readdir, stat } from 'node:fs/promises';
+import { copyFile, readdir, stat, writeFile } from 'node:fs/promises';
 import { basename, extname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -42,14 +42,33 @@ for (const [from, to] of [['site/originals', 'site'], ['docs/images/originals', 
 
 // Every small brand asset comes from the same master, including the DSH package icon.
 if (!selected.size || selected.has('logo')) {
-  for (const [name, size] of [['logo-256.png', 256], ['apple-touch-icon.png', 180], ['favicon.png', 64]]) {
+  const icon = size => sharp(join(root, 'site/originals/logo.png'))
+    .resize({ width: size, height: size, fit: 'contain', background: '#00000000', withoutEnlargement: true })
+    .png({ compressionLevel: 9, adaptiveFiltering: true });
+  // Bing only shows favicons whose size is a multiple of 48.
+  for (const [name, size] of [['logo-256.png', 256], ['apple-touch-icon.png', 180], ['favicon.png', 96]]) {
     const output = join(root, 'site', name);
-    await sharp(join(root, 'site/originals/logo.png'))
-      .resize({ width: size, height: size, fit: 'contain', background: '#00000000', withoutEnlargement: true })
-      .png({ compressionLevel: 9, adaptiveFiltering: true })
-      .toFile(output);
+    await icon(size).toFile(output);
     console.log(`site/${name}  ${size}x${size}  ${Math.round((await stat(output)).size / 1024)} KB`);
   }
+  // Crawlers that ignore <link rel="icon"> fetch /favicon.ico; PNG frames inside an ICO are widely supported.
+  const frames = await Promise.all([16, 32, 48].map(async size => ({ size, png: await icon(size).toBuffer() })));
+  const header = Buffer.alloc(6 + 16 * frames.length);
+  header.writeUInt16LE(1, 2);
+  header.writeUInt16LE(frames.length, 4);
+  let offset = header.length;
+  frames.forEach(({ size, png }, i) => {
+    const at = 6 + 16 * i;
+    header.writeUInt8(size, at);
+    header.writeUInt8(size, at + 1);
+    header.writeUInt16LE(1, at + 4);
+    header.writeUInt16LE(32, at + 6);
+    header.writeUInt32LE(png.length, at + 8);
+    header.writeUInt32LE(offset, at + 12);
+    offset += png.length;
+  });
+  await writeFile(join(root, 'site/favicon.ico'), Buffer.concat([header, ...frames.map(frame => frame.png)]));
+  console.log(`site/favicon.ico  16/32/48  ${Math.round(offset / 1024)} KB`);
   await copyFile(join(root, 'site/logo-256.png'), join(root, 'packages/dsh-open-market/icon.png'));
   console.log('packages/dsh-open-market/icon.png  copied from site/logo-256.png');
 }
