@@ -1,0 +1,664 @@
+{
+  "schema": 1,
+  "issue": 36,
+  "checkedAt": "2026-10-22T17:02:05.970Z",
+  "packages": [
+    {
+      "schema": 1,
+      "issue": 36,
+      "name": "@gulagala001/dsh-btw",
+      "previousVersion": "0.1.1-dsh.0.2.1-rc.2",
+      "version": "0.1.2-dsh.0.2.1-rc.2",
+      "checkedAt": "2026-10-22T17:01:43.142Z",
+      "manifest": {
+        "name": "@gulagala001/dsh-btw",
+        "version": "0.1.2-dsh.0.2.1-rc.2",
+        "description": "Ask side questions in DeepSeek Harness without interrupting the current task.",
+        "type": "module",
+        "license": "MIT",
+        "main": "src/index.mjs",
+        "exports": {
+          ".": "./src/index.mjs",
+          "./client": "./lib/client.js",
+          "./package.json": "./package.json"
+        },
+        "engines": {
+          "node": ">=22.19",
+          "dsh": "0.2.1-rc.2"
+        },
+        "scripts": {
+          "build": "node scripts/build.mjs",
+          "test": "node --test test/*.test.mjs",
+          "prepack": "npm run build && npm run check:public",
+          "check:public": "node scripts/check-public-files.mjs"
+        },
+        "files": [
+          "src",
+          "lib",
+          "scripts",
+          "docs",
+          "cordis.patch.yml",
+          "README.md",
+          "README.zh.md",
+          "LICENSE",
+          "README_EN.md",
+          "CHANGELOG.md"
+        ],
+        "peerDependencies": {
+          "@deepseek-ai/cordis": "4.0.5",
+          "@deepseek-ai/dsh-session": "0.2.1-rc.2",
+          "@deepseek-ai/dsh-llm": "0.2.1-rc.2"
+        },
+        "devDependencies": {
+          "esbuild": "0.25.12",
+          "react": "18.3.1"
+        },
+        "dsh": {
+          "bundle": {
+            "patch": "./cordis.patch.yml"
+          },
+          "client": {
+            "platform": "web",
+            "inject": [
+              "@deepseek-ai/dsh-client-connection",
+              "@deepseek-ai/dsh-client-ui-primitives",
+              "@deepseek-ai/dsh-client-ui-slots",
+              "@deepseek-ai/dsh-client-ui-conversation",
+              "@deepseek-ai/dsh-api-session-controller",
+              "@deepseek-ai/dsh-client-ui-input-trigger"
+            ]
+          }
+        },
+        "keywords": [
+          "dsh-plugin",
+          "deepseek-harness",
+          "btw",
+          "side-chat"
+        ],
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/gulagala001/dsh-btw.git"
+        },
+        "homepage": "https://github.com/gulagala001/dsh-btw#readme",
+        "bugs": {
+          "url": "https://github.com/gulagala001/dsh-btw/issues"
+        },
+        "author": "gulagala001"
+      },
+      "commitMessage": "Release DSH BTW 0.1.2",
+      "files": [
+        "package/.github/workflows/ci.yml",
+        "package/.gitignore",
+        "package/CHANGELOG.md",
+        "package/LICENSE",
+        "package/README.md",
+        "package/README.zh.md",
+        "package/README_EN.md",
+        "package/cordis.patch.yml",
+        "package/docs/images/side-chat.png",
+        "package/docs/install.md",
+        "package/docs/install.zh.md",
+        "package/docs/releases/v0.1.0-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.1.1-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.1.2-dsh.0.2.1-rc.2.md",
+        "package/package-lock.json",
+        "package/package.json",
+        "package/scripts/build.mjs",
+        "package/scripts/check-public-files.mjs",
+        "package/src/client/entry.mjs",
+        "package/src/client/index.jsx",
+        "package/src/client/store.mjs",
+        "package/src/client/style.css",
+        "package/src/context.mjs",
+        "package/src/index.mjs",
+        "package/src/shared.mjs",
+        "package/src/snapshot.mjs",
+        "package/test/isolation.test.mjs"
+      ],
+      "input": {
+        "name": "@gulagala001/dsh-btw",
+        "version": "0.1.2-dsh.0.2.1-rc.2",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gulagala001/dsh-btw",
+          "commit": "4c52e6059337100ade2935e8010914bca4fbe6a4",
+          "integrity": "sha512-JR0HukY4vL6eNxCl1rFu5LDN1yl9rHdL5hv+idG7z54zNQVTQ4/n1Xajn9CFbYOo1LAQNsilw89fjhvammAdCA==",
+          "publishedAt": "2026-10-22T14:03:28Z"
+        },
+        "title": {
+          "en": "DSH BTW",
+          "zh": "DSH BTW"
+        },
+        "description": {
+          "en": "Ask side questions using the current conversation while the main task continues. Requires DSH 0.2.1-rc.2; side history disappears on reload and side requests cannot run tools.",
+          "zh": "借助当前会话上下文旁聊，主任务可继续运行。仅适配 DSH 0.2.1-rc.2，刷新后旁聊历史清空，旁聊不能执行工具。"
+        },
+        "category": "interface"
+      },
+      "evidence": {
+        "name": "@gulagala001/dsh-btw",
+        "version": "0.1.2-dsh.0.2.1-rc.2",
+        "license": "MIT",
+        "repository": "https://github.com/gulagala001/dsh-btw",
+        "repositorySource": "package",
+        "sourceCommit": "4c52e6059337100ade2935e8010914bca4fbe6a4",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gulagala001/dsh-btw",
+          "commit": "4c52e6059337100ade2935e8010914bca4fbe6a4"
+        },
+        "tarball": "https://codeload.github.com/gulagala001/dsh-btw/tar.gz/4c52e6059337100ade2935e8010914bca4fbe6a4",
+        "integrity": "sha512-JR0HukY4vL6eNxCl1rFu5LDN1yl9rHdL5hv+idG7z54zNQVTQ4/n1Xajn9CFbYOo1LAQNsilw89fjhvammAdCA==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 27,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 135988,
+          "unpackedBytes": 202336,
+          "decodedBytes": 235520,
+          "entries": 38,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "entry": {
+        "name": "@gulagala001/dsh-btw",
+        "title": {
+          "en": "DSH BTW",
+          "zh": "DSH BTW"
+        },
+        "description": {
+          "en": "Ask side questions using the current conversation while the main task continues. Requires DSH 0.2.1-rc.2; side history disappears on reload and side requests cannot run tools.",
+          "zh": "借助当前会话上下文旁聊，主任务可继续运行。仅适配 DSH 0.2.1-rc.2，刷新后旁聊历史清空，旁聊不能执行工具。"
+        },
+        "author": "gulagala001",
+        "repository": {
+          "url": "https://github.com/gulagala001/dsh-btw"
+        },
+        "homepage": "https://github.com/gulagala001/dsh-btw#readme",
+        "metadata": {
+          "category": "interface",
+          "keywords": [
+            "dsh-plugin",
+            "deepseek-harness",
+            "btw",
+            "side-chat"
+          ]
+        },
+        "versions": [
+          {
+            "version": "0.1.2-dsh.0.2.1-rc.2",
+            "publishTimestamp": 1792677808,
+            "source": {
+              "type": "git",
+              "url": "https://github.com/gulagala001/dsh-btw",
+              "commit": "4c52e6059337100ade2935e8010914bca4fbe6a4"
+            },
+            "engines": {
+              "dsh": "0.2.1-rc.2"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "schema": 1,
+      "issue": 36,
+      "name": "dsh-shared-bash",
+      "previousVersion": "0.1.0",
+      "version": "0.2.0",
+      "checkedAt": "2026-10-22T17:01:43.172Z",
+      "manifest": {
+        "name": "dsh-shared-bash",
+        "version": "0.2.0",
+        "description": "tmux-like shared persistent bash sessions for DeepSeek Harness: every agent in a profile can open, drive and read the same shells, keeping cwd, variables and background state between calls.",
+        "type": "module",
+        "main": "index.js",
+        "exports": {
+          ".": "./index.js",
+          "./client": "./client.js",
+          "./package.json": "./package.json"
+        },
+        "files": [
+          "index.js",
+          "client.js",
+          "src",
+          "cordis.patch.yml",
+          "index.json",
+          "README.md",
+          "README.zh.md",
+          "LICENSE"
+        ],
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "dsh-bundle",
+          "bash",
+          "terminal",
+          "tmux",
+          "shell",
+          "msys2",
+          "windows"
+        ],
+        "engines": {
+          "node": ">=22",
+          "dsh": "^0.2.1-rc.2"
+        },
+        "dsh": {
+          "manifestVersion": 1,
+          "bundle": {
+            "patch": "./cordis.patch.yml"
+          },
+          "client": {
+            "platform": "web",
+            "immediately": true,
+            "inject": []
+          }
+        },
+        "scripts": {
+          "test": "node --test test/"
+        },
+        "license": "MIT",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/snowy-yang/dsh-shared-bash.git"
+        },
+        "bugs": {
+          "url": "https://github.com/snowy-yang/dsh-shared-bash/issues"
+        },
+        "homepage": "https://github.com/snowy-yang/dsh-shared-bash#readme"
+      },
+      "commitMessage": "feat: settings page over a fenced /api/shared-bash route\n\n- client.js: hand-written bundle registering a settings.section page that lists\n  sessions, reads output, interrupts, closes and opens them, and sends commands\n- src/web.js: JSON API plus the request fence the longer-than-/api prefix needs\n- sessions: an explicit cwd now enters the directory inside the shell, because a\n  login shell's profile scripts end in \\C:\\Users\\Administrator and the spawn cwd does not survive",
+      "files": [
+        "package/.gitignore",
+        "package/LICENSE",
+        "package/README.md",
+        "package/README.zh.md",
+        "package/client.js",
+        "package/cordis.patch.yml",
+        "package/index.js",
+        "package/index.json",
+        "package/package.json",
+        "package/src/sessions.js",
+        "package/src/tools.js",
+        "package/src/web.js",
+        "package/test/client.test.mjs",
+        "package/test/index.test.mjs",
+        "package/test/sessions.test.mjs",
+        "package/test/tools.test.mjs",
+        "package/test/web.test.mjs"
+      ],
+      "input": {
+        "name": "dsh-shared-bash",
+        "version": "0.2.0",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/snowy-yang/dsh-shared-bash",
+          "commit": "d3faae238d5c05082789aa939eb7e4150bd97000",
+          "integrity": "sha512-02P9SmvexF6OHRKcOOzJi/znMr9Iq+4NQeg788E17Rkh3KHQYFNlEPfyUa6koRbpES/M33gy11pW8Oh3mqtl5g==",
+          "publishedAt": "2026-10-22T15:17:05Z"
+        },
+        "title": {
+          "en": "Shared Bash Sessions",
+          "zh": "共享 Bash 会话"
+        },
+        "description": {
+          "en": "Share persistent Bash sessions across agents in a DSH profile, preserving directories, variables and jobs. Requires Bash; commands run with the host user's permissions.",
+          "zh": "让同一 DSH profile 中的各个 Agent 共用持久 Bash 会话，保留目录、变量和作业。需要 Bash，命令以宿主用户权限运行。"
+        },
+        "category": "tools"
+      },
+      "evidence": {
+        "name": "dsh-shared-bash",
+        "version": "0.2.0",
+        "license": "MIT",
+        "repository": "https://github.com/snowy-yang/dsh-shared-bash",
+        "repositorySource": "package",
+        "sourceCommit": "d3faae238d5c05082789aa939eb7e4150bd97000",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/snowy-yang/dsh-shared-bash",
+          "commit": "d3faae238d5c05082789aa939eb7e4150bd97000"
+        },
+        "tarball": "https://codeload.github.com/snowy-yang/dsh-shared-bash/tar.gz/d3faae238d5c05082789aa939eb7e4150bd97000",
+        "integrity": "sha512-02P9SmvexF6OHRKcOOzJi/znMr9Iq+4NQeg788E17Rkh3KHQYFNlEPfyUa6koRbpES/M33gy11pW8Oh3mqtl5g==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 17,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 31165,
+          "unpackedBytes": 102270,
+          "decodedBytes": 122880,
+          "entries": 21,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "entry": {
+        "name": "dsh-shared-bash",
+        "title": {
+          "en": "Shared Bash Sessions",
+          "zh": "共享 Bash 会话"
+        },
+        "description": {
+          "en": "Share persistent Bash sessions across agents in a DSH profile, preserving directories, variables and jobs. Requires Bash; commands run with the host user's permissions.",
+          "zh": "让同一 DSH profile 中的各个 Agent 共用持久 Bash 会话，保留目录、变量和作业。需要 Bash，命令以宿主用户权限运行。"
+        },
+        "repository": {
+          "url": "https://github.com/snowy-yang/dsh-shared-bash"
+        },
+        "homepage": "https://github.com/snowy-yang/dsh-shared-bash#readme",
+        "metadata": {
+          "category": "tools",
+          "keywords": [
+            "dsh",
+            "dsh-plugin",
+            "dsh-bundle",
+            "bash",
+            "terminal",
+            "tmux",
+            "shell",
+            "msys2",
+            "windows"
+          ]
+        },
+        "versions": [
+          {
+            "version": "0.2.0",
+            "publishTimestamp": 1792682225,
+            "source": {
+              "type": "git",
+              "url": "https://github.com/snowy-yang/dsh-shared-bash",
+              "commit": "d3faae238d5c05082789aa939eb7e4150bd97000"
+            },
+            "engines": {
+              "dsh": "^0.2.1-rc.2"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "schema": 1,
+      "issue": 36,
+      "name": "dsh-mobile",
+      "previousVersion": "0.6.15",
+      "version": "0.6.16",
+      "checkedAt": "2026-10-22T17:01:43.172Z",
+      "latest": "0.6.16",
+      "publishedAt": "2026-10-22T13:40:37.305Z",
+      "input": {
+        "name": "dsh-mobile",
+        "version": "0.6.16",
+        "title": {
+          "en": "DSH Mobile",
+          "zh": "DSH Mobile"
+        },
+        "description": {
+          "en": "Use DSH on your computer from a phone browser or the Android app over LAN or optional remote tunnels (Tailscale, cpolar, cloudflared, FRP), with HTTPS and device pairing.",
+          "zh": "通过局域网或可选的远程通道（Tailscale、cpolar、cloudflared、FRP），用手机浏览器或 Android App 安全地使用电脑上的 DSH，支持 HTTPS 和设备配对。"
+        },
+        "category": "integrations",
+        "archiveReview": {
+          "version": "0.6.16",
+          "integrity": "sha512-Bcl5a6UltAvzBZr58A3sCC6XoBaBXN9fgDu5uT8C8XjKpk39Gj1TNIiBvCm8Ut+9SBMqVVtxx1elVuO5p2bokg==",
+          "maxUnpackedBytes": 268435456,
+          "timeoutMs": 120000
+        }
+      },
+      "evidence": {
+        "name": "dsh-mobile",
+        "version": "0.6.16",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/saya-ch/dsh-mobile",
+        "repositorySource": "package",
+        "metadataUrl": "https://registry.npmjs.org/dsh-mobile",
+        "tarball": "https://registry.npmjs.org/dsh-mobile/-/dsh-mobile-0.6.16.tgz",
+        "integrity": "sha512-Bcl5a6UltAvzBZr58A3sCC6XoBaBXN9fgDu5uT8C8XjKpk39Gj1TNIiBvCm8Ut+9SBMqVVtxx1elVuO5p2bokg==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 61,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 27155289,
+          "unpackedBytes": 71317590,
+          "decodedBytes": 71365120,
+          "entries": 61,
+          "maxUnpackedBytes": 268435456,
+          "downloadTimeoutMs": 120000,
+          "reviewedBudget": true
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-08-15T06:45:45.364Z",
+          "last30Days": 26,
+          "last90Days": 92
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "entry": {
+        "name": "dsh-mobile",
+        "title": {
+          "en": "DSH Mobile",
+          "zh": "DSH Mobile"
+        },
+        "description": {
+          "en": "Use DSH on your computer from a phone browser or the Android app over LAN or optional remote tunnels (Tailscale, cpolar, cloudflared, FRP), with HTTPS and device pairing.",
+          "zh": "通过局域网或可选的远程通道（Tailscale、cpolar、cloudflared、FRP），用手机浏览器或 Android App 安全地使用电脑上的 DSH，支持 HTTPS 和设备配对。"
+        },
+        "repository": {
+          "url": "https://github.com/saya-ch/dsh-mobile"
+        },
+        "homepage": "https://github.com/saya-ch/dsh-mobile#readme",
+        "metadata": {
+          "category": "integrations",
+          "keywords": [
+            "deepseek-harness",
+            "dsh",
+            "dsh-plugin",
+            "plugin",
+            "android",
+            "lan",
+            "remote-access",
+            "tailscale",
+            "cpolar",
+            "frp",
+            "self-hosted",
+            "reverse-proxy",
+            "mobile",
+            "https"
+          ]
+        },
+        "versions": [
+          {
+            "version": "0.6.16",
+            "publishTimestamp": 1792676437,
+            "source": {
+              "type": "npm",
+              "registry": "https://registry.npmjs.org/"
+            },
+            "engines": {}
+          }
+        ]
+      }
+    },
+    {
+      "schema": 1,
+      "issue": 36,
+      "name": "dsh-damage-pulse",
+      "previousVersion": "4.2.8",
+      "version": "4.2.9",
+      "checkedAt": "2026-10-22T17:01:43.173Z",
+      "latest": "4.2.9",
+      "publishedAt": "2026-10-22T14:47:52.243Z",
+      "input": {
+        "name": "dsh-damage-pulse",
+        "version": "4.2.9",
+        "title": {
+          "en": "Damage Pulse",
+          "zh": "Damage Pulse"
+        },
+        "description": {
+          "en": "Track DeepSeek usage, costs and balance per call, session and account, with a whale-girl companion and damage-number animations for every charge.",
+          "zh": "按单次、会话和账户三层统计 DeepSeek 用量、费用和余额，每次扣费都有鲸娘和伤害数字式的动画反馈。"
+        },
+        "category": "usage",
+        "archiveReview": {
+          "version": "4.2.9",
+          "integrity": "sha512-yWqQV5ugISVSTx1MQBTZcVkMpYdrRqk/Rcy2xe6VaFLEHPqUCs/BxRnkVXYuINSH1IqOiNqRmHVxEDJ8vSKOqw==",
+          "maxUnpackedBytes": 268435456,
+          "timeoutMs": 120000
+        }
+      },
+      "evidence": {
+        "name": "dsh-damage-pulse",
+        "version": "4.2.9",
+        "license": "MIT",
+        "repository": "https://github.com/wssfk12138/dsh-damage-pulse",
+        "repositorySource": "package",
+        "metadataUrl": "https://registry.npmjs.org/dsh-damage-pulse",
+        "tarball": "https://registry.npmjs.org/dsh-damage-pulse/-/dsh-damage-pulse-4.2.9.tgz",
+        "integrity": "sha512-yWqQV5ugISVSTx1MQBTZcVkMpYdrRqk/Rcy2xe6VaFLEHPqUCs/BxRnkVXYuINSH1IqOiNqRmHVxEDJ8vSKOqw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 218,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 47476459,
+          "unpackedBytes": 75892152,
+          "decodedBytes": 76064768,
+          "entries": 218,
+          "maxUnpackedBytes": 268435456,
+          "downloadTimeoutMs": 120000,
+          "reviewedBudget": true
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-08-28T03:50:25.420Z",
+          "last30Days": 14,
+          "last90Days": 21
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "entry": {
+        "name": "dsh-damage-pulse",
+        "title": {
+          "en": "Damage Pulse",
+          "zh": "Damage Pulse"
+        },
+        "description": {
+          "en": "Track DeepSeek usage, costs and balance per call, session and account, with a whale-girl companion and damage-number animations for every charge.",
+          "zh": "按单次、会话和账户三层统计 DeepSeek 用量、费用和余额，每次扣费都有鲸娘和伤害数字式的动画反馈。"
+        },
+        "repository": {
+          "url": "https://github.com/wssfk12138/dsh-damage-pulse"
+        },
+        "homepage": "https://github.com/wssfk12138/dsh-damage-pulse#readme",
+        "metadata": {
+          "category": "usage",
+          "keywords": [
+            "deepseek-harness",
+            "dsh-plugin",
+            "token-monitor",
+            "balance-monitor",
+            "damage-animation",
+            "cache-aware"
+          ]
+        },
+        "versions": [
+          {
+            "version": "4.2.9",
+            "publishTimestamp": 1792680472,
+            "source": {
+              "type": "npm",
+              "registry": "https://registry.npmjs.org/"
+            },
+            "engines": {
+              "dsh": "^0.1.0-rc.5 || ^0.1.1-rc.2 || ^0.1.2-alpha.1 || ^0.1.3-alpha.1 || ^0.1.5-alpha.1 || ^0.1.6-alpha.1 || ^0.1.7-rc.2 || 0.2.0-rc.2 || 0.2.1-rc.1 || 0.2.1-rc.2"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

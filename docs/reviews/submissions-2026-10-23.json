@@ -1,0 +1,581 @@
+{
+  "schema": 1,
+  "checkedAt": "2026-10-22T17:03:38.847Z",
+  "scope": "Archive and source metadata checks for eight submitted entries. No plugin installation or runtime execution.",
+  "submissions": [
+    {
+      "issue": 34,
+      "name": "dsh-extensions",
+      "input": {
+        "name": "dsh-extensions",
+        "version": "0.1.0-dsh.0.2.1-rc.2",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gulagala001/dsh-extensions",
+          "commit": "d163ecb6235ffed5f9d70e22f80eaf9ebadb89e3",
+          "integrity": "sha512-wBPUFBJHbn4w0HFi1cHqov1E6aB7wH8UbTIKf7fEq82bQVki5s+8XoHOjgG9z1vOneXALOBa3Ka/9givYo7fIQ==",
+          "publishedAt": "2026-10-22T12:41:32Z"
+        },
+        "title": {
+          "en": "DSH Extensions",
+          "zh": "DSH Extensions（扩展管理）"
+        },
+        "description": {
+          "en": "Manage skills, MCP servers, instruction files, custom commands and hooks from the DSH Plugins page. Requires DSH 0.2.1-rc.2.",
+          "zh": "在 DSH 插件页管理 Skill、MCP 服务器、指令文件、自定义命令和 Hooks。仅适配 DSH 0.2.1-rc.2。"
+        },
+        "category": "development"
+      },
+      "evidence": {
+        "name": "dsh-extensions",
+        "version": "0.1.0-dsh.0.2.1-rc.2",
+        "license": "MIT",
+        "repository": "https://github.com/gulagala001/dsh-extensions",
+        "repositorySource": "package",
+        "sourceCommit": "d163ecb6235ffed5f9d70e22f80eaf9ebadb89e3",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gulagala001/dsh-extensions",
+          "commit": "d163ecb6235ffed5f9d70e22f80eaf9ebadb89e3"
+        },
+        "tarball": "https://codeload.github.com/gulagala001/dsh-extensions/tar.gz/d163ecb6235ffed5f9d70e22f80eaf9ebadb89e3",
+        "integrity": "sha512-wBPUFBJHbn4w0HFi1cHqov1E6aB7wH8UbTIKf7fEq82bQVki5s+8XoHOjgG9z1vOneXALOBa3Ka/9givYo7fIQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 41,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/a3999671cdb4b5341f12d5a20b22decb6420a8c30dbfa8a351c7f1f7762dee2f.svg",
+            "mime": "image/svg+xml",
+            "bytes": 498,
+            "sha256": "a3999671cdb4b5341f12d5a20b22decb6420a8c30dbfa8a351c7f1f7762dee2f"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 92243,
+          "unpackedBytes": 344156,
+          "decodedBytes": 389120,
+          "entries": 51,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      }
+    },
+    {
+      "issue": 35,
+      "name": "@gulagala001/dsh-persona-plugin",
+      "input": {
+        "name": "@gulagala001/dsh-persona-plugin",
+        "version": "0.1.0-dsh.0.2.1-rc.2",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gulagala001/dsh-persona-plugin",
+          "commit": "dd1c83424aab1ed3c70b3cd5a0783d9f06e6fdd0",
+          "integrity": "sha512-aOXSDHe3RC2XqZWVLWzIpAE1KfiOYeeaNrArwRu2bkj9VhVvcOYRk4dsq2K1fixOe54kI7WQIathMBCMtEoGQw==",
+          "publishedAt": "2026-10-22T12:41:32Z"
+        },
+        "title": {
+          "en": "Persona",
+          "zh": "Persona（人格预设）"
+        },
+        "description": {
+          "en": "Create, import and manage personality presets, with global and per-conversation choices. Requires DSH 0.2.1-rc.2.",
+          "zh": "创建、导入和管理人格预设，支持全局与单会话选择。仅适配 DSH 0.2.1-rc.2。"
+        },
+        "category": "interface"
+      },
+      "evidence": {
+        "name": "@gulagala001/dsh-persona-plugin",
+        "version": "0.1.0-dsh.0.2.1-rc.2",
+        "license": "MIT",
+        "repository": "https://github.com/gulagala001/dsh-persona-plugin",
+        "repositorySource": "package",
+        "sourceCommit": "dd1c83424aab1ed3c70b3cd5a0783d9f06e6fdd0",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gulagala001/dsh-persona-plugin",
+          "commit": "dd1c83424aab1ed3c70b3cd5a0783d9f06e6fdd0"
+        },
+        "tarball": "https://codeload.github.com/gulagala001/dsh-persona-plugin/tar.gz/dd1c83424aab1ed3c70b3cd5a0783d9f06e6fdd0",
+        "integrity": "sha512-aOXSDHe3RC2XqZWVLWzIpAE1KfiOYeeaNrArwRu2bkj9VhVvcOYRk4dsq2K1fixOe54kI7WQIathMBCMtEoGQw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 34,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 134935,
+          "unpackedBytes": 277763,
+          "decodedBytes": 317440,
+          "entries": 47,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      }
+    },
+    {
+      "issue": 37,
+      "name": "@ds-hu/dsh-better-workspaces",
+      "input": {
+        "name": "@ds-hu/dsh-better-workspaces",
+        "title": {
+          "en": "dsh-better-workspaces",
+          "zh": "dsh-better-workspaces"
+        },
+        "description": {
+          "en": "Create a Git worktree for each DSH task, review diffs and run Git or pull request actions from the web UI. Requires Git and pnpm.",
+          "zh": "在 DSH 网页端为每个任务创建 Git 工作树，查看差异并执行 Git 和 PR 操作。需要 Git 与 pnpm。"
+        },
+        "category": "development"
+      },
+      "evidence": {
+        "name": "@ds-hu/dsh-better-workspaces",
+        "version": "0.2.8",
+        "license": "MIT",
+        "repository": "https://github.com/ds-hu/dsh-better-workspaces",
+        "repositorySource": "package",
+        "sourceCommit": "b07b70fbae4263cda4b32ee3831958b7cff4c454",
+        "metadataUrl": "https://registry.npmjs.org/%40ds-hu%2Fdsh-better-workspaces",
+        "tarball": "https://registry.npmjs.org/@ds-hu/dsh-better-workspaces/-/dsh-better-workspaces-0.2.8.tgz",
+        "integrity": "sha512-AmINxbD0bSytfBNPl4VUr0UWwPxZO5W5hdA+5VyyW8Z1a0DI8Mrvmeb1PYHUpAogOsd+yvJPWbpkJ6DWPg23Rg==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 50,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 952008,
+          "unpackedBytes": 1524049,
+          "decodedBytes": 1564160,
+          "entries": 50,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-19T04:40:24.704Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      }
+    },
+    {
+      "issue": 38,
+      "name": "@ds-hu/dsh-pocket",
+      "input": {
+        "name": "@ds-hu/dsh-pocket",
+        "title": {
+          "en": "DSH Pocket OAuth",
+          "zh": "DSH Pocket OAuth"
+        },
+        "description": {
+          "en": "Use your computer's DSH Web UI from a phone with Gitee or GitHub OAuth sign-in. Requires your own OAuth app, a fixed-domain tunnel and the package's postinstall script.",
+          "zh": "通过 Gitee 或 GitHub OAuth 登录，在手机上使用电脑端 DSH Web。需自备 OAuth 应用和固定域名隧道，安装时需允许运行 postinstall 脚本。"
+        },
+        "category": "integrations"
+      },
+      "evidence": {
+        "name": "@ds-hu/dsh-pocket",
+        "version": "2.10.6",
+        "license": "GPL-2.0",
+        "repository": "https://github.com/cup113/dsh-pocket-oauth",
+        "repositorySource": "package",
+        "sourceCommit": "51d417fcdcdc349f6ec718a5bc742fa0cb8d0ef8",
+        "metadataUrl": "https://registry.npmjs.org/%40ds-hu%2Fdsh-pocket",
+        "tarball": "https://registry.npmjs.org/@ds-hu/dsh-pocket/-/dsh-pocket-2.10.6.tgz",
+        "integrity": "sha512-9/o36Ly+1azytvPk9n1c7IgbR3nHP7UD+Nfu9cU7Kq6ejyECErEA/547GiVrSgvL9605K4Uefyq9EG07oBDZyw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 33,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 154277,
+          "unpackedBytes": 475310,
+          "decodedBytes": 501760,
+          "entries": 33,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [
+          "postinstall"
+        ],
+        "releases": {
+          "firstPublished": "2026-10-19T05:43:47.976Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "notes": [
+        "Requires an OAuth application, fixed-domain tunnel and postinstall script.",
+        "Published repository metadata points to the previous owner; the canonical repository is ds-hu/dsh-pocket-oauth."
+      ]
+    },
+    {
+      "issue": 39,
+      "name": "@ds-hu/dsh-acp-plus",
+      "input": {
+        "name": "@ds-hu/dsh-acp-plus",
+        "title": {
+          "en": "dsh-acp-plus",
+          "zh": "dsh-acp-plus"
+        },
+        "description": {
+          "en": "Use DSH 0.2.0-rc.2 as an ACP agent in Paseo, with streaming, persistent sessions, model selection and approval controls. Requires Paseo.",
+          "zh": "把 DSH 0.2.0-rc.2 作为 ACP Agent 接入 Paseo，支持流式输出、会话持久化、模型选择和审批控制。需要 Paseo。"
+        },
+        "category": "integrations"
+      },
+      "evidence": {
+        "name": "@ds-hu/dsh-acp-plus",
+        "version": "0.3.0",
+        "license": "MIT",
+        "repository": "https://github.com/ds-hu/dsh-acp-paseo",
+        "repositorySource": "package",
+        "sourceCommit": "8528f248f22bdb323cdd37c026d559627e4fbeee",
+        "metadataUrl": "https://registry.npmjs.org/%40ds-hu%2Fdsh-acp-plus",
+        "tarball": "https://registry.npmjs.org/@ds-hu/dsh-acp-plus/-/dsh-acp-plus-0.3.0.tgz",
+        "integrity": "sha512-eI7KOEu3B+MV8XAsj2pDAE/yjdz5WUW3dRg8f4vioYOmVXaNi6wL4pV+kU9oZv4OadB9vv2HhenZHaEEy9NLpQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 51,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 47633,
+          "unpackedBytes": 214378,
+          "decodedBytes": 255488,
+          "entries": 51,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-19T04:40:59.892Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "notes": [
+        "DSH compatibility is exactly 0.2.0-rc.2; requires Paseo.",
+        "MIT is declared and the public source has LICENSE; the npm tarball omits that file."
+      ]
+    },
+    {
+      "issue": 40,
+      "name": "@zephinel/dsh-intelligent-ui",
+      "input": {
+        "name": "@zephinel/dsh-intelligent-ui",
+        "title": {
+          "en": "Intelligent UI",
+          "zh": "智能 UI"
+        },
+        "description": {
+          "en": "Render OpenUI Lang answers as interactive cards or articles, with maps, charts, forms, PNG export and standalone HTML export. Maps and remote images require network access.",
+          "zh": "把 OpenUI Lang 回答渲染为交互卡片或阅读文章，支持地图、图表、表单、PNG 和独立 HTML 导出；地图及远程图片仍需联网。"
+        },
+        "category": "interface"
+      },
+      "evidence": {
+        "name": "@zephinel/dsh-intelligent-ui",
+        "version": "0.3.0-26-10-22",
+        "license": "MIT",
+        "repository": "https://github.com/Zephinel/dsh-intelligent-ui",
+        "repositorySource": "package",
+        "sourceCommit": "8cfd0cd94ef869da3152fce71815dfb2e3a3b0a9",
+        "metadataUrl": "https://registry.npmjs.org/%40zephinel%2Fdsh-intelligent-ui",
+        "tarball": "https://registry.npmjs.org/@zephinel/dsh-intelligent-ui/-/dsh-intelligent-ui-0.3.0-26-10-22.tgz",
+        "integrity": "sha512-hUPOcEEbJXc57NFzcgviRJdr4P+yfsIN+0jn4QB9z0F37LikXejh1gUPfwrql9uGGsxAYhMjxG8U0o/gyvhpHg==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 40,
+        "display": {
+          "icon": {
+            "status": "omitted"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": [
+            {
+              "path": "package/icon.svg",
+              "reason": "SVG contains unsupported active content"
+            }
+          ]
+        },
+        "archive": {
+          "compressedBytes": 3815020,
+          "unpackedBytes": 9906244,
+          "decodedBytes": 9939968,
+          "entries": 40,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-20T15:36:18.023Z",
+          "last30Days": 7,
+          "last90Days": 7
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "notes": [
+        "The package icon is omitted by the SVG content check; the catalog uses its initial fallback."
+      ]
+    },
+    {
+      "issue": 41,
+      "name": "@ds-hu/dsh-auto-task-center",
+      "input": {
+        "name": "@ds-hu/dsh-auto-task-center",
+        "title": {
+          "en": "Task Center",
+          "zh": "任务中心"
+        },
+        "description": {
+          "en": "Schedule one-off, interval, daily, weekly, cron or webhook tasks in DSH, delivering messages to new or existing sessions with run history.",
+          "zh": "在 DSH 中创建一次性、间隔、每天、每周、Cron 或 Webhook 任务，向新建或已有会话投递消息，并查看运行记录。"
+        },
+        "category": "workflow"
+      },
+      "evidence": {
+        "name": "@ds-hu/dsh-auto-task-center",
+        "version": "0.1.0",
+        "license": "MIT",
+        "repository": "https://github.com/ds-hu/dsh-auto-task-center",
+        "repositorySource": "package",
+        "sourceCommit": "95d8038e0168ef6b2de06bc7fd299266911f922a",
+        "metadataUrl": "https://registry.npmjs.org/%40ds-hu%2Fdsh-auto-task-center",
+        "tarball": "https://registry.npmjs.org/@ds-hu/dsh-auto-task-center/-/dsh-auto-task-center-0.1.0.tgz",
+        "integrity": "sha512-utVSoHRJ6AHl6MJwm+OXHYb65uK6403pnnM3ACDZp/3jM8ahv59/ZI3SvVZTrYN14xWAeEewqzKcbs7qW4ST6g==",
+        "patch": [
+          "package/cordis.patch.yml",
+          "package/presets/task-center.patch.yml"
+        ],
+        "filesChecked": 43,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/e301d4892a3b03ec4e4f7f7a1bb3d2bcdc09da360e04f65c746cecd5f58deb92.svg",
+            "mime": "image/svg+xml",
+            "bytes": 653,
+            "sha256": "e301d4892a3b03ec4e4f7f7a1bb3d2bcdc09da360e04f65c746cecd5f58deb92"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 1300236,
+          "unpackedBytes": 1560301,
+          "decodedBytes": 1594880,
+          "entries": 43,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-22T14:46:03.588Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      }
+    },
+    {
+      "issue": 42,
+      "name": "@dr-co/dsh-secret-form",
+      "input": {
+        "name": "@dr-co/dsh-secret-form",
+        "title": {
+          "en": "dsh-secret-form",
+          "zh": "dsh-secret-form"
+        },
+        "description": {
+          "en": "Create one-time web forms for entering secrets into the DSH credential store or a file, with expiring links and cancellation.",
+          "zh": "生成一次性网页表单，将用户输入的密钥写入 DSH 凭据库或文件，支持链接过期与取消。"
+        },
+        "category": "tools"
+      },
+      "evidence": {
+        "name": "@dr-co/dsh-secret-form",
+        "version": "0.3.0",
+        "license": "MIT",
+        "repository": "https://github.com/unera/dsh-secret-form",
+        "repositorySource": "package",
+        "sourceCommit": "675816a419d47c4b523b0aa3a9293df6aafc34a5",
+        "metadataUrl": "https://registry.npmjs.org/%40dr-co%2Fdsh-secret-form",
+        "tarball": "https://registry.npmjs.org/@dr-co/dsh-secret-form/-/dsh-secret-form-0.3.0.tgz",
+        "integrity": "sha512-b+KEL8nLN/D0p0la4YWVwAOa19a+MXYtW/bNcB1XH46QG019HRLHC1z1aPFsZ351i3H8awGKE91LAV38WpRf9w==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 12,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 32274,
+          "unpackedBytes": 95155,
+          "decodedBytes": 105472,
+          "entries": 12,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-21T13:23:55.251Z",
+          "last30Days": 4,
+          "last90Days": 4
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      }
+    }
+  ]
+}
