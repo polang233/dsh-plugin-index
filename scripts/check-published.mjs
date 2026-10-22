@@ -100,10 +100,16 @@ export async function checkPublished(indexUrl, {expectedNames, expectedTitle, ve
       if (digest(result.bytes) !== match[1]) throw new Error('Icon hash mismatch: ' + icon);
     }
   }));
-  for (const language of ['', 'zh/']) {
+  // Every site language: the directory lists the whole index, and the first plugin has its own page.
+  for (const language of ['', 'zh/', 'zh-tw/']) {
     const page = (await readUrl(new URL(language || './', indexUrl), fetchImpl)).bytes.toString('utf8');
     const rows = page.match(/\bdata-plugin(?=[\s>])/g) ?? [];
     if (rows.length !== index.plugins.length || !page.includes('assets/logo-256.png')) throw new Error('Website does not match published index: ' + language);
+    const first = index.plugins[0]?.name;
+    if (first) {
+      const pluginPage = (await readUrl(new URL(`${language}plugins/${first}/`, indexUrl), fetchImpl)).bytes.toString('utf8');
+      if (!pluginPage.includes(`data-get="${first}"`)) throw new Error('Plugin page does not match published index: ' + language + first);
+    }
   }
   for (const asset of brandAssets) {
     const published = await readUrl(new URL('assets/' + asset.name, indexUrl), fetchImpl, 2 * 1024 * 1024);

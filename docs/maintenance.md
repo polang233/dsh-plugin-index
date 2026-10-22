@@ -36,7 +36,7 @@ For local browser tests, set `BROWSER_EXECUTABLE` to an existing Chrome or Chrom
 
 - `data/sources.json`: package list, translations and categories.
 - `scripts/lib.mjs`: registry and archive checks, compatibility ranges, index generation.
-- `scripts/site.mjs` and `site/`: English and Chinese pages.
+- `scripts/site.mjs` and `site/`: the website in English (`/`), Simplified Chinese (`/zh/`) and Traditional Chinese (`/zh-tw/`). Each language has a home page, a usage stats page (`stats/`) and one page per plugin (`plugins/<package>/`). Traditional Chinese is generated from the Simplified pages with OpenCC's Taiwan phrasing; DSH menu names wrapped in `ui()` keep their Simplified wording because DSH itself shows them that way. Plugin pages are rebuilt on every build and are not committed.
 - `public/index.json`: DSH format-1 index.
 - `public/status.json`: generation time and package-check evidence.
 
@@ -98,7 +98,7 @@ If GitHub is unavailable, a verified snapshot up to seven days old is kept with 
 2. Set the repository variable `PUBLISH_INDEX=true`.
 3. Run **Check and publish index** on `main`.
 
-The workflow runs unit tests, builds the catalog, checks both website languages in Chromium and validates the official format before uploading the Pages artifact. After deployment it checks the complete source allowlist, package evidence, both language pages, every referenced icon hash and the project branding assets. All requests reject redirects. Pull requests never deploy.
+The workflow runs unit tests, builds the catalog, checks all three website languages, plugin pages and the stats page in Chromium and validates the official format before uploading the Pages artifact. After deployment it checks the complete source allowlist, package evidence, the three language pages and a plugin page in each, every referenced icon hash and the project branding assets. All requests reject redirects. Pull requests never deploy.
 
 Scheduled runs are set to every six hours; GitHub may delay or suspend schedules in inactive repositories. The timestamp in the live `status.json` is the source of truth. Scheduled artifacts are deployed directly and do not create repository commits; a checked-in snapshot changes only when a maintainer includes it in a commit.
 
@@ -122,6 +122,25 @@ The validator is pinned to `@deepseek-ai/dsh-plugin-market-index@0.2.1-rc.2`. Wh
 ## dshopen.org (Cloudflare)
 
 The Worker in `cloudflare/` serves `public/` as static assets and counts reads of `index.json` in the `dshopen-stats` D1 database; see `https://dshopen.org/stats.json`. GitHub Pages stays up for the earlier address. CI uploads and promotes a new version after each build when the `CLOUDFLARE_API_TOKEN` secret is set, leaving the domain binding alone; otherwise run `pnpm build` and `npx wrangler deploy --config cloudflare/wrangler.jsonc`. Post-deploy checks send the `dshopen-check` user agent and are not counted.
+
+`stats.json` also reports each day's reads and readers by Cloudflare's two-letter country or region code (`countries`), which the stats page groups into UN geographic regions and names in UN style (for example "Hong Kong SAR, China"). The `countries` table must exist before country data appears; the Worker keeps counting totals without it. Create it once, and again after any change to `cloudflare/schema.sql`:
+
+```sh
+npx wrangler d1 execute dshopen-stats --remote --file cloudflare/schema.sql
+```
+
+With an analytics token the country split comes from Cloudflare's own traffic analytics instead, covering the last 30 days from the start: loads of `/index.json` by country, sampled, cached for an hour. People counts always stay in D1. Create a custom API token with **Zone → Analytics → Read** for the `dshopen.org` zone only, copy the zone ID from the zone's Overview page, and store both as Worker secrets (they carry over to the versions CI uploads):
+
+```sh
+npx wrangler secret put CF_ANALYTICS_TOKEN --config cloudflare/wrangler.jsonc
+npx wrangler secret put CF_ZONE_ID --config cloudflare/wrangler.jsonc
+```
+
+`stats.json` then reports `countries.source: "cloudflare"` and `metric: "reads"`. If the query fails, the Worker logs the error and falls back to its own D1 split (`source: "d1"`, `metric: "readers"`).
+
+## Search engines
+
+`sitemap.xml` lists every page in all three languages with `hreflang` alternates (`zh-TW` and `zh-HK` point to the Traditional pages). Submit `https://dshopen.org/sitemap.xml` once in Google Search Console and Bing Webmaster Tools; both pick up later changes on their own.
 
 ## Images
 

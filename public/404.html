@@ -44,21 +44,28 @@ button { cursor: pointer; }
 .skip:focus { transform: none; }
 
 /* Header */
-.site-header { position: sticky; top: 0; z-index: 30; transition: transform .35s ease, background-color .3s, box-shadow .3s; }
-.site-header-inner { min-height: 84px; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-/* Floating once the page moves: a frosted strip that hides while reading down and returns on scroll up. */
-.site-header.is-scrolled { background: rgba(255, 249, 238, .86); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 2px 0 rgba(20, 40, 75, .08); }
+.site-header { position: sticky; top: 0; z-index: 30; transition: transform .35s ease; }
+.site-header-inner { min-height: 84px; transition: min-height .3s ease; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+/* Floating once the page moves: no strip behind it, so it sits well on every section; the brand folds into the link pill as a small logo. It hides while reading down and returns on scroll up. */
 .site-header.is-scrolled .site-header-inner { min-height: 68px; }
 .site-header.is-hidden { transform: translateY(-110%); }
-.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; font-size: 20px; font-weight: 800; letter-spacing: -.02em; white-space: nowrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; font-size: 20px; font-weight: 800; letter-spacing: -.02em; white-space: nowrap; transition: opacity .25s, visibility .25s; }
 .brand:hover { color: var(--ink); }
-.brand img { width: 56px; height: 56px; flex-shrink: 0; object-fit: contain; padding: 3px; background: var(--sky); border: 2px solid var(--ink); border-radius: 18px; box-shadow: 3px 3px 0 var(--ink); transition: transform .25s cubic-bezier(.3, 1.6, .5, 1); }
+.brand img { width: 56px; height: 56px; flex-shrink: 0; object-fit: contain; padding: 0; background: var(--sky); border: 2px solid var(--ink); border-radius: 18px; box-shadow: 3px 3px 0 var(--ink); transition: transform .25s cubic-bezier(.3, 1.6, .5, 1); }
+/* Out of the flow once hidden, so the link pill keeps its full width. */
+.site-header.is-scrolled .brand { position: absolute; opacity: 0; visibility: hidden; }
 .brand:hover img { transform: rotate(-8deg) scale(1.06); }
-.header-links { display: flex; gap: 8px; align-items: center; padding: 6px; background: var(--paper); border: 2px solid var(--ink); border-radius: 999px; box-shadow: 3px 3px 0 var(--ink); }
-.header-links > a { padding: 6px 15px; border-radius: 999px; color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 700; }
+.header-links { margin-left: auto; display: flex; gap: 8px; align-items: center; padding: 6px; background: var(--paper); border: 2px solid var(--ink); border-radius: 999px; box-shadow: 3px 3px 0 var(--ink); }
+.header-links > a { padding: 6px 15px; border-radius: 999px; color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 700; white-space: nowrap; }
 .header-links > a:hover { background: var(--sky); color: var(--ink); }
+.header-links > .header-home { display: none; margin-block: -3px; padding: 0; }
+.site-header.is-scrolled .header-home { display: block; }
+.header-links > .header-home { width: 40px; height: 40px; overflow: hidden; background: var(--sky); border: 2px solid var(--ink); border-radius: 999px; transition: transform .25s cubic-bezier(.3, 1.6, .5, 1); }
+.header-home img { display: block; width: 100%; height: 100%; object-fit: contain; transform: scale(1.1); }
+.header-links > .header-home::after { display: none; }
+.header-links > .header-home:hover { transform: scale(1.12); }
 .languages { display: flex; align-items: center; gap: 2px; margin-left: 4px; padding: 3px; background: var(--cream); border-radius: 999px; font-size: 13px; font-weight: 700; }
-.languages a, .languages span { min-width: 40px; padding: 4px 10px; text-align: center; line-height: 1.5; border-radius: 999px; }
+.languages a, .languages span { white-space: nowrap; min-width: 36px; padding: 4px 10px; text-align: center; line-height: 1.5; border-radius: 999px; }
 .languages a { color: var(--slate); text-decoration: none; }
 .languages a:hover { color: var(--ink); background: var(--sky); }
 .languages [aria-current] { color: #fff; background: var(--ink); }
@@ -252,6 +259,8 @@ h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); letter-spacing: -.03em; lin
 }
 /* Between phone and tablet the URL column is narrow: smaller text and a tighter button keep the full address visible. */
 @media (max-width: 800px) and (min-width: 621px) {
+  /* The full name and every link do not fit side by side here; keep the name for screen readers only. */
+  .brand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .address-bar textarea { font-size: 16px; padding-left: 44px; background-position: 12px center; }
   .copy-button { min-width: 0; padding: 11px 13px; }
   .copy-button span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -319,6 +328,14 @@ h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); letter-spacing: -.03em; lin
   .site-header { transition: none; }
 }
 
+/* Today's usage under the URL: a live dot and the number of people, faded in once the stats arrive. */
+.usage { display: flex; align-items: center; gap: 8px; min-height: 22px; margin: 12px 0 0 8px; color: var(--slate); font-size: 14px; font-weight: 700; line-height: 22px; opacity: 0; transition: opacity .4s ease; }
+.usage.is-loaded { opacity: 1; }
+.usage strong { color: var(--ink); font-weight: 900; font-variant-numeric: tabular-nums; }
+.usage-dot { position: relative; width: 10px; height: 10px; flex-shrink: 0; border: 2px solid var(--ink); border-radius: 50%; background: #3ccf8e; }
+.usage-dot::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; background: #3ccf8e; animation: usage-pulse 2s ease-out infinite; }
+@keyframes usage-pulse { from { transform: scale(1); opacity: .6; } to { transform: scale(2.4); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .usage-dot::after { animation: none; opacity: 0; } }
 /* The copy confirmation floats under the URL so it never pushes the steps down. */
 .hero-copy .copy-status { position: absolute; left: 0; right: 0; top: 100%; margin-top: 6px; min-height: 0; }
 /* Short laptop screens: shallower step screenshots so the wavy edge still shows on the first screen. */
@@ -438,10 +455,16 @@ h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); letter-spacing: -.03em; lin
 
 /* Language switch: a sliding pill marks the current language and leans toward the other on hover. */
 .languages { position: relative; isolation: isolate; }
-.languages::before { content: ""; position: absolute; z-index: -1; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 4px); border-radius: 999px; background: var(--ink); transition: left .35s cubic-bezier(.5, 1.6, .4, 1), width .35s; }
-.languages[data-current="zh"]::before { left: calc(50% + 1px); }
-.languages[data-current="en"]:has(a:hover)::before { left: calc(50% + 1px); }
-.languages[data-current="zh"]:has(a:hover)::before { left: 3px; }
+.languages { --at: 0; display: grid; grid-template-columns: repeat(3, 1fr); }
+/* Each Chinese label in its own script's font, whatever the page language. */
+.languages [lang="zh-CN"] { font-family: "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; }
+.languages [lang="zh-TW"] { font-family: "PingFang TC", "Microsoft JhengHei UI", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif; }
+.languages[data-current="zh"] { --at: 1; }
+.languages[data-current="tw"] { --at: 2; }
+.languages:has(> :nth-child(1):hover) { --at: 0; }
+.languages:has(> :nth-child(2):hover) { --at: 1; }
+.languages:has(> :nth-child(3):hover) { --at: 2; }
+.languages::before { content: ""; position: absolute; z-index: -1; top: 3px; bottom: 3px; left: calc(3px + var(--at) * ((100% - 10px) / 3 + 2px)); width: calc((100% - 10px) / 3); border-radius: 999px; background: var(--ink); transition: left .35s cubic-bezier(.5, 1.6, .4, 1); }
 .languages a, .languages span { position: relative; transition: color .3s; }
 .languages [aria-current] { color: #fff; background: transparent; }
 .languages a:hover { color: #fff; background: transparent; }
@@ -496,7 +519,150 @@ body.is-leaving { opacity: 0; }
 .star-wrap:hover .star-note, .star-wrap:focus-within .star-note { opacity: 1; transform: none; }
 
 /* Author logos fill more of the avatar frame. */
-.plugin-avatar img { padding: 0; transform: scale(1.08); }
+.plugin-avatar img { padding: 0; transform: scale(1.16); }
 @media (max-width: 800px) { .footer-brand .star-note { left: 0; bottom: calc(100% + 12px); translate: none; } }
 @media (max-width: 620px) { .header-links > a { display: none; } }
-</style></head><body><header class="site-header shell"><a class="brand" href="https://dshopen.org/"><img src="https://dshopen.org/assets/logo-256.png" alt="" width="64" height="64"><span>Open Plugin Market</span></a></header><main class="shell hero"><h1>Page not found.</h1><p lang="zh-CN">页面不存在。</p><p>Open the plugin directory to continue.</p><p lang="zh-CN">返回插件目录，继续查找插件。</p><div class="contribute-links"><a class="submit-link" href="https://dshopen.org/">English directory</a><a class="submit-link" href="https://dshopen.org/zh/" lang="zh-CN">中文目录</a></div></main></body></html>
+
+/* Card titles link to each plugin's own page. */
+.plugin-link { color: inherit; text-decoration: none; }
+.plugin-link:hover { color: var(--blue-dark); text-decoration: underline; text-decoration-color: var(--sun); text-decoration-thickness: 3px; }
+.usage { color: var(--slate); text-decoration: none; width: max-content; max-width: 100%; }
+.usage:hover { color: var(--ink); }
+.usage-arrow { color: var(--blue); font-weight: 900; transition: transform .2s; }
+.usage:hover .usage-arrow { transform: translateX(3px); }
+
+/* Plugin pages: one sticker card for the plugin, then install steps and details side by side. */
+.detail { padding: 8px 0 64px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 18px; color: var(--slate); font-size: 14px; font-weight: 700; }
+.crumbs a { color: var(--slate); }
+.crumbs a:hover { color: var(--blue-dark); }
+.detail-card { --tone: var(--sky); padding: 26px 28px 22px; background: var(--paper); border: 2px solid var(--ink); border-radius: 28px; box-shadow: var(--pop); }
+.detail-card[data-tone="1"] { --tone: var(--peach); }
+.detail-card[data-tone="2"] { --tone: var(--mint); }
+.detail-card[data-tone="3"] { --tone: var(--lilac); }
+.detail-card[data-tone="4"] { --tone: #fff0b8; }
+.detail-card[data-tone="5"] { --tone: #ffd9e8; }
+.detail-head { display: flex; align-items: center; gap: 20px; }
+.detail-head > div { min-width: 0; }
+.detail-head h1 { font-size: clamp(28px, 3.4vw, 40px); line-height: 1.15; letter-spacing: -.03em; overflow-wrap: anywhere; }
+.detail-head .package-name { margin-top: 6px; font-size: 14px; }
+.detail-avatar { width: 84px; height: 84px; border-radius: 26px; box-shadow: 3px 3px 0 var(--ink); }
+.detail-lead { max-width: 760px; margin: 16px 0 16px; color: var(--ink); font-size: 18px; font-weight: 600; line-height: 1.7; text-wrap: pretty; overflow-wrap: anywhere; }
+.detail-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 24px; margin-top: 28px; align-items: start; }
+.detail-panel { min-width: 0; padding: 22px 24px; background: var(--paper); border: 2px solid var(--ink); border-radius: 24px; box-shadow: 4px 4px 0 var(--ink); }
+.detail-panel h2 { margin: 0 0 14px; font-size: 20px; font-weight: 900; letter-spacing: -.01em; }
+.detail-panel h3 { margin: 18px 0 8px; font-size: 14px; font-weight: 800; color: var(--slate); }
+.install-steps { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; counter-reset: step; }
+.install-steps > li { position: relative; padding-left: 42px; counter-increment: step; }
+.install-steps > li::before { content: counter(step); position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 28px; height: 28px; border: 2px solid var(--ink); border-radius: 9px; background: var(--sun); font-size: 14px; font-weight: 900; }
+.install-steps p { margin: 0 0 10px; color: var(--slate); font-size: 15px; font-weight: 600; line-height: 1.65; }
+.install-steps .address-bar { box-shadow: 3px 3px 0 var(--ink); border-radius: 18px; }
+.install-steps .address-bar textarea { height: 46px; font-size: 16px; line-height: 22px; padding-top: 12px; padding-bottom: 12px; }
+.install-steps .copy-button { min-width: 0; padding: 9px 14px; font-size: 14px; }
+.install-name { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.install-name code { padding: 5px 12px; border: 2px dashed var(--ink); border-radius: 10px; background: var(--cream); color: var(--ink); font-family: var(--mono); font-size: 14px; font-weight: 700; overflow-wrap: anywhere; user-select: all; }
+.install-name .get-copy { flex: 0 0 auto; padding: 6px 14px; font-size: 14px; box-shadow: 2px 2px 0 var(--ink); }
+.facts { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin: 0; font-size: 15px; }
+.facts dt { color: var(--slate); font-weight: 700; }
+.facts dd { margin: 0; color: var(--ink); font-weight: 800; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.facts .get-name { font-family: var(--mono); font-size: 14px; }
+.keyword-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.keyword-list li { padding: 1px 10px; border: 2px solid var(--soft-line); border-radius: 999px; color: var(--slate); font-size: 12px; font-weight: 700; }
+.related { margin-top: 48px; }
+.related-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 20px 0 0; padding: 0; list-style: none; }
+.related-card { display: flex; gap: 14px; align-items: flex-start; height: 100%; padding: 14px 16px; background: var(--paper); border: 2px solid var(--ink); border-radius: 20px; box-shadow: 3px 3px 0 var(--ink); color: var(--ink); text-decoration: none; transition: transform .2s, box-shadow .2s; }
+.related-card:hover { color: var(--ink); transform: translate(-2px, -3px); box-shadow: 5px 6px 0 var(--ink); }
+.related-card .plugin-avatar { --tone: var(--sky); width: 44px; height: 44px; border-radius: 14px; transform: none; }
+.related-text { display: grid; gap: 2px; min-width: 0; }
+.related-text strong { font-size: 16px; font-weight: 800; overflow-wrap: anywhere; }
+.related-text span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--slate); font-size: 13px; font-weight: 600; line-height: 1.5; }
+.related-more { margin: 22px 0 0; }
+.related-more .text-button { display: inline-flex; align-items: center; text-decoration: none; }
+
+/* Usage stats page: four number tiles, the daily chart and country bars, each in a sticker panel. */
+.stats-page { display: grid; gap: 24px; padding: 8px 0 64px; }
+.stats-intro h1 { font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -.035em; }
+.stats-intro p { max-width: 680px; margin: 12px 0 0; color: var(--slate); font-size: 16px; font-weight: 600; line-height: 1.7; }
+.stats-status.is-error { color: #b23a2c; }
+.stat-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.stat-tile { display: grid; gap: 4px; padding: 16px 18px; border: 2px solid var(--ink); border-radius: 20px; background: var(--paper); box-shadow: 3px 3px 0 var(--ink); }
+.stat-tile:nth-child(1) { background: var(--sky); }
+.stat-tile:nth-child(2) { background: var(--mint); }
+.stat-tile:nth-child(3) { background: var(--peach); }
+.stat-tile:nth-child(4) { background: #fff0b8; }
+.stat-label { display: flex; align-items: center; gap: 6px; color: var(--slate); font-size: 14px; font-weight: 800; }
+.stat-note { display: inline-grid; place-items: center; width: 18px; height: 18px; border: 2px solid var(--slate); border-radius: 50%; font-size: 11px; cursor: help; }
+.stat-tile strong { font-size: clamp(26px, 3vw, 36px); font-weight: 900; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.chart-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 12px; }
+.chart-head h2 { margin: 0; }
+.metric-chips .chip { min-height: 34px; padding: 3px 14px; font-size: 13px; }
+.metric-chips .chip[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.chart-note { margin: 0; color: var(--slate); font-size: 13px; font-weight: 700; }
+.daily-chart { position: relative; min-height: 220px; }
+.daily-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.daily-chart .grid { stroke: var(--soft-line); stroke-width: 1; }
+.daily-chart .baseline { stroke: var(--ink); stroke-width: 2; }
+.daily-chart .axis { fill: var(--slate); font-size: 12px; font-weight: 700; font-family: var(--font); font-variant-numeric: tabular-nums; }
+.daily-chart .bar { fill: var(--blue); transition: fill .15s; }
+.daily-chart .bar.is-today { fill: #8fb0ff; }
+.daily-chart .bar.is-active { fill: var(--blue-dark); }
+.daily-chart .hit { fill: transparent; cursor: default; outline: none; }
+.chart-tooltip { position: absolute; z-index: 2; display: grid; gap: 2px; min-width: 140px; padding: 8px 12px; border: 2px solid var(--ink); border-radius: 12px; background: var(--paper); box-shadow: 3px 3px 0 var(--ink); color: var(--slate); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; pointer-events: none; }
+.chart-tooltip strong { color: var(--ink); font-size: 13px; }
+.chart-tooltip .is-current { color: var(--ink); font-weight: 900; }
+.chart-table { margin-top: 12px; }
+.chart-table summary { color: var(--slate); font-size: 13px; font-weight: 800; cursor: pointer; }
+.table-wrap { overflow-x: auto; margin-top: 10px; }
+.chart-table table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+.chart-table th, .chart-table td { padding: 6px 10px; border-bottom: 1px solid var(--soft-line); text-align: right; }
+.chart-table th:first-child, .chart-table td:first-child { text-align: left; }
+.chart-table th { color: var(--slate); font-weight: 800; }
+/* Where people are: the region donut beside the country bars, stacked on narrow screens. */
+.geo-grid { display: grid; grid-template-columns: minmax(200px, 260px) minmax(0, 1fr); gap: 32px; align-items: start; }
+.geo-grid[hidden] { display: none; }
+.region-chart { margin: 0; }
+.region-chart figcaption, .country-chart h3 { margin: 0 0 12px; color: var(--slate); font-size: 14px; font-weight: 800; }
+.region-donut svg { display: block; width: 100%; max-width: 240px; height: auto; margin-inline: auto; }
+.region-donut .slice { stroke: var(--paper); stroke-width: 2; stroke-linejoin: round; }
+.donut-value { fill: var(--ink); font-size: 26px; font-weight: 900; font-family: var(--font); font-variant-numeric: tabular-nums; }
+.donut-label { fill: var(--slate); font-size: 13px; font-weight: 700; font-family: var(--font); }
+[data-region="Asia"] { --region: #2a78d6; }
+[data-region="Americas"] { --region: #eb6834; }
+[data-region="Europe"] { --region: #1baf7a; }
+[data-region="Oceania"] { --region: #eda100; }
+[data-region="Africa"] { --region: #e87ba4; }
+[data-region="Unknown"] { --region: #b5c0d3; }
+.region-donut .slice { fill: var(--region); }
+.region-legend { display: grid; gap: 6px; margin: 14px 0 0; padding: 0; list-style: none; font-size: 14px; font-weight: 700; }
+.region-legend li { display: grid; grid-template-columns: 14px 1fr auto; align-items: center; gap: 8px; }
+.region-legend .swatch { width: 14px; height: 14px; border: 2px solid var(--ink); border-radius: 5px; background: var(--region); }
+.region-legend strong { font-variant-numeric: tabular-nums; }
+.country-bars { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.country-bars li { display: grid; grid-template-columns: minmax(100px, 210px) minmax(0, 1fr) 96px; align-items: center; gap: 12px; font-size: 14px; font-weight: 700; }
+.country-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.country-track { height: 14px; border-radius: 999px; background: var(--cream); }
+.country-fill { display: block; height: 100%; border-radius: 999px; background: var(--blue); }
+.country-bars .is-other .country-fill { background: #9fb2d4; }
+.country-value { display: flex; align-items: baseline; justify-content: flex-end; gap: 8px; font-variant-numeric: tabular-nums; }
+.country-value small { color: var(--slate); font-size: 12px; }
+.chart-empty { margin: 0; color: var(--slate); font-size: 14px; font-weight: 600; }
+.method p { margin: 0 0 10px; max-width: 760px; color: var(--slate); font-size: 14px; font-weight: 600; line-height: 1.7; }
+
+@media (max-width: 800px) {
+  .detail-grid, .geo-grid { grid-template-columns: 1fr; }
+  .stat-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .detail-card { padding: 20px 18px 18px; border-radius: 24px; }
+  .detail-head { gap: 14px; }
+  .detail-avatar { width: 64px; height: 64px; border-radius: 20px; }
+  .detail-lead { font-size: 16px; }
+  .detail-panel { padding: 18px 16px; }
+  .install-steps > li { padding-left: 38px; }
+  .country-bars li { grid-template-columns: minmax(0, 1fr) 80px; }
+  .country-track { grid-column: 1 / -1; grid-row: 2; }
+}
+
+/* "Plugins" links land on the directory heading; the header tucks away when jumping down, so a small gap is enough. */
+#plugins { scroll-margin-top: 20px; }
+</style></head><body><header class="site-header shell"><a class="brand" href="https://dshopen.org/"><img src="https://dshopen.org/assets/logo-256.png" alt="" width="64" height="64"><span>Open Plugin Market</span></a></header><main class="shell hero"><h1>Page not found.</h1><p lang="zh-CN">页面不存在。</p><p lang="zh-TW">頁面不存在。</p><p>Open the plugin directory to continue.</p><p lang="zh-CN">返回插件目录，继续查找插件。</p><div class="contribute-links"><a class="submit-link" href="https://dshopen.org/">English directory</a><a class="submit-link" href="https://dshopen.org/zh/" lang="zh-CN">中文目录</a><a class="submit-link" href="https://dshopen.org/zh-tw/" lang="zh-TW">繁體中文目錄</a></div></main></body></html>

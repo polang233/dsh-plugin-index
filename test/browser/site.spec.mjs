@@ -2,15 +2,23 @@ import { test, expect } from '@playwright/test';
 import {githubRepository} from '../../scripts/github.mjs';
 
 const INDEX_URL = 'https://dshopen.org/index.json';
-for (const language of ['en', 'zh']) {
-  const route = language === 'en' ? './' : './zh/';
+const escapeRegExp = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const SITE = {
+  en: { route: './', lang: 'en', brand: 'Open Plugin Market', selected: 'selected', updated: /Updated/ },
+  zh: { route: './zh/', lang: 'zh-CN', brand: '开放插件市场', selected: '选中', updated: /更新/ },
+  tw: { route: './zh-tw/', lang: 'zh-TW', brand: '開放外掛市場', selected: '選中', updated: /更新/ }
+};
+for (const language of Object.keys(SITE)) {
+  const route = SITE[language].route;
   test(`${language}: directory filters, language navigation and layout`, async ({ page }) => {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     page.on('response', response => { if (response.status() >= 400) errors.push(`${response.status()}: ${response.url()}`); });
     await page.goto(route);
-    await expect(page.locator('html')).toHaveAttribute('lang', language === 'en' ? 'en' : 'zh-CN');
+    await expect(page.locator('html')).toHaveAttribute('lang', SITE[language].lang);
     await expect(page.locator('#index-url')).toHaveValue(INDEX_URL);
+    await expect(page.locator('.languages > *')).toHaveCount(3);
+    await expect(page.locator('.languages [aria-current]')).toHaveCount(1);
     const rows = page.locator('[data-plugin]');
     expect(await rows.count()).toBeGreaterThan(20);
     const all = await rows.count();
@@ -45,8 +53,9 @@ for (const language of ['en', 'zh']) {
     await page.locator('[data-chip=""]').click();
     await expect(page.locator('[data-plugin]:visible')).toHaveCount(PAGE);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    await page.locator('.languages a').click();
-    await expect(page.locator('html')).toHaveAttribute('lang', language === 'en' ? 'zh-CN' : 'en');
+    const next = await page.locator('.languages a').first().getAttribute('data-lang');
+    await page.locator('.languages a').first().click();
+    await expect(page.locator('html')).toHaveAttribute('lang', SITE[next].lang);
     expect(errors).toEqual([]);
   });
   test(`${language}: catalog metadata, icons and screenshots`, async ({ page }, info) => {
@@ -75,7 +84,7 @@ for (const language of ['en', 'zh']) {
     expect(actualDownloads.map(item => item.href + ':' + item.count).sort()).toEqual(expectedDownloads.map(item => item.source + ':' + item.downloads).sort());
     expect(actualDownloads.every(item => /\d{4}-\d{2}-\d{2}/.test(item.title))).toBe(true);
     await expect(page.locator('[data-publisher]')).toHaveCount(index.plugins.filter(plugin => plugin.metadata.labels.some(id => id.startsWith('publisher-'))).length);
-    await expect(page.locator('.brand')).toContainText(language === 'en' ? 'Open Plugin Market' : '开放插件市场');
+    await expect(page.locator('.brand')).toContainText(SITE[language].brand);
     await expect(rows.first().locator('.version')).toBeHidden();
     const below = rows.nth(1);
     await rows.first().locator('[data-more-toggle]').click();
@@ -89,11 +98,11 @@ for (const language of ['en', 'zh']) {
     await expect(rows.first().locator('.version')).toBeVisible();
     await rows.first().locator('.plugin-main').click({ position: { x: 6, y: 6 } });
     await expect(rows.first().locator('.version')).toBeHidden();
-    await rows.first().locator('h3').click({ position: { x: 4, y: 8 } });
+    await rows.first().locator('.plugin-description').click({ position: { x: 10, y: 10 } });
     await expect(rows.first().locator('.version')).toBeHidden();
     expect(await below.isVisible()).toBe(true);
     expect(await downloadLinks.first().textContent()).not.toContain('/30');
-    expect(await page.locator('.plugin-detail time').allTextContents()).toEqual(expect.arrayContaining([expect.stringMatching(language === 'en' ? /Updated/ : /更新/)]));
+    expect(await page.locator('.plugin-detail time').allTextContents()).toEqual(expect.arrayContaining([expect.stringMatching(SITE[language].updated)]));
     const icons = page.locator('.plugin-avatar img:not(.avatar-placeholder)');
     await expect(icons).toHaveCount(index.plugins.filter(plugin => plugin.icon).length);
     // Every plugin without its own logo shows the whale-girl placeholder instead of an initial.
@@ -133,7 +142,58 @@ for (const language of ['en', 'zh']) {
     await page.locator('[data-copy]').click();
     await expect(page.locator('#index-url')).toBeFocused();
     expect(await page.locator('#index-url').evaluate(node => node.selectionEnd - node.selectionStart)).toBe(INDEX_URL.length);
-    await expect(page.locator('#copy-status')).toContainText(language === 'en' ? 'selected' : '选中');
+    await expect(page.locator('#copy-status')).toContainText(SITE[language].selected);
+  });
+  test(`${language}: plugin pages link from the directory and back`, async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    page.on('response', response => { if (response.status() >= 400) errors.push(`${response.status()}: ${response.url()}`); });
+    await page.goto(route);
+    const card = page.locator('[data-plugin]').first();
+    const name = (await card.locator('[data-get]').getAttribute('data-get')).trim();
+    await card.locator('.plugin-link').click();
+    await expect(page).toHaveURL(new RegExp(`plugins/${escapeRegExp(name)}/$`));
+    await expect(page.locator('html')).toHaveAttribute('lang', SITE[language].lang);
+    await expect(page.locator('h1')).toBeVisible();
+    await expect(page.locator('.install-name .get-name')).toHaveText(name);
+    await expect(page.locator('#index-url')).toHaveValue(INDEX_URL);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', new RegExp(`plugins/${escapeRegExp(name)}/$`));
+    await expect(page.locator('link[rel="alternate"]')).toHaveCount(5);
+    const structured = await page.locator('script[type="application/ld+json"]').allTextContents();
+    expect(structured.map(item => JSON.parse(item)['@type'])).toEqual(['SoftwareApplication', 'BreadcrumbList']);
+    // The language switch keeps the reader on the same plugin.
+    const next = await page.locator('.languages a').first().getAttribute('data-lang');
+    await page.locator('.languages a').first().click();
+    await expect(page.locator('html')).toHaveAttribute('lang', SITE[next].lang);
+    await expect(page.locator('.install-name .get-name')).toHaveText(name);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.locator('.brand').click();
+    await expect(page.locator('#plugins')).toBeAttached();
+    expect(errors).toEqual([]);
+  });
+  test(`${language}: usage stats page draws days and countries`, async ({ page }) => {
+    const today = new Date().toISOString().slice(0, 10);
+    const yesterday = new Date(Date.now() - 86_400_000).toISOString().slice(0, 10);
+    await page.route('https://dshopen.org/stats.json', route => route.fulfill({ json: {
+      schema: 1, total: 5000, today: { reads: 900, readers: 400 },
+      last30Days: { reads: 3000, readers: 1300, daily: [{ day: yesterday, reads: 2100, readers: 900 }, { day: today, reads: 900, readers: 400 }] },
+      countries: { since: yesterday, today: [], last30Days: [{ country: 'CN', reads: 2000, readers: 900 }, { country: 'TW', reads: 600, readers: 250 }, { country: 'JP', reads: 300, readers: 100 }, { country: 'XX', reads: 100, readers: 50 }] }
+    } }));
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto(route + 'stats/');
+    await expect(page.locator('[data-tile="todayReaders"] [data-value]')).toHaveText(/400/);
+    await expect(page.locator('[data-tile="totalReads"] [data-value]')).toHaveText(/5[,.\s]?000/);
+    await expect(page.locator('[data-daily] .bar')).toHaveCount(2);
+    await expect(page.locator('[data-daily] .bar.is-today')).toHaveCount(1);
+    await expect(page.locator('[data-countries] li')).toHaveCount(4);
+    // 900 of 1,300 people: the largest share comes first.
+    await expect(page.locator('[data-countries] li').first().locator('strong')).toHaveText(/69[.,]2/);
+    await page.locator('[data-metric="reads"]').click();
+    await expect(page.locator('[data-metric="reads"]')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('[data-daily-table] tr')).toHaveCount(2);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    expect(errors).toEqual([]);
   });
 }
 
@@ -146,4 +206,18 @@ test('content and the index URL remain available without JavaScript', async ({ b
   await expect(page.locator('[data-copy]')).toBeHidden();
   await expect(page.locator('[data-filters]')).toBeHidden();
   await context.close();
+});
+
+test('usage stats page shows the Cloudflare split as shares of loads', async ({ page }) => {
+  await page.route('https://dshopen.org/stats.json', route => route.fulfill({ json: {
+    schema: 1, total: 100, today: { reads: 10, readers: 5 },
+    last30Days: { reads: 100, readers: 50, daily: [{ day: new Date().toISOString().slice(0, 10), reads: 10, readers: 5 }] },
+    countries: { source: 'cloudflare', metric: 'reads', since: null, today: [], last30Days: [{ country: 'CN', reads: 300 }, { country: 'MO', reads: 100 }] }
+  } }));
+  await page.goto('./zh/stats/');
+  await expect(page.locator('[data-countries] li')).toHaveCount(2);
+  await expect(page.locator('[data-countries] li').first().locator('strong')).toHaveText('75%');
+  await expect(page.locator('[data-countries] li').nth(1).locator('.country-name')).toHaveText('中国澳门');
+  await expect(page.locator('[data-countries-note]')).toContainText('Cloudflare');
+  await expect(page.locator('.donut-label')).toHaveText('加载次数');
 });

@@ -161,6 +161,24 @@ if (viewer && viewer.showModal) {
   viewer.addEventListener('click', event => { if (event.target === viewer || event.target.closest('[data-viewer-close]')) viewer.close(); });
 }
 
+// Today's readers of the index, from the Worker; the line keeps its height while loading and stays blank if the stats are unavailable.
+const usage = document.querySelector('[data-usage]');
+if (usage) {
+  fetch(usage.dataset.usage).then(response => response.ok ? response.json() : Promise.reject()).then(({ today }) => {
+    if (!Number.isSafeInteger(today?.readers) || today.readers < 1) return;
+    const format = new Intl.NumberFormat(document.documentElement.lang);
+    const parts = text.usage.split(/(\{\w+\})/).map(part => {
+      const key = part.match(/^\{(\w+)\}$/)?.[1];
+      if (!key) return document.createTextNode(part);
+      const strong = document.createElement('strong');
+      strong.textContent = format.format(today[key]);
+      return strong;
+    });
+    usage.querySelector('[data-usage-text]').replaceChildren(...parts);
+    usage.classList.add('is-loaded');
+  }).catch(() => {});
+}
+
 // Floating header: tucks away while scrolling down, returns on any upward scroll or near the top.
 const header = document.querySelector('[data-header]');
 if (header) {
@@ -237,7 +255,7 @@ for (const button of document.querySelectorAll('[data-get]')) {
     } catch {
       copied = false;
       // Select the name so a manual copy is one keystroke away.
-      const name = button.closest('[data-plugin]')?.querySelector('.get-name');
+      const name = button.closest('[data-plugin], [data-get-scope]')?.querySelector('.get-name');
       if (name) getSelection()?.selectAllChildren(name);
     }
     button.classList.toggle('is-done', copied);
@@ -270,3 +288,228 @@ for (const button of document.querySelectorAll('[data-get]')) {
 
 // Coming back from the page cache should never leave the page faded out.
 window.addEventListener('pageshow', () => document.body.classList.remove('is-leaving'));
+
+// Usage stats page: tiles, a daily bar chart (people or loads, one at a time) and the country and region shares, all from stats.json.
+const statsRoot = document.querySelector('[data-stats]');
+if (statsRoot) {
+  const words = JSON.parse(document.querySelector('#stats-messages').textContent);
+  const number = new Intl.NumberFormat(words.locale);
+  const percent = new Intl.NumberFormat(words.locale, { style: 'percent', maximumFractionDigits: 1 });
+  const shortDay = new Intl.DateTimeFormat(words.locale, { month: 'numeric', day: 'numeric', timeZone: 'UTC' });
+  const longDay = new Intl.DateTimeFormat(words.locale, { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short', timeZone: 'UTC' });
+  const dateOnly = new Intl.DateTimeFormat(words.locale, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+  let regionNames;
+  try { regionNames = new Intl.DisplayNames([words.locale], { type: 'region' }); } catch { /* Older browsers show the code. */ }
+  const regionName = code => code === 'XX' ? words.unknownRegion : words.regionNames[code] ?? regionNames?.of(code) ?? code;
+  // UN M49 geographic regions by ISO 3166 code; anything else (XX, AQ) counts as unknown.
+  const M49 = {
+    Asia: 'AF AM AZ BH BD BT BN KH CN CY GE HK IN ID IR IQ IL JP JO KZ KW KG LA LB MO MY MV MN MM NP KP OM PK PS PH QA SA SG KR LK SY TW TJ TH TL TR TM AE UZ VN YE',
+    Americas: 'AI AG AR AW BS BB BZ BM BO BQ BV BR CA KY CL CO CR CU CW DM DO EC SV FK GF GL GD GP GT GY HT HN JM MQ MX MS NI PA PY PE PR BL KN LC MF PM VC SX GS SR TT TC US UM UY VE VG VI',
+    Europe: 'AX AL AD AT BY BE BA BG HR CZ DK EE FO FI FR DE GI GR GG VA HU IS IE IM IT JE XK LV LI LT LU MT MD MC ME NL MK NO PL PT RO RU SM RS SK SI ES SJ SE CH UA GB',
+    Oceania: 'AS AU CX CC CK FJ PF GU HM KI MH FM NR NC NZ NU NF MP PW PG PN WS SB TK TO TV VU WF',
+    Africa: 'DZ AO BJ BW BF BI CV CM CF TD KM CG CD CI DJ EG GQ ER SZ ET GA GM GH GN GW KE LS LR LY MG MW ML MR MU YT MA MZ NA NE NG RE RW SH ST SN SC SL SO ZA SS SD TZ TG TN UG EH ZM ZW IO TF'
+  };
+  const continentOf = Object.fromEntries(Object.entries(M49).flatMap(([region, codes]) => codes.split(' ').map(code => [code, region])));
+  // Fixed colour per region, so a region keeps its colour whatever its rank.
+  const REGION_ORDER = ['Asia', 'Americas', 'Europe', 'Oceania', 'Africa', 'Unknown'];
+  const status = statsRoot.querySelector('[data-stats-status]');
+  const svg = (tag, attributes) => {
+    const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
+    return node;
+  };
+  const tile = (id, value) => { const node = statsRoot.querySelector(`[data-tile="${id}"] [data-value]`); if (node) node.textContent = Number.isSafeInteger(value) ? number.format(value) : '–'; };
+
+  // Every UTC day from the first recorded one to today (at most 30), with zeros for days without reads.
+  const daysOf = daily => {
+    const today = new Date().toISOString().slice(0, 10);
+    const known = new Map(daily.map(row => [row.day, row]));
+    const first = daily[0]?.day ?? today;
+    const days = [];
+    for (let at = Date.parse(`${today}T00:00:00Z`); days.length < 30; at -= 86_400_000) {
+      const day = new Date(at).toISOString().slice(0, 10);
+      if (day < first) break;
+      days.unshift({ day, reads: known.get(day)?.reads ?? 0, readers: known.get(day)?.readers ?? 0, today: day === today });
+    }
+    return days;
+  };
+  // Gridlines every 1, 2, 2.5 or 5 times a power of ten, about five of them, ending just above the tallest bar.
+  const niceScale = max => {
+    if (max <= 0) return { step: 1, ticks: 4 };
+    const rough = max / 5;
+    const power = 10 ** Math.floor(Math.log10(rough));
+    const step = Math.max(1, [1, 2, 2.5, 5, 10].find(f => f * power >= rough) * power);
+    return { step, ticks: Math.max(1, Math.ceil(max / step)) };
+  };
+
+  const chartBox = statsRoot.querySelector('[data-daily]');
+  const tooltip = Object.assign(document.createElement('div'), { className: 'chart-tooltip', hidden: true });
+  chartBox.append(tooltip);
+  let days = [];
+  let metric = 'readers';
+  const drawDaily = () => {
+    chartBox.querySelector('svg')?.remove();
+    if (!days.length) return;
+    const width = Math.max(280, chartBox.clientWidth);
+    const height = width < 520 ? 220 : 280;
+    const pad = { top: 12, right: 4, bottom: 28, left: 52 };
+    const plotW = width - pad.left - pad.right;
+    const plotH = height - pad.top - pad.bottom;
+    const { step, ticks } = niceScale(Math.max(...days.map(day => day[metric])));
+    const top = step * ticks;
+    const y = value => pad.top + plotH - value / top * plotH;
+    const slot = plotW / days.length;
+    const barW = Math.max(3, Math.min(36, slot - 2));
+    const root = svg('svg', { viewBox: `0 0 ${width} ${height}`, width, height, role: 'img', 'aria-label': `${metric === 'readers' ? words.metricReaders : words.metricReads}: ${days.map(day => `${day.day} ${day[metric]}`).join(', ')}` });
+    for (let tick = 0; tick <= ticks; tick++) {
+      const value = step * tick;
+      root.append(svg('line', { x1: pad.left, x2: width - pad.right, y1: y(value), y2: y(value), class: tick ? 'grid' : 'baseline' }));
+      const label = svg('text', { x: pad.left - 8, y: y(value) + 4, 'text-anchor': 'end', class: 'axis' });
+      label.textContent = number.format(value);
+      root.append(label);
+    }
+    // Label about six days along the axis, always including the last.
+    const every = Math.max(1, Math.ceil(days.length / 6));
+    days.forEach((day, at) => {
+      const x = pad.left + slot * at + (slot - barW) / 2;
+      const value = day[metric];
+      const h = Math.max(0, y(0) - y(value));
+      const r = Math.min(4, barW / 2, h);
+      // A bar with a 4px rounded top, flat on the baseline.
+      const bar = svg('path', { d: `M${x},${y(0)}V${y(0) - h + r}Q${x},${y(0) - h} ${x + r},${y(0) - h}H${x + barW - r}Q${x + barW},${y(0) - h} ${x + barW},${y(0) - h + r}V${y(0)}Z`, class: day.today ? 'bar is-today' : 'bar' });
+      const hit = svg('rect', { x: pad.left + slot * at, y: pad.top, width: slot, height: plotH, class: 'hit', tabindex: 0, 'aria-label': `${day.day}: ${words.metricReaders} ${number.format(day.readers)}, ${words.metricReads} ${number.format(day.reads)}` });
+      const show = () => {
+        root.querySelectorAll('.bar.is-active').forEach(node => node.classList.remove('is-active'));
+        bar.classList.add('is-active');
+        const date = new Date(`${day.day}T00:00:00Z`);
+        tooltip.innerHTML = '';
+        const title = document.createElement('strong');
+        title.textContent = longDay.format(date) + (day.today ? ' · UTC' : '');
+        tooltip.append(title);
+        for (const [key, label] of [['readers', words.metricReaders], ['reads', words.metricReads]]) {
+          const row = document.createElement('span');
+          row.className = key === metric ? 'is-current' : '';
+          row.textContent = `${label} ${number.format(day[key])}`;
+          tooltip.append(row);
+        }
+        tooltip.hidden = false;
+        const left = Math.min(Math.max(pad.left + slot * (at + .5) - tooltip.offsetWidth / 2, 0), width - tooltip.offsetWidth);
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${Math.max(0, y(value) - tooltip.offsetHeight - 10)}px`;
+      };
+      const hide = () => { bar.classList.remove('is-active'); tooltip.hidden = true; };
+      hit.addEventListener('pointerenter', show);
+      hit.addEventListener('focus', show);
+      hit.addEventListener('pointerleave', hide);
+      hit.addEventListener('blur', hide);
+      root.append(bar, hit);
+      if (at % every === (days.length - 1) % every) {
+        const label = svg('text', { x: pad.left + slot * (at + .5), y: height - 8, 'text-anchor': 'middle', class: 'axis' });
+        label.textContent = shortDay.format(new Date(`${day.day}T00:00:00Z`));
+        root.append(label);
+      }
+    });
+    chartBox.prepend(root);
+  };
+  statsRoot.querySelectorAll('[data-metric]').forEach(button => button.addEventListener('click', () => {
+    metric = button.dataset.metric;
+    statsRoot.querySelectorAll('[data-metric]').forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+    drawDaily();
+  }));
+  if ('ResizeObserver' in window) {
+    let lastWidth = 0;
+    new ResizeObserver(() => { if (chartBox.clientWidth !== lastWidth) { lastWidth = chartBox.clientWidth; drawDaily(); } }).observe(chartBox);
+  }
+
+  // A donut of the UN regions: one slice per region with people, a 2px gap between slices and the total in the middle.
+  const drawRegions = (rows, total, key) => {
+    const sums = new Map();
+    for (const row of rows) { const region = continentOf[row.country] ?? 'Unknown'; sums.set(region, (sums.get(region) ?? 0) + row[key]); }
+    const slices = REGION_ORDER.filter(region => sums.get(region)).map(region => ({ region, value: sums.get(region) }));
+    const size = 220, center = size / 2, outer = 104, inner = 66;
+    const root = svg('svg', { viewBox: `0 0 ${size} ${size}`, role: 'img', 'aria-label': slices.map(slice => `${words.regions[slice.region]} ${percent.format(slice.value / total)}`).join(', ') });
+    let angle = -Math.PI / 2;
+    const point = (radius, at) => `${center + radius * Math.cos(at)},${center + radius * Math.sin(at)}`;
+    for (const slice of slices) {
+      const sweep = slice.value / total * Math.PI * 2;
+      const end = angle + sweep;
+      const large = sweep > Math.PI ? 1 : 0;
+      // A lone region is a full ring, which one arc cannot draw.
+      const d = slices.length === 1
+        ? `M${center - outer},${center}a${outer},${outer} 0 1,0 ${outer * 2},0a${outer},${outer} 0 1,0 ${-outer * 2},0M${center - inner},${center}a${inner},${inner} 0 1,1 ${inner * 2},0a${inner},${inner} 0 1,1 ${-inner * 2},0Z`
+        : `M${point(outer, angle)}A${outer},${outer} 0 ${large},1 ${point(outer, end)}L${point(inner, end)}A${inner},${inner} 0 ${large},0 ${point(inner, angle)}Z`;
+      const path = svg('path', { d, class: 'slice', 'data-region': slice.region, 'fill-rule': 'evenodd' });
+      const title = svg('title', {});
+      title.textContent = `${words.regions[slice.region]}: ${number.format(slice.value)} · ${percent.format(slice.value / total)}`;
+      path.append(title);
+      root.append(path);
+      angle = end;
+    }
+    const value = svg('text', { x: center, y: center + 2, 'text-anchor': 'middle', class: 'donut-value' });
+    value.textContent = number.format(total);
+    const label = svg('text', { x: center, y: center + 22, 'text-anchor': 'middle', class: 'donut-label' });
+    label.textContent = key === 'reads' ? words.metricReads : words.metricReaders;
+    root.append(value, label);
+    statsRoot.querySelector('[data-regions]').replaceChildren(root);
+    statsRoot.querySelector('[data-region-legend]').replaceChildren(...slices.map(slice => {
+      const item = document.createElement('li');
+      item.dataset.region = slice.region;
+      item.innerHTML = '<span class="swatch" aria-hidden="true"></span><span class="legend-name"></span><strong></strong>';
+      item.querySelector('.legend-name').textContent = words.regions[slice.region];
+      item.querySelector('strong').textContent = percent.format(slice.value / total);
+      return item;
+    }));
+  };
+
+  const drawCountries = countries => {
+    const list = statsRoot.querySelector('[data-countries]');
+    // Cloudflare analytics report loads; the Worker's own D1 counts report people.
+    const key = countries?.metric === 'reads' ? 'reads' : 'readers';
+    const rows = (countries?.last30Days ?? []).filter(row => Number.isSafeInteger(row[key]) && row[key] > 0);
+    const total = rows.reduce((sum, row) => sum + row[key], 0);
+    statsRoot.querySelector('[data-countries-empty]').hidden = total > 0;
+    statsRoot.querySelector('[data-geo]').hidden = !total;
+    if (!total) return;
+    drawRegions(rows, total, key);
+    const note = statsRoot.querySelector('[data-countries-note]');
+    if (key === 'reads') note.textContent = words.countriesNoteLoads;
+    else if (countries.since) note.textContent = words.countriesNote.replace('{since}', dateOnly.format(new Date(`${countries.since}T00:00:00Z`)));
+    // The eight largest by name, the rest folded into one row so the bars stay comparable.
+    const shown = rows.slice(0, 8);
+    const rest = rows.slice(8);
+    if (rest.length) shown.push({ country: '', [key]: rest.reduce((sum, row) => sum + row[key], 0), label: words.otherRegions.replace('{count}', rest.length) });
+    const largest = Math.max(...shown.map(row => row[key]));
+    list.replaceChildren(...shown.map(row => {
+      const item = document.createElement('li');
+      item.className = row.country ? '' : 'is-other';
+      const share = row[key] / total;
+      item.innerHTML = '<span class="country-name"></span><span class="country-track"><span class="country-fill"></span></span><span class="country-value"><strong></strong><small></small></span>';
+      item.querySelector('.country-name').textContent = row.label ?? regionName(row.country);
+      item.querySelector('.country-fill').style.width = `${Math.max(1.5, row[key] / largest * 100)}%`;
+      item.querySelector('strong').textContent = percent.format(share);
+      item.querySelector('small').textContent = number.format(row[key]);
+      item.title = `${item.querySelector('.country-name').textContent}: ${number.format(row[key])} · ${percent.format(share)}`;
+      return item;
+    }));
+  };
+
+  fetch(statsRoot.dataset.stats).then(response => response.ok ? response.json() : Promise.reject(new Error(String(response.status)))).then(data => {
+    status.hidden = true;
+    tile('todayReaders', data.today?.readers);
+    tile('todayReads', data.today?.reads);
+    tile('monthReaders', data.last30Days?.readers);
+    tile('totalReads', data.total);
+    days = daysOf((data.last30Days?.daily ?? []).filter(row => /^\d{4}-\d{2}-\d{2}$/.test(row.day)));
+    statsRoot.querySelector('[data-daily-table]').replaceChildren(...[...days].reverse().map(day => {
+      const row = document.createElement('tr');
+      for (const value of [longDay.format(new Date(`${day.day}T00:00:00Z`)), number.format(day.readers), number.format(day.reads)]) {
+        const cell = document.createElement('td');
+        cell.textContent = value;
+        row.append(cell);
+      }
+      return row;
+    }));
+    drawDaily();
+    drawCountries(data.countries);
+  }).catch(() => { status.textContent = words.failed; status.classList.add('is-error'); });
+}

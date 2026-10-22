@@ -6,3 +6,7 @@ test-results/
 .DS_Store
 *.log
 .local/
+# Generated per-plugin pages: rebuilt on every build and deployed from the CI artifact.
+public/plugins/
+public/zh/plugins/
+public/zh-tw/plugins/

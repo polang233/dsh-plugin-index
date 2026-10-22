@@ -36,7 +36,7 @@ pnpm test:browser
 
 - `data/sources.json`：收录列表、中英文介绍和分类。
 - `scripts/lib.mjs`：发布源和归档检查、兼容范围、索引生成。
-- `scripts/site.mjs` 与 `site/`：中英文页面。
+- `scripts/site.mjs` 与 `site/`：英文（`/`）、简体中文（`/zh/`）和繁体中文（`/zh-tw/`）网站。每种语言都有首页、使用统计页（`stats/`）和每个插件的独立页面（`plugins/<包名>/`）。繁体页面由简体页面经 OpenCC 台湾用语转换生成；用 `ui()` 标出的 DSH 菜单名称保持简体，因为 DSH 界面本身就是这样显示的。插件页面每次构建重新生成，不提交到仓库。
 - `public/index.json`：DSH 格式 1 索引。
 - `public/status.json`：生成时间和逐包检查记录。
 
@@ -106,7 +106,7 @@ GitHub Actions 使用只读 `GITHUB_TOKEN`。本地可设置 `GITHUB_TOKEN` 或 
 2. 设置仓库变量 `PUBLISH_INDEX=true`。
 3. 在 `main` 分支运行 **Check and publish index**。
 
-工作流先运行单元测试、构建目录、使用 Chromium 检查中英文网站并校验官方格式，再上传 Pages 产物。部署后核对完整收录集合、逐包检查记录、两种语言页面、所有引用图标的内容哈希与项目品牌图片，全部请求禁止重定向。PR 不触发部署。
+工作流先运行单元测试、构建目录、使用 Chromium 检查三种语言的网站、插件页面和统计页并校验官方格式，再上传 Pages 产物。部署后核对完整收录集合、逐包检查记录、三种语言页面及其中的插件页面、所有引用图标的内容哈希与项目品牌图片，全部请求禁止重定向。PR 不触发部署。
 
 定时任务每六小时触发，GitHub 可能延迟任务或暂停不活跃仓库的计划；实际更新时间以线上 `status.json` 为准。定时任务直接部署产物，不自动提交代码；仓库内快照由维护者随改动提交。
 
@@ -137,6 +137,25 @@ CI 在仓库设置了 `CLOUDFLARE_API_TOKEN` 时，会在每次构建后用 `wra
 pnpm build
 npx wrangler deploy --config cloudflare/wrangler.jsonc
 ```
+
+`stats.json` 还按 Cloudflare 的两位国家或地区代号（`countries`）记录每天的加载次数和用户数，统计页按联合国地理分区汇总，并按联合国用法显示名称（如「中国香港」「中国台湾」）。需要先在 D1 里建好 `countries` 表才会有国家数据；没有这张表时 Worker 照常统计总数。首次部署、以及 `cloudflare/schema.sql` 变更后运行一次：
+
+```sh
+npx wrangler d1 execute dshopen-stats --remote --file cloudflare/schema.sql
+```
+
+配置分析 Token 后，国家和地区分布改为读取 Cloudflare 自带的流量分析：`/index.json` 近 30 天按国家的加载次数（抽样统计，缓存一小时），上线以来的数据可以直接看到。用户数始终来自 D1。在 Cloudflare 创建自定义 API Token，权限只给 `dshopen.org` 这个 zone 的 **Zone → Analytics → Read**，再从 zone 的 Overview 页复制 Zone ID，把两者存为 Worker 密钥（CI 上传的新版本会沿用）：
+
+```sh
+npx wrangler secret put CF_ANALYTICS_TOKEN --config cloudflare/wrangler.jsonc
+npx wrangler secret put CF_ZONE_ID --config cloudflare/wrangler.jsonc
+```
+
+之后 `stats.json` 会显示 `countries.source: "cloudflare"` 和 `metric: "reads"`。查询失败时 Worker 会记录错误，并退回自己的 D1 统计（`source: "d1"`，`metric: "readers"`）。
+
+## 搜索引擎
+
+`sitemap.xml` 列出三种语言的全部页面，并带 `hreflang` 对应关系（`zh-TW` 和 `zh-HK` 指向繁体页面）。在 Google Search Console 和 Bing Webmaster Tools 各提交一次 `https://dshopen.org/sitemap.xml`，之后的更新会被自动抓取。
 
 部署后的检查请求带 `dshopen-check` 这个 user-agent，不计入统计。
 
