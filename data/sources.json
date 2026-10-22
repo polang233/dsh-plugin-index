@@ -3526,18 +3526,6 @@
       "category": "interface"
     },
     {
-      "name": "dsh-web-fetch-enhanced",
-      "title": {
-        "en": "dsh-web-fetch-enhanced",
-        "zh": "网页抓取设置"
-      },
-      "description": {
-        "en": "Configurable User-Agent and non-public address allowlists for DeepSeek Harness web_fetch",
-        "zh": "配置网页抓取的 User-Agent 与非公网地址允许列表。"
-      },
-      "category": "tools"
-    },
-    {
       "name": "dsh-web-lan-access",
       "title": {
         "en": "dsh-web-lan-access",
@@ -7088,14 +7076,14 @@
       "category": "integrations"
     },
     {
-      "name": "@cloudplugin/dsh-skill-creator",
+      "name": "@cloudplugin/scenes-skill-creator",
       "title": {
-        "en": "Skill Creator",
-        "zh": "技能创建面板"
+        "en": "Scenes Skill Creator",
+        "zh": "场景技能创建面板"
       },
       "description": {
-        "en": "Create skills through configured creator backends, score the results and request revisions below the quality threshold.",
-        "zh": "通过指定的技能创建工具生成技能，对结果评分，未达要求时提出修改。"
+        "en": "Runs the official creator skills for general, REST API and Huawei Cloud skills from a sidebar form, shows their progress live, scores the result out of 10 and sends it back for revision until it passes.",
+        "zh": "在侧边栏按通用、标准 API 管理和华为云基础云服务三类填写需求，调用官方 creator 技能生成技能并实时展示过程，按 10 分制评分，未达标打回修改。"
       },
       "category": "skills"
     },
@@ -9267,14 +9255,14 @@
       }
     },
     {
-      "name": "dsh-web-search-enhanced",
+      "name": "dsh-tool-web-enhanced-profile",
       "title": {
-        "en": "Enhanced Web Search",
-        "zh": "增强网页搜索"
+        "en": "Web Tools Enhanced",
+        "zh": "增强网页工具"
       },
       "description": {
-        "en": "Search through Exa, Firecrawl, Tavily and TinyFish, with per-session connection and freshness preferences.",
-        "zh": "接入 Exa、Firecrawl、Tavily 和 TinyFish，按会话设置搜索连接与结果时效偏好。"
+        "en": "Serves web_search and web_fetch from switchable backends such as Exa, Firecrawl, Tavily and TinyFish, chosen per conversation from the composer. Installs the enhanced search and fetch plugins together; remove their standalone 0.1.x versions first.",
+        "zh": "用可切换的后端（Exa、Firecrawl、Tavily、TinyFish 等）提供 web_search 与 web_fetch，每个会话在输入框中选择连接。会一并安装增强搜索与抓取插件，安装前需先移除两者的 0.1.x 独立版本。"
       },
       "category": "tools"
     },
@@ -10422,7 +10410,7 @@
     },
     {
       "name": "@nagi-ovo/dsh-ads",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "title": {
         "en": "DSH Ads",
         "zh": "DSH Ads"
@@ -10433,8 +10421,8 @@
       },
       "category": "appearance",
       "archiveReview": {
-        "version": "0.1.2",
-        "integrity": "sha512-wgnMUzIiPY9ircpEKJ0HuwQLOAo7cxMt+kwCeQe4/J0DJz0iu2WMt4zVGHJYLvdt4m2xeKf3JT+HW5dYxorRlA==",
+        "version": "0.1.3",
+        "integrity": "sha512-7RMKGii5av9fUu9/bYSHyIRFwNjnApNVI64mtfy5B2Buu3aUoQrk4Y2BDJ+9BtfZTnw1O6Fhfb9UwmvoTqIc4Q==",
         "maxUnpackedBytes": 268435456,
         "timeoutMs": 120000
       }
@@ -10537,6 +10525,18 @@
       "description": {
         "en": "Predicts your next message after each reply and shows it as gray ghost text in the composer: Tab accepts, Alt+→ accepts piece by piece, ↻ suggests another and Esc dismisses. Uses the session model by default and sends only recent conversation text.",
         "zh": "每轮回复结束后预测你的下一句话，以灰色提示文字显示在输入框中：Tab 采纳、Alt+→ 逐段采纳、↻ 换一条、Esc 忽略。默认使用当前会话的模型，只发送最近的对话文本。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-subagent-fold",
+      "title": {
+        "en": "Subagent Fold",
+        "zh": "子代理折叠"
+      },
+      "description": {
+        "en": "Groups the built-in subagent dropdown by usage batch into History, Today, Previous and Current. The current batch stays expanded and the others can be collapsed; the original header is left untouched.",
+        "zh": "把原生「子代理」下拉按使用批次分为历史、今日、上次、本次四组，本次始终展开，其余可折叠；不改动原有头部。"
       },
       "category": "interface"
     }
