@@ -23,16 +23,25 @@ test/       单元测试与浏览器测试
 
 需要 Node.js 24+ 和 pnpm 11。
 
+日常收录、固定版本升级和维护修正按以下流程处理：
+
+1. 本地只检查本次改动条目的来源、版本、归档哈希、包清单、补丁和入口文件、许可证及下架名单。批量收录使用下文的 `preview-submissions.mjs`，仅下载待收录条目的归档。脚本或页面改动只运行相关的定向检查或局部预览。
+2. 检查 `git diff` 和 `git diff --check`，提交来源配置、文案及必要的复核记录后推送。本地不要求全量下载插件、刷新全站指标、重建索引或更新 `public/` 快照。
+3. 由 GitHub Actions 的 **Check and publish index** 工作流执行全量单元测试、构建、官方格式校验和浏览器测试。PR 只检查，`main` 分支通过检查后发布生成产物。
+4. CI 失败时先查看 Actions 日志，再针对失败条目或相关代码修正并推送，由 Actions 重新验证。
+
+以下为 Actions 中的全量检查命令，供查阅，不是本地提交前的必跑步骤：
+
 ```sh
 pnpm install --frozen-lockfile --ignore-scripts
 pnpm test
 pnpm build
 pnpm validate
-pnpm exec playwright install chromium
+pnpm exec playwright install --with-deps chromium
 pnpm test:browser
 ```
 
-本机已有 Chrome 或 Chromium 时，可设置 `BROWSER_EXECUTABLE` 为浏览器路径，省去下载。浏览器测试会自动启动和关闭本地预览服务。
+需要在本地复现浏览器测试失败时，可设置 `BROWSER_EXECUTABLE` 为已有 Chrome 或 Chromium 的路径，省去下载。浏览器测试会自动启动和关闭本地预览服务。
 
 - `data/sources.json`：收录列表、中英文介绍和分类。
 - `scripts/lib.mjs`：发布源和归档检查、兼容范围、索引生成。
@@ -42,7 +51,7 @@ pnpm test:browser
 
 仅修改页面时运行 `pnpm build:site`，再用 `pnpm preview` 访问 `http://127.0.0.1:4173/dsh-plugin-index/`。
 
-仅刷新指标、市场名称和作者身份时运行 `pnpm build:metadata`。它保留已检查的包版本与原始包检查时间；收录列表或固定版本改变时会要求完整构建。`publishers.json` 记录身份依据，`public/downloads.json` 与 `public/display.json` 记录下载数据和 DSH 展示内容。指标含义与客户端限制见[市场指标与身份标签](market-display.md)。
+仅刷新指标、市场名称和作者身份时运行 `pnpm build:metadata`。它保留已检查的包版本与原始包检查时间；收录列表或固定版本改变后，由 GitHub Actions 执行完整构建。`publishers.json` 记录身份依据，`public/downloads.json` 与 `public/display.json` 记录下载数据和 DSH 展示内容。指标含义与客户端限制见[市场指标与身份标签](market-display.md)。
 
 ## 更新收录
 
@@ -64,7 +73,7 @@ pnpm test:browser
 
 ## 作者下架
 
-作者通过 `[plugin-remove]` issue 或 PR 申请下架。确认申请人是 npm 维护者或源码仓库所有者后，从 `data/sources.json` 删除条目，重新生成 `public/`，并在 `data/withdrawn.json` 记录 `{name, repository, requestedBy, requestedAt, request}`，`request` 为申请链接。
+作者通过 `[plugin-remove]` issue 或 PR 申请下架。确认申请人是 npm 维护者或源码仓库所有者后，从 `data/sources.json` 删除条目，并在 `data/withdrawn.json` 记录 `{name, repository, requestedBy, requestedAt, request}`，`request` 为申请链接。推送后由 GitHub Actions 重新生成 `public/`。
 
 `pnpm build` 与 `preview-submissions.mjs` 遇到下架名单中的包会直接失败，`review-candidates.mjs` 会把它们记为 `stage: "withdrawn"` 并跳过下载与检查，单元测试也会核对收录列表中没有已下架的包。只有作者本人再次申请收录时，才从下架名单删除记录。
 
@@ -180,12 +189,12 @@ pnpm build:site
 
 ## 每日推荐轮换
 
-`public/recommendations.json` 随索引一同发布，保存每周候选池和近 14 天前十曝光记录。完整构建和指标刷新优先读取 GitHub Pages 已发布快照，失败时读取本地公开快照；不将尚未部署的记录写入 CI 缓存。规则见 [指标说明](market-display.md)。只重排本地已校验版本可运行 `pnpm build:recommendations`，新收录或版本变化仍需完整构建。运行 `pnpm preview:recommendations` 可生成 `.local/recommendation-preview.json` 查看连续 14 天的两组首屏名单。
+`public/recommendations.json` 随索引一同发布，保存每周候选池和近 14 天前十曝光记录。完整构建和指标刷新优先读取 GitHub Pages 已发布快照，失败时读取本地公开快照；不将尚未部署的记录写入 CI 缓存。规则见 [指标说明](market-display.md)。只重排本地已校验版本可运行 `pnpm build:recommendations`，新收录或版本变化由 GitHub Actions 完整构建。运行 `pnpm preview:recommendations` 可生成 `.local/recommendation-preview.json` 查看连续 14 天的两组首屏名单。
 
 ## 文案与品牌名称
 
 收录文案以 `data/sources.json` 为准。品牌身份记录在 `data/brand-names.json`，构建时检查中英文名称保留原名；作者提供的中文别名可并列展示。审核记录见 [2026-10-20 文案复核](reviews/localization-2026-10-20.md)。
 
-仅改名称和描述时运行 `pnpm build:copy`。它更新 `public/index.json`、`public/display.json` 和双语网页，保留包版本、校验时间、指标、排序和推荐曝光记录，不访问网络。尚未写入公开快照的新收录会列在输出中，等待完整构建。
+仅改名称和描述时运行 `pnpm build:copy`。它更新 `public/index.json`、`public/display.json` 和双语网页，保留包版本、校验时间、指标、排序和推荐曝光记录，不访问网络。尚未写入公开快照的新收录会列在输出中，等待 GitHub Actions 完整构建。
 
 结构化复核记录可用 `node scripts/apply-copy-review.mjs docs/reviews/localization-2026-10-20.json` 重放。重复执行不重复修改；源文案已被其他改动修改时会停止，要求重新复核。

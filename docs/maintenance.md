@@ -23,16 +23,25 @@ test/       Unit tests and browser tests
 
 Requires Node.js 24+ and pnpm 11.
 
+Use this workflow for routine additions, pinned-version upgrades, and maintenance fixes:
+
+1. Locally check only the changed entries: source, version, archive hash, manifest, patch and entry files, license, and withdrawal status. For batch additions, use `preview-submissions.mjs` below to download only the submitted archives. For script or website changes, run the relevant targeted checks or local preview.
+2. Review `git diff` and run `git diff --check`, then commit and push the source configuration, copy, and required review evidence. Local submissions do not require downloading the full catalog, refreshing all metrics, rebuilding the index, or updating `public/` snapshots.
+3. Let the **Check and publish index** GitHub Actions workflow run the full unit tests, build, official format validation, and browser tests. Pull requests run checks. Passing builds on `main` publish the generated artifacts.
+4. If CI fails, inspect the Actions log, fix the affected entry or code, and push the correction for Actions to verify again.
+
+The commands below document the full Actions checks. They are not local pre-commit requirements:
+
 ```sh
 pnpm install --frozen-lockfile --ignore-scripts
 pnpm test
 pnpm build
 pnpm validate
-pnpm exec playwright install chromium
+pnpm exec playwright install --with-deps chromium
 pnpm test:browser
 ```
 
-For local browser tests, set `BROWSER_EXECUTABLE` to an existing Chrome or Chromium executable to skip the browser download. Browser tests start and stop their own localhost preview server.
+To reproduce a browser test failure locally, set `BROWSER_EXECUTABLE` to an existing Chrome or Chromium executable to skip the browser download. Browser tests start and stop their own localhost preview server.
 
 - `data/sources.json`: package list, translations and categories.
 - `scripts/lib.mjs`: registry and archive checks, compatibility ranges, index generation.
@@ -84,7 +93,7 @@ Set `DSH_INDEX_PREVIEW_PORT` for both the preview server and browser checks when
 
 ## GitHub stars
 
-Use `pnpm build:metadata` to refresh metrics, the market title and identity labels while preserving validated package versions and their original check timestamps. A changed allowlist or pinned version requires a full build. `publishers.json` records identity evidence; `public/downloads.json` and `public/display.json` record download readings and DSH row text. See [market metrics and identity labels](market-display.md) for definitions and client limits.
+Use `pnpm build:metadata` to refresh metrics, the market title and identity labels while preserving validated package versions and their original check timestamps. GitHub Actions runs a full build when the allowlist or a pinned version changes. `publishers.json` records identity evidence; `public/downloads.json` and `public/display.json` record download readings and DSH row text. See [market metrics and identity labels](market-display.md) for definitions and client limits.
 
 Each build reads the public GitHub API once per unique repository and writes `public/github.json`. It records the exact star count, fetch time and last push time. Counts also populate the official index's `github-stars` sort key, so DSH can sort by stars.
 
@@ -163,7 +172,7 @@ Maintainer-approved Git entries pin `version` and declare `source: {type: "git",
 
 ## Author withdrawals
 
-Authors ask for removal through a `[plugin-remove]` issue or a PR. After confirming the requester maintains the npm package or owns the source repository, delete the entry from `data/sources.json`, regenerate `public/`, and record `{name, repository, requestedBy, requestedAt, request}` in `data/withdrawn.json`, where `request` links to the request.
+Authors ask for removal through a `[plugin-remove]` issue or a PR. After confirming the requester maintains the npm package or owns the source repository, delete the entry from `data/sources.json` and record `{name, repository, requestedBy, requestedAt, request}` in `data/withdrawn.json`, where `request` links to the request. GitHub Actions regenerates `public/` after the push.
 
 `pnpm build` and `preview-submissions.mjs` fail when a withdrawn package is listed. `review-candidates.mjs` records withdrawn candidates with `stage: "withdrawn"` and skips downloading them, and a unit test checks that the source list contains none. Remove a record from the withdrawn list only when the author asks to relist.
 
@@ -173,10 +182,10 @@ Authors ask for removal through a `[plugin-remove]` issue or a PR. After confirm
 
 ## Daily recommendation rotation
 
-`public/recommendations.json` ships with the index and stores weekly candidate pools and fourteen days of front-page exposure. Full builds and metadata refreshes prefer the deployed GitHub Pages state, with the local public snapshot as fallback. Unpublished state is not saved to the CI cache. See [recommendation rules](market-display.md). `pnpm build:recommendations` reorders already checked local versions offline; new sources and versions still require a full build. `pnpm preview:recommendations` writes a fourteen-day preview to `.local/recommendation-preview.json`.
+`public/recommendations.json` ships with the index and stores weekly candidate pools and fourteen days of front-page exposure. Full builds and metadata refreshes prefer the deployed GitHub Pages state, with the local public snapshot as fallback. Unpublished state is not saved to the CI cache. See [recommendation rules](market-display.md). `pnpm build:recommendations` reorders already checked local versions offline; GitHub Actions builds new sources and versions in full. `pnpm preview:recommendations` writes a fourteen-day preview to `.local/recommendation-preview.json`.
 
 ## Editorial copy and product names
 
 `data/sources.json` owns display names and bilingual descriptions. `data/brand-names.json` records reviewed product names; builds check that both display titles retain them. Author-provided Chinese aliases may appear alongside the original name. See the [2026-10-20 copy review](reviews/localization-2026-10-20.md).
 
-`pnpm build:copy` refreshes the existing index, display snapshot and bilingual pages offline. It retains package versions, validation timestamps, metrics, ranks and exposure history. New entries absent from the checked snapshot still need a full build. Structured reviews can be replayed with `node scripts/apply-copy-review.mjs docs/reviews/localization-2026-10-20.json`; already-applied edits are skipped, and conflicting copy requires another review.
+`pnpm build:copy` refreshes the existing index, display snapshot and bilingual pages offline. It retains package versions, validation timestamps, metrics, ranks and exposure history. GitHub Actions builds new entries that are absent from the checked snapshot. Structured reviews can be replayed with `node scripts/apply-copy-review.mjs docs/reviews/localization-2026-10-20.json`; already-applied edits are skipped, and conflicting copy requires another review.
