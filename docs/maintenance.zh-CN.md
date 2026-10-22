@@ -73,7 +73,7 @@ pnpm test:browser
 
 ## 作者下架
 
-作者通过 `[plugin-remove]` issue 或 PR 申请下架。确认申请人是 npm 维护者或源码仓库所有者后，从 `data/sources.json` 删除条目，并在 `data/withdrawn.json` 记录 `{name, repository, requestedBy, requestedAt, request}`，`request` 为申请链接。推送后由 GitHub Actions 重新生成 `public/`。
+作者通过 `[plugin-remove]` issue 申请下架。确认申请人是 npm 维护者或源码仓库所有者后，从 `data/sources.json` 删除条目，并在 `data/withdrawn.json` 记录 `{name, repository, requestedBy, requestedAt, request}`，`request` 为申请链接。推送后由 GitHub Actions 重新生成 `public/`。
 
 `pnpm build` 与 `preview-submissions.mjs` 遇到下架名单中的包会直接失败，`review-candidates.mjs` 会把它们记为 `stage: "withdrawn"` 并跳过下载与检查，单元测试也会核对收录列表中没有已下架的包。只有作者本人再次申请收录时，才从下架名单删除记录。
 

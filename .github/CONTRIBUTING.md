@@ -1,5 +1,7 @@
 # 贡献指南
 
+插件推荐、信息更正、版本更新和下架申请请通过 GitHub Issue 提交，维护者负责更新收录配置与发布。
+
 ## 推荐插件
 
 提交[插件收录申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml)，提供 npm 包名或源码仓库地址，以及一句功能介绍，中文或英文均可。作者也可以通过同一表单申请更正信息。
@@ -15,46 +17,28 @@
 
 ### Git 来源
 
-尚未发布 npm 的插件可经维护者确认后按固定 GitHub 提交收录。条目需要固定 `version`，并提供 `source: {type: "git", url, commit, integrity, publishedAt}`。`commit` 为完整提交 SHA，`integrity` 为对应 GitHub 源码归档的 SHA-512，`publishedAt` 为发行时间。根目录必须包含可安装的完整插件与 `package.json`。更新提交后需重新核查归档哈希；建议作者同时发布 npm 包。
+尚未发布 npm 的插件可经维护者确认后按固定 GitHub 提交收录。请在收录申请中提供公开仓库地址、版本和完整提交 SHA。仓库根目录必须包含可安装的完整插件、`package.json`、补丁及构建产物。维护者核查归档并记录哈希；建议作者同时发布 npm 包。
+
+## 更新或补充信息
+
+已有收录申请时，请在原 Issue 回复新版本、固定提交或补充材料。更正已收录插件的名称、介绍、仓库等信息，也可以使用[插件收录申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml)，注明包名和需要更正的内容。
+
+默认跟踪 npm 的 `latest` 标签；固定版本或 Git 提交的插件需要维护者重新核查后升级。运行兼容范围以实际发布包中的声明为准。
+
+## 提交后
+
+维护者会核对包的归属、用途、发布记录、许可证、补丁和入口文件，按需在 Issue 中请作者补充信息，并补齐简短的中英文介绍。
+
+本地只检查本次改动的条目。提交推送后，由 GitHub Actions 执行全量测试、构建、官方格式校验和浏览器测试，通过后发布。
 
 ## 申请下架
 
-作者或维护者可以提交[插件下架申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-remove.yml)，issue 标题以 `[plugin-remove]` 开头。请用发布该包或拥有源码仓库的 GitHub 账号提交，否则需附上能证明身份的链接。也可以直接提交 PR，同时修改下面两个文件。
+作者或维护者可以提交[插件下架申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-remove.yml)，Issue 标题以 `[plugin-remove]` 开头。请用发布该包或拥有源码仓库的 GitHub 账号提交，否则需附上能证明身份的链接。
 
-维护者确认身份后：
-
-1. 从 `data/sources.json` 删除该条目，推送后由 GitHub Actions 重新生成索引与页面。
-2. 在 `data/withdrawn.json` 记录包名、仓库、申请人、日期和申请链接。
-
-构建、收录预览和候选扫描都会读取下架名单：名单中的包出现在收录列表里会让构建失败，候选扫描会直接跳过它们。作者本人再次申请收录时，先从下架名单删除该记录，再按正常流程收录。
-
-## 提交 PR
-
-在 `data/sources.json` 中添加条目，使用已有分类：
-
-```json
-{
-  "name": "@owner/plugin",
-  "title": { "en": "Plugin name", "zh": "插件名称" },
-  "description": { "en": "What the plugin does.", "zh": "插件的具体用途。" },
-  "category": "tools"
-}
-```
-
-默认跟踪 npm 的 `latest` 标签；填写 `version` 可以固定版本，之后需手动修改。运行兼容范围来自实际发布包，不使用提交说明中的声明。
-
-源码字段缺失或归档超出默认预算时，需要先按[维护规则](../docs/maintenance.zh-CN.md#经核查的源码补充)核查准确版本。此类条目保持固定版本，升级需重新核查。
-
-本地只核对本次改动的条目、必要字段和归档哈希。批量收录可按[维护说明](../docs/maintenance.zh-CN.md#更新收录)运行 `preview-submissions.mjs`，仅检查这批归档。提交来源配置、文案和必要的复核记录即可，不要求本地全量下载插件或更新 `public/` 生成文件。
-
-推送后由 GitHub Actions 执行全量单元测试、构建、官方格式校验和浏览器测试。CI 失败时查看日志，针对失败条目或相关代码修正后再次推送。脚本或页面改动只需在本地做相关的定向检查或局部预览。
-
-收录调整与无关的网站修改请分开提交。维护者合并前会核对包的归属、用途、发布记录和介绍。
+维护者确认身份后移除收录条目，并记录下架申请。下架的插件会被候选扫描跳过；只有作者本人再次申请时，才按正常流程重新核查收录。
 
 ## 名称与中英文文案
 
 品牌、项目和产品名保留作者的写法与大小写，例如 DeepSeek Bot、Flowglass、Pharos。作者提供正式中文名时可以使用，或与原名并列；没有正式译名时直接保留原文。不要用功能概括替换产品名。普通功能名称可以自然翻译。
 
 描述用简洁中文讲清用途、必要的运行条件和重要限制。技术术语应放进具体语境，例如权限提升审批、沙箱外执行、衬线字体，避免逐词直译，也不扩大原说明中的能力或保证。名称有疑问时先核对作者 README、包内语言文件或清单。
-
-已核对的产品名记录在 `data/brand-names.json`。完整构建、指标刷新和文案刷新会检查这些名称是否仍保留。只修改文案时可运行 `pnpm build:copy`，更新已校验的本地索引和双语页面，保留版本、指标、推荐顺序及曝光记录。新收录和升级版本由 GitHub Actions 完整构建。

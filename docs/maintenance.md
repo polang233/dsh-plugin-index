@@ -172,7 +172,7 @@ Maintainer-approved Git entries pin `version` and declare `source: {type: "git",
 
 ## Author withdrawals
 
-Authors ask for removal through a `[plugin-remove]` issue or a PR. After confirming the requester maintains the npm package or owns the source repository, delete the entry from `data/sources.json` and record `{name, repository, requestedBy, requestedAt, request}` in `data/withdrawn.json`, where `request` links to the request. GitHub Actions regenerates `public/` after the push.
+Authors ask for removal through a `[plugin-remove]` issue. After confirming the requester maintains the npm package or owns the source repository, delete the entry from `data/sources.json` and record `{name, repository, requestedBy, requestedAt, request}` in `data/withdrawn.json`, where `request` links to the request. GitHub Actions regenerates `public/` after the push.
 
 `pnpm build` and `preview-submissions.mjs` fail when a withdrawn package is listed. `review-candidates.mjs` records withdrawn candidates with `stage: "withdrawn"` and skips downloading them, and a unit test checks that the source list contains none. Remove a record from the withdrawn list only when the author asks to relist.
 
