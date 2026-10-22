@@ -117,6 +117,8 @@ GitHub Actions 使用只读 `GITHUB_TOKEN`。本地可设置 `GITHUB_TOKEN` 或 
 
 工作流先运行单元测试、构建目录、使用 Chromium 检查三种语言的网站、插件页面和统计页并校验官方格式，再上传 Pages 产物。部署后核对完整收录集合、逐包检查记录、三种语言页面及其中的插件页面、所有引用图标的内容哈希与项目品牌图片，全部请求禁止重定向。PR 不触发部署。
 
+构建任务使用 Playwright 官方的 Ubuntu 24.04 容器，浏览器、运行库和字体已预装，省去每轮从 apt 和浏览器 CDN 安装的步骤；全量包检查和浏览器测试照常执行。容器标签的版本需与 `package.json` 中的 `@playwright/test` 一致，升级依赖时一并更新 `.github/workflows/publish.yml`。
+
 定时任务每六小时触发，GitHub 可能延迟任务或暂停不活跃仓库的计划；实际更新时间以线上 `status.json` 为准。定时任务直接部署产物，不自动提交代码；仓库内快照由维护者随改动提交。
 
 仅修改 `README*.md`、`docs/` 或 `.github/` 顶层 Markdown 文档时，推送和 PR 不触发完整构建与部署。定时任务和手动运行照常执行；同次提交包含收录、脚本、网站素材或工作流修改时，仍执行完整流程。
@@ -172,7 +174,7 @@ npx wrangler secret put CF_ZONE_ID --config cloudflare/wrangler.jsonc
 
 原图放在 `site/originals/` 和 `docs/images/originals/`，网站和 README 实际加载的是同名的无损 WebP（按显示尺寸缩放）。替换或新增原图后运行 `node scripts/optimize-images.mjs` 重新生成（需要 `sharp`，可用 `npm i --no-save sharp` 临时安装）。
 
-`site/originals/logo.png` 是品牌原图。运行 `node scripts/optimize-images.mjs logo`，统一导出 720px 无损 WebP、256px PNG、180px Apple 图标、64px favicon 和 DSH 插件包图标。原图和导出图的 `-old` 后缀文件作为备份保留，压缩脚本会跳过它们。
+`site/originals/logo.png` 是品牌原图。运行 `node scripts/optimize-images.mjs logo`，统一导出 720px 无损 WebP、256px PNG、180px Apple 图标、96px favicon、含 16/32/48px 帧的 ICO 和 DSH 插件包图标。原图和导出图的 `-old` 后缀文件作为备份保留，压缩脚本会跳过它们。
 
 更换 Logo 后，从本地页面重新导出两张 README 首页截图和三张 1200×630 分享图（英文、简体、繁体）。截图脚本需要 Playwright Chromium，或通过 `BROWSER_EXECUTABLE` 指定浏览器路径；同时需要 `sharp`，也可用 `SHARP_PATH` 指定其模块入口：
 

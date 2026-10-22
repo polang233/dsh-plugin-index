@@ -109,6 +109,8 @@ If GitHub is unavailable, a verified snapshot up to seven days old is kept with 
 
 The workflow runs unit tests, builds the catalog, checks all three website languages, plugin pages and the stats page in Chromium and validates the official format before uploading the Pages artifact. After deployment it checks the complete source allowlist, package evidence, the three language pages and a plugin page in each, every referenced icon hash and the project branding assets. All requests reject redirects. Pull requests never deploy.
 
+The build job uses the official Playwright container based on Ubuntu 24.04, with browsers, runtime libraries and fonts already installed. This removes the apt and browser CDN installation steps from each run. Full package checks and browser tests still run. Keep the container tag in `.github/workflows/publish.yml` aligned with the `@playwright/test` version in `package.json` when upgrading.
+
 Scheduled runs are set to every six hours; GitHub may delay or suspend schedules in inactive repositories. The timestamp in the live `status.json` is the source of truth. Scheduled artifacts are deployed directly and do not create repository commits; a checked-in snapshot changes only when a maintainer includes it in a commit.
 
 Pushes and pull requests that change only `README*.md`, `docs/`, or top-level Markdown files in `.github/` skip the full build and deployment. Scheduled and manual runs still execute. A commit that also changes listings, scripts, website assets, or workflows runs the full pipeline.
@@ -155,7 +157,7 @@ npx wrangler secret put CF_ZONE_ID --config cloudflare/wrangler.jsonc
 
 Full-size originals live in `site/originals/` and `docs/images/originals/`; the site and README load lossless WebP copies scaled to display size. After changing an original, run `node scripts/optimize-images.mjs` (needs `sharp`, e.g. `npm i --no-save sharp`).
 
-`site/originals/logo.png` is the brand master. `node scripts/optimize-images.mjs logo` exports the 720px lossless WebP, 256px PNG, 180px Apple touch icon, 64px favicon and the matching DSH package icon. Originals and exports with an `-old` suffix are retained as backups and skipped by the optimizer.
+`site/originals/logo.png` is the brand master. `node scripts/optimize-images.mjs logo` exports the 720px lossless WebP, 256px PNG, 180px Apple touch icon, 96px favicon, an ICO with 16/32/48px frames and the matching DSH package icon. Originals and exports with an `-old` suffix are retained as backups and skipped by the optimizer.
 
 After replacing the logo, refresh the two README home screenshots and the three 1200×630 sharing cards (English, Simplified and Traditional Chinese) from the local pages. The capture script needs Playwright Chromium, or a browser path in `BROWSER_EXECUTABLE`, plus `sharp` or `SHARP_PATH`:
 
