@@ -127,6 +127,17 @@ The Worker in `cloudflare/` serves `public/` as static assets and counts reads o
 
 Full-size originals live in `site/originals/` and `docs/images/originals/`; the site and README load lossless WebP copies scaled to display size. After changing an original, run `node scripts/optimize-images.mjs` (needs `sharp`, e.g. `npm i --no-save sharp`).
 
+`site/originals/logo.png` is the brand master. `node scripts/optimize-images.mjs logo` exports the 720px lossless WebP, 256px PNG, 180px Apple touch icon, 64px favicon and the matching DSH package icon. Originals and exports with an `-old` suffix are retained as backups and skipped by the optimizer.
+
+After replacing the logo, refresh the two README home screenshots and 1200×630 sharing cards from the local pages. The capture script needs Playwright Chromium, or a browser path in `BROWSER_EXECUTABLE`, plus `sharp` or `SHARP_PATH`:
+
+```sh
+pnpm build:site
+node scripts/capture-brand-images.mjs
+node scripts/optimize-images.mjs home-en home-zh
+pnpm build:site
+```
+
 ## Pinned Git sources
 
 Maintainer-approved Git entries pin `version` and declare `source: {type: "git", url, commit, integrity, publishedAt}`. The source must be a canonical GitHub repository URL with a full commit SHA, SHA-512 of that commit archive, and a release date. The repository root must contain the complete installable package. The generator downloads from `codeload.github.com` without redirects and applies the existing archive limits, identity, patch and entry-point checks. DSH installs the root package at that commit through the official Git source type. Git entries have no npm download or release-activity data. Updating requires reviewing the new commit and archive hash. No installation or lifecycle scripts run during generation.

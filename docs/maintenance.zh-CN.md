@@ -144,6 +144,17 @@ npx wrangler deploy --config cloudflare/wrangler.jsonc
 
 原图放在 `site/originals/` 和 `docs/images/originals/`，网站和 README 实际加载的是同名的无损 WebP（按显示尺寸缩放）。替换或新增原图后运行 `node scripts/optimize-images.mjs` 重新生成（需要 `sharp`，可用 `npm i --no-save sharp` 临时安装）。
 
+`site/originals/logo.png` 是品牌原图。运行 `node scripts/optimize-images.mjs logo`，统一导出 720px 无损 WebP、256px PNG、180px Apple 图标、64px favicon 和 DSH 插件包图标。原图和导出图的 `-old` 后缀文件作为备份保留，压缩脚本会跳过它们。
+
+更换 Logo 后，从本地页面重新导出两张 README 首页截图和 1200×630 分享图。截图脚本需要 Playwright Chromium，或通过 `BROWSER_EXECUTABLE` 指定浏览器路径；同时需要 `sharp`，也可用 `SHARP_PATH` 指定其模块入口：
+
+```sh
+pnpm build:site
+node scripts/capture-brand-images.mjs
+node scripts/optimize-images.mjs home-en home-zh
+pnpm build:site
+```
+
 ## 收录日期
 
 `public/added.json` 记录每个插件首次进入索引的日期（UTC），网站的「最近更新」排序取发布日期与收录日期中较晚的一个，新收录的插件也会排在前面。完整构建优先读取 GitHub Pages 上已发布的记录，失败时读取本地快照，已有日期保持不变，新出现的包记为构建当天。移除后再收录的包按重新收录日期计算。2026-10-19 之前的记录来自 `data/sources.json` 的 Git 历史，因此首批插件日期相同。
