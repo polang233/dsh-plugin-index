@@ -10727,6 +10727,195 @@
         "zh": "将会话放入回收站，支持单条或批量还原、彻底删除已归档日志，并保护活跃会话。"
       },
       "category": "interface"
+    },
+    {
+      "name": "@dr-co/dsh-speech-gate",
+      "title": {
+        "en": "Speech-to-text Gate",
+        "zh": "语音转文字网关"
+      },
+      "description": {
+        "en": "Register speech transcription providers for IM voice messages, using a configured model, an OpenAI-compatible API or a local command. Requires a transcription service or executable.",
+        "zh": "为 IM 语音消息提供转文字服务，可复用已配置模型、连接 OpenAI 兼容接口或调用本地命令。需配置转写服务或可执行程序。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "@sunshaobei/dsh-balance-panel",
+      "title": {
+        "en": "dsh-balance-panel",
+        "zh": "dsh-balance-panel"
+      },
+      "description": {
+        "en": "Show provider balances and usage quotas, including ChatGPT subscription usage through dsh-codex-auth, with automatic refresh and per-session model selection.",
+        "zh": "显示供应商余额与用量额度，支持通过 dsh-codex-auth 查看 ChatGPT 订阅用量，自动刷新并跟随当前会话所选模型。"
+      },
+      "category": "usage"
+    },
+    {
+      "name": "@sunshaobei/dsh-codex-auth",
+      "title": {
+        "en": "Codex Subscription Authorization",
+        "zh": "Codex 订阅授权"
+      },
+      "description": {
+        "en": "Manage ChatGPT OAuth authorization for Codex models from DSH settings, with credential status and renewal prompts. Requires a compatible ChatGPT subscription.",
+        "zh": "在 DSH 设置中管理 Codex 模型的 ChatGPT OAuth 授权，查看凭据状态并在失效时提示重新授权。需兼容的 ChatGPT 订阅。"
+      },
+      "category": "providers"
+    },
+    {
+      "name": "@sunshaobei/dsh-input-history",
+      "title": {
+        "en": "Input History",
+        "zh": "输入历史"
+      },
+      "description": {
+        "en": "Recall locally saved composer prompts and attachments with Arrow Up and Arrow Down when the composer is empty. Keeps up to 50 submissions in browser storage.",
+        "zh": "输入框为空时，用上下方向键恢复历史提示词和附件；最多在浏览器本地保存 50 条提交记录。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@sunshaobei/dsh-workflow",
+      "title": {
+        "en": "dsh-workflow",
+        "zh": "dsh-workflow"
+      },
+      "description": {
+        "en": "Create and run MCode workflows with parameters, subagent steps, run history, cancellation and recovery. Requires DSH 0.2.1-rc.2.",
+        "zh": "创建和运行 MCode 工作流，支持参数、子代理步骤、运行历史、停止与恢复。需 DSH 0.2.1-rc.2。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "@yyyzl/dsh-image-feedback",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/yyyzl/dsh-image-feedback",
+        "commit": "2b2328c336215d454a7f3c84426ff0688e1e7926",
+        "integrity": "sha512-JgmRi7lO8sSslrHfnr5HAwG9uidfygiXmtJUQmdZvLV5F+wHvJMUiYEXlfILW3lx+yPQ8LbceVJUuFKqdBXIzg==",
+        "publishedAt": "2026-10-22T19:59:49Z"
+      },
+      "title": {
+        "en": "Image Feedback",
+        "zh": "图片反馈"
+      },
+      "description": {
+        "en": "Annotate images in the native sidebar and send originals, numbered references and feedback to the current conversation without replacing its draft. Disable the legacy local bundle before migrating.",
+        "zh": "在原生侧栏标注图片，将原图、编号参考图和反馈发送到当前会话，保留输入草稿。迁移前需禁用旧版本地插件。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@dr-co/dsh-skills",
+      "title": {
+        "en": "dsh-skills",
+        "zh": "dsh-skills"
+      },
+      "description": {
+        "en": "Manage skills from a DSH Web sidebar page: view, edit, rename, import, export and enable or disable user skills; bundled and plugin-provided skills have limited actions.",
+        "zh": "在 DSH Web 侧栏查看、编辑、重命名、导入导出和启停用户技能；随包附带或插件提供的技能仅开放相应查看与导出操作。"
+      },
+      "category": "skills"
+    },
+    {
+      "name": "dsh-jev-progress",
+      "title": {
+        "en": "JeV Thinkout",
+        "zh": "JeV 思维链外显"
+      },
+      "description": {
+        "en": "Show selected DeepSeek reasoning as task plans, progress summaries and flow diagrams. Requires a JeV Key and DSH native translation; reasoning excerpts go to JeV, and lightweight summaries call DeepSeek Flash and may incur charges.",
+        "zh": "将 DeepSeek 思考中的任务规划、进度与阶段小结呈现为正文和流程图。需 JeV Key 及 DSH 原生翻译；思考片段会发送至 JeV，轻量摘要另调用 DeepSeek Flash，可能产生费用。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-reforge",
+      "version": "0.1.0-alpha.1",
+      "title": {
+        "en": "DSH-Reforge (experimental alpha)",
+        "zh": "DSH-Reforge（实验性 alpha）"
+      },
+      "description": {
+        "en": "Learn traceable experience from test-verified Python repairs in one repository. DSH 0.2.0-rc.2 Web only; learning is off by default. Verification runs repository code, and enabled model sharing sends bounded repair material to the configured provider.",
+        "zh": "从单仓库中通过测试验证的 Python 修复积累可追溯经验。仅支持 DSH 0.2.0-rc.2 Web，学习默认关闭；验证会执行仓库代码，启用模型共享后会向所选服务发送有限修复材料。"
+      },
+      "category": "memory"
+    },
+    {
+      "name": "dsh-mcp-tools",
+      "title": {
+        "en": "MCP Manager",
+        "zh": "MCP 管理器"
+      },
+      "description": {
+        "en": "Manage streamable HTTP and stdio MCP servers from DSH settings, configure request headers, test connectivity and enable or disable individual tools.",
+        "zh": "在 DSH 设置中管理 streamable HTTP 与 stdio MCP 服务器，配置请求头、测试连接，并逐个启停工具。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@lifenrir/dsh-video-preview",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/LiFenrir/dsh-video-preview",
+        "commit": "2dd1792962cca75af1fc598c41a23be4f8513d22",
+        "integrity": "sha512-URkfsn5PgbmMX0bTWo6T/yTBYnlE3Q5kufEha3qY3KTtdFe+9FpNHLcN8CHtA0daV7U+r8Js3pHHzQaX1EspWA==",
+        "publishedAt": "2026-10-23T08:10:03Z"
+      },
+      "title": {
+        "en": "Video Preview",
+        "zh": "视频预览"
+      },
+      "description": {
+        "en": "Play workspace videos in the right-side document preview with seeking and native controls, including files above the RPC preview limit. Playback depends on browser codec support.",
+        "zh": "在右侧文档预览中播放工作区视频，支持原生控件和拖动进度，可读取超过 RPC 预览大小限制的文件。能否播放取决于浏览器编解码支持。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@lifenrir/dsh-selection-quote",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/LiFenrir/dsh-selection-quote",
+        "commit": "bb36fd53bef1db7a7d0619c8494fadab186be329",
+        "integrity": "sha512-0f7fFjimeoq+L62ETZqPMpc2K0nNlO9Sy99sVpZgB4QVoTdT3lOEbNrLhkLnYPlqC1kVhaVE590OhygA09X04Q==",
+        "publishedAt": "2026-10-23T08:12:21Z"
+      },
+      "title": {
+        "en": "Selection Quote",
+        "zh": "划词引用"
+      },
+      "description": {
+        "en": "Quote selected message text into the composer with source roles and preserved code fences, then jump back from quote chips or sent cards. Selections must stay within one message.",
+        "zh": "划选消息文字并引用到输入框，保留来源角色与代码围栏，可从引用标签或发送后的卡片跳回原文。选区须位于同一条消息内。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@lifenrir/dsh-external-task-context",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/LiFenrir/dsh-external-task-context",
+        "commit": "c4e06785e2153db7d46ea3368e30ff648adb407a",
+        "integrity": "sha512-U851xsa0U6WHszoG9aOoOObsUctEcI4QFpOPiTZ5xnb4Uo0bKgbzu0Kws0Hnd6w/t7bvpxblJO8gh+9ypiggBg==",
+        "publishedAt": "2026-10-23T08:35:58Z"
+      },
+      "title": {
+        "en": "External Task Context",
+        "zh": "外部任务上下文"
+      },
+      "description": {
+        "en": "Inspect external subagent delegation prompts, runtime context and returned results in the right sidebar, using parent-session logs. Does not expose external agents' internal reasoning or full tool histories.",
+        "zh": "根据父会话日志，在右侧栏查看外部子代理的委派提示词、运行上下文和返回结果；不提供外部代理内部思考或完整工具调用历史。"
+      },
+      "category": "workflow"
     }
   ]
 }
