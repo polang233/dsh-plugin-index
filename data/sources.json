@@ -7524,18 +7524,6 @@
       "category": "knowledge"
     },
     {
-      "name": "@tnnevol/dsh-codebuddy",
-      "title": {
-        "en": "CodeBuddy Connector",
-        "zh": "CodeBuddy 模型接入"
-      },
-      "description": {
-        "en": "Connect CodeBuddy models through browser OAuth, with account switching, model capabilities and quota display.",
-        "zh": "通过浏览器 OAuth 接入 CodeBuddy 模型，支持账号切换、模型能力查看和额度显示。"
-      },
-      "category": "providers"
-    },
-    {
       "name": "@tryao/dsh-wps365-plugin",
       "title": {
         "en": "WPS 365 Connector",
@@ -10574,21 +10562,21 @@
     },
     {
       "name": "dsh-shared-bash",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "source": {
         "type": "git",
         "url": "https://github.com/snowy-yang/dsh-shared-bash",
-        "commit": "d3faae238d5c05082789aa939eb7e4150bd97000",
-        "integrity": "sha512-02P9SmvexF6OHRKcOOzJi/znMr9Iq+4NQeg788E17Rkh3KHQYFNlEPfyUa6koRbpES/M33gy11pW8Oh3mqtl5g==",
-        "publishedAt": "2026-10-22T15:17:05Z"
+        "commit": "324f263a8600f7a53344722d499bcb861aaad2fc",
+        "integrity": "sha512-SRIClH+hJDsnYBFGrRpxD04/GxwlJvWZjyTThIaKUP59KBS34/CRwK3KtER1rf8/3J9bc6SSz/GtuHbRYbpvoQ==",
+        "publishedAt": "2026-10-23T10:44:32Z"
       },
       "title": {
         "en": "Shared Bash Sessions",
         "zh": "共享 Bash 会话"
       },
       "description": {
-        "en": "Share persistent Bash sessions across agents in a DSH profile, preserving directories, variables and jobs. Requires Bash; commands run with the host user's permissions.",
-        "zh": "让同一 DSH profile 中的各个 Agent 共用持久 Bash 会话，保留目录、变量和作业。需要 Bash，命令以宿主用户权限运行。"
+        "en": "Keep a persistent PTY Bash terminal per DSH session, attach across agents by session id and run commands as asynchronous jobs. Requires Bash and a PTY subprocess provider; commands use the host user's permissions.",
+        "zh": "为每个 DSH 会话保留持久 PTY Bash 终端，按会话 ID 跨 Agent 连接，并以异步作业运行命令。需要 Bash 与支持 PTY 的子进程服务，命令以宿主用户权限执行。"
       },
       "category": "tools"
     },
@@ -10790,13 +10778,13 @@
     },
     {
       "name": "@yyyzl/dsh-image-feedback",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "git",
         "url": "https://github.com/yyyzl/dsh-image-feedback",
-        "commit": "2b2328c336215d454a7f3c84426ff0688e1e7926",
-        "integrity": "sha512-JgmRi7lO8sSslrHfnr5HAwG9uidfygiXmtJUQmdZvLV5F+wHvJMUiYEXlfILW3lx+yPQ8LbceVJUuFKqdBXIzg==",
-        "publishedAt": "2026-10-22T19:59:49Z"
+        "commit": "ed11b9611b685eed58e8a01aae6be49e8a3e93f1",
+        "integrity": "sha512-TUNx6TaiSwCYIojkvSTeZYC0e9yh9iM54Qk2DQGEyClNyRnmUM3JHf0Ec/1wRsUkQ4wDnKAuZ0o8y+rjhou9Qw==",
+        "publishedAt": "2026-10-23T13:33:21Z"
       },
       "title": {
         "en": "Image Feedback",
@@ -10916,6 +10904,30 @@
         "zh": "根据父会话日志，在右侧栏查看外部子代理的委派提示词、运行上下文和返回结果；不提供外部代理内部思考或完整工具调用历史。"
       },
       "category": "workflow"
+    },
+    {
+      "name": "dsh-startlux-decision",
+      "title": {
+        "en": "StartLux Decision",
+        "zh": "StartLux Decision"
+      },
+      "description": {
+        "en": "Assess tool-call risks through StartLux. Requires a Bamboo Relay API Key and sends tool arguments and recent context to the configured service. Disabled by default; shadow mode records decisions, and errors allow the call through.",
+        "zh": "通过 StartLux 评估工具调用风险，需 Bamboo Relay API Key，并向配置的服务发送工具参数和近期上下文。默认关闭；观察模式只记录判断，异常时放行。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-kimi-assemble",
+      "title": {
+        "en": "Kimi Assemble",
+        "zh": "Kimi Assemble"
+      },
+      "description": {
+        "en": "Control a logged-in Chrome or Edge browser through the Kimi extension and WebBridge, and Windows desktops through KimiCU. Requires the corresponding Kimi runtimes to be installed separately; desktop tools operate real windows.",
+        "zh": "通过 Kimi 扩展与 WebBridge 操作已登录的 Chrome 或 Edge，通过 KimiCU 操作 Windows 桌面。需另行安装对应的 Kimi 运行组件；桌面工具会操作真实窗口。"
+      },
+      "category": "tools"
     }
   ]
 }
