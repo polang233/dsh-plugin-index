@@ -10928,6 +10928,18 @@
         "zh": "通过 Kimi 扩展与 WebBridge 操作已登录的 Chrome 或 Edge，通过 KimiCU 操作 Windows 桌面。需另行安装对应的 Kimi 运行组件；桌面工具会操作真实窗口。"
       },
       "category": "tools"
+    },
+    {
+      "name": "dsh-open-market",
+      "title": {
+        "en": "Open Plugin Market",
+        "zh": "开放插件市场"
+      },
+      "description": {
+        "en": "Adds this market to Discover and an Open Market tab to the Plugins page: rotating daily picks, rows ranked by likes and growth, a checkup of installed plugins, and likes that count once a day per plugin.",
+        "zh": "把开放插件市场加入「发现」，并在插件页增加「开放市场」标签：轮播的今日推荐、按点赞和增长排的推荐行、已装插件体检，每个插件每天可以点赞一次。"
+      },
+      "category": "interface"
     }
   ]
 }

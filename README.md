@@ -12,6 +12,7 @@ https://dshopen.org/index.json
 [![索引使用量](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.total&label=%E7%B4%A2%E5%BC%95%E4%BD%BF%E7%94%A8%E9%87%8F&color=16a34a)](https://dshopen.org/stats.json)
 [![今日使用](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.today.reads&label=%E4%BB%8A%E6%97%A5%E4%BD%BF%E7%94%A8&color=0d9488)](https://dshopen.org/stats.json)
 [![Star](https://img.shields.io/github/stars/polang233/dsh-plugin-index?style=flat&label=Star&color=f59e0b)](https://github.com/polang233/dsh-plugin-index/stargazers)
+[![npm](https://img.shields.io/npm/v/dsh-open-market?label=dsh-open-market&color=cb3837)](https://www.npmjs.com/package/dsh-open-market)
 
 DeepSeek Harness（DSH）的社区**插件市场索引**，有支持官方 **索引源** 的形式，也有独立插件市场。
 
@@ -29,11 +30,13 @@ DeepSeek Harness（DSH）的社区**插件市场索引**，有支持官方 **索
 
 **方式一：添加索引源**。在 **插件 → 实验性插件** 中打开 **自定义插件市场 → 发现 → 添加索引源**，粘贴 `https://dshopen.org/index.json`。
 
-**方式二：安装插件**。运行下面的命令安装 `dsh-open-market`，它会自动把索引加入「发现」的索引源。并加载我们的市场插件，显示信息会更全一点
+**方式二：安装插件**。运行下面的命令安装 [`dsh-open-market`](https://www.npmjs.com/package/dsh-open-market)，它会自动打开自定义插件市场，并把索引加入「发现」，重启 DSH 后生效。
 
 ```bash
-dsh plugin --profile desktop add "git+https://github.com/polang233/dsh-plugin-index.git#main&path:/packages/dsh-open-market"
+dsh plugin --profile desktop add dsh-open-market
 ```
+
+插件还会在「插件」页加一个 **开放市场** 标签：自动轮播的今日推荐、按点赞和增长排的几行推荐、已装插件体检，点开卡片能看详情、点赞和安装。设置和官网、仓库链接在「已安装」里本插件的详情页。删掉索引源后不会被加回来，想恢复时输入 `/open-market`。也可以从 GitHub 安装：`dsh plugin --profile desktop add "git+https://github.com/polang233/dsh-plugin-index.git#main&path:/packages/dsh-open-market"`。
 
 [![开放插件市场网站首页](docs/images/home-zh.webp)](https://dshopen.org/zh/)
 
@@ -48,8 +51,21 @@ dsh plugin --profile desktop add "git+https://github.com/polang233/dsh-plugin-in
 | ⚡ 更新勤 | 近 30 天发版 ≥ 10 次 |
 | ◷ 最近 / 本周 / 本月 / 三个月内更新 | 收录版本的发布时间 |
 | ↓ 100+ … 10万+ | npm 近 30 天下载量，共 7 档 |
+| ♥ 点赞 | 在开放市场标签里点赞或安装，每人每天每个插件计一次，每 3 天减 1 |
 
 **默认排序**每周从有下载量、star 或验证记录的插件中选出约 70 个，每天轮换首页前十；本周展示过的会往后排，下周重新混排。**✨ 智能推荐**也每天换一批，以随机轮换为主，少量参考最近更新和增长。**随机资源**每天独立打乱。索引每 6 小时构建一次，轮换按 UTC+8 时间的自然日计算。算法与曝光记录见 [指标说明](docs/market-display.md)。
+
+## 收录后加个徽章
+
+插件收录后，可以在自己的 README 里放上这个徽章，显示点赞数和近 30 天下载量，点击直达本站的插件页。把两处 `dsh-pet` 换成你的包名（带 scope 时写成 `@scope/name`，链接里的 `@` 写成 `%40`）：
+
+```md
+[![开放插件市场](https://img.shields.io/endpoint?url=https%3A%2F%2Fdshopen.org%2Fbadge%2Fdsh-pet.json)](https://dshopen.org/zh/plugins/dsh-pet/)
+```
+
+[![开放插件市场](https://img.shields.io/endpoint?url=https%3A%2F%2Fdshopen.org%2Fbadge%2Fdsh-pet.json)](https://dshopen.org/zh/plugins/dsh-pet/)
+
+英文版在地址后加 `%3Flang%3Den`，链接改成 `https://dshopen.org/plugins/<包名>/`。
 
 ## 提交插件
 

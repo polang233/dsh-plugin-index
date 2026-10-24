@@ -12,6 +12,7 @@ https://dshopen.org/index.json
 [![Index usage](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.total&label=index%20usage&color=16a34a)](https://dshopen.org/stats.json)
 [![Usage today](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.today.reads&label=usage%20today&color=0d9488)](https://dshopen.org/stats.json)
 [![Stars](https://img.shields.io/github/stars/polang233/dsh-plugin-index?style=flat&label=stars&color=f59e0b)](https://github.com/polang233/dsh-plugin-index/stargazers)
+[![npm](https://img.shields.io/npm/v/dsh-open-market?label=dsh-open-market&color=cb3837)](https://www.npmjs.com/package/dsh-open-market)
 
 A community **plugin market index** for DeepSeek Harness (DSH). Add it as an official **index source**, or use the standalone market plugin.
 
@@ -25,11 +26,17 @@ A community **plugin market index** for DeepSeek Harness (DSH). Add it as an off
 
 ## Use it
 
-Switch on **Custom plugin markets** under **Plugins → Experimental plugins**, then pick one:
+Pick one:
 
-**Add the source by hand.** Paste `https://dshopen.org/index.json` into **Discover → Add index source**. The earlier `https://polang233.github.io/dsh-plugin-index/index.json` still works.
+**Add the source by hand.** Switch on **Custom plugin markets** under **Plugins → Experimental plugins**, then paste `https://dshopen.org/index.json` into **Discover → Add index source**. The earlier `https://polang233.github.io/dsh-plugin-index/index.json` still works.
 
-**Install the plugin.** `dsh plugin --profile desktop add "git+https://github.com/polang233/dsh-plugin-index.git#main&path:/packages/dsh-open-market"` installs `dsh-open-market`, which adds the source for you once. Remove it later and it stays removed.
+**Install the plugin.** Run the command below to install [`dsh-open-market`](https://www.npmjs.com/package/dsh-open-market). It switches on Custom plugin markets and adds the source for you once, from the next start of DSH.
+
+```bash
+dsh plugin --profile desktop add dsh-open-market
+```
+
+The plugin also adds an **Open Market** tab to the Plugins page: a rotating row of today's picks, rows ranked by likes and growth, and a checkup of your installed plugins. Open a card for details, likes and install. Settings and links to the website and repository are on the plugin's page under Installed. Remove the source and it stays removed; `/open-market` brings it back. You can also install it from GitHub: `dsh plugin --profile desktop add "git+https://github.com/polang233/dsh-plugin-index.git#main&path:/packages/dsh-open-market"`.
 
 [![The Open Plugin Market website home](docs/images/home-en.webp)](https://dshopen.org/)
 
@@ -37,7 +44,17 @@ Switch on **Custom plugin markets** under **Plugins → Experimental plugins**, 
 
 ## Labels and sorting
 
-✅ Verified · 🔥 Rising · ⚡ Frequent updates (10+ releases in 30 days) · ◷ four update-age buckets · ↓ seven download tiers. *Default* rotates ten front-page plugins daily from a weekly pool of about seventy qualified entries. *✨ Smart picks* also changes daily, with mostly random rotation and a small preference for recent updates and growth. Entries shown this week move down, and next week reshuffles the pool. *Random resources* reshuffles independently each day. The index rebuilds every six hours; rotation follows calendar days in UTC+8. See [metrics and exposure history](docs/market-display.md).
+✅ Verified · 🔥 Rising · ⚡ Frequent updates (10+ releases in 30 days) · ◷ four update-age buckets · ↓ seven download tiers · ♥ likes from the Open Market tab (once per person, plugin and day, including installs; each plugin loses one every three days). *Default* rotates ten front-page plugins daily from a weekly pool of about seventy qualified entries. *✨ Smart picks* also changes daily, with mostly random rotation and a small preference for recent updates and growth. Entries shown this week move down, and next week reshuffles the pool. *Random resources* reshuffles independently each day. The index rebuilds every six hours; rotation follows calendar days in UTC+8. See [metrics and exposure history](docs/market-display.md).
+
+## Add a badge once you're listed
+
+Once your plugin is listed, add this badge to its README. It shows likes and 30-day downloads and links to the plugin's page here. Replace both `dsh-pet` with your package name (for a scoped name use `@scope/name`, written as `%40scope/name` in the links):
+
+```md
+[![Open Plugin Market](https://img.shields.io/endpoint?url=https%3A%2F%2Fdshopen.org%2Fbadge%2Fdsh-pet.json%3Flang%3Den)](https://dshopen.org/plugins/dsh-pet/)
+```
+
+[![Open Plugin Market](https://img.shields.io/endpoint?url=https%3A%2F%2Fdshopen.org%2Fbadge%2Fdsh-pet.json%3Flang%3Den)](https://dshopen.org/plugins/dsh-pet/)
 
 ## Submit a plugin
 
