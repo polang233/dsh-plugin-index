@@ -7,7 +7,7 @@
 
 const COUNTED = new Set(['/index.json']);
 const PLUGIN_NAMES = new WeakMap();
-const DOWNLOADS = new WeakMap();
+const BADGE_LOGO = new WeakMap();
 
 export default {
   async fetch(request, env, ctx) {
@@ -95,24 +95,27 @@ function validPluginName(name) {
   return typeof name === 'string' && name.length <= 214 && /^(?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*$/.test(name);
 }
 
-async function pluginDownloads(request, env, now) {
-  let cached = DOWNLOADS.get(env.ASSETS);
+// The badge logo is the mascot's face; shields.io takes it as SVG, so the PNG is wrapped in one.
+async function badgeLogo(request, env, now) {
+  let cached = BADGE_LOGO.get(env.ASSETS);
   if (!cached || cached.expires <= now) {
-    const packages = (async () => {
-      const response = await env.ASSETS.fetch(new Request(new URL('/downloads.json', request.url)));
-      if (!response.ok) throw new Error('Downloads unavailable');
-      const data = await response.json();
-      if (!data.packages || typeof data.packages !== 'object' || Array.isArray(data.packages)) throw new Error('Invalid downloads');
-      return data.packages;
+    const svg = (async () => {
+      const response = await env.ASSETS.fetch(new Request(new URL('/assets/badge-logo.png', request.url)));
+      if (!response.ok) throw new Error('Badge logo unavailable');
+      const bytes = new Uint8Array(await response.arrayBuffer());
+      let binary = '';
+      for (const byte of bytes) binary += String.fromCharCode(byte);
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42"><image width="42" height="42" href="data:image/png;base64,${btoa(binary)}"/></svg>`;
     })();
-    cached = { packages, expires: now + 5 * 60_000 };
-    DOWNLOADS.set(env.ASSETS, cached);
+    cached = { svg, expires: now + 60 * 60_000 };
+    BADGE_LOGO.set(env.ASSETS, cached);
   }
   try {
-    return await cached.packages;
-  } catch (error) {
-    if (DOWNLOADS.get(env.ASSETS) === cached) DOWNLOADS.delete(env.ASSETS);
-    throw error;
+    return await cached.svg;
+  } catch {
+    // A badge without the logo is still a badge.
+    if (BADGE_LOGO.get(env.ASSETS) === cached) BADGE_LOGO.delete(env.ASSETS);
+    return undefined;
   }
 }
 
@@ -123,8 +126,10 @@ function badgeNumber(value, english) {
 
 async function badge(request, env, url) {
   const english = url.searchParams.get('lang') === 'en';
+  const now = Date.now();
+  const logoSvg = await badgeLogo(request, env, now);
   const reply = (message, color = '2563eb', cacheSeconds = 1800) => likeJson({
-    schemaVersion: 1, label: english ? 'Open Plugin Market' : '开放插件市场', message, color, cacheSeconds
+    schemaVersion: 1, label: english ? 'Open Plugin Market' : '开放插件市场', message, color, cacheSeconds, ...(logoSvg ? { logoSvg } : {})
   }, 200, { 'cache-control': 'public, max-age=1800' });
   const notListed = () => reply(english ? 'not listed' : '未收录', 'lightgrey');
   let name;
@@ -136,21 +141,11 @@ async function badge(request, env, url) {
   }
   if (!validPluginName(name)) return notListed();
   try {
-    const now = Date.now();
     if (!(await pluginNames(request, env, now)).has(name)) return notListed();
-    const [rows, packages] = await Promise.all([
-      env.DB.prepare('SELECT count, decayed_at FROM likes WHERE name = ?').bind(name).all(),
-      pluginDownloads(request, env, now)
-    ]);
+    const rows = await env.DB.prepare('SELECT count, decayed_at FROM likes WHERE name = ?').bind(name).all();
     const row = rows.results[0];
     const count = row ? effectiveLikes(row, new Date(now).toISOString().slice(0, 10)) : 0;
-    const downloads = Object.hasOwn(packages, name) ? packages[name] : undefined;
-    const parts = [];
-    if (count > 0) parts.push(`♥ ${badgeNumber(count, english)}`);
-    if (downloads?.status === 'ok' && Number.isFinite(downloads.downloads) && downloads.downloads >= 0) {
-      parts.push(`↓ ${badgeNumber(downloads.downloads, english)}/${english ? 'mo' : '月'}`);
-    }
-    return reply(parts.join(' · ') || (english ? 'listed' : '已收录'));
+    return reply(`${english ? 'listed' : '已收录'} · ♥ ${badgeNumber(count, english)}`);
   } catch {
     return reply(english ? 'unavailable' : '暂不可用', 'lightgrey', 300);
   }

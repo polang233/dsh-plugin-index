@@ -92,7 +92,9 @@ test('a failed analytics query falls back to the D1 split', async () => {
 });
 
 // A local D1 stand-in executes real SQL, including transactional batches.
-function likeEnvironment(t, names = ['dsh-pet', '@scope/name'], downloads = {}) {
+const LOGO_BYTES = new Uint8Array([137, 80, 78, 71, 1, 2, 3]);
+
+function likeEnvironment(t, names = ['dsh-pet', '@scope/name']) {
   t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-10-24T12:00:00Z') });
   t.mock.method(Math, 'random', () => 1);
   const sqlite = new DatabaseSync(':memory:');
@@ -128,7 +130,7 @@ function likeEnvironment(t, names = ['dsh-pet', '@scope/name'], downloads = {}) 
     },
     ASSETS: { async fetch(request) {
       requests.push(request);
-      if (new URL(request.url).pathname === '/downloads.json') return Response.json({ schema: 1, packages: downloads });
+      if (new URL(request.url).pathname === '/assets/badge-logo.png') return new Response(LOGO_BYTES, { headers: { 'content-type': 'image/png' } });
       return Response.json({ plugins: names.map(name => ({ name })) });
     } }
   };
@@ -357,54 +359,42 @@ function readBadge(env, path = 'dsh-pet.json') {
   return worker.fetch(new Request(`https://dshopen.org/badge/${path}`), env, {});
 }
 
-async function assertBadge(response, message, { english = false, color = '2563eb', cacheSeconds = 1800 } = {}) {
+const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42"><image width="42" height="42" href="data:image/png;base64,${Buffer.from(LOGO_BYTES).toString('base64')}"/></svg>`;
+
+async function assertBadge(response, message, { english = false, color = '2563eb', cacheSeconds = 1800, logo = true } = {}) {
   assert.equal(response.status, 200);
   assertCors(response);
   assert.equal(response.headers.get('content-type'), 'application/json; charset=utf-8');
   assert.equal(response.headers.get('cache-control'), 'public, max-age=1800');
   assert.deepEqual(await response.json(), {
-    schemaVersion: 1, label: english ? 'Open Plugin Market' : '开放插件市场', message, color, cacheSeconds
+    schemaVersion: 1, label: english ? 'Open Plugin Market' : '开放插件市场', message, color, cacheSeconds, ...(logo ? { logoSvg: LOGO_SVG } : {})
   });
 }
 
-test('badges combine effective likes and monthly downloads without changing stored likes or counting reads', async t => {
-  const { env, sqlite, requests } = likeEnvironment(t, ['dsh-pet'], {
-    'dsh-pet': { status: 'ok', downloads: 14871, week: 2869 }
-  });
+test('badges show the listing with effective likes and the face logo, without changing stored likes or counting reads', async t => {
+  const { env, sqlite, requests } = likeEnvironment(t, ['dsh-pet']);
   sqlite.exec("INSERT INTO likes VALUES ('dsh-pet', 14, '2026-10-17')");
-  await assertBadge(await readBadge(env), '♥ 12 · ↓ 1.5万/月');
-  await assertBadge(await readBadge(env, 'dsh-pet.json?lang=en'), '♥ 12 · ↓ 14.9k/mo', { english: true });
+  await assertBadge(await readBadge(env), '已收录 · ♥ 12');
+  await assertBadge(await readBadge(env, 'dsh-pet.json?lang=en'), 'listed · ♥ 12', { english: true });
   assert.equal(sqlite.prepare('SELECT count FROM likes').get().count, 14);
   assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM reads').get().count, 0);
-  assert.deepEqual(requests.map(request => request.url), ['https://dshopen.org/index.json', 'https://dshopen.org/downloads.json']);
+  assert.deepEqual(requests.map(request => request.url).sort(), ['https://dshopen.org/assets/badge-logo.png', 'https://dshopen.org/index.json']);
 });
 
-test('badges show downloads alone, including zero, and hide missing or unsuccessful download entries', async t => {
-  const names = ['downloads-only', 'zero', 'missing', 'failed', 'invalid'];
-  const { env, sqlite } = likeEnvironment(t, names, {
-    'downloads-only': { status: 'ok', downloads: 9876 },
-    zero: { status: 'ok', downloads: 0 },
-    failed: { status: 'error', downloads: 123 },
-    invalid: { status: 'ok', downloads: -1 }
-  });
-  sqlite.exec("INSERT INTO likes VALUES ('downloads-only', 1, '2026-10-14')");
-  await assertBadge(await readBadge(env, 'downloads-only.json'), '↓ 9876/月');
-  await assertBadge(await readBadge(env, 'zero.json'), '↓ 0/月');
-  for (const name of ['missing', 'failed', 'invalid']) {
-    await assertBadge(await readBadge(env, `${name}.json`), '已收录');
-    await assertBadge(await readBadge(env, `${name}.json?lang=en`), 'listed', { english: true });
+test('listed plugins without likes, or with fully decayed likes, show zero', async t => {
+  const { env, sqlite } = likeEnvironment(t, ['fresh', 'faded']);
+  sqlite.exec("INSERT INTO likes VALUES ('faded', 1, '2026-10-14')");
+  for (const name of ['fresh', 'faded']) {
+    await assertBadge(await readBadge(env, `${name}.json`), '已收录 · ♥ 0');
+    await assertBadge(await readBadge(env, `${name}.json?lang=en`), 'listed · ♥ 0', { english: true });
   }
-  sqlite.exec("INSERT INTO likes VALUES ('missing', 7, '2026-10-24')");
-  await assertBadge(await readBadge(env, 'missing.json'), '♥ 7');
 });
 
 test('badges accept scoped package names with literal or encoded @', async t => {
-  const { env, sqlite } = likeEnvironment(t, ['@a9i5k4/dsh-auto-memory'], {
-    '@a9i5k4/dsh-auto-memory': { status: 'ok', downloads: 14871 }
-  });
+  const { env, sqlite } = likeEnvironment(t, ['@a9i5k4/dsh-auto-memory']);
   sqlite.exec("INSERT INTO likes VALUES ('@a9i5k4/dsh-auto-memory', 3, '2026-10-24')");
   for (const scope of ['@a9i5k4', '%40a9i5k4']) {
-    await assertBadge(await readBadge(env, `${scope}/dsh-auto-memory.json`), '♥ 3 · ↓ 1.5万/月');
+    await assertBadge(await readBadge(env, `${scope}/dsh-auto-memory.json`), '已收录 · ♥ 3');
   }
 });
 
@@ -415,10 +405,10 @@ test('unlisted and malformed badge names return grey badges and skip unnecessary
     await assertBadge(await readBadge(env, path), '未收录', { color: 'lightgrey' });
     await assertBadge(await readBadge(env, `${path}?lang=en`), 'not listed', { color: 'lightgrey', english: true });
   }
-  assert.deepEqual(requests.map(request => request.url), ['https://dshopen.org/index.json']);
+  assert.deepEqual(requests.map(request => request.url).sort(), ['https://dshopen.org/assets/badge-logo.png', 'https://dshopen.org/index.json']);
 });
 
-test('badge numbers use Chinese and English units at their boundaries for both likes and downloads', async t => {
+test('badge like counts use Chinese and English units at their boundaries', async t => {
   const cases = [
     [999, '999', '999'],
     [1000, '1000', '1k'],
@@ -426,52 +416,50 @@ test('badge numbers use Chinese and English units at their boundaries for both l
     [10000, '1万', '10k'],
     [14871, '1.5万', '14.9k'],
     [100000, '10万', '100k'],
-    [999999, '100万', '1000k'],
     [1000000, '100万', '1M'],
     [1500000, '150万', '1.5M']
   ];
-  const names = cases.map(([value]) => `plugin-${value}`);
-  const { env, sqlite } = likeEnvironment(t, names, Object.fromEntries(cases.map(([value]) => [
-    `plugin-${value}`, { status: 'ok', downloads: value }
-  ])));
+  const { env, sqlite } = likeEnvironment(t, cases.map(([value]) => `plugin-${value}`));
   for (const [value, chinese, english] of cases) {
     const name = `plugin-${value}`;
     sqlite.prepare('INSERT INTO likes VALUES (?, ?, ?)').run(name, value, '2026-10-24');
-    await assertBadge(await readBadge(env, `${name}.json`), `♥ ${chinese} · ↓ ${chinese}/月`);
-    await assertBadge(await readBadge(env, `${name}.json?lang=en`), `♥ ${english} · ↓ ${english}/mo`, { english: true });
+    await assertBadge(await readBadge(env, `${name}.json`), `已收录 · ♥ ${chinese}`);
+    await assertBadge(await readBadge(env, `${name}.json?lang=en`), `listed · ♥ ${english}`, { english: true });
   }
 });
 
-test('concurrent badges share five-minute asset caches, refresh on expiry, and reuse the like plugin list', async t => {
-  const downloads = { 'dsh-pet': { status: 'ok', downloads: 100 } };
-  const { env, names, requests } = likeEnvironment(t, ['dsh-pet'], downloads);
-  await Promise.all(Array.from({ length: 4 }, async () => assertBadge(await readBadge(env), '↓ 100/月')));
+test('concurrent badges share the asset caches and the plugin list refreshes after five minutes', async t => {
+  const { env, names, requests } = likeEnvironment(t, ['dsh-pet']);
+  await Promise.all(Array.from({ length: 4 }, async () => assertBadge(await readBadge(env), '已收录 · ♥ 0')));
   assert.equal(requests.length, 2);
   names.push('new-plugin');
-  downloads['dsh-pet'].downloads = 200;
   t.mock.timers.tick(5 * 60_000 - 1);
-  await assertBadge(await readBadge(env), '↓ 100/月');
-  assert.equal((await sendLike(env, 'new-plugin')).status, 400);
-  assert.equal(requests.length, 2);
+  await assertBadge(await readBadge(env, 'new-plugin.json'), '未收录', { color: 'lightgrey' });
   t.mock.timers.tick(1);
-  await assertBadge(await readBadge(env), '↓ 200/月');
-  assert.equal((await sendLike(env, 'new-plugin')).status, 200);
-  assert.equal(requests.length, 4);
+  await assertBadge(await readBadge(env, 'new-plugin.json'), '已收录 · ♥ 0');
+  assert.equal(requests.filter(request => request.url.endsWith('/badge-logo.png')).length, 1);
 });
 
-for (const asset of ['/index.json', '/downloads.json']) {
-  test(`badge asset failures at ${asset} return unavailable and allow retry`, async t => {
-    const { env } = likeEnvironment(t);
-    const originalFetch = env.ASSETS.fetch;
-    for (const failure of [() => new Response('unavailable', { status: 503 }), () => new Response('invalid json'), () => Response.json({})]) {
-      t.mock.method(env.ASSETS, 'fetch', async request => new URL(request.url).pathname === asset ? failure() : originalFetch(request));
-      await assertBadge(await readBadge(env), '暂不可用', { color: 'lightgrey', cacheSeconds: 300 });
-      await assertBadge(await readBadge(env, 'dsh-pet.json?lang=en'), 'unavailable', { english: true, color: 'lightgrey', cacheSeconds: 300 });
-      env.ASSETS.fetch.mock.restore();
-    }
-    await assertBadge(await readBadge(env), '已收录');
-  });
-}
+test('badges without the logo asset still answer, and fetch the logo again later', async t => {
+  const { env } = likeEnvironment(t);
+  const originalFetch = env.ASSETS.fetch;
+  t.mock.method(env.ASSETS, 'fetch', async request => new URL(request.url).pathname === '/assets/badge-logo.png' ? new Response('missing', { status: 404 }) : originalFetch(request));
+  await assertBadge(await readBadge(env), '已收录 · ♥ 0', { logo: false });
+  env.ASSETS.fetch.mock.restore();
+  await assertBadge(await readBadge(env), '已收录 · ♥ 0');
+});
+
+test('badge index failures return unavailable and allow retry', async t => {
+  const { env } = likeEnvironment(t);
+  const originalFetch = env.ASSETS.fetch;
+  for (const failure of [() => new Response('unavailable', { status: 503 }), () => new Response('invalid json'), () => Response.json({})]) {
+    t.mock.method(env.ASSETS, 'fetch', async request => new URL(request.url).pathname === '/index.json' ? failure() : originalFetch(request));
+    await assertBadge(await readBadge(env), '暂不可用', { color: 'lightgrey', cacheSeconds: 300 });
+    await assertBadge(await readBadge(env, 'dsh-pet.json?lang=en'), 'unavailable', { english: true, color: 'lightgrey', cacheSeconds: 300 });
+    env.ASSETS.fetch.mock.restore();
+  }
+  await assertBadge(await readBadge(env), '已收录 · ♥ 0');
+});
 
 test('badge database errors return unavailable with HTTP 200 in both languages', async t => {
   const { env, sqlite } = likeEnvironment(t);

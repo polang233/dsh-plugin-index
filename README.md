@@ -12,7 +12,8 @@ https://dshopen.org/index.json
 [![索引使用量](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.total&label=%E7%B4%A2%E5%BC%95%E4%BD%BF%E7%94%A8%E9%87%8F&color=16a34a)](https://dshopen.org/stats.json)
 [![今日使用](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.today.reads&label=%E4%BB%8A%E6%97%A5%E4%BD%BF%E7%94%A8&color=0d9488)](https://dshopen.org/stats.json)
 [![Star](https://img.shields.io/github/stars/polang233/dsh-plugin-index?style=flat&label=Star&color=f59e0b)](https://github.com/polang233/dsh-plugin-index/stargazers)
-[![npm](https://img.shields.io/npm/v/dsh-open-market?label=dsh-open-market&color=cb3837)](https://www.npmjs.com/package/dsh-open-market)
+[![npm](https://img.shields.io/npm/v/dsh-open-market?label=npm&color=2563eb&logo=npm)](https://www.npmjs.com/package/dsh-open-market)
+[![开放插件市场](https://img.shields.io/endpoint?url=https%3A%2F%2Fdshopen.org%2Fbadge%2Fdsh-open-market.json)](https://dshopen.org/zh/plugins/dsh-open-market/)
 
 DeepSeek Harness（DSH）的社区**插件市场索引**，有支持官方 **索引源** 的形式，也有独立插件市场。
 
@@ -57,7 +58,7 @@ dsh plugin --profile desktop add dsh-open-market
 
 ## 收录后加个徽章
 
-插件收录后，可以在自己的 README 里放上这个徽章，显示点赞数和近 30 天下载量，点击直达本站的插件页。把两处 `dsh-pet` 换成你的包名（带 scope 时写成 `@scope/name`，链接里的 `@` 写成 `%40`）：
+插件收录后，可以在自己的 README 里放上这个徽章，带本站的头像，显示「已收录」和当前点赞数，点击直达本站的插件页。把两处 `dsh-pet` 换成你的包名（带 scope 时写成 `@scope/name`，链接里的 `@` 写成 `%40`）：
 
 ```md
 [![开放插件市场](https://img.shields.io/endpoint?url=https%3A%2F%2Fdshopen.org%2Fbadge%2Fdsh-pet.json)](https://dshopen.org/zh/plugins/dsh-pet/)
@@ -65,7 +66,7 @@ dsh plugin --profile desktop add dsh-open-market
 
 [![开放插件市场](https://img.shields.io/endpoint?url=https%3A%2F%2Fdshopen.org%2Fbadge%2Fdsh-pet.json)](https://dshopen.org/zh/plugins/dsh-pet/)
 
-英文版在地址后加 `%3Flang%3Den`，链接改成 `https://dshopen.org/plugins/<包名>/`。
+点赞数每 3 天减 1，会随着用户点赞实时变化（徽章约半小时刷新一次）。英文版在地址后加 `%3Flang%3Den`，链接改成 `https://dshopen.org/plugins/<包名>/`。
 
 ## 提交插件
 

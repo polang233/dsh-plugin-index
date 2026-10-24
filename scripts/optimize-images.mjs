@@ -72,8 +72,15 @@ if (!selected.size || selected.has('logo')) {
   console.log(`site/favicon.ico  16/32/48  ${Math.round(offset / 1024)} KB`);
   await copyFile(join(root, 'site/logo-256.png'), join(root, 'packages/dsh-open-market/icon.png'));
   console.log('packages/dsh-open-market/icon.png  copied from site/logo-256.png');
-  // Keep the directory's fallback portrait in the same character design as the logo.
   const { width, height } = await sharp(master).metadata();
+  // The listing badge shows the logo at 14px, where only the face reads, so it gets a tight crop.
+  await sharp(master).extract({
+    left: Math.round(width * .20), top: Math.round(height * .15),
+    width: Math.round(width * .44), height: Math.round(height * .44),
+  }).resize({ width: 42, height: 42 }).png({ compressionLevel: 9, adaptiveFiltering: true })
+    .toFile(join(root, 'site/badge-logo.png'));
+  console.log('site/badge-logo.png  42x42 face crop for the listing badge');
+  // Keep the directory's fallback portrait in the same character design as the logo.
   const portrait = sharp(master).extract({
     left: Math.round(width * .075), top: Math.round(height * .055),
     width: Math.round(width * .68), height: Math.round(height * .68),

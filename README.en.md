@@ -12,7 +12,8 @@ https://dshopen.org/index.json
 [![Index usage](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.total&label=index%20usage&color=16a34a)](https://dshopen.org/stats.json)
 [![Usage today](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.today.reads&label=usage%20today&color=0d9488)](https://dshopen.org/stats.json)
 [![Stars](https://img.shields.io/github/stars/polang233/dsh-plugin-index?style=flat&label=stars&color=f59e0b)](https://github.com/polang233/dsh-plugin-index/stargazers)
-[![npm](https://img.shields.io/npm/v/dsh-open-market?label=dsh-open-market&color=cb3837)](https://www.npmjs.com/package/dsh-open-market)
+[![npm](https://img.shields.io/npm/v/dsh-open-market?label=npm&color=2563eb&logo=npm)](https://www.npmjs.com/package/dsh-open-market)
+[![Open Plugin Market](https://img.shields.io/endpoint?url=https%3A%2F%2Fdshopen.org%2Fbadge%2Fdsh-open-market.json%3Flang%3Den)](https://dshopen.org/plugins/dsh-open-market/)
 
 A community **plugin market index** for DeepSeek Harness (DSH). Add it as an official **index source**, or use the standalone market plugin.
 
@@ -48,7 +49,7 @@ The plugin also adds an **Open Market** tab to the Plugins page: a rotating row 
 
 ## Add a badge once you're listed
 
-Once your plugin is listed, add this badge to its README. It shows likes and 30-day downloads and links to the plugin's page here. Replace both `dsh-pet` with your package name (for a scoped name use `@scope/name`, written as `%40scope/name` in the links):
+Once your plugin is listed, add this badge to its README. It carries our mascot, says the plugin is listed with its current likes, and links to the plugin's page here. Likes lose one every three days, and the badge refreshes about every half hour. Replace both `dsh-pet` with your package name (for a scoped name use `@scope/name`, written as `%40scope/name` in the links):
 
 ```md
 [![Open Plugin Market](https://img.shields.io/endpoint?url=https%3A%2F%2Fdshopen.org%2Fbadge%2Fdsh-pet.json%3Flang%3Den)](https://dshopen.org/plugins/dsh-pet/)
