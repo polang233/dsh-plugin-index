@@ -10,7 +10,7 @@
     "binding": "ASSETS",
     "not_found_handling": "404-page",
     // Only these paths run the Worker; everything else is served straight from the asset store.
-    "run_worker_first": ["/index.json", "/stats.json"]
+    "run_worker_first": ["/index.json", "/stats.json", "/likes.json", "/api/*", "/badge/*"]
   },
   "d1_databases": [
     { "binding": "DB", "database_name": "dshopen-stats", "database_id": "408308fd-fe81-4fdd-8b5d-ce3447e53eb6" }

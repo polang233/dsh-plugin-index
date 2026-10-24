@@ -149,7 +149,15 @@ npx wrangler secret put CF_ZONE_ID --config cloudflare/wrangler.jsonc
 
 `stats.json` then reports `countries.source: "cloudflare"` and `metric: "reads"`. If the query fails, the Worker logs the error and falls back to its own D1 split (`source: "d1"`, `metric: "readers"`).
 
-## Search engines
+## Likes
+
+The Worker also serves likes for the Open Market tab of the `dsh-open-market` plugin:
+
+- `GET /likes.json`: each plugin's current likes after decay, listing only those above zero; cached for 60 seconds.
+- `POST /api/like`: body `{name, source}`, where `source` is `like` or `install` (an install counts as a like).
+
+Each person likes a plugin at most once a day, and a like and an install share that once; each person has at most 100 a day. A person is the day's salted hash of IP and user agent, neither of which is stored. From its first like, each plugin loses one like every full three days, never below zero, settled lazily by date on reads and writes. Names missing from the current `index.json` are refused. The `likes` table and the daily `like_votes` table are in `cloudflare/schema.sql`; run the `d1 execute` above before deploying. The plugin has a setting to opt out of likes, which stops both requests.
+
 
 `sitemap.xml` lists every page in all three languages with `hreflang` alternates (`zh-TW` and `zh-HK` point to the Traditional pages). Submit `https://dshopen.org/sitemap.xml` once in Google Search Console and Bing Webmaster Tools; both pick up later changes on their own.
 

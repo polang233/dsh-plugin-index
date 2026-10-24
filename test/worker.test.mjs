@@ -1,5 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { DatabaseSync } from 'node:sqlite';
 import worker from '../cloudflare/worker.js';
 
 // A D1 stand-in that answers the statements stats() batches, by matching their SQL.
@@ -86,4 +89,393 @@ test('a failed analytics query falls back to the D1 split', async () => {
     globalThis.fetch = originalFetch;
     console.error = originalError;
   }
+});
+
+// A local D1 stand-in executes real SQL, including transactional batches.
+function likeEnvironment(t, names = ['dsh-pet', '@scope/name'], downloads = {}) {
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-10-24T12:00:00Z') });
+  t.mock.method(Math, 'random', () => 1);
+  const sqlite = new DatabaseSync(':memory:');
+  sqlite.exec(readFileSync(new URL('../cloudflare/schema.sql', import.meta.url), 'utf8'));
+  t.after(() => sqlite.close());
+  const execute = (sql, values) => {
+    const statement = sqlite.prepare(sql);
+    if (statement.columns().length) return { results: statement.all(...values).map(row => ({ ...row })) };
+    return { results: [], meta: { changes: Number(statement.run(...values).changes) } };
+  };
+  const prepare = (sql, values = []) => ({
+    sql, values,
+    bind(...bound) { return prepare(sql, bound); },
+    async run() { return execute(sql, values); },
+    async all() { return execute(sql, values); }
+  });
+  const requests = [];
+  const env = {
+    STATS_SALT: 'test-salt',
+    DB: {
+      prepare,
+      async batch(statements) {
+        sqlite.exec('BEGIN');
+        try {
+          const results = statements.map(item => execute(item.sql, item.values));
+          sqlite.exec('COMMIT');
+          return results;
+        } catch (error) {
+          sqlite.exec('ROLLBACK');
+          throw error;
+        }
+      }
+    },
+    ASSETS: { async fetch(request) {
+      requests.push(request);
+      if (new URL(request.url).pathname === '/downloads.json') return Response.json({ schema: 1, packages: downloads });
+      return Response.json({ plugins: names.map(name => ({ name })) });
+    } }
+  };
+  return { env, sqlite, requests, names };
+}
+
+function sendLike(env, name = 'dsh-pet', source = 'like', { ip = '192.0.2.1', ua = 'test-client', type = 'application/json' } = {}) {
+  return worker.fetch(new Request('https://dshopen.org/api/like', {
+    method: 'POST',
+    headers: { 'content-type': type, 'cf-connecting-ip': ip, 'user-agent': ua },
+    body: JSON.stringify({ name, source })
+  }), env, {});
+}
+
+function readLikes(env) {
+  return worker.fetch(new Request('https://dshopen.org/likes.json'), env, {});
+}
+
+function assertCors(response) {
+  assert.equal(response.headers.get('access-control-allow-origin'), '*');
+}
+
+test('likes accept JSON and text/plain, support scoped names, and publish the totals', async t => {
+  const { env, requests } = likeEnvironment(t, ['dsh-pet', '@scope/name', 'dsh~pet']);
+  const response = await sendLike(env);
+  assert.equal(response.status, 200);
+  assertCors(response);
+  assert.equal(response.headers.get('cache-control'), 'no-store');
+  assert.deepEqual(await response.json(), { name: 'dsh-pet', likes: 1, counted: true });
+  const installed = await sendLike(env, '@scope/name', 'install', { type: 'text/plain;charset=UTF-8' });
+  assert.equal(installed.status, 200);
+  assertCors(installed);
+  assert.deepEqual(await installed.json(), { name: '@scope/name', likes: 1, counted: true });
+  assert.equal((await sendLike(env, 'dsh~pet')).status, 200);
+  const listed = await readLikes(env);
+  assert.equal(listed.status, 200);
+  assertCors(listed);
+  assert.equal(listed.headers.get('content-type'), 'application/json; charset=utf-8');
+  assert.equal(listed.headers.get('cache-control'), 'public, max-age=60');
+  const body = await listed.json();
+  assert.equal(body.schema, 1);
+  assert.equal(body.generatedAt, '2026-10-24T12:00:00.000Z');
+  assert.match(body.rule, /three days/);
+  assert.deepEqual(body.likes, { 'dsh-pet': 1, '@scope/name': 1, 'dsh~pet': 1 });
+  assert.equal(requests.length, 1);
+  assert.equal(requests[0].url, 'https://dshopen.org/index.json');
+});
+
+test('like and install share one daily vote, and a new UTC day allows another', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  assert.equal((await (await sendLike(env)).json()).counted, true);
+  for (const source of ['like', 'install']) {
+    const response = await sendLike(env, 'dsh-pet', source);
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), { name: 'dsh-pet', likes: 1, counted: false });
+  }
+  t.mock.timers.setTime(Date.parse('2026-10-25T00:00:00Z'));
+  assert.deepEqual(await (await sendLike(env, 'dsh-pet', 'install')).json(), { name: 'dsh-pet', likes: 2, counted: true });
+  const votes = sqlite.prepare('SELECT * FROM like_votes ORDER BY day').all();
+  assert.equal(votes.length, 2);
+  assert.notEqual(votes[0].hash, votes[1].hash);
+});
+
+test('likes and reads use the same salted daily hash, and IP, UA, and salt distinguish people', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  await sendLike(env);
+  await sendLike(env, 'dsh-pet', 'like', { ip: '192.0.2.2' });
+  await sendLike(env, 'dsh-pet', 'like', { ua: 'another-client' });
+  const waits = [];
+  await worker.fetch(new Request('https://dshopen.org/index.json', {
+    headers: { 'cf-connecting-ip': '192.0.2.1', 'user-agent': 'test-client' }
+  }), env, { waitUntil: promise => waits.push(promise) });
+  await Promise.all(waits);
+  const expected = createHash('sha256').update('test-salt|2026-10-24|192.0.2.1|test-client').digest('hex').slice(0, 24);
+  assert.equal(sqlite.prepare('SELECT hash FROM visitors').get().hash, expected);
+  assert.equal(sqlite.prepare('SELECT hash FROM like_votes WHERE hash = ?').get(expected).hash, expected);
+  env.STATS_SALT = 'another-salt';
+  assert.deepEqual(await (await sendLike(env)).json(), { name: 'dsh-pet', likes: 4, counted: true });
+  const votes = sqlite.prepare('SELECT * FROM like_votes').all();
+  assert.equal(votes.length, 4);
+  assert.deepEqual(Object.keys(votes[0]).sort(), ['day', 'hash', 'name']);
+  assert.ok(votes.every(vote => /^[a-f0-9]{24}$/.test(vote.hash)));
+});
+
+test('unknown and malformed plugin names return 400 without recording a vote', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  for (const name of ['missing', '', '../dsh-pet', '@scope', 'DSH-PET', 'x'.repeat(215), null, 42]) {
+    const response = await sendLike(env, name);
+    assert.equal(response.status, 400);
+    assertCors(response);
+    assert.deepEqual(await response.json(), { error: 'unknown-plugin' });
+  }
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM like_votes').get().count, 0);
+  assert.deepEqual((await (await readLikes(env)).json()).likes, {});
+});
+
+test('the published plugin list is cached for five minutes and then refreshed', async t => {
+  const { env, requests, names } = likeEnvironment(t);
+  await sendLike(env);
+  names.push('new-plugin');
+  assert.equal((await sendLike(env, 'new-plugin')).status, 400);
+  t.mock.timers.tick(5 * 60_000 - 1);
+  assert.equal((await sendLike(env, 'new-plugin')).status, 400);
+  assert.equal(requests.length, 1);
+  t.mock.timers.tick(1);
+  assert.equal((await sendLike(env, 'new-plugin')).status, 200);
+  assert.equal(requests.length, 2);
+});
+
+test('the daily limit is 100 distinct plugins, duplicates remain successful, and tomorrow resets it', async t => {
+  const names = Array.from({ length: 101 }, (_, i) => `plugin-${i}`);
+  const { env, sqlite, requests } = likeEnvironment(t, names);
+  for (const name of names.slice(0, 100)) {
+    const response = await sendLike(env, name);
+    assert.equal(response.status, 200);
+    assert.equal((await response.json()).counted, true);
+  }
+  const limited = await sendLike(env, names[100], 'install');
+  assert.equal(limited.status, 429);
+  assertCors(limited);
+  assert.deepEqual(await limited.json(), { error: 'daily-limit' });
+  assert.deepEqual(await (await sendLike(env, names[0], 'install')).json(), { name: names[0], likes: 1, counted: false });
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM like_votes').get().count, 100);
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM likes').get().count, 100);
+  assert.equal(requests.length, 1);
+  assert.equal((await sendLike(env, names[100], 'like', { ip: '192.0.2.2' })).status, 200);
+  t.mock.timers.setTime(Date.parse('2026-10-25T00:00:00Z'));
+  assert.deepEqual(await (await sendLike(env, names[100])).json(), { name: names[100], likes: 2, counted: true });
+});
+
+test('reads decay lazily, omit zero totals, and leave stored totals untouched', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  sqlite.exec("INSERT INTO likes VALUES ('dsh-pet', 5, '2026-10-17'), ('@scope/name', 1, '2026-10-14')");
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { 'dsh-pet': 3 });
+  assert.equal(sqlite.prepare("SELECT count FROM likes WHERE name = 'dsh-pet'").get().count, 5);
+  assert.deepEqual(await (await sendLike(env, '@scope/name')).json(), { name: '@scope/name', likes: 1, counted: true });
+  assert.deepEqual({ ...sqlite.prepare("SELECT * FROM likes WHERE name = '@scope/name'").get() }, {
+    name: '@scope/name', count: 1, decayed_at: '2026-10-24'
+  });
+});
+
+test('writes settle whole decay cycles, preserve the remainder, and restart after reaching zero', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  sqlite.exec("INSERT INTO likes VALUES ('dsh-pet', 5, '2026-10-17'), ('@scope/name', 1, '2026-10-21')");
+  assert.deepEqual(await (await sendLike(env)).json(), { name: 'dsh-pet', likes: 4, counted: true });
+  assert.deepEqual({ ...sqlite.prepare("SELECT * FROM likes WHERE name = 'dsh-pet'").get() }, {
+    name: 'dsh-pet', count: 4, decayed_at: '2026-10-23'
+  });
+  assert.deepEqual(await (await sendLike(env, '@scope/name')).json(), { name: '@scope/name', likes: 1, counted: true });
+  assert.equal(sqlite.prepare("SELECT decayed_at FROM likes WHERE name = '@scope/name'").get().decayed_at, '2026-10-24');
+  t.mock.timers.setTime(Date.parse('2026-10-26T00:00:00Z'));
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { 'dsh-pet': 3, '@scope/name': 1 });
+  t.mock.timers.setTime(Date.parse('2026-10-27T00:00:00Z'));
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { 'dsh-pet': 3 });
+});
+
+test('a duplicate returns the decayed total without modifying the stored total', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  await sendLike(env);
+  sqlite.exec("UPDATE likes SET count = 1, decayed_at = '2026-10-14' WHERE name = 'dsh-pet'");
+  assert.deepEqual(await (await sendLike(env, 'dsh-pet', 'install')).json(), { name: 'dsh-pet', likes: 0, counted: false });
+  assert.equal(sqlite.prepare('SELECT count FROM likes').get().count, 1);
+  assert.deepEqual((await (await readLikes(env)).json()).likes, {});
+});
+
+test('concurrent votes keep deduplication and the daily limit atomic', async t => {
+  const names = Array.from({ length: 102 }, (_, i) => `plugin-${i}`);
+  const { env, sqlite } = likeEnvironment(t, names);
+  const duplicate = await Promise.all(Array.from({ length: 8 }, () => sendLike(env, names[0])));
+  const bodies = await Promise.all(duplicate.map(response => response.json()));
+  assert.equal(bodies.filter(body => body.counted).length, 1);
+  const votes = await Promise.all(names.slice(1).map(name => sendLike(env, name)));
+  assert.equal(votes.filter(response => response.status === 200).length, 99);
+  assert.equal(votes.filter(response => response.status === 429).length, 2);
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM like_votes').get().count, 100);
+  assert.equal(sqlite.prepare('SELECT SUM(count) AS count FROM likes').get().count, 100);
+});
+
+test('OPTIONS allows cross-origin POST with content-type, and unsupported methods have CORS', async t => {
+  const { env, requests } = likeEnvironment(t);
+  const response = await worker.fetch(new Request('https://dshopen.org/api/like', {
+    method: 'OPTIONS',
+    headers: { origin: 'https://example.org', 'access-control-request-method': 'POST', 'access-control-request-headers': 'content-type' }
+  }), env, {});
+  assert.equal(response.status, 204);
+  assertCors(response);
+  assert.equal(response.headers.get('access-control-allow-methods'), 'POST');
+  assert.equal(response.headers.get('access-control-allow-headers'), 'content-type');
+  assert.equal(await response.text(), '');
+  assert.equal(requests.length, 0);
+  const unsupported = await worker.fetch(new Request('https://dshopen.org/api/like'), env, {});
+  assert.equal(unsupported.status, 405);
+  assertCors(unsupported);
+});
+
+test('index and database errors return JSON with CORS, and failed indexes can be retried', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  t.mock.method(env.ASSETS, 'fetch', async () => new Response('unavailable', { status: 503 }));
+  const unavailable = await sendLike(env);
+  assert.equal(unavailable.status, 500);
+  assertCors(unavailable);
+  assert.deepEqual(await unavailable.json(), { error: 'internal-error' });
+  env.ASSETS.fetch.mock.restore();
+  assert.equal((await sendLike(env)).status, 200);
+  sqlite.exec('DROP TABLE likes');
+  const brokenRead = await readLikes(env);
+  assert.equal(brokenRead.status, 500);
+  assertCors(brokenRead);
+  const brokenWrite = await sendLike(env, '@scope/name');
+  assert.equal(brokenWrite.status, 500);
+  assertCors(brokenWrite);
+  assert.deepEqual(await brokenWrite.json(), { error: 'internal-error' });
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM like_votes').get().count, 1, 'the failed batch rolls back its vote');
+});
+
+test('old deduplication hashes are occasionally pruned without changing totals', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  await sendLike(env);
+  t.mock.timers.setTime(Date.parse('2026-10-25T00:00:00Z'));
+  Math.random.mock.mockImplementation(() => 0);
+  assert.deepEqual(await (await sendLike(env)).json(), { name: 'dsh-pet', likes: 2, counted: true });
+  assert.deepEqual(sqlite.prepare('SELECT day FROM like_votes').all().map(row => row.day), ['2026-10-25']);
+});
+
+function readBadge(env, path = 'dsh-pet.json') {
+  return worker.fetch(new Request(`https://dshopen.org/badge/${path}`), env, {});
+}
+
+async function assertBadge(response, message, { english = false, color = '2563eb', cacheSeconds = 1800 } = {}) {
+  assert.equal(response.status, 200);
+  assertCors(response);
+  assert.equal(response.headers.get('content-type'), 'application/json; charset=utf-8');
+  assert.equal(response.headers.get('cache-control'), 'public, max-age=1800');
+  assert.deepEqual(await response.json(), {
+    schemaVersion: 1, label: english ? 'Open Plugin Market' : '开放插件市场', message, color, cacheSeconds
+  });
+}
+
+test('badges combine effective likes and monthly downloads without changing stored likes or counting reads', async t => {
+  const { env, sqlite, requests } = likeEnvironment(t, ['dsh-pet'], {
+    'dsh-pet': { status: 'ok', downloads: 14871, week: 2869 }
+  });
+  sqlite.exec("INSERT INTO likes VALUES ('dsh-pet', 14, '2026-10-17')");
+  await assertBadge(await readBadge(env), '♥ 12 · ↓ 1.5万/月');
+  await assertBadge(await readBadge(env, 'dsh-pet.json?lang=en'), '♥ 12 · ↓ 14.9k/mo', { english: true });
+  assert.equal(sqlite.prepare('SELECT count FROM likes').get().count, 14);
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM reads').get().count, 0);
+  assert.deepEqual(requests.map(request => request.url), ['https://dshopen.org/index.json', 'https://dshopen.org/downloads.json']);
+});
+
+test('badges show downloads alone, including zero, and hide missing or unsuccessful download entries', async t => {
+  const names = ['downloads-only', 'zero', 'missing', 'failed', 'invalid'];
+  const { env, sqlite } = likeEnvironment(t, names, {
+    'downloads-only': { status: 'ok', downloads: 9876 },
+    zero: { status: 'ok', downloads: 0 },
+    failed: { status: 'error', downloads: 123 },
+    invalid: { status: 'ok', downloads: -1 }
+  });
+  sqlite.exec("INSERT INTO likes VALUES ('downloads-only', 1, '2026-10-14')");
+  await assertBadge(await readBadge(env, 'downloads-only.json'), '↓ 9876/月');
+  await assertBadge(await readBadge(env, 'zero.json'), '↓ 0/月');
+  for (const name of ['missing', 'failed', 'invalid']) {
+    await assertBadge(await readBadge(env, `${name}.json`), '已收录');
+    await assertBadge(await readBadge(env, `${name}.json?lang=en`), 'listed', { english: true });
+  }
+  sqlite.exec("INSERT INTO likes VALUES ('missing', 7, '2026-10-24')");
+  await assertBadge(await readBadge(env, 'missing.json'), '♥ 7');
+});
+
+test('badges accept scoped package names with literal or encoded @', async t => {
+  const { env, sqlite } = likeEnvironment(t, ['@a9i5k4/dsh-auto-memory'], {
+    '@a9i5k4/dsh-auto-memory': { status: 'ok', downloads: 14871 }
+  });
+  sqlite.exec("INSERT INTO likes VALUES ('@a9i5k4/dsh-auto-memory', 3, '2026-10-24')");
+  for (const scope of ['@a9i5k4', '%40a9i5k4']) {
+    await assertBadge(await readBadge(env, `${scope}/dsh-auto-memory.json`), '♥ 3 · ↓ 1.5万/月');
+  }
+});
+
+test('unlisted and malformed badge names return grey badges and skip unnecessary reads', async t => {
+  const { env, requests } = likeEnvironment(t);
+  t.mock.method(env.DB, 'prepare', () => { throw new Error('should not query D1'); });
+  for (const path of ['unknown.json', '.json', '@scope.json', 'DSH-PET.json', 'x'.repeat(215) + '.json', '%ZZ.json', '%2E%2E%2Fdsh-pet.json', 'dsh-pet.json/extra', 'dsh-pet']) {
+    await assertBadge(await readBadge(env, path), '未收录', { color: 'lightgrey' });
+    await assertBadge(await readBadge(env, `${path}?lang=en`), 'not listed', { color: 'lightgrey', english: true });
+  }
+  assert.deepEqual(requests.map(request => request.url), ['https://dshopen.org/index.json']);
+});
+
+test('badge numbers use Chinese and English units at their boundaries for both likes and downloads', async t => {
+  const cases = [
+    [999, '999', '999'],
+    [1000, '1000', '1k'],
+    [9999, '9999', '10k'],
+    [10000, '1万', '10k'],
+    [14871, '1.5万', '14.9k'],
+    [100000, '10万', '100k'],
+    [999999, '100万', '1000k'],
+    [1000000, '100万', '1M'],
+    [1500000, '150万', '1.5M']
+  ];
+  const names = cases.map(([value]) => `plugin-${value}`);
+  const { env, sqlite } = likeEnvironment(t, names, Object.fromEntries(cases.map(([value]) => [
+    `plugin-${value}`, { status: 'ok', downloads: value }
+  ])));
+  for (const [value, chinese, english] of cases) {
+    const name = `plugin-${value}`;
+    sqlite.prepare('INSERT INTO likes VALUES (?, ?, ?)').run(name, value, '2026-10-24');
+    await assertBadge(await readBadge(env, `${name}.json`), `♥ ${chinese} · ↓ ${chinese}/月`);
+    await assertBadge(await readBadge(env, `${name}.json?lang=en`), `♥ ${english} · ↓ ${english}/mo`, { english: true });
+  }
+});
+
+test('concurrent badges share five-minute asset caches, refresh on expiry, and reuse the like plugin list', async t => {
+  const downloads = { 'dsh-pet': { status: 'ok', downloads: 100 } };
+  const { env, names, requests } = likeEnvironment(t, ['dsh-pet'], downloads);
+  await Promise.all(Array.from({ length: 4 }, async () => assertBadge(await readBadge(env), '↓ 100/月')));
+  assert.equal(requests.length, 2);
+  names.push('new-plugin');
+  downloads['dsh-pet'].downloads = 200;
+  t.mock.timers.tick(5 * 60_000 - 1);
+  await assertBadge(await readBadge(env), '↓ 100/月');
+  assert.equal((await sendLike(env, 'new-plugin')).status, 400);
+  assert.equal(requests.length, 2);
+  t.mock.timers.tick(1);
+  await assertBadge(await readBadge(env), '↓ 200/月');
+  assert.equal((await sendLike(env, 'new-plugin')).status, 200);
+  assert.equal(requests.length, 4);
+});
+
+for (const asset of ['/index.json', '/downloads.json']) {
+  test(`badge asset failures at ${asset} return unavailable and allow retry`, async t => {
+    const { env } = likeEnvironment(t);
+    const originalFetch = env.ASSETS.fetch;
+    for (const failure of [() => new Response('unavailable', { status: 503 }), () => new Response('invalid json'), () => Response.json({})]) {
+      t.mock.method(env.ASSETS, 'fetch', async request => new URL(request.url).pathname === asset ? failure() : originalFetch(request));
+      await assertBadge(await readBadge(env), '暂不可用', { color: 'lightgrey', cacheSeconds: 300 });
+      await assertBadge(await readBadge(env, 'dsh-pet.json?lang=en'), 'unavailable', { english: true, color: 'lightgrey', cacheSeconds: 300 });
+      env.ASSETS.fetch.mock.restore();
+    }
+    await assertBadge(await readBadge(env), '已收录');
+  });
+}
+
+test('badge database errors return unavailable with HTTP 200 in both languages', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  sqlite.exec('DROP TABLE likes');
+  await assertBadge(await readBadge(env), '暂不可用', { color: 'lightgrey', cacheSeconds: 300 });
+  await assertBadge(await readBadge(env, 'dsh-pet.json?lang=en'), 'unavailable', { english: true, color: 'lightgrey', cacheSeconds: 300 });
 });

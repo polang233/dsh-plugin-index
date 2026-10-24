@@ -6,10 +6,28 @@
 // 30 days; it counts loads (not people) and is sampled, so D1 stays the source for every people count.
 
 const COUNTED = new Set(['/index.json']);
+const PLUGIN_NAMES = new WeakMap();
+const DOWNLOADS = new WeakMap();
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (url.pathname.startsWith('/badge/') && request.method === 'GET') return badge(request, env, url);
+    if (url.pathname === '/likes.json' || url.pathname === '/api/like') {
+      try {
+        if (url.pathname === '/likes.json' && request.method === 'GET') return await likes(env);
+        if (url.pathname === '/api/like') {
+          if (request.method === 'OPTIONS') return new Response(null, {
+            status: 204,
+            headers: { 'access-control-allow-origin': '*', 'access-control-allow-methods': 'POST', 'access-control-allow-headers': 'content-type' }
+          });
+          if (request.method === 'POST') return await like(request, env);
+        }
+        return likeJson({ error: 'method-not-allowed' }, 405);
+      } catch {
+        return likeJson({ error: 'internal-error' }, 500);
+      }
+    }
     if (url.pathname === '/stats.json') return stats(env, ctx);
     const response = await env.ASSETS.fetch(request);
     const own = request.headers.get('user-agent') === 'dshopen-check';
@@ -20,9 +38,7 @@ export default {
 
 async function count(request, env) {
   const day = new Date().toISOString().slice(0, 10);
-  const visitor = `${request.headers.get('cf-connecting-ip') ?? ''}|${request.headers.get('user-agent') ?? ''}`;
-  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${env.STATS_SALT ?? 'dshopen'}|${day}|${visitor}`));
-  const hash = [...new Uint8Array(digest).slice(0, 12)].map(byte => byte.toString(16).padStart(2, '0')).join('');
+  const hash = await visitorHash(request, env, day);
   const seen = await env.DB.prepare('INSERT OR IGNORE INTO visitors (day, hash) VALUES (?, ?)').bind(day, hash).run();
   const unique = seen.meta.changes > 0 ? 1 : 0;
   await env.DB.prepare('INSERT INTO reads (day, reads, readers) VALUES (?, 1, ?) ON CONFLICT(day) DO UPDATE SET reads = reads + 1, readers = readers + ?')
@@ -35,6 +51,151 @@ async function count(request, env) {
   } catch { /* Table not created yet. */ }
   // Hashes are only needed for the current day; prune older ones now and then.
   if (Math.random() < 0.01) await env.DB.prepare('DELETE FROM visitors WHERE day < ?').bind(day).run();
+}
+
+async function visitorHash(request, env, day) {
+  const visitor = `${request.headers.get('cf-connecting-ip') ?? ''}|${request.headers.get('user-agent') ?? ''}`;
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${env.STATS_SALT ?? 'dshopen'}|${day}|${visitor}`));
+  return [...new Uint8Array(digest).slice(0, 12)].map(byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+async function pluginNames(request, env, now) {
+  let cached = PLUGIN_NAMES.get(env.ASSETS);
+  if (!cached || cached.expires <= now) {
+    const names = (async () => {
+      const response = await env.ASSETS.fetch(new Request(new URL('/index.json', request.url)));
+      if (!response.ok) throw new Error('Index unavailable');
+      const index = await response.json();
+      return new Set(index.plugins.map(plugin => plugin.name));
+    })();
+    cached = { names, expires: now + 5 * 60_000 };
+    PLUGIN_NAMES.set(env.ASSETS, cached);
+  }
+  try {
+    return await cached.names;
+  } catch (error) {
+    if (PLUGIN_NAMES.get(env.ASSETS) === cached) PLUGIN_NAMES.delete(env.ASSETS);
+    throw error;
+  }
+}
+
+function likeJson(body, status = 200, headers = {}) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'content-type': 'application/json; charset=utf-8', 'access-control-allow-origin': '*', 'cache-control': 'no-store', ...headers }
+  });
+}
+
+function effectiveLikes(row, day) {
+  const cycles = Math.max(0, Math.floor((Date.parse(day) - Date.parse(row.decayed_at)) / (3 * DAY)));
+  return Math.max(0, row.count - cycles);
+}
+
+function validPluginName(name) {
+  return typeof name === 'string' && name.length <= 214 && /^(?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*$/.test(name);
+}
+
+async function pluginDownloads(request, env, now) {
+  let cached = DOWNLOADS.get(env.ASSETS);
+  if (!cached || cached.expires <= now) {
+    const packages = (async () => {
+      const response = await env.ASSETS.fetch(new Request(new URL('/downloads.json', request.url)));
+      if (!response.ok) throw new Error('Downloads unavailable');
+      const data = await response.json();
+      if (!data.packages || typeof data.packages !== 'object' || Array.isArray(data.packages)) throw new Error('Invalid downloads');
+      return data.packages;
+    })();
+    cached = { packages, expires: now + 5 * 60_000 };
+    DOWNLOADS.set(env.ASSETS, cached);
+  }
+  try {
+    return await cached.packages;
+  } catch (error) {
+    if (DOWNLOADS.get(env.ASSETS) === cached) DOWNLOADS.delete(env.ASSETS);
+    throw error;
+  }
+}
+
+function badgeNumber(value, english) {
+  const unit = english ? (value >= 1_000_000 ? [1_000_000, 'M'] : [1_000, 'k']) : [10_000, '万'];
+  return value < unit[0] ? String(value) : (value / unit[0]).toFixed(1).replace(/\.0$/, '') + unit[1];
+}
+
+async function badge(request, env, url) {
+  const english = url.searchParams.get('lang') === 'en';
+  const reply = (message, color = '2563eb', cacheSeconds = 1800) => likeJson({
+    schemaVersion: 1, label: english ? 'Open Plugin Market' : '开放插件市场', message, color, cacheSeconds
+  }, 200, { 'cache-control': 'public, max-age=1800' });
+  const notListed = () => reply(english ? 'not listed' : '未收录', 'lightgrey');
+  let name;
+  try {
+    if (!url.pathname.endsWith('.json')) return notListed();
+    name = decodeURIComponent(url.pathname.slice('/badge/'.length, -'.json'.length));
+  } catch {
+    return notListed();
+  }
+  if (!validPluginName(name)) return notListed();
+  try {
+    const now = Date.now();
+    if (!(await pluginNames(request, env, now)).has(name)) return notListed();
+    const [rows, packages] = await Promise.all([
+      env.DB.prepare('SELECT count, decayed_at FROM likes WHERE name = ?').bind(name).all(),
+      pluginDownloads(request, env, now)
+    ]);
+    const row = rows.results[0];
+    const count = row ? effectiveLikes(row, new Date(now).toISOString().slice(0, 10)) : 0;
+    const downloads = Object.hasOwn(packages, name) ? packages[name] : undefined;
+    const parts = [];
+    if (count > 0) parts.push(`♥ ${badgeNumber(count, english)}`);
+    if (downloads?.status === 'ok' && Number.isFinite(downloads.downloads) && downloads.downloads >= 0) {
+      parts.push(`↓ ${badgeNumber(downloads.downloads, english)}/${english ? 'mo' : '月'}`);
+    }
+    return reply(parts.join(' · ') || (english ? 'listed' : '已收录'));
+  } catch {
+    return reply(english ? 'unavailable' : '暂不可用', 'lightgrey', 300);
+  }
+}
+
+async function likes(env) {
+  const now = new Date();
+  const day = now.toISOString().slice(0, 10);
+  const rows = await env.DB.prepare('SELECT name, count, decayed_at FROM likes WHERE count > 0').all();
+  return likeJson({
+    schema: 1,
+    generatedAt: now.toISOString(),
+    rule: 'Each person can like each plugin once per UTC day (including installs), up to 100 plugins daily; likes lose one every three days, stopping at zero.',
+    likes: Object.fromEntries(rows.results.map(row => [row.name, effectiveLikes(row, day)]).filter(([, value]) => value > 0))
+  }, 200, { 'cache-control': 'public, max-age=60' });
+}
+
+async function like(request, env) {
+  const body = await request.json();
+  const name = body?.name;
+  if (!validPluginName(name)) {
+    return likeJson({ error: 'unknown-plugin' }, 400);
+  }
+  const now = Date.now();
+  if (!(await pluginNames(request, env, now)).has(name)) return likeJson({ error: 'unknown-plugin' }, 400);
+  if (body.source !== 'like' && body.source !== 'install') return likeJson({ error: 'invalid-source' }, 400);
+  const day = new Date(now).toISOString().slice(0, 10);
+  const hash = await visitorHash(request, env, day);
+  // D1 batches are transactions: only an inserted vote can increment the total.
+  const cycles = 'MAX(0, CAST((julianday(excluded.decayed_at) - julianday(likes.decayed_at)) / 3 AS INTEGER))';
+  const [vote, , total, seen] = await env.DB.batch([
+    env.DB.prepare('INSERT OR IGNORE INTO like_votes (day, name, hash) SELECT ?, ?, ? WHERE (SELECT COUNT(*) FROM like_votes WHERE day = ? AND hash = ?) < 100')
+      .bind(day, name, hash, day, hash),
+    env.DB.prepare(`INSERT INTO likes (name, count, decayed_at) SELECT ?, 1, ? WHERE changes() > 0
+      ON CONFLICT(name) DO UPDATE SET
+        count = MAX(0, likes.count - ${cycles}) + 1,
+        decayed_at = CASE WHEN likes.count - ${cycles} <= 0 THEN excluded.decayed_at
+          ELSE date(likes.decayed_at, '+' || (3 * ${cycles}) || ' days') END`)
+      .bind(name, day),
+    env.DB.prepare('SELECT count, decayed_at FROM likes WHERE name = ?').bind(name),
+    env.DB.prepare('SELECT 1 FROM like_votes WHERE day = ? AND name = ? AND hash = ?').bind(day, name, hash)
+  ]);
+  if (!seen.results.length) return likeJson({ error: 'daily-limit' }, 429);
+  if (Math.random() < 0.01) await env.DB.prepare('DELETE FROM like_votes WHERE day < ?').bind(day).run();
+  return likeJson({ name, likes: effectiveLikes(total.results[0], day), counted: vote.meta.changes > 0 });
 }
 
 async function stats(env, ctx) {

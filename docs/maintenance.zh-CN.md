@@ -164,7 +164,15 @@ npx wrangler secret put CF_ZONE_ID --config cloudflare/wrangler.jsonc
 
 之后 `stats.json` 会显示 `countries.source: "cloudflare"` 和 `metric: "reads"`。查询失败时 Worker 会记录错误，并退回自己的 D1 统计（`source: "d1"`，`metric: "readers"`）。
 
-## 搜索引擎
+## 点赞
+
+Worker 同时提供点赞接口，供 `dsh-open-market` 插件的「开放市场」标签页使用：
+
+- `GET /likes.json`：每个插件当前的点赞数（已扣除衰减，只列出大于 0 的），缓存 60 秒。
+- `POST /api/like`：请求体 `{name, source}`，`source` 为 `like`（点赞）或 `install`（安装视同点赞）。
+
+规则：每人每天对同一个插件只计一次，点赞和安装共用这一次；每人每天最多 100 次；「一个人」按当天 IP 与浏览器标识的加盐哈希判断，不保存原文。每个插件从第一次被点赞起，每满 3 天点赞数减 1，最低为 0，读写时按日期惰性结算。不在当前 `index.json` 里的包名一律拒绝。点赞表 `likes` 与每日去重表 `like_votes` 也在 `cloudflare/schema.sql` 里，部署前运行上面的 `d1 execute` 建表。插件里可以关闭「参与点赞」，关闭后不会请求这两个接口。
+
 
 `sitemap.xml` 列出三种语言的全部页面，并带 `hreflang` 对应关系（`zh-TW` 和 `zh-HK` 指向繁体页面）。在 Google Search Console 和 Bing Webmaster Tools 各提交一次 `https://dshopen.org/sitemap.xml`，之后的更新会被自动抓取。
 

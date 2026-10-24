@@ -6,6 +6,8 @@ test-results/
 .DS_Store
 *.log
 .local/
+# Local wrangler state.
+.wrangler/
 # Generated per-plugin pages: rebuilt on every build and deployed from the CI artifact.
 public/plugins/
 public/zh/plugins/
