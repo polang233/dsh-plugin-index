@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { renderStars } from '../scripts/site.mjs';
+import { HEADERS, renderStars } from '../scripts/site.mjs';
 
 const plugin = { repository: { url: 'https://github.com/owner/plugin' } };
 const snapshot = (stars, status = 'ok') => ({ repositories: { 'owner/plugin': { url: 'https://github.com/owner/plugin', stars, status, fetchedAt: '2026-10-18T05:26:39.262Z' } } });
@@ -23,4 +23,8 @@ test('a fallback count shows the number without cache wording', () => {
 });
 test('non-GitHub repositories do not display a fabricated count', () => {
   assert.equal(renderStars({ repository: { url: 'https://gitee.com/owner/plugin' } }, {}, 'zh'), '');
+});
+
+test('hashed plugin icons are served as immutable', () => {
+  assert.match(HEADERS, /^\/icons\/\*\n  Cache-Control: public, max-age=31536000, immutable\n$/);
 });

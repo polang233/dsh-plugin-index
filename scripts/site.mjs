@@ -145,6 +145,9 @@ function newestVersion(versions = []) {
 
 // Pages are addressed by a path under each language folder: '' for home, 'stats/', 'plugins/<package>/'.
 export const pluginPath = name => `plugins/${name}/`;
+// Cloudflare static assets read this file. Icon names are content hashes, so a browser may keep them for good
+// instead of revalidating each one whenever the DSH tab or the site opens.
+export const HEADERS = '/icons/*\n  Cache-Control: public, max-age=31536000, immutable\n';
 const depth = path => path.split('/').filter(Boolean).length;
 // A relative link from `from` (language folder + path) to `path` in `language`, so the site works under any base path.
 const link = (from, language, path = '') => '../'.repeat(depth(from)) + LANGUAGES[language].dir + path || './';
@@ -521,6 +524,7 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
   }
   await writeFile(new URL('sitemap.xml', output), sitemap(['', 'stats/', ...plugins.map(plugin => pluginPath(plugin.name))], evidence?.generatedAt), 'utf8');
   await copyFile(new URL('favicon.ico', source), new URL('favicon.ico', output));
+  await writeFile(new URL('_headers', output), HEADERS, 'utf8');
   await writeFile(new URL('robots.txt', output), `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}sitemap.xml\n`, 'utf8');
   await writeFile(new URL('404.html', output), notFound(await readFile(new URL('site.css', source), 'utf8')), 'utf8');
 }
