@@ -84,11 +84,32 @@ test('a failed analytics query falls back to the D1 split', async () => {
   try {
     const body = await statsJson({ DB: database(), CF_ANALYTICS_TOKEN: 'token', CF_ZONE_ID: 'zone' });
     assert.equal(body.countries.source, 'd1');
-    assert.equal(globalThis.caches.entries.size, 0);
+    assert.equal(globalThis.caches.entries.has('https://dshopen.org/__stats/countries-v1'), false);
   } finally {
     globalThis.fetch = originalFetch;
     console.error = originalError;
   }
+});
+
+test('stats.json is served from the edge cache and refreshed in the background once stale', async t => {
+  globalThis.caches = cacheStore();
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-10-24T12:00:00Z') });
+  let batches = 0;
+  const DB = database();
+  const batch = DB.batch;
+  DB.batch = async statements => { batches++; return batch(statements); };
+  await statsJson({ DB });
+  const runs = batches;
+  const fresh = await worker.fetch(new Request('https://dshopen.org/stats.json?x=1'), { DB }, { waitUntil() {} });
+  assert.equal(batches, runs, 'a fresh copy answers without D1, whatever the query string');
+  assert.equal(fresh.headers.get('cache-control'), 'public, max-age=300');
+  assert.equal(fresh.headers.get('x-stored-at'), null);
+  t.mock.timers.tick(300_001);
+  const waits = [];
+  const stale = await worker.fetch(new Request('https://dshopen.org/stats.json'), { DB }, { waitUntil: promise => waits.push(promise) });
+  assert.equal((await stale.json()).total, 500, 'a stale copy still answers at once');
+  await Promise.all(waits);
+  assert.ok(batches > runs, 'and is recomputed in the background');
 });
 
 // A local D1 stand-in executes real SQL, including transactional batches.

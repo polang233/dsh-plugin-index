@@ -15,7 +15,7 @@ export default {
     if (url.pathname.startsWith('/badge/') && request.method === 'GET') return badge(request, env, url);
     if (url.pathname === '/likes.json' || url.pathname === '/api/like') {
       try {
-        if (url.pathname === '/likes.json' && request.method === 'GET') return await likes(env);
+        if (url.pathname === '/likes.json' && request.method === 'GET') return await edgeCached(request, ctx, 60, () => likes(env));
         if (url.pathname === '/api/like') {
           if (request.method === 'OPTIONS') return new Response(null, {
             status: 204,
@@ -28,7 +28,7 @@ export default {
         return likeJson({ error: 'internal-error' }, 500);
       }
     }
-    if (url.pathname === '/stats.json') return stats(env, ctx);
+    if (url.pathname === '/stats.json') return edgeCached(request, ctx, 300, () => stats(env, ctx));
     const response = await env.ASSETS.fetch(request);
     const own = request.headers.get('user-agent') === 'dshopen-check';
     if (COUNTED.has(url.pathname) && request.method === 'GET' && response.ok && !own) ctx.waitUntil(count(request, env));
@@ -149,6 +149,35 @@ async function badge(request, env, url) {
   } catch {
     return reply(english ? 'unavailable' : '暂不可用', 'lightgrey', 300);
   }
+}
+
+/**
+ * Serve a computed JSON response from the edge cache, refreshing it in the background once it is older than
+ * `fresh` seconds. A cold Worker and D1 can take several seconds, longer than shields.io and the plugin wait.
+ */
+async function edgeCached(request, ctx, fresh, produce) {
+  if (typeof caches === 'undefined' || !ctx?.waitUntil) return produce();
+  const cache = caches.default;
+  const key = new Request(new URL(new URL(request.url).pathname, request.url));
+  const store = async response => {
+    const copy = new Response(response.body, response);
+    copy.headers.set('cache-control', 'public, max-age=86400');
+    copy.headers.set('x-stored-at', String(Date.now()));
+    await cache.put(key, copy);
+  };
+  const hit = await cache.match(key);
+  if (hit) {
+    if (Date.now() - Number(hit.headers.get('x-stored-at')) > fresh * 1000) {
+      ctx.waitUntil(produce().then(response => response.ok ? store(response) : undefined).catch(() => {}));
+    }
+    const response = new Response(hit.body, hit);
+    response.headers.set('cache-control', `public, max-age=${fresh}`);
+    response.headers.delete('x-stored-at');
+    return response;
+  }
+  const response = await produce();
+  if (response.ok) ctx.waitUntil(store(response.clone()).catch(() => {}));
+  return response;
 }
 
 async function likes(env) {
