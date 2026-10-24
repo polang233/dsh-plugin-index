@@ -94,21 +94,36 @@ window.__ModuleLoader__.load({
       return Number.isSafeInteger(counts[name]) && counts[name] > 0 ? counts[name] : 0;
     }
 
+    // One attempt; a cold server can take several seconds, so the caller tries twice.
+    async function fetchLikeCounts(signal) {
+      const controller = new AbortController();
+      const abort = () => controller.abort();
+      signal.addEventListener('abort', abort);
+      const timer = window.setTimeout(abort, 10000);
+      try {
+        const response = await fetch(likesOrigin() + '/likes.json', { signal: controller.signal });
+        if (!response.ok) throw new Error();
+        const data = await response.json();
+        if (data?.schema !== 1 || !data.likes || typeof data.likes !== 'object' || Array.isArray(data.likes)) throw new Error();
+        return Object.fromEntries(Object.entries(data.likes).filter(([, count]) => Number.isSafeInteger(count) && count > 0));
+      } finally {
+        window.clearTimeout(timer);
+        signal.removeEventListener('abort', abort);
+      }
+    }
+
     function loadLikes() {
       const controller = new AbortController();
-      const timer = window.setTimeout(() => controller.abort(), 5000);
       const revisions = new Map(likesRevisions);
       let live = true;
       async function load() {
         let counts = {};
-        try {
-          const response = await fetch(likesOrigin() + '/likes.json', { signal: controller.signal });
-          if (!response.ok) throw new Error();
-          const data = await response.json();
-          if (data?.schema !== 1 || !data.likes || typeof data.likes !== 'object' || Array.isArray(data.likes)) throw new Error();
-          counts = Object.fromEntries(Object.entries(data.likes).filter(([, count]) => Number.isSafeInteger(count) && count > 0));
-        } catch { /* Likes are optional; the rest of the market must always remain usable. */ }
-        finally { window.clearTimeout(timer); }
+        for (let attempt = 0; attempt < 2 && live; attempt++) {
+          try {
+            counts = await fetchLikeCounts(controller.signal);
+            break;
+          } catch { /* Likes are optional; the rest of the market must always remain usable. */ }
+        }
         if (!live) return;
         // A cached GET must not overwrite an optimistic vote or a newer POST response.
         for (const [name, revision] of likesRevisions) {
@@ -117,7 +132,7 @@ window.__ModuleLoader__.load({
         updateLikes({ counts });
       }
       load();
-      return () => { live = false; controller.abort(); window.clearTimeout(timer); };
+      return () => { live = false; controller.abort(); };
     }
 
     async function sendLike(name, source) {
@@ -223,6 +238,7 @@ window.__ModuleLoader__.load({
       website: 'Website', websiteUrl: 'https://dshopen.org/', repository: 'GitHub repository', submitPlugin: 'Submit a plugin', indexAddress: 'Index address'
     };
 
+    // In the light theme every DSH layer is white, so cards sit on the grey module fill to stand apart from the page.
     const STYLES = `
       .opm-root { min-width: 0; width: 100%; padding: 6px 0 12px; box-sizing: border-box;
         color: var(--dsw-alias-label-primary); line-height: 1.5; }
@@ -281,11 +297,11 @@ window.__ModuleLoader__.load({
         scroll-snap-type: x proximity; scrollbar-width: none; padding: 24px 8px; margin: -24px -8px; scroll-padding-inline: 8px; }
       .opm-rail::-webkit-scrollbar, .opm-carousel-viewport::-webkit-scrollbar { display: none; }
       .opm-card { flex: 0 0 220px; width: 220px; min-width: 0; scroll-snap-align: start; padding: 12px;
-        display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--dsw-alias-border-l1);
-        border-radius: var(--dsw-radius-md); background: var(--dsw-alias-settings-card-fill); cursor: pointer;
+        display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--dsw-alias-border-l2);
+        border-radius: var(--dsw-radius-md); background: var(--dsw-alias-bg-module-platform); cursor: pointer;
         transition: transform 150ms ease-out, box-shadow 150ms ease-out, border-color 150ms ease-out; }
       @media (hover: hover) {
-        .opm-card:hover { transform: translateY(-2px) scale(1.02); box-shadow: var(--dsw-elevation-soft); border-color: var(--dsw-alias-border-l2); }
+        .opm-card:hover { transform: translateY(-2px) scale(1.02); box-shadow: var(--dsw-elevation-soft); border-color: var(--dsw-alias-border-l3); }
       }
       .opm-card-heading { display: flex; gap: 8px; align-items: center; min-width: 0; }
       .opm-card-copy { min-width: 0; flex: 1; }
@@ -305,7 +321,7 @@ window.__ModuleLoader__.load({
         background: var(--dsw-alias-border-l3); }
       .opm-dot[aria-current="true"]::after { width: 14px; background: var(--dsw-alias-label-primary); }
       .opm-dot:hover { background: var(--dsw-alias-interactive-bg-hover); }
-      .opm-health { padding-top: 8px; border-top: 1px solid var(--dsw-alias-border-l1); }
+      .opm-health { padding-top: 8px; border-top: 1px solid var(--dsw-alias-border-l2); }
       .opm-health-group { margin-top: 6px; }
       .opm-health-group > h3 { margin-bottom: 4px; }
       .opm-health-list { list-style: none; margin: 0; padding: 0; }
@@ -317,8 +333,8 @@ window.__ModuleLoader__.load({
       .opm-health-summary { cursor: pointer; padding: 6px 0; color: var(--dsw-alias-label-secondary); font-size: 13px; }
       .opm-health-summary:hover { color: var(--dsw-alias-label-primary); }
       .opm-muted { color: var(--dsw-alias-label-secondary); font-size: 13px; }
-      .opm-state { padding: 18px 12px; border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-lg);
-        background: var(--dsw-alias-settings-card-fill); }
+      .opm-state { padding: 18px 12px; border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-lg);
+        background: var(--dsw-alias-bg-module-platform); }
       .opm-state .opm-button { margin-top: 10px; }
       .opm-error { color: var(--dsw-alias-state-warn-primary); font-size: 13px; overflow-wrap: anywhere; }
       .opm-error-detail { margin-top: 8px !important; white-space: pre-wrap; }
@@ -334,7 +350,7 @@ window.__ModuleLoader__.load({
       .opm-settings h2 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
       .opm-settings-group + .opm-settings-group { margin-top: 18px; }
       .opm-setting-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; max-width: 560px; padding: 6px 0; }
-      .opm-setting-row + .opm-setting-row { border-top: 1px solid var(--dsw-alias-border-l1); }
+      .opm-setting-row + .opm-setting-row { border-top: 1px solid var(--dsw-alias-border-l2); }
       .opm-setting-label { color: var(--dsw-alias-label-primary); }
       .opm-setting-help { max-width: 560px; margin-top: 2px !important; color: var(--dsw-alias-label-caption); font-size: 12px; }
       .opm-checkbox { display: flex; align-items: center; gap: 8px; cursor: pointer; }
@@ -357,7 +373,7 @@ window.__ModuleLoader__.load({
       .opm-panel-description { white-space: pre-wrap; }
       .opm-panel-info, .opm-panel-links { display: flex; flex-wrap: wrap; gap: 6px 12px; }
       .opm-panel-links a { color: var(--dsw-alias-label-secondary); font-size: 13px; text-underline-offset: 3px; overflow-wrap: anywhere; }
-      .opm-command { display: flex; align-items: center; gap: 8px; padding: 10px; background: var(--dsw-alias-settings-card-fill);
+      .opm-command { display: flex; align-items: center; gap: 8px; padding: 10px; background: var(--dsw-alias-bg-module-platform);
         border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-sm); }
       .opm-command code { flex: 1; min-width: 0; font-family: monospace; font-size: 12px; overflow-wrap: anywhere; user-select: text; }
       .opm-panel-actions { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
@@ -366,7 +382,7 @@ window.__ModuleLoader__.load({
       @media (hover: none) { .opm-arrow { display: none; } }
       @media (prefers-reduced-motion: reduce) {
         .opm-card, .opm-arrow { transition: none; }
-        .opm-card:hover { transform: none; border-color: var(--dsw-alias-border-l1); }
+        .opm-card:hover { transform: none; border-color: var(--dsw-alias-border-l3); }
       }
     `;
 
@@ -923,6 +939,24 @@ window.__ModuleLoader__.load({
       }
       ctx.slots.inject('plugins.bundle.config', () => ctx.slots.register(
         { name: 'plugins.bundle.config', key: 'dsh-open-market' }, SettingsSection));
+      // Installs from DSH's own Discover never reach dshopen.org. While likes are on, each bundle that appears after an
+      // install counts as an install like; sendLike skips plugins liked today and the server ignores unlisted names.
+      ctx.inject(['remote.pluginManager'], ctx => {
+        let known;
+        const installed = async () => {
+          const answer = await ctx.remote.pluginManager.listBundles();
+          return answer?.ok ? new Set(answer.value.filter(bundle => bundle.installed).map(bundle => bundle.name)) : undefined;
+        };
+        installed().then(names => { known ??= names; }, () => {});
+        ctx.effect(() => ctx.remote.$on('plugin-manager/changed', change => {
+          if (change?.reason !== 'install') return;
+          installed().then(names => {
+            if (!names) return;
+            if (known) for (const name of names) if (!known.has(name)) void sendLike(name, 'install');
+            known = names;
+          }, () => {});
+        }), 'open-market: count installs');
+      });
       const face = { remote: ctx.remote, resolve: text => ctx.locale.resolveText(text) };
       ctx.slots.inject('plugins.tab', () => ctx.slots.register({
         name: 'plugins.tab',
