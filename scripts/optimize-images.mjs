@@ -21,6 +21,7 @@ const widths = [
   [/^logo$/, 720],
   [/^home-/, 1440],
   [/^add-index/, 1120],
+  [/^discover-list/, 1120],
   [/^catalog-/, 1440],
 ];
 
@@ -43,17 +44,31 @@ for (const [from, to] of [['site/originals', 'site'], ['docs/images/originals', 
 // Every small brand asset comes from the same master, including the DSH package icon.
 if (!selected.size || selected.has('logo')) {
   const master = join(root, 'site/originals/logo.png');
-  const icon = size => sharp(master)
-    .resize({ width: size, height: size, fit: 'contain', background: '#00000000', withoutEnlargement: true })
-    .png({ compressionLevel: 9, adaptiveFiltering: true });
-  // Bing only shows favicons whose size is a multiple of 48.
-  for (const [name, size] of [['logo-256.png', 256], ['apple-touch-icon.png', 180], ['favicon.png', 96]]) {
+  const { width, height } = await sharp(master).metadata();
+  const png = image => image.png({ compressionLevel: 9, adaptiveFiltering: true });
+  // The full mascot stays for the README and the hero, where it is shown large.
+  await png(sharp(master).resize({ width: 256, height: 256, fit: 'contain', background: '#00000000' }))
+    .toFile(join(root, 'site/logo-256.png'));
+  // At icon sizes only the face reads, so the mark is a tight face crop with slightly rounded corners.
+  const face = await sharp(master).extract({
+    left: Math.round(width * .20), top: Math.round(height * .15),
+    width: Math.round(width * .44), height: Math.round(height * .44),
+  }).png().toBuffer();
+  const mark = (size, rounded = true) => {
+    const image = sharp(face).resize({ width: size, height: size });
+    if (!rounded) return png(image);
+    const radius = Math.max(2, Math.round(size * .16));
+    const mask = Buffer.from(`<svg width="${size}" height="${size}"><rect width="${size}" height="${size}" rx="${radius}" ry="${radius}"/></svg>`);
+    return png(image.composite([{ input: mask, blend: 'dest-in' }]));
+  };
+  // iOS rounds apple-touch-icon itself, so that one stays square. Bing only shows favicons whose size is a multiple of 48.
+  for (const [name, size, rounded] of [['mark-256.png', 256, true], ['apple-touch-icon.png', 180, false], ['favicon.png', 96, true], ['badge-logo.png', 42, true]]) {
     const output = join(root, 'site', name);
-    await icon(size).toFile(output);
+    await mark(size, rounded).toFile(output);
     console.log(`site/${name}  ${size}x${size}  ${Math.round((await stat(output)).size / 1024)} KB`);
   }
   // Crawlers that ignore <link rel="icon"> fetch /favicon.ico; PNG frames inside an ICO are widely supported.
-  const frames = await Promise.all([16, 32, 48].map(async size => ({ size, png: await icon(size).toBuffer() })));
+  const frames = await Promise.all([16, 32, 48].map(async size => ({ size, png: await mark(size).toBuffer() })));
   const header = Buffer.alloc(6 + 16 * frames.length);
   header.writeUInt16LE(1, 2);
   header.writeUInt16LE(frames.length, 4);
@@ -70,16 +85,8 @@ if (!selected.size || selected.has('logo')) {
   });
   await writeFile(join(root, 'site/favicon.ico'), Buffer.concat([header, ...frames.map(frame => frame.png)]));
   console.log(`site/favicon.ico  16/32/48  ${Math.round(offset / 1024)} KB`);
-  await copyFile(join(root, 'site/logo-256.png'), join(root, 'packages/dsh-open-market/icon.png'));
-  console.log('packages/dsh-open-market/icon.png  copied from site/logo-256.png');
-  const { width, height } = await sharp(master).metadata();
-  // The listing badge shows the logo at 14px, where only the face reads, so it gets a tight crop.
-  await sharp(master).extract({
-    left: Math.round(width * .20), top: Math.round(height * .15),
-    width: Math.round(width * .44), height: Math.round(height * .44),
-  }).resize({ width: 42, height: 42 }).png({ compressionLevel: 9, adaptiveFiltering: true })
-    .toFile(join(root, 'site/badge-logo.png'));
-  console.log('site/badge-logo.png  42x42 face crop for the listing badge');
+  await copyFile(join(root, 'site/mark-256.png'), join(root, 'packages/dsh-open-market/icon.png'));
+  console.log('packages/dsh-open-market/icon.png  copied from site/mark-256.png');
   // Keep the directory's fallback portrait in the same character design as the logo.
   const portrait = sharp(master).extract({
     left: Math.round(width * .075), top: Math.round(height * .055),

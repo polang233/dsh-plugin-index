@@ -104,7 +104,7 @@ export async function checkPublished(indexUrl, {expectedNames, expectedTitle, ve
   for (const language of ['', 'zh/', 'zh-tw/']) {
     const page = (await readUrl(new URL(language || './', indexUrl), fetchImpl)).bytes.toString('utf8');
     const rows = page.match(/\bdata-plugin(?=[\s>])/g) ?? [];
-    if (rows.length !== index.plugins.length || !page.includes('assets/logo-256.png')) throw new Error('Website does not match published index: ' + language);
+    if (rows.length !== index.plugins.length || !page.includes('assets/mark-256.png')) throw new Error('Website does not match published index: ' + language);
     const first = index.plugins[0]?.name;
     if (first) {
       const packagePath = first.split('/').map(encodeURIComponent).join('/');
@@ -122,7 +122,7 @@ export async function checkPublished(indexUrl, {expectedNames, expectedTitle, ve
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   const indexUrl = process.argv[2] ?? 'https://polang233.github.io/dsh-plugin-index/index.json';
   const config = JSON.parse(await readFile(new URL('../data/sources.json', import.meta.url), 'utf8'));
-  const brandAssets = await Promise.all(['logo.webp', 'logo-256.png', 'favicon.png', 'apple-touch-icon.png', 'social.png', 'social-zh.png', 'social-tw.png'].map(async name => ({name, bytes: await readFile(new URL('../site/' + name, import.meta.url))})));
+  const brandAssets = await Promise.all(['logo.webp', 'logo-256.png', 'mark-256.png', 'badge-logo.png', 'favicon.png', 'apple-touch-icon.png', 'social.png', 'social-zh.png', 'social-tw.png'].map(async name => ({name, bytes: await readFile(new URL('../site/' + name, import.meta.url))})));
   const publishers = JSON.parse(await readFile(new URL('../data/publishers.json', import.meta.url), 'utf8'));
   // Packages the build had to leave out are listed in status.json; every other source must be published.
   const status = await fetch(new URL('status.json', indexUrl), {redirect: 'error', signal: AbortSignal.timeout(30_000)}).then(response => response.ok ? response.json() : {}).catch(() => ({}));

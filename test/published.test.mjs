@@ -14,7 +14,7 @@ function fixture({wrongIcon = false, pageRows = 1, pluginPage = true, name = 'ex
     if (path.endsWith('status.json')) return Response.json({packages: [{name, version: '1.0.0', checks: ['sha512-integrity', 'bundle-patch-present']}]});
     if (path.includes('/icons/')) return new Response(wrongIcon ? 'changed' : bytes, {headers: {'content-type': 'image/svg+xml'}});
     if (path.includes('/plugins/')) return pluginPage ? new Response(`<button data-get="${name}">`, {headers: {'content-type': 'text/html'}}) : new Response('Not found', {status: 404});
-    return new Response('<img src="assets/logo-256.png">' + '<li data-plugin>'.repeat(pageRows), {headers: {'content-type': 'text/html'}});
+    return new Response('<img src="assets/mark-256.png">' + '<li data-plugin>'.repeat(pageRows), {headers: {'content-type': 'text/html'}});
   };
 }
 test('publication check reads the actual icon bytes, every language page and a plugin page', async () => {

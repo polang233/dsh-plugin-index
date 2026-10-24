@@ -308,9 +308,9 @@ function layout({ language, path, title, description, body, site, structured = [
 <body>
   <a class="skip" href="#main">${esc(text.skip)}</a>
   <header class="site-header" data-header><div class="site-header-inner shell">
-    <a class="brand" href="${esc(home)}"><img src="${root}assets/logo-256.png" alt="" width="64" height="64"><span>${esc(text.brand)}</span></a>
+    <a class="brand" href="${esc(home)}"><img src="${root}assets/mark-256.png" alt="" width="64" height="64"><span>${esc(text.brand)}</span></a>
     <nav class="header-links" aria-label="${esc(text.nav)}">
-      <a class="header-home" href="${onHome ? '#top' : esc(home)}" aria-label="${esc(text.brand)}"><img src="${root}assets/logo-256.png" alt="" width="64" height="64"></a><a href="${onHome ? '' : esc(home)}#plugins">${ICONS.plugins}<span>${esc(text.plugins)}</span></a><a href="${esc(link(from, language, 'stats/'))}"${path === 'stats/' ? ' aria-current="page"' : ''}>${ICONS.stats}<span>${esc(text.statsNav)}</span></a><a href="${REPOSITORY}">${ICONS.github}<span>GitHub</span></a>
+      <a class="header-home" href="${onHome ? '#top' : esc(home)}" aria-label="${esc(text.brand)}"><img src="${root}assets/mark-256.png" alt="" width="64" height="64"></a><a href="${onHome ? '' : esc(home)}#plugins">${ICONS.plugins}<span>${esc(text.plugins)}</span></a><a href="${esc(link(from, language, 'stats/'))}"${path === 'stats/' ? ' aria-current="page"' : ''}>${ICONS.stats}<span>${esc(text.statsNav)}</span></a><a href="${REPOSITORY}">${ICONS.github}<span>GitHub</span></a>
       <div class="languages" data-current="${language}" aria-label="${esc(text.language)}">${switcher}</div>
     </nav>
   </div></header>
@@ -319,7 +319,7 @@ ${body}
   </main>
   <footer class="site-footer">
     <div class="footer-grid shell">
-      <div class="footer-brand"><a class="footer-logo" href="${esc(home)}"><img src="${root}assets/logo-256.png" alt="" width="48" height="48"><span>${esc(text.brand)}</span></a><p>${esc(text.footerTagline)}</p><div class="star-wrap"><a class="star-cta" href="${REPOSITORY}" aria-describedby="star-note"><span aria-hidden="true">⭐</span>${esc(text.starCta)}</a><p class="star-note" id="star-note" role="tooltip">${esc(text.starNote)}</p></div></div>
+      <div class="footer-brand"><a class="footer-logo" href="${esc(home)}"><img src="${root}assets/mark-256.png" alt="" width="48" height="48"><span>${esc(text.brand)}</span></a><p>${esc(text.footerTagline)}</p><div class="star-wrap"><a class="star-cta" href="${REPOSITORY}" aria-describedby="star-note"><span aria-hidden="true">⭐</span>${esc(text.starCta)}</a><p class="star-note" id="star-note" role="tooltip">${esc(text.starNote)}</p></div></div>
       <div><h2>${esc(text.footerData)}</h2><ul class="footer-stats"><li><strong>${site.plugins}</strong> ${esc(text.statPlugins)}</li><li><strong>${site.categories}</strong> ${esc(text.statCategories)}</li><li><strong>${site.verified}</strong> ${esc(text.verifiedCount)}</li><li>${esc(text.refresh)}${site.updated[LANGUAGES[language].data] ? ` · ${esc(site.updated[LANGUAGES[language].data])}` : ''}</li></ul></div>
       <div><h2>${esc(text.footerLinks)}</h2><ul class="footer-links"><li><a href="${esc(SUBMIT)}">${esc(text.submit)}</a></li><li><a href="${docsUrl}">${esc(text.readDocs)}</a></li><li><a href="${REPOSITORY}">GitHub</a></li><li><a href="${esc(link(from, language, 'stats/'))}">${esc(text.stats)}</a></li><li><a href="${root}index.json">${esc(text.raw)}</a></li><li><a href="${root}status.json">${esc(text.status)}</a></li></ul></div>
     </div>
@@ -476,7 +476,7 @@ function sitemap(paths, updated) {
 }
 
 function notFound(css) {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Page not found — Open Plugin Market</title><link rel="icon" href="${ORIGIN}favicon.ico" sizes="48x48"><link rel="icon" href="${ORIGIN}assets/favicon.png" type="image/png" sizes="96x96"><style>${css}</style></head><body><header class="site-header shell"><a class="brand" href="${ORIGIN}"><img src="${ORIGIN}assets/logo-256.png" alt="" width="64" height="64"><span>Open Plugin Market</span></a></header><main class="shell hero"><h1>Page not found.</h1><p lang="zh-CN">页面不存在。</p><p lang="zh-TW">頁面不存在。</p><p>Open the plugin directory to continue.</p><p lang="zh-CN">返回插件目录，继续查找插件。</p><div class="contribute-links"><a class="submit-link" href="${ORIGIN}">English directory</a><a class="submit-link" href="${ORIGIN}zh/" lang="zh-CN">中文目录</a><a class="submit-link" href="${ORIGIN}zh-tw/" lang="zh-TW">繁體中文目錄</a></div></main></body></html>\n`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Page not found — Open Plugin Market</title><link rel="icon" href="${ORIGIN}favicon.ico" sizes="48x48"><link rel="icon" href="${ORIGIN}assets/favicon.png" type="image/png" sizes="96x96"><style>${css}</style></head><body><header class="site-header shell"><a class="brand" href="${ORIGIN}"><img src="${ORIGIN}assets/mark-256.png" alt="" width="64" height="64"><span>Open Plugin Market</span></a></header><main class="shell hero"><h1>Page not found.</h1><p lang="zh-CN">页面不存在。</p><p lang="zh-TW">頁面不存在。</p><p>Open the plugin directory to continue.</p><p lang="zh-CN">返回插件目录，继续查找插件。</p><div class="contribute-links"><a class="submit-link" href="${ORIGIN}">English directory</a><a class="submit-link" href="${ORIGIN}zh/" lang="zh-CN">中文目录</a><a class="submit-link" href="${ORIGIN}zh-tw/" lang="zh-TW">繁體中文目錄</a></div></main></body></html>\n`;
 }
 
 async function write(path, html) {
@@ -489,7 +489,7 @@ async function write(path, html) {
 export async function writeSite(index, evidence, snapshot = {}, downloads = {}, display = {}) {
   if (index?.format !== 1 || !Array.isArray(index.plugins)) throw new Error('writeSite expects a format-1 plugin index');
   await mkdir(new URL('assets/', output), { recursive: true });
-  for (const asset of ['site.css', 'site.js', 'logo.webp', 'logo-256.png', 'favicon.png', 'apple-touch-icon.png', 'badge-logo.png', 'placeholder-whale.webp', 'social.png', 'social-zh.png', 'social-tw.png', ...['zh', 'en'].flatMap(lang => ['', '-light', '-narrow', '-narrow-light'].map(kind => `dsh-discover-${lang}${kind}.webp`)), ...[1, 2, 3].flatMap(n => ['zh', 'en'].flatMap(lang => ['light', 'dark'].map(theme => `guide-${n}-${lang}-${theme}.webp`)))]) {
+  for (const asset of ['site.css', 'site.js', 'logo.webp', 'logo-256.png', 'mark-256.png', 'favicon.png', 'apple-touch-icon.png', 'badge-logo.png', 'placeholder-whale.webp', 'social.png', 'social-zh.png', 'social-tw.png', ...['zh', 'en'].flatMap(lang => ['', '-light', '-narrow', '-narrow-light'].map(kind => `dsh-discover-${lang}${kind}.webp`)), ...[1, 2, 3].flatMap(n => ['zh', 'en'].flatMap(lang => ['light', 'dark'].map(theme => `guide-${n}-${lang}-${theme}.webp`)))]) {
     await copyFile(new URL(asset, source), new URL(`assets/${asset}`, output));
   }
   // X and other link previews cache card images by URL, so name each card after its content.
