@@ -1,5 +1,5 @@
-# Adds the Open Plugin Market index to Plugins → Discover once the
-# Custom plugin markets bundle is on. Removing the source later is respected.
+# Switches on Custom plugin markets once, adds the Open Plugin Market index to
+# Plugins → Discover and registers /open-market. Turning either off later is respected.
 - insert:
-    - id: dsh-open-market
+    - id: open-market
       name: dsh-open-market

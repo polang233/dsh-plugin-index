@@ -6,33 +6,41 @@ Brings [Open Plugin Market](https://dshopen.org/) into DeepSeek Harness. This co
 
 ## Install / 安装
 
-1. In DSH, open **Plugins → Experimental plugins** and turn on **Custom plugin markets**.
-   在 DSH **插件 → 实验性插件** 中打开 **自定义插件市场**。
-2. Install the plugin from GitHub / 从 GitHub 安装插件:
+```bash
+dsh plugin --profile desktop add dsh-open-market
+```
+
+Or from GitHub / 或从 GitHub 安装:
 
 ```bash
 dsh plugin --profile desktop add "git+https://github.com/polang233/dsh-plugin-index.git#main&path:/packages/dsh-open-market"
 ```
 
-On the next start, `https://dshopen.org/index.json` appears in **Discover**.
-重启后，「发现」的索引源里会出现开放插件市场。
+On the next start, `https://dshopen.org/index.json` appears in **Plugins → Discover**.
+重启后，开放插件市场会出现在「插件 → 发现」中。
 
 ## Behavior / 行为
 
-- Adds the index once per profile, after your existing sources. It never duplicates a source.
-- If you remove the source later, it stays removed. The plugin keeps a small marker file, `.dsh-open-market.json`, in the profile directory.
-- It waits for the Custom plugin markets service and does nothing while that bundle is off.
-- It sends no network requests of its own. DSH fetches the index.
+- Switches on **Custom plugin markets** (Plugins → Experimental plugins) once per profile; DSH applies it at the next start. If you turn it off later, it stays off.
+- Adds the index once per profile, after your existing sources. It never duplicates a source, and a source you remove stays removed until you switch the plugin off and on again.
+- Adds an **Open Market** tab to the Plugins page: a rotating row of today's picks, scrolling rows of recommended, most liked, fast-growing, newly published and most active plugins, and a checkup of your installed plugins. Installing goes through DSH's own install dialog.
+- You can like a plugin once a day, and installing one counts as a like. Likes lose one every three days and weigh today's picks.
+- Settings and links to the website and repository are on the plugin's page under Installed.
+- `/open-market` puts the index back and switches Custom plugin markets on again, for when you change your mind.
+- The plugin keeps a small marker file, `.dsh-open-market.json`, in the profile directory. DSH fetches the index. The plugin's only own requests are likes: reading `dshopen.org/likes.json` and sending a like, which carry no account or identifier; turn off **Join likes** in the settings to stop both.
 
-- 每个 profile 只添加一次，追加在已有索引源之后，不会重复。
-- 之后删掉索引源不会被加回来。插件会在 profile 目录中记录 `.dsh-open-market.json`。
-- 依赖「自定义插件市场」，关闭时插件不做任何事。
-- 插件本身不发网络请求，索引由 DSH 读取。
+- 每个 profile 自动打开一次「插件 → 实验性插件 → 自定义插件市场」，DSH 在下次启动时生效。之后手动关掉，插件不会再打开。
+- 每个 profile 只添加一次索引源，追加在已有索引源之后，不会重复；删掉后不会被加回来，除非把插件关掉再打开。
+- 在「插件」页增加「开放市场」标签：自动轮播的今日推荐，智能推荐、最受欢迎、增长最快、最新发布、更新最勤几行横向列表，以及已装插件体检。安装走 DSH 自己的安装对话框。
+- 每个插件每天可以点赞一次，安装也算一次点赞；点赞每 3 天减少 1，并影响今日推荐。
+- 设置以及官网、GitHub 仓库链接，在「已安装」里本插件的详情页中。
+- 想恢复时输入 `/open-market`，会重新加入索引源，并在需要时打开自定义插件市场。
+- 插件在 profile 目录中记录 `.dsh-open-market.json`，索引由 DSH 读取。插件自己只发点赞相关的请求：读取 `dshopen.org/likes.json` 和提交点赞，不带账号或任何标识；在设置里关掉「参与点赞」后两者都不会发送。
 
 To use a mirror, override the row in your profile's `cordis.patch.yml`:
 
 ```yaml
-- id: dsh-open-market
+- id: open-market
   name: dsh-open-market
   config:
     indexUrl: https://example.com/index.json
