@@ -78,6 +78,53 @@ test('multiple patch files are checked and archive identity cannot drift', () =>
   assert.throws(() => checkBundle(manifest, new Set(['package/a.yml']), 'test', '1.0.0'), /missing/);
   assert.throws(() => checkBundle(manifest, new Set(), 'other', '1.0.0'), /identity/);
 });
+
+test('a missing client build prevents publication even when the host and patch are present', async () => {
+  const client = fixture({ manifestFields: {
+    exports: { '.': './lib/index.js', './client': './lib/client.js' },
+    dsh: { bundle: { patch: './cordis.patch.yml' }, client: { platform: 'web' } }
+  } });
+  await assert.rejects(buildIndex(config, client), /Client entry.*lib\/client\.js.*missing/);
+});
+
+test('client runtime exports support conditions and patterns without requiring declaration files', async () => {
+  for (const exports of [
+    { './client': { types: './lib/client.d.ts', import: './lib/client.js', default: './lib/client.js' } },
+    { './*': './lib/*.js' }
+  ]) {
+    const result = await collectPackage(config.packages[0], fixture({
+      manifestFields: { exports, dsh: { bundle: { patch: './cordis.patch.yml' }, client: { platform: 'web' } } },
+      extraFiles: [['lib/client.js', 'throw new Error("Client code must never execute");']]
+    }));
+    assert.deepEqual(result.evidence.clientEntries, ['package/lib/client.js']);
+    assert.ok(result.evidence.checks.includes('client-entry-present'));
+  }
+});
+
+test('client checks reject missing conditional files, blocked exports and unsafe paths', () => {
+  const manifest = { name: 'test', version: '1.0.0', dsh: { bundle: { patch: 'patch.yml' }, client: { platform: 'web' } } };
+  const files = new Set(['package/patch.yml', 'package/client.js']);
+  for (const target of [
+    { import: './client.js', require: './missing.cjs' },
+    { types: './client.d.ts' },
+    null,
+    '../client.js',
+    './x/../../client.js'
+  ]) assert.throws(() => checkBundle({ ...manifest, exports: { './client': target } }, files, 'test', '1.0.0'), /Client entry|Invalid package file/);
+  // An explicit null export is allowed when no browser half is declared.
+  assert.doesNotThrow(() => checkBundle({ ...manifest, dsh: { bundle: { patch: 'patch.yml' } }, exports: { './client': null } }, files, 'test', '1.0.0'));
+});
+
+test('legacy client subpaths are checked only when the manifest declares a client', () => {
+  const manifest = { name: 'test', version: '1.0.0', dsh: { bundle: { patch: 'patch.yml' }, client: { platform: 'web' } } };
+  const files = new Set(['package/patch.yml']);
+  assert.throws(() => checkBundle(manifest, files, 'test', '1.0.0'), /Client entry.*missing/);
+  files.add('package/client.js');
+  assert.doesNotThrow(() => checkBundle(manifest, files, 'test', '1.0.0'));
+  assert.throws(() => checkBundle({ ...manifest, exports: { '.': './host.js' } }, files, 'test', '1.0.0'), /Client entry.*export/);
+  assert.doesNotThrow(() => checkBundle({ ...manifest, dsh: { bundle: { patch: 'patch.yml' } } }, new Set(['package/patch.yml']), 'test', '1.0.0'));
+  assert.doesNotThrow(() => checkBundle({ ...manifest, dsh: { bundle: { patch: 'patch.yml' } }, exports: { './*': './lib/*.js' } }, new Set(['package/patch.yml']), 'test', '1.0.0'));
+});
 test('unsafe and duplicate archive paths reject cleanly', async () => {
   await assert.rejects(inspectArchive(archive([['package/../bad', 'x']])), /Unexpected|abort/);
   await assert.rejects(inspectArchive(archive([['package/package.json', '{}'], ['package/package.json', '{}']])), /Duplicate|abort/);

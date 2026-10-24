@@ -116,6 +116,58 @@ function packageFile(value) {
   return `package/${path}`;
 }
 
+function clientEntryFiles(manifest, files) {
+  const client = manifest.dsh?.client;
+  const exports = manifest.exports;
+  let declared = false, target, replacement;
+  if (exports && typeof exports === 'object' && !Array.isArray(exports)) {
+    if (Object.hasOwn(exports, './client')) {
+      declared = true;
+      target = exports['./client'];
+    } else if (client) {
+      const key = Object.keys(exports).filter(key => key.includes('*')).sort((a, b) => {
+        return b.indexOf('*') - a.indexOf('*') || b.length - a.length;
+      }).find(key => {
+        const [before, after] = key.split('*');
+        return key.indexOf('*') === key.lastIndexOf('*') && './client'.startsWith(before) && './client'.endsWith(after)
+          && './client'.length >= before.length + after.length;
+      });
+      if (key) {
+        const [before, after] = key.split('*');
+        declared = true;
+        replacement = './client'.slice(before.length, after ? -after.length : undefined);
+        target = exports[key];
+      }
+    }
+  }
+  if (!declared) {
+    if (!client) return [];
+    if (exports !== undefined) throw new Error('Client entry ./client is not exported');
+    const legacy = ['package/client', 'package/client.js', 'package/client.json', 'package/client.node', 'package/client/index.js', 'package/client/index.json', 'package/client/index.node'].find(file => files.has(file));
+    if (!legacy) throw new Error('Client entry client.js is missing from published archive');
+    return [legacy];
+  }
+  const targets = new Set();
+  function visit(value, depth = 0) {
+    if (depth > 16) throw new Error('Client entry export is too deeply nested');
+    if (value === null) return;
+    if (typeof value === 'string') {
+      const resolved = replacement === undefined ? value : value.replaceAll('*', replacement);
+      if (!resolved.startsWith('./') || resolved.includes('*')) throw new Error('Client entry must name a relative package file');
+      targets.add(packageFile(resolved));
+    } else if (Array.isArray(value)) value.forEach(item => visit(item, depth + 1));
+    else if (value && typeof value === 'object') {
+      for (const [condition, entry] of Object.entries(value)) {
+        if (condition !== 'types' && !condition.startsWith('types@')) visit(entry, depth + 1);
+      }
+    } else throw new Error('Client entry export has an invalid target');
+  }
+  visit(target);
+  if (client && !targets.size) throw new Error('Client entry ./client has no runtime export');
+  for (const file of targets) if (!files.has(file)) throw new Error(`Client entry ${file} is missing from published archive`);
+  return [...targets];
+}
+
 export function checkBundle(manifest, files, expectedName, expectedVersion) {
   if (manifest.name !== expectedName || manifest.version !== expectedVersion) throw new Error('Published archive identity differs from registry metadata');
   const declared = manifest.dsh?.bundle?.patch;
@@ -123,6 +175,7 @@ export function checkBundle(manifest, files, expectedName, expectedVersion) {
   if (!patches.length) throw new Error('Bundle must declare at least one patch');
   for (const patch of patches) if (!files.has(patch)) throw new Error(`Bundle patch is missing from published archive: ${patch}`);
   if (typeof manifest.main === 'string' && !files.has(packageFile(manifest.main))) throw new Error('Declared main file is missing from published archive');
+  clientEntryFiles(manifest, files);
   return patches;
 }
 
@@ -241,6 +294,7 @@ export async function collectPackage(input, { fetchImpl = fetch, now = Date.now(
   const {version, time, budget, bytes, published, metadataUrl, releases, source} = await packageRelease(input, {fetchImpl, now});
   const { manifest, files, unpackedBytes, decodedBytes, entryCount } = await inspectArchive(bytes, budget);
   const patch = checkBundle(manifest, files, input.name, version);
+  const clientEntries = clientEntryFiles(manifest, files);
   const resolved = displayFiles(manifest, files);
   const readFiles = [resolved.icon, ...Object.values(resolved.locales)].filter(path => path && files.has(path));
   const contents = readFiles.length ? (await inspectArchive(bytes, {...budget, readFiles})).contents : new Map();
@@ -283,11 +337,11 @@ export async function collectPackage(input, { fetchImpl = fetch, now = Date.now(
       ...(repositoryInfo.review ? {repositoryReview: repositoryInfo.review} : {}),
       ...(typeof published.gitHead === 'string' && /^[0-9a-f]{40}$/.test(published.gitHead) ? {sourceCommit: published.gitHead} : {}),
       ...(metadataUrl ? {metadataUrl} : {source}), tarball: published.dist.tarball, integrity: published.dist.integrity,
-      patch, filesChecked: files.size, display: display.evidence,
+      patch, ...(clientEntries.length ? {clientEntries} : {}), filesChecked: files.size, display: display.evidence,
       archive: {compressedBytes: bytes.length, unpackedBytes, decodedBytes, entries: entryCount, maxUnpackedBytes: budget.maxUnpackedBytes, downloadTimeoutMs: budget.timeoutMs, reviewedBudget: input.archiveReview !== undefined},
       lifecycleScripts,
       ...(releases ? {releases} : {}),
-      checks: [source.type === 'git' ? 'git-commit-pinned' : 'registry-identity', 'sha512-integrity', 'archive-manifest-identity', 'bundle-patch-present', ...(manifest.main ? ['main-file-present'] : [])],
+      checks: [source.type === 'git' ? 'git-commit-pinned' : 'registry-identity', 'sha512-integrity', 'archive-manifest-identity', 'bundle-patch-present', ...(manifest.main ? ['main-file-present'] : []), ...(clientEntries.length ? ['client-entry-present'] : [])],
       limitations: ['No runtime installation test', 'No code audit', 'Patch references and transitive dependencies are not validated']
     }
   };

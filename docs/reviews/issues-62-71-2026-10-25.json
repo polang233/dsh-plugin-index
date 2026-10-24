@@ -1,0 +1,3738 @@
+{
+  "schema": 1,
+  "checkedAt": "2026-10-24T16:45:30.408Z",
+  "status": "approved",
+  "scope": "Issues 65–71 and the two failing npm entries plus six Git pins in issue 62. Source and archive checks only; no plugin install/execution or full catalog build. The maintainer approved the changes and eight Issue replies were posted before publication.",
+  "counts": {
+    "added": 6,
+    "replaced": 1,
+    "updated": 1,
+    "deferredUpdates": 5,
+    "needsInformation": 2
+  },
+  "reviews": [
+    {
+      "issue": 65,
+      "name": "brooks-lint",
+      "decision": "add",
+      "reviewedVersion": "1.9.1",
+      "input": {
+        "name": "brooks-lint",
+        "title": {
+          "en": "brooks-lint",
+          "zh": "brooks-lint"
+        },
+        "description": {
+          "en": "Six Agent Skills for code review, architecture audits, technical debt, test quality, project health and fixes, provided to the DSH skill registry.",
+          "zh": "向 DSH 技能注册表提供六项 Agent Skills，覆盖代码审查、架构审计、技术债、测试质量、项目健康与修复。"
+        },
+        "category": "skills"
+      },
+      "repository": {
+        "url": "https://github.com/hyhmrright/brooks-lint",
+        "id": 1192608669,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "1.9.1",
+        "publishedAt": "2026-10-24T01:50:17.254Z",
+        "publisher": "hyhmrright",
+        "maintainers": [
+          "hyhmrright"
+        ],
+        "gitHead": "6323e176008fc318d125689dad533e5898a0a554"
+      },
+      "sourceCommit": "6323e176008fc318d125689dad533e5898a0a554",
+      "license": "MIT",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "brooks-lint",
+        "version": "1.9.1",
+        "license": "MIT",
+        "repository": "https://github.com/hyhmrright/brooks-lint",
+        "repositorySource": "package",
+        "sourceCommit": "6323e176008fc318d125689dad533e5898a0a554",
+        "metadataUrl": "https://registry.npmjs.org/brooks-lint",
+        "tarball": "https://registry.npmjs.org/brooks-lint/-/brooks-lint-1.9.1.tgz",
+        "integrity": "sha512-QuwCNhnq6Fu7m/XYrIhfTkaSLOfR6+5Axpv0dQH/gyH/aP6rkscD2BfrYRcX2t84kMtrRP/P1M0w9HC9n2t8oQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 32,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 126806,
+          "unpackedBytes": 334173,
+          "decodedBytes": 360960,
+          "entries": 32,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-24T01:22:26.825Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceComparisons": [
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/bin/brooks-lint.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/scripts/npm-platforms.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ]
+    },
+    {
+      "issue": 66,
+      "name": "@hui-xu-ai/dsh-wensu",
+      "decision": "add",
+      "reviewedVersion": "0.4.3",
+      "input": {
+        "name": "@hui-xu-ai/dsh-wensu",
+        "title": {
+          "en": "wensu",
+          "zh": "文溯"
+        },
+        "description": {
+          "en": "Connect the wensu stdio MCP server for CNKI bibliographic search, details, export and status, without full-text downloads. Requires Windows, Python 3.11+, wensu on PATH, and a separately configured Edge or Chrome extension and native host.",
+          "zh": "接入文溯 stdio MCP，提供知网题录检索、详情、导出与状态查询，不下载全文。需要 Windows、Python 3.11+、PATH 中的 wensu 命令，并另行配置 Edge/Chrome 扩展和原生宿主。"
+        },
+        "category": "knowledge"
+      },
+      "repository": {
+        "url": "https://github.com/hui-xu-ai/wensu",
+        "id": 1428344254,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.4.3",
+        "publishedAt": "2026-10-24T05:07:04.801Z",
+        "publisher": "hui-xu-ai",
+        "maintainers": [
+          "hui-xu-ai"
+        ],
+        "gitHead": "7aec933a87c3b7d0ea526db495a3fdee94c0f912"
+      },
+      "sourceCommit": "7aec933a87c3b7d0ea526db495a3fdee94c0f912",
+      "license": "MIT",
+      "licenseFiles": [],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "@hui-xu-ai/dsh-wensu",
+        "version": "0.4.3",
+        "license": "MIT",
+        "repository": "https://github.com/hui-xu-ai/wensu",
+        "repositorySource": "package",
+        "sourceCommit": "7aec933a87c3b7d0ea526db495a3fdee94c0f912",
+        "metadataUrl": "https://registry.npmjs.org/%40hui-xu-ai%2Fdsh-wensu",
+        "tarball": "https://registry.npmjs.org/@hui-xu-ai/dsh-wensu/-/dsh-wensu-0.4.3.tgz",
+        "integrity": "sha512-85xeNyqQ3CP0LRGVbaHZC3UYlwltCIvEyjaxLEr/fFgOYBkDon7cWS+KfVpQuZ8JmPYbU58bhw9nAkW6KBMVpQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 3,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 2159,
+          "unpackedBytes": 3754,
+          "decodedBytes": 6656,
+          "entries": 3,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-24T01:45:31.116Z",
+          "last30Days": 4,
+          "last90Days": 4
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceComparisons": [
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        }
+      ]
+    },
+    {
+      "issue": 67,
+      "name": "dsh-find-bar",
+      "decision": "add",
+      "reviewedVersion": "0.4.0",
+      "input": {
+        "name": "dsh-find-bar",
+        "title": {
+          "en": "dsh-find-bar",
+          "zh": "dsh-find-bar（页内查找）"
+        },
+        "description": {
+          "en": "Add Cmd/Ctrl+F search to the DSH desktop app, with highlighting, match counts and previous/next navigation. Search the conversation and right panel separately; collapsed content is skipped.",
+          "zh": "为 DSH 桌面端补上 Cmd/Ctrl+F 页内查找，支持高亮、匹配计数和前后跳转，可分别搜索对话与右侧面板，跳过折叠内容。"
+        },
+        "category": "interface"
+      },
+      "repository": {
+        "url": "https://github.com/secyborg/dsh-find-bar",
+        "id": 1346006457,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.4.0",
+        "publishedAt": "2026-10-24T11:23:26.062Z",
+        "publisher": "secyborg",
+        "maintainers": [
+          "secyborg"
+        ],
+        "gitHead": "117bd30fbf6666b88f0b84574b029865b7cf2b0c"
+      },
+      "sourceCommit": "117bd30fbf6666b88f0b84574b029865b7cf2b0c",
+      "license": "MIT",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-find-bar",
+        "version": "0.4.0",
+        "license": "MIT",
+        "repository": "https://github.com/secyborg/dsh-find-bar",
+        "repositorySource": "package",
+        "sourceCommit": "117bd30fbf6666b88f0b84574b029865b7cf2b0c",
+        "metadataUrl": "https://registry.npmjs.org/dsh-find-bar",
+        "tarball": "https://registry.npmjs.org/dsh-find-bar/-/dsh-find-bar-0.4.0.tgz",
+        "integrity": "sha512-+icuXpJg4fGr5mdYQAPoMl+DeuCZ0jfZ1iVOddWbquWQ/rSN535cxk7AinAuuKZ+8eEwQUqkGoQnlXF7ShKvzA==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 7,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 14103,
+          "unpackedBytes": 37329,
+          "decodedBytes": 43520,
+          "entries": 7,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-24T09:54:23.055Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceComparisons": [
+        {
+          "path": "package/lib/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ]
+    },
+    {
+      "issue": 68,
+      "name": "dsh-session-notifier",
+      "decision": "add",
+      "reviewedVersion": "1.0.3",
+      "input": {
+        "name": "dsh-session-notifier",
+        "title": {
+          "en": "Desktop Notifier",
+          "zh": "桌面通知"
+        },
+        "description": {
+          "en": "Notify when DSH Web sessions finish, fail, need approval or ask a question. Browser notifications focus an existing session tab; Windows/WSL toasts open a new tab. Requires notification permission and PowerShell for Windows toasts.",
+          "zh": "DSH Web 会话完成、失败、需要审批或提问时发送通知。浏览器通知优先聚焦已有会话标签页，Windows/WSL Toast 新开标签页；需允许通知，Windows Toast 另需 PowerShell。"
+        },
+        "category": "interface"
+      },
+      "repository": {
+        "url": "https://github.com/CoCoCoDeDeDe/dsh-session-notifier",
+        "id": 1432037650,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "1.0.3",
+        "publishedAt": "2026-10-24T11:33:31.207Z",
+        "publisher": "cococodededer",
+        "maintainers": [
+          "cococodededer"
+        ],
+        "gitHead": "1d3c1a8bdb151098f5a3c4b61ee9306dfb92f754"
+      },
+      "sourceCommit": "1d3c1a8bdb151098f5a3c4b61ee9306dfb92f754",
+      "license": "MIT",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-session-notifier",
+        "version": "1.0.3",
+        "license": "MIT",
+        "repository": "https://github.com/CoCoCoDeDeDe/dsh-session-notifier",
+        "repositorySource": "package",
+        "sourceCommit": "1d3c1a8bdb151098f5a3c4b61ee9306dfb92f754",
+        "metadataUrl": "https://registry.npmjs.org/dsh-session-notifier",
+        "tarball": "https://registry.npmjs.org/dsh-session-notifier/-/dsh-session-notifier-1.0.3.tgz",
+        "integrity": "sha512-x0R6AWRjUKMiS+G4iMif2x9r93xaNIga7+IH7307NHN+8qGbO+GfY5QjSPMrS7gD0+9BP0NPkkY+bFh2kB0CEw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 9,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/43f222a3f061bd552cd71178cb6774c2abc664367ae33c8c8df42aeb4ebe9747.svg",
+            "mime": "image/svg+xml",
+            "bytes": 679,
+            "sha256": "43f222a3f061bd552cd71178cb6774c2abc664367ae33c8c8df42aeb4ebe9747"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 18734,
+          "unpackedBytes": 57475,
+          "decodedBytes": 65536,
+          "entries": 9,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-24T10:17:58.407Z",
+          "last30Days": 5,
+          "last90Days": 5
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceComparisons": [
+        {
+          "path": "package/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ]
+    },
+    {
+      "issue": 69,
+      "name": "dsh-skills-panel",
+      "decision": "needs-information",
+      "reviewedVersion": "1.0.3",
+      "repository": {
+        "url": "https://github.com/holysesame/dsh-skills-panel",
+        "id": 1432070440,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "1.0.3",
+        "publishedAt": "2026-10-24T12:45:32.853Z",
+        "publisher": "holysesame",
+        "maintainers": [
+          "holysesame"
+        ],
+        "gitHead": "c9436fe8aba6d6293c8978789bc53ab99bc56d21"
+      },
+      "sourceCommit": "d1c9333a42a601e42fa90cdd5ff5552fe8108aed",
+      "license": "MIT",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-skills-panel",
+        "version": "1.0.3",
+        "license": "MIT",
+        "repository": "https://github.com/holysesame/dsh-skills-panel",
+        "repositorySource": "package",
+        "sourceCommit": "c9436fe8aba6d6293c8978789bc53ab99bc56d21",
+        "metadataUrl": "https://registry.npmjs.org/dsh-skills-panel",
+        "tarball": "https://registry.npmjs.org/dsh-skills-panel/-/dsh-skills-panel-1.0.3.tgz",
+        "integrity": "sha512-HfowV3hD5jGzBsTAJW95Y+uUlTOIWacLyQKB/D1Qm5bL5xZ4cvQkwpB5HnIuXSgoAWrNf7PJqLzjGgFk02bByA==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 8,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 11221,
+          "unpackedBytes": 32500,
+          "decodedBytes": 39936,
+          "entries": 8,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-24T10:22:04.153Z",
+          "last30Days": 5,
+          "last90Days": 5
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceComparisons": [
+        {
+          "path": "package/lib/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/scripts/sync-skills.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "functionalReview": {
+        "embeddedSkillCount": 10,
+        "absolutePathCount": 10,
+        "clientFile": "package/lib/client.js",
+        "syncScript": "package/scripts/sync-skills.mjs",
+        "hostHasNoDiscovery": true
+      },
+      "reason": "Published client embeds the author machine skill inventory; no automatic current-host discovery, and the manual sync script contains a fixed installation path."
+    },
+    {
+      "issue": 70,
+      "name": "dsh-workspace-graph",
+      "decision": "add",
+      "reviewedVersion": "0.1.0",
+      "input": {
+        "name": "dsh-workspace-graph",
+        "title": {
+          "en": "Workspace Atlas",
+          "zh": "工作区图谱"
+        },
+        "description": {
+          "en": "Browse workspaces and sessions as draggable bubbles, with search, filters, saved browser layouts and native rename, new-session, archive and restore actions. Dragging changes layout only. Tested on DSH 0.2.1-rc.2 Web.",
+          "zh": "用可拖动气泡浏览工作区与会话，支持搜索筛选、浏览器本地布局保存，以及重命名、新建会话、归档和恢复。拖拽只调整图谱布局，已测试 DSH 0.2.1-rc.2 Web。"
+        },
+        "category": "interface"
+      },
+      "repository": {
+        "url": "https://github.com/qrxf/dsh-workspace-graph",
+        "id": 1432155137,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.1.0",
+        "publishedAt": "2026-10-24T14:47:02.658Z",
+        "publisher": "qrxf",
+        "maintainers": [
+          "qrxf"
+        ]
+      },
+      "sourceCommit": "4b05b8aec00f6b9a19deb9d05f57ab0990386f31",
+      "license": "MIT",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-workspace-graph",
+        "version": "0.1.0",
+        "license": "MIT",
+        "repository": "https://github.com/qrxf/dsh-workspace-graph",
+        "repositorySource": "package",
+        "metadataUrl": "https://registry.npmjs.org/dsh-workspace-graph",
+        "tarball": "https://registry.npmjs.org/dsh-workspace-graph/-/dsh-workspace-graph-0.1.0.tgz",
+        "integrity": "sha512-EF7+EOU8dtOf7KO7FijwroWM/D9IXgiTG1F9b6mKbjI6uvaT9n4V9fiov3KItHFFyuS780w6j9s2Apa1jS99KQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/dist/client.js"
+        ],
+        "filesChecked": 9,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 542572,
+          "unpackedBytes": 720540,
+          "decodedBytes": 729600,
+          "entries": 9,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-24T13:55:31.420Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceComparisons": [
+        {
+          "path": "package/dist/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/dist/host.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ]
+    },
+    {
+      "issue": 71,
+      "name": "dsh-skill-cockpit",
+      "decision": "add",
+      "reviewedVersion": "1.0.0",
+      "input": {
+        "name": "dsh-skill-cockpit",
+        "title": {
+          "en": "Skill Cockpit",
+          "zh": "Skill Cockpit（技能面板）"
+        },
+        "description": {
+          "en": "Inspect skills from six root types, explain missing or disabled skills, and manage them through a page and the skill_panel tool. Supports editing, toggles, backups and trash; project skill roots remain read-only.",
+          "zh": "扫描六类技能根，说明技能不可见或被禁用的原因，通过面板和 skill_panel 工具管理技能，支持编辑、启停、备份与回收站；项目技能根保持只读。"
+        },
+        "category": "skills"
+      },
+      "repository": {
+        "url": "https://github.com/huanlin-labs/dsh-skill-cockpit",
+        "id": 1418868622,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "1.0.0",
+        "publishedAt": "2026-10-24T08:45:12.152Z",
+        "publisher": "zhaorui-wu",
+        "maintainers": [
+          "zhaorui-wu"
+        ],
+        "gitHead": "7d5e459692b5b3a3f2570948cd934a7033303ee7"
+      },
+      "sourceCommit": "7d5e459692b5b3a3f2570948cd934a7033303ee7",
+      "license": "MIT",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-skill-cockpit",
+        "version": "1.0.0",
+        "license": "MIT",
+        "repository": "https://github.com/huanlin-labs/dsh-skill-cockpit",
+        "repositorySource": "package",
+        "sourceCommit": "7d5e459692b5b3a3f2570948cd934a7033303ee7",
+        "metadataUrl": "https://registry.npmjs.org/dsh-skill-cockpit",
+        "tarball": "https://registry.npmjs.org/dsh-skill-cockpit/-/dsh-skill-cockpit-1.0.0.tgz",
+        "integrity": "sha512-VVbB20zqC+Us+kvXistVkO+51RG43jCJ1SRXLW07pJ+qXj2mkI6vSc6mM5GNLRrtdHwpcRrYD3xULBadmpsE/A==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 42,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 200407,
+          "unpackedBytes": 650130,
+          "decodedBytes": 681984,
+          "entries": 42,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-14T13:07:14.221Z",
+          "last30Days": 23,
+          "last90Days": 23
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceComparisons": [
+        {
+          "path": "package/lib/agent-presets.js",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/checks.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/client.js",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/frontmatter.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/manage-backup.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/manage-repair.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/manage-template.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/manage-trash.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/manage-write.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/manage.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/parked.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/presets.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/roots.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/scan.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/skill-zh.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/toggle.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/tools.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/undeclared.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/usage.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/vault.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-all.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-backup.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-checks.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-client.mjs",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-data-layer.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-manage.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-mode.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-repair.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-routes.mjs",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-template.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-toggle.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-trash.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run-usage.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ]
+    },
+    {
+      "issue": 62,
+      "name": "@angelky7/dsh-browser-control",
+      "decision": "replace",
+      "reviewedVersion": "1.1.0",
+      "replaces": "@caob23/dsh-browser-control",
+      "input": {
+        "name": "@angelky7/dsh-browser-control",
+        "title": {
+          "en": "DSH Browser Control",
+          "zh": "浏览器扩展桥接"
+        },
+        "description": {
+          "en": "Connect DSH to the DSH Browser Control extension through a local WebSocket bridge, with browser tools and a settings switch. Requires the browser extension; renamed from @caob23/dsh-browser-control.",
+          "zh": "通过本地 WebSocket 桥连接 DSH Browser Control 浏览器扩展，提供网页操作工具与设置开关。需要配套扩展，原包名为 @caob23/dsh-browser-control。"
+        },
+        "category": "tools"
+      },
+      "repository": {
+        "url": "https://github.com/angelky7/dsh-browser-control",
+        "id": 1342924739,
+        "visibility": "public",
+        "archived": false,
+        "license": "AGPL-3.0"
+      },
+      "registry": {
+        "latest": "1.1.0",
+        "publishedAt": "2026-10-24T12:09:00.490Z",
+        "publisher": "caob23",
+        "maintainers": [
+          "caob23"
+        ],
+        "gitHead": "fd67c307137c29b11f84393d71d4cca3903b052d"
+      },
+      "sourceCommit": "0eed701c7f66c4ebc5d2c6edad28f2f78c9c0464",
+      "sourceNote": "The registry gitHead predates the final scoped rename. Current public source has the new package name and matching runtime files.",
+      "license": "AGPL-3.0-only",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "@angelky7/dsh-browser-control",
+        "version": "1.1.0",
+        "license": "AGPL-3.0-only",
+        "repository": "https://github.com/angelky7/dsh-browser-control",
+        "repositorySource": "package",
+        "sourceCommit": "fd67c307137c29b11f84393d71d4cca3903b052d",
+        "metadataUrl": "https://registry.npmjs.org/%40angelky7%2Fdsh-browser-control",
+        "tarball": "https://registry.npmjs.org/@angelky7/dsh-browser-control/-/dsh-browser-control-1.1.0.tgz",
+        "integrity": "sha512-6D+t6uws6Cpx93eRjbWqk8z+DhSF01g+fZceOXf1SBZHlXd7nkN2K6REZu2hhT0PkrByAy7mkFDJ6JZpxVmhwA==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 20,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 102829,
+          "unpackedBytes": 326608,
+          "decodedBytes": 344064,
+          "entries": 20,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-24T12:08:04.005Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceComparisons": [
+        {
+          "path": "package/lib/types/errors.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/invariant.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/invariant.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/policy.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/server.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/ws.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/errors.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/index.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/invariant.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/policy.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/server.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/ws.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ]
+    },
+    {
+      "issue": 62,
+      "name": "@dsh-ai-providers/jina-cohere",
+      "decision": "needs-information",
+      "reviewedVersion": "0.5.0",
+      "repository": {
+        "url": "https://github.com/Firefox2100/dsh-ai-providers",
+        "id": 1403478066,
+        "visibility": "public",
+        "archived": false,
+        "license": "GPL-3.0"
+      },
+      "registry": {
+        "latest": "0.5.0",
+        "publishedAt": "2026-10-24T10:38:34.064Z",
+        "publisher": "GitHub Actions",
+        "maintainers": [
+          "firefox2100"
+        ]
+      },
+      "sourceCommit": "a054af0521bff65aa9abba95a4a0c616b005e7d3",
+      "license": "GPL-3.0-only",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/lib/index.js",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        },
+        {
+          "path": "package/src/connection.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/src/embedding.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/src/index.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/src/rerank.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "reason": "Bundle patch must name a file"
+    },
+    {
+      "issue": 62,
+      "name": "dsh-deepseek-workbench",
+      "decision": "defer-update",
+      "reviewedVersion": "0.1.3-dsh.0.2.1-rc.3",
+      "previousVersion": "0.1.1-dsh.0.2.1-rc.2",
+      "repository": {
+        "url": "https://github.com/gulagala001/dsh-deepseek-workbench",
+        "id": 1427062232,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "sourceCommit": "e36d45689367cc751c1804935782a149bdd7d8c1",
+      "license": "MIT",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "changes": {
+        "status": "ahead",
+        "aheadBy": 5,
+        "files": [
+          {
+            "path": ".github/workflows/documentation-structure.yml",
+            "status": "added",
+            "additions": 17,
+            "deletions": 0
+          },
+          {
+            "path": ".github/workflows/release-assets.yml",
+            "status": "added",
+            "additions": 22,
+            "deletions": 0
+          },
+          {
+            "path": "CHANGELOG.md",
+            "status": "modified",
+            "additions": 70,
+            "deletions": 0
+          },
+          {
+            "path": "README.md",
+            "status": "modified",
+            "additions": 7,
+            "deletions": 5
+          },
+          {
+            "path": "README_EN.md",
+            "status": "modified",
+            "additions": 7,
+            "deletions": 5
+          },
+          {
+            "path": "desktop/README.md",
+            "status": "modified",
+            "additions": 1,
+            "deletions": 1
+          },
+          {
+            "path": "desktop/README_EN.md",
+            "status": "modified",
+            "additions": 1,
+            "deletions": 1
+          },
+          {
+            "path": "docs/documentation.md",
+            "status": "added",
+            "additions": 50,
+            "deletions": 0
+          },
+          {
+            "path": "docs/install.md",
+            "status": "modified",
+            "additions": 6,
+            "deletions": 4
+          },
+          {
+            "path": "docs/install_EN.md",
+            "status": "modified",
+            "additions": 6,
+            "deletions": 4
+          },
+          {
+            "path": "docs/releases.md",
+            "status": "modified",
+            "additions": 9,
+            "deletions": 19
+          },
+          {
+            "path": "docs/structure.json",
+            "status": "added",
+            "additions": 75,
+            "deletions": 0
+          },
+          {
+            "path": "docs/usage.md",
+            "status": "modified",
+            "additions": 3,
+            "deletions": 2
+          },
+          {
+            "path": "docs/usage_EN.md",
+            "status": "modified",
+            "additions": 3,
+            "deletions": 2
+          },
+          {
+            "path": "package.json",
+            "status": "modified",
+            "additions": 13,
+            "deletions": 10
+          },
+          {
+            "path": "pnpm-lock.yaml",
+            "status": "modified",
+            "additions": 72,
+            "deletions": 72
+          },
+          {
+            "path": "pnpm-workspace.yaml",
+            "status": "modified",
+            "additions": 346,
+            "deletions": 0
+          },
+          {
+            "path": "scripts/check-docs.mjs",
+            "status": "added",
+            "additions": 88,
+            "deletions": 0
+          },
+          {
+            "path": "scripts/check-release-assets.mjs",
+            "status": "added",
+            "additions": 25,
+            "deletions": 0
+          },
+          {
+            "path": "src/client/conversation-import.mjs",
+            "status": "added",
+            "additions": 28,
+            "deletions": 0
+          },
+          {
+            "path": "src/client/index.jsx",
+            "status": "modified",
+            "additions": 12,
+            "deletions": 14
+          },
+          {
+            "path": "src/import.mjs",
+            "status": "modified",
+            "additions": 21,
+            "deletions": 5
+          },
+          {
+            "path": "src/index.mjs",
+            "status": "modified",
+            "additions": 1,
+            "deletions": 1
+          },
+          {
+            "path": "test/conversation-import.test.mjs",
+            "status": "added",
+            "additions": 47,
+            "deletions": 0
+          },
+          {
+            "path": "test/import.test.mjs",
+            "status": "added",
+            "additions": 158,
+            "deletions": 0
+          }
+        ],
+        "commits": [
+          {
+            "sha": "9ea75770ada712674d2475a37e41b91aeb857421",
+            "message": "Maintain public documentation structure, sources and release boundaries"
+          },
+          {
+            "sha": "ba8aa02f2188a1f48b50d5720c2ebc21ccb315c3",
+            "message": "fix: preserve migration requests and drain attachment writes"
+          },
+          {
+            "sha": "0ac7e0a7ccc1fa6dcc61c68b71d1fced3733a690",
+            "message": "Release DeepSeek Workbench 0.1.2 with integrated reliability fixes"
+          },
+          {
+            "sha": "a80cb8a21b4a82de80b4da6008cf56e365c35202",
+            "message": "Adapt exact SDK builds to DSH 0.2.1-rc.3"
+          },
+          {
+            "sha": "e36d45689367cc751c1804935782a149bdd7d8c1",
+            "message": "Prepare DeepSeek Workbench 0.1.3 · DSH 0.2.1-rc.3 release"
+          }
+        ]
+      }
+    },
+    {
+      "issue": 62,
+      "name": "dsh-colorlab",
+      "decision": "update",
+      "reviewedVersion": "1.1.9",
+      "previousVersion": "1.0.0",
+      "input": {
+        "name": "dsh-colorlab",
+        "version": "1.1.9",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/ruegg114514/dsh-colorlab",
+          "commit": "c4cf9481910c326ac7278ded2986f8d6c7e71634",
+          "integrity": "sha512-r0bGlo5baWtI/1A/ji56SwLVbox9xQ6dedoNRel6W5wlunETiAPs6nVJZ1U4VHlSBgb4iM0Af6XtYe6C7WlIdg==",
+          "publishedAt": "2026-10-24T14:25:55Z"
+        },
+        "title": {
+          "en": "ColorLab",
+          "zh": "ColorLab 配色主题"
+        },
+        "description": {
+          "en": "Customize DSH colors, saved presets and contrast hints, with optional glass panels, wallpaper or generated backgrounds. The package does not declare a DSH compatibility range.",
+          "zh": "调整 DSH 界面与正文配色、保存方案并查看对比度提示，可选玻璃面板、壁纸或生成背景。包内未声明适用的 DSH 版本。"
+        },
+        "category": "appearance"
+      },
+      "repository": {
+        "url": "https://github.com/ruegg114514/dsh-colorlab",
+        "id": 1425477038,
+        "visibility": "public",
+        "archived": false,
+        "license": "NOASSERTION"
+      },
+      "sourceCommit": "c4cf9481910c326ac7278ded2986f8d6c7e71634",
+      "license": "MIT",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-colorlab",
+        "version": "1.1.9",
+        "license": "MIT",
+        "repository": "https://github.com/ruegg114514/dsh-colorlab",
+        "repositorySource": "package",
+        "sourceCommit": "c4cf9481910c326ac7278ded2986f8d6c7e71634",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/ruegg114514/dsh-colorlab",
+          "commit": "c4cf9481910c326ac7278ded2986f8d6c7e71634"
+        },
+        "tarball": "https://codeload.github.com/ruegg114514/dsh-colorlab/tar.gz/c4cf9481910c326ac7278ded2986f8d6c7e71634",
+        "integrity": "sha512-r0bGlo5baWtI/1A/ji56SwLVbox9xQ6dedoNRel6W5wlunETiAPs6nVJZ1U4VHlSBgb4iM0Af6XtYe6C7WlIdg==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 44,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 3470608,
+          "unpackedBytes": 4507664,
+          "decodedBytes": 4546560,
+          "entries": 50,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "changes": {
+        "status": "ahead",
+        "aheadBy": 637,
+        "files": [
+          {
+            "path": "CHANGELOG.md",
+            "status": "added",
+            "additions": 407,
+            "deletions": 0
+          },
+          {
+            "path": "README.md",
+            "status": "modified",
+            "additions": 568,
+            "deletions": 20
+          },
+          {
+            "path": "assets/screenshot-contour.png",
+            "status": "added",
+            "additions": 0,
+            "deletions": 0
+          },
+          {
+            "path": "assets/screenshot-glass.png",
+            "status": "added",
+            "additions": 0,
+            "deletions": 0
+          },
+          {
+            "path": "assets/screenshot-gradient.png",
+            "status": "added",
+            "additions": 0,
+            "deletions": 0
+          },
+          {
+            "path": "client.js",
+            "status": "modified",
+            "additions": 9588,
+            "deletions": 2579
+          },
+          {
+            "path": "docs/DESIGN.md",
+            "status": "modified",
+            "additions": 1399,
+            "deletions": 7
+          },
+          {
+            "path": "index.js",
+            "status": "modified",
+            "additions": 617,
+            "deletions": 24
+          },
+          {
+            "path": "package.json",
+            "status": "modified",
+            "additions": 4,
+            "deletions": 1
+          },
+          {
+            "path": "preview-contain-test.html",
+            "status": "added",
+            "additions": 43,
+            "deletions": 0
+          },
+          {
+            "path": "preview-ground.html",
+            "status": "added",
+            "additions": 437,
+            "deletions": 0
+          },
+          {
+            "path": "screenshots.json",
+            "status": "modified",
+            "additions": 4,
+            "deletions": 1
+          },
+          {
+            "path": "scripts/card.test.mjs",
+            "status": "modified",
+            "additions": 153,
+            "deletions": 1
+          },
+          {
+            "path": "scripts/contour.test.mjs",
+            "status": "added",
+            "additions": 584,
+            "deletions": 0
+          },
+          {
+            "path": "scripts/contract.test.mjs",
+            "status": "modified",
+            "additions": 113,
+            "deletions": 7
+          },
+          {
+            "path": "scripts/glass.test.mjs",
+            "status": "added",
+            "additions": 1892,
+            "deletions": 0
+          },
+          {
+            "path": "scripts/host.test.mjs",
+            "status": "modified",
+            "additions": 119,
+            "deletions": 3
+          },
+          {
+            "path": "scripts/loader.test.mjs",
+            "status": "modified",
+            "additions": 17,
+            "deletions": 1
+          },
+          {
+            "path": "scripts/page.test.mjs",
+            "status": "modified",
+            "additions": 140,
+            "deletions": 87
+          },
+          {
+            "path": "scripts/runtime.test.mjs",
+            "status": "modified",
+            "additions": 63,
+            "deletions": 0
+          },
+          {
+            "path": "scripts/shape.test.mjs",
+            "status": "added",
+            "additions": 167,
+            "deletions": 0
+          },
+          {
+            "path": "scripts/test-all.mjs",
+            "status": "modified",
+            "additions": 8,
+            "deletions": 2
+          },
+          {
+            "path": "tools/capture-floats.js",
+            "status": "added",
+            "additions": 119,
+            "deletions": 0
+          },
+          {
+            "path": "tools/check-popover.js",
+            "status": "added",
+            "additions": 91,
+            "deletions": 0
+          },
+          {
+            "path": "tools/diagnose-float.js",
+            "status": "added",
+            "additions": 103,
+            "deletions": 0
+          }
+        ],
+        "commits": [
+          {
+            "sha": "0bd9a559571e91a9798de059cd74e1652a110c11",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "1a156e3f35193f92f101a404f2408eeee9a944a0",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "90289a64e4a8d445556ea53ffc6971d315628bc6",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "cb61cd6d504a4b7dd179d002ab7fab38969e7afa",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "30b7c7f2c1cbf67ef2ab4a979e5276c004f649fc",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "832fa8bd3e345c5fec2af629f66edfad30eedfac",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "2be94a01efe0667f0905864e95abb4edd090afce",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "b657488eb6d728bed4126c941d5afca9d2c6473e",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "3f6b00f1b8c3136208271f9a3483e7f39af40bc9",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "0c58b303c05596661ed13331e32c5495651287af",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "fac6132b938fffe39fbe2671f8ef6cb8a6efeba5",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "07c1b63d6a7f60aaf11bcc7c69abb7892e5b6d7e",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "832b6955de2f3feb0b3b69d4ba80e0c6180ca400",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "1cda3fb7b9765c73b7fb4c860105866fd3d903cc",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "56cbaa503ff6b6961d66ffff5d290b78ee5ce24b",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "0f1a245a7fe1f1d7f3e85bcf15815fbf92e837c1",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "46bc6d8ba3601eb1e75f1bf7a4c6c37ed3946133",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "188d1216c2455ea58c5f23c95cef9f23c158464d",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "c8b54d54fc624a683522fa5c9336f3c62edbcb14",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "b2c844a5daf593f2403b5d4d03dc3b32e78c7bd6",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "b910e7f933f0d7aa4f13de1679b6097fa97cbd75",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "46fef40b4869efec85d43d7eae7a33a1e49b30e6",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "dba30b21e3a9a0e00aba5db735a274758f0782f9",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "45ad69ea0de2a72bef693b6553492b60157213bd",
+            "message": "Stop baking one machine's home directory into the repo"
+          },
+          {
+            "sha": "2b06811154057dabf48cee851fa19c16e81e1271",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "064fd8dbdc7dae5fed952ac02fcba17b917948f4",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "d3ef8f460239b6e3876d1b8d740231a715ee5178",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "0dfd62bf1353d785992d93eb6c3d9e59e22fa4ba",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "b0b2ca11753b32f2dd6f1c273562ea70596e5100",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "0bb187ccc07ccde9453a7a60cb32b5753afb0344",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "f28dd4dad7904a8941c02a0e91e2205cb0b49ab6",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "b212336e61d768fecd46f2b05329cfc51b418fcd",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "cebbf64a2ee8f4d1069b9925ebfb3b5e069cf889",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "bae08738e3c0da90937552f79e0b5552ed65bc37",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "da076279316ea863731c5a371377209ee9b292f0",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "9a4071fa645c9eda78f4f55b6ff8d7ddb40c000b",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "4ecb19903de886feca9bf376c443a07ea04ff8f3",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "f8be71a816e8781ba4d0944122434629b5f53270",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "4183e1f0fe745db7be72487e29ae5c4a7c979817",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "ab44643a1ea1d0666f41810fd3c85eb714f56d05",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "0988e021f9c5d058a6a6c250795c541d19d47fb8",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "f097951bfbf106c9f8537eeabd2c6f2f4133f0d8",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "21b258a634f85997dd9b16dd49938faa73c540ab",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "bd3ec1f7390063f84a1345db4a9c4873b921e85b",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "348841660ad36ff303005dad08cdf548807cd5b6",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "1ce02e5945df2a0a6fe2febe8d049fbb5fffa525",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "8b3ff5094708e4691b082ca966436f7ac8fe9790",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "af3d08bf83c31ea5e019f28480b66c42d43aa401",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "cbc04958344572e499ae0a17ee5caa37aa908bd5",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "226c528e4fd6c1620e9e89fb7d785dcb60e6b7f3",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "edaafc62e1e95c569a9f27b0cea3221a6337e26f",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "9b0fe71d5faff5bdd7c9d6b330a32c154d7a74f3",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "09cb4b6f1a6f6ff4d7857dcfec3daefaf75df4d2",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "7c44c8e327b4360ce50376dd19e7d151c0b6588a",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "1746d3e6696e0dbabb8989a1dbae6e81d140df95",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "dad19bb75cceed7158b0ddb9062374554976974e",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "90768fb38ccdde75695fb9fa14991bb264186170",
+            "message": "Add a wallpaper-backed glass surface, step 1: background plus one alpha layer"
+          },
+          {
+            "sha": "c431990a680d4048a01e2269bf02b2622747164b",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "c1570ebd3c2459569a74f7cee00eb192a28ab169",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "38b449db0eca1ad00f9643e1a2dacf2049349b3c",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "f8a714244d7fcfdbf6093e88ed143e05b47ca62e",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "4ab5978d6f07d07cc6633846d14cb577370964cf",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "2ab40a9803dd4b381bbc95683c5ba8f269dc79a2",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "4d42b71ca0d5c8e88e51eed6d17fa19e2570ba4f",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "310516a37266d300f37480f6e32325ab08832af3",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "87ef460bc565133f175cc4e3952e23897d598b6d",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "c86934b19695f41a58b36c2cc774744cedf5c75d",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "bd8f1e2b8e0994b5e0a8e7b4e0f349a7f07cab66",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "121ca3083cd3441d4a2df88e1e959039c39559b6",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "32cdc97de92f70b02c7c8e6e5868d8655868fb27",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "4d47115481dbc4be5813a48f4962ae1718d666d1",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "6d123b52bac48e612e57a55e370479959f7aa7eb",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "80b4a6694fe73f529104b8d38973489fd8d19df9",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "8587e448131edead6e75d7ed373c9de69e99ce72",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "41254e0d04d440bc53d9ed2977b17246bbf20b02",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "6e28f0c350880eccb49e5a848be7d4cb52c48e06",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "5df6ee9561808827ea4962ed34479e088127d7fe",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "2e472e3c1ddd29af69a76a090267470502c970ee",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "b4b5b9edb26d4df23faee4f1fa8c9fad4d728f6d",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "445d74a69c258bec21b661392ec3b7ee30d0f45d",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "1a4a4373210b2319ca250a9a885fa014697eda2d",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "fc05c1530911251aeebe46d9a1251a2675a8d1cf",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "071d53abfcf958d976aed2066ee06045b4087300",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "611e8460321b4154f02720525a7695f6afad325f",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "ffef3086cebd3b2395e0f3c15cf0a47e032fafaa",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "21f5fca452096c44596126567832f584d9d39f99",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "9374808d15533eb33e02f77223e05810d1df4759",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "18a00bd9cf386d1a050da24812b7261cff55e034",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "0f8288f93d8fff675b9ceab5e0e84df6c54bd39d",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "57c6f078e9020cddf3d3d373057ffb97160bddc8",
+            "message": "Blur the backdrop itself, not every panel, and stop washing out the theme"
+          },
+          {
+            "sha": "f0f4e5a900e2d8d0261905510a2103199690b6ee",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "04e2105b5eb7f87cfd506c16b9d8bdf4218f6a20",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "2c6fdc9873200520cf5d99e8ca03b73c20fab2a3",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "4707be171576b1b4799a26a4a0c926bbd8e26c3a",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "82ffcb017bcb22709b1029321f1bb9f016275a7d",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "76ad0a5e1028c823aded3225548fc8e9acfb531a",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "8cad699cdf5029aa1f148c1f9d1fdb7f3b14c126",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "eac7dfb003d804bd1d35ea72ce67f32ce6390ad5",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "d7303425bbd8335b3272bd7597c4d2e4ddc0a630",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "63dea64495da11534a53d55accb98f0f48618950",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "19e5105fbd7c78cd0d71176151a1d1235205c1b3",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "8b5417609bd2e143e567025a60b3624945a3edd8",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "47eb0bc7516e3abef1af604a727872efab77df51",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "f6521013a5c01faf87be00c526aa2f5abf7a11b0",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "7d72e85edf2be338ff14ea6b093fc0a2e1f76d94",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "1d7f255b33604eb0ca8577aba29f2a85e646dac1",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "22382396d38bf22ac3eed6927fa2a6f9a2ad6697",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "b86daa83e812419ea9e6aed4f279de3bda00e0c8",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "bcf5c947def454753dd57f17f868abd73e4a4955",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "9638f935a104686900db637a1ffe5a398f52518b",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "c01ac6ebfb82deb4da9ca2a4d60f507cc30de23e",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "251eeff07d4c1672532192a926a19001cc50a080",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "4d3919870a06fa5b08b514fcfa55acc2cc86ee14",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "3705fa6e4e549cb99eb33ecf5bfd7fe0c4f0600b",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "bb6364acc6ede87173a37f581790893da4905032",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "05b80127cf4cbeefb6c8cf88f3e8fbf8f6da4ed8",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "02f11ca9eca1e114c85e6714839585b3c15ed2ac",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "33404975030faf3740675d8d0f41a5e3809178b8",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "d58e6ec3632321c5e609ba999ad995d1a00d8d55",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "bfa9a69d89ba86b671b212311c51993da62bce3c",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "d15445f401fe68847535c03899e437e16d0ba9fc",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "f39157601283a05d857f8d800ab95f613597b8a9",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "c545e1484e7a0aa6962e6e0b405f29a1b3b723df",
+            "message": "Make the glass cover the whole window, not just the three columns"
+          },
+          {
+            "sha": "569995fbc79609bee28c53532695218d50fb1bf6",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "8224b20df44f5ad7739ce31c67942953e3c071b2",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "8c5e41b3f771334a4ce9a9b0a77def00c2d31704",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "7c9c8abf77610386991be951dab008ecbdd48824",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "183533f5760373b726d727442b7df9d16c1d619d",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "3859ca33cf13b03ebc6ced770aba7076df6bedb0",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "69f94a6f4834320cd55f53747d0d28e040825abd",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "a06fdb8f2cfd34fb16ba094cc404354775dcc378",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "20255b6149e7835be041421ba33ad52f9ba515e6",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "75111994e043ae8fe0dfbc4a27d85de0b972b5d2",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "16fdf93aa1640ca25cefabfc167074c7f393a990",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "f6f51247660e97abaf49e92a83c10cd88b858cc2",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "d115ba668b133d10dbfb961946fdec918a17558a",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "83b8c0eb7d4e768626ddb041b900fd7cea08aa77",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "05a8cd55fe9c7cde8e0d28d4f35347a85edcd297",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "bcfea11551b44964267bfbef60dfd8f3b2e5ecd5",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "c801f4b625055ff99dea537b1e2a9a6e2ddd36f0",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "776e0243b4d5f49694733ec45e1cd3f3f91ea639",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "9bc28ffe27da99f52e6814e05aca2d520a9e63bd",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "bd5f4c345655adc7ee2d19192947e33fa8da4778",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "0320d14bacd3421adf4f42d53f41066259fa2106",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "6c1b2083e3090095168231af785b4e9a7e0e1eb8",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "25a4bc1ee6420ed5ea076b189ba1986df368a197",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "f9f720004d50ff98d1e0c84d699588bcbb37a9c8",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "eeb5e8c1ab86f4101275da88e8bc690d7f236507",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "069f8df993f0447a0c8cabcbd098bc5e55597f72",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "0fa68e360e32c93fc1e68cf6662b425299205bac",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "abb5a2ad344748905bf13f215c2d2a3db498c2b3",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "2338e4d264ea5a2f95c590ece588dfadcd680a01",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "254ad70905d41ddb67e76c49633feee8ec2e10e5",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "c110f4393b1f692c528029992b56dd0ed437a753",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "a10156bad82f9ada2673e7a2f9fbb4d89588a099",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "07abfa34fb449c668b6b952d294b1e2fdfc47d86",
+            "message": "Fix text bleeding into the composer, the untouched titlebar, the corner radius; add wallpaper choice"
+          },
+          {
+            "sha": "aee566af0bea4466d400cb1126da23418a20d1e9",
+            "message": "Restore the sidebar glass, fix text bleeding at the right layer, drop the size cap"
+          },
+          {
+            "sha": "072c93c8734eabd6d8362fedaf67288af6610d7a",
+            "message": "Restore the sidebar glass, fix text bleeding at the right layer, drop the size cap"
+          },
+          {
+            "sha": "161dae1158d01ddf56846874b5cd12d49ef6875c",
+            "message": "Input areas and dialogs must be opaque, because translucency over text always bleeds"
+          },
+          {
+            "sha": "74179ec597f10eb8e8cdb91fee56856147c95a28",
+            "message": "Input areas and dialogs must be opaque, because translucency over text always bleeds"
+          },
+          {
+            "sha": "54830e3cedeb04009177394343f38bda0c1fd52c",
+            "message": "Input areas and dialogs must be opaque, because translucency over text always bleeds"
+          },
+          {
+            "sha": "3014c60f338ef711949b32d98baa4fb14aba2ccd",
+            "message": "Input areas and dialogs must be opaque, because translucency over text always bleeds"
+          },
+          {
+            "sha": "68187005403e78722ef324847022459d3d01f282",
+            "message": "Input areas and dialogs must be opaque, because translucency over text always bleeds"
+          },
+          {
+            "sha": "78dfe795dc6c5d01f8fad1f0f74484f2eed1f5cd",
+            "message": "Input areas and dialogs must be opaque, because translucency over text always bleeds"
+          },
+          {
+            "sha": "c67c8d255eee53d1b4e4754399831a0aab194a3a",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "0eb2aa1cfc619f5626118d953845af577fff6e4d",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "7fe9a8e2fbd5eda3d09e883a3eef1428d03d3b2a",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "f7cddbe37ed63b39431d46663aec540358cd52a6",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "7429c790fca0b24fa9a7145f1477783a1a794181",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "373e8cc7b3fbdd3f945d9a78cb54508c1d109140",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "4116fd216e22a6a69577160e1141a2b34728ac1d",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "8183df893c693515b354be6a83cdc1af30d702d5",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "8a236445935e27845176de3f844f87a1f53401d1",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "57ef7571bab99f58bed1825af3cff9ce59a47c54",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "230539e32026e072c36cf03d4c6d3b94dfec676c",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "6c77980bcfbacdddb06bc537a5965df76fcb87d9",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "3bcdbc08699e15ed198cdfdc4ebbb56bb1677fbd",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "cec0d627a6743817061de1630ca45d9992ee05d9",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "13ef31c2a6381ba75d12cf03b40a5b7e517e5ad8",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "969e26746c02ba8b38dc1068d33d62eb83ae1c9c",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "86f0881b9a675e41b5197a3e4c4b836245cd97ff",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "37aa565adb8e9753da60e463d9bb33b38054da63",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "893c5f58ab8dd77fb46b9f186904815b5a9ace10",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "94aa7375558342ea7e16fa1c75a529400eaeb8d2",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "90b8b4bae6037a120a3f022a969507f12150ee50",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "8e29491e6d30cc39e6c7e8ec30ce94feb7807433",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "c91c8c0f41c7db6f9122023f2753278e7c8fa4df",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "03b4e41d12bdce4de0cdea9efe33ff9e68fffedc",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "9dc0c5d9280bd55468ae9c08fe4f362dd4ff481d",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "f4d182b7f72d7f05f7bb566b591ff8bd3618ce4f",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "ad20d08080de2c6dfeb408db65a1166a616df06b",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "171e011500048716632b3b62cdced965ffb5c853",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "77ec0ecd22c45a80c5fd0a08afc1a33bb6a84589",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "2cdb8cf29d47b5399c3dda6aaaad4e8e749e149f",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "7ab56e839b0d8ffe7f546057b5b63ba78339b8fa",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "ecc0aec11236d38e676eab62156bc322f32c431f",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "d9b6cd2476ac774cf95159915b2766eeb091774a",
+            "message": "Add the haze, edge lighting and reduced-transparency fallback, all four of which were claimed but missing"
+          },
+          {
+            "sha": "bb3e2207777ee05fa0d5eb08a36735bf2dd4ce06",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "ea201dc7e78f104eb5321dca4ea33069c328ca5a",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "8ed2a05ebf9843fcc9741a8989586e6126925139",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "076598d23a97826134cf87bf0503511a2e312c9d",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "2ec078173b67cde5f11f2157167ba201aac3cc1d",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "0b60d11e9a3e66d621ca3d8acd109f196fd2f9b0",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "df6759bc6a9d6094ea806cef603d160eda5f4283",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "cedb1004b2a7c87460c91530f104b0f029b8d25a",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "6ad92e8baf0974e6c61b4d073b709199a4c2c1c2",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "70db8409d6a507f46ab24696643f94925c44f14f",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "25be414d4c90f7e8e5ddbea4688ee2e8a2603433",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "933218ada792dec0ad6b7d265c303b0d080d4e5c",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "f5aaed10b4b01bda18d29a607dd2d2303e75bc70",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "c1213b05047f6a0011ce240c0834be7ad8c3f60e",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "ab62f8949b040681b8f876d50c9caf11f890dce0",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "055a66c2c1a8b678fc7748269704cb5a07a52464",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "ee2f7a99a04ea17bcab4c01673ec261388543fcf",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "040a44990cdd9e4aa7e07137b856d728df23134e",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "f0213c36d0ed9e438c89ea7ebfc9cd47ea54b39a",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "5c1043fa92afbc1a03a6ba7d39bb96fa1b9c4ce1",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "f643937417359cfb7db0a8ef15c7d0463f40b03f",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "d5a12a3083865895b460eca6685e2d792aaa8921",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "d9bfc8179287ccb2b4100337037ae81a344c67fb",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "f8d6451ac0af4a846672c7c9c7bc11f665de5723",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "017cd641ef6d09fc19707a5f94771eff1d05fdb5",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "2bde45c18ffea86a7a1982d9540f47525443b352",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "723f1889afdf698da3b0acc55c8ce8dcce2b1487",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "2627ff61035aa016263f8c7ec05e1930966914ae",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "f2e0a5aa38b071a21dd32019469869ca7a6f33b2",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "b439424e9872283897531120f4c1aa05d8b38448",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "fd5b759c93d25db3b4f8efbe38d2f306f5db0f6e",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "f74706a01cc18d6f86f19327668f8aa24fad5ea5",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "87691d10289f9676ef232790bd8e12b46caa40b3",
+            "message": "Cards and code blocks were being pushed to nearly opaque, which is why the glass was invisible"
+          },
+          {
+            "sha": "c7a14d0eae2ac86323ee9fee63db5ac9e42d0411",
+            "message": "Glass correctness, hand-drawn shapes, contour background, settings-page cleanup\n\nGlass: brace fixes; veil moved into the wallpaper layer; diff-based tier alpha\nwith color pre-compensation; composer seat hard clip; redundant backdrop-filter\nremoved from cards/code/composer (containing-block hazard); reduced-transparency\nhijack removed.\n\nShape (off by default): uneven radii, paper shadow (glass-off only), hover lift,\ngradient sidebar divider. Ported from dsh-maid-whale-UI, mechanism only.\n\nContour background: core pipeline ported from dsh-theme-endfield (MIT) with\nworker backend + main-thread fallback (8ms budget), boot ladder, scroll pause,\nbackend visible in settings subtitle.\n\nNew knobs: glassVeil, glassSat, contourSpeed.\n\nSettings page: chip row replaced by hidden-until-broken diagnostic line;\nwallpaper status folded into group subtitle; details folds; unified GroupHead.\n\nTests: 14 suites green (new shape + contour incl. worker-source replay)."
+          },
+          {
+            "sha": "1bd929dc29794e77a39d1a702c5f2e9c1f0835ec",
+            "message": "Update docs for glass/contour/shape and add the glass screenshot"
+          },
+          {
+            "sha": "9de437cdf8d9c4eda0e9e1267f082746aed24d04",
+            "message": "Keep contour animating while scrolling when the worker backend is live"
+          },
+          {
+            "sha": "00c844ba753fee292e1116d351078375dbf222cd",
+            "message": "Throttle instead of freeze: contour keeps animating while scrolling"
+          },
+          {
+            "sha": "07a9c29809bd20d247258c6119e4652fd795cef2",
+            "message": "Scroll silky first: hard frame freeze during scrolling on main-thread path"
+          },
+          {
+            "sha": "4210812782d60444d860d9343219143e43f415c6",
+            "message": "Fix worker init: OffscreenCanvas must be in the postMessage transfer list"
+          },
+          {
+            "sha": "be74784341897c495784d80713fc04d0408ef06e",
+            "message": "Cut contour raster cost: 8fps, 2 smoothing passes, DPR capped at 1"
+          },
+          {
+            "sha": "8279ed0f1c3310ded412d6e851ba1eaa91a48a07",
+            "message": "Contour: halve per-frame cost, and fix the three safety valves that never fired\n\nThe first round cut frequency (24fps -> 8fps), DPR and smoothing passes, but\nleft the per-frame volume untouched, and all three safety valves turned out to\nbe dead in the scenario users actually hit.\n\nMeasured on real Chromium at 1920x1080 (getImageData flush is the only way to\nsee the raster cost): 34.7ms -> ~16ms per frame, 60,483 -> 17,913 bezier\nsegments, build() 66.8ms -> ~35ms.\n\n- CONTOUR_MAX_CELLS 60000 -> 24000. The old cap never engaged at 1080p:\n  1920x1080 @ step 6 is exactly 58,101 cells, just under the limit, so the most\n  common resolution always got the most expensive grid. The \"cost ceiling\" was\n  decorative.\n- Chaikin passes split by animation state (1 animated / 2 static). Two passes\n  cost 3.3x the raster of un-smoothed polylines, and at an 8fps slow drift the\n  corner detail is unreadable anyway; the static frame still gets the quality.\n- contourOnScroll no longer zeroes contourOverBudget. Degrading needs 3\n  consecutive over-budget frames, and a reader who scrolls every few hundred ms\n  reset that counter every time -- the usage most in need of degradation pinned\n  itself to the priciest grid forever. Resume frames now count.\n- The learned step survives resize/rebuild, in both the main-thread and worker\n  paths. It used to be zeroed, so degradation never outlived a resize, and the\n  ladder's last stage deliberately refined back down to the most expensive step.\n- Rebuild moved to requestIdleCallback. setTimeout(fn, 0) only deferred the long\n  task to the next immediate macrotask; the comment claiming it ran at idle was\n  never true. Degraded builds also validate 10 rather than 32 rounds (32 rounds\n  at step 12 was a 56ms synchronous block, for the path that exists to be cheap).\n- Terrain scratch is reused across attempts instead of reallocating ~3.5MB per\n  candidate (up to 112MB of transient garbage per build). Coarse-grid builds\n  spiked to 84ms from GC, not computation -- the cost curve was non-monotonic.\n  best now stores a salt and is replayed, since the scratch is shared.\n- backdrop-filter is gated on contour mode. _frame::before (16px) and\n  dialogs/menus (26px, i.e. the settings page you toggle this from) blurred a\n  canvas that changes 8x/s, so Chromium had to recompute both 8 times a second\n  with zero visual benefit -- the backdrop is a flat colour plus 1px lines.\n- Worker cost budget 62.5ms -> 20ms (7.8x the main-thread budget let the raster\n  thread burn 500ms/s before degrading). matchMedia is cached instead of\n  building 60 MediaQueryLists per second. The 2d context is fetched once.\n\nAll 14 suites pass. contour.test.mjs gains 8 regression locks, including\n\"same engine rebuilt twice is byte-identical\" and \"two engines do not share\nscratch\" so the reuse cannot silently break the determinism guarantee.\n\ndocs/DESIGN.md records the measurements and the reasoning."
+          },
+          {
+            "sha": "ac8fca7290226be102ae4e1a6b2af74002e4a267",
+            "message": "Contour: expose the eight look knobs, and make them apply live\n\nThe contour background shipped with one adjustable thing (drift speed); every\nother visual parameter was a hard-coded constant. This exposes the ones that\nactually change what you see, collected in a folded \"Contour advanced\" section\nthat only appears when the background source is contour.\n\n  ink 0-100%      stroke opacity (was hard-coded 55%/70%)\n  colour          free picker; empty follows the accent colour\n  width           1 / 1.5 / 2 px (was hard-coded lineWidth = 1)\n  density         fine/normal/coarse -> cell cap 40000/24000/14000\n  levels          12-30, scaled against the 20 baseline\n  fps             4 / 8 / 15 (was hard-coded CONTOUR_FPS = 8)\n  relief          40-160%, multiplies the gaussian amplitude\n  drift           0-200%, multiplies the island breathing offset\n  reroll          button: new seed, rebuild, no page refresh\n\nSettings have to be live, so the change-signature guard in\ncontourApplySwitches had to learn about them. It previously hashed only\n\"is animating\" plus the stroke colour, which meant density / levels / relief /\ndrift changes produced an identical signature, the function returned early, and\nnothing repainted until the page was reloaded -- exactly the \"only the\ndistribution settings need a reload\" report. The signature now includes all\nfive look parameters, and contourApplyLook splits the response: levels, relief,\ndrift and width only need a re-extract and repaint, while density changes the\ngrid and must rebuild (debounced 160ms so dragging the slider rebuilds once).\n\nThe engine is serialised into the worker with String(fn), so it must never read\n`state`. All look parameters travel through setLook() instead, with the\nsetting-to-constant mapping kept on the main thread in contourLookNow().\nThe first attempt called contourLineWidth() straight from drawTo and the worker\ndied with a ReferenceError, silently falling back to the main thread.\n\nAlso fixes a real bug found while writing the tests: with drift at 0 the\nterrain kept moving, because the base sine's phase term did not take the drift\nfactor. Both terms now do, so 0 is genuinely static.\n\nContour labels are opt-in and default off. Measured on real Chromium at\n1080p / 21 levels / 86 paths, drawing them costs +141% per frame (draw 2.8 ->\n6.5ms, 76 fillText calls), so they are limited to the static speed setting,\nwhere only one frame is ever drawn. Labelling each level once instead of each\npath, and probing several points along the path to avoid the canvas edges,\nbrings it to +32% (3.7ms, 21 calls). At any animated speed the labels are\nsuppressed outright rather than costing the raster thread every frame.\n\nAll 14 suites pass, including 21 new regression locks: the eight settings must\nreach the engine, the look signature must contain all five distribution keys,\na rebuilt engine must still be byte-identical, and two engines must not share\nscratch. docs/DESIGN.md records the measurements and the worker constraint."
+          },
+          {
+            "sha": "8f819b4fa4388cdb47aca59faf0ee43447394fb3",
+            "message": "feat: rework background ground, reorganize settings, add screenshots\n\nBackground ground is now a small compositor with three modes:\n- glow: 2-6 light sources, each with its own colour, strength and X/Y\n- bands: 2-6 strips, each its own colour, cut angle 0-360 degrees\n- blend: both\n\nDensity ceiling raised to 100%. Gradient mode no longer applies the\nwallpaper veil, blur, saturation or upscale — those were designed for\nphoto wallpapers and were eating most of the glow.\n\nSettings page reorganized from 11 groups down to 5:\n- all colour controls collected into a single \"Colour\" group\n- Glass group keeps only 2 permanent rows (switch + background source);\n  the rest folds into \"Common settings\" and \"Current background only\",\n  the latter rendering just the parameters for the selected source\n- removed settings that did nothing meaningful: apply-scope, background\n  variant, accent presets, prose brightness, and all three preview blocks\n\nFixed a regression where the wallpaper local-path input and the fit\ndropdown had been dropped during earlier edits.\n\nAdds screenshots for the gradient ground and the contour background."
+          },
+          {
+            "sha": "5aebf8961c87875b16f7e506bbb8172992742dc7",
+            "message": "chore: prepare v1.1.0 release\n\n- bump version 1.0.0 -> 1.1.0\n- add CHANGELOG.md covering the background-ground rework, settings\n  reorganization, removals and fixes\n- document how to pin a release in both README languages"
+          },
+          {
+            "sha": "14ee28b8ff60e361d01141da90f6a1d340575b91",
+            "message": "fix: glass the transient popovers that have no role attribute\n\nThe file-change diff popover and the conversation-history popover are\nposition:fixed elements with no role, so the [role=\"dialog\"] and\n[role=\"menu\"] rules never matched them. The only code that touched them\nlived behind the \"Solid floats\" switch (off by default), and it pinned\nthem fully opaque instead of glassing them — so by default they rendered\nas flat boxes over live text.\n\nThey now follow the glass in two layers:\n- default: same delta-alpha compositing and blur as dialogs/menus, with a\n  slightly higher +0.03 readability compensation since these are\n  transient and read immediately\n- \"Solid floats\" on: still pins them opaque; its rule wins by source order\n\nThe HoverCard bubble had the same problem in a different shape — its\nbackground is the hard-coded --dsw-hovercard-bg, unreachable by any token\noverride. It is now overridden at the variable itself with a translucent\nglass value, resolved through runtime class detection.\n\nBumps version to 1.1.1."
+          },
+          {
+            "sha": "928bdc46fde699b21a48638875422bc79c5de3d9",
+            "message": "fix: blur the turn-preview popover (two stacked problems)\n\nThe popover is TurnNavigator's turn preview, class `xpvNua_preview`.\nv1.1.1 injected the right rule but it never applied, for two\nindependent reasons:\n\n1. Class name format. The rule matched [class*=\"_preview_\"], which only\n   covers CSS Modules hashed names. This popover's class is\n   `xpvNua_preview` — module name then element name, no leading\n   underscore — so the selector never matched. Now uses\n   [class*=\"preview\"], excluding the plugin's own dmt- classes.\n\n2. contain: layout blocked the backdrop sampling. Its parent nav has\n   contain: layout, which establishes a new containing block and\n   confines backdrop-filter sampling to that box — and the box is only\n   28px wide, so the blur had nothing to sample. A new rule clears\n   contain on any ancestor that directly contains a popover, via\n   :has(). The hashed class name cannot be hard-coded since it changes\n   every build; if :has() is unsupported the rule is ignored and the\n   popover degrades to \"translucent but not frosted\", as before.\n\nAdds preview-contain-test.html, the side-by-side page used to isolate\nthe contain behaviour, and the two console tools used for diagnosis.\n\nBumps version to 1.1.2."
+          },
+          {
+            "sha": "1afc07d739673b098954fba7b4a63ba5e988f216",
+            "message": "fix: detect popovers at runtime instead of matching class substrings\n\nv1.1.2 widened the popover selector to [class*=\"preview\"] to cover both\nclass naming formats. But the host has eight class names containing\n\"preview\" and only two are popovers — the rest are JSON-tree syntax\ncolouring, which live inside diff regions and only declare `color`.\nPainting them as surfaces put a dark box under every JSON value, so diff\nregions went solid.\n\nThe substring selector is gone. detectPopoverClasses() now scans the\nstylesheets and accepts a class only if both conditions hold:\n\n- the name matches a popover naming pattern (either `_preview_<hash>_<n>`\n  or `<hash>_preview`)\n- the rule declares a background\n\nA popover has to paint its own surface; an inner text block does not.\nThat criterion follows the host implementation rather than a class-name\nlist, so a new previewXxx class in a future host build cannot silently\nbreak it again.\n\nGenerated rules now target exact class names, and the contain override\nuses the same detected names.\n\nAlso fixes the format-A regex: it was missing the leading underscore, so\n`._preview_38jqx_52` never matched and only the format-B names were\ndetected.\n\nBumps version to 1.1.3."
+          },
+          {
+            "sha": "26754c4376c1ac5e744d1c18fa478fd5f30dd0b8",
+            "message": "fix: pass detected popover classes to buildGlassSheet\n\nbuildGlassSheet gained a sixth parameter for the detected popover class\nnames, but the real call site never passed it. The edit landed on an\nidentically-worded string in the module's export block instead of on the\nfunction that builds the stylesheet. The rule-generation logic was\ncorrect and its unit tests passed — the rule simply never received any\nclass names at runtime, so it was never emitted.\n\n- all call sites now pass the parameter\n- a test asserts every runtime call site includes it (mutation-tested by\n  removing the argument, which turns the assertion red)\n- detection also runs inside syncGlassSheet, not only syncCardSheet:\n  syncCardSheet runs early in startup when the host may not have\n  injected all stylesheets yet, and there was no second attempt. Bounded\n  at 60 retries, after which the result is cached.\n- the status object now exposes `popovers` (count of detected classes) so\n  this class of failure is visible instead of silent\n\nBumps version to 1.1.4."
+          },
+          {
+            "sha": "c15cb2e0a8d15eb59b08ea6fc413c8f917fba439",
+            "message": "fix: stop stacking the frosted haze on nested surfaces\n\nCode blocks looked noticeably whiter and duller than other glass\nsurfaces. The haze is a translucent white gradient on the shared\nglassSurface constant, which every glass surface used — including\nnested ones. A code block sits inside a card or column, so the haze\nstacked: 1 - (1-0.08)^2 = 15.4%, nearly double the configured value.\n\nSplit by nesting level:\n- glassSurface      (haze)    outermost: columns, cards, dialogs,\n                              popovers, composer\n- glassSurfaceFlat  (no haze) nested: code blocks, pre, inline code\n\nBoth keep box-shadow and border; those draw on the element's own edges\nand do not accumulate brightness.\n\nLowering the global haze value would have been the wrong fix — it exists\nto give the outermost layer its material feel, and thinning it everywhere\nwould flatten single-layer surfaces.\n\nBumps version to 1.1.5."
+          },
+          {
+            "sha": "0d444d46ef9819d0ba01b477bd0f2fbc5c3015da",
+            "message": "fix: give nested surfaces a third of the haze, not zero\n\nv1.1.5 removed the haze from nested surfaces to stop it stacking — but\nremoving it is not the same as reducing it. Code blocks lost their frost\nentirely.\n\nThe haze is a white overlay, so two layers combine as 1-(1-a)(1-b):\n\n  8% + 8%  = 15.4%  too heavy (the original bug)\n  8% + 0%  =  8%    child does not whiten at all — haze is gone\n  8% + 2.7%= 10.2%  matches the surrounding surfaces\n\nZero does not work because a code block paints its own fairly opaque\nsurface, which covers the parent's haze. Without a layer of its own, that\nsurface genuinely has no haze.\n\nNested surfaces now get haze/3. A third rather than half because a code\nblock's own fill is one tier more opaque than a card's, so the haze\ncarries less visual weight on it — full value reads too white, zero\nreads as absent.\n\nBumps version to 1.1.6."
+          },
+          {
+            "sha": "43969f424a18dcefff7ecb22095b61a80fecade7",
+            "message": "fix: nested haze a eighth, not a third\n\nv1.1.6 gave code blocks haze/3, which combined to 10.5% — visibly denser\nthan the 8% single-layer baseline. Now haze/8, combining to 8.9%, which\nmatches the surrounding surfaces.\n\n  divisor 1  -> child 8.00%  combined 15.36%  two full layers (original bug)\n  divisor 3  -> child 2.67%  combined 10.45%  v1.1.6, still too dense\n  divisor 8  -> child 1.00%  combined  8.92%  matches baseline\n\nThe earlier two attempts each had an unclear target: v1.1.5 optimised for\n\"don't stack too thick\" and landed on zero, leaving that surface with no\nhaze at all; v1.1.6 optimised for \"the haze should be visible\" and\novershot. The right target is combined density close to the single-layer\nbaseline — the child only needs enough to avoid reading as absent.\n\nThe test now bounds it from both sides: 0.005 <= haze < 0.02. Below the\nlower bound it is invisible; above the upper bound the combined value\nexceeds 9.8% and reads denser than everything else. All three wrong\nversions (zero, a third, full) are caught by mutation testing.\n\nBumps version to 1.1.7."
+          },
+          {
+            "sha": "7fc993d1f5209f8b9f6bf0c94c96e93ad38397d3",
+            "message": "feat: background brightness for wallpaper mode\n\nIt was gradient-only before. The two sources need different\nimplementations but share one meaning:\n\n  gradient   -> mixTowards() shifts the generated base colour\n                0 = pure black, 100 = pure white (deliberate; the\n                ambience layer fades with it)\n  wallpaper  -> CSS brightness(), on the same filter chain as blur and\n                saturate; 50 = 1.0, 0 = full black, 100 = doubles\n\nWallpaper stops at doubling rather than pure white — pure white would\nerase the photo's detail, whereas gradient reaching pure white is\nintentional.\n\nContour mode is unaffected: its line colour comes straight from the\naccent colour, so brightness would only distort it, same reasoning as\nsaturate.\n\nThe settings row is now shared by both sources instead of being gated on\ngradient alone.\n\nBumps version to 1.1.8."
+          },
+          {
+            "sha": "c4cf9481910c326ac7278ded2986f8d6c7e71634",
+            "message": "fix: match card bodies by whole class token, not substring\n\nThe card glass rule matched [class*=\"flL80G_file\"] — a substring match.\nCSS Modules give every inner element of the same component a shared\nprefix (flL80G_fileBody / fileName / fileIcon; KuQXFq_cardTitle / cardOpen\n/ cards), so the haze, border and shadow landed on each of those rows\ntoo — the \"boxes inside boxes\" the user screenshotted on the deliverable\nand plan cards.\n\nSwitched the six card prefixes to [class~=\"...\"] (whole-word class\nmatch). bubble deliberately keeps *=: message bubbles carry per-package\nhashes in their token (cJsG2q_bubble / v1fjQa_bubble) that must not be\nhard-coded, and no bubbleXxx inner elements exist in the host.\n\nThird instance of the same mistake class as the v1.1.7 popover selector:\nsubstring matching is unsafe against CSS Modules naming because inner\nelements share the owner's prefix. Wherever the exact token is known,\nuse ~=.\n\n13 new assertions; mutation (reverting to *=) turns all 13 red.\n\nBumps version to 1.1.9."
+          }
+        ]
+      }
+    },
+    {
+      "issue": 62,
+      "name": "@gulagala001/dsh-btw",
+      "decision": "defer-update",
+      "reviewedVersion": "0.1.4-dsh.0.2.1-rc.3",
+      "previousVersion": "0.1.2-dsh.0.2.1-rc.2",
+      "repository": {
+        "url": "https://github.com/gulagala001/dsh-btw",
+        "id": 1427123471,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "sourceCommit": "1e4bd0aa2cfb6b5f140037c1371752361b410214",
+      "license": "MIT",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "changes": {
+        "status": "ahead",
+        "aheadBy": 5,
+        "files": [
+          {
+            "path": ".github/workflows/documentation-structure.yml",
+            "status": "added",
+            "additions": 17,
+            "deletions": 0
+          },
+          {
+            "path": ".github/workflows/release-assets.yml",
+            "status": "added",
+            "additions": 22,
+            "deletions": 0
+          },
+          {
+            "path": "CHANGELOG.md",
+            "status": "modified",
+            "additions": 70,
+            "deletions": 0
+          },
+          {
+            "path": "README.md",
+            "status": "modified",
+            "additions": 8,
+            "deletions": 6
+          },
+          {
+            "path": "README_EN.md",
+            "status": "modified",
+            "additions": 8,
+            "deletions": 6
+          },
+          {
+            "path": "docs/documentation.md",
+            "status": "added",
+            "additions": 48,
+            "deletions": 0
+          },
+          {
+            "path": "docs/install.md",
+            "status": "modified",
+            "additions": 10,
+            "deletions": 6
+          },
+          {
+            "path": "docs/install.zh.md",
+            "status": "modified",
+            "additions": 8,
+            "deletions": 6
+          },
+          {
+            "path": "docs/releases/v0.1.3-dsh.0.2.1-rc.2.md",
+            "status": "added",
+            "additions": 33,
+            "deletions": 0
+          },
+          {
+            "path": "docs/releases/v0.1.4-dsh.0.2.1-rc.3.md",
+            "status": "added",
+            "additions": 31,
+            "deletions": 0
+          },
+          {
+            "path": "docs/structure.json",
+            "status": "added",
+            "additions": 65,
+            "deletions": 0
+          },
+          {
+            "path": "package-lock.json",
+            "status": "modified",
+            "additions": 39,
+            "deletions": 39
+          },
+          {
+            "path": "package.json",
+            "status": "modified",
+            "additions": 9,
+            "deletions": 6
+          },
+          {
+            "path": "scripts/check-docs.mjs",
+            "status": "added",
+            "additions": 88,
+            "deletions": 0
+          },
+          {
+            "path": "scripts/check-public-files.mjs",
+            "status": "modified",
+            "additions": 1,
+            "deletions": 1
+          },
+          {
+            "path": "scripts/check-release-assets.mjs",
+            "status": "added",
+            "additions": 25,
+            "deletions": 0
+          },
+          {
+            "path": "src/client/index.jsx",
+            "status": "modified",
+            "additions": 2,
+            "deletions": 1
+          },
+          {
+            "path": "src/client/store.mjs",
+            "status": "modified",
+            "additions": 47,
+            "deletions": 22
+          },
+          {
+            "path": "src/context.mjs",
+            "status": "modified",
+            "additions": 5,
+            "deletions": 12
+          },
+          {
+            "path": "src/index.mjs",
+            "status": "modified",
+            "additions": 2,
+            "deletions": 1
+          },
+          {
+            "path": "src/protocol.mjs",
+            "status": "added",
+            "additions": 10,
+            "deletions": 0
+          },
+          {
+            "path": "test/stream-lifecycle.test.mjs",
+            "status": "added",
+            "additions": 230,
+            "deletions": 0
+          }
+        ],
+        "commits": [
+          {
+            "sha": "212e53345a6e2944aed73acd1e90c88b775501fd",
+            "message": "Maintain public documentation structure, sources and release boundaries"
+          },
+          {
+            "sha": "6a970de251051f7bd23dbf10d283f4b9729fa9d6",
+            "message": "fix: settle side chat streams on terminal receipts and cancellation"
+          },
+          {
+            "sha": "edc9b0ea6728071ac721fea62a0a9d4c9ff2cac8",
+            "message": "Prepare BTW 0.1.3 release"
+          },
+          {
+            "sha": "2aa8c01bc9982180e548152909f5da44607e4d0a",
+            "message": "Adapt exact SDK builds to DSH 0.2.1-rc.3"
+          },
+          {
+            "sha": "1e4bd0aa2cfb6b5f140037c1371752361b410214",
+            "message": "Prepare BTW 0.1.4 · DSH 0.2.1-rc.3 release"
+          }
+        ]
+      }
+    },
+    {
+      "issue": 62,
+      "name": "@gulagala001/dsh-theme-plugin",
+      "decision": "defer-update",
+      "reviewedVersion": "0.2.3-dsh.0.2.1-rc.3",
+      "previousVersion": "0.2.1-dsh.0.2.1-rc.2",
+      "repository": {
+        "url": "https://github.com/gulagala001/dsh-theme-plugin",
+        "id": 1427170372,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "sourceCommit": "05a723a0b9eedc1099ed7366fefdf9f2ca70ef61",
+      "license": "MIT",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "changes": {
+        "status": "ahead",
+        "aheadBy": 9,
+        "files": [
+          {
+            "path": ".github/workflows/documentation-structure.yml",
+            "status": "added",
+            "additions": 17,
+            "deletions": 0
+          },
+          {
+            "path": ".github/workflows/release-assets.yml",
+            "status": "added",
+            "additions": 22,
+            "deletions": 0
+          },
+          {
+            "path": "CHANGELOG.md",
+            "status": "modified",
+            "additions": 84,
+            "deletions": 0
+          },
+          {
+            "path": "README.md",
+            "status": "modified",
+            "additions": 9,
+            "deletions": 5
+          },
+          {
+            "path": "README_EN.md",
+            "status": "modified",
+            "additions": 9,
+            "deletions": 5
+          },
+          {
+            "path": "docs/compatibility.md",
+            "status": "modified",
+            "additions": 2,
+            "deletions": 0
+          },
+          {
+            "path": "docs/compatibility_EN.md",
+            "status": "modified",
+            "additions": 2,
+            "deletions": 0
+          },
+          {
+            "path": "docs/development.md",
+            "status": "modified",
+            "additions": 8,
+            "deletions": 0
+          },
+          {
+            "path": "docs/documentation.md",
+            "status": "added",
+            "additions": 52,
+            "deletions": 0
+          },
+          {
+            "path": "docs/images/glyph-animation.gif",
+            "status": "added",
+            "additions": 0,
+            "deletions": 0
+          },
+          {
+            "path": "docs/images/readme-screenshots.json",
+            "status": "added",
+            "additions": 18,
+            "deletions": 0
+          },
+          {
+            "path": "docs/install.md",
+            "status": "modified",
+            "additions": 6,
+            "deletions": 6
+          },
+          {
+            "path": "docs/install_EN.md",
+            "status": "modified",
+            "additions": 6,
+            "deletions": 6
+          },
+          {
+            "path": "docs/releases/v0.2.2-dsh.0.2.1-rc.2.md",
+            "status": "added",
+            "additions": 39,
+            "deletions": 0
+          },
+          {
+            "path": "docs/releases/v0.2.3-dsh.0.2.1-rc.3.md",
+            "status": "added",
+            "additions": 39,
+            "deletions": 0
+          },
+          {
+            "path": "docs/structure.json",
+            "status": "added",
+            "additions": 85,
+            "deletions": 0
+          },
+          {
+            "path": "package.json",
+            "status": "modified",
+            "additions": 11,
+            "deletions": 6
+          },
+          {
+            "path": "pnpm-lock.yaml",
+            "status": "modified",
+            "additions": 2986,
+            "deletions": 2979
+          },
+          {
+            "path": "pnpm-workspace.yaml",
+            "status": "added",
+            "additions": 297,
+            "deletions": 0
+          },
+          {
+            "path": "scripts/check-docs.mjs",
+            "status": "added",
+            "additions": 88,
+            "deletions": 0
+          },
+          {
+            "path": "scripts/check-package.mjs",
+            "status": "modified",
+            "additions": 1,
+            "deletions": 1
+          },
+          {
+            "path": "scripts/check-release-assets.mjs",
+            "status": "added",
+            "additions": 25,
+            "deletions": 0
+          },
+          {
+            "path": "src/client/appearance.jsx",
+            "status": "modified",
+            "additions": 6,
+            "deletions": 22
+          },
+          {
+            "path": "src/client/store.mjs",
+            "status": "modified",
+            "additions": 34,
+            "deletions": 19
+          },
+          {
+            "path": "src/host/engine.mjs",
+            "status": "modified",
+            "additions": 115,
+            "deletions": 47
+          },
+          {
+            "path": "src/host/store.mjs",
+            "status": "modified",
+            "additions": 21,
+            "deletions": 13
+          },
+          {
+            "path": "src/index.mjs",
+            "status": "modified",
+            "additions": 4,
+            "deletions": 4
+          },
+          {
+            "path": "src/shared/protocol.mjs",
+            "status": "modified",
+            "additions": 2,
+            "deletions": 2
+          },
+          {
+            "path": "test/activation-consistency.test.mjs",
+            "status": "added",
+            "additions": 267,
+            "deletions": 0
+          },
+          {
+            "path": "test/builtin-brand.test.mjs",
+            "status": "added",
+            "additions": 70,
+            "deletions": 0
+          },
+          {
+            "path": "test/install-safety.test.mjs",
+            "status": "modified",
+            "additions": 4,
+            "deletions": 3
+          },
+          {
+            "path": "vendor/appearance/src/client/skins/brand.jsx",
+            "status": "added",
+            "additions": 32,
+            "deletions": 0
+          },
+          {
+            "path": "vendor/appearance/src/client/skins/claude-cli-terminal/presentation.jsx",
+            "status": "modified",
+            "additions": 5,
+            "deletions": 20
+          },
+          {
+            "path": "vendor/appearance/src/client/skins/glyph-motion/integration.jsx",
+            "status": "modified",
+            "additions": 0,
+            "deletions": 14
+          },
+          {
+            "path": "vendor/appearance/src/client/skins/runtime.mjs",
+            "status": "modified",
+            "additions": 12,
+            "deletions": 2
+          }
+        ],
+        "commits": [
+          {
+            "sha": "09da7c69d088cb47e68e8dca91aece42d92bf42b",
+            "message": "Maintain public documentation structure, sources and release boundaries"
+          },
+          {
+            "sha": "b44d8187d03f9a44e149535c455ad818e0c3f437",
+            "message": "docs: showcase Glyph animation on homepages"
+          },
+          {
+            "sha": "f1749948a4516c32d22097668b58259c6d114b96",
+            "message": "fix(theme): restore standalone Glyph whale and brand lifecycle"
+          },
+          {
+            "sha": "0456db1a28d5e1f0801ec201a7169512c6133d27",
+            "message": "release: prepare Theme 0.2.2 for DSH rc.2"
+          },
+          {
+            "sha": "a7ef6c67a1cfadf57081c4fb3c201dcaa24051ac",
+            "message": "fix: make theme activation receipts own runtime recovery"
+          },
+          {
+            "sha": "86004f0fdd36e713b49c79761e48e8c44fa178da",
+            "message": "Adapt exact SDK builds to DSH 0.2.1-rc.3"
+          },
+          {
+            "sha": "03ca409adef2c13d0f574a2e076fae04cddd5322",
+            "message": "Prepare DSH Theme 0.2.3 · DSH 0.2.1-rc.3 release"
+          },
+          {
+            "sha": "cafcb9a06004bc47430d9cc3d929763ee0cf6819",
+            "message": "Include exact host workspace pins in public build inputs"
+          },
+          {
+            "sha": "05a723a0b9eedc1099ed7366fefdf9f2ca70ef61",
+            "message": "test: align release fixtures and process shutdown checks"
+          }
+        ]
+      }
+    },
+    {
+      "issue": 62,
+      "name": "dsh-extensions",
+      "decision": "defer-update",
+      "reviewedVersion": "0.1.2-dsh.0.2.1-rc.3",
+      "previousVersion": "0.1.0-dsh.0.2.1-rc.2",
+      "repository": {
+        "url": "https://github.com/gulagala001/dsh-extensions",
+        "id": 1429682710,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "sourceCommit": "17fc34421517175bfc752f3b5923e5b592518b47",
+      "license": "MIT",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "changes": {
+        "status": "diverged",
+        "aheadBy": 9,
+        "files": [
+          {
+            "path": ".github/workflows/ci.yml",
+            "status": "modified",
+            "additions": 1,
+            "deletions": 0
+          },
+          {
+            "path": ".github/workflows/documentation-structure.yml",
+            "status": "added",
+            "additions": 17,
+            "deletions": 0
+          },
+          {
+            "path": ".github/workflows/release-assets.yml",
+            "status": "added",
+            "additions": 22,
+            "deletions": 0
+          },
+          {
+            "path": "CHANGELOG.md",
+            "status": "modified",
+            "additions": 78,
+            "deletions": 0
+          },
+          {
+            "path": "README.md",
+            "status": "modified",
+            "additions": 7,
+            "deletions": 5
+          },
+          {
+            "path": "README_EN.md",
+            "status": "modified",
+            "additions": 7,
+            "deletions": 5
+          },
+          {
+            "path": "docs/documentation.md",
+            "status": "added",
+            "additions": 45,
+            "deletions": 0
+          },
+          {
+            "path": "docs/install.md",
+            "status": "modified",
+            "additions": 7,
+            "deletions": 5
+          },
+          {
+            "path": "docs/install_EN.md",
+            "status": "modified",
+            "additions": 7,
+            "deletions": 5
+          },
+          {
+            "path": "docs/releases.md",
+            "status": "modified",
+            "additions": 13,
+            "deletions": 19
+          },
+          {
+            "path": "docs/structure.json",
+            "status": "added",
+            "additions": 50,
+            "deletions": 0
+          },
+          {
+            "path": "docs/usage.md",
+            "status": "modified",
+            "additions": 15,
+            "deletions": 5
+          },
+          {
+            "path": "docs/usage_EN.md",
+            "status": "modified",
+            "additions": 15,
+            "deletions": 5
+          },
+          {
+            "path": "package.json",
+            "status": "modified",
+            "additions": 10,
+            "deletions": 6
+          },
+          {
+            "path": "pnpm-lock.yaml",
+            "status": "modified",
+            "additions": 194,
+            "deletions": 194
+          },
+          {
+            "path": "pnpm-workspace.yaml",
+            "status": "modified",
+            "additions": 346,
+            "deletions": 0
+          },
+          {
+            "path": "scripts/check-docs.mjs",
+            "status": "added",
+            "additions": 88,
+            "deletions": 0
+          },
+          {
+            "path": "scripts/check-release-assets.mjs",
+            "status": "added",
+            "additions": 25,
+            "deletions": 0
+          },
+          {
+            "path": "src/client/hooks.jsx",
+            "status": "modified",
+            "additions": 14,
+            "deletions": 3
+          },
+          {
+            "path": "src/client/instructions.jsx",
+            "status": "modified",
+            "additions": 12,
+            "deletions": 10
+          },
+          {
+            "path": "src/client/locale.mjs",
+            "status": "modified",
+            "additions": 14,
+            "deletions": 4
+          },
+          {
+            "path": "src/client/skills.jsx",
+            "status": "modified",
+            "additions": 19,
+            "deletions": 18
+          },
+          {
+            "path": "src/commands.mjs",
+            "status": "modified",
+            "additions": 135,
+            "deletions": 75
+          },
+          {
+            "path": "src/common.mjs",
+            "status": "modified",
+            "additions": 2,
+            "deletions": 2
+          },
+          {
+            "path": "src/hooks.mjs",
+            "status": "modified",
+            "additions": 35,
+            "deletions": 14
+          },
+          {
+            "path": "src/index.mjs",
+            "status": "modified",
+            "additions": 1,
+            "deletions": 1
+          },
+          {
+            "path": "src/instructions.mjs",
+            "status": "modified",
+            "additions": 119,
+            "deletions": 52
+          },
+          {
+            "path": "src/mcp.mjs",
+            "status": "modified",
+            "additions": 59,
+            "deletions": 20
+          },
+          {
+            "path": "src/service.mjs",
+            "status": "modified",
+            "additions": 30,
+            "deletions": 22
+          },
+          {
+            "path": "src/skills.mjs",
+            "status": "modified",
+            "additions": 204,
+            "deletions": 111
+          },
+          {
+            "path": "test/commands.test.mjs",
+            "status": "added",
+            "additions": 37,
+            "deletions": 0
+          },
+          {
+            "path": "test/fixtures/mcp-server.mjs",
+            "status": "added",
+            "additions": 13,
+            "deletions": 0
+          },
+          {
+            "path": "test/hooks.test.mjs",
+            "status": "added",
+            "additions": 143,
+            "deletions": 0
+          },
+          {
+            "path": "test/mcp-native.test.mjs",
+            "status": "added",
+            "additions": 82,
+            "deletions": 0
+          },
+          {
+            "path": "test/mcp.test.mjs",
+            "status": "added",
+            "additions": 86,
+            "deletions": 0
+          }
+        ],
+        "commits": [
+          {
+            "sha": "fa266c81283b5904924ee634fe5c1aeb13a277e1",
+            "message": "Maintain public documentation structure, sources and release boundaries"
+          },
+          {
+            "sha": "a0ed28fd67d637ca42bed8c8a4dfc99bbf0b45e4",
+            "message": "fix: serialize extension state and own cancellable runtime work"
+          },
+          {
+            "sha": "8da381714035373055f9cb60aacccb15a9b79d4f",
+            "message": "Release DSH Extensions 0.1.1 with integrated reliability fixes"
+          },
+          {
+            "sha": "dfe5b66ddeb545a7c6b5eb2e52f8452932d8068a",
+            "message": "fix(commands): bind file execution and registration to native scopes"
+          },
+          {
+            "sha": "8f58076aee3ea4d457c4c1d9c0daaa9b64edab88",
+            "message": "fix(skills): use native catalogs and validate publication"
+          },
+          {
+            "sha": "4babf321bd395659c87d793830017e85b6dcdb1f",
+            "message": "fix(instructions): use active native policies and owned file writes"
+          },
+          {
+            "sha": "d0889553bd70f66cba5fbc6b050870e3d1702d5e",
+            "message": "Adapt exact SDK builds to DSH 0.2.1-rc.3"
+          },
+          {
+            "sha": "1cb7f9d474770589dbf4313218f8183dbfb74e6e",
+            "message": "Prepare DSH Extensions 0.1.2 · DSH 0.2.1-rc.3 release"
+          },
+          {
+            "sha": "17fc34421517175bfc752f3b5923e5b592518b47",
+            "message": "test: align release fixtures and process shutdown checks"
+          }
+        ]
+      }
+    },
+    {
+      "issue": 62,
+      "name": "@gulagala001/dsh-persona-plugin",
+      "decision": "defer-update",
+      "reviewedVersion": "0.1.2-dsh.0.2.1-rc.3",
+      "previousVersion": "0.1.0-dsh.0.2.1-rc.2",
+      "repository": {
+        "url": "https://github.com/gulagala001/dsh-persona-plugin",
+        "id": 1429682818,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "sourceCommit": "bcc31512cac139ce2e24e7c9b3a60bca23e5e420",
+      "license": "MIT",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "changes": {
+        "status": "diverged",
+        "aheadBy": 5,
+        "files": [
+          {
+            "path": ".github/workflows/documentation-structure.yml",
+            "status": "added",
+            "additions": 17,
+            "deletions": 0
+          },
+          {
+            "path": ".github/workflows/release-assets.yml",
+            "status": "added",
+            "additions": 22,
+            "deletions": 0
+          },
+          {
+            "path": "CHANGELOG.md",
+            "status": "modified",
+            "additions": 72,
+            "deletions": 0
+          },
+          {
+            "path": "README.md",
+            "status": "modified",
+            "additions": 7,
+            "deletions": 5
+          },
+          {
+            "path": "README_EN.md",
+            "status": "modified",
+            "additions": 7,
+            "deletions": 5
+          },
+          {
+            "path": "docs/documentation.md",
+            "status": "added",
+            "additions": 43,
+            "deletions": 0
+          },
+          {
+            "path": "docs/personality-format.md",
+            "status": "modified",
+            "additions": 6,
+            "deletions": 0
+          },
+          {
+            "path": "docs/releases.md",
+            "status": "modified",
+            "additions": 10,
+            "deletions": 22
+          },
+          {
+            "path": "docs/structure.json",
+            "status": "added",
+            "additions": 40,
+            "deletions": 0
+          },
+          {
+            "path": "package.json",
+            "status": "modified",
+            "additions": 10,
+            "deletions": 5
+          },
+          {
+            "path": "scripts/build-permission-native.mjs",
+            "status": "modified",
+            "additions": 1,
+            "deletions": 1
+          },
+          {
+            "path": "scripts/check-docs.mjs",
+            "status": "added",
+            "additions": 88,
+            "deletions": 0
+          },
+          {
+            "path": "scripts/check-public-files.mjs",
+            "status": "modified",
+            "additions": 1,
+            "deletions": 1
+          },
+          {
+            "path": "scripts/check-release-assets.mjs",
+            "status": "added",
+            "additions": 25,
+            "deletions": 0
+          },
+          {
+            "path": "src/client/editor.jsx",
+            "status": "modified",
+            "additions": 10,
+            "deletions": 3
+          },
+          {
+            "path": "src/client/settings-client.mjs",
+            "status": "added",
+            "additions": 60,
+            "deletions": 0
+          },
+          {
+            "path": "src/client/settings.jsx",
+            "status": "modified",
+            "additions": 1,
+            "deletions": 34
+          },
+          {
+            "path": "src/index.mjs",
+            "status": "modified",
+            "additions": 18,
+            "deletions": 5
+          },
+          {
+            "path": "src/store.mjs",
+            "status": "modified",
+            "additions": 8,
+            "deletions": 2
+          },
+          {
+            "path": "test/settings-client.test.mjs",
+            "status": "added",
+            "additions": 88,
+            "deletions": 0
+          },
+          {
+            "path": "test/settings-concurrency.test.mjs",
+            "status": "added",
+            "additions": 115,
+            "deletions": 0
+          }
+        ],
+        "commits": [
+          {
+            "sha": "fb4b5c8dc9328536a03fa1ba6c1eb3ff0d8a3c81",
+            "message": "Maintain public documentation structure, sources and release boundaries"
+          },
+          {
+            "sha": "802cde923fef613ed8341e32e83aa4425132e7f0",
+            "message": "fix: protect persona edits from stale saves and retired owners"
+          },
+          {
+            "sha": "ffac6e4f10f6bc403633d1c56a199404e19384f6",
+            "message": "Release Persona 0.1.1 with integrated reliability fixes"
+          },
+          {
+            "sha": "971c2a219f26ec5a3b57d8fe16719469c2d1590d",
+            "message": "Adapt exact SDK builds to DSH 0.2.1-rc.3"
+          },
+          {
+            "sha": "bcc31512cac139ce2e24e7c9b3a60bca23e5e420",
+            "message": "Prepare DSH Persona 0.1.2 · DSH 0.2.1-rc.3 release"
+          }
+        ]
+      }
+    }
+  ],
+  "replies": [
+    {
+      "issue": 65,
+      "name": "brooks-lint",
+      "replyLanguage": "zh",
+      "body": "感谢提交！已核查 brooks-lint@1.9.1，通过收录检查。提交推送并由 GitHub Actions 发布后即可在市场看到。🙂",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/65#issuecomment-6386930286"
+    },
+    {
+      "issue": 66,
+      "name": "@hui-xu-ai/dsh-wensu",
+      "replyLanguage": "zh",
+      "body": "感谢提交！已核查 @hui-xu-ai/dsh-wensu@0.4.3，通过收录检查。提交推送并由 GitHub Actions 发布后即可在市场看到。🙂",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/66#issuecomment-6386930737"
+    },
+    {
+      "issue": 67,
+      "name": "dsh-find-bar",
+      "replyLanguage": "zh",
+      "body": "感谢提交！已核查 dsh-find-bar@0.4.0，通过收录检查。提交推送并由 GitHub Actions 发布后即可在市场看到。🙂",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/67#issuecomment-6386931141"
+    },
+    {
+      "issue": 68,
+      "name": "dsh-session-notifier",
+      "replyLanguage": "zh",
+      "body": "感谢提交！已核查 dsh-session-notifier@1.0.3，通过收录检查。提交推送并由 GitHub Actions 发布后即可在市场看到。🙂",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/68#issuecomment-6386931574"
+    },
+    {
+      "issue": 69,
+      "name": "dsh-skills-panel",
+      "replyLanguage": "zh",
+      "body": "感谢提交！已检查 `dsh-skills-panel@1.0.3`。补丁和入口完整，但发布包的 `lib/client.js` 内嵌了作者机器上的 10 项技能及绝对路径，Host 入口没有读取当前用户技能的逻辑；安装后默认显示的并不是安装者自己的技能。\n\n请先清理发布包中的个人技能清单和绝对路径，并提供适用于当前用户环境的初始化/刷新方式，或从当前 DSH 实例读取技能。现有 `scripts/sync-skills.mjs` 中写死的 `D:/tools/...` 路径也请改为可发现或可配置，并说明在哪里运行、技能变化后如何刷新。发布修正版后在这里留言，我们再复核。🙂",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/69#issuecomment-6386932041"
+    },
+    {
+      "issue": 70,
+      "name": "dsh-workspace-graph",
+      "replyLanguage": "zh",
+      "body": "感谢提交！已核查 dsh-workspace-graph@0.1.0，通过收录检查。提交推送并由 GitHub Actions 发布后即可在市场看到。🙂",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/70#issuecomment-6386932459"
+    },
+    {
+      "issue": 71,
+      "name": "dsh-skill-cockpit",
+      "replyLanguage": "zh",
+      "body": "感谢提交！已核查 dsh-skill-cockpit@1.0.0，通过收录检查。提交推送并由 GitHub Actions 发布后即可在市场看到。🙂",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/71#issuecomment-6386932870"
+    },
+    {
+      "issue": 62,
+      "replyLanguage": "zh",
+      "body": "本轮已核查维护单的全部条目：\n\n- 浏览器插件已连续更名，当前有效包为 `@angelky7/dsh-browser-control@1.1.0`。已核对公开源码、许可证、归档、补丁与入口，并在收录配置中替换弃用的 `@caob23/dsh-browser-control`；中间名 `dsh-real-browser` 也已弃用，不使用它。\n- ColorLab 已从 1.0.0 更新为 1.1.9，固定提交和 SHA-512 已同步，客户端入口完整。\n- `@dsh-ai-providers/jina-cohere@0.5.0` 没有声明 `dsh.bundle.patch`，发布包也没有补丁。请补上独立可安装的 bundle 声明和补丁后发布新版；若它已改为供其他插件使用的库，请提供应该收录的组合包名称。当前继续由构建排除该条目。\n- 以下 Git 更新均缺少 `exports[\"./client\"]` 引用的 `lib/client.js`，保留原固定版本：\n  - `dsh-deepseek-workbench@0.1.3-dsh.0.2.1-rc.3`\n  - `@gulagala001/dsh-btw@0.1.4-dsh.0.2.1-rc.3`\n  - `@gulagala001/dsh-theme-plugin@0.2.3-dsh.0.2.1-rc.3`\n  - `dsh-extensions@0.1.2-dsh.0.2.1-rc.3`\n  - `@gulagala001/dsh-persona-plugin@0.1.2-dsh.0.2.1-rc.3`\n\n请把对应的预构建客户端文件提交到固定 Git 根目录，或发布包含完整构建产物的 npm 包，再提供版本/完整 SHA。新版还改为 rc.3 兼容范围，补齐后会一并复核该范围。现有 Release 附件不能直接替代当前 Git 来源。\n\n已补上客户端入口自动检查，支持条件导出和通配符，并写入检查记录。维护单继续保留，等待上述未通过项补齐；全量构建和发布交给 GitHub Actions。",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/62#issuecomment-6386933439"
+    }
+  ],
+  "validation": {
+    "checkedAt": "2026-10-24T16:46:25.118Z",
+    "officialFormat": "passed",
+    "targetedEntries": 8,
+    "syntaxChecked": 32,
+    "runtimeImportClosure": [
+      {
+        "name": "brooks-lint",
+        "files": 1,
+        "missing": []
+      },
+      {
+        "name": "@hui-xu-ai/dsh-wensu",
+        "files": 0,
+        "missing": []
+      },
+      {
+        "name": "dsh-find-bar",
+        "files": 2,
+        "missing": []
+      },
+      {
+        "name": "dsh-session-notifier",
+        "files": 2,
+        "missing": []
+      },
+      {
+        "name": "dsh-workspace-graph",
+        "files": 2,
+        "missing": []
+      },
+      {
+        "name": "dsh-skill-cockpit",
+        "files": 21,
+        "missing": []
+      },
+      {
+        "name": "@angelky7/dsh-browser-control",
+        "files": 2,
+        "missing": []
+      },
+      {
+        "name": "dsh-colorlab",
+        "files": 2,
+        "missing": []
+      }
+    ],
+    "unchangedEntries": 877,
+    "blockedRealGitArchives": [
+      {
+        "name": "dsh-deepseek-workbench",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      },
+      {
+        "name": "@gulagala001/dsh-btw",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      },
+      {
+        "name": "@gulagala001/dsh-theme-plugin",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      },
+      {
+        "name": "dsh-extensions",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      },
+      {
+        "name": "@gulagala001/dsh-persona-plugin",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      }
+    ],
+    "allChecksUsedReviewedArchives": true,
+    "fullCatalogBuild": false,
+    "pluginInstallationOrExecution": false,
+    "indexUnitTests": {
+      "passed": 35,
+      "failed": 0,
+      "command": "node --test test/index.test.mjs"
+    }
+  },
+  "repliesPostedAt": "2026-10-24T16:53:01.270Z"
+}

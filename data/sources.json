@@ -152,14 +152,14 @@
       "category": "tools"
     },
     {
-      "name": "@caob23/dsh-browser-control",
+      "name": "@angelky7/dsh-browser-control",
       "title": {
-        "en": "@caob23/dsh-browser-control",
+        "en": "DSH Browser Control",
         "zh": "浏览器扩展桥接"
       },
       "description": {
-        "en": "Local WebSocket bridge between dsh and the DSH Browser Control browser extension, with model-facing browser_* tools and a Settings-managed on/off switch",
-        "zh": "连接浏览器扩展，向 Agent 提供网页操作工具与开关。"
+        "en": "Connect DSH to the DSH Browser Control extension through a local WebSocket bridge, with browser tools and a settings switch. Requires the browser extension; renamed from @caob23/dsh-browser-control.",
+        "zh": "通过本地 WebSocket 桥连接 DSH Browser Control 浏览器扩展，提供网页操作工具与设置开关。需要配套扩展，原包名为 @caob23/dsh-browser-control。"
       },
       "category": "tools"
     },
@@ -9479,21 +9479,21 @@
     },
     {
       "name": "dsh-colorlab",
-      "version": "1.0.0",
+      "version": "1.1.9",
       "source": {
         "type": "git",
         "url": "https://github.com/ruegg114514/dsh-colorlab",
-        "commit": "b973f6bdd44b0bc3267f52b55115cc0e55fff889",
-        "integrity": "sha512-OpdkQGuztUPiK7Po/twNzux4vVL33lHzQ/21VCDiwS89xiFedKROZPv6CX3DQdUlq2n+HwFQ3LKonouZA1vcuA==",
-        "publishedAt": "2026-10-20T15:21:36Z"
+        "commit": "c4cf9481910c326ac7278ded2986f8d6c7e71634",
+        "integrity": "sha512-r0bGlo5baWtI/1A/ji56SwLVbox9xQ6dedoNRel6W5wlunETiAPs6nVJZ1U4VHlSBgb4iM0Af6XtYe6C7WlIdg==",
+        "publishedAt": "2026-10-24T14:25:55Z"
       },
       "title": {
         "en": "ColorLab",
         "zh": "ColorLab 配色主题"
       },
       "description": {
-        "en": "Customize DSH colors with the Mariana palette, saved presets and contrast hints. The package does not declare a DSH compatibility range.",
-        "zh": "以 Mariana 为默认配色，调整界面与正文颜色、保存配色方案并查看对比度提示。包内未声明适用的 DSH 版本。"
+        "en": "Customize DSH colors, saved presets and contrast hints, with optional glass panels, wallpaper or generated backgrounds. The package does not declare a DSH compatibility range.",
+        "zh": "调整 DSH 界面与正文配色、保存方案并查看对比度提示，可选玻璃面板、壁纸或生成背景。包内未声明适用的 DSH 版本。"
       },
       "category": "appearance"
     },
@@ -10940,6 +10940,78 @@
         "zh": "把开放插件市场加入「发现」，并在插件页增加「开放市场」标签：轮播的今日推荐、按点赞和增长排的推荐行、已装插件体检，每个插件每天可以点赞一次。"
       },
       "category": "interface"
+    },
+    {
+      "name": "brooks-lint",
+      "title": {
+        "en": "brooks-lint",
+        "zh": "brooks-lint"
+      },
+      "description": {
+        "en": "Six Agent Skills for code review, architecture audits, technical debt, test quality, project health and fixes, provided to the DSH skill registry.",
+        "zh": "向 DSH 技能注册表提供六项 Agent Skills，覆盖代码审查、架构审计、技术债、测试质量、项目健康与修复。"
+      },
+      "category": "skills"
+    },
+    {
+      "name": "@hui-xu-ai/dsh-wensu",
+      "title": {
+        "en": "wensu",
+        "zh": "文溯"
+      },
+      "description": {
+        "en": "Connect the wensu stdio MCP server for CNKI bibliographic search, details, export and status, without full-text downloads. Requires Windows, Python 3.11+, wensu on PATH, and a separately configured Edge or Chrome extension and native host.",
+        "zh": "接入文溯 stdio MCP，提供知网题录检索、详情、导出与状态查询，不下载全文。需要 Windows、Python 3.11+、PATH 中的 wensu 命令，并另行配置 Edge/Chrome 扩展和原生宿主。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-find-bar",
+      "title": {
+        "en": "dsh-find-bar",
+        "zh": "dsh-find-bar（页内查找）"
+      },
+      "description": {
+        "en": "Add Cmd/Ctrl+F search to the DSH desktop app, with highlighting, match counts and previous/next navigation. Search the conversation and right panel separately; collapsed content is skipped.",
+        "zh": "为 DSH 桌面端补上 Cmd/Ctrl+F 页内查找，支持高亮、匹配计数和前后跳转，可分别搜索对话与右侧面板，跳过折叠内容。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-session-notifier",
+      "title": {
+        "en": "Desktop Notifier",
+        "zh": "桌面通知"
+      },
+      "description": {
+        "en": "Notify when DSH Web sessions finish, fail, need approval or ask a question. Browser notifications focus an existing session tab; Windows/WSL toasts open a new tab. Requires notification permission and PowerShell for Windows toasts.",
+        "zh": "DSH Web 会话完成、失败、需要审批或提问时发送通知。浏览器通知优先聚焦已有会话标签页，Windows/WSL Toast 新开标签页；需允许通知，Windows Toast 另需 PowerShell。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-workspace-graph",
+      "title": {
+        "en": "Workspace Atlas",
+        "zh": "工作区图谱"
+      },
+      "description": {
+        "en": "Browse workspaces and sessions as draggable bubbles, with search, filters, saved browser layouts and native rename, new-session, archive and restore actions. Dragging changes layout only. Tested on DSH 0.2.1-rc.2 Web.",
+        "zh": "用可拖动气泡浏览工作区与会话，支持搜索筛选、浏览器本地布局保存，以及重命名、新建会话、归档和恢复。拖拽只调整图谱布局，已测试 DSH 0.2.1-rc.2 Web。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-skill-cockpit",
+      "title": {
+        "en": "Skill Cockpit",
+        "zh": "Skill Cockpit（技能面板）"
+      },
+      "description": {
+        "en": "Inspect skills from six root types, explain missing or disabled skills, and manage them through a page and the skill_panel tool. Supports editing, toggles, backups and trash; project skill roots remain read-only.",
+        "zh": "扫描六类技能根，说明技能不可见或被禁用的原因，通过面板和 skill_panel 工具管理技能，支持编辑、启停、备份与回收站；项目技能根保持只读。"
+      },
+      "category": "skills"
     }
   ]
 }
