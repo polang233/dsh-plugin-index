@@ -100,11 +100,15 @@ export async function checkPublished(indexUrl, {expectedNames, expectedTitle, ve
       if (digest(result.bytes) !== match[1]) throw new Error('Icon hash mismatch: ' + icon);
     }
   }));
-  // Every site language: the directory lists the whole index, and the first plugin has its own page.
+  // Every site language: the directory lists the whole index, the first cards in the page and the rest in the catalog
+  // file it names, and the first plugin has its own page.
+  const cards = html => (html.match(/\bdata-plugin(?=[\s>])/g) ?? []).length;
   for (const language of ['', 'zh/', 'zh-tw/']) {
-    const page = (await readUrl(new URL(language || './', indexUrl), fetchImpl)).bytes.toString('utf8');
-    const rows = page.match(/\bdata-plugin(?=[\s>])/g) ?? [];
-    if (rows.length !== index.plugins.length || !page.includes('assets/mark-256.png')) throw new Error('Website does not match published index: ' + language);
+    const pageUrl = new URL(language || './', indexUrl);
+    const page = (await readUrl(pageUrl, fetchImpl)).bytes.toString('utf8');
+    const rest = /\bdata-rest="([^"]+)"/.exec(page)?.[1]?.replaceAll('&amp;', '&');
+    const restCards = rest ? cards(JSON.parse((await readUrl(new URL(rest, pageUrl), fetchImpl, 16 * 1024 * 1024)).bytes.toString('utf8')).html) : 0;
+    if (cards(page) + restCards !== index.plugins.length || !page.includes('assets/mark-256.png')) throw new Error('Website does not match published index: ' + language);
     const first = index.plugins[0]?.name;
     if (first) {
       const packagePath = first.split('/').map(encodeURIComponent).join('/');
