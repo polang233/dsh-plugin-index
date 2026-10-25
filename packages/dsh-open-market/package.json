@@ -1,6 +1,6 @@
 {
   "name": "dsh-open-market",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Open Plugin Market for DeepSeek Harness: adds a community plugin index that favors fast-growing, actively maintained plugins.",
   "type": "module",
   "main": "index.js",

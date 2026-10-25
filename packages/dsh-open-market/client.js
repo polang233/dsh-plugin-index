@@ -190,7 +190,9 @@ window.__ModuleLoader__.load({
 
     const NS = 'openMarket';
     const zh = {
-      title: '开放市场', loading: '正在读取开放插件市场…', failed: '读取失败', retry: '重试',
+      title: '开放市场', loading: '正在读取开放插件市场…',
+      heroTitle: '开放插件市场', heroLead: '{count} 个社区插件，推荐每天更新', searchPlaceholder: '搜索插件名称、作者或描述',
+      allCategories: '全部', resultCount: '{count} 个插件', noResults: '没有找到匹配的插件', showMore: '显示更多', clearSearch: '清除', failed: '读取失败', retry: '重试',
       missingTitle: '开放插件市场不在索引源中', missingBody: '它可能在「发现」里被删掉了。添加后这里和「发现」都能看到。', addSource: '添加索引源',
       today: '今日推荐', recommended: '智能推荐', popular: '最受欢迎', trending: '增长最快',
       newest: '最新发布', active: '更新最勤', health: '我的插件体检',
@@ -216,7 +218,9 @@ window.__ModuleLoader__.load({
       website: '官网', websiteUrl: 'https://dshopen.org/zh/', repository: 'GitHub 仓库', submitPlugin: '提交插件', indexAddress: '索引地址'
     };
     const en = {
-      title: 'Open Market', loading: 'Loading Open Plugin Market…', failed: 'Could not load the market', retry: 'Retry',
+      title: 'Open Market', loading: 'Loading Open Plugin Market…',
+      heroTitle: 'Open Plugin Market', heroLead: '{count} community plugins, picks refreshed daily', searchPlaceholder: 'Search plugins by name, author or description',
+      allCategories: 'All', resultCount: '{count} plugins', noResults: 'No matching plugins', showMore: 'Show more', clearSearch: 'Clear', failed: 'Could not load the market', retry: 'Retry',
       missingTitle: 'Open Plugin Market is not an index source', missingBody: 'It may have been removed in Discover. Add it back to see it here and in Discover.', addSource: 'Add index source',
       today: 'Today’s picks', recommended: 'Recommended', popular: 'Most popular', trending: 'Fastest growing',
       newest: 'Newly published', active: 'Most active', health: 'My plugin checkup',
@@ -315,7 +319,7 @@ window.__ModuleLoader__.load({
       .opm-card-action { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-top: auto; }
       .opm-card .opm-tags { flex-wrap: nowrap; overflow: hidden; }
       .opm-card .opm-tag { white-space: nowrap; flex-shrink: 0; }
-      .opm-carousel { min-width: 0; }
+      .opm-carousel { min-width: 0; margin-top: 18px; }
       .opm-featured-slide { min-width: 0; flex-shrink: 0; display: flex; scroll-snap-align: start; }
       .opm-featured-card { width: 100%; flex: 1 1 auto; }
       .opm-dots { display: flex; align-items: center; flex-shrink: 0; }
@@ -383,6 +387,59 @@ window.__ModuleLoader__.load({
       .opm-panel-actions { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
       .opm-panel-actions .opm-like { min-height: 32px; }
       .opm-compatibility { margin-top: 16px !important; }
+      /* Banner: the market's name and size over two soft colour washes, then search and category chips. */
+      .opm-hero { position: relative; overflow: hidden; display: grid; gap: 12px; margin-top: 6px; padding: 18px 20px 16px;
+        border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-lg);
+        background: radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, #4f7cff 20%, transparent), transparent 55%),
+          radial-gradient(90% 120% at 100% 100%, color-mix(in srgb, #b36bff 18%, transparent), transparent 55%),
+          var(--dsw-alias-bg-module-platform); }
+      .opm-hero-title { font-size: 20px !important; font-weight: 700 !important; letter-spacing: -.01em; }
+      .opm-hero-lead { margin-top: 2px !important; color: var(--dsw-alias-label-secondary); font-size: 13px; }
+      .opm-search { position: relative; display: flex; align-items: center; max-width: 560px; }
+      .opm-search-icon { position: absolute; left: 11px; width: 15px; height: 15px; color: var(--dsw-alias-label-tertiary); pointer-events: none; }
+      .opm-search input { width: 100%; height: 36px; padding: 0 32px 0 32px; border: 1px solid var(--dsw-alias-border-l2);
+        border-radius: var(--dsw-radius-md); background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-primary);
+        font: inherit; font-size: 13px; outline: none; transition: border-color 150ms ease-out, box-shadow 150ms ease-out; }
+      .opm-search input::placeholder { color: var(--dsw-alias-label-tertiary); }
+      .opm-search input:focus { border-color: var(--dsw-alias-border-l3); box-shadow: 0 0 0 3px color-mix(in srgb, #4f7cff 22%, transparent); }
+      .opm-search input::-webkit-search-cancel-button { display: none; }
+      .opm-search-clear { position: absolute; right: 6px; width: 24px; height: 24px; padding: 0; border: 0; border-radius: var(--dsw-radius-sm);
+        background: none; color: var(--dsw-alias-label-tertiary); font: inherit; font-size: 16px; cursor: pointer; }
+      .opm-search-clear:hover { background: var(--dsw-alias-interactive-bg-hover); color: var(--dsw-alias-label-primary); }
+      .opm-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+      .opm-chip { display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border: 1px solid var(--dsw-alias-border-l2);
+        border-radius: 999px; background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-secondary); font: inherit; font-size: 12px;
+        cursor: pointer; transition: background-color 150ms ease-out, color 150ms ease-out; }
+      .opm-chip small { color: var(--dsw-alias-label-tertiary); font-size: 11px; font-variant-numeric: tabular-nums; }
+      .opm-chip:hover { color: var(--dsw-alias-label-primary); background: var(--dsw-alias-interactive-bg-hover); }
+      .opm-chip[aria-pressed="true"] { border-color: transparent; background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground); }
+      .opm-chip[aria-pressed="true"] small { color: inherit; opacity: .7; }
+      .opm-result-count { margin-bottom: 8px !important; }
+      .opm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+      .opm-grid .opm-card { width: auto; }
+      .opm-more { display: flex; margin: 12px auto 0; }
+      /* Section headings carry a small tinted glyph. */
+      .opm-glyph { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 20px; height: 20px; align-self: center;
+        border-radius: 6px; font-size: 12px; line-height: 1; color: var(--opm-glyph); background: color-mix(in srgb, var(--opm-glyph) 16%, transparent); }
+      .opm-glyph-today { --opm-glyph: #e59a00; }
+      .opm-glyph-recommended { --opm-glyph: #4f7cff; }
+      .opm-glyph-popular { --opm-glyph: #f0507a; }
+      .opm-glyph-trending { --opm-glyph: #f06a2c; }
+      .opm-glyph-newest { --opm-glyph: #19a974; }
+      .opm-glyph-active { --opm-glyph: #9a5cf5; }
+      /* Cards: a soft wash of the plugin's own hue, an icon that glows in it, and a featured size for today's picks. */
+      .opm-card { --opm-accent: hsl(var(--opm-hue, 220) 72% 58%);
+        background: linear-gradient(160deg, color-mix(in srgb, var(--opm-accent) 9%, transparent), transparent 55%), var(--dsw-alias-bg-module-platform); }
+      .opm-card .opm-icon { background: color-mix(in srgb, var(--opm-accent) 14%, var(--dsw-alias-bg-layer-1));
+        box-shadow: 0 6px 14px -8px var(--opm-accent); }
+      @media (hover: hover) {
+        .opm-card:hover { border-color: color-mix(in srgb, var(--opm-accent) 45%, var(--dsw-alias-border-l2)); }
+      }
+      .opm-featured-card { gap: 10px; padding: 16px; min-height: 168px;
+        background: radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, var(--opm-accent) 20%, transparent), transparent 60%), var(--dsw-alias-bg-module-platform); }
+      .opm-featured-card .opm-title { font-size: 16px; line-height: 22px; }
+      .opm-featured-card .opm-description { -webkit-line-clamp: 3; }
+      .opm-featured-card .opm-icon { box-shadow: 0 10px 22px -10px var(--opm-accent); }
       @media (hover: none) { .opm-arrow { display: none; } }
       @media (prefers-reduced-motion: reduce) {
         .opm-card, .opm-arrow { transition: none; }
@@ -397,6 +454,15 @@ window.__ModuleLoader__.load({
     function titleOf(entry, resolve) {
       return resolve(entry.title) || entry.name;
     }
+
+    // Each plugin gets a stable hue from its name, for the soft tint behind its card and icon.
+    function hueOf(name) {
+      let hash = 0;
+      for (const char of name) hash = (hash * 31 + char.codePointAt(0)) % 360;
+      return hash;
+    }
+
+    const SECTION_GLYPHS = { today: '☀', recommended: '✦', popular: '♥', trending: '↗', newest: '✚', active: '⚡' };
 
     function descriptionOf(entry, resolve, t) {
       const text = resolve(entry.description) || '';
@@ -547,7 +613,7 @@ window.__ModuleLoader__.load({
     function PluginCard(props) {
       const { entry, t, resolve, metadata, featured } = props;
       const title = titleOf(entry, resolve);
-      return h('article', { className: 'opm-card' + (featured ? ' opm-featured-card' : ''),
+      return h('article', { className: 'opm-card' + (featured ? ' opm-featured-card' : ''), style: { '--opm-hue': hueOf(entry.name) },
         tabIndex: 0, role: 'button', 'aria-label': title, 'aria-haspopup': 'dialog', 'data-plugin-name': entry.name,
         onClick: event => {
           // Disabled buttons do not run their own click handler, so guard their descendants here too.
@@ -560,7 +626,7 @@ window.__ModuleLoader__.load({
           }
         } },
         h('div', { className: 'opm-card-heading' },
-          h(PluginIcon, { entry, title }),
+          h(PluginIcon, { entry, title, large: featured }),
           h('div', { className: 'opm-card-copy' }, h('h3', { className: 'opm-title', title }, title),
             entry.author ? h('p', { className: 'opm-author', title: entry.author }, entry.author) : null)),
         h('p', { className: 'opm-description' }, descriptionOf(entry, resolve, t)),
@@ -657,7 +723,7 @@ window.__ModuleLoader__.load({
 
     function SectionHeading({ section, t, children }) {
       return h('div', { className: 'opm-heading' },
-        h('div', { className: 'opm-heading-copy' }, h('h2', null, t(section)),
+        h('div', { className: 'opm-heading-copy' }, h('span', { className: 'opm-glyph opm-glyph-' + section, 'aria-hidden': true }, SECTION_GLYPHS[section] || '•'), h('h2', null, t(section)),
           h('span', { className: 'opm-heading-hint', title: t(section + 'Hint') }, '· ' + t(section + 'Hint'))), children);
     }
 
@@ -801,6 +867,38 @@ window.__ModuleLoader__.load({
         installed.length === 0 && h('p', { className: 'opm-muted' }, props.t('upToDate')));
     }
 
+    // The top banner: the market's name, its size, and a search with category chips over the whole catalog.
+    function MarketHero({ t, resolve, entries, metadata, query, setQuery, category, setCategory }) {
+      const counts = new Map();
+      for (const entry of entries) { const id = entry.metadata?.category; if (id) counts.set(id, (counts.get(id) || 0) + 1); }
+      const categories = [...counts].sort((a, b) => b[1] - a[1]);
+      return h('section', { className: 'opm-hero', 'aria-label': t('heroTitle') },
+        h('div', { className: 'opm-hero-copy' },
+          h('h2', { className: 'opm-hero-title' }, t('heroTitle')),
+          h('p', { className: 'opm-hero-lead' }, t('heroLead').replace('{count}', entries.length))),
+        h('label', { className: 'opm-search' },
+          h('svg', { className: 'opm-search-icon', viewBox: '0 0 24 24', 'aria-hidden': true, fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' },
+            h('circle', { cx: 11, cy: 11, r: 7 }), h('path', { d: 'm20 20-3.5-3.5' })),
+          h('input', { type: 'search', value: query, placeholder: t('searchPlaceholder'), 'aria-label': t('searchPlaceholder'),
+            onChange: event => setQuery(event.target.value) }),
+          query && h('button', { type: 'button', className: 'opm-search-clear', onClick: () => setQuery(''), 'aria-label': t('clearSearch') }, '×')),
+        h('div', { className: 'opm-chips', role: 'group', 'aria-label': t('allCategories') },
+          [['', t('allCategories'), entries.length], ...categories.map(([id, count]) => [id, resolve(metadata?.categories?.[id]?.title) || id, count])]
+            .map(([id, label, count]) => h('button', { type: 'button', key: id || 'all', className: 'opm-chip', 'aria-pressed': category === id,
+              onClick: () => setCategory(id) }, label, h('small', null, count)))));
+    }
+
+    // Search and category results replace the rows with one grid of cards.
+    function SearchResults({ entries, ...props }) {
+      const [limit, setLimit] = React.useState(24);
+      React.useEffect(() => setLimit(24), [entries]);
+      return h('section', { className: 'opm-section', 'aria-label': props.t('resultCount').replace('{count}', entries.length) },
+        h('p', { className: 'opm-muted opm-result-count', role: 'status' }, props.t('resultCount').replace('{count}', entries.length)),
+        entries.length ? h('div', { className: 'opm-grid' }, entries.slice(0, limit).map(entry => h(PluginCard, { ...props, key: entry.name, entry })))
+          : h('p', { className: 'opm-muted' }, props.t('noResults')),
+        entries.length > limit && h('button', { type: 'button', className: 'opm-button opm-more', onClick: () => setLimit(value => value + 24) }, props.t('showMore')));
+    }
+
     function Loading({ t }) {
       return h('div', { role: 'status', 'aria-label': t('loading'), 'aria-busy': true },
         h('div', { 'aria-hidden': true },
@@ -838,6 +936,8 @@ window.__ModuleLoader__.load({
         return () => window.clearInterval(timer);
       }, []);
       const [actionError, setActionError] = React.useState('');
+      const [query, setQuery] = React.useState('');
+      const [category, setCategory] = React.useState('');
       React.useEffect(() => {
         let live = true;
         if (!quiet.current) setState({ status: 'loading' });
@@ -900,6 +1000,17 @@ window.__ModuleLoader__.load({
         };
       }, [state, day, preferences.hideInstalled, counts]);
 
+      const results = React.useMemo(() => {
+        if (state.status !== 'ready' || (!query.trim() && !category)) return null;
+        const terms = query.normalize('NFKC').toLowerCase().split(/\s+/).filter(Boolean);
+        return [...state.entries].sort(recommendedOrder).filter(entry => {
+          if (category && entry.metadata?.category !== category) return false;
+          const haystack = [entry.name, titleOf(entry, resolve), entry.author, resolve(entry.description), ...(entry.metadata?.keywords || [])]
+            .join(' ').normalize('NFKC').toLowerCase();
+          return terms.every(term => haystack.includes(term));
+        });
+      }, [state, query, category, resolve]);
+
       async function addSource() {
         const listed = await remote.pluginMarket.listIndexes();
         const urls = listed.ok ? listed.value.map(source => source.url) : [];
@@ -921,8 +1032,10 @@ window.__ModuleLoader__.load({
         h('button', { type: 'button', className: 'opm-button', onClick: () => setAttempt(value => value + 1) }, t('retry')));
       else {
         content = h(React.Fragment, null,
-          h(FeaturedCarousel, { ...props, entries: sections.daily, autoRotate: preferences.autoRotate && !selected }),
-          sections.rails.map(([section, entries]) => h(PluginRail, { ...props, key: section, section, entries })),
+          h(MarketHero, { t, resolve, entries: state.entries, metadata: state.metadata, query, setQuery, category, setCategory }),
+          results ? h(SearchResults, { ...props, entries: results }) : h(React.Fragment, null,
+            h(FeaturedCarousel, { ...props, entries: sections.daily, autoRotate: preferences.autoRotate && !selected }),
+            sections.rails.map(([section, entries]) => h(PluginRail, { ...props, key: section, section, entries }))),
           preferences.showCheckup && h(Checkup, { ...props, entries: state.entries }),
           actionError && h('p', { className: 'opm-error opm-action-error', role: 'alert' }, t('actionFailed') + ': ' + actionError));
       }
