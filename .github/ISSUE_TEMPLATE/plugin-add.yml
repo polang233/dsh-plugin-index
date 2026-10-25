@@ -2,6 +2,11 @@ name: 插件收录 / Add a plugin
 description: 推荐新插件或更正已收录信息 / Suggest a plugin or correct a listing
 title: "[plugin-add] "
 body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢推荐插件！这份索引由社区一点点整理、审核出来，如果它帮你找到过好用的插件，欢迎顺手给项目点个 ⭐ [Star](https://github.com/polang233/dsh-plugin-index)，这是对维护最直接的支持，也能让更多人发现你的插件。
+        Thanks for suggesting a plugin! This index is gathered and reviewed by hand. If it has helped you, a ⭐ [star](https://github.com/polang233/dsh-plugin-index) is the simplest way to support it, and helps more people find your plugin too.
   - type: input
     id: plugin
     attributes:
