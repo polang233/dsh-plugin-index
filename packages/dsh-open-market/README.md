@@ -23,7 +23,7 @@ On the next start, `https://dshopen.org/index.json` appears in **Plugins → Dis
 
 - Switches on **Custom plugin markets** (Plugins → Experimental plugins) once per profile; DSH applies it at the next start. If you turn it off later, it stays off.
 - Adds the index once per profile, after your existing sources. It never duplicates a source, and a source you remove stays removed until you switch the plugin off and on again.
-- Adds an **Open Market** tab to the Plugins page: a rotating row of today's picks, scrolling rows of recommended, most liked, fast-growing, newly published and most active plugins, and a checkup of your installed plugins. Installing goes through DSH's own install dialog.
+- Adds an **Open Market** tab to the Plugins page: a rotating row of today's picks, scrolling rows of recommended, most liked, fast-growing, newly published and most active plugins, and a checkup of your installed plugins. Installing goes through DSH's own install dialog. DSH cannot install over an installed plugin, so **Update** removes the current version first and then opens the install for the new one, as DSH's own Update for official plugins does.
 - You can like a plugin once a day, and installing one counts as a like. Likes lose one every three days and weigh today's picks.
 - Settings and links to the website and repository are on the plugin's page under Installed.
 - `/open-market` puts the index back and switches Custom plugin markets on again, for when you change your mind.
@@ -31,7 +31,7 @@ On the next start, `https://dshopen.org/index.json` appears in **Plugins → Dis
 
 - 每个 profile 自动打开一次「插件 → 实验性插件 → 自定义插件市场」，DSH 在下次启动时生效。之后手动关掉，插件不会再打开。
 - 每个 profile 只添加一次索引源，追加在已有索引源之后，不会重复；删掉后不会被加回来，除非把插件关掉再打开。
-- 在「插件」页增加「开放市场」标签：自动轮播的今日推荐，智能推荐、最受欢迎、增长最快、最新发布、更新最勤几行横向列表，以及已装插件体检。安装走 DSH 自己的安装对话框。
+- 在「插件」页增加「开放市场」标签：自动轮播的今日推荐，智能推荐、最受欢迎、增长最快、最新发布、更新最勤几行横向列表，以及已装插件体检。安装走 DSH 自己的安装对话框。DSH 不能覆盖安装已装的插件，所以「更新」会先卸载当前版本，再打开新版本的安装，和 DSH 官方插件的更新方式一样。
 - 每个插件每天可以点赞一次，安装也算一次点赞；点赞每 3 天减少 1，并影响今日推荐。
 - 设置以及官网、GitHub 仓库链接，在「已安装」里本插件的详情页中。
 - 想恢复时输入 `/open-market`，会重新加入索引源，并在需要时打开自定义插件市场。

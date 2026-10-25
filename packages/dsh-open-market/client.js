@@ -202,7 +202,9 @@ window.__ModuleLoader__.load({
       updates: '可更新', incompatibleGroup: '不兼容当前 DSH',
       healthyCount: '另有 {count} 个已安装的插件状态正常', upToDate: '已安装的插件都是最新的',
       install: '安装', notInstalled: '未安装', installed: '已安装', updateAvailable: '有更新', update: '更新',
-      incompatible: '不兼容', busy: '正在打开…', actionFailed: '无法打开插件操作',
+      incompatible: '不兼容', busy: '正在打开…', updating: '正在卸载旧版本…', actionFailed: '无法打开插件操作',
+      updateHint: '先卸载当前版本，再打开新版本的安装', updateRestart: '这个插件正在运行，DSH 重启后才能更新，请重启后再试',
+      updateUnavailable: '当前 DSH 不支持在这里更新，请到「已安装」里卸载后重新安装',
       unknownError: '未知错误', invalidPage: '市场返回了无效的分页数据', unknownVersion: '版本未知',
       noDescription: '暂无描述', sectionEmpty: '暂无符合条件的插件',
       previous: '向左浏览 {section}', next: '向右浏览 {section}',
@@ -226,7 +228,9 @@ window.__ModuleLoader__.load({
       updates: 'Updates available', incompatibleGroup: 'Incompatible with this DSH version',
       healthyCount: '{count} other installed plugins are in good shape', upToDate: 'Installed plugins are all up to date',
       install: 'Install', notInstalled: 'Not installed', installed: 'Installed', updateAvailable: 'Update available', update: 'Update',
-      incompatible: 'Incompatible', busy: 'Opening…', actionFailed: 'Could not open the plugin action',
+      incompatible: 'Incompatible', busy: 'Opening…', updating: 'Removing the old version…', actionFailed: 'Could not open the plugin action',
+      updateHint: 'Removes the current version, then opens the install for the new one', updateRestart: 'This plugin is running; restart DSH, then update it',
+      updateUnavailable: 'This DSH cannot update plugins from here; uninstall it under Installed and install it again',
       unknownError: 'Unknown error', invalidPage: 'The market returned invalid pagination data', unknownVersion: 'Unknown version',
       noDescription: 'No description available',
       sectionEmpty: 'No matching plugins yet', previous: 'Browse {section} left', next: 'Browse {section} right',
@@ -478,8 +482,9 @@ window.__ModuleLoader__.load({
       }, resolve(metadata?.labels?.[id]?.title) || id)));
     }
 
-    function InstallButton({ entry, t, resolve, install, openPackage, onError, small, update }) {
+    function InstallButton({ entry, t, resolve, install, openPackage, manager, onError, small, update }) {
       const [busy, setBusy] = React.useState(false);
+      const [phase, setPhase] = React.useState('busy');
       const version = defaultVersionOf(entry);
       const status = entry.installation.status;
       const installed = status !== 'not-installed' && status !== 'update-available';
@@ -495,21 +500,38 @@ window.__ModuleLoader__.load({
             void sendLike(entry.name, 'install');
             return answer;
           }
+          // DSH's install refuses a package that is already there, so an update removes it first, as DSH's own
+          // Update for official plugins does; the install dialog then installs the new version.
+          async function startUpdate() {
+            const service = manager?.();
+            if (!service?.removeBundle) return { ok: false, error: t('updateUnavailable') };
+            setPhase('updating');
+            const removed = await service.removeBundle(entry.name);
+            if (!removed?.ok) return removed;
+            const failure = removed.value?.error;
+            if (failure) return { ok: false, error: failure.code === 'stop-profile' ? t('updateRestart') : failure };
+            if (removed.value?.application === 'failed') return { ok: false, error: t('unknownError') };
+            setPhase('busy');
+            return install({ ...version.install, title: titleOf(entry, resolve), version: version.version });
+          }
           const answer = installed
             ? await openPackage(entry.name)
-            : await startInstall();
+            : status === 'update-available' ? await startUpdate() : await startInstall();
           if (answer?.ok === false) onError(errorText(answer.error, t('unknownError')));
         } catch (error) {
           onError(errorText(error, t('unknownError')));
         } finally {
           setBusy(false);
+          setPhase('busy');
         }
       }
+      const updating = status === 'update-available' && version;
       return h('button', {
         type: 'button', className: 'opm-button' + (version && !installed ? ' opm-button-primary' : '') + (small ? ' opm-button-small' : ''),
         disabled: !version || busy, onClick: event => { event.stopPropagation(); return act(); }, 'aria-busy': busy,
-        'aria-label': t(busy ? 'busy' : label) + ' · ' + titleOf(entry, resolve)
-      }, t(busy ? 'busy' : label));
+        title: updating && !busy ? t('updateHint') : undefined,
+        'aria-label': t(busy ? phase : label) + ' · ' + titleOf(entry, resolve)
+      }, t(busy ? phase : label));
     }
 
     function LikeButton({ entry, t, resolve, likes }) {
@@ -790,14 +812,25 @@ window.__ModuleLoader__.load({
             })))))));
     }
 
-    function OpenMarketTab({ t, remote, resolve, install, openPackage }) {
+    function OpenMarketTab({ t, remote, manager, resolve, install, openPackage }) {
       const root = React.useRef(null);
       const [selected, setSelected] = React.useState(null);
       const closeDetails = React.useCallback(() => setSelected(null), []);
       const [state, setState] = React.useState({ status: 'loading' });
       const [attempt, setAttempt] = React.useState(0);
+      // A reload after an install or removal keeps the current page on screen instead of the skeleton.
+      const quiet = React.useRef(false);
       const [day, setDay] = React.useState(localDay);
       const preferences = useSettings();
+      React.useEffect(() => {
+        if (typeof remote.$on !== 'function') return;
+        let timer;
+        const off = remote.$on('plugin-manager/changed', () => {
+          window.clearTimeout(timer);
+          timer = window.setTimeout(() => { quiet.current = true; setAttempt(value => value + 1); }, 400);
+        });
+        return () => { window.clearTimeout(timer); if (typeof off === 'function') off(); };
+      }, [remote]);
       const likes = useLikes(preferences.likes);
       const counts = preferences.likes ? likes.counts : EMPTY_LIKES;
       React.useEffect(() => {
@@ -807,7 +840,8 @@ window.__ModuleLoader__.load({
       const [actionError, setActionError] = React.useState('');
       React.useEffect(() => {
         let live = true;
-        setState({ status: 'loading' });
+        if (!quiet.current) setState({ status: 'loading' });
+        quiet.current = false;
         async function load() {
           const entries = new Map();
           let offset = 0;
@@ -874,7 +908,7 @@ window.__ModuleLoader__.load({
         else setState({ status: 'error', error: added.error });
       }
 
-      const props = { t, resolve, install, openPackage, metadata: state.metadata, onError: setActionError,
+      const props = { t, resolve, install, openPackage, manager, metadata: state.metadata, onError: setActionError,
         likesEnabled: preferences.likes, likes, onOpen: (entry, returnTarget) => setSelected({ entry, returnTarget }) };
       let content;
       if (state.status === 'loading') content = h(Loading, { t });
@@ -941,7 +975,11 @@ window.__ModuleLoader__.load({
         { name: 'plugins.bundle.config', key: 'dsh-open-market' }, SettingsSection));
       // Installs from DSH's own Discover never reach dshopen.org. While likes are on, each bundle that appears after an
       // install counts as an install like; sendLike skips plugins liked today and the server ignores unlisted names.
+      // The plugin manager is optional: without it the tab still browses and installs, only Update is unavailable.
+      let pluginManager;
       ctx.inject(['remote.pluginManager'], ctx => {
+        pluginManager = ctx.remote.pluginManager;
+        ctx.effect(() => () => { pluginManager = undefined; }, 'open-market: plugin manager');
         let known;
         const installed = async () => {
           const answer = await ctx.remote.pluginManager.listBundles();
@@ -957,7 +995,7 @@ window.__ModuleLoader__.load({
           }, () => {});
         }), 'open-market: count installs');
       });
-      const face = { remote: ctx.remote, resolve: text => ctx.locale.resolveText(text) };
+      const face = { remote: ctx.remote, manager: () => pluginManager, resolve: text => ctx.locale.resolveText(text) };
       ctx.slots.inject('plugins.tab', () => ctx.slots.register({
         name: 'plugins.tab',
         id: 'open-market',
