@@ -12,3 +12,10 @@ test-results/
 public/plugins/
 public/zh/plugins/
 public/zh-tw/plugins/
+# Generated catalog batches for "Show more" and search: rebuilt on every build.
+public/catalog.json
+public/catalog/
+public/zh/catalog.json
+public/zh/catalog/
+public/zh-tw/catalog.json
+public/zh-tw/catalog/

@@ -11,6 +11,12 @@ const STATS_URL = `${ORIGIN}stats.json`;
 const REPOSITORY = 'https://github.com/polang233/dsh-plugin-index';
 const DOCS = `${REPOSITORY}/blob/main/README.en.md`;
 const SUBMIT = `${REPOSITORY}/issues/new?template=plugin-add.yml`;
+const REMOVE = `${REPOSITORY}/issues/new?template=plugin-remove.yml`;
+const PLUGIN_COMMAND = 'dsh plugin --profile desktop add dsh-open-market';
+// The home page carries this many cards; the rest wait in catalog.json until a visitor asks for more, searches or sorts.
+export const INITIAL_PLUGINS = 48;
+// Further cards come in files of this many, so each "Show more" fetches only what the next batches need.
+export const CHUNK_PLUGINS = 12;
 const source = new URL('../site/', import.meta.url);
 const output = new URL('../public/', import.meta.url);
 
@@ -31,12 +37,29 @@ const finish = (html, language) => (language === 'tw' ? traditional(html) : html
 
 const COPY = {
   en: {
-    brand: 'Open Plugin Market', title: 'Open Plugin Market — DeepSeek Harness (DSH) plugin index', keywords: 'DeepSeek Harness plugins, DSH plugins, DSH extensions, DSH plugin market, dsh plugin, DeepSeek Harness plugin index, Open Plugin Market', socialImage: 'social.png',
-    statPlugins: 'plugins', statCategories: 'categories', more: 'Show more', sort: 'Sort', sorts: { default: 'Default', recommended: '✨ Smart picks', stars: 'Most stars', starsWeek: 'New stars (7 days)', published: 'Recently updated', random: 'Random' }, shown: 'Showing {shown} of {count}',
-    description: 'Community plugin market for DeepSeek Harness (DSH): tools, skills, memory, UI and more, recommended by growth, updates and downloads. Add one URL to browse and install them in DSH.',
+    brand: 'Open Plugin Market', title: 'Open Plugin Market · DSH plugin market | DeepSeek Harness plugin index & daily picks', keywords: 'DSH plugin market, DSH plugins, DSH plugin index, DeepSeek Harness plugins, DeepSeek Harness plugin market, DSH extensions, dsh plugin, best DSH plugins, Open Plugin Market', socialImage: 'social.png',
+    methodIndex: 'Add the index', methodPlugin: 'Install the plugin', methods: 'Ways to set it up',
+    pluginCommand: 'Run one line in a terminal:', pluginInApp: 'Or in DSH, open Plugins → Add plugin and enter the package name', pluginNote: 'Either way it switches on Custom plugin markets, adds this index and an Open Market tab to the Plugins page; restart DSH afterwards.',
+    shotDiscover: 'Discover', shotMarket: 'Open Market tab', shotMarketAlt: 'The Open Market tab that dsh-open-market adds to the DSH Plugins page: today\'s picks and rows of recommended plugins', pageLink: 'Page',
+    footerBrowse: 'Browse', footerJoin: 'Take part', removePlugin: 'Request removal', footerIndex: 'Index URL',
+    likesTitle: 'Most liked plugins', likesNote: 'Likes from the website and the Open Market tab; each plugin loses one every three days.', likesEmpty: 'No likes yet. Like a plugin in the directory and it shows up here.', liveNote: 'Live · refreshed every few minutes',
+    tileNotes: { yesterday: 'Yesterday {value}', average: '{value} a day on average', added: '{value} new in the last 7 days', likedPlugins: 'Across {value} plugins' },
+    statPlugins: 'plugins', statCategories: 'categories', more: 'Show more', moreLoading: 'Loading…', moreFailed: 'Could not load more. Try again', sort: 'Sort', sorts: { default: 'Default', recommended: '✨ Smart picks', likes: '♥ Most liked', stars: 'Most stars', starsWeek: 'New stars (7 days)', published: 'Recently updated', random: 'Random' }, shown: 'Showing {shown} of {count}',
+    description: 'DSH plugin market and plugin index for DeepSeek Harness: {count} community plugins (tools, skills, memory, UI and more), with daily picks by growth, updates and likes. Add one URL to browse and install them in DSH.',
+    like: 'Like', liked: 'Liked today', likeTitle: 'Like this plugin (once a day)', likeFailed: 'Could not like it. Try again later', likeLimit: 'Daily like limit reached',
+    ghLabel: 'GitHub: star the project',
+    altSetup: 'Or install the plugin, one step:', altSetupNote: 'It switches on Custom plugin markets and adds this index for you, plus an Open Market tab on the Plugins page. Restart DSH afterwards.', copyCommand: 'Copy', copiedShort: 'Copied',
+    faqTitle: 'Questions', faq: count => [
+      ['Where can I find DSH plugins?', `DeepSeek Harness (DSH) can browse any plugin index from its Discover tab. Open Plugin Market lists ${count} community plugins: add https://dshopen.org/index.json as an index source to browse, search and install them inside DSH, or browse them here by category, growth and release date.`],
+      ['How do I install a DSH plugin?', `Option 1: switch on Custom plugin markets under Plugins → Experimental plugins, go to Discover → Add index source, paste the index URL, then search for the plugin in Discover and install it. Option 2: run ${PLUGIN_COMMAND}, which does all of that for you and adds an Open Market tab to the Plugins page.`],
+      ['How are the picks ranked?', 'The default order refreshes every day and leads with plugins that are growing fast and shipping often, with verification, downloads, stars and likes as supporting signals. No author can flood the list, so new projects get a turn on the first screen.'],
+      ['Is this affiliated with DeepSeek?', 'No. Open Plugin Market is an independent community project. It uses the index format DSH\'s official plugin market reads, and DSH itself downloads and installs every plugin.'],
+      ['How do I list my own plugin?', 'Open a request on GitHub with a public repository, an npm release and a license. Once listed, put the badge in your README: it shows your likes and links to your plugin\'s page here.']
+    ],
+    badgeTitle: 'README badge', badgeText: 'Author of this plugin? Put this badge in your README. It shows likes and links here.', copyBadge: 'Copy Markdown',
     skip: 'Skip to content', plugins: 'Plugins', docs: 'Docs', statsNav: 'Stats', language: 'Language', nav: 'Main navigation', home: 'Home',
     headline: 'Everything can be a plugin.<br><em>Find them here.</em>',
-    intro: 'DeepSeek Harness is built around plugins, yet it ships no list or recommendations for community ones. The October 15 update added an official plugin market: paste one index JSON and you can browse and install community plugins without downloading anything by hand. So we built this index.',
+    eyebrow: 'The open DSH plugin market · plugin index · daily picks', intro: 'A plugin index with daily picks for DeepSeek Harness. Since the October 15 update DSH reads plugin markets, so copying the address below into Discover is all it takes to browse and install hundreds of community plugins.',
     address: 'Index URL', copy: 'Copy URL', copyTitle: 'Click to copy',
     copied: 'Copied', usage: '{readers} people using it today', usageNote: 'People whose DSH loaded this index today (UTC date), counted once per IP and user agent; neither is stored.', copySuccess: 'URL copied. Open DSH and add it as an index source.', details: 'Details', copyOpen: 'Copy name & open DSH', nameCopied: 'Copied, opening…', dshOpened: 'Opened, paste it', dshMissed: 'Copied, open DSH', getFailure: 'Name selected, copy it', getHint: 'Paste the name into DSH Discover search to install.', pluginName: 'Name', copyFailure: 'The address is selected. Press Ctrl+C or ⌘C, or use the selection menu to copy it.',
     showcase: { title: 'How it looks in DSH', text: 'Stars aren\'t everything here. The default picks refresh every day and put fast-growing, actively shipped, genuinely good plugins first, with verification, downloads and stars as supporting signals.', points: ['No single author can flood the list, so a newcomer can make the first screen', 'Rising, Frequent updates and Verified labels at a glance', 'Default order, ✨ Smart picks and Random: every visit turns up something new'], image: 'dsh-discover-en.webp', alt: 'The Discover tab of DeepSeek Harness listing Open Plugin Market plugins with labels and install buttons' },
@@ -49,12 +72,12 @@ const COPY = {
     directory: 'Plugin directory', search: 'Search plugins', searchPlaceholder: 'Name, package or description', category: 'Category', all: 'All categories', other: 'Other',
     results: '{count} of {total} plugins', initialCount: count => `${count} ${count === 1 ? 'plugin' : 'plugins'}`,
     noResults: 'No matching plugins', noResultsHelp: 'Try another search or choose all categories.', reset: 'Clear filters',
-    noJs: 'All plugins are listed below. Use your browser’s Find command to search this page.',
+    noJs: 'JavaScript is off, so only the first plugins are listed. Every plugin also has its own page, linked from each card.',
     noDescription: 'No description provided by the package author.', version: 'Version', source: 'Source', npm: 'npm package', website: 'Website', compatibility: 'Requires DSH', noVersion: 'Version not listed', released: 'Released',
     contributeTitle: 'Add a plugin to the index', contributeText: 'Have a useful DSH plugin? Send its package or repository link.', submit: 'Submit a plugin', readDocs: 'Read the docs',
     independent: 'An independent community project.', updated: 'Index updated', unknownDate: 'Update time unavailable',
     scope: 'Published-package checks do not replace an installation test or a code audit. DSH checks version compatibility when you install.',
-    raw: 'JSON index', status: 'Build details', stats: 'Usage stats', footerTagline: 'A community plugin market for DeepSeek Harness. Fast-growing, actively shipped plugins first, so small developers get seen.', starCta: 'Star us on GitHub', starNote: 'If this market helps you, a star keeps it going. Do the same for the plugins you use: the next star might be someone starring yours.', footerData: 'At a glance', footerLinks: 'Links', verifiedCount: 'verified', refresh: 'Rebuilt every 6 hours', license: 'GPL-3.0 license',
+    raw: 'JSON index', status: 'Build details', stats: 'Usage stats', footerTagline: 'A community plugin market for DeepSeek Harness. Fast-growing, actively shipped plugins first, so small developers get seen.', starCta: 'Star us on GitHub', starNote: 'If this market helps you, a star keeps it going. Do the same for the plugins you use: the next star might be someone starring yours.', footerLinks: 'Links', refresh: 'Rebuilt every 6 hours',
     starsUnavailable: 'GitHub stars unavailable', fetched: 'Fetched',
     // Plugin pages.
     pluginTitle: title => `${title} — DeepSeek Harness (DSH) plugin · Open Plugin Market`,
@@ -66,22 +89,39 @@ const COPY = {
     statsLead: 'DSH fetches this market’s index each time it loads or refreshes it. The numbers below come straight from those fetches and refresh every few minutes.',
     statsTiles: { todayReaders: 'People today', todayReads: 'Loads today', monthReaders: 'People, last 30 days', totalReads: 'Loads in total' },
     monthReadersNote: 'Sum of each day’s people; someone who uses DSH on several days counts once per day.',
-    dailyTitle: 'Daily use, last 30 days', metricReaders: 'People', metricReads: 'Loads', metric: 'Show',
-    countriesTitle: 'Where people use it', countriesNote: 'Share of people over the last 30 days. Collected since {since}.', countriesNoteLoads: 'Share of loads over the last 30 days, from Cloudflare traffic analytics (sampled, so approximate).', regionsTitle: 'By UN geographic region', countriesSub: 'By country or region',
+    dailyTitle: 'Trends, last 30 days', series: { reads: 'Loads', readers: 'People', plugins: 'Plugins listed', stars: 'GitHub stars' }, seriesLabel: 'Lines to show', metricReaders: 'People', metricReads: 'Loads', metric: 'Show',
+    countriesTitle: 'Where people use it', countriesNote: 'Share of people over the last 30 days. Collected since {since}.', countriesNoteLoads: 'Share of loads over the last 30 days, estimated from Cloudflare traffic analytics.', regionsTitle: 'By UN geographic region', countriesSub: 'By country or region',
     regions: { Asia: 'Asia', Americas: 'Americas', Europe: 'Europe', Oceania: 'Oceania', Africa: 'Africa', Unknown: 'Unknown' },
     // Names follow United Nations usage.
     regionNames: { HK: 'Hong Kong SAR, China', MO: 'Macao SAR, China', TW: 'Taiwan Province of China' }, countriesEmpty: 'Country and region data has not started yet. It appears here from the first day it is collected.',
     unknownRegion: 'Unknown', otherRegions: 'Other {count}', share: 'Share', day: 'Day', region: 'Country or region', showTable: 'Show as a table',
-    methodTitle: 'How this is counted', methodText: 'A load is one fetch of index.json. People are distinct IP address and user agent pairs within one UTC day: the pair is hashed with a daily salt to dedupe the day and is never stored. Countries and regions come from Cloudflare’s network location as two-letter codes: the split by loads is read from Cloudflare’s own traffic analytics for the last 30 days, and nothing finer than the country is kept. Checks made by this project are not counted.', rawStats: 'Raw data (stats.json)',
+    methodTitle: 'How this is counted', methodText: 'A load is one fetch of index.json. People are distinct IP address and user agent pairs within one UTC day: the pair is hashed with a daily salt to dedupe the day and is never stored. Countries and regions come from Cloudflare’s network location as two-letter codes: the split by loads is read from Cloudflare’s own traffic analytics for the last 30 days, and nothing finer than the country is kept. Continents follow the United Nations geographic regions (M49). Cloudflare samples its traffic analytics, so the split by loads is an estimate. Checks made by this project are not counted.', rawStats: 'Raw data (stats.json)',
     statsLoading: 'Loading usage stats…', statsFailed: 'Usage stats are unavailable right now. Try again later.'
   },
   zh: {
-    brand: '开放插件市场', title: 'DSH 插件市场 · 开放插件市场 — DeepSeek Harness 社区插件索引', keywords: 'DeepSeek Harness 插件, DSH 插件, DSH 插件市场, dsh plugin, DeepSeek 插件, 插件索引, 开放插件市场', socialImage: 'social-zh.png',
-    statPlugins: '个插件', statCategories: '个分类', more: '查看更多', sort: '排序', sorts: { default: '默认排序', recommended: '✨ 智能推荐', stars: 'star 最多', starsWeek: '近 7 天新增 star', published: '最近更新', random: '随机' }, shown: '已显示 {shown} / {count}',
-    description: `DeepSeek Harness（DSH）社区插件市场：工具、技能、记忆、界面等社区插件，按增长、更新和下载推荐。复制索引地址，在 DSH「${ui('发现')}」里浏览和安装。`,
+    brand: '开放插件市场', title: '开放插件市场 · DSH 插件市场 | DeepSeek Harness 插件索引与每日插件推荐', keywords: 'DSH 插件市场, DSH 插件, DSH 插件索引, DSH 插件推荐, DSH 插件下载, DSH 插件安装, DeepSeek Harness 插件, DeepSeek Harness 插件市场, DeepSeek 插件, dsh plugin, 开放插件市场', socialImage: 'social-zh.png',
+    methodIndex: '添加索引源', methodPlugin: '安装插件', methods: '两种使用方式',
+    pluginCommand: '在终端输入一行命令：', pluginInApp: `或者在 DSH「${ui('插件 → 添加插件')}」里输入包名`, pluginNote: `两种方式都会自动打开「${ui('自定义插件市场')}」、加入本索引，并在「${ui('插件')}」页多出「开放市场」标签，重启 DSH 后生效。`,
+    shotDiscover: `「${ui('发现')}」页`, shotMarket: '「开放市场」标签', shotMarketAlt: 'dsh-open-market 在 DSH「插件」页加入的「开放市场」标签：今日推荐和多行推荐列表', pageLink: '详情页',
+    footerBrowse: '浏览', footerJoin: '参与', removePlugin: '申请下架', footerIndex: '索引地址',
+    likesTitle: '点赞最多的插件', likesNote: '来自网站和「开放市场」标签的点赞，每个插件每 3 天减 1。', likesEmpty: '还没有点赞。去插件目录给喜欢的插件点个赞，它就会出现在这里。', liveNote: '实时 · 每隔几分钟更新',
+    tileNotes: { yesterday: '昨日 {value}', average: '日均 {value}', added: '近 7 天新增 {value}', likedPlugins: '来自 {value} 个插件' },
+    statPlugins: '个插件', statCategories: '个分类', more: '查看更多', moreLoading: '正在加载…', moreFailed: '加载失败，点击重试', sort: '排序', sorts: { default: '默认排序', recommended: '✨ 智能推荐', likes: '♥ 点赞最多', stars: 'star 最多', starsWeek: '近 7 天新增 star', published: '最近更新', random: '随机' }, shown: '已显示 {shown} / {count}',
+    description: `DSH 插件市场与插件索引：收录 {count} 个 DeepSeek Harness 社区插件，工具、技能、记忆、界面应有尽有，每天按增长、更新和点赞推荐。复制索引地址，在 DSH「${ui('发现')}」里浏览和安装。`,
+    like: '点赞', liked: '今天已点赞', likeTitle: '给这个插件点赞（每天一次）', likeFailed: '点赞失败，请稍后再试', likeLimit: '今天的点赞次数已用完',
+    ghLabel: 'GitHub：给项目点个 Star',
+    altSetup: '或者安装插件，一步完成：', altSetupNote: `自动打开「${ui('自定义插件市场')}」并加入本索引，还会在「${ui('插件')}」页多一个「开放市场」标签，重启 DSH 后生效。`, copyCommand: '复制', copiedShort: '已复制',
+    faqTitle: '常见问题', faq: count => [
+      ['DSH 插件在哪里找？', `DeepSeek Harness（DSH）的「${ui('发现')}」页可以添加插件索引源。开放插件市场收录了 ${count} 个社区插件，把 https://dshopen.org/index.json 添加为索引源后，就能在 DSH 里直接浏览、搜索和安装；也可以在本站按分类、增长和更新时间浏览。`],
+      ['DSH 插件怎么安装？', `方法一：在「${ui('插件 → 实验性插件')}」中打开「${ui('自定义插件市场')}」，再到「${ui('发现 → 添加索引源')}」粘贴索引地址，然后在「${ui('发现')}」里搜索插件名并安装。方法二：运行 ${PLUGIN_COMMAND}，它会自动完成上面的设置，并在「${ui('插件')}」页加一个「开放市场」标签。`],
+      ['插件推荐是怎么排的？', '默认推荐每天更新，以最近增长快、更新勤的插件为主，同时参考验证、下载量、star 和点赞。同一作者不会霸榜，新项目和小开发者的作品也有机会上首屏。'],
+      ['和 DeepSeek 官方是什么关系？', '开放插件市场是独立的社区项目，与 DeepSeek 官方无隶属关系。它使用 DSH 官方插件市场支持的索引格式，插件由 DSH 自己下载和安装。'],
+      ['怎么把自己的插件提交到 DSH 插件市场？', '在 GitHub 上填写收录申请，提供公开源码、npm 包和许可证即可。收录后可以在 README 放上徽章，显示点赞数并链接到本站的插件页。']
+    ],
+    badgeTitle: 'README 徽章', badgeText: '你是这个插件的作者？把徽章放进 README，显示点赞数，点击直达本页。', copyBadge: '复制 Markdown',
     skip: '跳到正文', plugins: '插件目录', docs: '文档', statsNav: '统计', language: '语言', nav: '主导航', home: '首页',
     headline: '万物皆可插件，<br><em>插件来这里找。</em>',
-    intro: 'DeepSeek Harness 以插件为核心，但官方没有提供社区插件的推荐和列表。10 月 15 日的更新加入了官方插件市场，填入一个索引 JSON 就能浏览和安装社区插件，不用再单独下载处理，方便了很多，于是我们做了这份索引。',
+    eyebrow: 'DSH 开放插件市场 · 插件索引 · 每日插件推荐', intro: `DeepSeek Harness 的社区插件索引与每日推荐。10 月 15 日起 DSH 支持插件市场，复制下面的地址粘贴到「${ui('发现')}」，就能直接浏览、安装几百个社区插件。`,
     address: '索引地址', copy: '复制地址', copyTitle: '点击复制',
     copied: '已复制', usage: '今日已有 {readers} 位用户在使用', usageNote: '今天（UTC 日期）在 DSH 中加载过这份索引的用户数，按 IP 和 UA 每日去重，两者都不保存。', copySuccess: '地址已复制。打开 DSH，把它添加为索引源。', details: '详情', copyOpen: '复制插件名并打开 DSH', nameCopied: '已复制，正在打开…', dshOpened: '已打开，粘贴搜索', dshMissed: '已复制，请手动打开', getFailure: '已选中，请手动复制', getHint: `在 DSH「${ui('发现')}」里粘贴搜索即可安装。`, pluginName: '插件名', copyFailure: '地址已选中。按 Ctrl+C 或 ⌘C，或使用选中文字的菜单复制。',
     showcase: { title: '在 DSH 里的样子', text: '不唯 star 🌟 论。默认推荐每天更新，以最近增长快、更新勤、优质的插件为主，同时参考验证、下载量和 star。', points: ['同一作者不会霸榜，小开发者的新作品也能上首屏', '增长快、更新勤、经过验证等标签一眼可见', '默认排序、✨ 智能推荐和随机，每次都有新发现'], image: 'dsh-discover-zh.webp', alt: 'DeepSeek Harness 的「发现」页面，列出开放插件市场的插件、标签和安装按钮' },
@@ -94,12 +134,12 @@ const COPY = {
     directory: '插件目录', search: '搜索插件', searchPlaceholder: '名称、包名或描述', category: '分类', all: '全部分类', other: '其他',
     results: '显示 {count} / {total} 个插件', initialCount: count => `${count} 个插件`,
     noResults: '没有匹配的插件', noResultsHelp: '换个关键词，或选择全部分类。', reset: '清除筛选',
-    noJs: '下方显示全部插件。可使用浏览器的查找功能搜索本页。',
+    noJs: '浏览器未启用 JavaScript，这里只列出前面一部分插件。每个插件都有自己的页面，可从卡片进入。',
     noDescription: '作者尚未提供插件描述。', version: '版本', source: '源码', npm: 'npm 包', website: '网站', compatibility: '适用 DSH', noVersion: '未提供版本', released: '发布于',
     contributeTitle: '让更多人找到你的插件', contributeText: '提交插件的包名或仓库地址，申请收录。', submit: '提交收录', readDocs: '阅读文档',
     independent: '独立社区项目。', updated: '索引更新于', unknownDate: '暂无更新时间',
     scope: '发布包检查不等于安装测试或代码审计。安装时，DSH 会检查版本兼容性。',
-    raw: 'JSON 索引', status: '构建详情', stats: '使用统计', footerTagline: 'DeepSeek Harness 的社区插件市场。增长快、更新勤的插件优先展示，让小开发者也被看到。', starCta: '给项目点个 Star', starNote: '觉得好用就给我们点个 star 吧。用到的插件也别忘了给作者一个，没准下一个 star 就是别人点给你的。', footerData: '数据一览', footerLinks: '相关链接', verifiedCount: '个经过验证', refresh: '每 6 小时更新', license: 'GPL-3.0 许可证',
+    raw: 'JSON 索引', status: '构建详情', stats: '使用统计', footerTagline: 'DeepSeek Harness 的社区插件市场。增长快、更新勤的插件优先展示，让小开发者也被看到。', starCta: '给项目点个 Star', starNote: '觉得好用就给我们点个 star 吧。用到的插件也别忘了给作者一个，没准下一个 star 就是别人点给你的。', footerLinks: '相关链接', refresh: '每 6 小时更新',
     starsUnavailable: 'GitHub star 暂不可用', fetched: '获取于',
     pluginTitle: title => `${title} — DeepSeek Harness（DSH）插件 · 开放插件市场`,
     pluginDescription: (title, description) => `${title}：${description}DeepSeek Harness（DSH）社区插件，收录于开放插件市场。`,
@@ -109,12 +149,12 @@ const COPY = {
     statsLead: 'DSH 每次加载或刷新这个市场，都会读取一次索引。下面的数字直接来自这些读取，每隔几分钟更新。',
     statsTiles: { todayReaders: '今日用户', todayReads: '今日加载', monthReaders: '近 30 天用户', totalReads: '累计加载' },
     monthReadersNote: '每天用户数之和；同一个人在不同的日子使用，每天各算一次。',
-    dailyTitle: '近 30 天每日使用', metricReaders: '用户', metricReads: '加载次数', metric: '显示',
-    countriesTitle: '使用地区分布', countriesNote: '近 30 天用户占比，自 {since} 起统计。', countriesNoteLoads: '近 30 天加载次数占比，来自 Cloudflare 流量分析（抽样统计，为估算值）。', regionsTitle: '按联合国地理分区', countriesSub: '按国家和地区',
+    dailyTitle: '近 30 天趋势', series: { reads: '使用次数', readers: '用户', plugins: '收录插件', stars: 'GitHub star' }, seriesLabel: '显示的数据', metricReaders: '用户', metricReads: '加载次数', metric: '显示',
+    countriesTitle: '使用地区分布', countriesNote: '近 30 天用户占比，自 {since} 起统计。', countriesNoteLoads: '近 30 天加载次数占比，来自 Cloudflare 流量分析的估算值。', regionsTitle: '按联合国地理分区', countriesSub: '按国家和地区',
     regions: { Asia: '亚洲', Americas: '美洲', Europe: '欧洲', Oceania: '大洋洲', Africa: '非洲', Unknown: '未知' },
     regionNames: { HK: '中国香港', MO: '中国澳门', TW: '中国台湾' }, countriesEmpty: '国家和地区数据尚未开始统计，从统计开始的那天起会显示在这里。',
     unknownRegion: '未知', otherRegions: '其他 {count} 个', share: '占比', day: '日期', region: '国家或地区', showTable: '以表格查看',
-    methodTitle: '统计方式', methodText: '一次加载就是读取一次 index.json。用户按 UTC 日期内不同的 IP 地址和 UA 组合计算：两者加上每日更换的盐值做哈希，只用于当天去重，从不保存。国家和地区来自 Cloudflare 网络位置，只用两个字母的国家或地区代号：按加载次数的分布读取自 Cloudflare 自带的近 30 天流量分析，不保留比国家更细的信息。本项目自己的检查请求不计入。', rawStats: '原始数据（stats.json）',
+    methodTitle: '统计方式', methodText: '一次加载就是读取一次 index.json。用户按 UTC 日期内不同的 IP 地址和 UA 组合计算：两者加上每日更换的盐值做哈希，只用于当天去重，从不保存。国家和地区来自 Cloudflare 网络位置，只用两个字母的国家或地区代号：按加载次数的分布读取自 Cloudflare 自带的近 30 天流量分析，不保留比国家更细的信息。各洲按联合国地理分区（M49）划分。Cloudflare 流量分析为抽样统计，按加载次数的分布是估算值。本项目自己的检查请求不计入。', rawStats: '原始数据（stats.json）',
     statsLoading: '正在加载使用统计…', statsFailed: '暂时无法获取使用统计，请稍后再试。'
   }
 };
@@ -193,7 +233,9 @@ function describe(plugin, data, context) {
   const badges = own.filter(id => id.startsWith('publisher-') && labels[id]).map(id => `<span class="publisher-badge" data-publisher="${esc(id)}">${esc(localize(labels[id].title, data))}</span>`).join('')
     + SIGNALS.filter(id => own.includes(id) && labels[id]).map(id => `<span class="signal-badge" data-signal="${id}">${esc(localize(labels[id].title, data))}</span>`).join('');
   const icon = typeof plugin.icon === 'string' && /^icons\/[a-f0-9]{64}\.(?:svg|png|jpg|webp)$/.test(plugin.icon) ? root + plugin.icon : undefined;
-  const detail = `${renderStars(plugin, snapshot, data)}
+  // Likes come from the Worker at runtime; the button stays hidden without JavaScript.
+  const likeButton = `<button type="button" class="like-button" data-like="${esc(packageName)}" title="${esc(text.likeTitle)}" aria-pressed="false" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.8 4 7.4 4c2 0 3.6 1.1 4.6 2.7C13 5.1 14.6 4 16.6 4c3.6 0 5.8 3.6 4.6 7.1-1.7 4.8-9.2 9.4-9.2 9.4z"/></svg><span class="visually-hidden">${esc(text.like)}</span><span data-like-count></span></button>`;
+  const detail = `${likeButton}${renderStars(plugin, snapshot, data)}
       ${npmMeasured ? `<a class="npm-downloads" data-downloads="${npm.downloads}" href="${esc(npm.source)}" title="${esc(npmTitle)}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>${esc(numberFormat(data).format(npm.downloads))}</a>` : ''}
       ${date ? `<time datetime="${esc(new Date(version.publishTimestamp * 1000).toISOString())}" title="${esc(dateLabel(version.publishTimestamp * 1000, data))}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>${esc(date)}</time>` : ''}`;
   const facts = `<dt>${esc(text.pluginName)}</dt><dd class="get-name">${esc(packageName)}</dd><dt>${esc(text.version)}</dt><dd class="version">${version ? esc(version.version) : esc(text.noVersion)}</dd>${version?.engines?.dsh ? `<dt>${esc(text.compatibility)}</dt><dd>${esc(version.engines.dsh)}</dd>` : ''}${version?.publishTimestamp ? `<dt>${esc(text.released)}</dt><dd>${esc(dateLabel(version.publishTimestamp * 1000, data))}</dd>` : ''}`;
@@ -217,14 +259,14 @@ function pluginRow(plugin, language, context, position = 0, added = {}) {
   const keys = plugin.metadata?.sortKeys ?? {};
   const sortData = [['order', position], ['recommended', keys.recommended], ['random', keys['random-resources']], ['stars', keys['github-stars']], ['stars-week', keys['stars-week']], ['published', recency]]
     .filter(([, value]) => Number.isFinite(value)).map(([key, value]) => ` data-sort-${key}="${value}"`).join('');
-  return `<li class="plugin" data-plugin data-tone="${info.tone}" data-category="${esc(info.categoryId)}" data-search="${esc(search)}"${sortData}>
+  return `<li class="plugin" data-plugin data-href="${esc(href)}" data-tone="${info.tone}" data-category="${esc(info.categoryId)}" data-search="${esc(search)}"${sortData}>
     <article class="plugin-main" aria-label="${esc(info.title || info.name)}">
       <div class="plugin-heading"><span class="plugin-avatar" aria-hidden="true">${avatar(info, root, position)}</span><div>${info.namedTitle ? `<h3 class="plugin-title"><a class="plugin-link" href="${esc(href)}">${esc(info.title)}</a></h3><p class="package-name">${esc(info.packageName)}</p>` : `<h3 class="package-name is-title"><a class="plugin-link" href="${esc(href)}">${esc(info.packageName)}</a></h3>`}</div></div>
       ${info.categoryId || info.badges ? `<div class="plugin-tags">${info.categoryId ? `<span class="plugin-tag">${esc(info.categoryTitle)}</span>` : ''}${info.badges}</div>` : ''}
       <p class="plugin-description">${esc(info.description)}</p>
     <div class="plugin-detail">
       ${info.detail}
-      <div class="plugin-actions"><button type="button" class="more-toggle" data-more-toggle aria-expanded="false" aria-controls="more-${position}" hidden><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5h.01"/></svg><span>${esc(text.details)}</span><svg class="chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></div>
+      <div class="plugin-actions"><a class="page-link" href="${esc(href)}"><span>${esc(text.pageLink)}</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
     </div>
     <div class="plugin-more" id="more-${position}" data-more-panel><div class="plugin-more-inner"><dl>${info.facts}</dl><p class="facts-links">${info.links.join('')}${info.getButton}</p></div></div>
     </article>
@@ -265,7 +307,9 @@ function layout({ language, path, title, description, body, site, structured = [
   const switcher = Object.entries(LANGUAGES).map(([id, entry]) => id === language
     ? `<span lang="${entry.tag}" aria-current="page" title="${entry.name}">${entry.label}</span>`
     : `<a href="${esc(link(from, id, path))}" lang="${entry.tag}" hreflang="${entry.tag}" data-lang="${id}" title="${entry.name}">${entry.label}</a>`).join('');
-  const messages = { usage: text.usage, copy: text.copy, copied: text.copied, copySuccess: text.copySuccess, copyFailure: text.copyFailure, nameCopied: text.nameCopied, dshOpened: text.dshOpened, dshMissed: text.dshMissed, getFailure: text.getFailure, results: text.results, more: text.more, shown: text.shown };
+  const messages = { usage: text.usage, copy: text.copy, copied: text.copied, copySuccess: text.copySuccess, copyFailure: text.copyFailure, nameCopied: text.nameCopied, dshOpened: text.dshOpened, dshMissed: text.dshMissed, getFailure: text.getFailure, results: text.results, more: text.more, moreLoading: text.moreLoading, moreFailed: text.moreFailed, shown: text.shown,
+    like: text.like, liked: text.liked, likeTitle: text.likeTitle, likeFailed: text.likeFailed, likeLimit: text.likeLimit, copyCommand: text.copyCommand, copiedShort: text.copiedShort,
+    statsUrl: STATS_URL, likesUrl: `${ORIGIN}likes.json`, likeApi: `${ORIGIN}api/like`, starsApi: `${ORIGIN}api/stars` };
   // The English home page is the x-default: send visitors on to their remembered or browser language.
   const redirect = language === 'en' && onHome ? `<script>try{var l=localStorage.getItem('opm-lang'),n=navigator.language||'';if(!l)l=/^zh-(tw|hk|mo|hant)/i.test(n)?'tw':/^zh/i.test(n)?'zh':'';var d={zh:'zh/',tw:'zh-tw/'}[l];if(d)location.replace(d+location.search+location.hash)}catch(e){}</script>` : '';
   return finish(`<!doctype html>
@@ -310,7 +354,7 @@ function layout({ language, path, title, description, body, site, structured = [
   <header class="site-header" data-header><div class="site-header-inner shell">
     <a class="brand" href="${esc(home)}"><img src="${root}assets/mark-256.png" alt="" width="64" height="64"><span>${esc(text.brand)}</span></a>
     <nav class="header-links" aria-label="${esc(text.nav)}">
-      <a class="header-home" href="${onHome ? '#top' : esc(home)}" aria-label="${esc(text.brand)}"><img src="${root}assets/mark-256.png" alt="" width="64" height="64"></a><a href="${onHome ? '' : esc(home)}#plugins">${ICONS.plugins}<span>${esc(text.plugins)}</span></a><a href="${esc(link(from, language, 'stats/'))}"${path === 'stats/' ? ' aria-current="page"' : ''}>${ICONS.stats}<span>${esc(text.statsNav)}</span></a><a href="${REPOSITORY}">${ICONS.github}<span>GitHub</span></a>
+      <a class="header-home" href="${onHome ? '#top' : esc(home)}" aria-label="${esc(text.brand)}"><img src="${root}assets/mark-256.png" alt="" width="64" height="64"></a><a href="${onHome ? '' : esc(home)}#plugins">${ICONS.plugins}<span>${esc(text.plugins)}</span></a><a href="${esc(link(from, language, 'stats/'))}"${path === 'stats/' ? ' aria-current="page"' : ''}>${ICONS.stats}<span>${esc(text.statsNav)}</span></a><a class="github-link" href="${REPOSITORY}" aria-label="${esc(text.ghLabel)}">${ICONS.github}<span>GitHub</span><span class="gh-extra" aria-hidden="true"><span class="gh-star">★</span><b data-gh-stars></b></span></a>
       <div class="languages" data-current="${language}" aria-label="${esc(text.language)}">${switcher}</div>
     </nav>
   </div></header>
@@ -319,11 +363,11 @@ ${body}
   </main>
   <footer class="site-footer">
     <div class="footer-grid shell">
-      <div class="footer-brand"><a class="footer-logo" href="${esc(home)}"><img src="${root}assets/mark-256.png" alt="" width="48" height="48"><span>${esc(text.brand)}</span></a><p>${esc(text.footerTagline)}</p><div class="star-wrap"><a class="star-cta" href="${REPOSITORY}" aria-describedby="star-note"><span aria-hidden="true">⭐</span>${esc(text.starCta)}</a><p class="star-note" id="star-note" role="tooltip">${esc(text.starNote)}</p></div></div>
-      <div><h2>${esc(text.footerData)}</h2><ul class="footer-stats"><li><strong>${site.plugins}</strong> ${esc(text.statPlugins)}</li><li><strong>${site.categories}</strong> ${esc(text.statCategories)}</li><li><strong>${site.verified}</strong> ${esc(text.verifiedCount)}</li><li>${esc(text.refresh)}${site.updated[LANGUAGES[language].data] ? ` · ${esc(site.updated[LANGUAGES[language].data])}` : ''}</li></ul></div>
-      <div><h2>${esc(text.footerLinks)}</h2><ul class="footer-links"><li><a href="${esc(SUBMIT)}">${esc(text.submit)}</a></li><li><a href="${docsUrl}">${esc(text.readDocs)}</a></li><li><a href="${REPOSITORY}">GitHub</a></li><li><a href="${esc(link(from, language, 'stats/'))}">${esc(text.stats)}</a></li><li><a href="${root}index.json">${esc(text.raw)}</a></li><li><a href="${root}status.json">${esc(text.status)}</a></li></ul></div>
+      <div class="footer-brand"><a class="footer-logo" href="${esc(home)}"><img src="${root}assets/mark-256.png" alt="" width="48" height="48"><span>${esc(text.brand)}</span></a><p>${esc(text.footerTagline)}</p><div class="star-wrap"><a class="star-cta" href="${REPOSITORY}" aria-describedby="star-note"><span aria-hidden="true">⭐</span>${esc(text.starCta)}<b class="star-count" data-gh-stars></b></a><p class="star-note" id="star-note" role="tooltip">${esc(text.starNote)}</p></div></div>
+      <nav aria-labelledby="footer-browse"><h2 id="footer-browse">${esc(text.footerBrowse)}</h2><ul class="footer-links"><li><a href="${onHome ? '' : esc(home)}#plugins">${esc(text.plugins)}</a></li><li><a href="${esc(link(from, language, 'stats/'))}">${esc(text.stats)}</a></li><li><a href="${root}index.json">${esc(text.raw)}</a></li><li><a href="${root}status.json">${esc(text.status)}</a></li></ul></nav>
+      <nav aria-labelledby="footer-join"><h2 id="footer-join">${esc(text.footerJoin)}</h2><ul class="footer-links"><li><a href="${esc(SUBMIT)}">${esc(text.submit)}</a></li><li><a href="${esc(REMOVE)}">${esc(text.removePlugin)}</a></li><li><a href="${docsUrl}">${esc(text.readDocs)}</a></li><li><a href="${REPOSITORY}">GitHub</a></li></ul></nav>
     </div>
-    <div class="footer-bottom shell"><p>${esc(text.independent)} ${esc(text.scope)}</p><p><a href="${REPOSITORY}/blob/main/LICENSE">${esc(text.license)}</a></p></div>
+    <div class="footer-bottom shell"><p>${esc(text.independent)} ${esc(text.scope)}</p><p class="footer-meta"><span class="footer-languages">${Object.entries(LANGUAGES).map(([id, entry]) => id === language ? `<span lang="${entry.tag}">${entry.name}</span>` : `<a href="${esc(link(from, id, path))}" lang="${entry.tag}" hreflang="${entry.tag}">${entry.name}</a>`).join('')}</span></p></div>
   </footer>
   ${onHome ? `<dialog class="shot-viewer" data-viewer><button type="button" class="viewer-close" data-viewer-close aria-label="${esc(text.close)}">×</button><img alt=""></dialog>` : ''}
   <script id="site-messages" type="application/json">${json(messages)}</script>
@@ -331,8 +375,9 @@ ${body}
 </html>\n`, language);
 }
 
-function homePage(index, language, context) {
-  const { text, site, added } = context;
+/** The home page with the first INITIAL_PLUGINS rendered cards; `rest` names the file holding the others. */
+function homePage(index, language, context, rows, rest) {
+  const { text, site } = context;
   const data = LANGUAGES[language].data;
   const plugins = index.plugins;
   const categories = index.metadata?.categories ?? {};
@@ -343,27 +388,36 @@ function homePage(index, language, context) {
     + site.usedCategories.map(id => chip(id, localize(categories[id]?.title, data, id), countBy(id))).join('')
     + (hasUncategorized ? chip('__uncategorized__', text.other, countBy(''), ' data-uncategorized') : '');
   const updated = site.updated[data];
-  const sortIds = ['default', 'recommended', 'stars', ...(plugins.some(plugin => Number.isFinite(plugin.metadata?.sortKeys?.['stars-week'])) ? ['starsWeek'] : []), 'published', 'random'];
+  const sortIds = ['default', 'recommended', 'likes', 'stars', ...(plugins.some(plugin => Number.isFinite(plugin.metadata?.sortKeys?.['stars-week'])) ? ['starsWeek'] : []), 'published', 'random'];
   const sortChips = sortIds.map((id, at) => `<button type="button" class="chip" data-sort="${id}" aria-pressed="${at === 0}">${esc(text.sorts[id])}</button>`).join('');
   const stickers = ['tools', 'skills', 'memory'].filter(id => site.usedCategories.includes(id))
     .map((id, at) => `<span class="sticker sticker-${at + 1}">${esc(localize(categories[id]?.title, data, id))}</span>`).join('');
   const guide = data;
   const root = context.root;
+  const faq = text.faq(plugins.length);
   const body = `    <section class="hero shell" aria-labelledby="page-title">
       <div class="hero-copy">
       <h1 id="page-title">${text.headline}</h1>
       <p class="hero-lead">${esc(text.intro)}</p>
       ${addressBar(text)}
-      <a class="usage" href="${esc(link(context.from, language, 'stats/'))}" data-usage="${STATS_URL}" title="${esc(text.usageNote)}"><span class="usage-dot" aria-hidden="true"></span><span data-usage-text></span><span class="usage-arrow" aria-hidden="true">→</span></a>
+      <div class="hero-foot"><a class="usage" href="${esc(link(context.from, language, 'stats/'))}" data-usage="${STATS_URL}" title="${esc(text.usageNote)}"><span class="usage-dot" aria-hidden="true"></span><span data-usage-text></span><span class="usage-arrow" aria-hidden="true">→</span></a><p class="eyebrow">${esc(text.eyebrow)}</p></div>
       </div>
       <div class="hero-art" aria-hidden="true"><div class="art-blob"></div><img src="${root}assets/logo.webp" alt="" width="560" height="560" decoding="async">${stickers}</div>
-      <h2 class="section-title steps-title" id="setup-title" data-reveal>${esc(text.setup)}</h2>
-      <ol class="steps" aria-labelledby="setup-title" data-guide="${GUIDE_THEME}">${text.steps.map(([title, detail], at) => `<li data-reveal data-zoom-card style="--reveal-delay: ${at * 90}ms"><h3><span class="step-num" aria-hidden="true">${at + 1}</span>${esc(title)}</h3><button type="button" class="step-shot" data-zoom aria-label="${esc(text.zoom)}: ${esc(title)}"><img src="${root}assets/guide-${at + 1}-${guide}-${GUIDE_THEME}.webp" alt="${esc(detail)}" title="${esc(detail)}" width="${GUIDE_SIZES[guide][at][0]}" height="${GUIDE_SIZES[guide][at][1]}" loading="lazy" decoding="async"></button></li>`).join('')}</ol>
+      <div class="steps-head" data-reveal><h2 class="section-title steps-title" id="setup-title">${esc(text.setup)}</h2><div class="method-tabs" role="tablist" aria-label="${esc(text.methods)}" hidden><button type="button" role="tab" id="method-index-tab" aria-controls="method-index" aria-selected="true" data-method-tab="index">${esc(text.methodIndex)}</button><button type="button" role="tab" id="method-plugin-tab" aria-controls="method-plugin" aria-selected="false" tabindex="-1" data-method-tab="plugin">${esc(text.methodPlugin)}</button></div></div>
+      <div class="method-panels">
+      <ol class="steps" id="method-index" role="tabpanel" aria-labelledby="method-index-tab" data-method="index" data-guide="${GUIDE_THEME}">${text.steps.map(([title, detail], at) => `<li data-reveal data-zoom-card style="--reveal-delay: ${at * 90}ms"><h3><span class="step-num" aria-hidden="true">${at + 1}</span>${esc(title)}</h3><button type="button" class="step-shot" data-zoom aria-label="${esc(text.zoom)}: ${esc(title)}"><img src="${root}assets/guide-${at + 1}-${guide}-${GUIDE_THEME}.webp" alt="${esc(detail)}" title="${esc(detail)}" width="${GUIDE_SIZES[guide][at][0]}" height="${GUIDE_SIZES[guide][at][1]}" loading="lazy" decoding="async"></button></li>`).join('')}</ol>
+      <div class="plugin-method" id="method-plugin" role="tabpanel" aria-labelledby="method-plugin-tab" data-method="plugin">
+        <p class="plugin-line"><span class="step-num" aria-hidden="true">1</span>${esc(text.pluginCommand)}</p>
+        <div class="terminal"><code><span aria-hidden="true">$ </span>${PLUGIN_COMMAND}</code><button type="button" class="copy-chip" data-copy-text="${PLUGIN_COMMAND}" hidden>${ICONS.copy}<span>${esc(text.copyCommand)}</span></button></div>
+        <p class="plugin-line"><span class="step-num" aria-hidden="true">2</span>${esc(text.pluginInApp)}<code>dsh-open-market</code></p>
+        <p class="plugin-note">${esc(text.pluginNote)}</p>
+      </div>
+      </div>
     </section>
     <section class="directory-surface" aria-labelledby="directory-title">
     <section class="showcase shell" aria-labelledby="showcase-title">
       <div class="showcase-copy" data-reveal><h2 class="section-title" id="showcase-title">${esc(text.showcase.title)}</h2><p>${esc(text.showcase.text)}</p><ul>${text.showcase.points.map(point => `<li>${esc(point)}</li>`).join('')}</ul></div>
-      <figure class="app-frame" data-reveal><div class="app-bar" aria-hidden="true"><span></span><span></span><span></span></div><picture><source media="(max-width: 620px)" srcset="${root}assets/${text.showcase.image.replace('.webp', '-narrow.webp')}" width="800" height="1028"><img src="${root}assets/${text.showcase.image}" alt="${esc(text.showcase.alt)}" width="1600" height="1000" loading="lazy" decoding="async"></picture><picture class="app-light"><source media="(max-width: 620px)" srcset="${root}assets/${text.showcase.image.replace('.webp', '-narrow-light.webp')}"><img src="${root}assets/${text.showcase.image.replace('.webp', '-light.webp')}" alt="" width="1600" height="1000" loading="lazy" decoding="async"></picture></figure>
+      <figure class="app-frame" data-reveal data-shots><div class="app-bar"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><div class="app-tabs" role="tablist" hidden><button type="button" role="tab" aria-selected="true" data-shot-tab="discover">${esc(text.shotDiscover)}</button><button type="button" role="tab" aria-selected="false" data-shot-tab="market">${esc(text.shotMarket)}</button></div></div><picture><source media="(max-width: 620px)" srcset="${root}assets/${text.showcase.image.replace('.webp', '-narrow.webp')}" width="800" height="1028"><img src="${root}assets/${text.showcase.image}" alt="${esc(text.showcase.alt)}" width="1600" height="1000" loading="lazy" decoding="async"></picture><picture class="app-light"><source media="(max-width: 620px)" srcset="${root}assets/${text.showcase.image.replace('.webp', '-narrow-light.webp')}"><img src="${root}assets/${text.showcase.image.replace('.webp', '-light.webp')}" alt="" width="1600" height="1000" loading="lazy" decoding="async"></picture><img class="app-market" data-shot="market" src="${root}assets/open-market-${guide}.webp" alt="${esc(text.shotMarketAlt)}" width="1600" height="1376" loading="lazy" decoding="async"><img class="app-market app-market-light" src="${root}assets/open-market-${guide}-light.webp" alt="" width="1600" height="1376" loading="lazy" decoding="async"></figure>
     </section><div class="directory-zone"><div class="directory shell" id="plugins">
       <div class="directory-heading" data-reveal><h2 class="section-title" id="directory-title">${esc(text.directory)}</h2></div>
       <div class="directory-meta"><ul class="stats"><li><strong>${plugins.length}</strong> ${esc(text.statPlugins)}</li><li><strong>${site.usedCategories.length}</strong> ${esc(text.statCategories)}</li>${updated ? `<li>${esc(text.updated)} <strong>${esc(updated)}</strong></li>` : ''}</ul></div>
@@ -373,17 +427,34 @@ function homePage(index, language, context) {
         <div class="field chips-field"><span class="field-label visually-hidden" id="category-label">${esc(text.category)}</span><div class="chips" role="group" aria-labelledby="category-label">${categoriesHtml}</div></div>
       </form>
       <noscript><p class="no-js">${esc(text.noJs)}</p></noscript>
-      <ul class="plugin-list">${plugins.map((plugin, position) => pluginRow(plugin, language, context, position, added)).join('\n')}</ul>
+      <ul class="plugin-list" data-total="${plugins.length}"${rest ? ` data-rest="${esc(rest.all)}" data-chunk="${esc(rest.chunk)}" data-chunks="${rest.chunks}"` : ''}>${rows.join('\n')}</ul>
       <div class="more" data-more-wrap hidden><p class="more-progress" data-progress role="status" aria-live="polite"></p><span class="more-bar" aria-hidden="true"><i data-bar></i></span><button type="button" class="more-button" data-more></button></div>
       <div class="empty" id="empty-results" ${plugins.length ? 'hidden' : ''}><h3>${esc(text.noResults)}</h3><p>${esc(text.noResultsHelp)}</p><button type="button" class="text-button" data-reset hidden>${esc(text.reset)}</button></div>
     </div>
-    <section class="contribute shell" aria-labelledby="contribute-title" data-reveal>
-      <div><h2 id="contribute-title">${esc(text.contributeTitle)}</h2><p>${esc(text.contributeText)}</p></div>
-      <div class="contribute-links"><a class="submit-link" href="${esc(SUBMIT)}">${esc(text.submit)}</a><a href="${language === 'en' ? DOCS : `${REPOSITORY}/blob/main/README.md`}">${esc(text.readDocs)}</a></div>
+    <section class="help shell">
+      <div class="faq" aria-labelledby="faq-title">
+        <h2 class="section-title" id="faq-title" data-reveal>${esc(text.faqTitle)}</h2>
+        <div class="faq-list">${faq.map(([question, answer], at) => `<details${at === 0 ? ' open' : ''}><summary>${esc(question)}</summary><p>${esc(answer)}</p></details>`).join('')}</div>
+      </div>
+      <aside class="contribute" aria-labelledby="contribute-title" data-reveal>
+        <h2 id="contribute-title">${esc(text.contributeTitle)}</h2><p>${esc(text.contributeText)}</p>
+        <div class="contribute-links"><a class="submit-link" href="${esc(SUBMIT)}">${esc(text.submit)}</a><a href="${language === 'en' ? DOCS : `${REPOSITORY}/blob/main/README.md`}">${esc(text.readDocs)}</a></div>
+      </aside>
     </section>
     </div></section>`;
-  const structured = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: text.brand, url: absolute(language), inLanguage: LANGUAGES[language].tag, description: text.description }];
-  return layout({ language, path: '', title: text.title, description: text.description, body, site, structured });
+  const description = text.description.replace('{count}', plugins.length);
+  const structured = [
+    { '@context': 'https://schema.org', '@type': 'WebSite', name: text.brand, alternateName: language === 'en' ? ['DSH Plugin Market', 'DeepSeek Harness plugin index'] : ['DSH 插件市场', 'DSH 插件索引', 'Open Plugin Market'], url: absolute(language), inLanguage: LANGUAGES[language].tag, description },
+    { '@context': 'https://schema.org', '@type': 'FAQPage', inLanguage: LANGUAGES[language].tag, mainEntity: faq.map(([question, answer]) => ({ '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer } })) }
+  ];
+  return layout({ language, path: '', title: text.title, description, body, site, structured });
+}
+
+// The shields.io badge the README section documents, for this plugin and the page's language.
+function readmeBadge(name, language, label) {
+  const endpoint = `${ORIGIN}badge/${name.replace('@', '%40')}.json${language === 'en' ? '?lang=en' : ''}`;
+  const image = `https://img.shields.io/endpoint?url=${encodeURIComponent(endpoint)}`;
+  return { image, markdown: `[![${label}](${image})](${absolute(language, pluginPath(name))})` };
 }
 
 function pluginPage(plugin, index, language, context, related) {
@@ -395,6 +466,7 @@ function pluginPage(plugin, index, language, context, related) {
   const categoryLink = info.categoryId ? `${home}#plugins` : undefined;
   const keywords = (plugin.metadata?.keywords ?? []).filter(word => typeof word === 'string' && word.length <= 40).slice(0, 12);
   const author = typeof plugin.author === 'string' ? plugin.author : plugin.author?.name;
+  const badge = readmeBadge(info.packageName, language, text.brand);
   const relatedItems = related.map(other => {
     const item = describe(other, data, context);
     return `<li><a class="related-card" href="${esc(link(from, language, pluginPath(other.name)))}"><span class="plugin-avatar" aria-hidden="true">${avatar(item, root)}</span><span class="related-text"><strong>${esc(item.namedTitle ? item.title : item.packageName)}</strong><span>${esc(item.description)}</span></span></a></li>`;
@@ -420,6 +492,10 @@ function pluginPage(plugin, index, language, context, related) {
           <dl class="facts">${info.facts}${author ? `<dt>${esc(text.author)}</dt><dd>${esc(author)}</dd>` : ''}${info.categoryId ? `<dt>${esc(text.category)}</dt><dd><a href="${esc(categoryLink)}">${esc(info.categoryTitle)}</a></dd>` : ''}${info.npm ? `<dt>${esc(text.npmMonth)}</dt><dd>${esc(numberFormat(data).format(info.npm.downloads))}</dd>` : ''}</dl>
           ${info.links.length ? `<p class="facts-links">${info.links.join('')}</p>` : ''}
           ${keywords.length ? `<h3>${esc(text.keywords)}</h3><ul class="keyword-list">${keywords.map(word => `<li>${esc(word)}</li>`).join('')}</ul>` : ''}
+          <h3>${esc(text.badgeTitle)}</h3>
+          <p class="badge-note">${esc(text.badgeText)}</p>
+          <p class="badge-preview"><img src="${esc(badge.image)}" alt="${esc(text.brand)}" height="20" decoding="async"></p>
+          <div class="snippet"><code>${esc(badge.markdown)}</code><button type="button" class="copy-chip" data-copy-text="${esc(badge.markdown)}" hidden>${ICONS.copy}<span>${esc(text.copyBadge)}</span></button></div>
         </section>
       </div>
       ${relatedItems ? `<section class="related" aria-labelledby="related-title"><h2 class="section-title" id="related-title">${esc(text.related.replace('{category}', info.categoryTitle))}</h2><ul class="related-list">${relatedItems}</ul><p class="related-more"><a class="text-button" href="${esc(home)}#plugins">${esc(text.browseAll)}</a></p></section>` : ''}
@@ -489,6 +565,9 @@ async function write(path, html) {
 export async function writeSite(index, evidence, snapshot = {}, downloads = {}, display = {}) {
   if (index?.format !== 1 || !Array.isArray(index.plugins)) throw new Error('writeSite expects a format-1 plugin index');
   await mkdir(new URL('assets/', output), { recursive: true });
+  for (const [from, name] of ['zh', 'en'].flatMap(lang => ['', '-light'].map(kind => [`open-market-${lang}${kind}.webp`, `open-market-${lang}${kind}.webp`]))) {
+    await copyFile(new URL(`../docs/images/${from}`, source), new URL(`assets/${name}`, output));
+  }
   for (const asset of ['site.css', 'site.js', 'logo.webp', 'logo-256.png', 'mark-256.png', 'favicon.png', 'apple-touch-icon.png', 'badge-logo.png', 'placeholder-whale.webp', 'social.png', 'social-zh.png', 'social-tw.png', ...['zh', 'en'].flatMap(lang => ['', '-light', '-narrow', '-narrow-light'].map(kind => `dsh-discover-${lang}${kind}.webp`)), ...[1, 2, 3].flatMap(n => ['zh', 'en'].flatMap(lang => ['light', 'dark'].map(theme => `guide-${n}-${lang}-${theme}.webp`)))]) {
     await copyFile(new URL(asset, source), new URL(`assets/${asset}`, output));
   }
@@ -516,7 +595,25 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
   const shared = { categories: index.metadata?.categories ?? {}, snapshot, downloads, display, labels: index.metadata?.labels ?? {}, site, added };
   for (const language of Object.keys(LANGUAGES)) {
     const context = path => ({ ...shared, text: COPY[language], from: LANGUAGES[language].dir + path, root: '../'.repeat(depth(LANGUAGES[language].dir + path)) });
-    await write(LANGUAGES[language].dir, homePage(index, language, context('')));
+    const home = context('');
+    const rows = plugins.map((plugin, position) => pluginRow(plugin, language, home, position, added));
+    // Hundreds of cards made a slow connection paint a heap of half-styled boxes; the rest load on demand.
+    // catalog.json holds every remaining card, for search and sorting; catalog/<n>.json holds them in batches, for "Show more".
+    const restRows = rows.slice(INITIAL_PLUGINS).map(row => finish(row, language));
+    const dir = new URL(LANGUAGES[language].dir || './', output);
+    await rm(new URL('catalog/', dir), { recursive: true, force: true });
+    let rest;
+    if (restRows.length) {
+      const version = createHash('sha256').update(restRows.join('\n')).digest('hex').slice(0, 10);
+      await mkdir(new URL('catalog/', dir), { recursive: true });
+      await writeFile(new URL('catalog.json', dir), JSON.stringify({ html: restRows.join('\n') }), 'utf8');
+      const chunks = Math.ceil(restRows.length / CHUNK_PLUGINS);
+      for (let at = 0; at < chunks; at++) {
+        await writeFile(new URL(`catalog/${at}.json`, dir), JSON.stringify({ html: restRows.slice(at * CHUNK_PLUGINS, (at + 1) * CHUNK_PLUGINS).join('\n') }), 'utf8');
+      }
+      rest = { all: `catalog.json?v=${version}`, chunk: `catalog/{n}.json?v=${version}`, chunks };
+    } else await rm(new URL('catalog.json', dir), { force: true });
+    await write(LANGUAGES[language].dir, homePage(index, language, home, rows.slice(0, INITIAL_PLUGINS), rest));
     await write(LANGUAGES[language].dir + 'stats/', statsPage(language, context('stats/')));
     for (const [at, plugin] of plugins.entries()) {
       await write(LANGUAGES[language].dir + pluginPath(plugin.name), pluginPage(plugin, index, language, context(pluginPath(plugin.name)), relatedPlugins(plugins, at)));

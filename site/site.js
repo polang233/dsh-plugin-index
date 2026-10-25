@@ -43,11 +43,9 @@ if (copyButton && indexInput) {
   indexInput.addEventListener('click', () => { indexInput.select(); copy(); });
 }
 
-const PAGE_SIZE = 24;
 const controls = document.querySelector('[data-filters]');
 const search = document.querySelector('#plugin-search');
 const chips = [...document.querySelectorAll('[data-chip]')];
-const rows = [...document.querySelectorAll('[data-plugin]')];
 const count = document.querySelector('#result-count');
 const empty = document.querySelector('#empty-results');
 const reset = document.querySelector('[data-reset]');
@@ -59,45 +57,84 @@ const list = document.querySelector('.plugin-list');
 const sortChips = [...document.querySelectorAll('[data-sort]')];
 const normalize = value => value.normalize('NFKC').toLocaleLowerCase().trim();
 const fill = (template, values) => template.replace(/\{(\w+)\}/g, (_, key) => values[key]);
+const numbers = new Intl.NumberFormat(document.documentElement.lang);
+// Likes and stars live on dshopen.org's Worker, also for the GitHub Pages mirror. For a local `wrangler dev`, set
+// localStorage['opm-api-origin'] to its origin (http://localhost:8787).
+let apiOrigin;
+try { apiOrigin = localStorage.getItem('opm-api-origin') || undefined; } catch { /* Private mode. */ }
+const worker = url => apiOrigin ? new URL(new URL(url).pathname, apiOrigin).href : url;
 
+// The page ships the first cards; later ones arrive in batches for "Show more", or all at once for search and sorting.
+let rows = [...document.querySelectorAll('[data-plugin]')];
+const total = Number(list?.dataset.total) || rows.length;
+const chunkCount = Number(list?.dataset.chunks) || 0;
+const present = new Set(rows.map(row => row.dataset.href));
+let complete = !list?.dataset.rest;
+let fetchedChunks = 0;
+let chunkLoading;
+let allLoading;
 let category = '';
-let limit = PAGE_SIZE;
+let sort = 'default';
 let matches = rows;
 let ordered = rows;
+// Batches follow the columns on screen: with three columns the first view shows 24 cards and keeps 24 more ready;
+// each "Show more" shows the ready batch and readies a larger one (24, 36, 48, …). Two columns use two thirds, one half.
+let clicks = 0;
+const columns = () => list ? getComputedStyle(list).gridTemplateColumns.split(' ').filter(Boolean).length : 1;
+const unit = () => { const cols = columns(); return cols >= 3 ? 12 : cols === 2 ? 8 : 6; };
+let limit = 2 * unit();
+const readyAhead = () => limit + unit() * (clicks + 2);
 
 // Masonry: each card spans as many 4px rows as its height needs, so short cards no longer leave gaps.
+// The 4px rows only switch on here, so a page whose script is slow or missing shows ordinary rows, never a pile of overlapping cards.
 const masonry = () => {
   if (!list) return;
-  const unit = parseFloat(getComputedStyle(list).gridAutoRows) || 4;
+  list.dataset.masonry = '';
+  const unitHeight = parseFloat(getComputedStyle(list).gridAutoRows) || 4;
   const gap = rows.length ? parseFloat(getComputedStyle(rows[0]).paddingBottom) || 0 : 0;
   // Read every height first, then write, so the browser lays out once instead of once per card.
   const shown = rows.filter(row => !row.hidden);
   // offsetHeight ignores the hover lift and scale, so hovering never reflows the grid.
-  const spans = shown.map(row => Math.ceil((row.firstElementChild.offsetHeight + gap) / unit));
+  const spans = shown.map(row => Math.ceil((row.firstElementChild.offsetHeight + gap) / unitHeight));
   shown.forEach((row, at) => { const value = `span ${spans[at]}`; if (row.style.gridRowEnd !== value) row.style.gridRowEnd = value; });
 };
+let resized;
 if ('ResizeObserver' in window && list) {
   let queued = false;
-  const watch = new ResizeObserver(() => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; masonry(); }); } });
-  rows.forEach(row => watch.observe(row.firstElementChild));
+  resized = new ResizeObserver(() => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; masonry(); }); } });
 }
 
+const filtered = () => Boolean(category || search?.value.trim() || sort !== 'default');
 // Show the first `limit` matches; the rest stay hidden until the reader asks for more.
 function render() {
   matches.forEach((row, at) => { row.hidden = at >= limit; });
   const shown = Math.min(limit, matches.length);
-  count.textContent = fill(text.results, { count: matches.length, total: rows.length });
-  empty.hidden = matches.length > 0;
-  moreWrap.hidden = matches.length <= shown;
+  // Without filters, cards still on the server count as more to show.
+  const narrowed = Boolean(category || search?.value.trim());
+  const waiting = !complete && filtered();
+  const available = complete || narrowed ? matches.length : total;
+  count.textContent = fill(text.results, { count: available, total }) + (waiting ? ` · ${text.moreLoading}` : '');
+  empty.hidden = matches.length > 0 || waiting;
+  moreWrap.hidden = available <= shown;
   if (!moreWrap.hidden) {
-    progress.textContent = fill(text.shown, { shown, count: matches.length });
-    bar.style.width = `${Math.round(shown / matches.length * 100)}%`;
-    moreButton.textContent = text.more;
+    progress.textContent = fill(text.shown, { shown, count: available });
+    bar.style.width = `${Math.round(shown / available * 100)}%`;
+    if (!moreButton.disabled) moreButton.textContent = text.more;
   }
+  list.dataset.ready = '';
   masonry();
 }
 
-function filter() {
+const value = (row, key) => { const number = Number(row.dataset[key]); return Number.isFinite(number) && row.dataset[key] !== undefined ? number : -Infinity; };
+// Use the same published daily orders as DSH, including random resources; likes come from the Worker.
+function order() {
+  const key = { recommended: 'sortRecommended', likes: 'sortLikes', stars: 'sortStars', starsWeek: 'sortStarsWeek', published: 'sortPublished', random: 'sortRandom' }[sort];
+  ordered = [...rows].sort((a, b) => (key ? value(b, key) - value(a, key) : 0) || value(a, 'sortOrder') - value(b, 'sortOrder'));
+  list.append(...ordered);
+}
+
+// keep: leave the reader's page count alone, after "Show more" or a background load.
+function filter(keep = false) {
   const terms = normalize(search.value).split(/\s+/).filter(Boolean);
   const uncategorized = category === '__uncategorized__';
   const hit = new Set();
@@ -109,24 +146,81 @@ function filter() {
     else row.hidden = true;
   }
   matches = ordered.filter(row => hit.has(row));
-  limit = PAGE_SIZE;
+  if (!keep) { clicks = 0; limit = 2 * unit(); }
   render();
 }
 
-function showMore() {
-  if (limit >= matches.length) return;
-  limit += PAGE_SIZE;
-  render();
+function addRows(html) {
+  const template = document.createElement('template');
+  template.innerHTML = html;
+  const added = [...template.content.querySelectorAll('[data-plugin]')].filter(row => !present.has(row.dataset.href));
+  added.forEach(row => { row.hidden = true; present.add(row.dataset.href); });
+  list.append(...added);
+  added.forEach(setupRow);
+  rows = [...rows, ...added];
+  paintLikes();
+  order();
 }
+const getJson = path => fetch(new URL(path, location.href)).then(response => response.ok ? response.json() : Promise.reject(new Error(String(response.status))));
+
+// Fetch the next batch files until `wanted` cards are on the page.
+function ensureRows(wanted) {
+  if (complete || rows.length >= wanted || fetchedChunks >= chunkCount) return Promise.resolve();
+  chunkLoading ??= (async () => {
+    while (!complete && rows.length < wanted && fetchedChunks < chunkCount) {
+      const next = Array.from({ length: Math.min(chunkCount - fetchedChunks, Math.ceil((wanted - rows.length) / 12)) }, (_, at) => fetchedChunks + at);
+      const parts = await Promise.all(next.map(n => getJson(list.dataset.chunk.replace('{n}', n))));
+      if (complete) break;
+      parts.forEach(({ html }) => addRows(html));
+      fetchedChunks += next.length;
+      if (fetchedChunks >= chunkCount) complete = true;
+    }
+  })().finally(() => { chunkLoading = undefined; });
+  return chunkLoading.then(() => ensureRows(wanted));
+}
+function loadAll() {
+  if (complete) return Promise.resolve();
+  allLoading ??= getJson(list.dataset.rest).then(({ html }) => {
+    addRows(html);
+    complete = true;
+    filter(true);
+  }).catch(error => { allLoading = undefined; throw error; });
+  return allLoading;
+}
+
+async function showMore() {
+  if (limit >= matches.length && (complete || filtered())) return;
+  clicks++;
+  limit += unit() * (clicks + 1);
+  if (!complete && !filtered() && rows.length < limit) {
+    moreButton.disabled = true;
+    moreButton.textContent = text.moreLoading;
+    try { await ensureRows(limit); } catch {
+      clicks--;
+      limit -= unit() * (clicks + 2);
+      moreButton.disabled = false;
+      moreButton.textContent = text.moreFailed;
+      return;
+    }
+    moreButton.disabled = false;
+    filter(true);
+  } else render();
+  // Ready the next, larger batch while the reader looks at this one.
+  if (!filtered()) ensureRows(readyAhead()).then(() => filter(true)).catch(() => {});
+}
+
+// Searching, filtering or sorting needs the whole catalog; the visible cards update at once and again when it arrives.
+const needAll = () => { if (!complete) loadAll().catch(() => render()); };
 
 if (controls && search && chips.length && moreWrap) {
   controls.hidden = false;
   reset.hidden = false;
-  search.addEventListener('input', filter);
+  search.addEventListener('input', () => { if (search.value.trim()) needAll(); filter(); });
   controls.addEventListener('submit', event => event.preventDefault());
   const select = value => {
     category = value;
     chips.forEach(chip => chip.setAttribute('aria-pressed', String(chip.dataset.chip === value)));
+    if (value) needAll();
     filter();
   };
   chips.forEach(chip => chip.addEventListener('click', () => select(chip.dataset.chip)));
@@ -137,17 +231,43 @@ if (controls && search && chips.length && moreWrap) {
   });
   // Each click reveals one more batch; the list never grows on its own.
   moreButton.addEventListener('click', showMore);
-  // Use the same published daily orders as DSH, including random resources.
-  const value = (row, key) => { const number = Number(row.dataset[key]); return Number.isFinite(number) && row.dataset[key] !== undefined ? number : -Infinity; };
   const sortBy = id => {
+    sort = id;
     sortChips.forEach(chip => chip.setAttribute('aria-pressed', String(chip.dataset.sort === id)));
-    const key = { recommended: 'sortRecommended', stars: 'sortStars', starsWeek: 'sortStarsWeek', published: 'sortPublished', random: 'sortRandom' }[id];
-    ordered = [...rows].sort((a, b) => (key ? value(b, key) - value(a, key) : 0) || value(a, 'sortOrder') - value(b, 'sortOrder'));
-    list.append(...ordered);
+    if (id !== 'default') needAll();
+    order();
     filter();
   };
-  sortChips.forEach(chip => chip.addEventListener('click', () => sortBy(chip.dataset.sort)));
+  const settleSort = slider(sortChips[0]?.parentElement, sortChips, chip => chip.getAttribute('aria-pressed') === 'true');
+  sortChips.forEach(chip => chip.addEventListener('click', () => { sortBy(chip.dataset.sort); settleSort(); }));
   select('');
+  // An idle search box types plugin names into its placeholder, letter by letter, then erases them for the next one.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const idle = search.placeholder;
+    const names = [...new Set(rows.slice(0, 24).map(row => row.querySelector('.plugin-link')?.textContent.trim()).filter(Boolean))].sort(() => Math.random() - .5);
+    let at = 0, shown = 0, erasing = false, timer;
+    const tick = () => {
+      if (document.activeElement === search || search.value) { search.placeholder = idle; timer = setTimeout(tick, 1200); return; }
+      const name = names[at % names.length];
+      shown += erasing ? -1 : 1;
+      search.placeholder = name.slice(0, shown) + '｜';
+      let delay = erasing ? 45 : 110;
+      if (!erasing && shown >= name.length) { erasing = true; delay = 1600; }
+      else if (erasing && shown <= 0) { erasing = false; at++; delay = 500; }
+      timer = setTimeout(tick, delay);
+    };
+    if (names.length) timer = setTimeout(tick, 1500);
+    search.addEventListener('focus', () => { search.placeholder = idle; });
+  }
+  // The first view follows the columns, also after a resize that changes them.
+  let lastColumns = columns();
+  window.addEventListener('resize', () => {
+    const now = columns();
+    if (now === lastColumns) return;
+    lastColumns = now;
+    if (clicks === 0) { limit = 2 * unit(); render(); }
+  }, { passive: true });
+  ensureRows(readyAhead()).then(() => filter(true)).catch(() => {});
 }
 
 // Step screenshots open full size in a dialog; Escape, the close button or a click outside closes it.
@@ -164,14 +284,13 @@ if (viewer && viewer.showModal) {
 // Today's readers of the index, from the Worker; the line keeps its height while loading and stays blank if the stats are unavailable.
 const usage = document.querySelector('[data-usage]');
 if (usage) {
-  fetch(usage.dataset.usage).then(response => response.ok ? response.json() : Promise.reject()).then(({ today }) => {
+  fetch(text.statsUrl).then(response => response.ok ? response.json() : Promise.reject()).then(({ today }) => {
     if (!Number.isSafeInteger(today?.readers) || today.readers < 1) return;
-    const format = new Intl.NumberFormat(document.documentElement.lang);
     const parts = text.usage.split(/(\{\w+\})/).map(part => {
       const key = part.match(/^\{(\w+)\}$/)?.[1];
       if (!key) return document.createTextNode(part);
       const strong = document.createElement('strong');
-      strong.textContent = format.format(today[key]);
+      strong.textContent = numbers.format(today[key]);
       return strong;
     });
     usage.querySelector('[data-usage-text]').replaceChildren(...parts);
@@ -185,7 +304,10 @@ if (header) {
   let last = window.scrollY, ticking = false;
   const update = () => {
     const y = window.scrollY;
-    header.classList.toggle('is-scrolled', y > 8);
+    // Folding the brand shortens the header, which moves the page; the gap between the two thresholds keeps that move
+    // from folding and unfolding it again at certain heights.
+    if (y > 48) header.classList.add('is-scrolled');
+    else if (y < 4) header.classList.remove('is-scrolled');
     if (y > last + 4 && y > 140) header.classList.add('is-hidden');
     else if (y < last - 4 || y <= 140) header.classList.remove('is-hidden');
     last = y; ticking = false;
@@ -203,43 +325,16 @@ if ('IntersectionObserver' in window) {
   revealed.forEach(node => seen.observe(node));
 } else revealed.forEach(node => node.classList.add('is-visible'));
 
-// "Details" unfolds the card in place: the panel grows, the ResizeObserver above re-spans the row, and the cards below move down.
+// A card unfolds its details in place: the panel grows, the ResizeObserver above re-spans the row, and the cards below move down.
 const setOpen = (row, open) => {
   row.classList.toggle('is-open', open);
-  row.querySelector('[data-more-toggle]')?.setAttribute('aria-expanded', String(open));
+  row.firstElementChild.setAttribute('aria-expanded', String(open));
   const panel = row.querySelector('[data-more-panel]');
   if (panel) panel.inert = !open;
 };
-// Whether a point sits on an actual glyph, not just inside a text element's box (a short line's trailing space counts as blank).
-const onText = (x, y) => {
-  const position = document.caretPositionFromPoint?.(x, y);
-  const caret = position ? { node: position.offsetNode, offset: position.offset } : (range => range && { node: range.startContainer, offset: range.startOffset })(document.caretRangeFromPoint?.(x, y));
-  if (caret?.node?.nodeType !== Node.TEXT_NODE) return false;
-  const glyph = document.createRange();
-  return [caret.offset - 1, caret.offset].some(at => {
-    if (at < 0 || at >= caret.node.length) return false;
-    glyph.setStart(caret.node, at); glyph.setEnd(caret.node, at + 1);
-    return [...glyph.getClientRects()].some(box => x >= box.left && x <= box.right && y >= box.top && y <= box.bottom);
-  });
-};
-if (list) {
-  list.dataset.expandable = '';
-  rows.forEach(row => {
-    setOpen(row, false);
-    const toggle = row.querySelector('[data-more-toggle]');
-    if (!toggle) return;
-    toggle.hidden = false;
-    toggle.addEventListener('click', () => setOpen(row, !row.classList.contains('is-open')));
-    // A click on the card's blank space works like "Details"; text stays selectable and links, buttons and the open panel keep their own clicks.
-    row.firstElementChild.addEventListener('click', event => {
-      if (event.target.closest('a, button, .plugin-more-inner') || String(getSelection()).trim() || onText(event.clientX, event.clientY)) return;
-      setOpen(row, !row.classList.contains('is-open'));
-    });
-  });
-}
 
 // Copy the plugin name, then hand off to DSH. It only registers dsh://open, so the user pastes the name into Discover search.
-for (const button of document.querySelectorAll('[data-get]')) {
+function setupGet(button) {
   button.hidden = false;
   const label = button.querySelector('span');
   const idle = label.textContent;
@@ -284,6 +379,193 @@ for (const button of document.querySelectorAll('[data-get]')) {
       reset(5000);
     }, 3000);
   });
+}
+
+// Likes: counts from the Worker, one like per plugin per day here (the Worker also counts each person once a day).
+const LIKED_KEY = 'opm-liked';
+const today = () => new Date().toISOString().slice(0, 10);
+const likes = { counts: {}, liked: new Set() };
+try {
+  const saved = JSON.parse(localStorage.getItem(LIKED_KEY));
+  if (saved?.day === today() && Array.isArray(saved.names)) likes.liked = new Set(saved.names);
+} catch { /* Private mode or nothing saved. */ }
+function paintLike(button) {
+  const name = button.dataset.like;
+  const value = likes.counts[name] ?? 0;
+  const liked = likes.liked.has(name);
+  button.hidden = false;
+  button.classList.toggle('is-liked', liked);
+  button.setAttribute('aria-pressed', String(liked));
+  button.title = button.dataset.note ?? (liked ? text.liked : text.likeTitle);
+  button.querySelector('[data-like-count]').textContent = value ? numbers.format(value) : '';
+  const row = button.closest('[data-plugin]');
+  if (row) row.dataset.sortLikes = value;
+}
+function paintLikes() { document.querySelectorAll('[data-like]').forEach(paintLike); }
+function setupLike(button) {
+  paintLike(button);
+  button.addEventListener('click', async event => {
+    event.stopPropagation();
+    const name = button.dataset.like;
+    if (likes.liked.has(name) || button.dataset.busy) return;
+    button.dataset.busy = '1';
+    delete button.dataset.note;
+    // Answer at once; the server's count replaces the guess.
+    likes.liked.add(name);
+    likes.counts[name] = (likes.counts[name] ?? 0) + 1;
+    button.classList.remove('is-pop'); void button.offsetWidth; button.classList.add('is-pop');
+    document.querySelectorAll('[data-like]').forEach(other => { if (other.dataset.like === name) paintLike(other); });
+    try {
+      const response = await fetch(worker(text.likeApi), { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name, source: 'like' }) });
+      const answer = await response.json().catch(() => ({}));
+      if (response.status === 429) throw Object.assign(new Error('limit'), { note: text.likeLimit });
+      if (!response.ok || !Number.isSafeInteger(answer.likes)) throw new Error(String(response.status));
+      likes.counts[name] = answer.likes;
+      try { localStorage.setItem(LIKED_KEY, JSON.stringify({ day: today(), names: [...likes.liked] })); } catch { /* Private mode. */ }
+    } catch (error) {
+      likes.liked.delete(name);
+      likes.counts[name] = Math.max(0, (likes.counts[name] ?? 1) - 1);
+      button.dataset.note = error.note ?? text.likeFailed;
+    }
+    delete button.dataset.busy;
+    document.querySelectorAll('[data-like]').forEach(other => { if (other.dataset.like === name) paintLike(other); });
+  });
+}
+const likesFeed = document.querySelector('[data-like]') ? fetch(worker(text.likesUrl)).then(response => response.ok ? response.json() : Promise.reject()) : undefined;
+if (document.querySelector('[data-like]')) {
+  likesFeed.then(data => {
+    if (data?.likes && typeof data.likes === 'object') likes.counts = { ...data.likes, ...Object.fromEntries(Object.entries(likes.counts).filter(([name]) => likes.liked.has(name))) };
+    paintLikes();
+    if (sort === 'likes' && list) { order(); filter(true); }
+  }).catch(() => {});
+}
+
+// Anywhere on a card unfolds its details, except links, buttons, the open panel and selected text; the corner link and the
+// title open the plugin's page. Keyboard users reach the card itself with Tab and unfold it with Enter or Space.
+function setupRow(row) {
+  resized?.observe(row.firstElementChild);
+  row.querySelectorAll('[data-get]').forEach(setupGet);
+  row.querySelectorAll('[data-like]').forEach(setupLike);
+  const card = row.firstElementChild;
+  card.tabIndex = 0;
+  card.setAttribute('aria-controls', row.querySelector('[data-more-panel]')?.id ?? '');
+  setOpen(row, false);
+  card.addEventListener('click', event => {
+    if (event.target.closest('a, button, .plugin-more-inner') || String(getSelection()).trim()) return;
+    setOpen(row, !row.classList.contains('is-open'));
+  });
+  card.addEventListener('keydown', event => {
+    if (event.target !== card || (event.key !== 'Enter' && event.key !== ' ')) return;
+    event.preventDefault();
+    setOpen(row, !row.classList.contains('is-open'));
+  });
+}
+if (list) {
+  list.dataset.expandable = '';
+  rows.forEach(setupRow);
+}
+// Plugin pages carry the same like and copy buttons outside any card.
+document.querySelectorAll('[data-get-scope] [data-get]').forEach(setupGet);
+document.querySelectorAll('[data-get-scope] [data-like]').forEach(setupLike);
+
+// A pill that slides under the hovered option and settles back on the chosen one, like the language switcher.
+function slider(group, items, chosen) {
+  if (!group || !items.length) return () => {};
+  group.classList.add('has-slider');
+  const pill = Object.assign(document.createElement('span'), { className: 'slider' });
+  pill.setAttribute('aria-hidden', 'true');
+  group.prepend(pill);
+  const place = item => {
+    if (!item) return;
+    pill.style.width = `${item.offsetWidth}px`;
+    pill.style.height = `${item.offsetHeight}px`;
+    pill.style.transform = `translate(${item.offsetLeft}px, ${item.offsetTop}px)`;
+  };
+  const settle = () => place(items.find(chosen) ?? items[0]);
+  items.forEach(item => item.addEventListener('pointerenter', () => place(item)));
+  group.addEventListener('pointerleave', settle);
+  window.addEventListener('resize', settle, { passive: true });
+  document.fonts?.ready.then(settle);
+  settle();
+  // The first placement happens without the slide, so the pill does not fly in on load.
+  requestAnimationFrame(() => group.classList.add('is-sliding'));
+  return settle;
+}
+
+// Tabs: the two ways to set up (index or plugin) and the two screenshots in the showcase share one space each.
+function tabs(buttons, show, { auto } = {}) {
+  if (!buttons.length) return;
+  buttons[0].parentElement.hidden = false;
+  const settle = slider(buttons[0].parentElement, buttons, button => button.getAttribute('aria-selected') === 'true');
+  let timer;
+  const pick = (button, focus) => {
+    buttons.forEach(other => { other.setAttribute('aria-selected', String(other === button)); other.tabIndex = other === button ? 0 : -1; });
+    show(button);
+    settle();
+    if (focus) button.focus();
+  };
+  buttons.forEach((button, at) => {
+    button.addEventListener('click', () => { clearInterval(timer); pick(button); });
+    button.addEventListener('keydown', event => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      clearInterval(timer);
+      pick(buttons[(at + step + buttons.length) % buttons.length], true);
+    });
+  });
+  // The showcase alternates by itself while on screen, until the reader picks a tab or hovers it.
+  if (auto && !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const frame = auto;
+    let paused = false;
+    frame.addEventListener('pointerenter', () => { paused = true; });
+    frame.addEventListener('pointerleave', () => { paused = false; });
+    new IntersectionObserver(([entry]) => {
+      clearInterval(timer);
+      if (entry.isIntersecting) timer = setInterval(() => {
+        if (paused) return;
+        const at = buttons.findIndex(button => button.getAttribute('aria-selected') === 'true');
+        pick(buttons[(at + 1) % buttons.length]);
+      }, 5000);
+    }, { threshold: .5 }).observe(frame);
+  }
+}
+const panels = document.querySelector('.method-panels');
+if (panels) {
+  panels.dataset.tabbed = '';
+  tabs([...document.querySelectorAll('[data-method-tab]')], button => {
+    panels.querySelectorAll('[data-method]').forEach(panel => panel.classList.toggle('is-active', panel.dataset.method === button.dataset.methodTab));
+  });
+  panels.querySelector('[data-method="index"]').classList.add('is-active');
+}
+const shots = document.querySelector('[data-shots]');
+if (shots) tabs([...shots.querySelectorAll('[data-shot-tab]')], button => { shots.dataset.showing = button.dataset.shotTab; }, { auto: shots });
+
+// Small copy buttons: the plugin install command and README badges.
+for (const button of document.querySelectorAll('[data-copy-text]')) {
+  button.hidden = false;
+  const label = button.querySelector('span');
+  const idle = label.textContent;
+  let timer;
+  button.addEventListener('click', async () => {
+    clearTimeout(timer);
+    try {
+      await navigator.clipboard.writeText(button.dataset.copyText);
+      label.textContent = text.copiedShort;
+    } catch {
+      const code = button.parentElement.querySelector('code');
+      if (code) getSelection()?.selectAllChildren(code);
+    }
+    timer = setTimeout(() => { label.textContent = idle; }, 2000);
+  });
+}
+
+// The project's live star count, for the GitHub link's hover and the footer.
+const starSlots = document.querySelectorAll('[data-gh-stars]');
+if (starSlots.length) {
+  fetch(worker(text.starsApi)).then(response => response.ok ? response.json() : Promise.reject()).then(({ stars }) => {
+    if (!Number.isSafeInteger(stars)) return;
+    starSlots.forEach(slot => { slot.textContent = numbers.format(stars); slot.closest('a')?.classList.add('has-stars'); });
+  }).catch(() => {});
 }
 
 // Coming back from the page cache should never leave the page faded out.

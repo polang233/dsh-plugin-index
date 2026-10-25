@@ -8,10 +8,16 @@ const SITE = {
   zh: { route: './zh/', lang: 'zh-CN', brand: '开放插件市场', selected: '选中', updated: /更新/ },
   tw: { route: './zh-tw/', lang: 'zh-TW', brand: '開放外掛市場', selected: '選中', updated: /更新/ }
 };
+// Likes, the project's star count and README badges come from dshopen.org and shields.io; tests never reach them.
+test.beforeEach(async ({ page }) => {
+  await page.route('https://dshopen.org/likes.json', route => route.fulfill({ json: { schema: 1, likes: {} } }));
+  await page.route('https://dshopen.org/api/stars', route => route.fulfill({ json: { stars: 1234 } }));
+  await page.route('https://img.shields.io/**', route => route.fulfill({ contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="90" height="20"/>' }));
+});
+
 for (const language of Object.keys(SITE)) {
   const route = SITE[language].route;
   test(`${language}: directory filters, language navigation and layout`, async ({ page }) => {
-    // The home page carries every plugin card; shared CI runners need more than the default 30 seconds for it.
     test.slow();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
@@ -22,18 +28,23 @@ for (const language of Object.keys(SITE)) {
     await expect(page.locator('.languages > *')).toHaveCount(3);
     await expect(page.locator('.languages [aria-current]')).toHaveCount(1);
     const rows = page.locator('[data-plugin]');
-    expect(await rows.count()).toBeGreaterThan(20);
-    const all = await rows.count();
-    const PAGE = 24;
-    // The directory opens with one batch; the rest is revealed on demand.
+    const index = await (await page.request.get('./index.json')).json();
+    // The page ships 48 cards; the first view follows the columns: 24 for three, 16 for two, 12 for one.
+    await expect(rows).toHaveCount(48);
+    const columns = await page.locator('.plugin-list').evaluate(list => getComputedStyle(list).gridTemplateColumns.split(' ').length);
+    const PAGE = { 1: 12, 2: 16, 3: 24 }[columns];
     await expect(page.locator('[data-plugin]:visible')).toHaveCount(PAGE);
     await expect(page.locator('[data-more]')).toBeVisible();
     await page.locator('[data-more]').click();
-    // Each click reveals exactly one more batch; scrolling never loads more on its own.
+    // The first click shows the ready batch and readies a larger one; scrolling never loads more on its own.
     await expect(page.locator('[data-plugin]:visible')).toHaveCount(PAGE * 2);
+    // The page already carries 48, so on narrow screens nothing more is fetched yet.
+    await expect(rows).toHaveCount(Math.max(48, PAGE * 2 + PAGE / 2 * 3));
+    await page.locator('[data-more]').click();
+    await expect(page.locator('[data-plugin]:visible')).toHaveCount(PAGE * 2 + PAGE / 2 * 3);
     await page.mouse.wheel(0, 20000);
     await page.waitForTimeout(300);
-    await expect(page.locator('[data-plugin]:visible')).toHaveCount(PAGE * 2);
+    await expect(page.locator('[data-plugin]:visible')).toHaveCount(PAGE * 2 + PAGE / 2 * 3);
     await page.locator('[data-sort="stars"]').click();
     const stars = await page.locator('[data-plugin]:visible').evaluateAll(items => items.slice(0, 5).map(item => Number(item.dataset.sortStars ?? -1)));
     expect(stars).toEqual([...stars].sort((a, b) => b - a));
@@ -50,7 +61,7 @@ for (const language of Object.keys(SITE)) {
     const category = await chip.getAttribute('data-chip');
     await chip.click();
     await expect(chip).toHaveAttribute('aria-pressed', 'true');
-    const expectedCount = await page.locator('[data-plugin]').evaluateAll((nodes, category) => nodes.filter(node => node.dataset.category === category).length, category);
+    const expectedCount = index.plugins.filter(plugin => plugin.metadata?.category === category).length;
     await expect(page.locator('[data-plugin]:visible')).toHaveCount(Math.min(PAGE, expectedCount));
     await page.locator('[data-chip=""]').click();
     await expect(page.locator('[data-plugin]:visible')).toHaveCount(PAGE);
@@ -69,6 +80,10 @@ for (const language of Object.keys(SITE)) {
     const rows = page.locator('[data-plugin]');
     const snapshot = await (await page.request.get('./github.json')).json();
     const index = await (await page.request.get('./index.json')).json();
+    // Sorting loads the rest of the catalog.
+    await page.locator('[data-sort="stars"]').click();
+    await expect(rows).toHaveCount(index.plugins.length, { timeout: 15000 });
+    await page.locator('[data-sort="default"]').click();
     const starLinks = page.locator('[data-stars]');
     const expectedStars = index.plugins.flatMap(plugin => {
       const key = githubRepository(plugin.repository?.url)?.key;
@@ -90,18 +105,12 @@ for (const language of Object.keys(SITE)) {
     await expect(page.locator('.brand')).toContainText(SITE[language].brand);
     await expect(rows.first().locator('.version')).toBeHidden();
     const below = rows.nth(1);
-    await rows.first().locator('[data-more-toggle]').click();
-    await expect(rows.first().locator('.version')).toBeVisible();
-    await expect(rows.first().locator('[data-more-toggle]')).toHaveAttribute('aria-expanded', 'true');
-    await expect(rows.first().locator('[data-get]')).toHaveAttribute('data-get', /\S/);
-    await rows.first().locator('[data-more-toggle]').click();
-    await expect(rows.first().locator('.version')).toBeHidden();
-    // Blank card space opens the details too; clicking the title text does not.
-    await rows.first().locator('.plugin-main').click({ position: { x: 6, y: 6 } });
-    await expect(rows.first().locator('.version')).toBeVisible();
-    await rows.first().locator('.plugin-main').click({ position: { x: 6, y: 6 } });
-    await expect(rows.first().locator('.version')).toBeHidden();
+    // Anywhere on the card unfolds its details, text included.
     await rows.first().locator('.plugin-description').click({ position: { x: 10, y: 10 } });
+    await expect(rows.first().locator('.version')).toBeVisible();
+    await expect(rows.first().locator('.plugin-main')).toHaveAttribute('aria-expanded', 'true');
+    await expect(rows.first().locator('[data-get]')).toHaveAttribute('data-get', /\S/);
+    await rows.first().locator('.plugin-main').click({ position: { x: 6, y: 6 } });
     await expect(rows.first().locator('.version')).toBeHidden();
     expect(await below.isVisible()).toBe(true);
     expect(await downloadLinks.first().textContent()).not.toContain('/30');
@@ -172,7 +181,25 @@ for (const language of Object.keys(SITE)) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.locator('.brand').click();
     await expect(page.locator('#plugins')).toBeAttached();
+    // The corner link opens the page too.
+    const other = page.locator('[data-plugin]').nth(1);
+    const otherName = (await other.locator('[data-get]').getAttribute('data-get')).trim();
+    await other.locator('.page-link').click();
+    await expect(page).toHaveURL(new RegExp(`plugins/${escapeRegExp(otherName)}/$`));
+    await expect(page.locator('.snippet code')).toContainText('img.shields.io/endpoint?url=https%3A%2F%2Fdshopen.org%2Fbadge%2F');
     expect(errors).toEqual([]);
+  });
+  test(`${language}: likes and the project's stars`, async ({ page }) => {
+    let liked;
+    await page.route('https://dshopen.org/api/like', async route => { liked = route.request().postDataJSON(); await route.fulfill({ json: { name: liked.name, likes: 5, counted: true } }); });
+    await page.goto(route);
+    const like = page.locator('[data-plugin]').first().locator('[data-like]');
+    await expect(like).toBeVisible();
+    await like.click();
+    await expect(like).toHaveAttribute('aria-pressed', 'true');
+    await expect(like.locator('[data-like-count]')).toHaveText('5');
+    expect(liked).toEqual({ name: await like.getAttribute('data-like'), source: 'like' });
+    await expect(page.locator('.github-link [data-gh-stars]')).toHaveText(/1[,.\s]?234/);
   });
   test(`${language}: usage stats page draws days and countries`, async ({ page }) => {
     const today = new Date().toISOString().slice(0, 10);

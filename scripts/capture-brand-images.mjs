@@ -18,7 +18,7 @@ const preview = spawn(process.execPath, ['scripts/preview.mjs'], {
 
 const socialStyles = `
   .site-header, footer, main > section:not(.hero),
-  .hero > .steps-title, .hero > .steps { display: none !important; }
+  .hero > .steps-head, .hero > .method-panels { display: none !important; }
   body { min-height: 630px; }
   .hero {
     width: calc(100% - 64px); height: 630px; margin: 0 32px; padding: 32px 0;
