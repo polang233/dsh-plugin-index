@@ -7755,8 +7755,8 @@
     {
       "name": "ds-bot",
       "title": {
-        "en": "DeepSeek Bot",
-        "zh": "DeepSeek Bot"
+        "en": "DS Bot",
+        "zh": "DS Bot"
       },
       "description": {
         "en": "Create long-lived bots with memory, direct messages and group chats for multi-bot collaboration.",
