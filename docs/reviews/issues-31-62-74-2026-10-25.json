@@ -1,0 +1,1916 @@
+{
+  "schema": 1,
+  "status": "approved",
+  "checkedAt": "2026-10-25T05:28:57.222Z",
+  "scope": "Issues 72–74, issue 31 rename, and all issue 62 failures/pins with documented vendor replacements.",
+  "counts": {
+    "newSubmissions": 3,
+    "renamed": 1,
+    "libraryRemoved": 1,
+    "replacementBundles": 3,
+    "validPinsKept": 2,
+    "invalidCurrentPinsStillExcluded": 3,
+    "deferredUpstreamPins": 5,
+    "catalogBefore": 885,
+    "catalogAfter": 890
+  },
+  "checks": {
+    "fullCatalogBuild": false,
+    "pluginInstallation": false,
+    "pluginExecution": false,
+    "commentsPosted": true
+  },
+  "notes": [
+    "Three new submission runtime files and patches match the public source byte for byte.",
+    "Argo is version-pinned with repositoryReview because its npm manifest omits repository. Exact source package: packages/dsh-plugin at d9fea8b6cdf492a69d1f334019ff311b8dfc0fdc; repository root contains Apache-2.0 LICENSE. It has no packaged icon; normal fallback applies.",
+    "Argo routing verified against the integrity-checked official rc.2 web and base archives: defaults pin http, custom profiles without a selected provider are ambiguous. This is a documented configuration prerequisite, not a default-profile installation failure.",
+    "Scratchpad puts its compatibility claim in dsh.engines.dsh instead of engines.dsh, so the generated official index has no range; the description states the README requirement and this review records the field limitation.",
+    "Error Atlas has separate labelled built-in development-error examples. Live records are read from the current Host store; built-in examples are not injected as user lessons. Its HTTP API permits loopback connections only.",
+    "Vendor runtime/Jina/Cohere are compiled npm artifacts; their public source, entry identities, patch rows, service activation and API paths were inspected. Compiled bytes are not claimed identical to TypeScript source."
+  ],
+  "reviews": [
+    {
+      "key": "atlas",
+      "issue": 72,
+      "name": "dsh-error-atlas",
+      "decision": "add",
+      "reviewedVersion": "0.11.26",
+      "input": {
+        "name": "dsh-error-atlas",
+        "title": {
+          "en": "Error Atlas",
+          "zh": "错误星图"
+        },
+        "description": {
+          "en": "Record runtime failures and coding retrospectives locally, explore a WebGL knowledge graph and recall lessons through tools and optional context injection. The panel API accepts local connections only; the package declares no DSH version range.",
+          "zh": "在本地记录运行错误与编程复盘，以 WebGL 图谱查看关联，通过工具和可关闭的上下文注入复用教训。面板接口仅接受本机连接，包内未声明适用的 DSH 版本。"
+        },
+        "category": "memory"
+      },
+      "sourceCommit": "23ecb00c3016969105a6a83c375e7b816344564c",
+      "repository": {
+        "url": "https://github.com/chaos-miku/dsh-error-atlas",
+        "id": 1432472523,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.11.26",
+        "publishedAt": "2026-10-24T21:49:59.312Z",
+        "publisher": "chaos-miku",
+        "maintainers": [
+          "chaos-miku"
+        ],
+        "gitHead": "23ecb00c3016969105a6a83c375e7b816344564c"
+      },
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/bin/atlas-digest.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/bin/atlas-retro.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/run.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/test/smoke.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "evidence": {
+        "name": "dsh-error-atlas",
+        "version": "0.11.26",
+        "license": "MIT",
+        "repository": "https://github.com/chaos-miku/dsh-error-atlas",
+        "repositorySource": "package",
+        "sourceCommit": "23ecb00c3016969105a6a83c375e7b816344564c",
+        "metadataUrl": "https://registry.npmjs.org/dsh-error-atlas",
+        "tarball": "https://registry.npmjs.org/dsh-error-atlas/-/dsh-error-atlas-0.11.26.tgz",
+        "integrity": "sha512-RJ/qcVVBM/A5ytFhEdBMvjpRJiR5+dtVVo+o6PLLz3ApRZ9phirkHarXvAa5m3dtVZAKcqZxWEq1MAVT/93UEg==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 16,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/692274599885afcd961afba86bee5c761269ba9a39b2809044e8498289bf3e35.svg",
+            "mime": "image/svg+xml",
+            "bytes": 1137,
+            "sha256": "692274599885afcd961afba86bee5c761269ba9a39b2809044e8498289bf3e35"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 318828,
+          "unpackedBytes": 617993,
+          "decodedBytes": 631808,
+          "entries": 16,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-24T18:38:40.697Z",
+          "last30Days": 6,
+          "last90Days": 6
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      }
+    },
+    {
+      "key": "scratchpad",
+      "issue": 73,
+      "name": "@chaiyahang/dsh-scratchpad",
+      "decision": "add",
+      "reviewedVersion": "0.2.3",
+      "input": {
+        "name": "@chaiyahang/dsh-scratchpad",
+        "title": {
+          "en": "Scratchpad",
+          "zh": "便签"
+        },
+        "description": {
+          "en": "Keep notes, tags and attachments in Host storage, preview Markdown and tasks, send notes with real attachments to chat, import or export JSON and let Agents read and edit notes. The author requires DSH 0.2.1-rc.2 or later.",
+          "zh": "在 Host 端保存便签、标签和附件，预览 Markdown 与待办，把便签及真实附件发送到对话，支持 JSON 导入导出和 Agent 读写。作者要求 DSH 0.2.1-rc.2 或更高版本。"
+        },
+        "category": "interface"
+      },
+      "sourceCommit": "5e3b15ecfba5fc0bfc79dcb7ad73d3c3842bcd7a",
+      "repository": {
+        "url": "https://github.com/Chaiyahang/dsh-scratchpad",
+        "id": 1432734923,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.2.3",
+        "publishedAt": "2026-10-25T03:08:40.025Z",
+        "publisher": "GitHub Actions",
+        "maintainers": [
+          "chaiyahang"
+        ],
+        "gitHead": "5e3b15ecfba5fc0bfc79dcb7ad73d3c3842bcd7a"
+      },
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "evidence": {
+        "name": "@chaiyahang/dsh-scratchpad",
+        "version": "0.2.3",
+        "license": "MIT",
+        "repository": "https://github.com/Chaiyahang/dsh-scratchpad",
+        "repositorySource": "package",
+        "sourceCommit": "5e3b15ecfba5fc0bfc79dcb7ad73d3c3842bcd7a",
+        "metadataUrl": "https://registry.npmjs.org/%40chaiyahang%2Fdsh-scratchpad",
+        "tarball": "https://registry.npmjs.org/@chaiyahang/dsh-scratchpad/-/dsh-scratchpad-0.2.3.tgz",
+        "integrity": "sha512-l9sY+vUFGxWYDvcjWUo27fwSmf2eEnmQVMCR2qoGNjbx6uZ2LIUM8S0njef9b7TlCcdjQRzfIJl1qX2DU+Vw1w==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 9,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/2dbbeeea0b4a7230918485580692afb4eb244639d57a89c0e6ef74431ad5611e.svg",
+            "mime": "image/svg+xml",
+            "bytes": 324,
+            "sha256": "2dbbeeea0b4a7230918485580692afb4eb244639d57a89c0e6ef74431ad5611e"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 30119,
+          "unpackedBytes": 119325,
+          "decodedBytes": 126976,
+          "entries": 9,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-25T02:19:10.371Z",
+          "last30Days": 5,
+          "last90Days": 5
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      }
+    },
+    {
+      "key": "argo",
+      "issue": 74,
+      "name": "@taxueseek/argo-dsh",
+      "decision": "add",
+      "reviewedVersion": "2.9.8",
+      "input": {
+        "name": "@taxueseek/argo-dsh",
+        "title": {
+          "en": "Argo",
+          "zh": "Argo 阿尔戈"
+        },
+        "description": {
+          "en": "Add native search and fetch tools, optional web routing and parallel research with a settings panel. Requires Node.js 18+, Python 3.9+ and PyYAML. Set the web search/fetch provider explicitly to route built-in web tools through Argo; no DSH version range is declared.",
+          "zh": "提供原生搜索与抓取工具、可选的网页工具路由、并行研究及设置面板。需要 Node.js 18+、Python 3.9+ 和 PyYAML；内置网页工具改走 Argo 时需显式配置搜索与抓取路由，包内未声明适用的 DSH 版本。"
+        },
+        "category": "tools",
+        "version": "2.9.8",
+        "repositoryReview": {
+          "version": "2.9.8",
+          "integrity": "sha512-vmIFtzga0IBI1ZvYKEraZh767g9qR7j+x4hKrjO97mKQpyYwc5HOuH24PppvZHkEnLGOawnwNMKX9lEzsm2uvQ==",
+          "url": "https://github.com/taxueseek/argo",
+          "commit": "d9fea8b6cdf492a69d1f334019ff311b8dfc0fdc"
+        }
+      },
+      "sourceCommit": "d9fea8b6cdf492a69d1f334019ff311b8dfc0fdc",
+      "repository": {
+        "url": "https://github.com/taxueseek/argo",
+        "id": 1304997851,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "2.9.8",
+        "publishedAt": "2026-10-23T10:04:29.727Z",
+        "publisher": "taxueseek",
+        "maintainers": [
+          "taxueseek"
+        ]
+      },
+      "licenseFiles": [],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/dsh/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/dsh/diagnostics.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/dsh/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/dsh/runner.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/dsh/wide-research.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/dsh/native-tools.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "evidence": {
+        "name": "@taxueseek/argo-dsh",
+        "version": "2.9.8",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/taxueseek/argo",
+        "repositorySource": "review",
+        "repositoryReview": {
+          "version": "2.9.8",
+          "integrity": "sha512-vmIFtzga0IBI1ZvYKEraZh767g9qR7j+x4hKrjO97mKQpyYwc5HOuH24PppvZHkEnLGOawnwNMKX9lEzsm2uvQ==",
+          "commit": "d9fea8b6cdf492a69d1f334019ff311b8dfc0fdc",
+          "url": "https://github.com/taxueseek/argo",
+          "evidence": "https://github.com/taxueseek/argo/blob/d9fea8b6cdf492a69d1f334019ff311b8dfc0fdc/package.json"
+        },
+        "metadataUrl": "https://registry.npmjs.org/%40taxueseek%2Fargo-dsh",
+        "tarball": "https://registry.npmjs.org/@taxueseek/argo-dsh/-/argo-dsh-2.9.8.tgz",
+        "integrity": "sha512-vmIFtzga0IBI1ZvYKEraZh767g9qR7j+x4hKrjO97mKQpyYwc5HOuH24PppvZHkEnLGOawnwNMKX9lEzsm2uvQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/dsh/client.js"
+        ],
+        "filesChecked": 9,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 61687,
+          "unpackedBytes": 213639,
+          "decodedBytes": 221696,
+          "entries": 9,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-21T08:58:30.444Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      }
+    },
+    {
+      "key": "enhancer",
+      "issue": 31,
+      "name": "@feiwell/dsh-enhance-prompt",
+      "decision": "rename",
+      "reviewedVersion": "0.2.0",
+      "input": {
+        "name": "@feiwell/dsh-enhance-prompt",
+        "version": "0.2.0",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/feiwell/dsh-enhance-prompt",
+          "commit": "72524db41749dd6faa0820e58cd94dcbcd47d1e6",
+          "integrity": "sha512-IKIzKQyLmtVlvQ/5NX9Ev040PBTYQfnXIdnuKwkIg5DWHtDcpvId5ztU4sZqWzUydQ+B3VmVLZmKVu4fBDNUNw==",
+          "publishedAt": "2026-10-24T15:25:28Z"
+        },
+        "title": {
+          "en": "Prompt Enhancer",
+          "zh": "提示词增强"
+        },
+        "description": {
+          "en": "Rewrite the composer draft in the DeepSeek Harness desktop app with work, code and design modes, and restore the original text with one click.",
+          "zh": "在 DeepSeek Harness 桌面版的输入栏改写提示词，提供日常办公、代码开发和设计创意三种模式，支持一键还原原文。"
+        },
+        "category": "interface"
+      },
+      "sourceCommit": "72524db41749dd6faa0820e58cd94dcbcd47d1e6",
+      "repository": {
+        "url": "https://github.com/feiwell/dsh-enhance-prompt",
+        "id": 1384392182,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "@feiwell/dsh-enhance-prompt",
+        "version": "0.2.0",
+        "license": "MIT",
+        "repository": "https://github.com/feiwell/dsh-enhance-prompt",
+        "repositorySource": "package",
+        "sourceCommit": "72524db41749dd6faa0820e58cd94dcbcd47d1e6",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/feiwell/dsh-enhance-prompt",
+          "commit": "72524db41749dd6faa0820e58cd94dcbcd47d1e6"
+        },
+        "tarball": "https://codeload.github.com/feiwell/dsh-enhance-prompt/tar.gz/72524db41749dd6faa0820e58cd94dcbcd47d1e6",
+        "integrity": "sha512-IKIzKQyLmtVlvQ/5NX9Ev040PBTYQfnXIdnuKwkIg5DWHtDcpvId5ztU4sZqWzUydQ+B3VmVLZmKVu4fBDNUNw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 16,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/b75817248066488cf3cfc0403db72562f9e98d0d171bd4e28a1937619f50fd4a.svg",
+            "mime": "image/svg+xml",
+            "bytes": 719,
+            "sha256": "b75817248066488cf3cfc0403db72562f9e98d0d171bd4e28a1937619f50fd4a"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 30548,
+          "unpackedBytes": 90005,
+          "decodedBytes": 112640,
+          "entries": 23,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "replaces": "dsh-enhance-prompt",
+      "runtimeChanges": false
+    },
+    {
+      "key": "provider-runtime",
+      "issue": 62,
+      "name": "@dsh-ai-providers/runtime",
+      "decision": "replacement",
+      "reviewedVersion": "0.5.1",
+      "input": {
+        "name": "@dsh-ai-providers/runtime",
+        "title": {
+          "en": "AI Providers Runtime",
+          "zh": "AI 提供方运行时"
+        },
+        "description": {
+          "en": "Activate the shared AI provider registry and settings for language models, embeddings, reranking, speech and images. Install and activate this bundle before the Jina or Cohere provider; vendor packages and credentials are configured separately.",
+          "zh": "启用语言模型、嵌入、重排序、语音与图像共用的 AI 提供方注册表和设置界面。使用 Jina 或 Cohere 插件前需先安装并启用本组合包，厂商插件与凭据另行配置。"
+        },
+        "category": "providers"
+      },
+      "sourceCommit": "14b0c6437a3632ec683e66b0913ad50ab2fc59d5",
+      "repository": {
+        "url": "https://github.com/Firefox2100/dsh-ai-providers",
+        "id": 1403478066,
+        "visibility": "public",
+        "archived": false,
+        "license": "GPL-3.0"
+      },
+      "registry": {
+        "latest": "0.5.1",
+        "publishedAt": "2026-10-24T20:55:35.421Z",
+        "publisher": "GitHub Actions",
+        "maintainers": [
+          "firefox2100"
+        ]
+      },
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/client.js",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        }
+      ],
+      "evidence": {
+        "name": "@dsh-ai-providers/runtime",
+        "version": "0.5.1",
+        "license": "GPL-3.0-only",
+        "repository": "https://github.com/Firefox2100/dsh-ai-providers",
+        "repositorySource": "package",
+        "metadataUrl": "https://registry.npmjs.org/%40dsh-ai-providers%2Fruntime",
+        "tarball": "https://registry.npmjs.org/@dsh-ai-providers/runtime/-/runtime-0.5.1.tgz",
+        "integrity": "sha512-UfzRGLDvWwMorw8kV4jpcitqY5mng4N0bm2B+/a8oqX5rNi+mxsl7e7EvLj9OpT6OX0roIEEZpfowXSm3QgSkA==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 7,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 63520,
+          "unpackedBytes": 244244,
+          "decodedBytes": 251392,
+          "entries": 7,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-12T15:19:05.670Z",
+          "last30Days": 12,
+          "last90Days": 12
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "replaces": "@dsh-ai-providers/jina-cohere"
+    },
+    {
+      "key": "jina",
+      "issue": 62,
+      "name": "@dsh-ai-providers/jina",
+      "decision": "replacement",
+      "reviewedVersion": "0.5.1",
+      "input": {
+        "name": "@dsh-ai-providers/jina",
+        "title": {
+          "en": "Jina AI",
+          "zh": "Jina AI"
+        },
+        "description": {
+          "en": "Provide Jina embeddings and reranking with reusable connections and DSH-managed credentials. Requires the @dsh-ai-providers/runtime bundle to be installed and activated; consumer plugins call the services.",
+          "zh": "通过复用连接和 DSH 凭据提供 Jina 嵌入与重排序。需要先安装并启用 @dsh-ai-providers/runtime 组合包，由使用这些服务的插件调用。"
+        },
+        "category": "providers"
+      },
+      "sourceCommit": "14b0c6437a3632ec683e66b0913ad50ab2fc59d5",
+      "repository": {
+        "url": "https://github.com/Firefox2100/dsh-ai-providers",
+        "id": 1403478066,
+        "visibility": "public",
+        "archived": false,
+        "license": "GPL-3.0"
+      },
+      "registry": {
+        "latest": "0.5.1",
+        "publishedAt": "2026-10-24T20:54:37.804Z",
+        "publisher": "GitHub Actions",
+        "maintainers": [
+          "firefox2100"
+        ]
+      },
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/client.js",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        }
+      ],
+      "evidence": {
+        "name": "@dsh-ai-providers/jina",
+        "version": "0.5.1",
+        "license": "GPL-3.0-only",
+        "repository": "https://github.com/Firefox2100/dsh-ai-providers",
+        "repositorySource": "package",
+        "metadataUrl": "https://registry.npmjs.org/%40dsh-ai-providers%2Fjina",
+        "tarball": "https://registry.npmjs.org/@dsh-ai-providers/jina/-/jina-0.5.1.tgz",
+        "integrity": "sha512-kBn27Vm0jcW/YX5P0mgAPfoDN+DmlsLFxsVn010nlsNtEgSxgtgk/KamVU+P1nXzF68BcO7iNVjPyYJ0wb+V+g==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 7,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 34328,
+          "unpackedBytes": 116701,
+          "decodedBytes": 123392,
+          "entries": 7,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T13:28:59.278Z",
+          "last30Days": 6,
+          "last90Days": 6
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "replaces": "@dsh-ai-providers/jina-cohere"
+    },
+    {
+      "key": "cohere",
+      "issue": 62,
+      "name": "@dsh-ai-providers/cohere",
+      "decision": "replacement",
+      "reviewedVersion": "0.5.1",
+      "input": {
+        "name": "@dsh-ai-providers/cohere",
+        "title": {
+          "en": "Cohere",
+          "zh": "Cohere"
+        },
+        "description": {
+          "en": "Provide native Cohere v2 language models, embeddings and reranking, including streamed tool calls and model discovery. Requires the @dsh-ai-providers/runtime bundle to be installed and activated, with separately configured connections and credentials.",
+          "zh": "提供原生 Cohere v2 语言模型、嵌入与重排序，支持流式工具调用和模型发现。需要先安装并启用 @dsh-ai-providers/runtime 组合包，并另行配置连接与凭据。"
+        },
+        "category": "providers"
+      },
+      "sourceCommit": "14b0c6437a3632ec683e66b0913ad50ab2fc59d5",
+      "repository": {
+        "url": "https://github.com/Firefox2100/dsh-ai-providers",
+        "id": 1403478066,
+        "visibility": "public",
+        "archived": false,
+        "license": "GPL-3.0"
+      },
+      "registry": {
+        "latest": "0.5.1",
+        "publishedAt": "2026-10-24T20:54:55.972Z",
+        "publisher": "GitHub Actions",
+        "maintainers": [
+          "firefox2100"
+        ]
+      },
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/client.js",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        }
+      ],
+      "evidence": {
+        "name": "@dsh-ai-providers/cohere",
+        "version": "0.5.1",
+        "license": "GPL-3.0-only",
+        "repository": "https://github.com/Firefox2100/dsh-ai-providers",
+        "repositorySource": "package",
+        "metadataUrl": "https://registry.npmjs.org/%40dsh-ai-providers%2Fcohere",
+        "tarball": "https://registry.npmjs.org/@dsh-ai-providers/cohere/-/cohere-0.5.1.tgz",
+        "integrity": "sha512-Me6mcekoYFYT5ZuRy/dJCYYJtf5DJ1qGvYHuNB4g2hjXDRiLTvs8Zxh+ym1F39+tEnmPpLsUpdqtxJTKUIPCHg==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 7,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 45884,
+          "unpackedBytes": 165020,
+          "decodedBytes": 172032,
+          "entries": 7,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T13:28:55.795Z",
+          "last30Days": 6,
+          "last90Days": 6
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "replaces": "@dsh-ai-providers/jina-cohere"
+    },
+    {
+      "key": "jina-cohere",
+      "issue": 62,
+      "name": "@dsh-ai-providers/jina-cohere",
+      "decision": "replace-library",
+      "reviewedVersion": "0.5.1",
+      "sourceCommit": "14b0c6437a3632ec683e66b0913ad50ab2fc59d5",
+      "reason": "Bundle patch must name a file",
+      "files": [
+        "package/LICENSE",
+        "package/README.md",
+        "package/lib/index.js",
+        "package/lib/index.js.map",
+        "package/package.json",
+        "package/src/connection.ts",
+        "package/src/embedding.ts",
+        "package/src/index.ts",
+        "package/src/rerank.ts"
+      ]
+    },
+    {
+      "key": "dsh-deepseek-workbench-current",
+      "issue": 62,
+      "name": "dsh-deepseek-workbench",
+      "decision": "keep-config-excluded",
+      "reviewedVersion": "0.1.1-dsh.0.2.1-rc.2",
+      "currentVersion": "0.1.1-dsh.0.2.1-rc.2",
+      "sourceCommit": "59cdaf8765f671625fda237470e9046692968de7",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-deepseek-workbench",
+        "commit": "59cdaf8765f671625fda237470e9046692968de7",
+        "integrity": "sha512-xQNDKNXw32N67cHW0pJ1ijBsjAUPRDBOyY5mOrK9AynB+977osZrpHz7q4PKc7X4yann1vwztjW6lEA2r2izww==",
+        "publishedAt": "2026-10-22T12:36:24Z"
+      },
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "files": [
+        "package/.github/workflows/ci.yml",
+        "package/.gitignore",
+        "package/CHANGELOG.md",
+        "package/LICENSE",
+        "package/README.md",
+        "package/README_EN.md",
+        "package/THIRD_PARTY_NOTICES.md",
+        "package/cordis.patch.yml",
+        "package/desktop/README.md",
+        "package/desktop/README_EN.md",
+        "package/desktop/apply-host.mjs",
+        "package/desktop/check-host.mjs",
+        "package/desktop/deepseek-browser-policy.ts",
+        "package/docs/desktop-host.md",
+        "package/docs/desktop-host_EN.md",
+        "package/docs/images/temporary-chat.png",
+        "package/docs/install.md",
+        "package/docs/install_EN.md",
+        "package/docs/releases.md",
+        "package/docs/usage.md",
+        "package/docs/usage_EN.md",
+        "package/package.json",
+        "package/pnpm-lock.yaml",
+        "package/pnpm-workspace.yaml",
+        "package/scripts/build.mjs",
+        "package/scripts/check-public-files.mjs",
+        "package/scripts/page-script-defines.mjs",
+        "package/scripts/prepack.mjs",
+        "package/src/account-probe.mjs",
+        "package/src/client/browser-adapter.mjs",
+        "package/src/client/extraction.mjs",
+        "package/src/client/host-capabilities.mjs",
+        "package/src/client/index.jsx",
+        "package/src/client/native-chat-bridge.mjs",
+        "package/src/client/native-chat.css",
+        "package/src/client/native-chat.jsx",
+        "package/src/client/platform-page.jsx",
+        "package/src/client/style.css",
+        "package/src/client/temporary-sidebar.jsx",
+        "package/src/client/temporary-web.mjs",
+        "package/src/import.mjs",
+        "package/src/index.mjs",
+        "package/test/capability-contract.test.mjs",
+        "package/test/native-chat-bridge.test.mjs",
+        "package/test/temporary-web.test.mjs",
+        "package/test/ui-adapter.test.mjs"
+      ]
+    },
+    {
+      "key": "dsh-deepseek-workbench-upstream",
+      "issue": 62,
+      "name": "dsh-deepseek-workbench",
+      "decision": "defer-update",
+      "reviewedVersion": "0.1.3-dsh.0.2.1-rc.3",
+      "currentVersion": "0.1.1-dsh.0.2.1-rc.2",
+      "sourceCommit": "e36d45689367cc751c1804935782a149bdd7d8c1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-deepseek-workbench",
+        "commit": "e36d45689367cc751c1804935782a149bdd7d8c1",
+        "integrity": "sha512-0mvDnRI+dYUcdfz3bkrOOVr99YA4TP4aYfuPoNq1ZF+6j+kzcqy6kWT8LqltM+BpG9D1FhE6v9mtUXoSiHTluw==",
+        "publishedAt": "2026-10-24T05:58:46Z"
+      },
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "files": [
+        "package/.github/workflows/ci.yml",
+        "package/.github/workflows/documentation-structure.yml",
+        "package/.github/workflows/release-assets.yml",
+        "package/.gitignore",
+        "package/CHANGELOG.md",
+        "package/LICENSE",
+        "package/README.md",
+        "package/README_EN.md",
+        "package/THIRD_PARTY_NOTICES.md",
+        "package/cordis.patch.yml",
+        "package/desktop/README.md",
+        "package/desktop/README_EN.md",
+        "package/desktop/apply-host.mjs",
+        "package/desktop/check-host.mjs",
+        "package/desktop/deepseek-browser-policy.ts",
+        "package/docs/desktop-host.md",
+        "package/docs/desktop-host_EN.md",
+        "package/docs/documentation.md",
+        "package/docs/images/temporary-chat.png",
+        "package/docs/install.md",
+        "package/docs/install_EN.md",
+        "package/docs/releases.md",
+        "package/docs/structure.json",
+        "package/docs/usage.md",
+        "package/docs/usage_EN.md",
+        "package/package.json",
+        "package/pnpm-lock.yaml",
+        "package/pnpm-workspace.yaml",
+        "package/scripts/build.mjs",
+        "package/scripts/check-docs.mjs",
+        "package/scripts/check-public-files.mjs",
+        "package/scripts/check-release-assets.mjs",
+        "package/scripts/page-script-defines.mjs",
+        "package/scripts/prepack.mjs",
+        "package/src/account-probe.mjs",
+        "package/src/client/browser-adapter.mjs",
+        "package/src/client/conversation-import.mjs",
+        "package/src/client/extraction.mjs",
+        "package/src/client/host-capabilities.mjs",
+        "package/src/client/index.jsx",
+        "package/src/client/native-chat-bridge.mjs",
+        "package/src/client/native-chat.css",
+        "package/src/client/native-chat.jsx",
+        "package/src/client/platform-page.jsx",
+        "package/src/client/style.css",
+        "package/src/client/temporary-sidebar.jsx",
+        "package/src/client/temporary-web.mjs",
+        "package/src/import.mjs",
+        "package/src/index.mjs",
+        "package/test/capability-contract.test.mjs",
+        "package/test/conversation-import.test.mjs",
+        "package/test/import.test.mjs",
+        "package/test/native-chat-bridge.test.mjs",
+        "package/test/temporary-web.test.mjs",
+        "package/test/ui-adapter.test.mjs"
+      ]
+    },
+    {
+      "key": "gulagala001_dsh-btw-current",
+      "issue": 62,
+      "name": "@gulagala001/dsh-btw",
+      "decision": "keep-config-excluded",
+      "reviewedVersion": "0.1.2-dsh.0.2.1-rc.2",
+      "currentVersion": "0.1.2-dsh.0.2.1-rc.2",
+      "sourceCommit": "4c52e6059337100ade2935e8010914bca4fbe6a4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-btw",
+        "commit": "4c52e6059337100ade2935e8010914bca4fbe6a4",
+        "integrity": "sha512-JR0HukY4vL6eNxCl1rFu5LDN1yl9rHdL5hv+idG7z54zNQVTQ4/n1Xajn9CFbYOo1LAQNsilw89fjhvammAdCA==",
+        "publishedAt": "2026-10-22T14:03:28Z"
+      },
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "files": [
+        "package/.github/workflows/ci.yml",
+        "package/.gitignore",
+        "package/CHANGELOG.md",
+        "package/LICENSE",
+        "package/README.md",
+        "package/README.zh.md",
+        "package/README_EN.md",
+        "package/cordis.patch.yml",
+        "package/docs/images/side-chat.png",
+        "package/docs/install.md",
+        "package/docs/install.zh.md",
+        "package/docs/releases/v0.1.0-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.1.1-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.1.2-dsh.0.2.1-rc.2.md",
+        "package/package-lock.json",
+        "package/package.json",
+        "package/scripts/build.mjs",
+        "package/scripts/check-public-files.mjs",
+        "package/src/client/entry.mjs",
+        "package/src/client/index.jsx",
+        "package/src/client/store.mjs",
+        "package/src/client/style.css",
+        "package/src/context.mjs",
+        "package/src/index.mjs",
+        "package/src/shared.mjs",
+        "package/src/snapshot.mjs",
+        "package/test/isolation.test.mjs"
+      ]
+    },
+    {
+      "key": "gulagala001_dsh-btw-upstream",
+      "issue": 62,
+      "name": "@gulagala001/dsh-btw",
+      "decision": "defer-update",
+      "reviewedVersion": "0.1.4-dsh.0.2.1-rc.3",
+      "currentVersion": "0.1.2-dsh.0.2.1-rc.2",
+      "sourceCommit": "1e4bd0aa2cfb6b5f140037c1371752361b410214",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-btw",
+        "commit": "1e4bd0aa2cfb6b5f140037c1371752361b410214",
+        "integrity": "sha512-cELbGVnGdHffv2NwKjDmXEGbDIsj0/+eSc7sMeVPY/9XUB3pNt8BGp53+gGuKXG9pz8N0kLAc6gyx0yK/W4B1g==",
+        "publishedAt": "2026-10-24T05:58:43Z"
+      },
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "files": [
+        "package/.github/workflows/ci.yml",
+        "package/.github/workflows/documentation-structure.yml",
+        "package/.github/workflows/release-assets.yml",
+        "package/.gitignore",
+        "package/CHANGELOG.md",
+        "package/LICENSE",
+        "package/README.md",
+        "package/README.zh.md",
+        "package/README_EN.md",
+        "package/cordis.patch.yml",
+        "package/docs/documentation.md",
+        "package/docs/images/side-chat.png",
+        "package/docs/install.md",
+        "package/docs/install.zh.md",
+        "package/docs/releases/v0.1.0-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.1.1-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.1.2-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.1.3-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.1.4-dsh.0.2.1-rc.3.md",
+        "package/docs/structure.json",
+        "package/package-lock.json",
+        "package/package.json",
+        "package/scripts/build.mjs",
+        "package/scripts/check-docs.mjs",
+        "package/scripts/check-public-files.mjs",
+        "package/scripts/check-release-assets.mjs",
+        "package/src/client/entry.mjs",
+        "package/src/client/index.jsx",
+        "package/src/client/store.mjs",
+        "package/src/client/style.css",
+        "package/src/context.mjs",
+        "package/src/index.mjs",
+        "package/src/protocol.mjs",
+        "package/src/shared.mjs",
+        "package/src/snapshot.mjs",
+        "package/test/isolation.test.mjs",
+        "package/test/stream-lifecycle.test.mjs"
+      ]
+    },
+    {
+      "key": "gulagala001_dsh-theme-plugin-current",
+      "issue": 62,
+      "name": "@gulagala001/dsh-theme-plugin",
+      "decision": "keep-config-excluded",
+      "reviewedVersion": "0.2.1-dsh.0.2.1-rc.2",
+      "currentVersion": "0.2.1-dsh.0.2.1-rc.2",
+      "sourceCommit": "d0abfd142dff121cf75f5a823eff36d7da182eda",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-theme-plugin",
+        "commit": "d0abfd142dff121cf75f5a823eff36d7da182eda",
+        "integrity": "sha512-bAl5wHpbKpxkgyTdonZ2o6IgTkUuCBbQntJ/1WNY8OE3ZESTVwE39t77/7O5emQ4ledTtX1pTtYiqzoSYVX60A==",
+        "publishedAt": "2026-10-22T12:36:24Z"
+      },
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "files": [
+        "package/.github/workflows/check.yml",
+        "package/.gitignore",
+        "package/CHANGELOG.md",
+        "package/LICENSE",
+        "package/README.md",
+        "package/README_EN.md",
+        "package/THIRD_PARTY_NOTICES.md",
+        "package/assets/builtin/claude-cli-terminal.e19443ccbe5f.css",
+        "package/assets/builtin/google-material-expressive.2ef622a7e447.css",
+        "package/assets/builtin/theme-codex-dark.jpg",
+        "package/assets/builtin/theme-codex-light.jpg",
+        "package/assets/builtin/theme-glass-dark.jpg",
+        "package/assets/builtin/theme-glass-light.jpg",
+        "package/assets/builtin/theme-material-dark.jpg",
+        "package/assets/builtin/theme-material-light.jpg",
+        "package/assets/builtin/theme-terminal-dark.jpg",
+        "package/assets/builtin/theme-terminal-light.jpg",
+        "package/cordis.patch.yml",
+        "package/docs/ai-repair.md",
+        "package/docs/compatibility.md",
+        "package/docs/compatibility_EN.md",
+        "package/docs/development.md",
+        "package/docs/images/appearance.png",
+        "package/docs/images/market.png",
+        "package/docs/images/theme-hero-en.png",
+        "package/docs/images/theme-hero-zh.png",
+        "package/docs/images/theme-management.png",
+        "package/docs/install.md",
+        "package/docs/install_EN.md",
+        "package/docs/releases/v0.1.0-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.2.0-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.2.1-dsh.0.2.1-rc.2.md",
+        "package/package.json",
+        "package/pnpm-lock.yaml",
+        "package/scripts/build.mjs",
+        "package/scripts/check-package.mjs",
+        "package/scripts/theme.mjs",
+        "package/src/client/appearance.jsx",
+        "package/src/client/customization.jsx",
+        "package/src/client/customization.mjs",
+        "package/src/client/external.mjs",
+        "package/src/client/index.jsx",
+        "package/src/client/semantic.mjs",
+        "package/src/client/store.mjs",
+        "package/src/client/style.css",
+        "package/src/client/theme-scope.mjs",
+        "package/src/client/theme-settings.mjs",
+        "package/src/client/ui.jsx",
+        "package/src/host/backend-build.mjs",
+        "package/src/host/browser.mjs",
+        "package/src/host/build-dependencies.mjs",
+        "package/src/host/client-assets.mjs",
+        "package/src/host/client-build.mjs",
+        "package/src/host/client-entry.mjs",
+        "package/src/host/client-modules.mjs",
+        "package/src/host/config-entries.mjs",
+        "package/src/host/engine.mjs",
+        "package/src/host/files.mjs",
+        "package/src/host/formats.mjs",
+        "package/src/host/host-modules.mjs",
+        "package/src/host/market.mjs",
+        "package/src/host/native-backend.mjs",
+        "package/src/host/network.mjs",
+        "package/src/host/packages.mjs",
+        "package/src/host/probe-page.mjs",
+        "package/src/host/probe-runner.mjs",
+        "package/src/host/probe.mjs",
+        "package/src/host/store.mjs",
+        "package/src/host/styles.mjs",
+        "package/src/host/theme-backend.mjs",
+        "package/src/host/versions.mjs",
+        "package/src/index.mjs",
+        "package/src/shared/host-contract.mjs",
+        "package/src/shared/protocol.mjs",
+        "package/test/compatibility-runtime.test.mjs",
+        "package/test/install-safety.test.mjs",
+        "package/test/market.test.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/shared/attribute-markers.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/shared/ownership.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/shared/surfaces.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/shared/window-chrome.css",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/brand.jsx",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/chrome.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/director.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/effort.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/field.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/icons.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/layout.css",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/occlusion.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/renderer.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/scene.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/semantics.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/waves.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/whale-path.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/whale.mjs",
+        "package/vendor/appearance/src/client/attribute-markers.mjs",
+        "package/vendor/appearance/src/client/brand.mjs",
+        "package/vendor/appearance/src/client/document-title.mjs",
+        "package/vendor/appearance/src/client/native-controls.jsx",
+        "package/vendor/appearance/src/client/overlay-inert.mjs",
+        "package/vendor/appearance/src/client/sidebar.css",
+        "package/vendor/appearance/src/client/sidebar.jsx",
+        "package/vendor/appearance/src/client/skins/adapter.css",
+        "package/vendor/appearance/src/client/skins/advanced.jsx",
+        "package/vendor/appearance/src/client/skins/advanced.mjs",
+        "package/vendor/appearance/src/client/skins/appearance.css",
+        "package/vendor/appearance/src/client/skins/background.mjs",
+        "package/vendor/appearance/src/client/skins/bundled.mjs",
+        "package/vendor/appearance/src/client/skins/bundled/assets.json",
+        "package/vendor/appearance/src/client/skins/bundled/claude-cli-terminal.json",
+        "package/vendor/appearance/src/client/skins/bundled/codex-desktop.json",
+        "package/vendor/appearance/src/client/skins/bundled/glyph-motion.json",
+        "package/vendor/appearance/src/client/skins/bundled/google-material-expressive.json",
+        "package/vendor/appearance/src/client/skins/bundled/ios-liquid-glass.json",
+        "package/vendor/appearance/src/client/skins/claude-cli-terminal/layout.css",
+        "package/vendor/appearance/src/client/skins/claude-cli-terminal/presentation.jsx",
+        "package/vendor/appearance/src/client/skins/codex-desktop/integration.jsx",
+        "package/vendor/appearance/src/client/skins/codex-desktop/layout.css",
+        "package/vendor/appearance/src/client/skins/controls.jsx",
+        "package/vendor/appearance/src/client/skins/coordinator.mjs",
+        "package/vendor/appearance/src/client/skins/format.mjs",
+        "package/vendor/appearance/src/client/skins/glyph-motion/integration.jsx",
+        "package/vendor/appearance/src/client/skins/google-material-expressive/appearance.jsx",
+        "package/vendor/appearance/src/client/skins/google-material-expressive/integration.jsx",
+        "package/vendor/appearance/src/client/skins/google-material-expressive/layout.css",
+        "package/vendor/appearance/src/client/skins/ios-liquid-glass/layout.css",
+        "package/vendor/appearance/src/client/skins/layout-base.css",
+        "package/vendor/appearance/src/client/skins/mapping.mjs",
+        "package/vendor/appearance/src/client/skins/palette.mjs",
+        "package/vendor/appearance/src/client/skins/palettes.mjs",
+        "package/vendor/appearance/src/client/skins/personalization.jsx",
+        "package/vendor/appearance/src/client/skins/runtime.mjs",
+        "package/vendor/appearance/src/client/skins/surfaces.mjs",
+        "package/vendor/appearance/src/client/slot-decoration.mjs",
+        "package/vendor/font-licenses/Google-Sans-Code-OFL.txt",
+        "package/vendor/font-licenses/Google-Sans-Flex-OFL.txt",
+        "package/vendor/font-licenses/JetBrains-Mono-OFL.txt",
+        "package/vendor/font-licenses/Material-Symbols-LICENSE.txt",
+        "package/vendor/font-licenses/Noto-Sans-SC-OFL.txt",
+        "package/vendor/licenses/DeepSeek-MIT.txt",
+        "package/vendor/licenses/Glyph-MIT.txt"
+      ]
+    },
+    {
+      "key": "gulagala001_dsh-theme-plugin-upstream",
+      "issue": 62,
+      "name": "@gulagala001/dsh-theme-plugin",
+      "decision": "defer-update",
+      "reviewedVersion": "0.2.3-dsh.0.2.1-rc.3",
+      "currentVersion": "0.2.1-dsh.0.2.1-rc.2",
+      "sourceCommit": "05a723a0b9eedc1099ed7366fefdf9f2ca70ef61",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-theme-plugin",
+        "commit": "05a723a0b9eedc1099ed7366fefdf9f2ca70ef61",
+        "integrity": "sha512-bFbxral5nqNENL6QNQmsz2wqBITia6OAdIbyBA23YdJvp6asm9AV3YmTPfIJN8dgaPg3JjN0w6EIgPoYYPN+Jg==",
+        "publishedAt": "2026-10-24T06:33:50Z"
+      },
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "files": [
+        "package/.github/workflows/check.yml",
+        "package/.github/workflows/documentation-structure.yml",
+        "package/.github/workflows/release-assets.yml",
+        "package/.gitignore",
+        "package/CHANGELOG.md",
+        "package/LICENSE",
+        "package/README.md",
+        "package/README_EN.md",
+        "package/THIRD_PARTY_NOTICES.md",
+        "package/assets/builtin/claude-cli-terminal.e19443ccbe5f.css",
+        "package/assets/builtin/google-material-expressive.2ef622a7e447.css",
+        "package/assets/builtin/theme-codex-dark.jpg",
+        "package/assets/builtin/theme-codex-light.jpg",
+        "package/assets/builtin/theme-glass-dark.jpg",
+        "package/assets/builtin/theme-glass-light.jpg",
+        "package/assets/builtin/theme-material-dark.jpg",
+        "package/assets/builtin/theme-material-light.jpg",
+        "package/assets/builtin/theme-terminal-dark.jpg",
+        "package/assets/builtin/theme-terminal-light.jpg",
+        "package/cordis.patch.yml",
+        "package/docs/ai-repair.md",
+        "package/docs/compatibility.md",
+        "package/docs/compatibility_EN.md",
+        "package/docs/development.md",
+        "package/docs/documentation.md",
+        "package/docs/images/appearance.png",
+        "package/docs/images/glyph-animation.gif",
+        "package/docs/images/market.png",
+        "package/docs/images/readme-screenshots.json",
+        "package/docs/images/theme-hero-en.png",
+        "package/docs/images/theme-hero-zh.png",
+        "package/docs/images/theme-management.png",
+        "package/docs/install.md",
+        "package/docs/install_EN.md",
+        "package/docs/releases/v0.1.0-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.2.0-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.2.1-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.2.2-dsh.0.2.1-rc.2.md",
+        "package/docs/releases/v0.2.3-dsh.0.2.1-rc.3.md",
+        "package/docs/structure.json",
+        "package/package.json",
+        "package/pnpm-lock.yaml",
+        "package/pnpm-workspace.yaml",
+        "package/scripts/build.mjs",
+        "package/scripts/check-docs.mjs",
+        "package/scripts/check-package.mjs",
+        "package/scripts/check-release-assets.mjs",
+        "package/scripts/theme.mjs",
+        "package/src/client/appearance.jsx",
+        "package/src/client/customization.jsx",
+        "package/src/client/customization.mjs",
+        "package/src/client/external.mjs",
+        "package/src/client/index.jsx",
+        "package/src/client/semantic.mjs",
+        "package/src/client/store.mjs",
+        "package/src/client/style.css",
+        "package/src/client/theme-scope.mjs",
+        "package/src/client/theme-settings.mjs",
+        "package/src/client/ui.jsx",
+        "package/src/host/backend-build.mjs",
+        "package/src/host/browser.mjs",
+        "package/src/host/build-dependencies.mjs",
+        "package/src/host/client-assets.mjs",
+        "package/src/host/client-build.mjs",
+        "package/src/host/client-entry.mjs",
+        "package/src/host/client-modules.mjs",
+        "package/src/host/config-entries.mjs",
+        "package/src/host/engine.mjs",
+        "package/src/host/files.mjs",
+        "package/src/host/formats.mjs",
+        "package/src/host/host-modules.mjs",
+        "package/src/host/market.mjs",
+        "package/src/host/native-backend.mjs",
+        "package/src/host/network.mjs",
+        "package/src/host/packages.mjs",
+        "package/src/host/probe-page.mjs",
+        "package/src/host/probe-runner.mjs",
+        "package/src/host/probe.mjs",
+        "package/src/host/store.mjs",
+        "package/src/host/styles.mjs",
+        "package/src/host/theme-backend.mjs",
+        "package/src/host/versions.mjs",
+        "package/src/index.mjs",
+        "package/src/shared/host-contract.mjs",
+        "package/src/shared/protocol.mjs",
+        "package/test/activation-consistency.test.mjs",
+        "package/test/builtin-brand.test.mjs",
+        "package/test/compatibility-runtime.test.mjs",
+        "package/test/install-safety.test.mjs",
+        "package/test/market.test.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/shared/attribute-markers.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/shared/ownership.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/shared/surfaces.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/shared/window-chrome.css",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/brand.jsx",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/chrome.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/director.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/effort.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/field.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/icons.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/layout.css",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/occlusion.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/renderer.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/scene.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/semantics.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/waves.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/whale-path.mjs",
+        "package/vendor/appearance/plugins/glyph-theme/src/theme/whale.mjs",
+        "package/vendor/appearance/src/client/attribute-markers.mjs",
+        "package/vendor/appearance/src/client/brand.mjs",
+        "package/vendor/appearance/src/client/document-title.mjs",
+        "package/vendor/appearance/src/client/native-controls.jsx",
+        "package/vendor/appearance/src/client/overlay-inert.mjs",
+        "package/vendor/appearance/src/client/sidebar.css",
+        "package/vendor/appearance/src/client/sidebar.jsx",
+        "package/vendor/appearance/src/client/skins/adapter.css",
+        "package/vendor/appearance/src/client/skins/advanced.jsx",
+        "package/vendor/appearance/src/client/skins/advanced.mjs",
+        "package/vendor/appearance/src/client/skins/appearance.css",
+        "package/vendor/appearance/src/client/skins/background.mjs",
+        "package/vendor/appearance/src/client/skins/brand.jsx",
+        "package/vendor/appearance/src/client/skins/bundled.mjs",
+        "package/vendor/appearance/src/client/skins/bundled/assets.json",
+        "package/vendor/appearance/src/client/skins/bundled/claude-cli-terminal.json",
+        "package/vendor/appearance/src/client/skins/bundled/codex-desktop.json",
+        "package/vendor/appearance/src/client/skins/bundled/glyph-motion.json",
+        "package/vendor/appearance/src/client/skins/bundled/google-material-expressive.json",
+        "package/vendor/appearance/src/client/skins/bundled/ios-liquid-glass.json",
+        "package/vendor/appearance/src/client/skins/claude-cli-terminal/layout.css",
+        "package/vendor/appearance/src/client/skins/claude-cli-terminal/presentation.jsx",
+        "package/vendor/appearance/src/client/skins/codex-desktop/integration.jsx",
+        "package/vendor/appearance/src/client/skins/codex-desktop/layout.css",
+        "package/vendor/appearance/src/client/skins/controls.jsx",
+        "package/vendor/appearance/src/client/skins/coordinator.mjs",
+        "package/vendor/appearance/src/client/skins/format.mjs",
+        "package/vendor/appearance/src/client/skins/glyph-motion/integration.jsx",
+        "package/vendor/appearance/src/client/skins/google-material-expressive/appearance.jsx",
+        "package/vendor/appearance/src/client/skins/google-material-expressive/integration.jsx",
+        "package/vendor/appearance/src/client/skins/google-material-expressive/layout.css",
+        "package/vendor/appearance/src/client/skins/ios-liquid-glass/layout.css",
+        "package/vendor/appearance/src/client/skins/layout-base.css",
+        "package/vendor/appearance/src/client/skins/mapping.mjs",
+        "package/vendor/appearance/src/client/skins/palette.mjs",
+        "package/vendor/appearance/src/client/skins/palettes.mjs",
+        "package/vendor/appearance/src/client/skins/personalization.jsx",
+        "package/vendor/appearance/src/client/skins/runtime.mjs",
+        "package/vendor/appearance/src/client/skins/surfaces.mjs",
+        "package/vendor/appearance/src/client/slot-decoration.mjs",
+        "package/vendor/font-licenses/Google-Sans-Code-OFL.txt",
+        "package/vendor/font-licenses/Google-Sans-Flex-OFL.txt",
+        "package/vendor/font-licenses/JetBrains-Mono-OFL.txt",
+        "package/vendor/font-licenses/Material-Symbols-LICENSE.txt",
+        "package/vendor/font-licenses/Noto-Sans-SC-OFL.txt",
+        "package/vendor/licenses/DeepSeek-MIT.txt",
+        "package/vendor/licenses/Glyph-MIT.txt"
+      ]
+    },
+    {
+      "key": "dsh-extensions-current",
+      "issue": 62,
+      "name": "dsh-extensions",
+      "decision": "keep-valid-pin",
+      "reviewedVersion": "0.1.0-dsh.0.2.1-rc.2",
+      "currentVersion": "0.1.0-dsh.0.2.1-rc.2",
+      "sourceCommit": "d163ecb6235ffed5f9d70e22f80eaf9ebadb89e3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-extensions",
+        "commit": "d163ecb6235ffed5f9d70e22f80eaf9ebadb89e3",
+        "integrity": "sha512-wBPUFBJHbn4w0HFi1cHqov1E6aB7wH8UbTIKf7fEq82bQVki5s+8XoHOjgG9z1vOneXALOBa3Ka/9givYo7fIQ==",
+        "publishedAt": "2026-10-22T12:41:32Z"
+      },
+      "reason": "Current pinned archive is complete",
+      "files": [
+        "package/.github/workflows/ci.yml",
+        "package/.gitignore",
+        "package/CHANGELOG.md",
+        "package/LICENSE",
+        "package/README.md",
+        "package/README_EN.md",
+        "package/cordis.patch.yml",
+        "package/docs/install.md",
+        "package/docs/install_EN.md",
+        "package/docs/releases.md",
+        "package/docs/usage.md",
+        "package/docs/usage_EN.md",
+        "package/icon.svg",
+        "package/lib/client.js",
+        "package/locale/en.json",
+        "package/locale/zh.json",
+        "package/package.json",
+        "package/pnpm-lock.yaml",
+        "package/pnpm-workspace.yaml",
+        "package/scripts/build.mjs",
+        "package/scripts/check-public-files.mjs",
+        "package/scripts/prepack.mjs",
+        "package/src/client/api.mjs",
+        "package/src/client/commands.jsx",
+        "package/src/client/hooks.jsx",
+        "package/src/client/index.jsx",
+        "package/src/client/instructions.jsx",
+        "package/src/client/locale.mjs",
+        "package/src/client/mcp.jsx",
+        "package/src/client/skills.jsx",
+        "package/src/client/style.css",
+        "package/src/client/ui.jsx",
+        "package/src/commands.mjs",
+        "package/src/common.mjs",
+        "package/src/frontmatter.mjs",
+        "package/src/hooks.mjs",
+        "package/src/index.mjs",
+        "package/src/instructions.mjs",
+        "package/src/mcp.mjs",
+        "package/src/service.mjs",
+        "package/src/skills.mjs"
+      ],
+      "clientEntries": [
+        "package/lib/client.js"
+      ]
+    },
+    {
+      "key": "dsh-extensions-upstream",
+      "issue": 62,
+      "name": "dsh-extensions",
+      "decision": "defer-update",
+      "reviewedVersion": "0.1.2-dsh.0.2.1-rc.3",
+      "currentVersion": "0.1.0-dsh.0.2.1-rc.2",
+      "sourceCommit": "17fc34421517175bfc752f3b5923e5b592518b47",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-extensions",
+        "commit": "17fc34421517175bfc752f3b5923e5b592518b47",
+        "integrity": "sha512-xBXZ29Fi9FRQhAgLMe4bVBz9XkPFRxr3ir5DnB/27POSNXYigtv3IB5A96EmWaVvBe/zDZNraLDj2Q9x1GJkqw==",
+        "publishedAt": "2026-10-24T06:33:54Z"
+      },
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "files": [
+        "package/.github/workflows/ci.yml",
+        "package/.github/workflows/documentation-structure.yml",
+        "package/.github/workflows/release-assets.yml",
+        "package/.gitignore",
+        "package/CHANGELOG.md",
+        "package/LICENSE",
+        "package/README.md",
+        "package/README_EN.md",
+        "package/cordis.patch.yml",
+        "package/docs/documentation.md",
+        "package/docs/install.md",
+        "package/docs/install_EN.md",
+        "package/docs/releases.md",
+        "package/docs/structure.json",
+        "package/docs/usage.md",
+        "package/docs/usage_EN.md",
+        "package/icon.svg",
+        "package/locale/en.json",
+        "package/locale/zh.json",
+        "package/package.json",
+        "package/pnpm-lock.yaml",
+        "package/pnpm-workspace.yaml",
+        "package/scripts/build.mjs",
+        "package/scripts/check-docs.mjs",
+        "package/scripts/check-public-files.mjs",
+        "package/scripts/check-release-assets.mjs",
+        "package/scripts/prepack.mjs",
+        "package/src/client/api.mjs",
+        "package/src/client/commands.jsx",
+        "package/src/client/hooks.jsx",
+        "package/src/client/index.jsx",
+        "package/src/client/instructions.jsx",
+        "package/src/client/locale.mjs",
+        "package/src/client/mcp.jsx",
+        "package/src/client/skills.jsx",
+        "package/src/client/style.css",
+        "package/src/client/ui.jsx",
+        "package/src/commands.mjs",
+        "package/src/common.mjs",
+        "package/src/frontmatter.mjs",
+        "package/src/hooks.mjs",
+        "package/src/index.mjs",
+        "package/src/instructions.mjs",
+        "package/src/mcp.mjs",
+        "package/src/service.mjs",
+        "package/src/skills.mjs",
+        "package/test/commands.test.mjs",
+        "package/test/fixtures/mcp-server.mjs",
+        "package/test/hooks.test.mjs",
+        "package/test/mcp-native.test.mjs",
+        "package/test/mcp.test.mjs"
+      ]
+    },
+    {
+      "key": "gulagala001_dsh-persona-plugin-current",
+      "issue": 62,
+      "name": "@gulagala001/dsh-persona-plugin",
+      "decision": "keep-valid-pin",
+      "reviewedVersion": "0.1.0-dsh.0.2.1-rc.2",
+      "currentVersion": "0.1.0-dsh.0.2.1-rc.2",
+      "sourceCommit": "dd1c83424aab1ed3c70b3cd5a0783d9f06e6fdd0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-persona-plugin",
+        "commit": "dd1c83424aab1ed3c70b3cd5a0783d9f06e6fdd0",
+        "integrity": "sha512-aOXSDHe3RC2XqZWVLWzIpAE1KfiOYeeaNrArwRu2bkj9VhVvcOYRk4dsq2K1fixOe54kI7WQIathMBCMtEoGQw==",
+        "publishedAt": "2026-10-22T12:41:32Z"
+      },
+      "reason": "Current pinned archive is complete",
+      "files": [
+        "package/.github/workflows/ci.yml",
+        "package/.gitignore",
+        "package/CHANGELOG.md",
+        "package/LICENSE",
+        "package/README.md",
+        "package/README_EN.md",
+        "package/THIRD_PARTY_NOTICES.md",
+        "package/cordis.patch.yml",
+        "package/docs/images/persona.png",
+        "package/docs/personality-format.md",
+        "package/docs/releases.md",
+        "package/lib/client.js",
+        "package/lib/host/permission-native.factory.mjs",
+        "package/package.json",
+        "package/scripts/build-permission-native.mjs",
+        "package/scripts/build.mjs",
+        "package/scripts/check-public-files.mjs",
+        "package/src/client/editor.jsx",
+        "package/src/client/index.jsx",
+        "package/src/client/main-conversation.mjs",
+        "package/src/client/native-controls.jsx",
+        "package/src/client/permission-menu.jsx",
+        "package/src/client/session-menu.jsx",
+        "package/src/client/settings.jsx",
+        "package/src/client/slot-decoration.mjs",
+        "package/src/client/style.css",
+        "package/src/index.mjs",
+        "package/src/session.mjs",
+        "package/src/shared/identity.mjs",
+        "package/src/shared/personality.mjs",
+        "package/src/shared/prompt.mjs",
+        "package/src/shared/protocol.mjs",
+        "package/src/store.mjs",
+        "package/test/persona.test.mjs"
+      ],
+      "clientEntries": [
+        "package/lib/client.js"
+      ]
+    },
+    {
+      "key": "gulagala001_dsh-persona-plugin-upstream",
+      "issue": 62,
+      "name": "@gulagala001/dsh-persona-plugin",
+      "decision": "defer-update",
+      "reviewedVersion": "0.1.2-dsh.0.2.1-rc.3",
+      "currentVersion": "0.1.0-dsh.0.2.1-rc.2",
+      "sourceCommit": "bcc31512cac139ce2e24e7c9b3a60bca23e5e420",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gulagala001/dsh-persona-plugin",
+        "commit": "bcc31512cac139ce2e24e7c9b3a60bca23e5e420",
+        "integrity": "sha512-l9WUQ3J+ApNppSz8HysRw2MHOz+paQGow+9jWa0rKHwnLp34zW6IAgfnNedgTqXgrMOMHAkBirEZXva61A2eGQ==",
+        "publishedAt": "2026-10-24T05:58:46Z"
+      },
+      "reason": "Client entry package/lib/client.js is missing from published archive",
+      "files": [
+        "package/.github/workflows/ci.yml",
+        "package/.github/workflows/documentation-structure.yml",
+        "package/.github/workflows/release-assets.yml",
+        "package/.gitignore",
+        "package/CHANGELOG.md",
+        "package/LICENSE",
+        "package/README.md",
+        "package/README_EN.md",
+        "package/THIRD_PARTY_NOTICES.md",
+        "package/cordis.patch.yml",
+        "package/docs/documentation.md",
+        "package/docs/images/persona.png",
+        "package/docs/personality-format.md",
+        "package/docs/releases.md",
+        "package/docs/structure.json",
+        "package/package.json",
+        "package/scripts/build-permission-native.mjs",
+        "package/scripts/build.mjs",
+        "package/scripts/check-docs.mjs",
+        "package/scripts/check-public-files.mjs",
+        "package/scripts/check-release-assets.mjs",
+        "package/src/client/editor.jsx",
+        "package/src/client/index.jsx",
+        "package/src/client/main-conversation.mjs",
+        "package/src/client/native-controls.jsx",
+        "package/src/client/permission-menu.jsx",
+        "package/src/client/session-menu.jsx",
+        "package/src/client/settings-client.mjs",
+        "package/src/client/settings.jsx",
+        "package/src/client/slot-decoration.mjs",
+        "package/src/client/style.css",
+        "package/src/index.mjs",
+        "package/src/session.mjs",
+        "package/src/shared/identity.mjs",
+        "package/src/shared/personality.mjs",
+        "package/src/shared/prompt.mjs",
+        "package/src/shared/protocol.mjs",
+        "package/src/store.mjs",
+        "package/test/persona.test.mjs",
+        "package/test/settings-client.test.mjs",
+        "package/test/settings-concurrency.test.mjs"
+      ]
+    }
+  ],
+  "replies": [
+    {
+      "issue": 72,
+      "body": "感谢提交！已核查 dsh-error-atlas@0.11.26，将在下个提交后收录 😊",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/72#issuecomment-6394601263"
+    },
+    {
+      "issue": 73,
+      "body": "感谢提交！已核查 @chaiyahang/dsh-scratchpad@0.2.3，将在下个提交后收录 😊",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/73#issuecomment-6394601685"
+    },
+    {
+      "issue": 74,
+      "body": "感谢提交！已核查 @taxueseek/argo-dsh@2.9.8，将按固定版本收录，并补充源码核查记录和 Python/PyYAML、网页工具路由配置要求 😊",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/74#issuecomment-6394602182"
+    },
+    {
+      "issue": 31,
+      "body": "感谢补充！已核查 @feiwell/dsh-enhance-prompt@0.2.0 的固定提交 72524db41749dd6faa0820e58cd94dcbcd47d1e6、归档 SHA-512 和补丁，Host/客户端运行代码未变，将在下个提交中替换旧包名 😊",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/31#issuecomment-6394602574"
+    },
+    {
+      "issue": 62,
+      "body": "本轮复查结果如下：\n\n- `@dsh-ai-providers/jina-cohere@0.5.1` 的 README 已明确说明它是公共库，不是插件，因此不再要求该库补 bundle。按作者推荐，收录项改为 `@dsh-ai-providers/runtime`、`@dsh-ai-providers/jina` 和 `@dsh-ai-providers/cohere`，本轮核查版本均为 0.5.1，归档、补丁与 Host/客户端入口完整。Jina/Cohere 需要先安装并启用 runtime，仅下载依赖不会自动启用它，市场介绍中已说明。公共库会由依赖安装，不再单列为可安装插件。\n- Workbench、BTW、主题插件：当前固定的旧版本和最新 rc.3 Git 归档都缺少 `exports[\"./client\"]` 指向的 `lib/client.js`。三个旧版本的配置仍保留，但线上构建会排除它们；此前“保留旧版”并不代表归档完整或仍在市场展示。\n- Extensions 和 Persona：旧固定版本包含完整客户端，继续保留；最新 rc.3 Git 归档缺少 `lib/client.js`，暂不升级。\n\n请给以上五个 Git 插件提供包含预构建 Host/客户端文件的公开 npm 包，或把构建产物提交到可安装的仓库根目录并提供完整 SHA。Workbench、BTW、主题插件还需补齐当前固定版本，或提供可替代的完整版本。GitHub Release 的 tgz 附件与固定 Git 源码归档不同，当前来源规则不能直接替用。收到后会重新核查 rc.3 兼容范围。\n\n维护单继续保留；完整构建与发布仍交给 GitHub Actions。",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/62#issuecomment-6394603009"
+    }
+  ],
+  "validation": {
+    "checkedAt": "2026-10-25T05:28:58.306Z",
+    "targetedEntries": 7,
+    "officialFormat": "passed",
+    "syntaxChecked": 18,
+    "runtimeImportClosure": [
+      {
+        "name": "dsh-error-atlas",
+        "files": 2,
+        "missing": []
+      },
+      {
+        "name": "@chaiyahang/dsh-scratchpad",
+        "files": 2,
+        "missing": []
+      },
+      {
+        "name": "@taxueseek/argo-dsh",
+        "files": 6,
+        "missing": []
+      },
+      {
+        "name": "@feiwell/dsh-enhance-prompt",
+        "files": 2,
+        "missing": []
+      },
+      {
+        "name": "@dsh-ai-providers/runtime",
+        "files": 2,
+        "missing": []
+      },
+      {
+        "name": "@dsh-ai-providers/jina",
+        "files": 2,
+        "missing": []
+      },
+      {
+        "name": "@dsh-ai-providers/cohere",
+        "files": 2,
+        "missing": []
+      }
+    ],
+    "publicSourceByteMatches": [
+      "atlas",
+      "scratchpad",
+      "argo"
+    ],
+    "clientSourceMaps": [
+      {
+        "name": "@dsh-ai-providers/runtime",
+        "sources": 19,
+        "ownSourceFiles": 17,
+        "matchedOwnSourceContents": 17
+      },
+      {
+        "name": "@dsh-ai-providers/jina",
+        "sources": 8,
+        "ownSourceFiles": 6,
+        "matchedOwnSourceContents": 6
+      },
+      {
+        "name": "@dsh-ai-providers/cohere",
+        "sources": 7,
+        "ownSourceFiles": 5,
+        "matchedOwnSourceContents": 5
+      }
+    ],
+    "unchangedEntries": 883,
+    "rejectedGitArchives": [
+      {
+        "name": "dsh-deepseek-workbench",
+        "role": "current",
+        "version": "0.1.1-dsh.0.2.1-rc.2",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      },
+      {
+        "name": "dsh-deepseek-workbench",
+        "role": "upstream",
+        "version": "0.1.3-dsh.0.2.1-rc.3",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      },
+      {
+        "name": "@gulagala001/dsh-btw",
+        "role": "current",
+        "version": "0.1.2-dsh.0.2.1-rc.2",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      },
+      {
+        "name": "@gulagala001/dsh-btw",
+        "role": "upstream",
+        "version": "0.1.4-dsh.0.2.1-rc.3",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      },
+      {
+        "name": "@gulagala001/dsh-theme-plugin",
+        "role": "current",
+        "version": "0.2.1-dsh.0.2.1-rc.2",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      },
+      {
+        "name": "@gulagala001/dsh-theme-plugin",
+        "role": "upstream",
+        "version": "0.2.3-dsh.0.2.1-rc.3",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      },
+      {
+        "name": "dsh-extensions",
+        "role": "upstream",
+        "version": "0.1.2-dsh.0.2.1-rc.3",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      },
+      {
+        "name": "@gulagala001/dsh-persona-plugin",
+        "role": "upstream",
+        "version": "0.1.2-dsh.0.2.1-rc.3",
+        "error": "Client entry package/lib/client.js is missing from published archive"
+      }
+    ],
+    "argoRouting": {
+      "checkedAt": "2026-10-25T05:24:21.196Z",
+      "hostVersion": "0.2.1-rc.2",
+      "officialArchivesIntegrityVerified": true,
+      "tests": 3,
+      "defaultProfilePins": {
+        "searchProvider": "deepseek-official",
+        "fetchProvider": "http"
+      },
+      "unconfiguredCustomProfile": "WEB_PROVIDER_AMBIGUOUS",
+      "configuredHttp": "http",
+      "configuredArgo": "argo",
+      "conclusion": "Default official profile remains usable. Custom profiles with multiple providers need an explicit route. Argo web integration requires configuring the web route; native argo tools remain separately registered.",
+      "pluginExecuted": false,
+      "fullHostStarted": false
+    },
+    "fullCatalogBuild": false,
+    "pluginInstallation": false,
+    "pluginExecution": false
+  },
+  "repliesPostedAt": "2026-10-25T06:56:09.891Z",
+  "publication": {
+    "buildAndTests": "GitHub Actions",
+    "closingIssues": [
+      72,
+      73,
+      74
+    ],
+    "keptOpen": [
+      62
+    ],
+    "alreadyClosed": [
+      31
+    ]
+  }
+}

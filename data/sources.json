@@ -10110,18 +10110,6 @@
       "category": "development"
     },
     {
-      "name": "@dsh-ai-providers/jina-cohere",
-      "title": {
-        "en": "Jina / Cohere Reranking",
-        "zh": "Jina / Cohere Reranking（重排序）"
-      },
-      "description": {
-        "en": "Provide reranking through Jina- or Cohere-compatible /rerank APIs for plugins that use the shared dsh-ai-providers service. It does nothing on its own.",
-        "zh": "通过 Jina 或 Cohere 兼容的 /rerank 接口提供重排序，供使用 dsh-ai-providers 共享服务的插件调用，单独安装不起作用。"
-      },
-      "category": "providers"
-    },
-    {
       "name": "dsh-plugin-codegraph",
       "title": {
         "en": "CodeGraph",
@@ -10529,14 +10517,14 @@
       "category": "interface"
     },
     {
-      "name": "dsh-enhance-prompt",
+      "name": "@feiwell/dsh-enhance-prompt",
       "version": "0.2.0",
       "source": {
         "type": "git",
         "url": "https://github.com/feiwell/dsh-enhance-prompt",
-        "commit": "f096352e48333880761c932f450c62dda5eeebea",
-        "integrity": "sha512-HSmaZMyK1Ct+uZKHLeCnJRAEvsUtSQc+jLQWYk22j9YC56ER3BHvsxGZJqd5W+ssCxVzsT3W9Ppecws1G/RFbw==",
-        "publishedAt": "2026-10-22T21:05:06+08:00"
+        "commit": "72524db41749dd6faa0820e58cd94dcbcd47d1e6",
+        "integrity": "sha512-IKIzKQyLmtVlvQ/5NX9Ev040PBTYQfnXIdnuKwkIg5DWHtDcpvId5ztU4sZqWzUydQ+B3VmVLZmKVu4fBDNUNw==",
+        "publishedAt": "2026-10-24T15:25:28Z"
       },
       "title": {
         "en": "Prompt Enhancer",
@@ -11012,6 +11000,85 @@
         "zh": "扫描六类技能根，说明技能不可见或被禁用的原因，通过面板和 skill_panel 工具管理技能，支持编辑、启停、备份与回收站；项目技能根保持只读。"
       },
       "category": "skills"
+    },
+    {
+      "name": "dsh-error-atlas",
+      "title": {
+        "en": "Error Atlas",
+        "zh": "错误星图"
+      },
+      "description": {
+        "en": "Record runtime failures and coding retrospectives locally, explore a WebGL knowledge graph and recall lessons through tools and optional context injection. The panel API accepts local connections only; the package declares no DSH version range.",
+        "zh": "在本地记录运行错误与编程复盘，以 WebGL 图谱查看关联，通过工具和可关闭的上下文注入复用教训。面板接口仅接受本机连接，包内未声明适用的 DSH 版本。"
+      },
+      "category": "memory"
+    },
+    {
+      "name": "@chaiyahang/dsh-scratchpad",
+      "title": {
+        "en": "Scratchpad",
+        "zh": "便签"
+      },
+      "description": {
+        "en": "Keep notes, tags and attachments in Host storage, preview Markdown and tasks, send notes with real attachments to chat, import or export JSON and let Agents read and edit notes. The author requires DSH 0.2.1-rc.2 or later.",
+        "zh": "在 Host 端保存便签、标签和附件，预览 Markdown 与待办，把便签及真实附件发送到对话，支持 JSON 导入导出和 Agent 读写。作者要求 DSH 0.2.1-rc.2 或更高版本。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@taxueseek/argo-dsh",
+      "title": {
+        "en": "Argo",
+        "zh": "Argo 阿尔戈"
+      },
+      "description": {
+        "en": "Add native search and fetch tools, optional web routing and parallel research with a settings panel. Requires Node.js 18+, Python 3.9+ and PyYAML. Set the web search/fetch provider explicitly to route built-in web tools through Argo; no DSH version range is declared.",
+        "zh": "提供原生搜索与抓取工具、可选的网页工具路由、并行研究及设置面板。需要 Node.js 18+、Python 3.9+ 和 PyYAML；内置网页工具改走 Argo 时需显式配置搜索与抓取路由，包内未声明适用的 DSH 版本。"
+      },
+      "category": "tools",
+      "version": "2.9.8",
+      "repositoryReview": {
+        "version": "2.9.8",
+        "integrity": "sha512-vmIFtzga0IBI1ZvYKEraZh767g9qR7j+x4hKrjO97mKQpyYwc5HOuH24PppvZHkEnLGOawnwNMKX9lEzsm2uvQ==",
+        "url": "https://github.com/taxueseek/argo",
+        "commit": "d9fea8b6cdf492a69d1f334019ff311b8dfc0fdc"
+      }
+    },
+    {
+      "name": "@dsh-ai-providers/runtime",
+      "title": {
+        "en": "AI Providers Runtime",
+        "zh": "AI 提供方运行时"
+      },
+      "description": {
+        "en": "Activate the shared AI provider registry and settings for language models, embeddings, reranking, speech and images. Install and activate this bundle before the Jina or Cohere provider; vendor packages and credentials are configured separately.",
+        "zh": "启用语言模型、嵌入、重排序、语音与图像共用的 AI 提供方注册表和设置界面。使用 Jina 或 Cohere 插件前需先安装并启用本组合包，厂商插件与凭据另行配置。"
+      },
+      "category": "providers"
+    },
+    {
+      "name": "@dsh-ai-providers/jina",
+      "title": {
+        "en": "Jina AI",
+        "zh": "Jina AI"
+      },
+      "description": {
+        "en": "Provide Jina embeddings and reranking with reusable connections and DSH-managed credentials. Requires the @dsh-ai-providers/runtime bundle to be installed and activated; consumer plugins call the services.",
+        "zh": "通过复用连接和 DSH 凭据提供 Jina 嵌入与重排序。需要先安装并启用 @dsh-ai-providers/runtime 组合包，由使用这些服务的插件调用。"
+      },
+      "category": "providers"
+    },
+    {
+      "name": "@dsh-ai-providers/cohere",
+      "title": {
+        "en": "Cohere",
+        "zh": "Cohere"
+      },
+      "description": {
+        "en": "Provide native Cohere v2 language models, embeddings and reranking, including streamed tool calls and model discovery. Requires the @dsh-ai-providers/runtime bundle to be installed and activated, with separately configured connections and credentials.",
+        "zh": "提供原生 Cohere v2 语言模型、嵌入与重排序，支持流式工具调用和模型发现。需要先安装并启用 @dsh-ai-providers/runtime 组合包，并另行配置连接与凭据。"
+      },
+      "category": "providers"
     }
   ]
 }
