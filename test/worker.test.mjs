@@ -112,6 +112,35 @@ test('stats.json is served from the edge cache and refreshed in the background o
   assert.ok(batches > runs, 'and is recomputed in the background');
 });
 
+test('the project star count is fetched from GitHub once and then served from the edge cache', async t => {
+  globalThis.caches = cacheStore();
+  const calls = [];
+  t.mock.method(globalThis, 'fetch', async (url, init) => {
+    calls.push({ url: String(url), authorization: init.headers.authorization });
+    return Response.json({ stargazers_count: 42 });
+  });
+  const ask = async env => {
+    const waits = [];
+    const response = await worker.fetch(new Request('https://dshopen.org/api/stars'), env, { waitUntil: promise => waits.push(promise) });
+    await Promise.all(waits);
+    return response;
+  };
+  const first = await ask({ GITHUB_TOKEN: 'secret' });
+  assert.deepEqual(await first.json(), { stars: 42, fetchedAt: (await (await ask({})).json()).fetchedAt });
+  assert.equal(first.headers.get('access-control-allow-origin'), '*');
+  assert.deepEqual(calls, [{ url: 'https://api.github.com/repos/polang233/dsh-plugin-index', authorization: 'Bearer secret' }]);
+});
+
+test('an unavailable GitHub answer is a 502 and is not cached', async t => {
+  globalThis.caches = cacheStore();
+  let calls = 0;
+  t.mock.method(globalThis, 'fetch', async () => { calls++; return new Response('rate limited', { status: 403 }); });
+  const response = await worker.fetch(new Request('https://dshopen.org/api/stars'), {}, { waitUntil() {} });
+  assert.equal(response.status, 502);
+  await worker.fetch(new Request('https://dshopen.org/api/stars'), {}, { waitUntil() {} });
+  assert.equal(calls, 2);
+});
+
 // A local D1 stand-in executes real SQL, including transactional batches.
 const LOGO_BYTES = new Uint8Array([137, 80, 78, 71, 1, 2, 3]);
 
