@@ -571,7 +571,7 @@ if (starSlots.length) {
 // Coming back from the page cache should never leave the page faded out.
 window.addEventListener('pageshow', () => document.body.classList.remove('is-leaving'));
 
-// Usage stats page: tiles, a daily bar chart (people or loads, one at a time) and the country and region shares, all from stats.json.
+// Usage stats page: tiles, the trend lines (loads, people, catalog size and stars) and the country and region shares.
 const statsRoot = document.querySelector('[data-stats]');
 if (statsRoot) {
   const words = JSON.parse(document.querySelector('#stats-messages').textContent);
@@ -600,7 +600,23 @@ if (statsRoot) {
     for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
     return node;
   };
-  const tile = (id, value) => { const node = statsRoot.querySelector(`[data-tile="${id}"] [data-value]`); if (node) node.textContent = Number.isSafeInteger(value) ? number.format(value) : '–'; };
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Numbers roll up to their value once, in under a second.
+  const tile = (id, value, note) => {
+    const node = statsRoot.querySelector(`[data-tile="${id}"] [data-value]`);
+    if (!node) return;
+    const sub = node.parentElement.querySelector('[data-sub]');
+    if (sub && note) sub.textContent = note;
+    if (!Number.isSafeInteger(value)) { node.textContent = '–'; return; }
+    if (still || value < 10) { node.textContent = number.format(value); return; }
+    const start = performance.now();
+    const step = now => {
+      const progress = Math.min(1, (now - start) / 900);
+      node.textContent = number.format(Math.round(value * (1 - (1 - progress) ** 3)));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
 
   // Every UTC day from the first recorded one to today (at most 30), with zeros for days without reads.
   const daysOf = daily => {
@@ -624,83 +640,115 @@ if (statsRoot) {
     return { step, ticks: Math.max(1, Math.ceil(max / step)) };
   };
 
+  // Trends: loads, people, catalog size and GitHub stars over the same days, each switched on or off from its chip.
+  // One line is drawn against its own axis; with several, each is scaled to its own range so their shapes compare,
+  // and the axis keeps the first one's numbers.
   const chartBox = statsRoot.querySelector('[data-daily]');
   const tooltip = Object.assign(document.createElement('div'), { className: 'chart-tooltip', hidden: true });
   chartBox.append(tooltip);
   let days = [];
-  let metric = 'readers';
+  let starHistory;
+  const SERIES = ['reads', 'readers', 'plugins', 'stars'];
+  const active = new Set(['reads']);
+  // The latest recorded value on or before a day, from [day, value] pairs in date order.
+  const stepValue = (pairs, day) => { let value = 0; for (const [at, count] of pairs ?? []) { if (at > day) break; value = count; } return value; };
+  const valueOf = (day, id) => id === 'plugins' ? stepValue(words.catalogDaily, day.day) : id === 'stars' ? (starHistory ? stepValue(starHistory, day.day) : null) : day[id];
   const drawDaily = () => {
     chartBox.querySelector('svg')?.remove();
     if (!days.length) return;
+    const shown = SERIES.filter(id => active.has(id) && days.some(day => valueOf(day, id) !== null));
     const width = Math.max(280, chartBox.clientWidth);
-    const height = width < 520 ? 220 : 280;
-    const pad = { top: 12, right: 4, bottom: 28, left: 52 };
+    // Beside the regions panel the chart fills the height the row gives it.
+    const height = Math.max(width < 520 ? 220 : 260, Math.min(340, chartBox.clientHeight));
+    const pad = { top: 14, right: 10, bottom: 28, left: 52 };
     const plotW = width - pad.left - pad.right;
     const plotH = height - pad.top - pad.bottom;
-    const { step, ticks } = niceScale(Math.max(...days.map(day => day[metric])));
-    const top = step * ticks;
-    const y = value => pad.top + plotH - value / top * plotH;
-    const slot = plotW / days.length;
-    const barW = Math.max(3, Math.min(36, slot - 2));
-    const root = svg('svg', { viewBox: `0 0 ${width} ${height}`, width, height, role: 'img', 'aria-label': `${metric === 'readers' ? words.metricReaders : words.metricReads}: ${days.map(day => `${day.day} ${day[metric]}`).join(', ')}` });
-    for (let tick = 0; tick <= ticks; tick++) {
-      const value = step * tick;
-      root.append(svg('line', { x1: pad.left, x2: width - pad.right, y1: y(value), y2: y(value), class: tick ? 'grid' : 'baseline' }));
-      const label = svg('text', { x: pad.left - 8, y: y(value) + 4, 'text-anchor': 'end', class: 'axis' });
-      label.textContent = number.format(value);
-      root.append(label);
+    const slot = days.length > 1 ? plotW / (days.length - 1) : plotW;
+    const x = at => pad.left + (days.length > 1 ? slot * at : plotW / 2);
+    const scales = Object.fromEntries(shown.map(id => { const { step, ticks } = niceScale(Math.max(...days.map(day => valueOf(day, id) ?? 0))); return [id, step * ticks]; }));
+    const y = (id, value) => pad.top + plotH - value / scales[id] * plotH;
+    const root = svg('svg', { viewBox: `0 0 ${width} ${height}`, width, height, role: 'img', 'aria-label': shown.map(id => `${words.series[id]}: ${days.map(day => `${day.day} ${valueOf(day, id)}`).join(', ')}`).join('; ') });
+    const axisId = shown[0];
+    if (axisId) {
+      const { ticks } = niceScale(scales[axisId]);
+      for (let tick = 0; tick <= ticks; tick++) {
+        const value = scales[axisId] / ticks * tick;
+        root.append(svg('line', { x1: pad.left, x2: width - pad.right, y1: y(axisId, value), y2: y(axisId, value), class: tick ? 'grid' : 'baseline' }));
+        const label = svg('text', { x: pad.left - 8, y: y(axisId, value) + 4, 'text-anchor': 'end', class: `axis series-${axisId}` });
+        label.textContent = number.format(Math.round(value));
+        root.append(label);
+      }
     }
-    // Label about six days along the axis, always including the last.
     const every = Math.max(1, Math.ceil(days.length / 6));
     days.forEach((day, at) => {
-      const x = pad.left + slot * at + (slot - barW) / 2;
-      const value = day[metric];
-      const h = Math.max(0, y(0) - y(value));
-      const r = Math.min(4, barW / 2, h);
-      // A bar with a 4px rounded top, flat on the baseline.
-      const bar = svg('path', { d: `M${x},${y(0)}V${y(0) - h + r}Q${x},${y(0) - h} ${x + r},${y(0) - h}H${x + barW - r}Q${x + barW},${y(0) - h} ${x + barW},${y(0) - h + r}V${y(0)}Z`, class: day.today ? 'bar is-today' : 'bar' });
-      const hit = svg('rect', { x: pad.left + slot * at, y: pad.top, width: slot, height: plotH, class: 'hit', tabindex: 0, 'aria-label': `${day.day}: ${words.metricReaders} ${number.format(day.readers)}, ${words.metricReads} ${number.format(day.reads)}` });
+      if (at % every !== (days.length - 1) % every) return;
+      const label = svg('text', { x: x(at), y: height - 8, 'text-anchor': 'middle', class: 'axis' });
+      label.textContent = shortDay.format(new Date(`${day.day}T00:00:00Z`));
+      root.append(label);
+    });
+    for (const id of shown) {
+      const points = days.map((day, at) => [x(at), y(id, valueOf(day, id) ?? 0)]);
+      const line = points.map(([px, py], at) => `${at ? 'L' : 'M'}${px},${py}`).join('');
+      if (shown.length === 1) root.append(svg('path', { d: `${line}L${points.at(-1)[0]},${y(id, 0)}L${points[0][0]},${y(id, 0)}Z`, class: `series-area series-${id}` }));
+      root.append(svg('path', { d: line, class: `series-line series-${id}`, pathLength: 1 }));
+      points.forEach(([px, py], at) => root.append(svg('circle', { cx: px, cy: py, r: days[at].today ? 4.5 : 3, class: `series-point series-${id}${days[at].today ? ' is-today' : ''}` })));
+    }
+    // One hover column per day shows every visible value.
+    const cursor = svg('line', { y1: pad.top, y2: pad.top + plotH, class: 'cursor', visibility: 'hidden' });
+    root.append(cursor);
+    days.forEach((day, at) => {
+      const hit = svg('rect', { x: x(at) - slot / 2, y: pad.top, width: Math.max(slot, 8), height: plotH, class: 'hit', tabindex: 0, 'aria-label': `${day.day}: ${shown.map(id => `${words.series[id]} ${number.format(valueOf(day, id) ?? 0)}`).join(', ')}` });
       const show = () => {
-        root.querySelectorAll('.bar.is-active').forEach(node => node.classList.remove('is-active'));
-        bar.classList.add('is-active');
-        const date = new Date(`${day.day}T00:00:00Z`);
+        cursor.setAttribute('x1', x(at)); cursor.setAttribute('x2', x(at)); cursor.setAttribute('visibility', 'visible');
         tooltip.innerHTML = '';
         const title = document.createElement('strong');
-        title.textContent = longDay.format(date) + (day.today ? ' · UTC' : '');
+        title.textContent = longDay.format(new Date(`${day.day}T00:00:00Z`)) + (day.today ? ' · UTC' : '');
         tooltip.append(title);
-        for (const [key, label] of [['readers', words.metricReaders], ['reads', words.metricReads]]) {
+        for (const id of shown) {
           const row = document.createElement('span');
-          row.className = key === metric ? 'is-current' : '';
-          row.textContent = `${label} ${number.format(day[key])}`;
+          row.className = `series-${id}`;
+          row.textContent = `${words.series[id]} ${number.format(valueOf(day, id) ?? 0)}`;
           tooltip.append(row);
         }
         tooltip.hidden = false;
-        const left = Math.min(Math.max(pad.left + slot * (at + .5) - tooltip.offsetWidth / 2, 0), width - tooltip.offsetWidth);
-        tooltip.style.left = `${left}px`;
-        tooltip.style.top = `${Math.max(0, y(value) - tooltip.offsetHeight - 10)}px`;
+        tooltip.style.left = `${Math.min(Math.max(x(at) - tooltip.offsetWidth / 2, 0), width - tooltip.offsetWidth)}px`;
+        tooltip.style.top = `${pad.top}px`;
       };
-      const hide = () => { bar.classList.remove('is-active'); tooltip.hidden = true; };
+      const hide = () => { cursor.setAttribute('visibility', 'hidden'); tooltip.hidden = true; };
       hit.addEventListener('pointerenter', show);
       hit.addEventListener('focus', show);
       hit.addEventListener('pointerleave', hide);
       hit.addEventListener('blur', hide);
-      root.append(bar, hit);
-      if (at % every === (days.length - 1) % every) {
-        const label = svg('text', { x: pad.left + slot * (at + .5), y: height - 8, 'text-anchor': 'middle', class: 'axis' });
-        label.textContent = shortDay.format(new Date(`${day.day}T00:00:00Z`));
-        root.append(label);
-      }
+      root.append(hit);
     });
     chartBox.prepend(root);
+    // Lines draw in on the first draw and on a switch, not on every resize.
+    setTimeout(() => chartBox.classList.add('is-drawn'), 1200);
   };
-  statsRoot.querySelectorAll('[data-metric]').forEach(button => button.addEventListener('click', () => {
-    metric = button.dataset.metric;
-    statsRoot.querySelectorAll('[data-metric]').forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+  const toggles = [...statsRoot.querySelectorAll('[data-series]')];
+  toggles.forEach(button => button.addEventListener('click', () => {
+    const id = button.dataset.series;
+    // The last visible line stays on, so the chart is never empty.
+    if (active.has(id) && active.size === 1) return;
+    if (active.has(id)) active.delete(id); else active.add(id);
+    button.setAttribute('aria-pressed', String(active.has(id)));
+    chartBox.classList.remove('is-drawn');
     drawDaily();
   }));
+  // stars.json is written by each full build from GitHub's stargazer dates.
+  fetch(new URL(words.starsHistory, location.href)).then(response => response.ok ? response.json() : Promise.reject()).then(data => {
+    if (Array.isArray(data?.history)) { starHistory = data.history.filter(pair => Array.isArray(pair) && Number.isSafeInteger(pair[1])); if (active.has('stars')) drawDaily(); }
+    else statsRoot.querySelector('[data-series="stars"]')?.setAttribute('hidden', '');
+  }).catch(() => statsRoot.querySelector('[data-series="stars"]')?.setAttribute('hidden', ''));
   if ('ResizeObserver' in window) {
     let lastWidth = 0;
-    new ResizeObserver(() => { if (chartBox.clientWidth !== lastWidth) { lastWidth = chartBox.clientWidth; drawDaily(); } }).observe(chartBox);
+    // Width, and height beside the regions panel (whose data arrives later); a stacked chart's own height stays put.
+    let lastHeight = 0;
+    new ResizeObserver(() => {
+      if (chartBox.clientWidth === lastWidth && Math.abs(chartBox.clientHeight - lastHeight) < 2) return;
+      lastWidth = chartBox.clientWidth; lastHeight = chartBox.clientHeight;
+      drawDaily();
+    }).observe(chartBox);
   }
 
   // A donut of the UN regions: one slice per region with people, a 2px gap between slices and the total in the middle.
@@ -767,7 +815,8 @@ if (statsRoot) {
       const share = row[key] / total;
       item.innerHTML = '<span class="country-name"></span><span class="country-track"><span class="country-fill"></span></span><span class="country-value"><strong></strong><small></small></span>';
       item.querySelector('.country-name').textContent = row.label ?? regionName(row.country);
-      item.querySelector('.country-fill').style.width = `${Math.max(1.5, row[key] / largest * 100)}%`;
+      // A square-root scale: one dominant country no longer flattens the rest into slivers; the percentage stays exact.
+      item.querySelector('.country-fill').style.width = `${Math.max(3, Math.sqrt(row[key] / largest) * 100)}%`;
       item.querySelector('strong').textContent = percent.format(share);
       item.querySelector('small').textContent = number.format(row[key]);
       item.title = `${item.querySelector('.country-name').textContent}: ${number.format(row[key])} · ${percent.format(share)}`;
@@ -777,11 +826,11 @@ if (statsRoot) {
 
   fetch(statsRoot.dataset.stats).then(response => response.ok ? response.json() : Promise.reject(new Error(String(response.status)))).then(data => {
     status.hidden = true;
-    tile('todayReaders', data.today?.readers);
-    tile('todayReads', data.today?.reads);
-    tile('monthReaders', data.last30Days?.readers);
-    tile('totalReads', data.total);
     days = daysOf((data.last30Days?.daily ?? []).filter(row => /^\d{4}-\d{2}-\d{2}$/.test(row.day)));
+    const yesterday = days.length > 1 ? days[days.length - 2] : undefined;
+    const note = (key, value) => Number.isSafeInteger(value) ? words.tileNotes[key].replace('{value}', number.format(value)) : '';
+    tile('todayReaders', data.today?.readers, note('yesterday', yesterday?.readers));
+    tile('monthReaders', data.last30Days?.readers, days.length ? note('average', Math.round((data.last30Days?.readers ?? 0) / days.length)) : '');
     statsRoot.querySelector('[data-daily-table]').replaceChildren(...[...days].reverse().map(day => {
       const row = document.createElement('tr');
       for (const value of [longDay.format(new Date(`${day.day}T00:00:00Z`)), number.format(day.readers), number.format(day.reads)]) {
@@ -794,4 +843,40 @@ if (statsRoot) {
     drawDaily();
     drawCountries(data.countries);
   }).catch(() => { status.textContent = words.failed; status.classList.add('is-error'); });
+
+  // The catalog's own numbers need no request; likes and the plugin name list are read once for the tiles and the ranking.
+  const catalogNote = (key, value) => words.tileNotes[key].replace('{value}', number.format(value));
+  // While the whole catalog is younger than a week the weekly count says nothing, so the note waits.
+  tile('plugins', words.plugins, words.addedWeek > 0 && words.addedWeek < words.plugins ? catalogNote('added', words.addedWeek) : '');
+  const ranking = statsRoot.querySelector('[data-like-ranking]');
+  const liked = Promise.all([
+    fetch(worker(words.likesUrl)).then(response => response.ok ? response.json() : Promise.reject()),
+    fetch(new URL(ranking.dataset.names, location.href)).then(response => response.ok ? response.json() : Promise.reject())
+  ]).then(([likes, names]) => [Object.entries(likes?.likes ?? {}).filter(([name, value]) => names[name] && Number.isSafeInteger(value) && value > 0), names]);
+  liked.then(([entries]) => tile('likes', entries.reduce((sum, [, value]) => sum + value, 0), catalogNote('likedPlugins', entries.length)), () => tile('likes', undefined));
+
+  // The ten most liked plugins, with their titles and icons from this language's name list.
+  liked.then(([entries, names]) => {
+    const top = [...entries].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 10);
+    if (!top.length) {
+      ranking.replaceWith(Object.assign(document.createElement('p'), { className: 'chart-empty', textContent: words.likesEmpty }));
+      return;
+    }
+    const most = top[0][1];
+    ranking.replaceChildren(...top.map(([name, value], at) => {
+      const [title, icon, href] = names[name];
+      const item = document.createElement('li');
+      item.style.setProperty('--i', at);
+      item.innerHTML = '<span class="rank"></span><a class="rank-plugin"><span class="plugin-avatar" aria-hidden="true"><img alt="" width="36" height="36" loading="lazy" decoding="async"></span><span class="rank-name"></span></a><span class="rank-track"><span class="rank-fill"></span></span><strong class="rank-value"></strong>';
+      item.querySelector('.rank').textContent = at + 1;
+      item.querySelector('.rank-plugin').href = href;
+      const image = item.querySelector('img');
+      image.src = icon ? new URL(icon, location.href).href : new URL(ranking.dataset.placeholder, location.href).href;
+      if (!icon) image.className = 'avatar-placeholder';
+      item.querySelector('.rank-name').textContent = title;
+      item.querySelector('.rank-fill').style.width = `${Math.max(4, value / most * 100)}%`;
+      item.querySelector('.rank-value').textContent = `♥ ${number.format(value)}`;
+      return item;
+    }));
+  }).catch(() => ranking.closest('section')?.setAttribute('hidden', ''));
 }

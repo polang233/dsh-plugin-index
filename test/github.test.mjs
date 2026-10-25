@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parseMarketIndex } from '@deepseek-ai/dsh-plugin-market-index';
-import { collectGitHub, githubRepository, applyGitHubStars } from '../scripts/github.mjs';
+import { collectGitHub, githubRepository, applyGitHubStars, collectStarHistory } from '../scripts/github.mjs';
 
 const NOW = Date.parse('2026-10-18T00:00:00Z');
 const index = {
@@ -81,4 +81,16 @@ test('unexpected repository identities or star values are not published', async 
 test('removed repositories are not carried forward from a snapshot', async () => {
   const snapshot = await collectGitHub({ ...index, plugins: [] }, { now: NOW, previous: cached('2026-10-17T00:00:00Z'), fetchImpl: () => assert.fail('no requests') });
   assert.deepEqual(snapshot.repositories, {});
+});
+
+test('star history counts stars by the end of each day and keeps the previous history on failure', async () => {
+  const pages = [Array.from({ length: 100 }, (_, at) => ({ starred_at: at < 60 ? '2026-10-19T01:00:00Z' : '2026-10-20T01:00:00Z' })), [{ starred_at: '2026-10-22T05:00:00Z' }]];
+  const requests = [];
+  const fetchImpl = async (url, init) => { requests.push([url, init.headers.accept]); return Response.json(pages[requests.length - 1]); };
+  const result = await collectStarHistory('owner/repo', { fetchImpl, token: 'secret' });
+  assert.deepEqual(result.history, [['2026-10-19', 60], ['2026-10-20', 100], ['2026-10-22', 101]]);
+  assert.deepEqual(requests.map(([url, accept]) => [url.split('?')[1], accept]), [['per_page=100&page=1', 'application/vnd.github.star+json'], ['per_page=100&page=2', 'application/vnd.github.star+json']]);
+  const previous = { schema: 1, history: [['2026-10-19', 1]] };
+  assert.equal(await collectStarHistory('owner/repo', { fetchImpl: async () => new Response('', { status: 401 }), token: 'secret', previous }), previous);
+  assert.equal(await collectStarHistory('owner/repo', { token: '', previous }), previous);
 });

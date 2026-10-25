@@ -87,7 +87,7 @@ const COPY = {
     // Usage stats page.
     statsTitle: 'Usage stats — Open Plugin Market', statsHeading: 'Usage stats', statsDescription: 'How many people use Open Plugin Market in DeepSeek Harness each day, and where they are: daily users and loads for the last 30 days, by country and region.',
     statsLead: 'DSH fetches this market’s index each time it loads or refreshes it. The numbers below come straight from those fetches and refresh every few minutes.',
-    statsTiles: { todayReaders: 'People today', todayReads: 'Loads today', monthReaders: 'People, last 30 days', totalReads: 'Loads in total' },
+    statsTiles: { todayReaders: 'People today', monthReaders: 'People, last 30 days', plugins: 'Plugins listed', likes: 'Likes' },
     monthReadersNote: 'Sum of each day’s people; someone who uses DSH on several days counts once per day.',
     dailyTitle: 'Trends, last 30 days', series: { reads: 'Loads', readers: 'People', plugins: 'Plugins listed', stars: 'GitHub stars' }, seriesLabel: 'Lines to show', metricReaders: 'People', metricReads: 'Loads', metric: 'Show',
     countriesTitle: 'Where people use it', countriesNote: 'Share of people over the last 30 days. Collected since {since}.', countriesNoteLoads: 'Share of loads over the last 30 days, estimated from Cloudflare traffic analytics.', regionsTitle: 'By UN geographic region', countriesSub: 'By country or region',
@@ -147,7 +147,7 @@ const COPY = {
     facts: '插件信息', author: '作者', keywords: '关键词', related: '更多「{category}」插件', browseAll: '浏览全部插件', npmMonth: '近 30 天 npm 下载量',
     statsTitle: '使用统计 — 开放插件市场', statsHeading: '使用统计', statsDescription: '开放插件市场在 DeepSeek Harness 中每天有多少人使用、来自哪里：近 30 天每日用户数和加载次数，以及国家和地区分布。',
     statsLead: 'DSH 每次加载或刷新这个市场，都会读取一次索引。下面的数字直接来自这些读取，每隔几分钟更新。',
-    statsTiles: { todayReaders: '今日用户', todayReads: '今日加载', monthReaders: '近 30 天用户', totalReads: '累计加载' },
+    statsTiles: { todayReaders: '今日用户', monthReaders: '近 30 天用户', plugins: '收录插件', likes: '累计点赞' },
     monthReadersNote: '每天用户数之和；同一个人在不同的日子使用，每天各算一次。',
     dailyTitle: '近 30 天趋势', series: { reads: '使用次数', readers: '用户', plugins: '收录插件', stars: 'GitHub star' }, seriesLabel: '显示的数据', metricReaders: '用户', metricReads: '加载次数', metric: '显示',
     countriesTitle: '使用地区分布', countriesNote: '近 30 天用户占比，自 {since} 起统计。', countriesNoteLoads: '近 30 天加载次数占比，来自 Cloudflare 流量分析的估算值。', regionsTitle: '按联合国地理分区', countriesSub: '按国家和地区',
@@ -510,24 +510,31 @@ function pluginPage(plugin, index, language, context, related) {
 }
 
 function statsPage(language, context) {
-  const { text, site } = context;
-  const tiles = Object.entries(text.statsTiles).map(([id, label]) => `<li class="stat-tile" data-tile="${id}"><span class="stat-label">${esc(label)}${id === 'monthReaders' ? `<span class="stat-note" title="${esc(text.monthReadersNote)}" aria-label="${esc(text.monthReadersNote)}">?</span>` : ''}</span><strong data-value>–</strong></li>`).join('');
-  const messages = { locale: LANGUAGES[language].tag, metricReaders: text.metricReaders, metricReads: text.metricReads, countriesNote: text.countriesNote, countriesNoteLoads: text.countriesNoteLoads, unknownRegion: text.unknownRegion, otherRegions: text.otherRegions, regions: text.regions, regionNames: text.regionNames, failed: text.statsFailed };
+  const { text, site, root } = context;
+  const tiles = Object.entries(text.statsTiles).map(([id, label]) => `<li class="stat-tile" data-tile="${id}"><span class="stat-label">${esc(label)}${id === 'monthReaders' ? `<span class="stat-note" title="${esc(text.monthReadersNote)}" aria-label="${esc(text.monthReadersNote)}">?</span>` : ''}</span><strong data-value>–</strong><span class="stat-sub" data-sub></span></li>`).join('');
+  // Catalog facts the page needs no request for: the catalog size at the end of each listed day, and recent additions.
+  const messages = { locale: LANGUAGES[language].tag, tileNotes: text.tileNotes, plugins: site.plugins, addedWeek: site.addedWeek, catalogDaily: site.catalogDaily, series: text.series, starsHistory: `${root}stars.json`, likesUrl: `${ORIGIN}likes.json`, likesEmpty: text.likesEmpty, metricReaders: text.metricReaders, metricReads: text.metricReads, countriesNote: text.countriesNote, countriesNoteLoads: text.countriesNoteLoads, unknownRegion: text.unknownRegion, otherRegions: text.otherRegions, regions: text.regions, regionNames: text.regionNames, failed: text.statsFailed };
   const body = `    <div class="stats-page shell" data-stats="${STATS_URL}">
-      <header class="stats-intro"><h1 id="page-title">${esc(text.statsHeading)}</h1><p>${esc(text.statsLead)}</p><p class="stats-status" data-stats-status role="status">${esc(text.statsLoading)}</p></header>
+      <header class="stats-intro"><div><div class="stats-title"><h1 id="page-title">${esc(text.statsHeading)}</h1><p class="live-note"><span class="usage-dot" aria-hidden="true"></span>${esc(text.liveNote)}</p></div><p>${esc(text.statsLead)}</p><p class="stats-status" data-stats-status role="status">${esc(text.statsLoading)}</p></div></header>
       <ul class="stat-tiles">${tiles}</ul>
+      <div class="stats-grid">
       <section class="detail-panel chart-panel" aria-labelledby="daily-title">
-        <div class="chart-head"><h2 id="daily-title">${esc(text.dailyTitle)}</h2><div class="chips metric-chips" role="group" aria-label="${esc(text.metric)}"><button type="button" class="chip" data-metric="readers" aria-pressed="true">${esc(text.metricReaders)}</button><button type="button" class="chip" data-metric="reads" aria-pressed="false">${esc(text.metricReads)}</button></div></div>
+        <div class="chart-head"><h2 id="daily-title">${esc(text.dailyTitle)}</h2><div class="series-toggles" role="group" aria-label="${esc(text.seriesLabel)}">${Object.entries(text.series).map(([id, label]) => `<button type="button" class="series-toggle" data-series="${id}" aria-pressed="${id === 'reads'}"><span class="series-dot" aria-hidden="true"></span>${esc(label)}</button>`).join('')}</div></div>
         <div class="daily-chart" data-daily></div>
         <details class="chart-table"><summary>${esc(text.showTable)}</summary><div class="table-wrap"><table><thead><tr><th scope="col">${esc(text.day)}</th><th scope="col">${esc(text.metricReaders)}</th><th scope="col">${esc(text.metricReads)}</th></tr></thead><tbody data-daily-table></tbody></table></div></details>
       </section>
       <section class="detail-panel chart-panel" aria-labelledby="countries-title">
         <div class="chart-head"><h2 id="countries-title">${esc(text.countriesTitle)}</h2><p class="chart-note" data-countries-note></p></div>
         <div class="geo-grid" data-geo>
-          <figure class="region-chart"><figcaption>${esc(text.regionsTitle)}</figcaption><div class="region-donut" data-regions></div><ul class="region-legend" data-region-legend></ul></figure>
+          <figure class="region-chart" aria-label="${esc(text.regionsTitle)}"><div class="region-donut" data-regions></div><ul class="region-legend" data-region-legend></ul></figure>
           <div class="country-chart"><h3>${esc(text.countriesSub)}</h3><ol class="country-bars" data-countries></ol></div>
         </div>
         <p class="chart-empty" data-countries-empty hidden>${esc(text.countriesEmpty)}</p>
+      </section>
+      </div>
+      <section class="detail-panel chart-panel" aria-labelledby="likes-title">
+        <div class="chart-head"><h2 id="likes-title">${esc(text.likesTitle)}</h2><p class="chart-note">${esc(text.likesNote)}</p></div>
+        <ol class="like-ranking" data-like-ranking data-names="plugins.json" data-placeholder="${root}assets/placeholder-whale.webp"></ol>
       </section>
       <section class="detail-panel method" aria-labelledby="method-title"><h2 id="method-title">${esc(text.methodTitle)}</h2><p>${esc(text.methodText)}</p><p><a href="${STATS_URL}">${esc(text.rawStats)}</a></p></section>
       <script id="stats-messages" type="application/json">${json(messages)}</script>
@@ -590,6 +597,12 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
     socialImages
   };
   site.categories = site.usedCategories.length;
+  // For the stats page: the catalog size at the end of each day a plugin joined, and how many joined in the last week.
+  const joined = Object.entries(plugins.reduce((days, plugin) => { const day = added.packages?.[plugin.name]; if (day) days[day] = (days[day] ?? 0) + 1; return days; }, {})).sort();
+  let running = 0;
+  site.catalogDaily = joined.map(([day, count]) => [day, running += count]);
+  const weekAgo = (Date.parse(evidence?.generatedAt ?? '') || Date.now()) - 7 * 86_400_000;
+  site.addedWeek = plugins.filter(plugin => (addedTimestamp(added, plugin.name) ?? 0) * 1000 > weekAgo).length;
   // Plugin pages are regenerated from scratch so withdrawn plugins do not linger.
   for (const language of Object.keys(LANGUAGES)) await rm(new URL(LANGUAGES[language].dir + 'plugins/', output), { recursive: true, force: true });
   const shared = { categories: index.metadata?.categories ?? {}, snapshot, downloads, display, labels: index.metadata?.labels ?? {}, site, added };
@@ -615,6 +628,13 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
     } else await rm(new URL('catalog.json', dir), { force: true });
     await write(LANGUAGES[language].dir, homePage(index, language, home, rows.slice(0, INITIAL_PLUGINS), rest));
     await write(LANGUAGES[language].dir + 'stats/', statsPage(language, context('stats/')));
+    // Titles, icons and links for the stats page's likes ranking, which only knows package names.
+    const statsContext = context('stats/');
+    const names = Object.fromEntries(plugins.map(plugin => {
+      const info = describe(plugin, LANGUAGES[language].data, statsContext);
+      return [info.packageName, [info.namedTitle ? info.title : info.packageName, info.icon ?? null, link(statsContext.from, language, pluginPath(plugin.name))]];
+    }));
+    await writeFile(new URL(LANGUAGES[language].dir + 'stats/plugins.json', output), finish(JSON.stringify(names), language), 'utf8');
     for (const [at, plugin] of plugins.entries()) {
       await write(LANGUAGES[language].dir + pluginPath(plugin.name), pluginPage(plugin, index, language, context(pluginPath(plugin.name)), relatedPlugins(plugins, at)));
     }

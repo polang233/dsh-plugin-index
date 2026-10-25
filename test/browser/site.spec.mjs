@@ -213,14 +213,18 @@ for (const language of Object.keys(SITE)) {
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(route + 'stats/');
     await expect(page.locator('[data-tile="todayReaders"] [data-value]')).toHaveText(/400/);
-    await expect(page.locator('[data-tile="totalReads"] [data-value]')).toHaveText(/5[,.\s]?000/);
-    await expect(page.locator('[data-daily] .bar')).toHaveCount(2);
-    await expect(page.locator('[data-daily] .bar.is-today')).toHaveCount(1);
+    await expect(page.locator('[data-tile="plugins"] [data-value]')).toHaveText(/\d/);
+    // Loads show by default; each chip adds or removes a line, and the last line cannot be switched off.
+    await expect(page.locator('[data-daily] .series-line')).toHaveCount(1);
+    await expect(page.locator('[data-daily] .series-point.is-today')).toHaveCount(1);
+    await page.locator('[data-series="readers"]').click();
+    await expect(page.locator('[data-daily] .series-line')).toHaveCount(2);
+    await page.locator('[data-series="reads"]').click();
+    await page.locator('[data-series="readers"]').click();
+    await expect(page.locator('[data-daily] .series-line')).toHaveCount(1);
     await expect(page.locator('[data-countries] li')).toHaveCount(4);
     // 900 of 1,300 people: the largest share comes first.
     await expect(page.locator('[data-countries] li').first().locator('strong')).toHaveText(/69[.,]2/);
-    await page.locator('[data-metric="reads"]').click();
-    await expect(page.locator('[data-metric="reads"]')).toHaveAttribute('aria-pressed', 'true');
     await expect(page.locator('[data-daily-table] tr')).toHaveCount(2);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(errors).toEqual([]);

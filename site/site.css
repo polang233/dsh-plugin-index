@@ -833,3 +833,106 @@ body.is-leaving { opacity: 0; }
 .hero-copy { container-type: inline-size; }
 @container (max-width: 600px) { .hero-foot .eyebrow { display: none; } }
 @container (max-width: 720px) { html[lang="en"] .hero-foot .eyebrow { display: none; } }
+
+/* Stats page. */
+.stats-intro { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.live-note { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 10px !important; padding: 3px 12px 3px 10px; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper); color: var(--ink) !important; font-size: 13px !important; font-weight: 800 !important; box-shadow: 2px 2px 0 var(--ink); }
+.live-note .usage-dot { position: relative; }
+.stat-tile { transition: transform .25s cubic-bezier(.3, 1.6, .45, 1), box-shadow .25s; }
+.stat-tile:hover { transform: translate(-2px, -4px) rotate(-.6deg); box-shadow: 5px 7px 0 var(--ink); }
+.stat-sub { min-height: 1.4em; color: var(--slate); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.daily-chart .bar { stroke: var(--ink); stroke-width: 1.5; transform-box: fill-box; transform-origin: bottom; animation: bar-grow .7s cubic-bezier(.3, 1.35, .45, 1) both; animation-delay: calc(var(--i, 0) * 22ms); }
+.daily-chart.is-drawn .bar { animation: none; }
+@keyframes bar-grow { from { transform: scaleY(0); } to { transform: none; } }
+.like-ranking { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.like-ranking li { display: grid; grid-template-columns: 30px minmax(140px, 1.2fr) minmax(0, 2fr) auto; align-items: center; gap: 12px; animation: rank-in .5s ease both; animation-delay: calc(var(--i, 0) * 50ms); }
+@keyframes rank-in { from { opacity: 0; translate: -10px 0; } to { opacity: 1; translate: none; } }
+.rank { display: grid; place-items: center; width: 28px; height: 28px; border: 2px solid var(--ink); border-radius: 50%; background: var(--paper); font-size: 13px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.like-ranking li:nth-child(1) .rank { background: var(--sun); }
+.like-ranking li:nth-child(2) .rank { background: var(--sky); }
+.like-ranking li:nth-child(3) .rank { background: var(--peach); }
+.rank-plugin { display: flex; align-items: center; gap: 10px; min-width: 0; color: var(--ink); font-weight: 800; text-decoration: none; }
+.rank-plugin:hover { color: var(--blue-dark); }
+.rank-plugin .plugin-avatar { width: 36px; height: 36px; border-radius: 12px; --tone: var(--sky); }
+.rank-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rank-track { height: 14px; overflow: hidden; border: 2px solid var(--ink); border-radius: 999px; background: var(--cream); }
+.rank-fill { display: block; height: 100%; border-right: 2px solid var(--ink); background: #ff9ec0; }
+.rank-value { font-size: 14px; font-weight: 900; font-variant-numeric: tabular-nums; }
+@media (max-width: 620px) {
+    .like-ranking li { grid-template-columns: 28px minmax(0, 1fr) auto; }
+  .rank-track { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .stat-tile:hover { transform: none; } }
+/* Stats tiles: flatter, the number and its note on one line. */
+.stat-tile { grid-template-columns: auto 1fr; align-items: baseline; gap: 2px 10px; padding: 10px 16px; }
+.stat-tile .stat-label { grid-column: 1 / -1; font-size: 13px; }
+.stat-tile strong { font-size: clamp(24px, 2.4vw, 30px); line-height: 1.15; }
+.stat-sub { min-height: 0; }
+
+/* Trend lines and their switches. */
+/* Trend colours: the site's blue and coral, plus violet and amber, apart in hue and readable on white. */
+.daily-chart, .series-toggles { --reads: #0e9aa7; --readers: #f0644f; --plugins: #8a5cf5; --stars: #e09b00; }
+.series-toggles { display: flex; flex-wrap: wrap; gap: 6px; }
+.series-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper); color: var(--ink); font-size: 13px; font-weight: 800; box-shadow: 2px 2px 0 var(--ink); transition: transform .15s, box-shadow .15s, opacity .2s; }
+.series-toggle:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink); }
+.series-toggle[aria-pressed="false"] { opacity: .5; box-shadow: none; }
+.series-dot { width: 10px; height: 10px; border: 2px solid var(--ink); border-radius: 50%; }
+[data-series="reads"] .series-dot { background: var(--reads); }
+[data-series="readers"] .series-dot { background: var(--readers); }
+[data-series="plugins"] .series-dot { background: var(--plugins); }
+[data-series="stars"] .series-dot { background: var(--stars); }
+.series-toggle[aria-pressed="false"] .series-dot { background: transparent; }
+.daily-chart .series-line { fill: none; stroke-width: 2.75; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; animation: line-draw .9s ease-out both; }
+.daily-chart.is-drawn .series-line { animation: none; }
+@keyframes line-draw { from { stroke-dashoffset: 1; } }
+.daily-chart .series-area { stroke: none; opacity: .1; }
+.daily-chart .series-point { fill: var(--paper); stroke-width: 2.5; }
+.daily-chart .series-point.is-today { fill: currentColor; }
+.daily-chart .cursor { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.daily-chart .series-reads { stroke: var(--reads); fill: var(--reads); color: var(--reads); }
+.daily-chart .series-readers { stroke: var(--readers); fill: var(--readers); color: var(--readers); }
+.daily-chart .series-plugins { stroke: var(--plugins); fill: var(--plugins); color: var(--plugins); }
+.daily-chart .series-stars { stroke: var(--stars); fill: var(--stars); color: var(--stars); }
+.daily-chart .series-point { fill: var(--paper); }
+.daily-chart .series-point.is-today { fill: currentColor; }
+.daily-chart text.axis[class*="series-"] { stroke: none; }
+.daily-chart .series-line, .daily-chart .series-area { fill-opacity: 1; }
+.daily-chart .series-line { fill: none; }
+.chart-tooltip span[class^="series-"] { font-weight: 800; }
+.chart-tooltip .series-reads { color: #0b7d88; }
+.chart-tooltip .series-readers { color: #cf4632; }
+.chart-tooltip .series-plugins { color: #6d3fe0; }
+.chart-tooltip .series-stars { color: #a86f00; }
+
+/* Trend and regions side by side on wide screens: the trend takes three fifths, regions the rest, stacked inside. */
+.stats-grid { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 24px; align-items: stretch; }
+.stats-grid > .chart-panel:first-child { display: flex; flex-direction: column; }
+.stats-grid > .chart-panel:first-child .daily-chart { flex: 1; min-height: 220px; }
+@media (min-width: 1001px) { .stats-grid .daily-chart svg { position: absolute; left: 0; top: 0; } }
+.stats-grid > .chart-panel { margin: 0; min-width: 0; }
+.stats-grid .geo-grid { grid-template-columns: 1fr; gap: 18px; }
+.stats-grid .region-chart { display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: center; gap: 4px 18px; }
+.stats-grid .region-donut svg { width: 150px; height: 150px; }
+.region-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0; }
+.region-legend li { display: inline-flex; align-items: center; gap: 6px; }
+.stats-grid .country-bars li { grid-template-columns: minmax(64px, 96px) minmax(0, 1fr) 46px; gap: 8px; font-size: 13px; }
+.stats-grid .country-value { justify-content: flex-start; }
+.stats-grid .country-value small { display: none; }
+@media (max-width: 1000px) { .stats-grid { grid-template-columns: 1fr; } }
+.stats-intro p { max-width: none; }
+
+/* The live marker sits beside the heading instead of on its own line. */
+.stats-title { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.stats-title .live-note { margin: 0 !important; }
+/* Wide screens: a shorter trend and a tighter regions panel, so both fit under the tiles. */
+@media (min-width: 1001px) {
+  .stats-grid .region-chart { grid-template-columns: 112px minmax(0, 1fr); }
+  .stats-grid .region-donut svg { width: 112px; height: 112px; }
+  .stats-grid .country-bars { gap: 0; }
+  .stats-grid .country-bars li { min-height: 0; line-height: 1.25; padding: 1px 0; }
+  .stats-grid .country-track { height: 10px; }
+  .stats-grid .geo-grid { gap: 10px; }
+  .stats-grid .country-chart h3 { margin-bottom: 6px; }
+  .stats-grid > .chart-panel { padding-top: 16px; padding-bottom: 16px; }
+  .stats-grid .chart-head { margin-bottom: 8px; }
+}

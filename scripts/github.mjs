@@ -150,3 +150,30 @@ export function applyGitHubStars(index, snapshot) {
   parseMarketIndex(result, 'https://polang233.github.io/dsh-plugin-index/index.json');
   return result;
 }
+
+/**
+ * When each star of one repository arrived, as [day, stars by the end of that day] pairs, for the stats page's trend.
+ * GitHub lists stargazers oldest first and gives `starred_at` only to authenticated requests; on any failure the
+ * previous history stays.
+ */
+export async function collectStarHistory(key, { fetchImpl = fetch, token = process.env.GITHUB_TOKEN ?? process.env.GH_TOKEN, previous } = {}) {
+  const kept = Array.isArray(previous?.history) ? previous : undefined;
+  if (!token) return kept;
+  try {
+    const days = [];
+    for (let page = 1; page <= 20; page++) {
+      const response = await fetchImpl(`https://api.github.com/repos/${key}/stargazers?per_page=100&page=${page}`, {
+        headers: { accept: 'application/vnd.github.star+json', authorization: `Bearer ${token}`, 'user-agent': 'dsh-plugin-index' }
+      });
+      if (!response.ok) throw new Error(`GitHub ${response.status}`);
+      const stars = await response.json();
+      days.push(...stars.map(star => String(star?.starred_at ?? '').slice(0, 10)).filter(day => /^\d{4}-\d{2}-\d{2}$/.test(day)));
+      if (stars.length < 100) break;
+    }
+    const totals = new Map();
+    days.sort().forEach((day, at) => totals.set(day, at + 1));
+    return { schema: 1, repository: key, generatedAt: new Date().toISOString(), history: [...totals] };
+  } catch {
+    return kept;
+  }
+}

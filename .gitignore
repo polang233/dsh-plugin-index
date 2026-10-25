@@ -19,3 +19,8 @@ public/zh/catalog.json
 public/zh/catalog/
 public/zh-tw/catalog.json
 public/zh-tw/catalog/
+# Generated for the stats page: plugin names for the likes ranking, and the star history from full builds.
+public/stats/plugins.json
+public/zh/stats/plugins.json
+public/zh-tw/stats/plugins.json
+public/stars.json

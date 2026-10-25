@@ -1,6 +1,6 @@
 import {validateBrandNames} from './catalog-copy.mjs';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
-import { collectGitHub, publishedSnapshot } from './github.mjs';
+import { collectGitHub, collectStarHistory, publishedSnapshot } from './github.mjs';
 import { collectDownloads } from './downloads.mjs';
 import { applyMarketDisplay } from './market-display.mjs';
 import { writeSite } from './site.mjs';
@@ -74,6 +74,9 @@ await writeFile(new URL('display.json', output), `${JSON.stringify(display, null
 await writeFile(new URL('recommendations.json', output), `${JSON.stringify(recommendations, null, 2)}\n`);
 const previousAdded = await publishedSnapshot('added.json') ?? await readJson(new URL('added.json', output));
 await writeFile(new URL('added.json', output), `${JSON.stringify(trackAdded(index.plugins.map(plugin => plugin.name), previousAdded), null, 2)}\n`);
+// The project's own stars over time, for the stats page; an offline or failed run keeps the published history.
+const stars = await collectStarHistory('polang233/dsh-plugin-index', { previous: await publishedSnapshot('stars.json') ?? await readJson(new URL('stars.json', output)) });
+if (stars) await writeFile(new URL('stars.json', output), `${JSON.stringify(stars)}\n`);
 await writeSite(index, evidence, github, downloads, display);
 console.log(`Generated format-1 index: ${index.plugins.length} plugins; official validator ${evidence.validator.version}; ${built.evidence.failures.length} failing packages.`);
 console.log(`GitHub metadata: ${evidence.github.fetched} fetched, ${evidence.github.cached} cached, ${evidence.github.unavailable} unavailable.`);
