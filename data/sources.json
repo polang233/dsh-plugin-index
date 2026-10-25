@@ -10291,7 +10291,7 @@
     },
     {
       "name": "dsh-synapse",
-      "version": "0.5.0",
+      "version": "0.5.4",
       "title": {
         "en": "Synapse",
         "zh": "Synapse（会话地图）"
@@ -10302,10 +10302,10 @@
       },
       "category": "interface",
       "repositoryReview": {
+        "version": "0.5.4",
+        "integrity": "sha512-AK2PnY3qDn259TN1ctPpTGCOZgGX5lMnMunf2bl4t4I1RG1MCJpiVt5zLtYGL8gFeGFhbr1PPjLVmfX0HLfbNQ==",
         "url": "https://github.com/liangmianya/dsh-synapse",
-        "version": "0.5.0",
-        "commit": "265d7ff1f41c87e41f5648166e410cbf972c417f",
-        "integrity": "sha512-9tOqqAmGG2E2gJhZTLRWGKl2jU0fTlUW+pkncm8iTOJu2sbM4GOH5Bj3UxTiVxKDIwxuO5WQgj0kjMAxUhMhfQ=="
+        "commit": "d9e0ff3081e398569c546086046dc5a3f9d4617b"
       }
     },
     {
@@ -10424,7 +10424,7 @@
     },
     {
       "name": "dsh-damage-pulse",
-      "version": "4.2.9",
+      "version": "4.3.0",
       "title": {
         "en": "Damage Pulse",
         "zh": "Damage Pulse"
@@ -10433,13 +10433,7 @@
         "en": "Track DeepSeek usage, costs and balance per call, session and account, with a whale-girl companion and damage-number animations for every charge.",
         "zh": "按单次、会话和账户三层统计 DeepSeek 用量、费用和余额，每次扣费都有鲸娘和伤害数字式的动画反馈。"
       },
-      "category": "usage",
-      "archiveReview": {
-        "version": "4.2.9",
-        "integrity": "sha512-yWqQV5ugISVSTx1MQBTZcVkMpYdrRqk/Rcy2xe6VaFLEHPqUCs/BxRnkVXYuINSH1IqOiNqRmHVxEDJ8vSKOqw==",
-        "maxUnpackedBytes": 268435456,
-        "timeoutMs": 120000
-      }
+      "category": "usage"
     },
     {
       "name": "dsh-notifier",
@@ -11079,6 +11073,106 @@
         "zh": "提供原生 Cohere v2 语言模型、嵌入与重排序，支持流式工具调用和模型发现。需要先安装并启用 @dsh-ai-providers/runtime 组合包，并另行配置连接与凭据。"
       },
       "category": "providers"
+    },
+    {
+      "name": "@kadima-code/dsh-session-mirror",
+      "title": {
+        "en": "Session Mirror",
+        "zh": "会话镜像备份"
+      },
+      "description": {
+        "en": "Incrementally mirror individual DSH session logs, preview fuzzy-match restores and optionally clean expired backups. Defaults to ~/.dsh/sessions and E:\\DshChatBackup; configure a usable backup destination. Automatic cleanup is off by default.",
+        "zh": "逐会话增量镜像 DSH 日志，支持模糊匹配恢复预览和可选的过期备份清理。默认读取 ~/.dsh/sessions，备份到 E:\\DshChatBackup，使用前请配置可用目录；自动清理默认关闭。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-doc-review",
+      "title": {
+        "en": "Document Review",
+        "zh": "文档审阅与批注"
+      },
+      "description": {
+        "en": "Annotate model replies, read documents, discuss comment threads and revise text, then bring a summary back to the conversation. Requires DSH 0.2.1-rc.3 or later. Reviews are stored in browser localStorage; model-assisted review consumes tokens.",
+        "zh": "给模型回复添加多处批注，以文档模式阅读、讨论评论和修订正文，再把摘要带回对话。需要 DSH 0.2.1-rc.3 或更高版本；记录保存在浏览器本地，模型辅助审阅会消耗 token。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-rimlight",
+      "title": {
+        "en": "Rimlight",
+        "zh": "Rimlight（边缘流光）"
+      },
+      "description": {
+        "en": "Show up to four comet-like bands along the window edge, colored by session model and animated with session state. Reverses the flow while waiting for input. The package declares no DSH compatibility range.",
+        "zh": "沿窗口边缘显示最多四条流星光带，按会话模型配色并随会话状态变化，等待输入时反向流动。包内未声明适用的 DSH 版本。"
+      },
+      "category": "appearance"
+    },
+    {
+      "name": "dsh-matrix-theme",
+      "version": "0.5.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/SShiRkiT/dsh-matrix-theme",
+        "commit": "0100750d7f675b2cdb55553cc58c3583976622cd",
+        "integrity": "sha512-A+YDBXCahNB4cnhyP6dmhj46hRz0mNKCtTz+zj/Sl8xOgFGAeAPKRpg6PLPebxB+G+WENe3wWE2qp/D8otoUfw==",
+        "publishedAt": "2026-10-25T09:58:43Z"
+      },
+      "title": {
+        "en": "Matrix Theme",
+        "zh": "Matrix 暗色主题"
+      },
+      "description": {
+        "en": "Apply a near-black Matrix palette, glass sidebar and composer panels, with styling scoped to the theme. Keeps dark mode while enabled. Requires the DSH theme client service from 0.2.1-rc.2 or later.",
+        "zh": "提供近黑色 Matrix 配色、玻璃侧栏与输入面板，样式限定在主题作用域内，启用期间保持暗色模式。需要 DSH 0.2.1-rc.2 或更高版本的主题服务。"
+      },
+      "category": "appearance"
+    },
+    {
+      "name": "dsh-quick-backup",
+      "version": "0.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/SShiRkiT/dsh-quick-backup",
+        "commit": "de1265848dd979babeadc980438995e4ee023fc0",
+        "integrity": "sha512-RDfhXx9RiHH3+5IwAY9r+KC4p93OZQMucen4/4D8w0JtVZPx/uKy5v8qfQvdR5ya5sopteziA9hxs82qW+QVMw==",
+        "publishedAt": "2026-10-25T09:50:51Z"
+      },
+      "title": {
+        "en": "Quick Backup for Windows",
+        "zh": "Quick Backup（Windows 本地备份）"
+      },
+      "description": {
+        "en": "Back up the DSH desktop environment to a local Git repository and manage versions from Settings. Windows only; requires PowerShell, Git for Windows and initialization with setup.ps1. Export snapshots or copy a restore command; credentials are excluded by default.",
+        "zh": "把 DSH 桌面环境备份到本地 Git 仓库，在设置中管理版本、导出快照和复制恢复命令。仅适用于 Windows，需要 PowerShell、Git for Windows，并先用 setup.ps1 初始化备份仓库；凭据默认不备份。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-model-picker-control",
+      "title": {
+        "en": "Model Picker Control",
+        "zh": "模型选择器总控"
+      },
+      "description": {
+        "en": "Rename, hide and reorder models and providers, create groups across providers and add suffix badges. Keeps the model picker and /model popup consistent, with saved settings and a reset action. Requires DSH 0.2.1-rc.1 through versions below 0.3.0.",
+        "zh": "统一调整模型选择器与 /model 弹窗中的名称、隐藏项、排序、跨提供方分组和后缀徽标，支持保存设置与恢复默认。适用于 DSH >=0.2.1-rc.1 且低于 0.3.0。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-skills-panel",
+      "title": {
+        "en": "Skills Panel",
+        "zh": "技能面板"
+      },
+      "description": {
+        "en": "List the current DSH instance’s skills for the active session, refresh the catalog, pin favorites and insert skill commands into the composer. Open a session first; the package declares no DSH compatibility range.",
+        "zh": "读取当前 DSH 实例中会话可用的技能，支持刷新目录、固定常用项和向输入框插入技能命令。需先打开会话，包内未声明适用的 DSH 版本。"
+      },
+      "category": "skills"
     }
   ]
 }
