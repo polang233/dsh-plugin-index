@@ -2,7 +2,9 @@
 
 <img src="site/logo-256.png" alt="The Open Plugin Market whale maid" width="180">
 
-# Open Plugin Market
+# Open Plugin Market · DSH plugin market
+
+**The plugin index and daily picks for DeepSeek Harness (DSH)**
 
 [![Plugins](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Findex.json&query=%24.plugins.length&label=plugins&color=2563eb)](https://dshopen.org/)
 [![Index usage](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.total&label=index%20usage&color=16a34a)](https://dshopen.org/stats.json)
@@ -15,7 +17,7 @@
 
 </div>
 
-A community **plugin market** for DeepSeek Harness (DSH). Add it as an **index source** in the official Discover tab, or install the plugin for a standalone Open Market page inside DSH.
+A community **plugin market** and **plugin index** for DeepSeek Harness (DSH), listing hundreds of community plugins: tools, skills, memory, UI and workflows. Add it as an **index source** in the official Discover tab, install the plugin for a standalone Open Market page inside DSH, or search, filter and like plugins on [dshopen.org](https://dshopen.org/).
 
 **Stars aren't everything.** The default picks refresh every day and put fast-growing, actively shipped, genuinely good plugins first, with verification, downloads and stars as supporting signals. Established favourites can't hog the list, so new projects and newcomers' plugins get a chance at the first screen and a wider audience.
 
@@ -45,7 +47,7 @@ It also adds an **Open Market** tab to the Plugins page: today's picks and rows 
 
 ## Labels and sorting
 
-✅ Verified · 🔥 Rising · ⚡ Frequent updates (10+ releases in 30 days) · ◷ four update-age buckets · ↓ seven download tiers · ♥ likes from the Open Market tab (once per person, plugin and day, including installs; each plugin loses one every three days). *Default* rotates ten front-page plugins daily from a weekly pool of about seventy qualified entries. *✨ Smart picks* also changes daily, with mostly random rotation and a small preference for recent updates and growth. Entries shown this week move down, and next week reshuffles the pool. *Random resources* reshuffles independently each day. The index rebuilds every six hours; rotation follows calendar days in UTC+8. See [metrics and exposure history](docs/market-display.md).
+✅ Verified · 🔥 Rising · ⚡ Frequent updates (10+ releases in 30 days) · ◷ four update-age buckets · ↓ seven download tiers · ♥ likes from the website or the Open Market tab (once per person, plugin and day, including installs; each plugin loses one every three days). *Default* rotates ten front-page plugins daily from a weekly pool of about seventy qualified entries. *✨ Smart picks* also changes daily, with mostly random rotation and a small preference for recent updates and growth. Entries shown this week move down, and next week reshuffles the pool. *Random resources* reshuffles independently each day. The index rebuilds every six hours; rotation follows calendar days in UTC+8. See [metrics and exposure history](docs/market-display.md).
 
 ## Submit a plugin
 

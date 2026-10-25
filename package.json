@@ -10,7 +10,7 @@
     "type": "git",
     "url": "https://github.com/polang233/dsh-plugin-index.git"
   },
-  "homepage": "https://polang233.github.io/dsh-plugin-index/",
+  "homepage": "https://dshopen.org/",
   "engines": {
     "node": ">=24"
   },

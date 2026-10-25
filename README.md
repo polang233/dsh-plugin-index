@@ -2,7 +2,9 @@
 
 <img src="site/logo-256.png" alt="开放插件市场的鲸鱼女仆" width="180">
 
-# Open Plugin Market · 开放插件市场
+# 开放插件市场 · DSH 插件市场
+
+**DeepSeek Harness（DSH）插件索引与每日插件推荐** · Open Plugin Market
 
 [![插件](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Findex.json&query=%24.plugins.length&label=%E6%8F%92%E4%BB%B6&color=2563eb)](https://dshopen.org/zh/)
 [![索引使用量](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdshopen.org%2Fstats.json&query=%24.total&label=%E7%B4%A2%E5%BC%95%E4%BD%BF%E7%94%A8%E9%87%8F&color=16a34a)](https://dshopen.org/stats.json)
@@ -15,7 +17,7 @@
 
 </div>
 
-DeepSeek Harness（DSH）的社区**插件市场**：可以作为官方「发现」的**索引源**添加，也可以安装插件，在 DSH 里获得独立的开放市场页面。
+DeepSeek Harness（DSH）的社区**插件市场**和**插件索引**，收录数百个 DSH 社区插件：工具、技能、记忆、界面、工作流应有尽有。可以作为官方「发现」的**索引源**添加，也可以安装插件，在 DSH 里获得独立的开放市场页面；还可以直接在 [dshopen.org](https://dshopen.org/zh/) 上搜索、筛选、点赞插件。
 
 **不只看 star🌟 数** 默认推荐每天会更新，以最近增长快、更新勤、优质的插件为主，同时参考验证、下载量和 star，经典作品不会霸榜。新项目、小开发者的新作品有机会出现在首屏，被更多人看到。
 
@@ -52,7 +54,7 @@ dsh plugin --profile desktop add dsh-open-market
 | ⚡ 更新勤 | 近 30 天发版 ≥ 10 次 |
 | ◷ 最近 / 本周 / 本月 / 三个月内更新 | 收录版本的发布时间 |
 | ↓ 100+ … 10万+ | npm 近 30 天下载量，共 7 档 |
-| ♥ 点赞 | 在开放市场标签里点赞或安装，每人每天每个插件计一次，每 3 天减 1 |
+| ♥ 点赞 | 在网站或开放市场标签里点赞或安装，每人每天每个插件计一次，每 3 天减 1 |
 
 **默认排序**每周从有下载量、star 或验证记录的插件中选出约 70 个，每天轮换首页前十；本周展示过的会往后排，下周重新混排。**✨ 智能推荐**也每天换一批，以随机轮换为主，少量参考最近更新和增长。**随机资源**每天独立打乱。索引每 6 小时构建一次，轮换按 UTC+8 时间的自然日计算。算法与曝光记录见 [指标说明](docs/market-display.md)。
 
