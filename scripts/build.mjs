@@ -75,7 +75,8 @@ await writeFile(new URL('recommendations.json', output), `${JSON.stringify(recom
 const previousAdded = await publishedSnapshot('added.json') ?? await readJson(new URL('added.json', output));
 await writeFile(new URL('added.json', output), `${JSON.stringify(trackAdded(index.plugins.map(plugin => plugin.name), previousAdded), null, 2)}\n`);
 // The project's own stars over time, for the stats page; an offline or failed run keeps the published history.
-const stars = await collectStarHistory('polang233/dsh-plugin-index', { previous: await publishedSnapshot('stars.json') ?? await readJson(new URL('stars.json', output)) });
+// data/star-history.json seeds the history from before builds could read it.
+const stars = await collectStarHistory('polang233/dsh-plugin-index', { previous: await publishedSnapshot('stars.json') ?? await readJson(new URL('stars.json', output)) ?? await readJson(new URL('../data/star-history.json', import.meta.url)) });
 if (stars) await writeFile(new URL('stars.json', output), `${JSON.stringify(stars)}\n`);
 await writeSite(index, evidence, github, downloads, display);
 console.log(`Generated format-1 index: ${index.plugins.length} plugins; official validator ${evidence.validator.version}; ${built.evidence.failures.length} failing packages.`);

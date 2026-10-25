@@ -185,7 +185,24 @@ export async function collectStarHistory(key, { fetchImpl = fetch, token = proce
     days.sort().forEach((day, at) => totals.set(day, at + 1));
     return { schema: 1, repository: key, generatedAt: new Date().toISOString(), history: [...totals] };
   } catch (error) {
-    console.warn(`::warning title=Star history unavailable::${key}: ${error.message}`);
-    return kept;
+    console.warn(`::warning title=Star dates unavailable::${key}: ${error.message}; recording today's count instead`);
+    return recordStarCount(key, { fetchImpl, token, previous: kept });
+  }
+}
+
+/** Without star dates, add today's star count to the previous history, so the trend grows one day per build. */
+async function recordStarCount(key, { fetchImpl, token, previous, now = Date.now() }) {
+  try {
+    const response = await fetchImpl(`https://api.github.com/repos/${key}`, {
+      headers: { accept: 'application/vnd.github+json', 'user-agent': 'dsh-plugin-index', ...(token ? { authorization: `Bearer ${token}` } : {}) }
+    });
+    const stars = response.ok ? (await response.json())?.stargazers_count : undefined;
+    if (!Number.isSafeInteger(stars)) throw new Error(`GitHub ${response.status}`);
+    const today = new Date(now).toISOString().slice(0, 10);
+    const history = (previous?.history ?? []).filter(([day]) => day < today);
+    return { schema: 1, repository: key, generatedAt: new Date(now).toISOString(), history: [...history, [today, stars]] };
+  } catch (error) {
+    console.warn(`::warning title=Star count unavailable::${key}: ${error.message}`);
+    return previous;
   }
 }

@@ -95,5 +95,9 @@ test('star history counts stars by the end of each day and keeps the previous hi
   assert.deepEqual(requests, [{ owner: 'owner', name: 'repo', after: null }, { owner: 'owner', name: 'repo', after: 'c1' }]);
   const previous = { schema: 1, history: [['2026-10-19', 1]] };
   assert.equal(await collectStarHistory('owner/repo', { fetchImpl: async () => Response.json({ errors: [{ message: 'forbidden' }] }), token: 'secret', previous }), previous);
+  // Without star dates, today's count joins the previous history.
+  const counted = await collectStarHistory('owner/repo', { token: 'secret', previous, fetchImpl: async url => String(url).endsWith('/graphql') ? Response.json({ errors: [{ message: 'Resource not accessible by integration' }] }) : Response.json({ stargazers_count: 7 }) });
+  assert.deepEqual(counted.history.slice(0, 1), [['2026-10-19', 1]]);
+  assert.equal(counted.history.at(-1)[1], 7);
   assert.equal(await collectStarHistory('owner/repo', { token: '', previous }), previous);
 });
