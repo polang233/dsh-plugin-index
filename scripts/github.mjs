@@ -153,22 +153,33 @@ export function applyGitHubStars(index, snapshot) {
 
 /**
  * When each star of one repository arrived, as [day, stars by the end of that day] pairs, for the stats page's trend.
- * GitHub lists stargazers oldest first and gives `starred_at` only to authenticated requests; on any failure the
- * previous history stays.
+ * GitHub gives star dates only to authenticated requests, and the Actions token may not list stargazers over REST, so
+ * this reads them through GraphQL, a hundred at a time, oldest first. On any failure the previous history stays.
  */
 export async function collectStarHistory(key, { fetchImpl = fetch, token = process.env.GITHUB_TOKEN ?? process.env.GH_TOKEN, previous } = {}) {
   const kept = Array.isArray(previous?.history) ? previous : undefined;
   if (!token) return kept;
+  const [owner, name] = key.split('/');
   try {
     const days = [];
-    for (let page = 1; page <= 20; page++) {
-      const response = await fetchImpl(`https://api.github.com/repos/${key}/stargazers?per_page=100&page=${page}`, {
-        headers: { accept: 'application/vnd.github.star+json', authorization: `Bearer ${token}`, 'user-agent': 'dsh-plugin-index' }
+    let after = null;
+    for (let page = 0; page < 50; page++) {
+      const response = await fetchImpl('https://api.github.com/graphql', {
+        method: 'POST',
+        headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json', 'user-agent': 'dsh-plugin-index' },
+        body: JSON.stringify({
+          query: 'query($owner: String!, $name: String!, $after: String) { repository(owner: $owner, name: $name) { stargazers(first: 100, after: $after, orderBy: { field: STARRED_AT, direction: ASC }) { edges { starredAt } pageInfo { hasNextPage endCursor } } } }',
+          variables: { owner, name, after }
+        })
       });
       if (!response.ok) throw new Error(`GitHub ${response.status} ${(await response.text()).slice(0, 160)}`);
-      const stars = await response.json();
-      days.push(...stars.map(star => String(star?.starred_at ?? '').slice(0, 10)).filter(day => /^\d{4}-\d{2}-\d{2}$/.test(day)));
-      if (stars.length < 100) break;
+      const { data, errors } = await response.json();
+      if (errors?.length) throw new Error(errors.map(error => error.message).join('; ').slice(0, 160));
+      const stargazers = data?.repository?.stargazers;
+      if (!stargazers) throw new Error('No stargazers in the answer');
+      days.push(...stargazers.edges.map(edge => String(edge?.starredAt ?? '').slice(0, 10)).filter(day => /^\d{4}-\d{2}-\d{2}$/.test(day)));
+      if (!stargazers.pageInfo?.hasNextPage) break;
+      after = stargazers.pageInfo.endCursor;
     }
     const totals = new Map();
     days.sort().forEach((day, at) => totals.set(day, at + 1));
