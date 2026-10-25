@@ -131,14 +131,18 @@ test('the project star count is fetched from GitHub once and then served from th
   assert.deepEqual(calls, [{ url: 'https://api.github.com/repos/polang233/dsh-plugin-index', authorization: 'Bearer secret' }]);
 });
 
-test('an unavailable GitHub answer is a 502 and is not cached', async t => {
+test('without GitHub the count comes from the published star history, and without either it is a 502 that is not cached', async t => {
   globalThis.caches = cacheStore();
   let calls = 0;
   t.mock.method(globalThis, 'fetch', async () => { calls++; return new Response('rate limited', { status: 403 }); });
-  const response = await worker.fetch(new Request('https://dshopen.org/api/stars'), {}, { waitUntil() {} });
+  const assets = history => ({ async fetch() { return history ? Response.json({ generatedAt: '2026-10-25T00:00:00Z', history }) : new Response('', { status: 404 }); } });
+  const fallback = await worker.fetch(new Request('https://dshopen.org/api/stars'), { ASSETS: assets([['2026-10-24', 40], ['2026-10-25', 48]]) }, { waitUntil() {} });
+  assert.deepEqual(await fallback.json(), { stars: 48, fetchedAt: '2026-10-25T00:00:00Z' });
+  globalThis.caches = cacheStore();
+  const response = await worker.fetch(new Request('https://dshopen.org/api/stars'), { ASSETS: assets() }, { waitUntil() {} });
   assert.equal(response.status, 502);
-  await worker.fetch(new Request('https://dshopen.org/api/stars'), {}, { waitUntil() {} });
-  assert.equal(calls, 2);
+  await worker.fetch(new Request('https://dshopen.org/api/stars'), { ASSETS: assets() }, { waitUntil() {} });
+  assert.equal(calls, 3);
 });
 
 // A local D1 stand-in executes real SQL, including transactional batches.

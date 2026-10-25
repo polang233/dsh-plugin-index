@@ -29,7 +29,7 @@ export default {
       }
     }
     if (url.pathname === '/stats.json') return edgeCached(request, ctx, 300, () => stats(env, ctx));
-    if (url.pathname === '/api/stars' && request.method === 'GET') return edgeCached(request, ctx, 3600, () => repositoryStars(env));
+    if (url.pathname === '/api/stars' && request.method === 'GET') return edgeCached(request, ctx, 3600, () => repositoryStars(request, env));
     const response = await env.ASSETS.fetch(request);
     const own = request.headers.get('user-agent') === 'dshopen-check';
     if (COUNTED.has(url.pathname) && request.method === 'GET' && response.ok && !own) ctx.waitUntil(count(request, env));
@@ -181,18 +181,26 @@ async function edgeCached(request, ctx, fresh, produce) {
   return response;
 }
 
-// The site's GitHub link shows the project's star count; one GitHub request an hour serves every visitor.
-async function repositoryStars(env) {
+// The site's GitHub link shows the project's star count; one GitHub request an hour serves every visitor. GitHub often
+// refuses unauthenticated requests from Cloudflare's shared addresses, so without a token the count falls back to the
+// star history the last full build published.
+async function repositoryStars(request, env) {
   try {
     const response = await fetch('https://api.github.com/repos/polang233/dsh-plugin-index', {
       headers: { accept: 'application/vnd.github+json', 'user-agent': 'dshopen.org', ...(env.GITHUB_TOKEN ? { authorization: `Bearer ${env.GITHUB_TOKEN}` } : {}) }
     });
     const repository = response.ok ? await response.json() : undefined;
-    if (!Number.isSafeInteger(repository?.stargazers_count)) return likeJson({ error: 'unavailable' }, 502);
-    return likeJson({ stars: repository.stargazers_count, fetchedAt: new Date().toISOString() }, 200, { 'cache-control': 'public, max-age=3600' });
-  } catch {
-    return likeJson({ error: 'unavailable' }, 502);
-  }
+    if (Number.isSafeInteger(repository?.stargazers_count)) {
+      return likeJson({ stars: repository.stargazers_count, fetchedAt: new Date().toISOString() }, 200, { 'cache-control': 'public, max-age=3600' });
+    }
+  } catch { /* Try the published history. */ }
+  try {
+    const published = await env.ASSETS.fetch(new Request(new URL('/stars.json', request.url)));
+    const data = published.ok ? await published.json() : undefined;
+    const stars = Array.isArray(data?.history) ? data.history.at(-1)?.[1] : undefined;
+    if (Number.isSafeInteger(stars)) return likeJson({ stars, fetchedAt: data.generatedAt ?? null }, 200, { 'cache-control': 'public, max-age=3600' });
+  } catch { /* Nothing to show. */ }
+  return likeJson({ error: 'unavailable' }, 502);
 }
 
 async function likes(env) {

@@ -165,7 +165,7 @@ export async function collectStarHistory(key, { fetchImpl = fetch, token = proce
       const response = await fetchImpl(`https://api.github.com/repos/${key}/stargazers?per_page=100&page=${page}`, {
         headers: { accept: 'application/vnd.github.star+json', authorization: `Bearer ${token}`, 'user-agent': 'dsh-plugin-index' }
       });
-      if (!response.ok) throw new Error(`GitHub ${response.status}`);
+      if (!response.ok) throw new Error(`GitHub ${response.status} ${(await response.text()).slice(0, 160)}`);
       const stars = await response.json();
       days.push(...stars.map(star => String(star?.starred_at ?? '').slice(0, 10)).filter(day => /^\d{4}-\d{2}-\d{2}$/.test(day)));
       if (stars.length < 100) break;
@@ -173,7 +173,8 @@ export async function collectStarHistory(key, { fetchImpl = fetch, token = proce
     const totals = new Map();
     days.sort().forEach((day, at) => totals.set(day, at + 1));
     return { schema: 1, repository: key, generatedAt: new Date().toISOString(), history: [...totals] };
-  } catch {
+  } catch (error) {
+    console.warn(`::warning title=Star history unavailable::${key}: ${error.message}`);
     return kept;
   }
 }
