@@ -186,7 +186,9 @@ for (const language of Object.keys(SITE)) {
     const otherName = (await other.locator('[data-get]').getAttribute('data-get')).trim();
     await other.locator('.page-link').click();
     await expect(page).toHaveURL(new RegExp(`plugins/${escapeRegExp(otherName)}/$`));
-    await expect(page.locator('.snippet code')).toContainText('img.shields.io/endpoint?url=https%3A%2F%2Fdshopen.org%2Fbadge%2F');
+    await expect(page.locator('.detail-panel:not(:has(.install-steps)) .snippet code')).toContainText('img.shields.io/endpoint?url=https%3A%2F%2Fdshopen.org%2Fbadge%2F');
+    // The Open Market plugin is offered as an easier way to install and update.
+    await expect(page.locator('.install-plugin code')).toHaveText('dsh plugin --profile desktop add dsh-open-market');
     expect(errors).toEqual([]);
   });
   test(`${language}: likes and the project's stars`, async ({ page }) => {

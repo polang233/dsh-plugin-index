@@ -834,6 +834,35 @@ body.is-leaving { opacity: 0; }
 @container (max-width: 600px) { .hero-foot .eyebrow { display: none; } }
 @container (max-width: 720px) { html[lang="en"] .hero-foot .eyebrow { display: none; } }
 
+/* Plugin pages: source and npm links carry their marks. */
+.facts-links a { display: inline-flex; align-items: center; gap: 6px; }
+.facts-links a svg { width: 15px; height: 15px; flex-shrink: 0; }
+.facts-links .link-npm { background: #ffe4e4; }
+
+/* The install panel's address bar follows the panel's own width: when it is narrow the copy button keeps only its
+   icon and the address shrinks a little, so the whole URL stays readable. */
+.install-steps li { container-type: inline-size; }
+@media (min-width: 621px) {
+  @container (max-width: 470px) {
+    .install-steps .address-bar textarea { padding-left: 40px; font-size: 15px; background-position: 10px center; }
+    .install-steps .copy-button { min-width: 0; padding: 11px 13px; }
+    .install-steps .copy-button span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  }
+}
+/* Phones stack the bar; the address shrinks with the panel so it never cuts off. */
+@media (max-width: 620px) { .install-steps .address-bar textarea { padding-inline: 38px 14px; font-size: clamp(12px, 5cqi, 16px); } }
+
+/* The Open Market plugin as an easier way to install and update. */
+.detail-panel, .detail-panel > * { min-width: 0; }
+.install-plugin { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 18px; padding: 14px 16px; border: 2px dashed var(--ink); border-radius: 16px; background: #fff7d6; }
+.install-plugin-title { margin: 0; font-weight: 800; }
+.install-plugin-note { margin: 0; color: var(--slate); font-size: 14px; font-weight: 600; line-height: 1.6; }
+
+/* One-line snippets: the command and the badge Markdown stay on one row, cut with an ellipsis; copying takes all of it. */
+.snippet-line { align-items: center; }
+.snippet-line code { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; overflow-wrap: normal; font-size: 13px; }
+.snippet-line .copy-chip { flex-shrink: 0; white-space: nowrap; }
+
 /* Stats page. */
 .stats-intro { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .live-note { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 10px !important; padding: 3px 12px 3px 10px; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper); color: var(--ink) !important; font-size: 13px !important; font-weight: 800 !important; box-shadow: 2px 2px 0 var(--ink); }

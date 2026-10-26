@@ -82,7 +82,7 @@ const COPY = {
     // Plugin pages.
     pluginTitle: title => `${title} — DeepSeek Harness (DSH) plugin · Open Plugin Market`,
     pluginDescription: (title, description) => `${title}: ${description} A community plugin for DeepSeek Harness (DSH), listed on Open Plugin Market.`,
-    install: 'Install in DSH', installSteps: ['Add Open Plugin Market as an index source once: Plugins → Experimental → Custom plugin markets, then Discover → Add index source, and paste this URL.', 'Copy the plugin name, open DSH and paste it into Discover search to install.'],
+    installPluginTitle: 'Easier: install the Open Market plugin', installPluginNote: 'It adds this index for you and an Open Market tab to the Plugins page: search for {name} there to install it, and update it there when a new version comes out.', install: 'Install in DSH', installSteps: ['Add Open Plugin Market as an index source once: Plugins → Experimental → Custom plugin markets, then Discover → Add index source, and paste this URL.', 'Copy the plugin name, open DSH and paste it into Discover search to install.'],
     facts: 'Plugin details', author: 'Author', keywords: 'Keywords', related: 'More in {category}', browseAll: 'Browse all plugins', npmMonth: 'npm downloads in the last 30 days',
     // Usage stats page.
     statsTitle: 'Usage stats — Open Plugin Market', statsHeading: 'Usage stats', statsDescription: 'How many people use Open Plugin Market in DeepSeek Harness each day, and where they are: daily users and loads for the last 30 days, by country and region.',
@@ -143,7 +143,7 @@ const COPY = {
     starsUnavailable: 'GitHub star 暂不可用', fetched: '获取于',
     pluginTitle: title => `${title} — DeepSeek Harness（DSH）插件 · 开放插件市场`,
     pluginDescription: (title, description) => `${title}：${description}DeepSeek Harness（DSH）社区插件，收录于开放插件市场。`,
-    install: '在 DSH 中安装', installSteps: [`先把开放插件市场添加为索引源（只需一次）：${ui('插件 → 实验性插件 → 自定义插件市场')}，再到「${ui('发现 → 添加索引源')}」粘贴这个地址。`, `复制插件名，打开 DSH，在「${ui('发现')}」里粘贴搜索即可安装。`],
+    installPluginTitle: '更省事：安装开放市场插件', installPluginNote: `它会自动加入本索引，并在「${ui('插件')}」页多一个「开放市场」标签：在里面搜索「{name}」即可安装，以后有新版本也能在那里一键更新。`, install: '在 DSH 中安装', installSteps: [`先把开放插件市场添加为索引源（只需一次）：${ui('插件 → 实验性插件 → 自定义插件市场')}，再到「${ui('发现 → 添加索引源')}」粘贴这个地址。`, `复制插件名，打开 DSH，在「${ui('发现')}」里粘贴搜索即可安装。`],
     facts: '插件信息', author: '作者', keywords: '关键词', related: '更多「{category}」插件', browseAll: '浏览全部插件', npmMonth: '近 30 天 npm 下载量',
     statsTitle: '使用统计 — 开放插件市场', statsHeading: '使用统计', statsDescription: '开放插件市场在 DeepSeek Harness 中每天有多少人使用、来自哪里：近 30 天每日用户数和加载次数，以及国家和地区分布。',
     statsLead: 'DSH 每次加载或刷新这个市场，都会读取一次索引。下面的数字直接来自这些读取，每隔几分钟更新。',
@@ -220,8 +220,9 @@ function describe(plugin, data, context) {
   const homepage = safeUrl(plugin.homepage);
   const npmUrl = version?.source?.type === 'npm' ? `https://www.npmjs.com/package/${packageName.split('/').map(encodeURIComponent).join('/')}` : undefined;
   const links = [];
-  if (sourceUrl) links.push(`<a href="${esc(sourceUrl)}" rel="noopener noreferrer">${esc(text.source)}</a>`);
-  if (npmUrl) links.push(`<a href="${esc(npmUrl)}" rel="noopener noreferrer">${esc(text.npm)}</a>`);
+  // GitHub and npm links carry their marks; other source hosts get a plain code mark.
+  if (sourceUrl) links.push(`<a class="link-source" href="${esc(sourceUrl)}" rel="noopener noreferrer">${githubRepository(sourceUrl) ? ICONS.github : ICONS.code}<span>${esc(text.source)}</span></a>`);
+  if (npmUrl) links.push(`<a class="link-npm" href="${esc(npmUrl)}" rel="noopener noreferrer">${ICONS.npm}<span>${esc(text.npm)}</span></a>`);
   if (!sourceUrl && homepage) links.push(`<a href="${esc(homepage)}" rel="noopener noreferrer">${esc(text.website)}</a>`);
   // Stable pastel tone per category so cards read as grouped without extra data.
   const tone = Array.from(categoryId).reduce((sum, char) => (sum * 31 + char.codePointAt(0)) % 997, 7) % 6;
@@ -278,7 +279,9 @@ const ICONS = {
   stats: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><rect x="5.5" y="11" width="3.5" height="6" rx="1"/><rect x="10.25" y="6" width="3.5" height="11" rx="1"/><rect x="15" y="9" width="3.5" height="8" rx="1"/></svg>',
   docs: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>',
   github: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8a10.2 10.2 0 0 0-3.2 19.9c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.3-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .9-.3 2.8 1a9.6 9.6 0 0 1 5.1 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10.2 10.2 0 0 0 12 1.8z"/></svg>',
-  copy: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 8h12v13H8zM16 8V3H3v13h5"/></svg>'
+  copy: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 8h12v13H8zM16 8V3H3v13h5"/></svg>',
+  npm: '<svg aria-hidden="true" viewBox="0 0 24 24"><path fill="#cb3837" d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z"/></svg>',
+  code: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5m8-10 5 5-5 5"/></svg>'
 };
 
 // The index URL with its copy button, shared by the home page and every plugin page.
@@ -486,6 +489,7 @@ function pluginPage(plugin, index, language, context, related) {
             <li><p>${esc(text.installSteps[0])}</p><div class="hero-copy">${addressBar(text)}</div></li>
             <li><p>${esc(text.installSteps[1])}</p><p class="install-name"><code class="get-name">${esc(info.packageName)}</code>${info.getButton}</p></li>
           </ol>
+          <div class="install-plugin"><p class="install-plugin-title">${esc(text.installPluginTitle)}</p><div class="snippet snippet-line"><code>${PLUGIN_COMMAND}</code><button type="button" class="copy-chip" data-copy-text="${PLUGIN_COMMAND}" hidden>${ICONS.copy}<span>${esc(text.copyCommand)}</span></button></div><p class="install-plugin-note">${esc(text.installPluginNote.replace('{name}', heading))}</p></div>
         </section>
         <section class="detail-panel" aria-labelledby="facts-title">
           <h2 id="facts-title">${esc(text.facts)}</h2>
@@ -495,7 +499,7 @@ function pluginPage(plugin, index, language, context, related) {
           <h3>${esc(text.badgeTitle)}</h3>
           <p class="badge-note">${esc(text.badgeText)}</p>
           <p class="badge-preview"><img src="${esc(badge.image)}" alt="${esc(text.brand)}" height="20" decoding="async"></p>
-          <div class="snippet"><code>${esc(badge.markdown)}</code><button type="button" class="copy-chip" data-copy-text="${esc(badge.markdown)}" hidden>${ICONS.copy}<span>${esc(text.copyBadge)}</span></button></div>
+          <div class="snippet snippet-line" title="${esc(badge.markdown)}"><code>${esc(badge.markdown)}</code><button type="button" class="copy-chip" data-copy-text="${esc(badge.markdown)}" hidden>${ICONS.copy}<span>${esc(text.copyBadge)}</span></button></div>
         </section>
       </div>
       ${relatedItems ? `<section class="related" aria-labelledby="related-title"><h2 class="section-title" id="related-title">${esc(text.related.replace('{category}', info.categoryTitle))}</h2><ul class="related-list">${relatedItems}</ul><p class="related-more"><a class="text-button" href="${esc(home)}#plugins">${esc(text.browseAll)}</a></p></section>` : ''}
