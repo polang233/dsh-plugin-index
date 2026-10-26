@@ -1,5 +1,6 @@
 import { parseMarketIndex } from '@deepseek-ai/dsh-plugin-market-index';
-import { githubRepository, applyGitHubStars, starsGained } from './github.mjs';
+import { applyGitHubStars, starsGained } from './github.mjs';
+import { githubRepository } from './github-repository.mjs';
 import { endorsementsFor } from './endorsements.mjs';
 import { LABELS, TIERS } from './labels.mjs';
 import { EMPTY_REVIEWS, REVIEW_SOURCE, maintainerReviewFor, validateMaintainerReviews } from './maintainer-reviews.mjs';

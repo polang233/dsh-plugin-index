@@ -1,5 +1,5 @@
 import {createHash} from 'node:crypto';
-import {githubRepository} from './github.mjs';
+import {githubRepository} from './github-repository.mjs';
 
 import {DAY, FRONT_PAGE, CYCLE_DAYS, POOL_SIZE, recommendationDay, cycleDay, validateState} from './recommendation-state.mjs';
 export {recommendationDay, checkRecommendationSnapshot} from './recommendation-state.mjs';

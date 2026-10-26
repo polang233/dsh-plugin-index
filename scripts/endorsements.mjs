@@ -1,4 +1,4 @@
-import { githubRepository } from './github.mjs';
+import { githubRepository } from './github-repository.mjs';
 
 const MAX_CACHE_AGE = 14 * 86_400_000;
 

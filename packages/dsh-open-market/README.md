@@ -27,6 +27,7 @@ On the next start, `https://dshopen.org/index.json` appears in **Plugins → Dis
 - You can like a plugin once a day, and installing one counts as a like. Likes lose one every three days and weigh today's picks.
 - **Start new conversations in Auto review** (off by default; in the settings, or the second row of this plugin under Installed): every new conversation switches to DSH's experimental Auto review permission when it starts, so you no longer pick and confirm it each time. Auto review is switched on too if it was off, which may need a restart. Restored conversations, forks and subagents keep their own permission.
 - Settings and links to the website and repository are on the plugin's page under Installed.
+- The browsing tab appears when Custom plugin markets is available; an unavailable market service does not block DSH startup.
 - `/open-market` puts the index back and switches Custom plugin markets on again, for when you change your mind.
 - The plugin keeps a small marker file, `.dsh-open-market.json`, in the profile directory. DSH fetches the index. The plugin's only own requests are likes: reading `dshopen.org/likes.json` and sending a like, which carry no account or identifier; turn off **Join likes** in the settings to stop both.
 
@@ -36,6 +37,7 @@ On the next start, `https://dshopen.org/index.json` appears in **Plugins → Dis
 - 每个插件每天可以点赞一次，安装也算一次点赞；点赞每 3 天减少 1，并影响今日推荐。
 - **新对话自动使用「自动审查」**（默认关闭，在设置里或「已安装」中本插件的第二个组件开关）：每个新对话开始时自动切换到 DSH 实验性的「自动审查」权限，不用每次手动选择、再确认两次。DSH 没开「自动审查」时会一并打开，可能需要重启生效。恢复的对话、分叉和子代理保持各自的权限。
 - 设置以及官网、GitHub 仓库链接，在「已安装」里本插件的详情页中。
+- 「自定义插件市场」服务就绪后才显示市场标签，服务关闭或暂未启动时不会阻塞 DSH 启动。
 - 想恢复时输入 `/open-market`，会重新加入索引源，并在需要时打开自定义插件市场。
 - 插件在 profile 目录中记录 `.dsh-open-market.json`，索引由 DSH 读取。插件自己只发点赞相关的请求：读取 `dshopen.org/likes.json` 和提交点赞，不带账号或任何标识；在设置里关掉「参与点赞」后两者都不会发送。
 

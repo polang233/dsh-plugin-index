@@ -1,18 +1,10 @@
 import { parseMarketIndex } from '@deepseek-ai/dsh-plugin-market-index';
+import { githubRepository } from './github-repository.mjs';
 
 const DAY = 24 * 60 * 60 * 1000;
 const MAX_CACHE_AGE = 7 * DAY;
 const HISTORY_DAYS = 35;
 const SORT_KEY = 'github-stars';
-
-export function githubRepository(value) {
-  if (typeof value !== 'string' || !URL.canParse(value)) return undefined;
-  const url = new URL(value);
-  if (!['https:', 'http:'].includes(url.protocol) || !['github.com', 'www.github.com'].includes(url.hostname) || url.username || url.password) return undefined;
-  const path = url.pathname.replace(/\/$/, '').replace(/\.git$/, '').slice(1);
-  if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(path)) return undefined;
-  return { key: path.toLowerCase(), url: `https://github.com/${path}` };
-}
 
 function validStars(value) {
   return Number.isSafeInteger(value) && value >= 0;

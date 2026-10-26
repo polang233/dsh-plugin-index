@@ -1,7 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
+import {cp, mkdtemp, rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {execFileSync} from 'node:child_process';
 import {checkPublished} from '../scripts/check-published.mjs';
+
+test('deployment verification starts from a checkout without installed dependencies', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'dsh-published-'));
+  try {
+    await cp(new URL('../scripts/', import.meta.url), join(directory, 'scripts'), {recursive: true});
+    const checker = pathToFileURL(join(directory, 'scripts/check-published.mjs')).href;
+    execFileSync(process.execPath, ['--input-type=module', '--eval', `await import(${JSON.stringify(checker)})`], {stdio: 'pipe'});
+  } finally {
+    await rm(directory, {recursive: true, force: true});
+  }
+});
 
 function fixture({wrongIcon = false, pageRows = 1, restRows, pluginPage = true, name = 'example'} = {}) {
   const bytes = Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"/>');

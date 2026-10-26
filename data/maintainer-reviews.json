@@ -543,6 +543,18 @@
       "record": "docs/reviews/issues-62-71-2026-10-25.json"
     },
     {
+      "name": "dsh-flymemory",
+      "version": "1.1.0",
+      "integrity": "sha512-bY1AIh8F+CNpBuv/7XmsPOUQU3Ee+feA2gX9+jP2eX9UAPMFCGK+5WytFSIdgtc6guFZaGQhHGD+GUh2TSs5yQ==",
+      "repository": "https://github.com/aujurd22/dsh-flymemory",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-26T10:22:20.175Z",
+      "scope": "static-security",
+      "record": "docs/reviews/issues-59-62-90-93-2026-10-26.json"
+    },
+    {
       "name": "dsh-game-translate",
       "version": "0.3.8",
       "integrity": "sha512-XlaSTLE8e3H09mD1YFOjJmwhtXQw0Wp5cBot4G7urEpdyGC3A2SBnzsauh60+adaWoDTUA+Xkp8jbxvuXfUAzg==",
@@ -664,6 +676,18 @@
       "reviewedAt": "2026-10-26T06:29:06.370Z",
       "scope": "static-security",
       "record": "docs/reviews/issues-59-62-81-89-2026-10-26.json"
+    },
+    {
+      "name": "dsh-mobile",
+      "version": "0.6.18",
+      "integrity": "sha512-rpbKuW7BnCwdeh3FEYpMD1JZRitO/bneM/cgBUVdz7/Xvyjltv6hFx4XVfD9N8hcgjjEXqz9S+uqoz26TndEJA==",
+      "repository": "https://github.com/saya-ch/dsh-mobile",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-26T10:31:02.719Z",
+      "scope": "static-security",
+      "record": "docs/reviews/issues-59-62-90-93-2026-10-26.json"
     },
     {
       "name": "dsh-model-picker-control",

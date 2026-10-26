@@ -1,4 +1,4 @@
-import { githubRepository } from './github.mjs';
+import { githubRepository } from './github-repository.mjs';
 
 export const REVIEW_SOURCE = 'open-plugin-market';
 export const EMPTY_REVIEWS = { schema: 1, entries: [] };

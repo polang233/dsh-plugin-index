@@ -1,0 +1,656 @@
+{
+  "schema": 1,
+  "status": "processed",
+  "checkedAt": "2026-10-26T10:22:20.175Z",
+  "baseRevision": "9580fceb76b4e7afc7b9bb8a625f9e5772473ecc",
+  "scope": "Latest submissions, author replies, changed video pin, startup bug and failed publication verification",
+  "counts": {
+    "added": 1,
+    "deferredUpdates": 1,
+    "catalogBefore": 902,
+    "catalogAfter": 903,
+    "updated": 1
+  },
+  "reviews": [
+    {
+      "issue": 90,
+      "name": "dsh-flymemory",
+      "decision": "accept",
+      "reviewedVersion": "1.1.0",
+      "sourceCommit": "52471ce614e385f39e182f16879c49a6af5cbf8b",
+      "repository": {
+        "url": "https://github.com/aujurd22/dsh-flymemory",
+        "id": 1397075782,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "1.1.0",
+        "publishedAt": "2026-10-26T08:31:30.636Z",
+        "publisher": "aujurd",
+        "maintainers": [
+          "aujurd"
+        ],
+        "gitHead": "52471ce614e385f39e182f16879c49a6af5cbf8b"
+      },
+      "archive": {
+        "compressedBytes": 88574,
+        "unpackedBytes": 256429,
+        "decodedBytes": 274432,
+        "entries": 23
+      },
+      "integrity": "sha512-bY1AIh8F+CNpBuv/7XmsPOUQU3Ee+feA2gX9+jP2eX9UAPMFCGK+5WytFSIdgtc6guFZaGQhHGD+GUh2TSs5yQ==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/lib/context.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/bin/flymemory.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/python/flymemory/__init__.py",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/python/flymemory/clusters.py",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        },
+        {
+          "path": "package/python/flymemory/encoder.py",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/python/flymemory_server.py",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        },
+        {
+          "path": "package/python/hook_auto.py",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/python/hook_compact.py",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/python/flymemory/hopfield.py",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/python/flymemory/maintenance.py",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        },
+        {
+          "path": "package/python/flymemory/memory_store.py",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/python/flymemory/v3.py",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/examples/early-band.patch.yml",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        }
+      ],
+      "evidence": {
+        "name": "dsh-flymemory",
+        "version": "1.1.0",
+        "license": "MIT",
+        "repository": "https://github.com/aujurd22/dsh-flymemory",
+        "repositorySource": "package",
+        "sourceCommit": "52471ce614e385f39e182f16879c49a6af5cbf8b",
+        "metadataUrl": "https://registry.npmjs.org/dsh-flymemory",
+        "tarball": "https://registry.npmjs.org/dsh-flymemory/-/dsh-flymemory-1.1.0.tgz",
+        "integrity": "sha512-bY1AIh8F+CNpBuv/7XmsPOUQU3Ee+feA2gX9+jP2eX9UAPMFCGK+5WytFSIdgtc6guFZaGQhHGD+GUh2TSs5yQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 23,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/86b9159166f51d0c52740619e48af8dde07c730506ef67b98cebf9d5e61efb20.svg",
+            "mime": "image/svg+xml",
+            "bytes": 962,
+            "sha256": "86b9159166f51d0c52740619e48af8dde07c730506ef67b98cebf9d5e61efb20"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 88574,
+          "unpackedBytes": 256429,
+          "decodedBytes": 274432,
+          "entries": 23,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-26T07:14:47.189Z",
+          "last30Days": 6,
+          "last90Days": 6
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "input": {
+        "name": "dsh-flymemory",
+        "title": {
+          "en": "FlyMemory",
+          "zh": "FlyMemory 长期记忆"
+        },
+        "description": {
+          "en": "Local long-term memory with 15 MCP tools, automatic capture and recall, and bounded pointer context. Shares stored user input across sessions. Requires Node >=20, Python >=3.10, torch, sentence-transformers, numpy and mcp >=1.30 <2; first use downloads an embedding model. No DSH version range is declared.",
+          "zh": "提供 15 个 MCP 长期记忆工具、自动捕获召回和有界指针上下文；用户输入会持久保存并跨会话共享。需 Node >=20、Python >=3.10，以及 torch、sentence-transformers、numpy、mcp >=1.30 <2，首次会下载嵌入模型；包内未声明 DSH 版本范围。"
+        },
+        "category": "workflow"
+      }
+    },
+    {
+      "issue": 59,
+      "name": "@lifenrir/dsh-video-preview",
+      "decision": "defer-update",
+      "reviewedVersion": "0.1.2",
+      "sourceCommit": "73e814768be9bff6e7752c1f0c18bf3dfdcd5e29",
+      "repository": {
+        "url": "https://github.com/LiFenrir/dsh-video-preview",
+        "id": 1430759328,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.1.2",
+        "publishedAt": "2026-10-26T06:07:27.471Z",
+        "publisher": "lifenrir",
+        "maintainers": [
+          "lifenrir"
+        ],
+        "gitHead": "73e814768be9bff6e7752c1f0c18bf3dfdcd5e29"
+      },
+      "archive": {
+        "compressedBytes": 11567,
+        "unpackedBytes": 29994,
+        "decodedBytes": 38912,
+        "entries": 10
+      },
+      "integrity": "sha512-hwuErUM6Xe0EAzMelowOHwsKWomT2iro+y9ZsMEP2Vk/rXkncBCwL6T4kRjmqtTgWxOJAqduNe29ZmYdfG4GFQ==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "evidence": {
+        "name": "@lifenrir/dsh-video-preview",
+        "version": "0.1.2",
+        "license": "MIT",
+        "repository": "https://github.com/LiFenrir/dsh-video-preview",
+        "repositorySource": "package",
+        "sourceCommit": "73e814768be9bff6e7752c1f0c18bf3dfdcd5e29",
+        "metadataUrl": "https://registry.npmjs.org/%40lifenrir%2Fdsh-video-preview",
+        "tarball": "https://registry.npmjs.org/@lifenrir/dsh-video-preview/-/dsh-video-preview-0.1.2.tgz",
+        "integrity": "sha512-hwuErUM6Xe0EAzMelowOHwsKWomT2iro+y9ZsMEP2Vk/rXkncBCwL6T4kRjmqtTgWxOJAqduNe29ZmYdfG4GFQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 10,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/fe2cdcff9fee8633b7f8b239fe560b539f32434e0ce623ccc45a76f61c293118.svg",
+            "mime": "image/svg+xml",
+            "bytes": 305,
+            "sha256": "fe2cdcff9fee8633b7f8b239fe560b539f32434e0ce623ccc45a76f61c293118"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 11567,
+          "unpackedBytes": 29994,
+          "decodedBytes": 38912,
+          "entries": 10,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T10:38:52.502Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "previous": {
+        "name": "@lifenrir/dsh-video-preview",
+        "version": "0.1.0",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/LiFenrir/dsh-video-preview",
+          "commit": "2dd1792962cca75af1fc598c41a23be4f8513d22",
+          "integrity": "sha512-URkfsn5PgbmMX0bTWo6T/yTBYnlE3Q5kufEha3qY3KTtdFe+9FpNHLcN8CHtA0daV7U+r8Js3pHHzQaX1EspWA==",
+          "publishedAt": "2026-10-23T08:10:03Z"
+        },
+        "title": {
+          "en": "Video Preview",
+          "zh": "视频预览"
+        },
+        "description": {
+          "en": "Play workspace videos in the right-side document preview with seeking and native controls, including files above the RPC preview limit. Playback depends on browser codec support.",
+          "zh": "在右侧文档预览中播放工作区视频，支持原生控件和拖动进度，可读取超过 RPC 预览大小限制的文件。能否播放取决于浏览器编解码支持。"
+        },
+        "category": "interface"
+      }
+    },
+    {
+      "issue": 62,
+      "name": "dsh-mobile",
+      "decision": "update",
+      "reviewedVersion": "0.6.18",
+      "sourceCommit": "0d5ac46dc961e021f363e85b0ba6d3585682e980",
+      "repository": {
+        "url": "https://github.com/saya-ch/dsh-mobile",
+        "id": 1334817483,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "0.6.18",
+        "publishedAt": "2026-10-26T08:09:40.927Z",
+        "publisher": "saya-ch",
+        "maintainers": [
+          "saya-ch"
+        ]
+      },
+      "archive": {
+        "compressedBytes": 27229031,
+        "unpackedBytes": 71590085,
+        "decodedBytes": 71640064,
+        "entries": 63
+      },
+      "integrity": "sha512-rpbKuW7BnCwdeh3FEYpMD1JZRitO/bneM/cgBUVdz7/Xvyjltv6hFx4XVfD9N8hcgjjEXqz9S+uqoz26TndEJA==",
+      "licenseFiles": [
+        "package/LICENSE",
+        "package/packages/question-fixes/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-mobile",
+        "version": "0.6.18",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/saya-ch/dsh-mobile",
+        "repositorySource": "package",
+        "metadataUrl": "https://registry.npmjs.org/dsh-mobile",
+        "tarball": "https://registry.npmjs.org/dsh-mobile/-/dsh-mobile-0.6.18.tgz",
+        "integrity": "sha512-rpbKuW7BnCwdeh3FEYpMD1JZRitO/bneM/cgBUVdz7/Xvyjltv6hFx4XVfD9N8hcgjjEXqz9S+uqoz26TndEJA==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 63,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 27229031,
+          "unpackedBytes": 71590085,
+          "decodedBytes": 71640064,
+          "entries": 63,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-08-15T06:45:45.364Z",
+          "last30Days": 25,
+          "last90Days": 94
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "input": {
+        "name": "dsh-mobile",
+        "version": "0.6.18",
+        "title": {
+          "en": "DSH Mobile",
+          "zh": "DSH Mobile"
+        },
+        "description": {
+          "en": "Use DSH on your computer from a phone browser or the Android app over LAN or optional remote tunnels (Tailscale, cpolar, cloudflared, FRP), with HTTPS and device pairing.",
+          "zh": "通过局域网或可选的远程通道（Tailscale、cpolar、cloudflared、FRP），用手机浏览器或 Android App 安全地使用电脑上的 DSH，支持 HTTPS 和设备配对。"
+        },
+        "category": "integrations"
+      }
+    }
+  ],
+  "security": {
+    "scope": "Targeted static review of published JavaScript/Python entries, local MCP transport, memory storage, hooks, subprocess and network sinks; no plugin activation or dependency installation",
+    "flymemory": {
+      "result": "No admission-blocking issue found in reviewed paths",
+      "controls": [
+        {
+          "path": "lib/index.js:113-153",
+          "note": "Loopback default; private plugin data directory; seeding another pickle library is explicit and off by default."
+        },
+        {
+          "path": "lib/index.js:510-574",
+          "note": "Native capture requires a typed user source with rpcId; credential-marker filters run before capture. Recalled text is identified as historical data."
+        },
+        {
+          "path": "lib/index.js:589-612",
+          "note": "Python child uses argument arrays with no shell; executable/script/model overrides are operator configuration."
+        },
+        {
+          "path": "python/flymemory_server.py:164",
+          "note": "FastMCP default loopback transport; README requires mcp >=1.30,<2. Upstream v1.30.0 enables Host/Origin DNS-rebinding protection for 127.0.0.1. No permissive CORS override is present."
+        },
+        {
+          "path": "python/flymemory/v3.py:1090-1132",
+          "note": "Pickle database paths are configured locally, not MCP tool inputs; only self-generated or trusted libraries may be loaded. No untrusted pickle import endpoint is exposed."
+        },
+        {
+          "path": "lib/context.js:205-263",
+          "note": "Context and compaction checkpoint persistence are expected features; shared memory and automatic persistence are disclosed in catalog copy."
+        }
+      ],
+      "upstreamControlEvidence": "https://github.com/modelcontextprotocol/python-sdk/blob/v1.30.0/src/mcp/server/fastmcp/server.py#L190",
+      "outbound": [
+        "Configured MCP endpoint (loopback by default)",
+        "Hugging Face embedding model download on first use",
+        "npm registry only for the explicit CLI version check"
+      ],
+      "limitations": [
+        "Third-party Python dependencies and downloaded model binaries were not audited",
+        "No real DSH/Python engine execution",
+        "Credential filters are heuristic; no claim that all secrets are detected",
+        "No package-declared DSH compatibility range; README test claims are not runtime verification"
+      ]
+    },
+    "video": {
+      "result": "Existing backpressure defect remains in 0.1.2; do not migrate or grant a local reviewed badge",
+      "path": "index.js:153-187",
+      "flow": "An admitted stream request for a large workspace video enters ReadableStream.start(); its loop reads and enqueues the whole requested range without checking demand or implementing pull/cancel.",
+      "impact": "A slow consuming client can cause buffering proportional to video size. This is a resource issue within the existing authenticated route, not an unauthenticated arbitrary-file claim.",
+      "counterEvidence": "4 MiB chunks bound individual reads; route uses the DSH connection API and fs sandbox. Neither bounds the accumulated stream queue.",
+      "hostIdenticalToReviewed011": true,
+      "currentConfig": "Keep Git 0.1.0 unchanged; the old version shares this defect and is not described as a safe fallback."
+    },
+    "mobile": {
+      "result": "No new admission-blocking issue found in the reviewed release diff",
+      "comparison": {
+        "checkedAt": "2026-10-26T10:31:02.712Z",
+        "filesChanged": [
+          "package/lib/client.js",
+          "package/package.json",
+          "package/packages/question-fixes/package.json",
+          "package/lib/cli.js.map",
+          "package/lib/client.js.map",
+          "package/lib/index.mjs.map",
+          "package/docs/ATTACH_EXISTING_FRPS.en.md",
+          "package/docs/ATTACH_EXISTING_FRPS.md",
+          "package/CHANGELOG.md",
+          "package/CONTRIBUTORS.md",
+          "package/README.en.md",
+          "package/docs/README.md",
+          "package/README.md",
+          "package/SECURITY.md",
+          "package/docs/SELF_HOSTED_ORIGIN.en.md",
+          "package/docs/SELF_HOSTED_ORIGIN.md",
+          "package/docs/SLOW_CONNECTIONS.en.md",
+          "package/docs/SLOW_CONNECTIONS.md",
+          "package/docs/TRUSTED_NETWORKS.en.md",
+          "package/docs/TRUSTED_NETWORKS.md",
+          "package/lib/index.mjs",
+          "package/lib/index.d.mts",
+          "package/cordis.patch.yml",
+          "package/docs/MOBILE_PLUGIN_ADAPTATION.en.md",
+          "package/docs/MOBILE_PLUGIN_ADAPTATION.md"
+        ],
+        "nativeFilesUnchanged": [
+          "package/bin/dsh-mobile-funnel-linux-arm64",
+          "package/bin/dsh-mobile-funnel-linux-x64",
+          "package/bin/dsh-mobile-funnel-win32-x64.exe"
+        ],
+        "runtimeDependenciesUnchanged": true,
+        "sourceCommit": "0d5ac46dc961e021f363e85b0ba6d3585682e980",
+        "decodedBytes": 71640064
+      },
+      "controls": [
+        {
+          "path": "lib/index.mjs:1115-1130",
+          "note": "Administrative CIDR access remains off by default; explicit lists are bounded, parsed and reject /0."
+        },
+        {
+          "path": "lib/index.mjs:1907-1930",
+          "note": "Direct socket peer, loopback Host, Origin/Sec-Fetch-Site and mutation-header controls remain; any non-loopback admin caller also requires DSH authentication."
+        },
+        {
+          "path": "lib/index.mjs:18717,19111-19121",
+          "note": "Remote administration is admitted only when the local DSH login advertises a token; requestRejection must validate the request."
+        },
+        {
+          "path": "lib/index.mjs:3127-3167,6830-6850,6954-6973",
+          "note": "New directory creation is behind existing device authorization and CSRF checks; JSON is bounded, name must be one safe child segment, parent is explicit, mkdir is non-recursive and does not overwrite."
+        },
+        {
+          "path": "lib/client.js:8323-9015",
+          "note": "Picker create action is explicit; path/name are textContent/input values and JSON request data, not HTML or shell code. Cancellation/timeout cannot silently retry writes."
+        }
+      ],
+      "sourceMapping": "Published bundles are generated from the public TypeScript tree at the recorded commit. Reviewed changed controls correspond to src/config.ts, src/http-security.ts, src/plugin.ts, src/computer-images.ts, src/gateway.ts and client picker sources; no local rebuild or byte-for-byte reproducible-build claim.",
+      "limitations": [
+        "Inherits the previous partial static review of unchanged code",
+        "Native binaries and third-party dependencies were not audited; all three native binaries and runtime dependency declarations are unchanged",
+        "No plugin activation, network-tunnel start or real filesystem creation was run"
+      ]
+    }
+  },
+  "followups": {
+    "authorReplies": "No new author replies on #81, #83, #84, #86, #59 or the previously accepted submissions as of this check",
+    "maintenance62": "A later scheduled run newly detected Mobile 0.6.18. Reviewed and updated it; other held pins unchanged. Video 0.1.2 remains deferred.",
+    "withdrawn": [
+      92,
+      93
+    ],
+    "withdrawnNote": "Both balance-panel submissions were closed by their submitters; comments contain encoding loss. Do not infer approval or list the withdrawn packages.",
+    "bug91": {
+      "screenshot": "The web boot waits for dsh-open-market: remote.pluginMarket",
+      "rootCause": "The browser module declared an optional experimental service as a mandatory startup injection.",
+      "fix": "Keep the base browser module and settings active without the service; scope the browsing tab to a dynamic remote.pluginMarket injection so it appears and disposes with that service.",
+      "release": "Source fix only; the npm 0.2.4 artifact is unchanged. Keep #91 open while awaiting installed versions and a published fix.",
+      "workaround": "Disable dsh-open-market in recovery plugin management to restart; enable Custom plugin markets before re-enabling the plugin."
+    }
+  },
+  "ci": {
+    "run": "https://github.com/polang233/dsh-plugin-index/actions/runs/40283882154",
+    "succeeded": [
+      "Build",
+      "Unit tests",
+      "Browser tests",
+      "GitHub Pages deployment",
+      "Cloudflare deployment"
+    ],
+    "failure": "Both post-publication jobs failed before checking the site: maintainer-reviews imported github.mjs, which eagerly imports the catalog SDK absent in deployment checkouts.",
+    "fix": "Move repository URL parsing into a dependency-free module and migrate callers; the publication checker can start without node_modules.",
+    "reproduction": "New isolated-checkout regression test failed with the same ERR_MODULE_NOT_FOUND before the fix and passed after it.",
+    "additionalFailedRun": "https://github.com/polang233/dsh-plugin-index/actions/runs/40304377467"
+  },
+  "replies": [
+    {
+      "issue": 90,
+      "body": "感谢提交！已复核最新 1.1.0，将收录，并注明 Python/MCP 依赖、自动记忆和首次模型下载要求 😊\n\n本轮已做静态安全审查，该版本上架后会显示「已审查」标签。",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/90#issuecomment-6413720432",
+      "postedAt": "2026-10-26T10:31:49.5316971Z"
+    },
+    {
+      "issue": 59,
+      "body": "补充复查了 0.1.2：流式读取仍在 start() 内持续预读整段，慢客户端的缓冲问题尚未修复，暂不迁移。请改为按 pull() 需求读取并处理取消；当前固定旧版也有这个问题。修复后可继续复核。",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/59#issuecomment-6413721631",
+      "postedAt": "2026-10-26T10:31:50.6667951Z"
+    },
+    {
+      "issue": 91,
+      "body": "Thanks for reporting this! The screenshot shows Open Market waiting for the optional `remote.pluginMarket` service. I reproduced the dependency problem and fixed it in the source; npm 0.2.4 does not contain the fix yet.\n\nFor now, disable `dsh-open-market` in the recovery screen’s Plugin Manager and restart. Then enable **Plugins → Experimental plugins → Custom plugin markets**, restart, and re-enable Open Market. Please share your DSH and `dsh-open-market` versions; if it still fails, include the relevant diagnostics with secrets removed.",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/91#issuecomment-6413722738",
+      "postedAt": "2026-10-26T10:31:51.8150780Z"
+    },
+    {
+      "issue": 62,
+      "body": "补充复核了新检测到的 Mobile 0.6.18，包与本轮静态安全检查通过，将更新并绑定该版本的「已审查」标签。视频预览 0.1.2 仍有整段预读问题，暂不升级；其余待补条目保持现状。",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/62#issuecomment-6413860992",
+      "postedAt": "2026-10-26T10:31:56.6039262Z"
+    }
+  ],
+  "publication": {
+    "branch": "main",
+    "fullValidation": "GitHub Actions",
+    "closeIssues": [
+      90
+    ],
+    "leaveOpen": [
+      62,
+      81,
+      83,
+      84,
+      86,
+      91
+    ]
+  },
+  "validation": {
+    "checkedAt": "2026-10-26T10:31:48.033Z",
+    "targetedEntries": 2,
+    "officialFormat": "passed",
+    "exactReleaseReviewBadge": "passed",
+    "javascriptSyntaxFiles": 11,
+    "relativeImports": "passed",
+    "unchangedExistingEntries": 901,
+    "pluginExecuted": false,
+    "fullCatalogBuild": false,
+    "fullTests": "GitHub Actions",
+    "pythonAstFiles": 10,
+    "targetedTests": 73,
+    "regressionReproductions": [
+      "Deployment checker with no node_modules",
+      "Client boot without remote.pluginMarket"
+    ]
+  },
+  "repliesPostedAt": "2026-10-26T10:32:37.966Z"
+}

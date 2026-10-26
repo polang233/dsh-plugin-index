@@ -10405,7 +10405,7 @@
     },
     {
       "name": "dsh-mobile",
-      "version": "0.6.17",
+      "version": "0.6.18",
       "title": {
         "en": "DSH Mobile",
         "zh": "DSH Mobile"
@@ -11227,6 +11227,18 @@
         "zh": "把各工作区的置顶会话汇总到侧栏顶部可折叠分组，点击仍在原工作区打开。直接使用宿主置顶状态，无网络请求；依赖侧栏 DOM 结构，包内未声明适用的 DSH 版本。"
       },
       "category": "interface"
+    },
+    {
+      "name": "dsh-flymemory",
+      "title": {
+        "en": "FlyMemory",
+        "zh": "FlyMemory 长期记忆"
+      },
+      "description": {
+        "en": "Local long-term memory with 15 MCP tools, automatic capture and recall, and bounded pointer context. Shares stored user input across sessions. Requires Node >=20, Python >=3.10, torch, sentence-transformers, numpy and mcp >=1.30 <2; first use downloads an embedding model. No DSH version range is declared.",
+        "zh": "提供 15 个 MCP 长期记忆工具、自动捕获召回和有界指针上下文；用户输入会持久保存并跨会话共享。需 Node >=20、Python >=3.10，以及 torch、sentence-transformers、numpy、mcp >=1.30 <2，首次会下载嵌入模型；包内未声明 DSH 版本范围。"
+      },
+      "category": "workflow"
     }
   ]
 }

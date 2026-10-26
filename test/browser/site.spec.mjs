@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import {githubRepository} from '../../scripts/github.mjs';
+import {githubRepository} from '../../scripts/github-repository.mjs';
 
 const INDEX_URL = 'https://dshopen.org/index.json';
 const escapeRegExp = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

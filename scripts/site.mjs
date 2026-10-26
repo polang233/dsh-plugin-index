@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile, copyFile, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { Converter } from 'opencc-js';
-import { githubRepository } from './github.mjs';
+import { githubRepository } from './github-repository.mjs';
 import { releaseAge } from './market-display.mjs';
 import { addedTimestamp } from './added.mjs';
 import { SOURCES } from './endorsements.mjs';

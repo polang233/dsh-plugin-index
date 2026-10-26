@@ -1052,7 +1052,7 @@ window.__ModuleLoader__.load({
           marketRoot: root, onClose: closeDetails }));
     }
 
-    const inject = ['slots', 'locale', 'remote', 'remote.pluginMarket'];
+    const inject = ['slots', 'locale', 'remote'];
 
     function apply(ctx) {
       ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'open-market: dictionaries');
@@ -1150,16 +1150,19 @@ window.__ModuleLoader__.load({
           }, () => {});
         }), 'open-market: count installs');
       });
-      const face = { remote: ctx.remote, manager: () => pluginManager, resolve: text => ctx.locale.resolveText(text) };
-      ctx.slots.inject('plugins.tab', () => ctx.slots.register({
-        name: 'plugins.tab',
-        id: 'open-market',
-        // Installed and Discover share order 0 and then follow load order; 1 keeps this tab after both.
-        order: 1,
-        label: () => t('title'),
-        locale: NS,
-        inject: () => face
-      }, OpenMarketTab));
+      // Custom markets may be off, unavailable, or still starting. Only the browsing tab needs this service.
+      ctx.inject(['remote.pluginMarket'], ctx => {
+        const face = { remote: ctx.remote, manager: () => pluginManager, resolve: text => ctx.locale.resolveText(text) };
+        ctx.slots.inject('plugins.tab', () => ctx.slots.register({
+          name: 'plugins.tab',
+          id: 'open-market',
+          // Installed and Discover share order 0 and then follow load order; 1 keeps this tab after both.
+          order: 1,
+          label: () => t('title'),
+          locale: NS,
+          inject: () => face
+        }, OpenMarketTab));
+      });
     }
 
     return { apply, inject };

@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parseMarketIndex } from '@deepseek-ai/dsh-plugin-market-index';
-import { collectGitHub, githubRepository, applyGitHubStars, collectStarHistory } from '../scripts/github.mjs';
+import { collectGitHub, applyGitHubStars, collectStarHistory } from '../scripts/github.mjs';
+import { githubRepository } from '../scripts/github-repository.mjs';
 
 const NOW = Date.parse('2026-10-18T00:00:00Z');
 const index = {

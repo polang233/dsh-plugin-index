@@ -2,7 +2,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { collectPackage } from './lib.mjs';
-import { collectGitHub, githubRepository } from './github.mjs';
+import { collectGitHub } from './github.mjs';
+import { githubRepository } from './github-repository.mjs';
 import semver from 'semver';
 import { readWithdrawn } from './withdrawn.mjs';
 
