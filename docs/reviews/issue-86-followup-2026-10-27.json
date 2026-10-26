@@ -1,0 +1,336 @@
+{
+  "schema": 1,
+  "status": "processed",
+  "checkedAt": "2026-10-26T16:22:41.893Z",
+  "baseRevision": "3cb65e8b2b4fbd1f438ac2c50067c7eb251da3de",
+  "scope": "Issue 86 version 0.2.1 follow-up and final current-state checks for pending submissions",
+  "reviews": [
+    {
+      "issue": 86,
+      "name": "dsh-bili-mini",
+      "reviewedVersion": "0.2.1",
+      "decision": "accept",
+      "integrity": "sha512-nBY8DB2n/5xn0VWQdyn5rKJmmpnLMmI1F5HK6kkhxqszoSixlR/HcE5cQSgp2OD9rcZW4KXlpekW2ug4M7mRCw==",
+      "sourceCommit": "fb75b1ad62dadc4c9982d9213cb793d1db44eba2",
+      "publishedAt": "2026-10-26T15:45:40.665Z",
+      "repository": {
+        "url": "https://github.com/tuanzhanghao/dsh-bili-mini",
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "archive": {
+        "compressedBytes": 343991,
+        "unpackedBytes": 1262626,
+        "decodedBytes": 1281536,
+        "entries": 23
+      },
+      "input": {
+        "name": "dsh-bili-mini",
+        "title": {
+          "en": "BiliMini",
+          "zh": "BiliMini"
+        },
+        "category": "integrations",
+        "description": {
+          "en": "Browse Bilibili recommendations, watch videos with danmaku, and optionally sync watch progress from a sidebar. QR login stores account cookies on the local host and sends them to Bilibili; no model calls. Requires Node >=20; no DSH compatibility range is declared.",
+          "zh": "在侧边栏浏览 B 站推荐、观看视频与弹幕，可选同步观看进度。扫码登录将账号 Cookie 保存在本机并用于 B 站请求，不调用模型。需 Node >=20；未声明 DSH 兼容范围。"
+        }
+      },
+      "evidence": {
+        "name": "dsh-bili-mini",
+        "version": "0.2.1",
+        "license": "MIT",
+        "repository": "https://github.com/tuanzhanghao/dsh-bili-mini",
+        "repositorySource": "package",
+        "sourceCommit": "fb75b1ad62dadc4c9982d9213cb793d1db44eba2",
+        "metadataUrl": "https://registry.npmjs.org/dsh-bili-mini",
+        "tarball": "https://registry.npmjs.org/dsh-bili-mini/-/dsh-bili-mini-0.2.1.tgz",
+        "integrity": "sha512-nBY8DB2n/5xn0VWQdyn5rKJmmpnLMmI1F5HK6kkhxqszoSixlR/HcE5cQSgp2OD9rcZW4KXlpekW2ug4M7mRCw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 23,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/c419ff172f49ec1af43946c003908bdfad7b0cc94d6002033f7ff8902777a680.svg",
+            "mime": "image/svg+xml",
+            "bytes": 317,
+            "sha256": "c419ff172f49ec1af43946c003908bdfad7b0cc94d6002033f7ff8902777a680"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 343991,
+          "unpackedBytes": 1262626,
+          "decodedBytes": 1281536,
+          "entries": 23,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-24T15:00:59.425Z",
+          "last30Days": 5,
+          "last90Days": 5
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceCorrespondence": {
+        "allSelectedFirstPartyFilesMatch": true,
+        "compared": [
+          {
+            "file": "package/LICENSE",
+            "sameBytes": true,
+            "sameText": true
+          },
+          {
+            "file": "package/auth.js",
+            "sameBytes": true,
+            "sameText": true
+          },
+          {
+            "file": "package/bili.js",
+            "sameBytes": true,
+            "sameText": true
+          },
+          {
+            "file": "package/client.js",
+            "sameBytes": true,
+            "sameText": true
+          },
+          {
+            "file": "package/danmaku.js",
+            "sameBytes": true,
+            "sameText": true
+          },
+          {
+            "file": "package/index.js",
+            "sameBytes": true,
+            "sameText": true
+          },
+          {
+            "file": "package/trust.js",
+            "sameBytes": true,
+            "sameText": true
+          },
+          {
+            "file": "package/locale/en.json",
+            "sameBytes": true,
+            "sameText": true
+          },
+          {
+            "file": "package/locale/zh.json",
+            "sameBytes": true,
+            "sameText": true
+          },
+          {
+            "file": "package/README.md",
+            "sameBytes": true,
+            "sameText": true
+          },
+          {
+            "file": "package/cordis.patch.yml",
+            "sameBytes": true,
+            "sameText": true
+          }
+        ]
+      },
+      "securityReview": {
+        "scope": "Published first-party Host/client/auth/bili/danmaku/trust code, patch and corresponding immutable public source; unchanged vendored assets compared by bytes",
+        "priorConclusion": "0.2.0 was held for missing evidence of raw-route browser trust controls and unbound QR polling, not a confirmed CSRF or privacy exploit.",
+        "controls": [
+          {
+            "paths": [
+              "trust.js:46-63,72-80,128-193",
+              "index.js:703-725"
+            ],
+            "note": "All API dispatch passes a loopback Host fence and Origin/HTTP Referer plus Sec-Fetch-Site checks. Rejects non-loopback DNS authorities, cross-site marker, opaque Origin, mismatched port/origin. This is browser request trust, not user authentication."
+          },
+          {
+            "paths": [
+              "index.js:117-182,1009-1078"
+            ],
+            "note": "QR generation keeps upstream key in Host, issues random UUID capability bound to the locally created challenge. Poll rejects missing/unknown/expired token and mismatched legacy key; terminal results and upstream errors delete the token; capped map and TTL timers bound retained sessions."
+          },
+          {
+            "paths": [
+              "index.js:1080-1134",
+              "client.js:474-504,1949-2060,2092-2100"
+            ],
+            "note": "JSON-only bounded cancel body, idempotent cancellation, logout invalidation and in-memory client token cleanup on close/retry/unmount. Tokens in memory do not protect against same-origin malicious code."
+          },
+          {
+            "paths": [
+              "index.js:239-273,518-568,1404-1416"
+            ],
+            "note": "Only capability-bearing media routes and public immutable vendor assets use Host-only trust. Media maps are bounded, random and expiring, with CDN HTTPS URL allowlisting; API responses have no permissive CORS."
+          },
+          {
+            "paths": [
+              "auth.js:23-139"
+            ],
+            "note": "Unchanged cookie-bearing requests restrict Bilibili HTTPS hosts and reject redirects; cookie values filtered, saved locally with POSIX mode when supported and redacted from logs. Stream proxy uses no account cookie, so do not generalize the auth redirect policy to it."
+          }
+        ],
+        "findings": [],
+        "limitations": [
+          "Single local-user/loopback service, not multi-user authentication or a guarantee against local processes or same-origin code.",
+          "Missing browser markers are allowed; media capability routes intentionally allow CORS. Review covers the stated loopback threat model.",
+          "No real login, playback, GUI runtime, OS ACL verification or exhaustive vendored/transitive dependency audit; source comparison is not a reproducible build claim.",
+          "Cancellation does not abort an already-running upstream login poll; cooperative local UI and upstream latency still apply."
+        ]
+      }
+    }
+  ],
+  "latestState": {
+    "newestIssue": 101,
+    "newIssuesAfter101": 0,
+    "observedAuthorReplies": [
+      6420791678,
+      6420815515
+    ],
+    "pendingNpmMetadata": [
+      {
+        "integritySame": true,
+        "deprecated": null,
+        "latest": "0.2.0",
+        "reviewed": "0.2.0",
+        "name": "dsh-canteen-retention-check"
+      },
+      {
+        "integritySame": true,
+        "deprecated": null,
+        "latest": "1.2.6",
+        "reviewed": "1.2.6",
+        "name": "dsh-composer-predictions"
+      },
+      {
+        "integritySame": true,
+        "deprecated": null,
+        "latest": "0.1.1",
+        "reviewed": "0.1.1",
+        "name": "dsh-construction-doc-check"
+      },
+      {
+        "integritySame": true,
+        "deprecated": null,
+        "latest": "0.2.8",
+        "reviewed": "0.2.8",
+        "name": "dsh-moodboard"
+      },
+      {
+        "integritySame": true,
+        "deprecated": null,
+        "latest": "0.1.11",
+        "reviewed": "0.1.11",
+        "name": "dsh-move-to-workspace"
+      },
+      {
+        "integritySame": true,
+        "deprecated": null,
+        "latest": "0.2.3",
+        "reviewed": "0.2.3",
+        "name": "dsh-prompt-rewrite"
+      },
+      {
+        "integritySame": true,
+        "deprecated": null,
+        "latest": "0.1.0",
+        "reviewed": "0.1.0",
+        "name": "dsh-safety-ledger-check"
+      },
+      {
+        "integritySame": true,
+        "deprecated": null,
+        "latest": "0.3.0",
+        "reviewed": "0.3.0",
+        "name": "dsh-workspace-status"
+      }
+    ],
+    "previousActions": {
+      "url": "https://github.com/polang233/dsh-plugin-index/actions/runs/40308316414",
+      "conclusion": "success"
+    }
+  },
+  "replies": [
+    {
+      "issue": 86,
+      "body": "感谢补齐这些控制 😊 已复核 0.2.1 的路由来源校验、本机二维码会话绑定与清理，可收录并为该版本添加「已审查」标签。",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/86#issuecomment-6421249846",
+      "postedAt": "2026-10-26T16:24:29.5208552Z"
+    }
+  ],
+  "replyLanguage": {
+    "language": "zh",
+    "evidence": "Author-written issue comments are Chinese; no region inferred."
+  },
+  "validation": {
+    "checkedAt": "2026-10-26T16:22:41.893Z",
+    "officialFormat": "passed",
+    "publishedSourceTextMatches": true,
+    "changedExistingFiles": [
+      "package/README.md",
+      "package/client.js",
+      "package/index.js",
+      "package/package.json"
+    ],
+    "addedFiles": [
+      "package/trust.js"
+    ],
+    "unchangedCommonFiles": 18,
+    "syntaxFiles": 6,
+    "missingRelativeImports": [],
+    "isolatedTrustCases": 20,
+    "credentialPatternCandidates": 0,
+    "hostOrClientActivated": false,
+    "networkOrLoginExecuted": false,
+    "fullCatalogBuild": false,
+    "fullTests": "GitHub Actions"
+  },
+  "publication": {
+    "status": "approved-and-replied",
+    "commentsSent": true,
+    "delivery": "Included in the approved main-branch submission commit",
+    "fullValidation": "GitHub Actions",
+    "localMemory": "AGENTS.md remains locally excluded and is not part of the commit"
+  },
+  "processedAt": "2026-10-26T16:25:14.717Z",
+  "finalBatchValidation": {
+    "checkedAt": "2026-10-26T16:23:28.548Z",
+    "acceptedEntries": 10,
+    "exactReleaseStaticSecurityBadges": 10,
+    "unchangedPublishedEntries": 903,
+    "originalReviewRecordsPreserved": 71,
+    "catalogCount": 913,
+    "ledgerCount": 81,
+    "latestNpmChecks": 8,
+    "replies": 10,
+    "fullCatalogBuild": false,
+    "fullTests": "GitHub Actions",
+    "localMemoryExcluded": true
+  }
+}

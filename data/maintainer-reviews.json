@@ -171,6 +171,19 @@
       "record": "docs/reviews/issues-31-62-74-2026-10-25.json"
     },
     {
+      "name": "@gongfpp/dsh-novel-fish",
+      "version": "0.1.4",
+      "integrity": "sha512-TGUIGsugVUtAFwpsfJmDz9GW0z/rAgysWRtK8osasJyLhjnKFpx29/ERbZMfkoNxTb6OJZrb/qnfGv3z9+eraw==",
+      "repository": "https://github.com/gongfpp/dsh-novel-fish",
+      "source": {
+        "type": "git",
+        "commit": "7c25fa93c7c253a8b1925cc1ddff35a47064c633"
+      },
+      "reviewedAt": "2026-10-26T15:56:08.949Z",
+      "scope": "static-security",
+      "record": "docs/reviews/issues-100-101-2026-10-26.json"
+    },
+    {
       "name": "@gulagala001/dsh-btw",
       "version": "0.1.0-dsh.0.2.1-rc.2",
       "integrity": "sha512-jPKof4BUNeNChfbbB39/eYaXDwPKmkOdshyg2VNtmSlgwvWYVae2QJhJ+KlK7pa22XeAC9g+GOZt6Fhg1jLSyw==",
@@ -431,6 +444,30 @@
       "record": "docs/reviews/issues-62-71-2026-10-25.json"
     },
     {
+      "name": "dsh-bili-mini",
+      "version": "0.2.1",
+      "integrity": "sha512-nBY8DB2n/5xn0VWQdyn5rKJmmpnLMmI1F5HK6kkhxqszoSixlR/HcE5cQSgp2OD9rcZW4KXlpekW2ug4M7mRCw==",
+      "repository": "https://github.com/tuanzhanghao/dsh-bili-mini",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-26T16:22:41.893Z",
+      "scope": "static-security",
+      "record": "docs/reviews/issue-86-followup-2026-10-27.json"
+    },
+    {
+      "name": "dsh-canteen-retention-check",
+      "version": "0.2.0",
+      "integrity": "sha512-HGw7Ye0BlTdceaqDaN/MfYVybnn7xT2suKgiy5VyYWAGnqFelu3TO/iwfUZEUwSdACbgfrhcLEdFuvMvDFue3g==",
+      "repository": "https://github.com/PerryLink/dsh-canteen-retention-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-26T15:56:08.949Z",
+      "scope": "static-security",
+      "record": "docs/reviews/issues-100-101-2026-10-26.json"
+    },
+    {
       "name": "dsh-colorlab",
       "version": "1.0.0",
       "integrity": "sha512-OpdkQGuztUPiK7Po/twNzux4vVL33lHzQ/21VCDiwS89xiFedKROZPv6CX3DQdUlq2n+HwFQ3LKonouZA1vcuA==",
@@ -455,6 +492,30 @@
       "reviewedAt": "2026-10-24T16:45:30.408Z",
       "scope": "package",
       "record": "docs/reviews/issues-62-71-2026-10-25.json"
+    },
+    {
+      "name": "dsh-composer-predictions",
+      "version": "1.2.6",
+      "integrity": "sha512-xPv91FmfBZ/0cliptHbXIYsqcPTpbTc8bbQ2FsChYWkRShG+sKIwgt9zVIIoHPW7sGLpGOmivA0sKEq+u9UNEg==",
+      "repository": "https://github.com/Stijnus/dsh-composer-predictions",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-26T14:45:00.985Z",
+      "scope": "static-security",
+      "record": "docs/reviews/issues-94-99-2026-10-26.json"
+    },
+    {
+      "name": "dsh-construction-doc-check",
+      "version": "0.1.1",
+      "integrity": "sha512-3PgPbIsEK6VFMz7VQRVIgsSLoyiD1Baqn+BpZ8HG0yLQWQg4yYIFx5Xb968n7iapkNWL4TyYmW8pPOrYgBssVw==",
+      "repository": "https://github.com/PerryLink/dsh-construction-doc-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-26T15:56:08.949Z",
+      "scope": "static-security",
+      "record": "docs/reviews/issues-100-101-2026-10-26.json"
     },
     {
       "name": "dsh-damage-pulse",
@@ -702,6 +763,30 @@
       "record": "docs/reviews/issues-62-69-80-2026-10-25.json"
     },
     {
+      "name": "dsh-moodboard",
+      "version": "0.2.8",
+      "integrity": "sha512-fYUIZPmU8nPOGfV662gFZQvOuQbHyLPcuL6WLRpGgoNX7hCTcuqOOPAdZd61WF+Q3c3VsTYFyAHYkbd9nAovig==",
+      "repository": "https://github.com/Stijnus/dsh-moodboard",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-26T14:45:00.985Z",
+      "scope": "static-security",
+      "record": "docs/reviews/issues-94-99-2026-10-26.json"
+    },
+    {
+      "name": "dsh-move-to-workspace",
+      "version": "0.1.11",
+      "integrity": "sha512-m5O2Rlcr8SmnaelmQVMn5oGfrJh4gW4aMeEuwbqHa9Xyelwkhyi3Mm1IrlnnITAn+hqzdSi4oyNZdxKFzvBPfQ==",
+      "repository": "https://github.com/Stijnus/dsh-move-to-workspace",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-26T14:45:00.985Z",
+      "scope": "static-security",
+      "record": "docs/reviews/issues-94-99-2026-10-26.json"
+    },
+    {
       "name": "dsh-pinned-panel",
       "version": "0.3.0",
       "integrity": "sha512-/PstBhPZV5M7t/GRdfTpZqJ6L/lJMhR1R6jvLSV2yLp4F3coBKacv5JLnlsFmuqCJAXenKPMzhdtp5ANx5rH7A==",
@@ -739,6 +824,18 @@
       "record": "docs/reviews/plugin-submissions-2026-10-21.json"
     },
     {
+      "name": "dsh-prompt-rewrite",
+      "version": "0.2.3",
+      "integrity": "sha512-S8anfAyxz98sht7FLB+5u9o/kuLEKZXZl+7fV3iyyBLGM9ZvZngxorBjGbDrpcJcomlPCG00Ex0/HmVW/jPEzw==",
+      "repository": "https://github.com/Stijnus/dsh-prompt-optimizer",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-26T14:45:00.985Z",
+      "scope": "static-security",
+      "record": "docs/reviews/issues-94-99-2026-10-26.json"
+    },
+    {
       "name": "dsh-quick-backup",
       "version": "0.2.0",
       "integrity": "sha512-RDfhXx9RiHH3+5IwAY9r+KC4p93OZQMucen4/4D8w0JtVZPx/uKy5v8qfQvdR5ya5sopteziA9hxs82qW+QVMw==",
@@ -774,6 +871,18 @@
       "reviewedAt": "2026-10-25T12:21:16.117Z",
       "scope": "package",
       "record": "docs/reviews/issues-62-69-80-2026-10-25.json"
+    },
+    {
+      "name": "dsh-safety-ledger-check",
+      "version": "0.1.0",
+      "integrity": "sha512-/dQwb/YdX4aZ8XOX/uh99TWXy3Em2M/6QUwiKrGeeUIymR9XaWucEcBtHJITREQ1nYG48pGSvuBGQi9FJuQPqQ==",
+      "repository": "https://github.com/PerryLink/dsh-safety-ledger-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-26T15:56:08.949Z",
+      "scope": "static-security",
+      "record": "docs/reviews/issues-100-101-2026-10-26.json"
     },
     {
       "name": "dsh-session-notifier",
@@ -872,6 +981,18 @@
       "reviewedAt": "2026-10-24T16:45:30.408Z",
       "scope": "package",
       "record": "docs/reviews/issues-62-71-2026-10-25.json"
+    },
+    {
+      "name": "dsh-workspace-status",
+      "version": "0.3.0",
+      "integrity": "sha512-bHqlzQh8MNdxWKMN7z49aNlNCXEjyIiiWEBReHhCjdfCYee3iOjHYwPURhjIKVx59CP7AXhbciTXFEBkto164w==",
+      "repository": "https://github.com/Stijnus/dsh-workspace-status",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-26T14:45:00.985Z",
+      "scope": "static-security",
+      "record": "docs/reviews/issues-94-99-2026-10-26.json"
     }
   ]
 }

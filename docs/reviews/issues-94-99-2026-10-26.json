@@ -1,0 +1,1215 @@
+{
+  "schema": 1,
+  "status": "processed",
+  "checkedAt": "2026-10-26T14:45:00.985Z",
+  "baseRevision": "3cb65e8b2b4fbd1f438ac2c50067c7eb251da3de",
+  "scope": "Issues 94–99, QQ re-submission related to 83, latest replies and preceding publication",
+  "counts": {
+    "added": 5,
+    "deferred": 1,
+    "catalogBefore": 903,
+    "catalogAfter": 908
+  },
+  "reviews": [
+    {
+      "issue": 94,
+      "name": "dsh-composer-predictions",
+      "reviewedVersion": "1.2.6",
+      "decision": "accept",
+      "sourceCommit": "f1d43a68888e7f2bb97fbf5164ed85cd0c507a45",
+      "repository": {
+        "url": "https://github.com/Stijnus/dsh-composer-predictions",
+        "id": 1430786662,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "1.2.6",
+        "publishedAt": "2026-10-26T10:35:47.176Z",
+        "publisher": "GitHub Actions",
+        "maintainers": [
+          "stijnus"
+        ],
+        "gitHead": "f1d43a68888e7f2bb97fbf5164ed85cd0c507a45"
+      },
+      "archive": {
+        "compressedBytes": 26454,
+        "unpackedBytes": 83869,
+        "decodedBytes": 93696,
+        "entries": 11
+      },
+      "integrity": "sha512-xPv91FmfBZ/0cliptHbXIYsqcPTpbTc8bbQ2FsChYWkRShG+sKIwgt9zVIIoHPW7sGLpGOmivA0sKEq+u9UNEg==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "evidence": {
+        "name": "dsh-composer-predictions",
+        "version": "1.2.6",
+        "license": "MIT",
+        "repository": "https://github.com/Stijnus/dsh-composer-predictions",
+        "repositorySource": "package",
+        "sourceCommit": "f1d43a68888e7f2bb97fbf5164ed85cd0c507a45",
+        "metadataUrl": "https://registry.npmjs.org/dsh-composer-predictions",
+        "tarball": "https://registry.npmjs.org/dsh-composer-predictions/-/dsh-composer-predictions-1.2.6.tgz",
+        "integrity": "sha512-xPv91FmfBZ/0cliptHbXIYsqcPTpbTc8bbQ2FsChYWkRShG+sKIwgt9zVIIoHPW7sGLpGOmivA0sKEq+u9UNEg==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 11,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/1b32da50727aae657f5af0075f3038c2230cdd0ecab16a89f4feec0a9fd40f93.svg",
+            "mime": "image/svg+xml",
+            "bytes": 659,
+            "sha256": "1b32da50727aae657f5af0075f3038c2230cdd0ecab16a89f4feec0a9fd40f93"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 26454,
+          "unpackedBytes": 83869,
+          "decodedBytes": 93696,
+          "entries": 11,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T08:04:35.901Z",
+          "last30Days": 12,
+          "last90Days": 12
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "input": {
+        "name": "dsh-composer-predictions",
+        "title": {
+          "en": "Composer Predictions",
+          "zh": "输入预测"
+        },
+        "description": {
+          "en": "Tab suggestions for the next message and inline draft continuation. Makes background model calls over recent conversation and tool context, using the session model or a configured model and consuming tokens. Accepting inserts editable text without sending. Requires DSH >=0.2.1-rc.3 <0.3.0-0.",
+          "zh": "为下一条消息和草稿续写提供 Tab 候选，后台调用当前会话模型或指定模型，读取近期对话与工具上下文并消耗 token；采纳仅写入草稿，不自动发送。需 DSH >=0.2.1-rc.3 <0.3.0-0。"
+        },
+        "category": "interface"
+      },
+      "security": {
+        "result": "No admission-blocking issue found in the reviewed paths",
+        "controls": [
+          {
+            "path": "index.js:215-259",
+            "note": "Both prediction routes invoke connection.admit, require an owner principal and JSON POST, bound request/draft sizes and resolve an existing session."
+          },
+          {
+            "path": "index.js:288-385",
+            "note": "One bounded auxiliary call uses the session or configured provider/model, streams only text, handles deadlines/cancellation and keeps a 200-entry cache. No tool execution or transcript write is performed."
+          },
+          {
+            "path": "client.js:435-444,724-745",
+            "note": "Requests use same-origin endpoints. Tab accepts through the host insertion API and respects refusal; no submission is triggered."
+          }
+        ]
+      }
+    },
+    {
+      "issue": 95,
+      "name": "dsh-moodboard",
+      "reviewedVersion": "0.2.8",
+      "decision": "accept",
+      "sourceCommit": "d504b9a0fc4a58b28b1718ef0ba905fb0bc6407a",
+      "repository": {
+        "url": "https://github.com/Stijnus/dsh-moodboard",
+        "id": 1433089955,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.2.8",
+        "publishedAt": "2026-10-25T22:27:24.926Z",
+        "publisher": "GitHub Actions",
+        "maintainers": [
+          "stijnus"
+        ],
+        "gitHead": "d504b9a0fc4a58b28b1718ef0ba905fb0bc6407a"
+      },
+      "archive": {
+        "compressedBytes": 65911,
+        "unpackedBytes": 299849,
+        "decodedBytes": 309248,
+        "entries": 10
+      },
+      "integrity": "sha512-fYUIZPmU8nPOGfV662gFZQvOuQbHyLPcuL6WLRpGgoNX7hCTcuqOOPAdZd61WF+Q3c3VsTYFyAHYkbd9nAovig==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "evidence": {
+        "name": "dsh-moodboard",
+        "version": "0.2.8",
+        "license": "MIT",
+        "repository": "https://github.com/Stijnus/dsh-moodboard",
+        "repositorySource": "package",
+        "sourceCommit": "d504b9a0fc4a58b28b1718ef0ba905fb0bc6407a",
+        "metadataUrl": "https://registry.npmjs.org/dsh-moodboard",
+        "tarball": "https://registry.npmjs.org/dsh-moodboard/-/dsh-moodboard-0.2.8.tgz",
+        "integrity": "sha512-fYUIZPmU8nPOGfV662gFZQvOuQbHyLPcuL6WLRpGgoNX7hCTcuqOOPAdZd61WF+Q3c3VsTYFyAHYkbd9nAovig==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 10,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/36e3ed3165f457f6c3278304a98b06d3e2850ea125199092f15f8b440fda3060.svg",
+            "mime": "image/svg+xml",
+            "bytes": 580,
+            "sha256": "36e3ed3165f457f6c3278304a98b06d3e2850ea125199092f15f8b440fda3060"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 65911,
+          "unpackedBytes": 299849,
+          "decodedBytes": 309248,
+          "entries": 10,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-25T22:06:04.936Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "input": {
+        "name": "dsh-moodboard",
+        "title": {
+          "en": "Moodboard",
+          "zh": "参考图板"
+        },
+        "description": {
+          "en": "Save reference images with tags, notes and pinned style guides. The board is shared under DSH_HOME; the agent tool returns selected references to the model before UI work. Uploads use local DSH attachments. Requires DSH >=0.2.1-rc.3 <0.3.0-0.",
+          "zh": "保存参考图、标签、备注与置顶风格指南，通过工具把选定参考交给模型用于界面设计。图板在 DSH_HOME 下共享，图片由 DSH 附件服务本地存储。需 DSH >=0.2.1-rc.3 <0.3.0-0。"
+        },
+        "category": "interface"
+      },
+      "security": {
+        "result": "No admission-blocking issue found in the reviewed paths",
+        "controls": [
+          {
+            "path": "index.js:407-446",
+            "note": "Every board/image request invokes host admission and the owner-principal gate before dispatch."
+          },
+          {
+            "path": "index.js:177-327",
+            "note": "A fixed board path under DSH_HOME uses serialized mutations and atomic temporary-file rename; failed writes leave in-memory state unchanged."
+          },
+          {
+            "path": "index.js:761-800,891-927",
+            "note": "Raw image reads select an existing board entry, not a caller path; uploads accept bounded canonical base64 and four raster types and pass bytes through the attachment service for normalization."
+          },
+          {
+            "path": "index.js:1111-1125,1424-1477; client.js:2640-2646",
+            "note": "Source links accept http(s) only and are not fetched by the host. Reference metadata uses React text and links with noopener/noreferrer. The read tool returns user-selected image references to the model."
+          }
+        ]
+      }
+    },
+    {
+      "issue": 96,
+      "name": "dsh-prompt-rewrite",
+      "reviewedVersion": "0.2.3",
+      "decision": "accept",
+      "sourceCommit": "a596675aee8e8face326eee61e711748f2f72cce",
+      "repository": {
+        "url": "https://github.com/Stijnus/dsh-prompt-optimizer",
+        "id": 1433095369,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.2.3",
+        "publishedAt": "2026-10-25T22:28:17.812Z",
+        "publisher": "GitHub Actions",
+        "maintainers": [
+          "stijnus"
+        ],
+        "gitHead": "a596675aee8e8face326eee61e711748f2f72cce"
+      },
+      "archive": {
+        "compressedBytes": 16543,
+        "unpackedBytes": 50741,
+        "decodedBytes": 59392,
+        "entries": 10
+      },
+      "integrity": "sha512-S8anfAyxz98sht7FLB+5u9o/kuLEKZXZl+7fV3iyyBLGM9ZvZngxorBjGbDrpcJcomlPCG00Ex0/HmVW/jPEzw==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "evidence": {
+        "name": "dsh-prompt-rewrite",
+        "version": "0.2.3",
+        "license": "MIT",
+        "repository": "https://github.com/Stijnus/dsh-prompt-optimizer",
+        "repositorySource": "package",
+        "sourceCommit": "a596675aee8e8face326eee61e711748f2f72cce",
+        "metadataUrl": "https://registry.npmjs.org/dsh-prompt-rewrite",
+        "tarball": "https://registry.npmjs.org/dsh-prompt-rewrite/-/dsh-prompt-rewrite-0.2.3.tgz",
+        "integrity": "sha512-S8anfAyxz98sht7FLB+5u9o/kuLEKZXZl+7fV3iyyBLGM9ZvZngxorBjGbDrpcJcomlPCG00Ex0/HmVW/jPEzw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 10,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/5f9b5ca90c0214b2f6a1e1a97ad4b9bb0c68d5041d72b789b72780c5182844d8.svg",
+            "mime": "image/svg+xml",
+            "bytes": 701,
+            "sha256": "5f9b5ca90c0214b2f6a1e1a97ad4b9bb0c68d5041d72b789b72780c5182844d8"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 16543,
+          "unpackedBytes": 50741,
+          "decodedBytes": 59392,
+          "entries": 10,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-25T22:13:26.964Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "input": {
+        "name": "dsh-prompt-rewrite",
+        "title": {
+          "en": "Prompt Rewrite",
+          "zh": "提示词改写"
+        },
+        "description": {
+          "en": "Rewrite a composer draft with the current session model, preview the streamed result, then apply or undo it. Supports plain, sections and role-task-goal formats; model calls consume tokens. Requires DSH >=0.2.1-rc.3 <0.3.0-0 and Node >=20.",
+          "zh": "调用当前会话模型改写输入草稿，流式预览后手动应用或撤销，支持纯文本、分段和角色·任务·目标格式；模型调用消耗 token。需 DSH >=0.2.1-rc.3 <0.3.0-0、Node >=20。"
+        },
+        "category": "interface"
+      },
+      "security": {
+        "result": "No admission-blocking issue found in the reviewed paths",
+        "controls": [
+          {
+            "path": "index.js:127-203",
+            "note": "Defaults and rewrite routes use host admission plus the owner gate; the rewrite requires JSON POST and bounded nonempty draft/session inputs."
+          },
+          {
+            "path": "index.js:215-306; client.js:505-526",
+            "note": "A bounded auxiliary model stream returns text for manual draft application/undo. It does not send the draft as a new agent request or execute tools."
+          },
+          {
+            "path": "oss-prompt-optimizer@1.13.1 lib/index.js:1-20,lib/meta.js:878-883",
+            "note": "The imported buildOptimizePrompt and detectLanguage functions are template/text utilities. The dependency plugin is not activated by this bundle; this targeted read does not audit every dependency feature."
+          }
+        ]
+      }
+    },
+    {
+      "issue": 97,
+      "name": "dsh-move-to-workspace",
+      "reviewedVersion": "0.1.11",
+      "decision": "accept",
+      "sourceCommit": "1222a0da829bcfb0c8808245a8fb5d74a6e0f018",
+      "repository": {
+        "url": "https://github.com/Stijnus/dsh-move-to-workspace",
+        "id": 1433089869,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.1.11",
+        "publishedAt": "2026-10-25T22:28:53.145Z",
+        "publisher": "GitHub Actions",
+        "maintainers": [
+          "stijnus"
+        ],
+        "gitHead": "1222a0da829bcfb0c8808245a8fb5d74a6e0f018"
+      },
+      "archive": {
+        "compressedBytes": 34122,
+        "unpackedBytes": 138255,
+        "decodedBytes": 147456,
+        "entries": 11
+      },
+      "integrity": "sha512-m5O2Rlcr8SmnaelmQVMn5oGfrJh4gW4aMeEuwbqHa9Xyelwkhyi3Mm1IrlnnITAn+hqzdSi4oyNZdxKFzvBPfQ==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/scripts/registry-doctor.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "evidence": {
+        "name": "dsh-move-to-workspace",
+        "version": "0.1.11",
+        "license": "MIT",
+        "repository": "https://github.com/Stijnus/dsh-move-to-workspace",
+        "repositorySource": "package",
+        "sourceCommit": "1222a0da829bcfb0c8808245a8fb5d74a6e0f018",
+        "metadataUrl": "https://registry.npmjs.org/dsh-move-to-workspace",
+        "tarball": "https://registry.npmjs.org/dsh-move-to-workspace/-/dsh-move-to-workspace-0.1.11.tgz",
+        "integrity": "sha512-m5O2Rlcr8SmnaelmQVMn5oGfrJh4gW4aMeEuwbqHa9Xyelwkhyi3Mm1IrlnnITAn+hqzdSi4oyNZdxKFzvBPfQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 11,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/22b5f7662018c51b63cef1a19f2f37650e0c379474f5aec14fa60bb18862d5c2.svg",
+            "mime": "image/svg+xml",
+            "bytes": 617,
+            "sha256": "22b5f7662018c51b63cef1a19f2f37650e0c379474f5aec14fa60bb18862d5c2"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 34122,
+          "unpackedBytes": 138255,
+          "decodedBytes": 147456,
+          "entries": 11,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-25T10:49:10.610Z",
+          "last30Days": 13,
+          "last90Days": 13
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "input": {
+        "name": "dsh-move-to-workspace",
+        "title": {
+          "en": "Move to Workspace",
+          "zh": "会话迁移与整理"
+        },
+        "description": {
+          "en": "Copy complete conversations to another workspace and archive their originals, with bulk organization, folder registration and renaming. Also offers confirmed permanent deletion of closed sessions. Log deletion assumes the standard JSONL backend. Requires DSH >=0.2.1-rc.3 <0.3.0-0.",
+          "zh": "复制完整会话到其他工作区并归档原记录，支持批量整理、注册目录和改名，也提供确认后永久删除已关闭会话的功能。日志删除依赖默认 JSONL 存储布局。需 DSH >=0.2.1-rc.3 <0.3.0-0。"
+        },
+        "category": "workflow"
+      },
+      "security": {
+        "result": "No admission-blocking issue found in the reviewed paths",
+        "controls": [
+          {
+            "path": "index.js:386-402,840-866",
+            "note": "All mutation routes require JSON POST and host owner admission; deletion receives only a session identity and resolves storage through persistence metadata."
+          },
+          {
+            "path": "index.js:200-251,285-329",
+            "note": "Moving rejects running work and subagents, flushes and closes the copy before archive, and rechecks source revision. The original remains visible on failed transfer."
+          },
+          {
+            "path": "index.js:879-920; client.js:1287-1396",
+            "note": "Permanent deletion has an explicit destructive confirmation, rejects live sessions/agents and subagent children, and removes the located log directory. Verified the default JSONL backend stores each session under its own encoded directory."
+          },
+          {
+            "path": "scripts/registry-doctor.mjs:165-240",
+            "note": "The maintenance CLI reports by default and writes only with --fix; it creates a backup and uses temp+rename. It is not run automatically, and was not executed locally."
+          }
+        ],
+        "nonBlocking": [
+          {
+            "path": "index.js:925",
+            "issue": "Projection-cache cleanup ignores DSH_HOME and uses homedir()/.dsh. A custom data directory can retain stale cache; the separately resolved main log deletion still uses the active persistence backend.",
+            "suggestion": "Resolve the projection-cache path through the active host storage service or DSH_HOME instead of a fixed home directory."
+          }
+        ]
+      }
+    },
+    {
+      "issue": 98,
+      "name": "dsh-workspace-status",
+      "reviewedVersion": "0.3.0",
+      "decision": "accept",
+      "sourceCommit": "194ba6d032a10c61febb630845211442eaadedf8",
+      "repository": {
+        "url": "https://github.com/Stijnus/dsh-workspace-status",
+        "id": 1433678095,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.3.0",
+        "publishedAt": "2026-10-26T11:59:38.821Z",
+        "publisher": "GitHub Actions",
+        "maintainers": [
+          "stijnus"
+        ],
+        "gitHead": "194ba6d032a10c61febb630845211442eaadedf8"
+      },
+      "archive": {
+        "compressedBytes": 31423,
+        "unpackedBytes": 103639,
+        "decodedBytes": 113664,
+        "entries": 11
+      },
+      "integrity": "sha512-bHqlzQh8MNdxWKMN7z49aNlNCXEjyIiiWEBReHhCjdfCYee3iOjHYwPURhjIKVx59CP7AXhbciTXFEBkto164w==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "evidence": {
+        "name": "dsh-workspace-status",
+        "version": "0.3.0",
+        "license": "MIT",
+        "repository": "https://github.com/Stijnus/dsh-workspace-status",
+        "repositorySource": "package",
+        "sourceCommit": "194ba6d032a10c61febb630845211442eaadedf8",
+        "metadataUrl": "https://registry.npmjs.org/dsh-workspace-status",
+        "tarball": "https://registry.npmjs.org/dsh-workspace-status/-/dsh-workspace-status-0.3.0.tgz",
+        "integrity": "sha512-bHqlzQh8MNdxWKMN7z49aNlNCXEjyIiiWEBReHhCjdfCYee3iOjHYwPURhjIKVx59CP7AXhbciTXFEBkto164w==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 11,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/bbd9b2840746ba70d56df311a279692bcfc20e5bb5ba1f7d8ce484bf78d86872.svg",
+            "mime": "image/svg+xml",
+            "bytes": 597,
+            "sha256": "bbd9b2840746ba70d56df311a279692bcfc20e5bb5ba1f7d8ce484bf78d86872"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 31423,
+          "unpackedBytes": 103639,
+          "decodedBytes": 113664,
+          "entries": 11,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-25T22:31:00.053Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "input": {
+        "name": "dsh-workspace-status",
+        "title": {
+          "en": "Workspace Status",
+          "zh": "工作区状态与置顶通知"
+        },
+        "description": {
+          "en": "Workspace activity marks, a pinned-conversation section grouped by workspace, and notifications for pinned sessions. In-app notices are on and sound is off by default; OS notifications require permission and may show session titles. Requires DSH >=0.2.1-rc.2 <0.3.0-0 and Node >=22.18.",
+          "zh": "显示工作区活动状态、按工作区分组的置顶会话及置顶状态通知。默认开启站内提示、关闭声音；系统通知需要授权，可能显示会话标题。需 DSH >=0.2.1-rc.2 <0.3.0-0、Node >=22.18。"
+        },
+        "category": "interface"
+      },
+      "security": {
+        "result": "No admission-blocking issue found in the reviewed paths",
+        "controls": [
+          {
+            "path": "index.js:14-18",
+            "note": "Host entry is a no-op; the feature uses browser UI hooks and the host pin feed rather than opening a network service."
+          },
+          {
+            "path": "client.js:221-230,645-730",
+            "note": "Session identifiers are escaped before CSS selectors; labels render as React text. Pin state comes from the host registry; preferences live in browser storage."
+          },
+          {
+            "path": "client.js:1083-1164",
+            "note": "Notifications fire on pinned-session transitions only, do not replay the initial state, require granted OS permission for background desktop notifications, and have separate sound preferences. Titles may be visible to the OS."
+          }
+        ]
+      }
+    },
+    {
+      "issue": 99,
+      "relatedIssues": [
+        83
+      ],
+      "name": "dsh-qq-gateway",
+      "reviewedVersion": "1.0.2",
+      "decision": "defer",
+      "sourceCommit": "4508d2b5685e64e845478bf5d86b1b27decdb4d9",
+      "repository": {
+        "url": "https://github.com/ShawwiMA/dsh-qq-gateway",
+        "id": 1433310220,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "1.0.2",
+        "publishedAt": "2026-10-26T14:29:42.055Z",
+        "publisher": "shawwima",
+        "maintainers": [
+          "shawwima"
+        ]
+      },
+      "archive": {
+        "compressedBytes": 117669,
+        "unpackedBytes": 352472,
+        "decodedBytes": 372224,
+        "entries": 24
+      },
+      "integrity": "sha512-pWL+R/x4L7AkZIdxt0j6AqVjKhi4yJcT26N3xo5E3kglIJx/MU5trTGHtJv9bdVbyFlmsHzVW+W5LWuRdPQ9JA==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceComparisons": [
+        {
+          "path": "package/lib/gateway/actions.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/authz.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/config.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/container-proxy.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/docker.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/events.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/gateway.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/guard.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/human-delay.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/markdown-image.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/media.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/mute.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/protocol.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/shutdown.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/status-server.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/tools.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/ws.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/shutdown-helper.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "evidence": {
+        "name": "dsh-qq-gateway",
+        "version": "1.0.2",
+        "license": "MIT",
+        "repository": "https://github.com/ShawwiMA/dsh-qq-gateway",
+        "repositorySource": "package",
+        "metadataUrl": "https://registry.npmjs.org/dsh-qq-gateway",
+        "tarball": "https://registry.npmjs.org/dsh-qq-gateway/-/dsh-qq-gateway-1.0.2.tgz",
+        "integrity": "sha512-pWL+R/x4L7AkZIdxt0j6AqVjKhi4yJcT26N3xo5E3kglIJx/MU5trTGHtJv9bdVbyFlmsHzVW+W5LWuRdPQ9JA==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 24,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 117669,
+          "unpackedBytes": 352472,
+          "decodedBytes": 372224,
+          "entries": 24,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-25T14:33:26.745Z",
+          "last30Days": 4,
+          "last90Days": 4
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "security": {
+        "result": "Original three findings fixed; hold on a new media-source authorization bypass",
+        "fixes": [
+          {
+            "original": "qq-unauthenticated-reverse-websocket",
+            "evidence": "lib/index.js:49-67,123-133 requires a nonempty token for activation; lib/gateway/ws.js:390-415 rejects browser Origin by default and validates header tokens; gateway.js:1473-1486 rejects additional peers."
+          },
+          {
+            "original": "qq-uncaught-upgrade-target",
+            "evidence": "lib/gateway/ws.js:378-388 and outer upgrade catch contain malformed URL errors."
+          },
+          {
+            "original": "qq-unbounded-websocket-buffer",
+            "evidence": "lib/gateway/ws.js:64-74,196-208,222-237 bounds frame payload declarations and accumulated fragmented messages; defaults are 1 MiB/frame and 4 MiB/message."
+          }
+        ],
+        "finding": {
+          "id": "qq-media-url-file-policy-bypass",
+          "severity": "medium",
+          "confidence": "high-static",
+          "title": "Unchecked media url bypasses non-main local-media restrictions",
+          "version": "1.0.2",
+          "sources": [
+            {
+              "path": "lib/gateway/tools.js:36-52,109-163",
+              "note": "qq_send accepts generic segments from model arguments and forwards them to gateway.sendMessage."
+            },
+            {
+              "path": "lib/gateway/gateway.js:539-567",
+              "note": "sendMessage supplies the current sender main/outbox policy, then sends built segments as OneBot message data."
+            },
+            {
+              "path": "lib/gateway/actions.js:153-155,246-260",
+              "note": "resolveMediaFile returns any nonempty url verbatim without parsing the scheme or applying allowRawBytes/checkOutboundPath; buildSegment copies it into data.file."
+            }
+          ],
+          "precondition": "A permitted non-main QQ sender influences an agent turn into calling qq_send with a crafted media segment. This is not an unauthenticated remote socket exploit.",
+          "flow": "Untrusted QQ/model argument segments[].url or segments[].data.url -> partsOf -> sendMessage -> resolveMediaFile rawUrl branch -> OneBot message[].data.file -> connected protocol implementation.",
+          "impact": "The value can describe a local media file on the OneBot/NapCat host or an encoded-media source despite fileSendPolicy=main. Effective filesystem access depends on the protocol process and mounted paths; this url branch does not itself read arbitrary files from the DSH host.",
+          "counterEvidence": "The plain image helper routes non-http input to path, and path/base64/file branches do apply policy. Mandatory token, Origin rejection, a single peer, sender allowlists and model permissions reduce exposure but do not constrain generic media url values.",
+          "protocolEvidence": "https://github.com/botuniverse/onebot-11/blob/master/message/segment.md#图片",
+          "protocolSemantics": "The official OneBot 11 media file field supports network URLs, file URIs and base64 values. The plugin maps its url input into that file field.",
+          "remediation": "Parse and allow only absolute http/https values in the url branch, or normalize every media source into one category and authorize it consistently before forwarding. Cover both top-level and nested url fields for image/record/video/file.",
+          "validation": "Static end-to-end control-flow inspection plus the primary protocol specification; no real files were read through the plugin and no QQ messages or model calls were sent."
+        },
+        "limitations": [
+          "No NapCat execution or external messaging",
+          "Additional unchanged media, Docker/proxy and dependency paths inherit only the prior partial review, not an exhaustive audit"
+        ]
+      }
+    }
+  ],
+  "security": {
+    "scope": "Targeted static review of the five actual published Host/Client packages and matching immutable source; authentication gates, network/model calls, file and attachment boundaries, deletion/archiving, and browser output. Includes the actual QQ 1.0.2 release diff and confirmation of the previous three fixes.",
+    "limitations": [
+      "No plugin installation, activation or actual model invocation",
+      "No full transitive-dependency, host-platform or browser-runtime audit",
+      "Admission depends on the DSH connection service contract; caller code explicitly invokes admission and restricts owner principals",
+      "Deletion layout was checked against the standard JSONL backend, not arbitrary third-party persistence backends"
+    ],
+    "contextEvidence": [
+      {
+        "name": "@deepseek-ai/dsh-session-persistence-jsonl",
+        "version": "0.2.1-rc.3",
+        "path": "lib/index.js:919-932,2450-2455",
+        "conclusion": "locate returns a log inside a separate, encoded session directory"
+      },
+      {
+        "name": "oss-prompt-optimizer",
+        "version": "1.13.1",
+        "path": "lib/meta.js:878-883",
+        "conclusion": "Imported rewrite API builds a prompt string; separate plugin activation is not required"
+      }
+    ],
+    "findings": [
+      {
+        "id": "qq-media-url-file-policy-bypass",
+        "severity": "medium",
+        "confidence": "high-static",
+        "title": "Unchecked media url bypasses non-main local-media restrictions",
+        "version": "1.0.2",
+        "sources": [
+          {
+            "path": "lib/gateway/tools.js:36-52,109-163",
+            "note": "qq_send accepts generic segments from model arguments and forwards them to gateway.sendMessage."
+          },
+          {
+            "path": "lib/gateway/gateway.js:539-567",
+            "note": "sendMessage supplies the current sender main/outbox policy, then sends built segments as OneBot message data."
+          },
+          {
+            "path": "lib/gateway/actions.js:153-155,246-260",
+            "note": "resolveMediaFile returns any nonempty url verbatim without parsing the scheme or applying allowRawBytes/checkOutboundPath; buildSegment copies it into data.file."
+          }
+        ],
+        "precondition": "A permitted non-main QQ sender influences an agent turn into calling qq_send with a crafted media segment. This is not an unauthenticated remote socket exploit.",
+        "flow": "Untrusted QQ/model argument segments[].url or segments[].data.url -> partsOf -> sendMessage -> resolveMediaFile rawUrl branch -> OneBot message[].data.file -> connected protocol implementation.",
+        "impact": "The value can describe a local media file on the OneBot/NapCat host or an encoded-media source despite fileSendPolicy=main. Effective filesystem access depends on the protocol process and mounted paths; this url branch does not itself read arbitrary files from the DSH host.",
+        "counterEvidence": "The plain image helper routes non-http input to path, and path/base64/file branches do apply policy. Mandatory token, Origin rejection, a single peer, sender allowlists and model permissions reduce exposure but do not constrain generic media url values.",
+        "protocolEvidence": "https://github.com/botuniverse/onebot-11/blob/master/message/segment.md#图片",
+        "protocolSemantics": "The official OneBot 11 media file field supports network URLs, file URIs and base64 values. The plugin maps its url input into that file field.",
+        "remediation": "Parse and allow only absolute http/https values in the url branch, or normalize every media source into one category and authorize it consistently before forwarding. Cover both top-level and nested url fields for image/record/video/file.",
+        "validation": "Static end-to-end control-flow inspection plus the primary protocol specification; no real files were read through the plugin and no QQ messages or model calls were sent."
+      }
+    ]
+  },
+  "latestState": {
+    "previousActions": {
+      "run": "https://github.com/polang233/dsh-plugin-index/actions/runs/40308316414",
+      "conclusion": "success",
+      "jobs": [
+        "build",
+        "cloudflare",
+        "maintenance",
+        "deploy"
+      ]
+    },
+    "oldIssues": "No new replies to the old Issues themselves; #99 is a fresh submission by the #83 author with the 1.0.2 security changes.",
+    "maintenance62": "Only the existing held entries remain; Mobile 0.6.18 is no longer behind upstream",
+    "changedFromSubmission": [
+      {
+        "issue": 94,
+        "submitted": "1.2.5",
+        "reviewed": "1.2.6"
+      },
+      {
+        "issue": 98,
+        "submitted": "0.1.0",
+        "reviewed": "0.3.0"
+      }
+    ],
+    "newSubmission": {
+      "issue": 99,
+      "observedAt": "2026-10-26T14:53:38.370Z",
+      "relationship": "Same author and package as #83",
+      "decision": "defer"
+    }
+  },
+  "replies": [
+    {
+      "issue": 94,
+      "body": "Thanks for sending this over 🙂 1.2.6 is ready for the catalog, with background model calls and token usage noted. This release will be tagged Reviewed.",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/94#issuecomment-6421237819",
+      "postedAt": "2026-10-26T16:23:57.8397632Z"
+    },
+    {
+      "issue": 95,
+      "body": "The reference-board and attachment checks for 0.2.8 look good 😊 Ready to include it with a Reviewed badge.",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/95#issuecomment-6421238918",
+      "postedAt": "2026-10-26T16:24:00.7359727Z"
+    },
+    {
+      "issue": 96,
+      "body": "0.2.3 is ready to list 😄 I checked the owner-only rewrite route and the manual apply/undo behavior. It will carry the Reviewed label.",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/96#issuecomment-6421239955",
+      "postedAt": "2026-10-26T16:24:03.5712073Z"
+    },
+    {
+      "issue": 97,
+      "body": "Thanks for the workspace tools 😁 0.1.11 passed this review and is ready to include with a Reviewed badge. Please also make projection-cache cleanup follow DSH_HOME.",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/97#issuecomment-6421240904",
+      "postedAt": "2026-10-26T16:24:06.2695147Z"
+    },
+    {
+      "issue": 98,
+      "body": "Checked the status, pinning and notification features in 0.3.0 😃 Ready for the catalog, with a Reviewed label for this release.",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/98#issuecomment-6421241888",
+      "postedAt": "2026-10-26T16:24:08.8786511Z"
+    },
+    {
+      "issue": 99,
+      "body": "感谢修复！原先的认证、异常 URL 和 WS 缓冲问题已补上；1.0.2 的媒体 url 字段仍未限制协议，可绕过非主号的文件发送限制，暂缓收录。请只接受 HTTP/HTTPS，其他媒体来源统一经过权限校验，修好后继续复核。",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/99#issuecomment-6421243098",
+      "postedAt": "2026-10-26T16:24:12.8132175Z"
+    },
+    {
+      "issue": 83,
+      "body": "已在 #99 复核 1.0.2，原三项问题已修复；还需补齐媒体 url 的协议与权限校验，暂缓收录。后续可统一在 #99 补充修正版。",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/83#issuecomment-6421246338",
+      "postedAt": "2026-10-26T16:24:20.6209168Z"
+    }
+  ],
+  "publication": {
+    "status": "approved-and-replied",
+    "commentsSent": true,
+    "delivery": "Included in the approved main-branch submission commit",
+    "fullValidation": "GitHub Actions",
+    "localMemory": "AGENTS.md remains locally excluded and is not part of the commit"
+  },
+  "validation": {
+    "checkedAt": "2026-10-26T14:55:30.304Z",
+    "targetedEntries": 5,
+    "heldEntryStructure": "passed but withheld for security",
+    "officialFormat": "passed",
+    "exactReleaseReviewBadges": 5,
+    "heldReleaseNotListedOrLabeled": true,
+    "syntaxFiles": 30,
+    "relativeRuntimeImports": [
+      {
+        "name": "dsh-composer-predictions",
+        "missing": []
+      },
+      {
+        "name": "dsh-moodboard",
+        "missing": []
+      },
+      {
+        "name": "dsh-prompt-rewrite",
+        "missing": []
+      },
+      {
+        "name": "dsh-move-to-workspace",
+        "missing": []
+      },
+      {
+        "name": "dsh-workspace-status",
+        "missing": []
+      },
+      {
+        "name": "dsh-qq-gateway",
+        "missing": []
+      }
+    ],
+    "credentialPatternCandidates": 0,
+    "unchangedExistingEntries": 903,
+    "pluginExecuted": false,
+    "pluginInstalled": false,
+    "fullCatalogBuild": false,
+    "fullTests": "GitHub Actions"
+  },
+  "replyLanguage": {
+    "checkedAt": "2026-10-26T15:46:14.872Z",
+    "Stijnus": {
+      "language": "en",
+      "evidence": "https://github.com/Stijnus",
+      "note": "No public location or explicit language preference; author-led submission is English with a Chinese summary."
+    },
+    "ShawwiMA": {
+      "language": "zh",
+      "evidence": "https://github.com/polang233/dsh-plugin-index/issues/99",
+      "note": "Author-written submission is Chinese; no region inferred from name or account."
+    }
+  },
+  "processedAt": "2026-10-26T16:25:14.706Z",
+  "finalBatchValidation": {
+    "checkedAt": "2026-10-26T16:23:28.548Z",
+    "acceptedEntries": 10,
+    "exactReleaseStaticSecurityBadges": 10,
+    "unchangedPublishedEntries": 903,
+    "originalReviewRecordsPreserved": 71,
+    "catalogCount": 913,
+    "ledgerCount": 81,
+    "latestNpmChecks": 8,
+    "replies": 10,
+    "fullCatalogBuild": false,
+    "fullTests": "GitHub Actions",
+    "localMemoryExcluded": true
+  }
+}

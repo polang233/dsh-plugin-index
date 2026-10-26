@@ -1,0 +1,1603 @@
+{
+  "schema": 1,
+  "status": "processed",
+  "checkedAt": "2026-10-26T15:56:08.949Z",
+  "baseRevision": "3cb65e8b2b4fbd1f438ac2c50067c7eb251da3de",
+  "scope": "Issues 100 and 101; public author-language evidence and varied posted replies",
+  "counts": {
+    "reviewed": 10,
+    "added": 4,
+    "deferred": 6,
+    "catalogBefore": 908,
+    "catalogAfter": 912,
+    "previousPendingAccepted": 5,
+    "totalPendingAccepted": 9
+  },
+  "reviews": [
+    {
+      "issue": 100,
+      "name": "dsh-bid-health-check",
+      "reviewedVersion": "0.1.0",
+      "decision": "defer",
+      "sourceCommit": "b040da97f748e9ecd397f2c4fd5569e462262e4a",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-bid-health-check",
+        "id": 1431446411,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "0.1.0",
+        "publishedAt": "2026-10-23T19:09:29.132Z",
+        "publisher": "perrylink",
+        "maintainers": [
+          "perrylink"
+        ],
+        "gitHead": "b040da97f748e9ecd397f2c4fd5569e462262e4a"
+      },
+      "archive": {
+        "compressedBytes": 23979,
+        "unpackedBytes": 109650,
+        "decodedBytes": 123904,
+        "entries": 17
+      },
+      "integrity": "sha512-YoVRaXmTQnxD7R60iC5wcVQHE7cC1WGxRQq+SfgZpUl+/Y537rPreiirUuOXfz42W/4kZv1wCpPHOn0P+2fi9Q==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-bid-health-check",
+        "version": "0.1.0",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/PerryLink/dsh-bid-health-check",
+        "repositorySource": "package",
+        "sourceCommit": "b040da97f748e9ecd397f2c4fd5569e462262e4a",
+        "metadataUrl": "https://registry.npmjs.org/dsh-bid-health-check",
+        "tarball": "https://registry.npmjs.org/dsh-bid-health-check/-/dsh-bid-health-check-0.1.0.tgz",
+        "integrity": "sha512-YoVRaXmTQnxD7R60iC5wcVQHE7cC1WGxRQq+SfgZpUl+/Y537rPreiirUuOXfz42W/4kZv1wCpPHOn0P+2fi9Q==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 17,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/b7b2ae4af699560ebd86827940892e28a9a95f3de057ee7c2df4924a27a0a27e.svg",
+            "mime": "image/svg+xml",
+            "bytes": 435,
+            "sha256": "b7b2ae4af699560ebd86827940892e28a9a95f3de057ee7c2df4924a27a0a27e"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 23979,
+          "unpackedBytes": 109650,
+          "decodedBytes": 123904,
+          "entries": 17,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T19:08:33.320Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceCorrespondence": {
+        "name": "dsh-bid-health-check",
+        "commit": "b040da97f748e9ecd397f2c4fd5569e462262e4a",
+        "sourceManifestMatches": true,
+        "checkedModulePaths": [
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/config.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/yaml.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/model.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/report.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/index.ts"
+          }
+        ]
+      },
+      "security": {
+        "result": "Hold while the shared parser decompression issue remains",
+        "finding": "table-ingest-unbounded-zip-inflate"
+      }
+    },
+    {
+      "issue": 100,
+      "name": "dsh-canteen-retention-check",
+      "reviewedVersion": "0.2.0",
+      "decision": "accept",
+      "sourceCommit": "67743f47620420b5c884c08d6db7691bb2f26194",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-canteen-retention-check",
+        "id": 1431339802,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "0.2.0",
+        "publishedAt": "2026-10-23T19:46:38.086Z",
+        "publisher": "perrylink",
+        "maintainers": [
+          "perrylink"
+        ],
+        "gitHead": "67743f47620420b5c884c08d6db7691bb2f26194"
+      },
+      "archive": {
+        "compressedBytes": 54612,
+        "unpackedBytes": 224888,
+        "decodedBytes": 239616,
+        "entries": 18
+      },
+      "integrity": "sha512-HGw7Ye0BlTdceaqDaN/MfYVybnn7xT2suKgiy5VyYWAGnqFelu3TO/iwfUZEUwSdACbgfrhcLEdFuvMvDFue3g==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-canteen-retention-check",
+        "version": "0.2.0",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/PerryLink/dsh-canteen-retention-check",
+        "repositorySource": "package",
+        "sourceCommit": "67743f47620420b5c884c08d6db7691bb2f26194",
+        "metadataUrl": "https://registry.npmjs.org/dsh-canteen-retention-check",
+        "tarball": "https://registry.npmjs.org/dsh-canteen-retention-check/-/dsh-canteen-retention-check-0.2.0.tgz",
+        "integrity": "sha512-HGw7Ye0BlTdceaqDaN/MfYVybnn7xT2suKgiy5VyYWAGnqFelu3TO/iwfUZEUwSdACbgfrhcLEdFuvMvDFue3g==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 18,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/309d81d01a4d60a62244666d1ca1881bebd954fa2de754f799ef2c1e3c3279d1.svg",
+            "mime": "image/svg+xml",
+            "bytes": 442,
+            "sha256": "309d81d01a4d60a62244666d1ca1881bebd954fa2de754f799ef2c1e3c3279d1"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 54612,
+          "unpackedBytes": 224888,
+          "decodedBytes": 239616,
+          "entries": 18,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T17:19:59.085Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceCorrespondence": {
+        "name": "dsh-canteen-retention-check",
+        "commit": "67743f47620420b5c884c08d6db7691bb2f26194",
+        "sourceManifestMatches": true,
+        "checkedModulePaths": [
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/config.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/yaml.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/table.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/datetime.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/report.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/rules.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/rows.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/wording.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/view.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/ruleset.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/memo.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/index.ts"
+          }
+        ]
+      },
+      "input": {
+        "name": "dsh-canteen-retention-check",
+        "title": {
+          "en": "Canteen Retention Check",
+          "zh": "食堂留样台账核查"
+        },
+        "category": "tools",
+        "description": {
+          "en": "Check local JSON/YAML canteen retention records against the bundled rules and list missing fields, literal differences and skipped checks for human review. Does not issue a compliance decision. Requires DSH >=0.2.1-0 <0.3.0 and Node ^22.19 or >=24.",
+          "zh": "按随包规则核对本地 JSON/YAML 食堂留样台账，列出缺项、字面差异及无法执行的检查，供人工复核，不作合规认定。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
+        }
+      },
+      "security": {
+        "result": "No admission-blocking issue found in reviewed paths",
+        "controls": [
+          {
+            "path": "lib/index.mjs:2540-2620,2660-2696",
+            "note": "Only local JSON/YAML text and explicit rules are read; tools return reports without network calls, file writes, subprocesses or dynamic code execution. Rules use a restricted parser that rejects tags/aliases."
+          }
+        ]
+      }
+    },
+    {
+      "issue": 100,
+      "name": "dsh-construction-doc-check",
+      "reviewedVersion": "0.1.1",
+      "decision": "accept",
+      "sourceCommit": "7bcb70150263c77b5adf296bf61a33cf7933de19",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-construction-doc-check",
+        "id": 1431347600,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "0.1.1",
+        "publishedAt": "2026-10-23T19:34:08.457Z",
+        "publisher": "perrylink",
+        "maintainers": [
+          "perrylink"
+        ],
+        "gitHead": "7bcb70150263c77b5adf296bf61a33cf7933de19"
+      },
+      "archive": {
+        "compressedBytes": 28033,
+        "unpackedBytes": 122031,
+        "decodedBytes": 137216,
+        "entries": 18
+      },
+      "integrity": "sha512-3PgPbIsEK6VFMz7VQRVIgsSLoyiD1Baqn+BpZ8HG0yLQWQg4yYIFx5Xb968n7iapkNWL4TyYmW8pPOrYgBssVw==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-construction-doc-check",
+        "version": "0.1.1",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/PerryLink/dsh-construction-doc-check",
+        "repositorySource": "package",
+        "sourceCommit": "7bcb70150263c77b5adf296bf61a33cf7933de19",
+        "metadataUrl": "https://registry.npmjs.org/dsh-construction-doc-check",
+        "tarball": "https://registry.npmjs.org/dsh-construction-doc-check/-/dsh-construction-doc-check-0.1.1.tgz",
+        "integrity": "sha512-3PgPbIsEK6VFMz7VQRVIgsSLoyiD1Baqn+BpZ8HG0yLQWQg4yYIFx5Xb968n7iapkNWL4TyYmW8pPOrYgBssVw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 18,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/9e28e8aa136bb3a500f95eb01fa89aa361126246637fabd6b4a2871f736d6a3d.svg",
+            "mime": "image/svg+xml",
+            "bytes": 446,
+            "sha256": "9e28e8aa136bb3a500f95eb01fa89aa361126246637fabd6b4a2871f736d6a3d"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 28033,
+          "unpackedBytes": 122031,
+          "decodedBytes": 137216,
+          "entries": 18,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T17:27:45.204Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceCorrespondence": {
+        "name": "dsh-construction-doc-check",
+        "commit": "7bcb70150263c77b5adf296bf61a33cf7933de19",
+        "sourceManifestMatches": true,
+        "checkedModulePaths": [
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/config.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/yaml.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/engine.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/report.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/index.ts"
+          }
+        ]
+      },
+      "input": {
+        "name": "dsh-construction-doc-check",
+        "title": {
+          "en": "Construction Document Check",
+          "zh": "施工资料归档核查"
+        },
+        "category": "tools",
+        "description": {
+          "en": "Scan a local construction archive by filename and size to locate expected document categories, missing items, empty files and suspected older copies. Does not inspect document contents or certify compliance. Requires DSH >=0.2.1-0 <0.3.0 and Node ^22.19 or >=24.",
+          "zh": "按文件名和大小扫描施工资料目录，核对资料类别、缺件、零字节文件及疑似旧版，仅辅助归档检查，不打开正文或作合规认定。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
+        }
+      },
+      "security": {
+        "result": "No admission-blocking issue found in reviewed paths",
+        "controls": [
+          {
+            "path": "lib/index.mjs:526-580,846-869",
+            "note": "Directory traversal uses a depth limit and Dirent file/directory checks, ignores symlink entries, reads names/sizes and rule text, and does not open document bodies or write results to disk."
+          }
+        ]
+      }
+    },
+    {
+      "issue": 100,
+      "name": "dsh-excel-reconcile",
+      "reviewedVersion": "0.1.1",
+      "decision": "defer",
+      "sourceCommit": "9fbb31b126d6b52ad552ec494cd05a274d108041",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-excel-reconcile",
+        "id": 1431305125,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "0.1.1",
+        "publishedAt": "2026-10-23T17:56:51.771Z",
+        "publisher": "perrylink",
+        "maintainers": [
+          "perrylink"
+        ],
+        "gitHead": "9fbb31b126d6b52ad552ec494cd05a274d108041"
+      },
+      "archive": {
+        "compressedBytes": 32088,
+        "unpackedBytes": 133938,
+        "decodedBytes": 148992,
+        "entries": 17
+      },
+      "integrity": "sha512-62+suJ8aS0XCUWfS1qbLqA/L8I60pqpZhicljgdInaxRN02URkxcjPezScP+1GS2yh3qgIrR43ntUURl3WUopw==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-excel-reconcile",
+        "version": "0.1.1",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/PerryLink/dsh-excel-reconcile",
+        "repositorySource": "package",
+        "sourceCommit": "9fbb31b126d6b52ad552ec494cd05a274d108041",
+        "metadataUrl": "https://registry.npmjs.org/dsh-excel-reconcile",
+        "tarball": "https://registry.npmjs.org/dsh-excel-reconcile/-/dsh-excel-reconcile-0.1.1.tgz",
+        "integrity": "sha512-62+suJ8aS0XCUWfS1qbLqA/L8I60pqpZhicljgdInaxRN02URkxcjPezScP+1GS2yh3qgIrR43ntUURl3WUopw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 17,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/3b6e986f539ce547f55e169c700b0d836a76d05f7e0e0654bb3627ab2188aa17.svg",
+            "mime": "image/svg+xml",
+            "bytes": 434,
+            "sha256": "3b6e986f539ce547f55e169c700b0d836a76d05f7e0e0654bb3627ab2188aa17"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 32088,
+          "unpackedBytes": 133938,
+          "decodedBytes": 148992,
+          "entries": 17,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T16:46:59.588Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceCorrespondence": {
+        "name": "dsh-excel-reconcile",
+        "commit": "9fbb31b126d6b52ad552ec494cd05a274d108041",
+        "sourceManifestMatches": true,
+        "checkedModulePaths": [
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/yaml.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/config.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/model.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/xlsx-write.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/report.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/view.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/index.ts"
+          }
+        ]
+      },
+      "security": {
+        "result": "Hold while the shared parser decompression issue remains",
+        "finding": "table-ingest-unbounded-zip-inflate"
+      }
+    },
+    {
+      "issue": 100,
+      "name": "dsh-invoice-ledger",
+      "reviewedVersion": "0.1.0",
+      "decision": "defer",
+      "sourceCommit": "f9cd3e8a6d388d7ccd221ca6c73fa51089e60252",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-invoice-ledger",
+        "id": 1431331388,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "0.1.0",
+        "publishedAt": "2026-10-23T17:12:29.876Z",
+        "publisher": "perrylink",
+        "maintainers": [
+          "perrylink"
+        ],
+        "gitHead": "f9cd3e8a6d388d7ccd221ca6c73fa51089e60252"
+      },
+      "archive": {
+        "compressedBytes": 40136,
+        "unpackedBytes": 164201,
+        "decodedBytes": 180224,
+        "entries": 18
+      },
+      "integrity": "sha512-uGQGs/6YtT2exW8hu+V4XpEk0l8lEtZa1myaL3kEpca7qkVkVzAJDiV9m+RhclVWUbXF8k2Qowphs5bdTonL1Q==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-invoice-ledger",
+        "version": "0.1.0",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/PerryLink/dsh-invoice-ledger",
+        "repositorySource": "package",
+        "sourceCommit": "f9cd3e8a6d388d7ccd221ca6c73fa51089e60252",
+        "metadataUrl": "https://registry.npmjs.org/dsh-invoice-ledger",
+        "tarball": "https://registry.npmjs.org/dsh-invoice-ledger/-/dsh-invoice-ledger-0.1.0.tgz",
+        "integrity": "sha512-uGQGs/6YtT2exW8hu+V4XpEk0l8lEtZa1myaL3kEpca7qkVkVzAJDiV9m+RhclVWUbXF8k2Qowphs5bdTonL1Q==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 18,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/f3e38f949ff6f12181ee2c1e5fe68b99ceedc77d1092ea72936dba7819cb383b.svg",
+            "mime": "image/svg+xml",
+            "bytes": 433,
+            "sha256": "f3e38f949ff6f12181ee2c1e5fe68b99ceedc77d1092ea72936dba7819cb383b"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 40136,
+          "unpackedBytes": 164201,
+          "decodedBytes": 180224,
+          "entries": 18,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T17:11:32.666Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceCorrespondence": {
+        "name": "dsh-invoice-ledger",
+        "commit": "f9cd3e8a6d388d7ccd221ca6c73fa51089e60252",
+        "sourceManifestMatches": true,
+        "checkedModulePaths": [
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/config.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/yaml.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/engine.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/xlsx-write.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/report.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/index.ts"
+          }
+        ]
+      },
+      "security": {
+        "result": "Hold while the shared parser decompression issue remains",
+        "finding": "table-ingest-unbounded-zip-inflate"
+      }
+    },
+    {
+      "issue": 100,
+      "name": "dsh-payroll-audit",
+      "reviewedVersion": "0.1.0",
+      "decision": "defer",
+      "sourceCommit": "8e6879f6e876051ff65dd3b4c9ccf39ba41719fe",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-payroll-audit",
+        "id": 1431319498,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "0.1.0",
+        "publishedAt": "2026-10-23T17:04:07.867Z",
+        "publisher": "perrylink",
+        "maintainers": [
+          "perrylink"
+        ],
+        "gitHead": "8e6879f6e876051ff65dd3b4c9ccf39ba41719fe"
+      },
+      "archive": {
+        "compressedBytes": 45250,
+        "unpackedBytes": 188703,
+        "decodedBytes": 205312,
+        "entries": 20
+      },
+      "integrity": "sha512-N0JqqQokLd/iFJkd+t0T/m9BYnU9T6KZs+yWv9pLd4PJLKZLWw7Cy45ppSx9M83AoS6qLIltp/v9mXf/4gh6Vw==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-payroll-audit",
+        "version": "0.1.0",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/PerryLink/dsh-payroll-audit",
+        "repositorySource": "package",
+        "sourceCommit": "8e6879f6e876051ff65dd3b4c9ccf39ba41719fe",
+        "metadataUrl": "https://registry.npmjs.org/dsh-payroll-audit",
+        "tarball": "https://registry.npmjs.org/dsh-payroll-audit/-/dsh-payroll-audit-0.1.0.tgz",
+        "integrity": "sha512-N0JqqQokLd/iFJkd+t0T/m9BYnU9T6KZs+yWv9pLd4PJLKZLWw7Cy45ppSx9M83AoS6qLIltp/v9mXf/4gh6Vw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 20,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/f18ff39ed207b7d63fd95c654c9ac6680073d773ca099a4787881067370997bc.svg",
+            "mime": "image/svg+xml",
+            "bytes": 432,
+            "sha256": "f18ff39ed207b7d63fd95c654c9ac6680073d773ca099a4787881067370997bc"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 45250,
+          "unpackedBytes": 188703,
+          "decodedBytes": 205312,
+          "entries": 20,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T17:02:49.105Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceCorrespondence": {
+        "name": "dsh-payroll-audit",
+        "commit": "8e6879f6e876051ff65dd3b4c9ccf39ba41719fe",
+        "sourceManifestMatches": true,
+        "checkedModulePaths": [
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/config.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/expr.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/yaml.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/engine.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/params.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/report.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/index.ts"
+          }
+        ]
+      },
+      "security": {
+        "result": "Hold while the shared parser decompression issue remains",
+        "finding": "table-ingest-unbounded-zip-inflate"
+      }
+    },
+    {
+      "issue": 100,
+      "name": "dsh-safety-ledger-check",
+      "reviewedVersion": "0.1.0",
+      "decision": "accept",
+      "sourceCommit": "d705d0a2d33b6bcfece65306f8ab482d4804ef2f",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-safety-ledger-check",
+        "id": 1431455269,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "0.1.0",
+        "publishedAt": "2026-10-23T19:21:52.054Z",
+        "publisher": "perrylink",
+        "maintainers": [
+          "perrylink"
+        ],
+        "gitHead": "d705d0a2d33b6bcfece65306f8ab482d4804ef2f"
+      },
+      "archive": {
+        "compressedBytes": 51561,
+        "unpackedBytes": 215341,
+        "decodedBytes": 229888,
+        "entries": 18
+      },
+      "integrity": "sha512-/dQwb/YdX4aZ8XOX/uh99TWXy3Em2M/6QUwiKrGeeUIymR9XaWucEcBtHJITREQ1nYG48pGSvuBGQi9FJuQPqQ==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-safety-ledger-check",
+        "version": "0.1.0",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/PerryLink/dsh-safety-ledger-check",
+        "repositorySource": "package",
+        "sourceCommit": "d705d0a2d33b6bcfece65306f8ab482d4804ef2f",
+        "metadataUrl": "https://registry.npmjs.org/dsh-safety-ledger-check",
+        "tarball": "https://registry.npmjs.org/dsh-safety-ledger-check/-/dsh-safety-ledger-check-0.1.0.tgz",
+        "integrity": "sha512-/dQwb/YdX4aZ8XOX/uh99TWXy3Em2M/6QUwiKrGeeUIymR9XaWucEcBtHJITREQ1nYG48pGSvuBGQi9FJuQPqQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 18,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/407783d5ea46c1ea819c77693051b1e22c4a28616efcfd374d83de79b463c9cb.svg",
+            "mime": "image/svg+xml",
+            "bytes": 438,
+            "sha256": "407783d5ea46c1ea819c77693051b1e22c4a28616efcfd374d83de79b463c9cb"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 51561,
+          "unpackedBytes": 215341,
+          "decodedBytes": 229888,
+          "entries": 18,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T19:18:40.684Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceCorrespondence": {
+        "name": "dsh-safety-ledger-check",
+        "commit": "d705d0a2d33b6bcfece65306f8ab482d4804ef2f",
+        "sourceManifestMatches": true,
+        "checkedModulePaths": [
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/config.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/yaml.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/table.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/datetime.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/report.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/rules.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/rows.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/wording.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/view.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/ruleset.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/shared/memo.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/index.ts"
+          }
+        ]
+      },
+      "input": {
+        "name": "dsh-safety-ledger-check",
+        "title": {
+          "en": "Safety Ledger Check",
+          "zh": "施工安全台账核查"
+        },
+        "category": "tools",
+        "description": {
+          "en": "Compare local JSON/YAML safety qualification and training records with bundled rules, returning literal discrepancies and skipped checks for human review. Does not certify qualifications or compliance. Requires DSH >=0.2.1-0 <0.3.0 and Node ^22.19 or >=24.",
+          "zh": "按随包规则核对本地 JSON/YAML 安全资格与培训台账，输出字面差异及无法执行的检查，供人工复核，不认定资质或合规性。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
+        }
+      },
+      "security": {
+        "result": "No admission-blocking issue found in reviewed paths",
+        "controls": [
+          {
+            "path": "lib/index.mjs:2570-2650,2690-2720",
+            "note": "Reads only the supplied JSON/YAML text and explicit rules, checks the request signal and returns a report; no document ZIP parsing, external requests, writes, subprocesses or eval."
+          }
+        ]
+      }
+    },
+    {
+      "issue": 100,
+      "name": "dsh-table-ingest",
+      "reviewedVersion": "0.2.0",
+      "decision": "defer",
+      "sourceCommit": "77af66b58921f8f171bdc7b0bc8d31dbbb7c55a2",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-table-ingest",
+        "id": 1431282973,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "0.2.0",
+        "publishedAt": "2026-10-23T16:41:14.173Z",
+        "publisher": "perrylink",
+        "maintainers": [
+          "perrylink"
+        ],
+        "gitHead": "77af66b58921f8f171bdc7b0bc8d31dbbb7c55a2"
+      },
+      "archive": {
+        "compressedBytes": 46380,
+        "unpackedBytes": 174705,
+        "decodedBytes": 191488,
+        "entries": 20
+      },
+      "integrity": "sha512-g0edMPmE8wVUgpWTfwefpOX6tHemlx8lvqUGW2S8LPY8Mf9Wh2Ubj9V4Hl+ON0RW+Ea1PYgtSkaizLIJOhX6eQ==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-table-ingest",
+        "version": "0.2.0",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/PerryLink/dsh-table-ingest",
+        "repositorySource": "package",
+        "sourceCommit": "77af66b58921f8f171bdc7b0bc8d31dbbb7c55a2",
+        "metadataUrl": "https://registry.npmjs.org/dsh-table-ingest",
+        "tarball": "https://registry.npmjs.org/dsh-table-ingest/-/dsh-table-ingest-0.2.0.tgz",
+        "integrity": "sha512-g0edMPmE8wVUgpWTfwefpOX6tHemlx8lvqUGW2S8LPY8Mf9Wh2Ubj9V4Hl+ON0RW+Ea1PYgtSkaizLIJOhX6eQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 20,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/0aedd4843b423e5ebd62aa6a18d21f38f29cc5861573a289e5705e29230c721d.svg",
+            "mime": "image/svg+xml",
+            "bytes": 431,
+            "sha256": "0aedd4843b423e5ebd62aa6a18d21f38f29cc5861573a289e5705e29230c721d"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 46380,
+          "unpackedBytes": 174705,
+          "decodedBytes": 191488,
+          "entries": 20,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T16:26:40.645Z",
+          "last30Days": 4,
+          "last90Days": 4
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceCorrespondence": {
+        "name": "dsh-table-ingest",
+        "commit": "77af66b58921f8f171bdc7b0bc8d31dbbb7c55a2",
+        "sourceManifestMatches": true,
+        "checkedModulePaths": [
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/config.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/view.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/index.ts"
+          },
+          {
+            "bundle": "package/lib/ingest-BUAAEwYG.mjs",
+            "source": "src/ingest/zip.ts"
+          },
+          {
+            "bundle": "package/lib/ingest-BUAAEwYG.mjs",
+            "source": "src/ingest/xml.ts"
+          },
+          {
+            "bundle": "package/lib/ingest-BUAAEwYG.mjs",
+            "source": "src/ingest/xlsx.ts"
+          },
+          {
+            "bundle": "package/lib/ingest-BUAAEwYG.mjs",
+            "source": "src/ingest/csv.ts"
+          },
+          {
+            "bundle": "package/lib/ingest-BUAAEwYG.mjs",
+            "source": "src/ingest/docx.ts"
+          },
+          {
+            "bundle": "package/lib/ingest-BUAAEwYG.mjs",
+            "source": "src/ingest/table-json.ts"
+          },
+          {
+            "bundle": "package/lib/ingest-BUAAEwYG.mjs",
+            "source": "src/ingest/ingest.ts"
+          }
+        ]
+      },
+      "security": {
+        "result": "Hold while the shared parser decompression issue remains",
+        "finding": "table-ingest-unbounded-zip-inflate"
+      }
+    },
+    {
+      "issue": 100,
+      "name": "dsh-tender-requirements",
+      "reviewedVersion": "0.2.0",
+      "decision": "defer",
+      "sourceCommit": "3991f969ecfcf761618c686ae106a003229205f6",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-tender-requirements",
+        "id": 1431361321,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "0.2.0",
+        "publishedAt": "2026-10-23T19:02:09.681Z",
+        "publisher": "perrylink",
+        "maintainers": [
+          "perrylink"
+        ],
+        "gitHead": "3991f969ecfcf761618c686ae106a003229205f6"
+      },
+      "archive": {
+        "compressedBytes": 26379,
+        "unpackedBytes": 113525,
+        "decodedBytes": 128000,
+        "entries": 17
+      },
+      "integrity": "sha512-rCaFy9pJpNrMWBwp2P1HMO1VV7/J2dAv7RKvOgpIUSQAHn93VvQ4T2ngIc8CuUuFhq9a5Uv6O5/a8AOC85U05g==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-tender-requirements",
+        "version": "0.2.0",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/PerryLink/dsh-tender-requirements",
+        "repositorySource": "package",
+        "sourceCommit": "3991f969ecfcf761618c686ae106a003229205f6",
+        "metadataUrl": "https://registry.npmjs.org/dsh-tender-requirements",
+        "tarball": "https://registry.npmjs.org/dsh-tender-requirements/-/dsh-tender-requirements-0.2.0.tgz",
+        "integrity": "sha512-rCaFy9pJpNrMWBwp2P1HMO1VV7/J2dAv7RKvOgpIUSQAHn93VvQ4T2ngIc8CuUuFhq9a5Uv6O5/a8AOC85U05g==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 17,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/b1413dd2705875022b996ed5a86d78c05aeca2001f8fa0ada04142508da0db6d.svg",
+            "mime": "image/svg+xml",
+            "bytes": 438,
+            "sha256": "b1413dd2705875022b996ed5a86d78c05aeca2001f8fa0ada04142508da0db6d"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 26379,
+          "unpackedBytes": 113525,
+          "decodedBytes": 128000,
+          "entries": 17,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T17:42:42.231Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "sourceCorrespondence": {
+        "name": "dsh-tender-requirements",
+        "commit": "3991f969ecfcf761618c686ae106a003229205f6",
+        "sourceManifestMatches": true,
+        "checkedModulePaths": [
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/config.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/model.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/report.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/requirements.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/pack-report.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/version.ts"
+          },
+          {
+            "bundle": "package/lib/index.mjs",
+            "source": "src/index.ts"
+          }
+        ]
+      },
+      "security": {
+        "result": "Hold while the shared parser decompression issue remains",
+        "finding": "table-ingest-unbounded-zip-inflate"
+      }
+    },
+    {
+      "issue": 101,
+      "name": "@gongfpp/dsh-novel-fish",
+      "reviewedVersion": "0.1.4",
+      "decision": "accept",
+      "sourceCommit": "7c25fa93c7c253a8b1925cc1ddff35a47064c633",
+      "repository": {
+        "url": "https://github.com/gongfpp/dsh-novel-fish",
+        "id": 1429647093,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "archive": {
+        "compressedBytes": 1148206,
+        "unpackedBytes": 1922373,
+        "decodedBytes": 1986560,
+        "entries": 80
+      },
+      "integrity": "sha512-TGUIGsugVUtAFwpsfJmDz9GW0z/rAgysWRtK8osasJyLhjnKFpx29/ERbZMfkoNxTb6OJZrb/qnfGv3z9+eraw==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "@gongfpp/dsh-novel-fish",
+        "version": "0.1.4",
+        "license": "MIT",
+        "repository": "https://github.com/gongfpp/dsh-novel-fish",
+        "repositorySource": "package",
+        "sourceCommit": "7c25fa93c7c253a8b1925cc1ddff35a47064c633",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gongfpp/dsh-novel-fish",
+          "commit": "7c25fa93c7c253a8b1925cc1ddff35a47064c633"
+        },
+        "tarball": "https://codeload.github.com/gongfpp/dsh-novel-fish/tar.gz/7c25fa93c7c253a8b1925cc1ddff35a47064c633",
+        "integrity": "sha512-TGUIGsugVUtAFwpsfJmDz9GW0z/rAgysWRtK8osasJyLhjnKFpx29/ERbZMfkoNxTb6OJZrb/qnfGv3z9+eraw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 66,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "assets/icon.svg",
+            "url": "icons/15ea420d57f8646442b2351d6f409c4a4d2d49028016c99912e03e464421ad1b.svg",
+            "mime": "image/svg+xml",
+            "bytes": 363,
+            "sha256": "15ea420d57f8646442b2351d6f409c4a4d2d49028016c99912e03e464421ad1b"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 1148206,
+          "unpackedBytes": 1922373,
+          "decodedBytes": 1986560,
+          "entries": 80,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "input": {
+        "name": "@gongfpp/dsh-novel-fish",
+        "version": "0.1.4",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/gongfpp/dsh-novel-fish",
+          "commit": "7c25fa93c7c253a8b1925cc1ddff35a47064c633",
+          "integrity": "sha512-TGUIGsugVUtAFwpsfJmDz9GW0z/rAgysWRtK8osasJyLhjnKFpx29/ERbZMfkoNxTb6OJZrb/qnfGv3z9+eraw==",
+          "publishedAt": "2026-10-26T13:44:54Z"
+        },
+        "title": {
+          "en": "Novel Fish",
+          "zh": "小说摸鱼"
+        },
+        "category": "interface",
+        "description": {
+          "en": "Append a passage from a browser-local book below the real reasoning or tool output when you expand selected native chat regions. Imports EPUB/TXT/MD and remembers book progress without writing novel text to the conversation. Declares only DSH 0.2.1-rc.2 and Node >=22; depends on chat DOM. EPUB is text-only and excludes DRM.",
+          "zh": "主动展开选中的原生聊天区域时，在真实思考或工具输出下追加本地小说，支持 EPUB/TXT/MD 导入和各书进度；小说不写入会话数据。仅声明兼容 DSH 0.2.1-rc.2、Node >=22，依赖聊天 DOM；EPUB 只取文字，不支持 DRM。"
+        }
+      },
+      "security": {
+        "result": "No admission-blocking issue found in reviewed paths",
+        "controls": [
+          {
+            "path": "index.js:1-2; src/client.js:18-59",
+            "note": "Host entry has no behavior. Browser setup registers local settings, local storage and a chat presentation adapter; no model/session-write or network service is called."
+          },
+          {
+            "path": "src/epub.js:15-39,73-122; lib/client.js:15372-15486",
+            "note": "EPUB reads referenced XML/spine entries through a shared 128 MiB streaming budget and CRC check, rejects entity declarations, and limits references to archive-local paths."
+          },
+          {
+            "path": "src/chat-adapter.js:84-151,178-209",
+            "note": "Advancement requires a trusted disclosure input and verifies the region really opened. Real reasoning/tool output is retained; added book content is React text or textContent. Disposal removes observers/listeners and restores decorated labels."
+          },
+          {
+            "path": "src/persistence.js:1-111",
+            "note": "Book data, passages and progress remain in IndexedDB; changes use transactions and book deletion targets records by book identity."
+          }
+        ]
+      }
+    }
+  ],
+  "security": {
+    "scope": "Targeted static review of actual release entries and security-sensitive parsing, file, model/network and DOM paths. Nine generated TypeScript bundles were mapped to 71 public source module paths without rebuilding.",
+    "findings": [
+      {
+        "id": "table-ingest-unbounded-zip-inflate",
+        "severity": "medium",
+        "confidence": "high-static",
+        "title": "Document ZIP entries lack application-level decompression budgets",
+        "package": "dsh-table-ingest",
+        "version": "0.2.0",
+        "sources": [
+          {
+            "path": "lib/ingest-BUAAEwYG.mjs:19-72",
+            "source": "src/ingest/zip.ts:32-78",
+            "note": "readZipEntries inflates every non-directory entry with inflateRawSync(raw), retains all outputs, and zipMap keeps the resulting buffers. No application entry/aggregate output or compression-ratio budget is set."
+          },
+          {
+            "path": "lib/index.mjs:200-207",
+            "note": "table_ingest reads the input, checks AbortSignal before parsing, then enters synchronous ingestToTable. The configured asynchronous tool timeout cannot interrupt synchronous inflate."
+          }
+        ],
+        "affected": [
+          {
+            "name": "dsh-bid-health-check",
+            "version": "0.1.0",
+            "dependency": "^0.2.0",
+            "runtimeImports": [
+              "import { ingestDocx } from \"dsh-table-ingest/api\";"
+            ]
+          },
+          {
+            "name": "dsh-excel-reconcile",
+            "version": "0.1.1",
+            "dependency": "^0.2.0",
+            "runtimeImports": [
+              "import { ingestToTable } from \"dsh-table-ingest/api\";"
+            ]
+          },
+          {
+            "name": "dsh-invoice-ledger",
+            "version": "0.1.0",
+            "dependency": "^0.2.0",
+            "runtimeImports": [
+              "import { ingestToTable } from \"dsh-table-ingest/api\";"
+            ]
+          },
+          {
+            "name": "dsh-payroll-audit",
+            "version": "0.1.0",
+            "dependency": "^0.2.0",
+            "runtimeImports": [
+              "import { ingestToTable } from \"dsh-table-ingest/api\";"
+            ]
+          },
+          {
+            "name": "dsh-table-ingest",
+            "version": "0.2.0",
+            "dependency": "self",
+            "runtimeImports": []
+          },
+          {
+            "name": "dsh-tender-requirements",
+            "version": "0.2.0",
+            "dependency": "^0.2.0",
+            "runtimeImports": [
+              "import { ingestDocx, ingestToTable } from \"dsh-table-ingest/api\";"
+            ]
+          }
+        ],
+        "precondition": "An operator asks the tool to inspect an externally supplied DOCX/XLSX file. The document producer controls ZIP compressed entries; no unauthenticated HTTP endpoint is involved.",
+        "flow": "External document -> owner-selected local file -> tool readFile -> ingestDocx/ingestToTable -> zipMap -> readZipEntries -> synchronous inflateRawSync and retained buffers.",
+        "impact": "A small compressed document can expand until the hosting tool process runs out of memory or becomes unresponsive; multiple entries amplify the aggregate. Node platform buffer limits are not a practical application budget.",
+        "counterEvidence": "The parser rejects encryption, ZIP64 and unsupported compression and checks some archive signatures. XML parsing strips DTDs and does not load external entities; nothing is extracted to disk. These controls do not bound inflated bytes.",
+        "remediation": "Enforce input size, entry count, actual per-entry and aggregate expanded-byte budgets before retaining output; pass maxOutputLength or use bounded streaming and reject oversized archives. Check cancellation between bounded operations. Publish a fixed parser and re-review the dependent tools against it.",
+        "validation": {
+          "method": "Static release/source data-flow review and a bounded Node zlib primitive check. No third-party plugin was loaded or executed.",
+          "primitive": {
+            "compressedBytes": 8158,
+            "expandedBytes": 8388608,
+            "ratio": 1028.267712674675,
+            "explicitOneMiBLimit": "ERR_BUFFER_TOO_LARGE",
+            "pluginExecuted": false,
+            "userDocumentsRead": false,
+            "maximumSyntheticOutputBytes": 8388608
+          }
+        },
+        "limitations": "This is not a full malicious DOCX execution or a live DSH crash reproduction."
+      }
+    ],
+    "limitations": [
+      "No plugin installation or activation, model calls, customer-document parsing or host file operations",
+      "No exhaustive dependency/vendor audit; Novel Fish bundled libraries were reviewed only around the exercised EPUB path",
+      "No opinion on legal/regulatory correctness, currency or completeness of bundled business rules",
+      "Declared DSH compatibility and real GUI behavior were not runtime-verified; Novel Fish limits itself to 0.2.1-rc.2"
+    ]
+  },
+  "replies": [
+    {
+      "issue": 100,
+      "body": "已复核这批 9 个包：食堂留样、施工资料归档、施工安全台账 3 项可收录，并按版本添加「已审查」标签 😊\n\n其余 6 项共用 dsh-table-ingest 0.2.0 的 DOCX/XLSX 解压代码，目前缺少单项和累计输出预算，同步解压也不能由现有工具超时打断。请先为解析器补齐解压上限及超限拒绝机制，发布修正版后一起复核。",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/100#issuecomment-6421247753",
+      "postedAt": "2026-10-26T16:24:24.3233578Z"
+    },
+    {
+      "issue": 101,
+      "body": "固定提交 0.1.4 的客户端产物和本地书库路径已核查，通过本轮静态审查，可收录 ☺️ 会注明仅声明兼容 DSH 0.2.1-rc.2、EPUB 只取文字等限制，上架后显示「已审查」标签。",
+      "url": "https://github.com/polang233/dsh-plugin-index/issues/101#issuecomment-6421248828",
+      "postedAt": "2026-10-26T16:24:26.9438075Z"
+    }
+  ],
+  "replyLanguage": {
+    "policy": "Use public self-described region or explicit language preference; otherwise follow author-written text. Do not infer nationality from usernames, names or avatars.",
+    "authors": [
+      {
+        "login": "PerryLink",
+        "language": "zh",
+        "profile": "https://github.com/PerryLink",
+        "evidence": "Public location is Beijing, China; Chinese reply is appropriate despite English submission."
+      },
+      {
+        "login": "gongfpp",
+        "language": "zh",
+        "profile": "https://github.com/gongfpp",
+        "evidence": "No public location; the author wrote the submission in Chinese. No region inferred."
+      }
+    ],
+    "previousReplies": "Stijnus has no public location and primarily wrote English with a Chinese summary; keep English and vary each acceptance reply by the actual feature."
+  },
+  "publication": {
+    "status": "approved-and-replied",
+    "commentsSent": true,
+    "delivery": "Included in the approved main-branch submission commit",
+    "fullValidation": "GitHub Actions",
+    "localMemory": "AGENTS.md remains locally excluded and is not part of the commit"
+  },
+  "validation": {
+    "checkedAt": "2026-10-26T15:58:00.840Z",
+    "reviewedPackages": 10,
+    "acceptedOfficialEntries": 4,
+    "heldPackages": 6,
+    "exactReleaseReviewBadges": 4,
+    "syntaxFiles": 13,
+    "relativeRuntimeImports": [
+      {
+        "name": "dsh-bid-health-check",
+        "missing": []
+      },
+      {
+        "name": "dsh-canteen-retention-check",
+        "missing": []
+      },
+      {
+        "name": "dsh-construction-doc-check",
+        "missing": []
+      },
+      {
+        "name": "dsh-excel-reconcile",
+        "missing": []
+      },
+      {
+        "name": "dsh-invoice-ledger",
+        "missing": []
+      },
+      {
+        "name": "dsh-payroll-audit",
+        "missing": []
+      },
+      {
+        "name": "dsh-safety-ledger-check",
+        "missing": []
+      },
+      {
+        "name": "dsh-table-ingest",
+        "missing": []
+      },
+      {
+        "name": "dsh-tender-requirements",
+        "missing": []
+      },
+      {
+        "name": "@gongfpp/dsh-novel-fish",
+        "missing": []
+      }
+    ],
+    "credentialPatternCandidates": 0,
+    "unchangedExistingEntries": 908,
+    "previousPendingBatchPreserved": true,
+    "replyVariationAndLocalMemory": "checked",
+    "pluginExecuted": false,
+    "fullCatalogBuild": false,
+    "fullTests": "GitHub Actions"
+  },
+  "processedAt": "2026-10-26T16:25:14.713Z",
+  "finalBatchValidation": {
+    "checkedAt": "2026-10-26T16:23:28.548Z",
+    "acceptedEntries": 10,
+    "exactReleaseStaticSecurityBadges": 10,
+    "unchangedPublishedEntries": 903,
+    "originalReviewRecordsPreserved": 71,
+    "catalogCount": 913,
+    "ledgerCount": 81,
+    "latestNpmChecks": 8,
+    "replies": 10,
+    "fullCatalogBuild": false,
+    "fullTests": "GitHub Actions",
+    "localMemoryExcluded": true
+  }
+}

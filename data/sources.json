@@ -11239,6 +11239,134 @@
         "zh": "提供 15 个 MCP 长期记忆工具、自动捕获召回和有界指针上下文；用户输入会持久保存并跨会话共享。需 Node >=20、Python >=3.10，以及 torch、sentence-transformers、numpy、mcp >=1.30 <2，首次会下载嵌入模型；包内未声明 DSH 版本范围。"
       },
       "category": "workflow"
+    },
+    {
+      "name": "dsh-composer-predictions",
+      "title": {
+        "en": "Composer Predictions",
+        "zh": "输入预测"
+      },
+      "description": {
+        "en": "Tab suggestions for the next message and inline draft continuation. Makes background model calls over recent conversation and tool context, using the session model or a configured model and consuming tokens. Accepting inserts editable text without sending. Requires DSH >=0.2.1-rc.3 <0.3.0-0.",
+        "zh": "为下一条消息和草稿续写提供 Tab 候选，后台调用当前会话模型或指定模型，读取近期对话与工具上下文并消耗 token；采纳仅写入草稿，不自动发送。需 DSH >=0.2.1-rc.3 <0.3.0-0。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-moodboard",
+      "title": {
+        "en": "Moodboard",
+        "zh": "参考图板"
+      },
+      "description": {
+        "en": "Save reference images with tags, notes and pinned style guides. The board is shared under DSH_HOME; the agent tool returns selected references to the model before UI work. Uploads use local DSH attachments. Requires DSH >=0.2.1-rc.3 <0.3.0-0.",
+        "zh": "保存参考图、标签、备注与置顶风格指南，通过工具把选定参考交给模型用于界面设计。图板在 DSH_HOME 下共享，图片由 DSH 附件服务本地存储。需 DSH >=0.2.1-rc.3 <0.3.0-0。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-prompt-rewrite",
+      "title": {
+        "en": "Prompt Rewrite",
+        "zh": "提示词改写"
+      },
+      "description": {
+        "en": "Rewrite a composer draft with the current session model, preview the streamed result, then apply or undo it. Supports plain, sections and role-task-goal formats; model calls consume tokens. Requires DSH >=0.2.1-rc.3 <0.3.0-0 and Node >=20.",
+        "zh": "调用当前会话模型改写输入草稿，流式预览后手动应用或撤销，支持纯文本、分段和角色·任务·目标格式；模型调用消耗 token。需 DSH >=0.2.1-rc.3 <0.3.0-0、Node >=20。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-move-to-workspace",
+      "title": {
+        "en": "Move to Workspace",
+        "zh": "会话迁移与整理"
+      },
+      "description": {
+        "en": "Copy complete conversations to another workspace and archive their originals, with bulk organization, folder registration and renaming. Also offers confirmed permanent deletion of closed sessions. Log deletion assumes the standard JSONL backend. Requires DSH >=0.2.1-rc.3 <0.3.0-0.",
+        "zh": "复制完整会话到其他工作区并归档原记录，支持批量整理、注册目录和改名，也提供确认后永久删除已关闭会话的功能。日志删除依赖默认 JSONL 存储布局。需 DSH >=0.2.1-rc.3 <0.3.0-0。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-workspace-status",
+      "title": {
+        "en": "Workspace Status",
+        "zh": "工作区状态与置顶通知"
+      },
+      "description": {
+        "en": "Workspace activity marks, a pinned-conversation section grouped by workspace, and notifications for pinned sessions. In-app notices are on and sound is off by default; OS notifications require permission and may show session titles. Requires DSH >=0.2.1-rc.2 <0.3.0-0 and Node >=22.18.",
+        "zh": "显示工作区活动状态、按工作区分组的置顶会话及置顶状态通知。默认开启站内提示、关闭声音；系统通知需要授权，可能显示会话标题。需 DSH >=0.2.1-rc.2 <0.3.0-0、Node >=22.18。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-canteen-retention-check",
+      "title": {
+        "en": "Canteen Retention Check",
+        "zh": "食堂留样台账核查"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Check local JSON/YAML canteen retention records against the bundled rules and list missing fields, literal differences and skipped checks for human review. Does not issue a compliance decision. Requires DSH >=0.2.1-0 <0.3.0 and Node ^22.19 or >=24.",
+        "zh": "按随包规则核对本地 JSON/YAML 食堂留样台账，列出缺项、字面差异及无法执行的检查，供人工复核，不作合规认定。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
+      }
+    },
+    {
+      "name": "dsh-construction-doc-check",
+      "title": {
+        "en": "Construction Document Check",
+        "zh": "施工资料归档核查"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Scan a local construction archive by filename and size to locate expected document categories, missing items, empty files and suspected older copies. Does not inspect document contents or certify compliance. Requires DSH >=0.2.1-0 <0.3.0 and Node ^22.19 or >=24.",
+        "zh": "按文件名和大小扫描施工资料目录，核对资料类别、缺件、零字节文件及疑似旧版，仅辅助归档检查，不打开正文或作合规认定。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
+      }
+    },
+    {
+      "name": "dsh-safety-ledger-check",
+      "title": {
+        "en": "Safety Ledger Check",
+        "zh": "施工安全台账核查"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Compare local JSON/YAML safety qualification and training records with bundled rules, returning literal discrepancies and skipped checks for human review. Does not certify qualifications or compliance. Requires DSH >=0.2.1-0 <0.3.0 and Node ^22.19 or >=24.",
+        "zh": "按随包规则核对本地 JSON/YAML 安全资格与培训台账，输出字面差异及无法执行的检查，供人工复核，不认定资质或合规性。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
+      }
+    },
+    {
+      "name": "@gongfpp/dsh-novel-fish",
+      "version": "0.1.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gongfpp/dsh-novel-fish",
+        "commit": "7c25fa93c7c253a8b1925cc1ddff35a47064c633",
+        "integrity": "sha512-TGUIGsugVUtAFwpsfJmDz9GW0z/rAgysWRtK8osasJyLhjnKFpx29/ERbZMfkoNxTb6OJZrb/qnfGv3z9+eraw==",
+        "publishedAt": "2026-10-26T13:44:54Z"
+      },
+      "title": {
+        "en": "Novel Fish",
+        "zh": "小说摸鱼"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Append a passage from a browser-local book below the real reasoning or tool output when you expand selected native chat regions. Imports EPUB/TXT/MD and remembers book progress without writing novel text to the conversation. Declares only DSH 0.2.1-rc.2 and Node >=22; depends on chat DOM. EPUB is text-only and excludes DRM.",
+        "zh": "主动展开选中的原生聊天区域时，在真实思考或工具输出下追加本地小说，支持 EPUB/TXT/MD 导入和各书进度；小说不写入会话数据。仅声明兼容 DSH 0.2.1-rc.2、Node >=22，依赖聊天 DOM；EPUB 只取文字，不支持 DRM。"
+      }
+    },
+    {
+      "name": "dsh-bili-mini",
+      "title": {
+        "en": "BiliMini",
+        "zh": "BiliMini"
+      },
+      "category": "integrations",
+      "description": {
+        "en": "Browse Bilibili recommendations, watch videos with danmaku, and optionally sync watch progress from a sidebar. QR login stores account cookies on the local host and sends them to Bilibili; no model calls. Requires Node >=20; no DSH compatibility range is declared.",
+        "zh": "在侧边栏浏览 B 站推荐、观看视频与弹幕，可选同步观看进度。扫码登录将账号 Cookie 保存在本机并用于 B 站请求，不调用模型。需 Node >=20；未声明 DSH 兼容范围。"
+      }
     }
   ]
 }
