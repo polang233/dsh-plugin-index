@@ -10405,7 +10405,7 @@
     },
     {
       "name": "dsh-mobile",
-      "version": "0.6.16",
+      "version": "0.6.17",
       "title": {
         "en": "DSH Mobile",
         "zh": "DSH Mobile"
@@ -10414,13 +10414,7 @@
         "en": "Use DSH on your computer from a phone browser or the Android app over LAN or optional remote tunnels (Tailscale, cpolar, cloudflared, FRP), with HTTPS and device pairing.",
         "zh": "通过局域网或可选的远程通道（Tailscale、cpolar、cloudflared、FRP），用手机浏览器或 Android App 安全地使用电脑上的 DSH，支持 HTTPS 和设备配对。"
       },
-      "category": "integrations",
-      "archiveReview": {
-        "version": "0.6.16",
-        "integrity": "sha512-Bcl5a6UltAvzBZr58A3sCC6XoBaBXN9fgDu5uT8C8XjKpk39Gj1TNIiBvCm8Ut+9SBMqVVtxx1elVuO5p2bokg==",
-        "maxUnpackedBytes": 268435456,
-        "timeoutMs": 120000
-      }
+      "category": "integrations"
     },
     {
       "name": "dsh-damage-pulse",
@@ -10849,14 +10843,6 @@
     },
     {
       "name": "@lifenrir/dsh-selection-quote",
-      "version": "0.1.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/LiFenrir/dsh-selection-quote",
-        "commit": "bb36fd53bef1db7a7d0619c8494fadab186be329",
-        "integrity": "sha512-0f7fFjimeoq+L62ETZqPMpc2K0nNlO9Sy99sVpZgB4QVoTdT3lOEbNrLhkLnYPlqC1kVhaVE590OhygA09X04Q==",
-        "publishedAt": "2026-10-23T08:12:21Z"
-      },
       "title": {
         "en": "Selection Quote",
         "zh": "划词引用"
@@ -10869,14 +10855,6 @@
     },
     {
       "name": "@lifenrir/dsh-external-task-context",
-      "version": "0.1.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/LiFenrir/dsh-external-task-context",
-        "commit": "c4e06785e2153db7d46ea3368e30ff648adb407a",
-        "integrity": "sha512-U851xsa0U6WHszoG9aOoOObsUctEcI4QFpOPiTZ5xnb4Uo0bKgbzu0Kws0Hnd6w/t7bvpxblJO8gh+9ypiggBg==",
-        "publishedAt": "2026-10-23T08:35:58Z"
-      },
       "title": {
         "en": "External Task Context",
         "zh": "外部任务上下文"
@@ -11026,16 +11004,16 @@
         "zh": "Argo 阿尔戈"
       },
       "description": {
-        "en": "Add native search and fetch tools, optional web routing and parallel research with a settings panel. Requires Node.js 18+, Python 3.9+ and PyYAML. Set the web search/fetch provider explicitly to route built-in web tools through Argo; no DSH version range is declared.",
-        "zh": "提供原生搜索与抓取工具、可选的网页工具路由、并行研究及设置面板。需要 Node.js 18+、Python 3.9+ 和 PyYAML；内置网页工具改走 Argo 时需显式配置搜索与抓取路由，包内未声明适用的 DSH 版本。"
+        "en": "Add native search and fetch tools, optional web routing and parallel research with a settings panel. Requires Node.js 18+, Python 3.9+ and PyYAML. Set the web search/fetch provider explicitly to route built-in web tools through Argo; no DSH version range is declared. Starts an external Argo CLI through npx by default.",
+        "zh": "提供原生搜索与抓取工具、可选的网页工具路由、并行研究及设置面板。需要 Node.js 18+、Python 3.9+ 和 PyYAML；内置网页工具改走 Argo 时需显式配置搜索与抓取路由，包内未声明适用的 DSH 版本。 默认通过 npx 启动外部 Argo CLI。"
       },
       "category": "tools",
-      "version": "2.9.8",
+      "version": "2.9.9",
       "repositoryReview": {
-        "version": "2.9.8",
-        "integrity": "sha512-vmIFtzga0IBI1ZvYKEraZh767g9qR7j+x4hKrjO97mKQpyYwc5HOuH24PppvZHkEnLGOawnwNMKX9lEzsm2uvQ==",
+        "version": "2.9.9",
+        "integrity": "sha512-BLHOJiQB0ReuGCNn2YStpVrJu9+Iw6hy7v/Hw7No6Gpmg2CISeOE6lBy8wGVcgg42I/4mgLkGBpm59o7O2xiNA==",
         "url": "https://github.com/taxueseek/argo",
-        "commit": "d9fea8b6cdf492a69d1f334019ff311b8dfc0fdc"
+        "commit": "a00649e2c58f1b3469c997733eb26a3f496c9208"
       }
     },
     {
@@ -11112,13 +11090,13 @@
     },
     {
       "name": "dsh-matrix-theme",
-      "version": "0.5.0",
+      "version": "0.9.0",
       "source": {
         "type": "git",
         "url": "https://github.com/SShiRkiT/dsh-matrix-theme",
-        "commit": "0100750d7f675b2cdb55553cc58c3583976622cd",
-        "integrity": "sha512-A+YDBXCahNB4cnhyP6dmhj46hRz0mNKCtTz+zj/Sl8xOgFGAeAPKRpg6PLPebxB+G+WENe3wWE2qp/D8otoUfw==",
-        "publishedAt": "2026-10-25T09:58:43Z"
+        "commit": "df867d52f93eba15530777f0a48f8cc617c57225",
+        "integrity": "sha512-i1MPbLGOabBdodPIIGNCQJ9RNk3jX6DUoA2f/lznLf4XzltYEihBMewiZrYrEHYD+Nw7aW9T/lWYAYSD0bEwWw==",
+        "publishedAt": "2026-10-26T05:45:54Z"
       },
       "title": {
         "en": "Matrix Theme",
@@ -11173,6 +11151,82 @@
         "zh": "读取当前 DSH 实例中会话可用的技能，支持刷新目录、固定常用项和向输入框插入技能命令。需先打开会话，包内未声明适用的 DSH 版本。"
       },
       "category": "skills"
+    },
+    {
+      "name": "dsh-plugin-screen-control",
+      "title": {
+        "en": "Windows Screen Control",
+        "zh": "Windows 后台屏幕操控"
+      },
+      "description": {
+        "en": "Capture, OCR and control Windows background windows through a bundled Rust engine. Windows x64 only; declares DSH ^0.2.0-rc.2 and Node.js ^22.19 or >=24. Grants screen capture, mouse and keyboard capabilities.",
+        "zh": "通过随包 Rust 引擎截取、识别和操控 Windows 后台窗口，提供鼠标与键盘工具。仅限 Windows x64，声明适配 DSH ^0.2.0-rc.2，需 Node.js ^22.19 或 >=24。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@aghost-prj/dsh-auto-review-model",
+      "title": {
+        "en": "Auto-review Model",
+        "zh": "自动审查专用模型"
+      },
+      "description": {
+        "en": "Choose a separate provider, model and reasoning effort for the experimental DSH authorization reviewer while preserving native policy and conversation routing. Requires the host Auto review component; no DSH version range is declared.",
+        "zh": "为 DSH 实验性自动授权审查单独指定提供方、模型和推理档位，保留原生策略与主对话路由。依赖宿主 Auto review 组件，包内未声明适用的 DSH 版本。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-game-translate",
+      "version": "0.3.8",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/S0ra233/DSH-game-translate",
+        "commit": "9a0c891da98381ca7c631ed0de23a44c13ca5997",
+        "integrity": "sha512-XlaSTLE8e3H09mD1YFOjJmwhtXQw0Wp5cBot4G7urEpdyGC3A2SBnzsauh60+adaWoDTUA+Xkp8jbxvuXfUAzg==",
+        "publishedAt": "2026-10-26T00:54:41Z"
+      },
+      "title": {
+        "en": "Game Translation",
+        "zh": "游戏翻译"
+      },
+      "description": {
+        "en": "Extract, translate and review game text with grouped reading, model delegation and verified writes into an independent copy. Requires DSH 0.2.1-rc.3, Node.js >=24.9 and Python; includes a Windows native UI. Model calls consume tokens.",
+        "zh": "提取、翻译和双栏审校游戏文本，支持分组阅读、多模型委托及独立副本写回核验。需 DSH 0.2.1-rc.3、Node.js >=24.9 与 Python，附 Windows 原生界面；模型调用消耗 token。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@woosau/dsh-custom-env",
+      "title": {
+        "en": "Custom Environment",
+        "zh": "自定义环境变量"
+      },
+      "description": {
+        "en": "Manage DSH_HOME/.env in Settings, update the running host environment and synchronize Windows/macOS user variables. Compare and install the dsh CLI launcher on PATH. Uses native koffi, which may require build approval; declares DSH >=0.2.0.",
+        "zh": "在设置中管理 DSH_HOME/.env，热更新 Host 环境并同步 Windows/macOS 用户变量，可检查和安装 PATH 上的 dsh CLI。会修改当前用户环境；原生依赖 koffi 可能需允许构建，声明适配 DSH >=0.2.0。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-pinned-panel",
+      "version": "0.3.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/OuQiL/dsh-pinned-panel",
+        "commit": "c6be7577b64e759e79d978cf42aef5cea88c805b",
+        "integrity": "sha512-/PstBhPZV5M7t/GRdfTpZqJ6L/lJMhR1R6jvLSV2yLp4F3coBKacv5JLnlsFmuqCJAXenKPMzhdtp5ANx5rH7A==",
+        "publishedAt": "2026-10-26T05:49:57Z"
+      },
+      "title": {
+        "en": "Pinned Sessions",
+        "zh": "跨工作区置顶会话"
+      },
+      "description": {
+        "en": "Collect pinned sessions across workspaces in one collapsible group at the top of the sidebar, opening them in their original workspace. Uses host pin state and no network. Depends on sidebar DOM structure; no DSH version range is declared.",
+        "zh": "把各工作区的置顶会话汇总到侧栏顶部可折叠分组，点击仍在原工作区打开。直接使用宿主置顶状态，无网络请求；依赖侧栏 DOM 结构，包内未声明适用的 DSH 版本。"
+      },
+      "category": "interface"
     }
   ]
 }

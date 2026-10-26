@@ -2,6 +2,7 @@ import { parseMarketIndex } from '@deepseek-ai/dsh-plugin-market-index';
 import { githubRepository, applyGitHubStars, starsGained } from './github.mjs';
 import { endorsementsFor } from './endorsements.mjs';
 import { LABELS, TIERS } from './labels.mjs';
+import { EMPTY_REVIEWS, REVIEW_SOURCE, maintainerReviewFor, validateMaintainerReviews } from './maintainer-reviews.mjs';
 
 export { LABELS };
 import { rotateRecommendations } from './recommendations.mjs';
@@ -26,10 +27,11 @@ export function releaseAge(timestamp, now, language) {
  * Growth compares the last 7 days with the weekly average of the 23 days before them.
  * A floor of 30 weekly downloads keeps one-off spikes on tiny packages out of "Rising".
  */
-export function marketSignals(plugin, { npm, releases, repo, endorsements = [], listings = [], now }) {
+export function marketSignals(plugin, { npm, releases, repo, endorsements = [], listings = [], maintainerReview, now }) {
   const signals = {};
   if (endorsements.length) signals.verifiedBy = endorsements;
   if (listings.length) signals.listedBy = listings;
+  if (maintainerReview) signals.maintainerReview = maintainerReview;
   if (plugin.icon) signals.logo = true;
   if (measured(repo) && count(repo.stars)) {
     signals.stars = repo.stars;
@@ -92,8 +94,10 @@ export function validatePublishers(publishers) {
   }
 }
 
-export function applyMarketDisplay(index, { github = {}, downloads = {}, releases = {}, endorsements = {}, publishers = { schema: 1, entries: [] }, previousRecommendations, now = Date.now() } = {}) {
+export function applyMarketDisplay(index, { github = {}, downloads = {}, releases = {}, endorsements = {}, publishers = { schema: 1, entries: [] }, maintainerReviews = EMPTY_REVIEWS, packageEvidence = {}, previousRecommendations, now = Date.now() } = {}) {
   validatePublishers(publishers);
+  validateMaintainerReviews(maintainerReviews);
+  const checked = new Map((packageEvidence.packages ?? []).map(record => [record.name, record]));
   const starred = applyGitHubStars(index, github);
   const metadata = { ...starred.metadata, labels: { ...starred.metadata?.labels }, sortKeys: { ...starred.metadata?.sortKeys } };
   for (const id of Object.keys(metadata.labels)) if (owned(id)) delete metadata.labels[id];
@@ -113,7 +117,10 @@ export function applyMarketDisplay(index, { github = {}, downloads = {}, release
     }
     const npm = downloads.packages?.[plugin.name];
     const repo = github.repositories?.[githubRepository(plugin.repository?.url)?.key];
-    const signals = marketSignals(plugin, { npm, repo, releases: releases[plugin.name], endorsements: endorsementsFor(plugin, endorsements, { strict: true }), listings: endorsementsFor(plugin, endorsements, { strict: false }), now });
+    const maintainerReview = maintainerReviewFor(plugin, maintainerReviews, checked, now);
+    const verifiedBy = endorsementsFor(plugin, endorsements, { strict: true });
+    if (maintainerReview) verifiedBy.push(REVIEW_SOURCE);
+    const signals = marketSignals(plugin, { npm, repo, releases: releases[plugin.name], endorsements: verifiedBy, maintainerReview, listings: endorsementsFor(plugin, endorsements, { strict: false }), now });
     const own = labelsFor(signals);
     for (const id of own) used.add(id);
     labels.push(...own);

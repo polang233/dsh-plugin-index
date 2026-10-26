@@ -34,9 +34,9 @@ const github = await collectGitHub(base, { previous: await optional('.cache/gith
 const downloads = await collectDownloads(base, { previous: await optional('.cache/downloads.json') ?? await optional('public/downloads.json') });
 const endorsements = await collectEndorsements({ previous: await optional('.cache/endorsements.json') ?? await publishedSnapshot('endorsements.json') ?? await optional('public/endorsements.json') });
 const previousRecommendations = await publishedSnapshot('recommendations.json') ?? await optional('public/recommendations.json');
-const { index, display, recommendations } = applyMarketDisplay(base, { github, downloads, endorsements, releases: releasesOf(evidence), publishers: await read('data/publishers.json'), previousRecommendations, now: Date.parse(downloads.generatedAt) });
+const { index, display, recommendations } = applyMarketDisplay(base, { github, downloads, endorsements, releases: releasesOf(evidence), publishers: await read('data/publishers.json'), maintainerReviews: await read('data/maintainer-reviews.json'), packageEvidence: evidence, previousRecommendations, now: Date.parse(downloads.generatedAt) });
 // Package validation timestamps remain unchanged during a metrics-only refresh.
-evidence.market = { generatedAt: display.generatedAt, downloads: 'downloads.json', display: 'display.json', recommendations: 'recommendations.json', publisherEvidence: 'https://github.com/polang233/dsh-plugin-index/blob/main/data/publishers.json' };
+evidence.market = { generatedAt: display.generatedAt, downloads: 'downloads.json', display: 'display.json', recommendations: 'recommendations.json', publisherEvidence: 'https://github.com/polang233/dsh-plugin-index/blob/main/data/publishers.json', reviewEvidence: 'https://github.com/polang233/dsh-plugin-index/blob/main/data/maintainer-reviews.json' };
 const counts = Object.values(github.repositories);
 evidence.github = { snapshot: 'github.json', fetched: counts.filter(record => record.status === 'ok').length, cached: counts.filter(record => record.status === 'stale').length, unavailable: counts.filter(record => record.status === 'unavailable').length };
 await mkdir(new URL('../.cache/', import.meta.url), { recursive: true });

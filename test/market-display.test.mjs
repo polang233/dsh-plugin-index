@@ -180,5 +180,5 @@ test('only verifying sources earn the label; a large list only lifts the order',
   const result = applyMarketDisplay(index, { endorsements: snapshot, now: NOW });
   assert.ok(!result.index.plugins[0].metadata.labels.includes('verified'));
   assert.deepEqual(result.display.plugins[plugin.name].signals.listedBy, ['awesome-dsh-plugin']);
-  assert.equal(LABELS.verified.zh, '✅ 经过验证');
+  assert.equal(LABELS.verified.zh, '✅ 已审查');
 });

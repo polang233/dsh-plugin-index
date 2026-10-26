@@ -6,7 +6,7 @@
 
 | 标签 id | 中文 / English | 条件 |
 | --- | --- | --- |
-| `verified` | ✅ 经过验证 / Verified | 被其他市场的人工或源码级验证收录，见下文 |
+| `verified` | ✅ 已审查 / Reviewed | 本站对当前版本的审查记录匹配，或有下列其他市场的审查依据 |
 | `trending` | 🔥 增长快 / Rising | 近 7 天下载 ≥ 30 且达到此前周均值的 1.5 倍；或近 7 天新增 star ≥ 5 且增幅 ≥ 10% |
 | `active` | ⚡ 更新勤 / Frequent updates | 近 30 天发版 ≥ 10 次（约前三分之一） |
 | `updated-recent` / `-week` / `-month` / `-quarter` | ◷ 最近 / 本周 / 本月 / 三个月内更新 | 收录版本发布于 3 / 7 / 30 / 90 天内 |
@@ -27,7 +27,7 @@ DSH 的排序菜单固定包含「默认排序」和「发布时间」，索引�
 
 ### 候选门槛与权重
 
-候选需满足至少一项：经过其他市场验证、npm 近 30 天下载量 ≥ 300、GitHub star ≥ 5。归档仓库不进入推荐池，在默认排序和智能推荐中沉底。没有指标基础的插件保留在完整目录和随机资源中，不会仅凭随机数进入首屏候选。
+候选需满足至少一项：经过本站或其他市场审查、npm 近 30 天下载量 ≥ 300、GitHub star ≥ 5。归档仓库不进入推荐池，在默认排序和智能推荐中沉底。没有指标基础的插件保留在完整目录和随机资源中，不会仅凭随机数进入首屏候选。
 
 默认候选的质量评分继续参考下载量 32%、star 28%、有 Logo 15%、经过验证 10%（只被大列表收录记 5%）、近期维护 10%。这些权重用于选择候选，首页展示机会则由每日轮换决定。同一作者的多个插件会降权，分散曝光。
 
@@ -45,13 +45,18 @@ DSH 的排序菜单固定包含「默认排序」和「发布时间」，索引�
 
 ## 验证来源
 
+本站记录保存在 `data/maintainer-reviews.json`，绑定包名、仓库、精确版本、SHA-512 与来源类型；Git 版本还绑定完整提交。构建时必须与实际归档检查证据相符才授予 `verified`。npm `latest` 更新、归档哈希变化或更换仓库后，旧记录不再适用，不为保留标签而锁定自动更新。
+
+`scope: package` 表示早期包结构、来源及许可核查；`scope: static-security` 表示增加静态安全审查后的通过版本。网站标签提示和插件详情显示本站的范围、版本、日期及记录链接，`display.json` 的 `signals.verifiedBy` 保留审查方，`signals.maintainerReview` 保存本站依据。历史核查不能改写为完整安全审计，标签也不保证绝对安全。暂缓、缺少证据和已确认有未解决问题的版本不授予本站标签。
+
 | 来源 | 作用 | 匹配方式 |
 | --- | --- | --- |
-| [awesome-deepseek-harness-plugins](https://github.com/walkinglabs/awesome-deepseek-harness-plugins) | 「经过验证」标签 | 源码级 DSH 插件验证加静态安全检查后才收录；按 GitHub 仓库匹配 |
-| [dsh-plugin-shop](https://github.com/LivXue/dsh-plugin-shop) `registry/verified.yml` | 「经过验证」标签 | 人工审核；绑定仓库或精确的 npm 版本 |
+| 本站人工复核记录 | 「已审查」标签 | 包名、仓库、版本、归档哈希与来源全部匹配；保留具体核查范围 |
+| [awesome-deepseek-harness-plugins](https://github.com/walkinglabs/awesome-deepseek-harness-plugins) | 「已审查」标签 | 源码级 DSH 插件验证加静态安全检查后才收录；按 GitHub 仓库匹配 |
+| [dsh-plugin-shop](https://github.com/LivXue/dsh-plugin-shop) `registry/verified.yml` | 「已审查」标签 | 人工审核；绑定仓库或精确的 npm 版本 |
 | [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin) | 只影响排序 | 审核后收录，但覆盖了本索引六成以上的插件，单独作为标签区分度不够 |
 
-快照保存在 `endorsements.json`，读取失败时沿用 14 天内的上一次结果。被收录只说明对方做过审核，不代表本索引做了代码审计。
+外部快照保存在 `endorsements.json`，读取失败时沿用 14 天内的上一次结果。外部来源仅代表对方的审核，不转为本站审查记录。
 
 ## 来源
 
@@ -65,4 +70,6 @@ npm 下载量包含 CI 和镜像等自动请求，只能反映趋势，不等于
 
 ---
 
-**English.** Rows show `★ stars │ description` plus a fixed set of native labels: Verified, Rising (downloads or stars), Frequent updates, four update-age buckets, seven download tiers, and verified publishers. The *Default* order rotates ten entries daily from a weekly pool of seventy qualified plugins. *✨ Smart picks* builds its own seventy-entry pool from the top 140 quality candidates, with mostly random daily ordering and a 20% momentum/quality score. Entries do not repeat within a week; a new week reshuffles the pools while avoiding yesterday's front page. Daily random resources use the same published ranks on the website and in DSH. Dates use Asia/Taipei. Pools and fourteen days of exposure history live in `recommendations.json`. Exact readings live in `downloads.json`, `github.json` and `display.json`. Fallback readings never add cache dates to labels.
+**English.** Rows show `★ stars │ description` plus a fixed set of native labels: Reviewed, Rising (downloads or stars), Frequent updates, four update-age buckets, seven download tiers, and verified publishers. The *Default* order rotates ten entries daily from a weekly pool of seventy qualified plugins. *✨ Smart picks* builds its own seventy-entry pool from the top 140 quality candidates, with mostly random daily ordering and a 20% momentum/quality score. Entries do not repeat within a week; a new week reshuffles the pools while avoiding yesterday's front page. Daily random resources use the same published ranks on the website and in DSH. Dates use Asia/Taipei. Pools and fourteen days of exposure history live in `recommendations.json`. Exact readings live in `downloads.json`, `github.json` and `display.json`. Fallback readings never add cache dates to labels.
+
+Local maintainer reviews bind the exact package, repository, version, SHA-512 and source commit for Git releases. Historical package checks and static security reviews keep separate scopes. A changed release loses its local badge until reviewed again; external endorsements keep their own attribution.

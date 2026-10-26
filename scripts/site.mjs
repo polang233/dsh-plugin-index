@@ -4,6 +4,7 @@ import { Converter } from 'opencc-js';
 import { githubRepository } from './github.mjs';
 import { releaseAge } from './market-display.mjs';
 import { addedTimestamp } from './added.mjs';
+import { SOURCES } from './endorsements.mjs';
 
 const ORIGIN = 'https://dshopen.org/';
 const INDEX_URL = `${ORIGIN}index.json`;
@@ -18,7 +19,7 @@ export const INITIAL_PLUGINS = 48;
 // Further cards come in files of this many, so each "Show more" fetches only what the next batches need.
 export const CHUNK_PLUGINS = 12;
 const source = new URL('../site/', import.meta.url);
-const output = new URL('../public/', import.meta.url);
+const defaultOutput = new URL('../public/', import.meta.url);
 
 // Site languages: the folder each lives in, its tags, its switcher label and which index language it reads.
 // Traditional Chinese is the Simplified page run through OpenCC with Taiwan phrasing (插件 → 外掛, 软件 → 軟體).
@@ -62,7 +63,7 @@ const COPY = {
     eyebrow: 'The open DSH plugin market · plugin index · daily picks', intro: 'A plugin index with daily picks for DeepSeek Harness. Since the October 15 update DSH reads plugin markets, so copying the address below into Discover is all it takes to browse and install hundreds of community plugins.',
     address: 'Index URL', copy: 'Copy URL', copyTitle: 'Click to copy',
     copied: 'Copied', usage: '{readers} people using it today', usageNote: 'People whose DSH loaded this index today (UTC date), counted once per IP and user agent; neither is stored.', copySuccess: 'URL copied. Open DSH and add it as an index source.', details: 'Details', copyOpen: 'Copy name & open DSH', nameCopied: 'Copied, opening…', dshOpened: 'Opened, paste it', dshMissed: 'Copied, open DSH', getFailure: 'Name selected, copy it', getHint: 'Paste the name into DSH Discover search to install.', pluginName: 'Name', copyFailure: 'The address is selected. Press Ctrl+C or ⌘C, or use the selection menu to copy it.',
-    showcase: { title: 'How it looks in DSH', text: 'Stars aren\'t everything here. The default picks refresh every day and put fast-growing, actively shipped, genuinely good plugins first, with verification, downloads and stars as supporting signals.', points: ['No single author can flood the list, so a newcomer can make the first screen', 'Rising, Frequent updates and Verified labels at a glance', 'Default order, ✨ Smart picks and Random: every visit turns up something new'], image: 'dsh-discover-en.webp', alt: 'The Discover tab of DeepSeek Harness listing Open Plugin Market plugins with labels and install buttons' },
+    showcase: { title: 'How it looks in DSH', text: 'Stars aren\'t everything here. The default picks refresh every day and put fast-growing, actively shipped, genuinely good plugins first, with verification, downloads and stars as supporting signals.', points: ['No single author can flood the list, so a newcomer can make the first screen', 'Rising, Frequent updates and Reviewed labels at a glance', 'Default order, ✨ Smart picks and Random: every visit turns up something new'], image: 'dsh-discover-en.webp', alt: 'The Discover tab of DeepSeek Harness listing Open Plugin Market plugins with labels and install buttons' },
     zoom: 'Enlarge screenshot', close: 'Close', stepAlts: ['The Custom plugin markets switch under Plugins → Experimental plugins', 'The Add index source button in Discover', 'The index source dialog with the dshopen.org URL and the Add button'],
     setup: 'Quick start', steps: [
       ['Turn on the market', 'Plugins → Experimental → Custom plugin markets'],
@@ -83,7 +84,7 @@ const COPY = {
     pluginTitle: title => `${title} — DeepSeek Harness (DSH) plugin · Open Plugin Market`,
     pluginDescription: (title, description) => `${title}: ${description} A community plugin for DeepSeek Harness (DSH), listed on Open Plugin Market.`,
     installPluginTitle: 'Easier: install the Open Market plugin', installPluginNote: 'It adds this index for you and an Open Market tab to the Plugins page: search for {name} there to install it, and update it there when a new version comes out.', install: 'Install in DSH', installSteps: ['Add Open Plugin Market as an index source once: Plugins → Experimental → Custom plugin markets, then Discover → Add index source, and paste this URL.', 'Copy the plugin name, open DSH and paste it into Discover search to install.'],
-    facts: 'Plugin details', author: 'Author', keywords: 'Keywords', related: 'More in {category}', browseAll: 'Browse all plugins', npmMonth: 'npm downloads in the last 30 days',
+    facts: 'Plugin details', author: 'Author', keywords: 'Keywords', related: 'More in {category}', browseAll: 'Browse all plugins', npmMonth: 'npm downloads in the last 30 days', review: 'Review', reviewRecord: 'Review record',
     // Usage stats page.
     statsTitle: 'Usage stats — Open Plugin Market', statsHeading: 'Usage stats', statsDescription: 'How many people use Open Plugin Market in DeepSeek Harness each day, and where they are: daily users and loads for the last 30 days, by country and region.',
     statsLead: 'DSH fetches this market’s index each time it loads or refreshes it. The numbers below come straight from those fetches and refresh every few minutes.',
@@ -124,7 +125,7 @@ const COPY = {
     eyebrow: 'DSH 开放插件市场 · 插件索引 · 每日插件推荐', intro: `DeepSeek Harness 的社区插件索引与每日推荐。10 月 15 日起 DSH 支持插件市场，复制下面的地址粘贴到「${ui('发现')}」，就能直接浏览、安装几百个社区插件。`,
     address: '索引地址', copy: '复制地址', copyTitle: '点击复制',
     copied: '已复制', usage: '今日已有 {readers} 位用户在使用', usageNote: '今天（UTC 日期）在 DSH 中加载过这份索引的用户数，按 IP 和 UA 每日去重，两者都不保存。', copySuccess: '地址已复制。打开 DSH，把它添加为索引源。', details: '详情', copyOpen: '复制插件名并打开 DSH', nameCopied: '已复制，正在打开…', dshOpened: '已打开，粘贴搜索', dshMissed: '已复制，请手动打开', getFailure: '已选中，请手动复制', getHint: `在 DSH「${ui('发现')}」里粘贴搜索即可安装。`, pluginName: '插件名', copyFailure: '地址已选中。按 Ctrl+C 或 ⌘C，或使用选中文字的菜单复制。',
-    showcase: { title: '在 DSH 里的样子', text: '不唯 star 🌟 论。默认推荐每天更新，以最近增长快、更新勤、优质的插件为主，同时参考验证、下载量和 star。', points: ['同一作者不会霸榜，小开发者的新作品也能上首屏', '增长快、更新勤、经过验证等标签一眼可见', '默认排序、✨ 智能推荐和随机，每次都有新发现'], image: 'dsh-discover-zh.webp', alt: 'DeepSeek Harness 的「发现」页面，列出开放插件市场的插件、标签和安装按钮' },
+    showcase: { title: '在 DSH 里的样子', text: '不唯 star 🌟 论。默认推荐每天更新，以最近增长快、更新勤、优质的插件为主，同时参考验证、下载量和 star。', points: ['同一作者不会霸榜，小开发者的新作品也能上首屏', '增长快、更新勤、已审查等标签一眼可见', '默认排序、✨ 智能推荐和随机，每次都有新发现'], image: 'dsh-discover-zh.webp', alt: 'DeepSeek Harness 的「发现」页面，列出开放插件市场的插件、标签和安装按钮' },
     zoom: '放大截图', close: '关闭', stepAlts: [`「${ui('插件 → 实验性插件')}」中的「${ui('自定义插件市场')}」开关`, `「${ui('发现')}」里的「${ui('添加索引源')}」按钮`, '填好 dshopen.org 地址的索引源窗口和「添加」按钮'],
     setup: '最简单使用教程', steps: [
       ['开启市场', ui('插件 → 实验性插件 → 自定义插件市场')],
@@ -144,7 +145,7 @@ const COPY = {
     pluginTitle: title => `${title} — DeepSeek Harness（DSH）插件 · 开放插件市场`,
     pluginDescription: (title, description) => `${title}：${description}DeepSeek Harness（DSH）社区插件，收录于开放插件市场。`,
     installPluginTitle: '更省事：安装开放市场插件', installPluginNote: `它会自动加入本索引，并在「${ui('插件')}」页多一个「开放市场」标签：在里面搜索「{name}」即可安装，以后有新版本也能在那里一键更新。`, install: '在 DSH 中安装', installSteps: [`先把开放插件市场添加为索引源（只需一次）：${ui('插件 → 实验性插件 → 自定义插件市场')}，再到「${ui('发现 → 添加索引源')}」粘贴这个地址。`, `复制插件名，打开 DSH，在「${ui('发现')}」里粘贴搜索即可安装。`],
-    facts: '插件信息', author: '作者', keywords: '关键词', related: '更多「{category}」插件', browseAll: '浏览全部插件', npmMonth: '近 30 天 npm 下载量',
+    facts: '插件信息', author: '作者', keywords: '关键词', related: '更多「{category}」插件', browseAll: '浏览全部插件', npmMonth: '近 30 天 npm 下载量', review: '审查', reviewRecord: '审查记录',
     statsTitle: '使用统计 — 开放插件市场', statsHeading: '使用统计', statsDescription: '开放插件市场在 DeepSeek Harness 中每天有多少人使用、来自哪里：近 30 天每日用户数和加载次数，以及国家和地区分布。',
     statsLead: 'DSH 每次加载或刷新这个市场，都会读取一次索引。下面的数字直接来自这些读取，每隔几分钟更新。',
     statsTiles: { todayReaders: '今日用户', monthReaders: '近 30 天用户', plugins: '收录插件', likes: '累计点赞' },
@@ -206,6 +207,17 @@ export function renderStars(plugin, snapshot, language) {
   return `<span class="stars-group"><a class="github-stars" data-stars="${repo.stars}" href="${esc(repository.url)}/stargazers" title="${esc(tooltip)}" aria-label="${esc(tooltip)}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></svg>${count}<span class="stars-label">GitHub</span></a></span>`;
 }
 
+export function reviewSummary(signals = {}, language = 'en') {
+  const review = signals.maintainerReview;
+  if (review) {
+    const scope = language === 'en'
+      ? (review.scope === 'static-security' ? 'Static security review' : 'Package checks')
+      : (review.scope === 'static-security' ? '静态安全审查' : '包结构核查');
+    return `${language === 'en' ? 'Open Plugin Market' : '开放插件市场'} · ${scope} · v${review.version} · ${review.reviewedAt.slice(0, 10)}`;
+  }
+  return (signals.verifiedBy ?? []).map(id => SOURCES[id]?.title).filter(Boolean).join(' · ');
+}
+
 // Everything a card or a plugin page shows about one plugin, resolved once per language.
 function describe(plugin, data, context) {
   const { categories, text, snapshot, downloads, display, labels, root } = context;
@@ -231,15 +243,19 @@ function describe(plugin, data, context) {
   const npmMeasured = npm && ['ok', 'stale'].includes(npm.status) && Number.isSafeInteger(npm.downloads) && npm.downloads >= 0;
   const npmTitle = npmMeasured ? `npm · ${npm.start} – ${npm.end} · ${text.fetched} ${npm.fetchedAt}` : '';
   const own = plugin.metadata?.labels ?? [];
+  const signals = display.plugins?.[plugin.name]?.signals ?? {};
+  const review = signals.maintainerReview?.version === version?.version ? signals.maintainerReview : undefined;
+  const reviewText = reviewSummary({ ...signals, maintainerReview: review }, data);
   const badges = own.filter(id => id.startsWith('publisher-') && labels[id]).map(id => `<span class="publisher-badge" data-publisher="${esc(id)}">${esc(localize(labels[id].title, data))}</span>`).join('')
-    + SIGNALS.filter(id => own.includes(id) && labels[id]).map(id => `<span class="signal-badge" data-signal="${id}">${esc(localize(labels[id].title, data))}</span>`).join('');
+    + SIGNALS.filter(id => own.includes(id) && labels[id]).map(id => `<span class="signal-badge" data-signal="${id}"${id === 'verified' && reviewText ? ` title="${esc(reviewText)}"` : ''}>${esc(localize(labels[id].title, data))}</span>`).join('');
   const icon = typeof plugin.icon === 'string' && /^icons\/[a-f0-9]{64}\.(?:svg|png|jpg|webp)$/.test(plugin.icon) ? root + plugin.icon : undefined;
   // Likes come from the Worker at runtime; the button stays hidden without JavaScript.
   const likeButton = `<button type="button" class="like-button" data-like="${esc(packageName)}" title="${esc(text.likeTitle)}" aria-pressed="false" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.8 4 7.4 4c2 0 3.6 1.1 4.6 2.7C13 5.1 14.6 4 16.6 4c3.6 0 5.8 3.6 4.6 7.1-1.7 4.8-9.2 9.4-9.2 9.4z"/></svg><span class="visually-hidden">${esc(text.like)}</span><span data-like-count></span></button>`;
   const detail = `${likeButton}${renderStars(plugin, snapshot, data)}
       ${npmMeasured ? `<a class="npm-downloads" data-downloads="${npm.downloads}" href="${esc(npm.source)}" title="${esc(npmTitle)}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>${esc(numberFormat(data).format(npm.downloads))}</a>` : ''}
       ${date ? `<time datetime="${esc(new Date(version.publishTimestamp * 1000).toISOString())}" title="${esc(dateLabel(version.publishTimestamp * 1000, data))}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>${esc(date)}</time>` : ''}`;
-  const facts = `<dt>${esc(text.pluginName)}</dt><dd class="get-name">${esc(packageName)}</dd><dt>${esc(text.version)}</dt><dd class="version">${version ? esc(version.version) : esc(text.noVersion)}</dd>${version?.engines?.dsh ? `<dt>${esc(text.compatibility)}</dt><dd>${esc(version.engines.dsh)}</dd>` : ''}${version?.publishTimestamp ? `<dt>${esc(text.released)}</dt><dd>${esc(dateLabel(version.publishTimestamp * 1000, data))}</dd>` : ''}`;
+  const reviewUrl = review && safeUrl(review.record);
+  const facts = `<dt>${esc(text.pluginName)}</dt><dd class="get-name">${esc(packageName)}</dd><dt>${esc(text.version)}</dt><dd class="version">${version ? esc(version.version) : esc(text.noVersion)}</dd>${version?.engines?.dsh ? `<dt>${esc(text.compatibility)}</dt><dd>${esc(version.engines.dsh)}</dd>` : ''}${version?.publishTimestamp ? `<dt>${esc(text.released)}</dt><dd>${esc(dateLabel(version.publishTimestamp * 1000, data))}</dd>` : ''}${own.includes('verified') && reviewText ? `<dt>${esc(text.review)}</dt><dd>${esc(reviewText)}${reviewUrl ? ` · <a href="${esc(reviewUrl)}">${esc(text.reviewRecord)}</a>` : ''}</dd>` : ''}`;
   const getButton = `<button type="button" class="get-copy" data-get="${esc(packageName)}" title="${esc(text.getHint)}" hidden><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>${esc(text.copyOpen)}</span></button>`;
   return { name, packageName, title, namedTitle: title && title !== name, description, version, categoryId, categoryTitle, links, tone, npm: npmMeasured ? npm : undefined, badges, icon, detail, facts, getButton, sourceUrl, homepage, npmUrl };
 }
@@ -566,14 +582,14 @@ function notFound(css) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Page not found — Open Plugin Market</title><link rel="icon" href="${ORIGIN}favicon.ico" sizes="48x48"><link rel="icon" href="${ORIGIN}assets/favicon.png" type="image/png" sizes="96x96"><style>${css}</style></head><body><header class="site-header shell"><a class="brand" href="${ORIGIN}"><img src="${ORIGIN}assets/mark-256.png" alt="" width="64" height="64"><span>Open Plugin Market</span></a></header><main class="shell hero"><h1>Page not found.</h1><p lang="zh-CN">页面不存在。</p><p lang="zh-TW">頁面不存在。</p><p>Open the plugin directory to continue.</p><p lang="zh-CN">返回插件目录，继续查找插件。</p><div class="contribute-links"><a class="submit-link" href="${ORIGIN}">English directory</a><a class="submit-link" href="${ORIGIN}zh/" lang="zh-CN">中文目录</a><a class="submit-link" href="${ORIGIN}zh-tw/" lang="zh-TW">繁體中文目錄</a></div></main></body></html>\n`;
 }
 
-async function write(path, html) {
+async function write(path, html, output) {
   const file = new URL(path + 'index.html', output);
   await mkdir(new URL('.', file), { recursive: true });
   await writeFile(file, html, 'utf8');
 }
 
 /** Write the static site in English, Simplified and Traditional Chinese alongside the canonical format-1 index. */
-export async function writeSite(index, evidence, snapshot = {}, downloads = {}, display = {}) {
+export async function writeSite(index, evidence, snapshot = {}, downloads = {}, display = {}, {output = defaultOutput} = {}) {
   if (index?.format !== 1 || !Array.isArray(index.plugins)) throw new Error('writeSite expects a format-1 plugin index');
   await mkdir(new URL('assets/', output), { recursive: true });
   for (const [from, name] of ['zh', 'en'].flatMap(lang => ['', '-light'].map(kind => [`open-market-${lang}${kind}.webp`, `open-market-${lang}${kind}.webp`]))) {
@@ -630,8 +646,8 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
       }
       rest = { all: `catalog.json?v=${version}`, chunk: `catalog/{n}.json?v=${version}`, chunks };
     } else await rm(new URL('catalog.json', dir), { force: true });
-    await write(LANGUAGES[language].dir, homePage(index, language, home, rows.slice(0, INITIAL_PLUGINS), rest));
-    await write(LANGUAGES[language].dir + 'stats/', statsPage(language, context('stats/')));
+    await write(LANGUAGES[language].dir, homePage(index, language, home, rows.slice(0, INITIAL_PLUGINS), rest), output);
+    await write(LANGUAGES[language].dir + 'stats/', statsPage(language, context('stats/')), output);
     // Titles, icons and links for the stats page's likes ranking, which only knows package names.
     const statsContext = context('stats/');
     const names = Object.fromEntries(plugins.map(plugin => {
@@ -640,7 +656,7 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
     }));
     await writeFile(new URL(LANGUAGES[language].dir + 'stats/plugins.json', output), finish(JSON.stringify(names), language), 'utf8');
     for (const [at, plugin] of plugins.entries()) {
-      await write(LANGUAGES[language].dir + pluginPath(plugin.name), pluginPage(plugin, index, language, context(pluginPath(plugin.name)), relatedPlugins(plugins, at)));
+      await write(LANGUAGES[language].dir + pluginPath(plugin.name), pluginPage(plugin, index, language, context(pluginPath(plugin.name)), relatedPlugins(plugins, at)), output);
     }
   }
   await writeFile(new URL('sitemap.xml', output), sitemap(['', 'stats/', ...plugins.map(plugin => pluginPath(plugin.name))], evidence?.generatedAt), 'utf8');

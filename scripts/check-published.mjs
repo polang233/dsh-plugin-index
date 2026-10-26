@@ -4,13 +4,16 @@ import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {LABELS} from './labels.mjs';
 import {checkRecommendationSnapshot} from './recommendation-state.mjs';
+import {REVIEW_SOURCE, maintainerReviewFor, validateMaintainerReviews} from './maintainer-reviews.mjs';
 
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 
 /** Verify the text DSH actually renders against independent source snapshots. */
-export function checkMarketDisplay(index, github, downloads, display, publishers) {
+export function checkMarketDisplay(index, github, downloads, display, publishers, {maintainerReviews, packageEvidence} = {}) {
   if (display.schema !== 1 || downloads.schema !== 1 || !Number.isFinite(Date.parse(display.generatedAt))) throw new Error('Missing market snapshots');
   const counts = { stars: 0, downloads: 0, identities: 0 };
+  if (maintainerReviews) validateMaintainerReviews(maintainerReviews);
+  const checked = new Map((packageEvidence?.packages ?? []).map(record => [record.name, record]));
   if (index.metadata?.sortKeys?.recommended) {
     const ranks = index.plugins.map(plugin => plugin.metadata?.sortKeys?.recommended).sort((a, b) => a - b);
     if (ranks.some((rank, position) => rank !== position + 1)) throw new Error('Recommendations must contain one rank per plugin');
@@ -22,6 +25,13 @@ export function checkMarketDisplay(index, github, downloads, display, publishers
   for (const plugin of index.plugins) {
     const presentation = display.plugins?.[plugin.name];
     if (!presentation) throw new Error('Missing DSH row evidence: ' + plugin.name);
+    if (maintainerReviews) {
+      const review = maintainerReviewFor(plugin, maintainerReviews, checked, Date.parse(display.generatedAt));
+      if (JSON.stringify(review) !== JSON.stringify(presentation.signals?.maintainerReview)
+        || Boolean(review) !== Boolean(presentation.signals?.verifiedBy?.includes(REVIEW_SOURCE))) {
+        throw new Error('Maintainer review evidence mismatch: ' + plugin.name);
+      }
+    }
     const repoKey = plugin.repository?.url?.replace(/^https?:\/\/(?:www\.)?github\.com\//, '').replace(/\.git\/?$/, '').replace(/\/$/, '').toLowerCase();
     const repo = github.repositories?.[repoKey], npm = downloads.packages?.[plugin.name];
     const hasStars = repo && ['ok', 'stale'].includes(repo.status) && Number.isSafeInteger(repo.stars) && repo.stars >= 0;
@@ -62,7 +72,7 @@ async function readUrl(url, fetchImpl, maxBytes = 8 * 1024 * 1024) {
 }
 
 /** Check the deployed catalog and every referenced author icon, without redirects. */
-export async function checkPublished(indexUrl, {expectedNames, expectedTitle, verifyMarket = false, publishers, fetchImpl = fetch, brandAssets = []} = {}) {
+export async function checkPublished(indexUrl, {expectedNames, expectedTitle, verifyMarket = false, publishers, maintainerReviews, fetchImpl = fetch, brandAssets = []} = {}) {
   const raw = await readUrl(indexUrl, fetchImpl);
   if (!/application\/json/i.test(raw.type)) throw new Error('Index is not served as JSON');
   const index = JSON.parse(raw.bytes);
@@ -72,11 +82,11 @@ export async function checkPublished(indexUrl, {expectedNames, expectedTitle, ve
   if (expectedNames && JSON.stringify([...names].sort()) !== JSON.stringify([...expectedNames].sort())) throw new Error('Published catalog differs from the source allowlist');
   if (expectedTitle && JSON.stringify(index.title) !== JSON.stringify(expectedTitle)) throw new Error('Published market title differs from this release');
   let market;
+  const status = JSON.parse((await readUrl(new URL('status.json', indexUrl), fetchImpl)).bytes);
   if (verifyMarket) {
     const snapshots = await Promise.all(['github.json', 'downloads.json', 'display.json'].map(async path => JSON.parse((await readUrl(new URL(path, indexUrl), fetchImpl)).bytes)));
-    market = checkMarketDisplay(index, ...snapshots, publishers);
+    market = checkMarketDisplay(index, ...snapshots, publishers, {maintainerReviews, packageEvidence: status});
   }
-  const status = JSON.parse((await readUrl(new URL('status.json', indexUrl), fetchImpl)).bytes);
   if (status.market?.recommendations) {
     const recommendations = JSON.parse((await readUrl(new URL('recommendations.json', indexUrl), fetchImpl)).bytes);
     checkRecommendationSnapshot(index, recommendations);
@@ -128,9 +138,10 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
   const config = JSON.parse(await readFile(new URL('../data/sources.json', import.meta.url), 'utf8'));
   const brandAssets = await Promise.all(['logo.webp', 'logo-256.png', 'mark-256.png', 'badge-logo.png', 'favicon.png', 'apple-touch-icon.png', 'social.png', 'social-zh.png', 'social-tw.png'].map(async name => ({name, bytes: await readFile(new URL('../site/' + name, import.meta.url))})));
   const publishers = JSON.parse(await readFile(new URL('../data/publishers.json', import.meta.url), 'utf8'));
+  const maintainerReviews = JSON.parse(await readFile(new URL('../data/maintainer-reviews.json', import.meta.url), 'utf8'));
   // Packages the build had to leave out are listed in status.json; every other source must be published.
   const status = await fetch(new URL('status.json', indexUrl), {redirect: 'error', signal: AbortSignal.timeout(30_000)}).then(response => response.ok ? response.json() : {}).catch(() => ({}));
   const leftOut = new Set((status.failures ?? []).filter(failure => !failure.retained).map(failure => failure.name));
-  const result = await checkPublished(indexUrl, {expectedNames: config.packages.map(input => input.name).filter(name => !leftOut.has(name)), expectedTitle: config.title, verifyMarket: true, publishers, brandAssets});
+  const result = await checkPublished(indexUrl, {expectedNames: config.packages.map(input => input.name).filter(name => !leftOut.has(name)), expectedTitle: config.title, verifyMarket: true, publishers, maintainerReviews, brandAssets});
   console.log(JSON.stringify(result));
 }

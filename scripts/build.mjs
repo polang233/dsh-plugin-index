@@ -42,12 +42,13 @@ for (const root of [cache, output]) {
 const downloads = await collectDownloads(built.index, { previous: previousDownloads });
 const endorsements = await collectEndorsements({ previous: await readJson(new URL('endorsements.json', cache)) ?? await publishedSnapshot('endorsements.json') ?? await readJson(new URL('endorsements.json', output)) });
 const publishers = JSON.parse(await readFile(new URL('../data/publishers.json', import.meta.url), 'utf8'));
+const maintainerReviews = JSON.parse(await readFile(new URL('../data/maintainer-reviews.json', import.meta.url), 'utf8'));
 const previousRecommendations = await publishedSnapshot('recommendations.json') ?? await readJson(new URL('recommendations.json', output));
-const { index, display, recommendations } = applyMarketDisplay(built.index, { github, downloads, releases: releasesOf(built.evidence), endorsements, publishers, previousRecommendations, now: Date.parse(downloads.generatedAt) });
+const { index, display, recommendations } = applyMarketDisplay(built.index, { github, downloads, releases: releasesOf(built.evidence), endorsements, publishers, maintainerReviews, packageEvidence: built.evidence, previousRecommendations, now: Date.parse(downloads.generatedAt) });
 const states = Object.values(github.repositories);
 const evidence = {
   ...built.evidence,
-  market: { generatedAt: display.generatedAt, downloads: 'downloads.json', display: 'display.json', recommendations: 'recommendations.json', publisherEvidence: 'https://github.com/polang233/dsh-plugin-index/blob/main/data/publishers.json' },
+  market: { generatedAt: display.generatedAt, downloads: 'downloads.json', display: 'display.json', recommendations: 'recommendations.json', publisherEvidence: 'https://github.com/polang233/dsh-plugin-index/blob/main/data/publishers.json', reviewEvidence: 'https://github.com/polang233/dsh-plugin-index/blob/main/data/maintainer-reviews.json' },
   github: {
     snapshot: 'github.json',
     fetched: states.filter(repo => repo.status === 'ok').length,

@@ -57,6 +57,10 @@ pnpm test:browser
 
 回复收录申请时保持一句话、自然简短。中文示例：`感谢！将在下个提交后收录 😊`，可换用不同的微笑表情。非中文开发者用英文：`Thanks! It'll be added in the next commit 😊`。接纳后按维护者授权回复并关闭 issue。
 
+新增、替换及升级还需复核实际发布代码的安全问题，重点检查凭据、外发数据、接口认证与授权、命令/文件操作及失败处理。结论注明具体版本与覆盖限制。回复可补一句：`目前已加强静态安全审查，通过上架后会显示「已审查」标签。` 未通过项说明需要修复或补充的内容，保持简短。
+
+通过后在 `data/maintainer-reviews.json` 添加具体版本、SHA-512、仓库、来源、日期、核查范围和记录路径。Git 还需完整提交。`package` 用于早期包结构核查，`static-security` 用于加入静态安全审查后的通过项；不要把历史核查升级成未做过的审计。版本或归档字节不匹配时自动失去本站标签，其他平台的审查依据独立保留。详见[标签说明](market-display.md)。
+
 批量收录可先将 issue、包名和回复草稿记录为 `schema: 1`、`entries: [{issue, name, replyLanguage, reply}]` 的 JSON。运行 `node scripts/preview-submissions.mjs <复核记录.json>`，仅检查这批发布归档并生成 `.local/submission-preview/` 下的索引、证据和回复预览，不安装插件、不改写已发布快照、不发评论。
 
 未指定 `version` 时跟踪 npm `latest`，索引每 6 小时构建一次；指定后固定为该版本。仓库核查和大包预算会固定版本，运行 `pnpm check:pins` 可列出已落后于 npm `latest` 的固定条目，需重新核查后升级。生成器最多并发读取四个来源，并重试临时网络错误。npm 包下载限于公共 npm registry，固定 Git 来源仅使用下文的 GitHub 提交归档；审核仓库图片使用独立的图标读取边界，不执行被收录插件的代码。全部来源与官方校验器通过后才允许发布。

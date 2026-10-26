@@ -1,0 +1,2559 @@
+{
+  "schema": 1,
+  "status": "approved",
+  "checkedAt": "2026-10-26T06:29:06.37Z",
+  "baseRevision": "fce7d4fada78d80e6bb629365c87990638069129",
+  "scope": "Issues 81–89, npm migrations 59–61 and changed pins in 62",
+  "counts": {
+    "added": 5,
+    "updated": 3,
+    "migrated": 2,
+    "deferred": 7,
+    "catalogBefore": 897,
+    "catalogAfter": 902
+  },
+  "reviews": [
+    {
+      "issue": 59,
+      "key": "video",
+      "name": "@lifenrir/dsh-video-preview",
+      "decision": "defer-update",
+      "reviewedVersion": "0.1.1",
+      "previousVersion": "0.1.0",
+      "sourceCommit": "2dd1792962cca75af1fc598c41a23be4f8513d22",
+      "repository": {
+        "url": "https://github.com/LiFenrir/dsh-video-preview",
+        "id": 1430759328,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.1.1",
+        "publishedAt": "2026-10-26T01:08:30.044Z",
+        "publisher": "lifenrir",
+        "maintainers": [
+          "lifenrir"
+        ],
+        "gitHead": "2dd1792962cca75af1fc598c41a23be4f8513d22"
+      },
+      "archive": {
+        "compressedBytes": 11567,
+        "unpackedBytes": 30002,
+        "decodedBytes": 38912,
+        "entries": 10
+      },
+      "integrity": "sha512-5vGUNEI+OdgJAxFCE+lBNGwXPYyJD0if5+mW6uP6hWBXY4pVnMbaB4T+O0MSNgNxnAyiQoB/GAzH4H+GGPM/Uw==",
+      "sourceComparisons": [
+        {
+          "path": "package/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "@lifenrir/dsh-video-preview",
+        "version": "0.1.1",
+        "license": "MIT",
+        "repository": "https://github.com/LiFenrir/dsh-video-preview",
+        "repositorySource": "package",
+        "sourceCommit": "2dd1792962cca75af1fc598c41a23be4f8513d22",
+        "metadataUrl": "https://registry.npmjs.org/%40lifenrir%2Fdsh-video-preview",
+        "tarball": "https://registry.npmjs.org/@lifenrir/dsh-video-preview/-/dsh-video-preview-0.1.1.tgz",
+        "integrity": "sha512-5vGUNEI+OdgJAxFCE+lBNGwXPYyJD0if5+mW6uP6hWBXY4pVnMbaB4T+O0MSNgNxnAyiQoB/GAzH4H+GGPM/Uw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 10,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/fe2cdcff9fee8633b7f8b239fe560b539f32434e0ce623ccc45a76f61c293118.svg",
+            "mime": "image/svg+xml",
+            "bytes": 305,
+            "sha256": "fe2cdcff9fee8633b7f8b239fe560b539f32434e0ce623ccc45a76f61c293118"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 11567,
+          "unpackedBytes": 30002,
+          "decodedBytes": 38912,
+          "entries": 10,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T10:38:52.502Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "npm 0.1.1 与既有运行代码一致，但 ReadableStream.start 无视 backpressure，持续排入整个请求范围；慢客户端仍可能使大视频常驻内存。暂不迁移，现有 Git 版也有此问题。",
+      "securityReview": "npm 0.1.1 与既有运行代码一致，但 ReadableStream.start 无视 backpressure，持续排入整个请求范围；慢客户端仍可能使大视频常驻内存。暂不迁移，现有 Git 版也有此问题。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 60,
+      "key": "quote",
+      "name": "@lifenrir/dsh-selection-quote",
+      "decision": "migrate-npm",
+      "reviewedVersion": "0.1.1",
+      "previousVersion": "0.1.0",
+      "input": {
+        "name": "@lifenrir/dsh-selection-quote",
+        "title": {
+          "en": "Selection Quote",
+          "zh": "划词引用"
+        },
+        "description": {
+          "en": "Quote selected message text into the composer with source roles and preserved code fences, then jump back from quote chips or sent cards. Selections must stay within one message.",
+          "zh": "划选消息文字并引用到输入框，保留来源角色与代码围栏，可从引用标签或发送后的卡片跳回原文。选区须位于同一条消息内。"
+        },
+        "category": "interface"
+      },
+      "sourceCommit": "bb36fd53bef1db7a7d0619c8494fadab186be329",
+      "repository": {
+        "url": "https://github.com/LiFenrir/dsh-selection-quote",
+        "id": 1430759407,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.1.1",
+        "publishedAt": "2026-10-26T01:08:34.564Z",
+        "publisher": "lifenrir",
+        "maintainers": [
+          "lifenrir"
+        ],
+        "gitHead": "bb36fd53bef1db7a7d0619c8494fadab186be329"
+      },
+      "archive": {
+        "compressedBytes": 17166,
+        "unpackedBytes": 48464,
+        "decodedBytes": 57856,
+        "entries": 10
+      },
+      "integrity": "sha512-ZlQO+rYs5vf1Z4+h48BwbvQEvVEEmjT4QAu7tqIudVI3fGb82xrKpbctMp91/cRz95u0Gg4QP0BS0mmWUFJtjA==",
+      "sourceComparisons": [
+        {
+          "path": "package/lib/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "@lifenrir/dsh-selection-quote",
+        "version": "0.1.1",
+        "license": "MIT",
+        "repository": "https://github.com/LiFenrir/dsh-selection-quote",
+        "repositorySource": "package",
+        "sourceCommit": "bb36fd53bef1db7a7d0619c8494fadab186be329",
+        "metadataUrl": "https://registry.npmjs.org/%40lifenrir%2Fdsh-selection-quote",
+        "tarball": "https://registry.npmjs.org/@lifenrir/dsh-selection-quote/-/dsh-selection-quote-0.1.1.tgz",
+        "integrity": "sha512-ZlQO+rYs5vf1Z4+h48BwbvQEvVEEmjT4QAu7tqIudVI3fGb82xrKpbctMp91/cRz95u0Gg4QP0BS0mmWUFJtjA==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 10,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/377fe826cf583b76dc193f46544f548e2df5227d1819f9250f29d38310504d22.svg",
+            "mime": "image/svg+xml",
+            "bytes": 747,
+            "sha256": "377fe826cf583b76dc193f46544f548e2df5227d1819f9250f29d38310504d22"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 17166,
+          "unpackedBytes": 48464,
+          "decodedBytes": 57856,
+          "entries": 10,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T10:39:03.563Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "归档、身份、许可、入口与本轮定向静态安全审查未发现收录阻断项。",
+      "securityReview": "完整发布客户端已读：当前会话 binding、引用分隔符和围栏处理、React 文本渲染；无 Host 路由或外发。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 61,
+      "key": "context",
+      "name": "@lifenrir/dsh-external-task-context",
+      "decision": "migrate-npm",
+      "reviewedVersion": "0.1.1",
+      "previousVersion": "0.1.0",
+      "input": {
+        "name": "@lifenrir/dsh-external-task-context",
+        "title": {
+          "en": "External Task Context",
+          "zh": "外部任务上下文"
+        },
+        "description": {
+          "en": "Inspect external subagent delegation prompts, runtime context and returned results in the right sidebar, using parent-session logs. Does not expose external agents' internal reasoning or full tool histories.",
+          "zh": "根据父会话日志，在右侧栏查看外部子代理的委派提示词、运行上下文和返回结果；不提供外部代理内部思考或完整工具调用历史。"
+        },
+        "category": "workflow"
+      },
+      "sourceCommit": "c4e06785e2153db7d46ea3368e30ff648adb407a",
+      "repository": {
+        "url": "https://github.com/LiFenrir/dsh-external-task-context",
+        "id": 1430786479,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.1.1",
+        "publishedAt": "2026-10-26T01:08:37.008Z",
+        "publisher": "lifenrir",
+        "maintainers": [
+          "lifenrir"
+        ],
+        "gitHead": "c4e06785e2153db7d46ea3368e30ff648adb407a"
+      },
+      "archive": {
+        "compressedBytes": 17859,
+        "unpackedBytes": 60779,
+        "decodedBytes": 72704,
+        "entries": 13
+      },
+      "integrity": "sha512-xFAvYW4ZB7HK5Rgu+iCDrSYZjCbcneXPBYksNKQTVd8VhRiWj3HGgfAB2R+o58wKVBMU2RbP8Y7iawdjFrHnDw==",
+      "sourceComparisons": [
+        {
+          "path": "package/lib/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "@lifenrir/dsh-external-task-context",
+        "version": "0.1.1",
+        "license": "MIT",
+        "repository": "https://github.com/LiFenrir/dsh-external-task-context",
+        "repositorySource": "package",
+        "sourceCommit": "c4e06785e2153db7d46ea3368e30ff648adb407a",
+        "metadataUrl": "https://registry.npmjs.org/%40lifenrir%2Fdsh-external-task-context",
+        "tarball": "https://registry.npmjs.org/@lifenrir/dsh-external-task-context/-/dsh-external-task-context-0.1.1.tgz",
+        "integrity": "sha512-xFAvYW4ZB7HK5Rgu+iCDrSYZjCbcneXPBYksNKQTVd8VhRiWj3HGgfAB2R+o58wKVBMU2RbP8Y7iawdjFrHnDw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 13,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/ffced475bc3fc8b5f68e35cdf91a71083fa3915ea2b8c4ca7e17a976b8dd94a9.svg",
+            "mime": "image/svg+xml",
+            "bytes": 596,
+            "sha256": "ffced475bc3fc8b5f68e35cdf91a71083fa3915ea2b8c4ca7e17a976b8dd94a9"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 17859,
+          "unpackedBytes": 60779,
+          "decodedBytes": 72704,
+          "entries": 13,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-23T10:39:07.247Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "归档、身份、许可、入口与本轮定向静态安全审查未发现收录阻断项。",
+      "securityReview": "完整发布 Host/客户端已读：只投影现有会话事件，跳过继承事件、限制文本/待匹配条目，React 文本显示，无新增外发。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 62,
+      "key": "argo",
+      "name": "@taxueseek/argo-dsh",
+      "decision": "update",
+      "reviewedVersion": "2.9.9",
+      "previousVersion": "2.9.8",
+      "input": {
+        "name": "@taxueseek/argo-dsh",
+        "title": {
+          "en": "Argo",
+          "zh": "Argo 阿尔戈"
+        },
+        "description": {
+          "en": "Add native search and fetch tools, optional web routing and parallel research with a settings panel. Requires Node.js 18+, Python 3.9+ and PyYAML. Set the web search/fetch provider explicitly to route built-in web tools through Argo; no DSH version range is declared. Starts an external Argo CLI through npx by default.",
+          "zh": "提供原生搜索与抓取工具、可选的网页工具路由、并行研究及设置面板。需要 Node.js 18+、Python 3.9+ 和 PyYAML；内置网页工具改走 Argo 时需显式配置搜索与抓取路由，包内未声明适用的 DSH 版本。 默认通过 npx 启动外部 Argo CLI。"
+        },
+        "category": "tools",
+        "version": "2.9.9",
+        "repositoryReview": {
+          "version": "2.9.9",
+          "integrity": "sha512-BLHOJiQB0ReuGCNn2YStpVrJu9+Iw6hy7v/Hw7No6Gpmg2CISeOE6lBy8wGVcgg42I/4mgLkGBpm59o7O2xiNA==",
+          "url": "https://github.com/taxueseek/argo",
+          "commit": "a00649e2c58f1b3469c997733eb26a3f496c9208"
+        }
+      },
+      "sourceCommit": "a00649e2c58f1b3469c997733eb26a3f496c9208",
+      "repository": {
+        "url": "https://github.com/taxueseek/argo",
+        "id": 1304997851,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "2.9.9",
+        "publishedAt": "2026-10-25T15:24:13.57Z",
+        "publisher": "taxueseek",
+        "maintainers": [
+          "taxueseek"
+        ]
+      },
+      "archive": {
+        "compressedBytes": 64944,
+        "unpackedBytes": 222893,
+        "decodedBytes": 230912,
+        "entries": 9
+      },
+      "integrity": "sha512-BLHOJiQB0ReuGCNn2YStpVrJu9+Iw6hy7v/Hw7No6Gpmg2CISeOE6lBy8wGVcgg42I/4mgLkGBpm59o7O2xiNA==",
+      "sourceComparisons": [
+        {
+          "path": "package/dsh/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/dsh/diagnostics.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/dsh/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/dsh/runner.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/dsh/wide-research.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/dsh/native-tools.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "licenseFiles": [],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "@taxueseek/argo-dsh",
+        "version": "2.9.9",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/taxueseek/argo",
+        "repositorySource": "review",
+        "repositoryReview": {
+          "version": "2.9.9",
+          "integrity": "sha512-BLHOJiQB0ReuGCNn2YStpVrJu9+Iw6hy7v/Hw7No6Gpmg2CISeOE6lBy8wGVcgg42I/4mgLkGBpm59o7O2xiNA==",
+          "commit": "a00649e2c58f1b3469c997733eb26a3f496c9208",
+          "url": "https://github.com/taxueseek/argo",
+          "evidence": "https://github.com/taxueseek/argo/blob/a00649e2c58f1b3469c997733eb26a3f496c9208/package.json"
+        },
+        "metadataUrl": "https://registry.npmjs.org/%40taxueseek%2Fargo-dsh",
+        "tarball": "https://registry.npmjs.org/@taxueseek/argo-dsh/-/argo-dsh-2.9.9.tgz",
+        "integrity": "sha512-BLHOJiQB0ReuGCNn2YStpVrJu9+Iw6hy7v/Hw7No6Gpmg2CISeOE6lBy8wGVcgg42I/4mgLkGBpm59o7O2xiNA==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/dsh/client.js"
+        ],
+        "filesChecked": 9,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 64944,
+          "unpackedBytes": 222893,
+          "decodedBytes": 230912,
+          "entries": 9,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-21T08:58:30.444Z",
+          "last30Days": 4,
+          "last90Days": 4
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "归档、身份、许可、入口与本轮定向静态安全审查未发现收录阻断项。",
+      "securityReview": "实际发布运行文件与固定公开源码一致；追踪 argv/凭据环境、子代理限制与报告路径，无已确认阻断项。默认 npx 启动外部 Argo，继承环境和可变外部引擎是明确覆盖限制，不能视为已审完整引擎。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 62,
+      "key": "matrix",
+      "name": "dsh-matrix-theme",
+      "decision": "update",
+      "reviewedVersion": "0.9.0",
+      "previousVersion": "0.5.0",
+      "input": {
+        "name": "dsh-matrix-theme",
+        "version": "0.9.0",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/SShiRkiT/dsh-matrix-theme",
+          "commit": "df867d52f93eba15530777f0a48f8cc617c57225",
+          "integrity": "sha512-i1MPbLGOabBdodPIIGNCQJ9RNk3jX6DUoA2f/lznLf4XzltYEihBMewiZrYrEHYD+Nw7aW9T/lWYAYSD0bEwWw==",
+          "publishedAt": "2026-10-26T05:45:54Z"
+        },
+        "title": {
+          "en": "Matrix Theme",
+          "zh": "Matrix 暗色主题"
+        },
+        "description": {
+          "en": "Apply a near-black Matrix palette, glass sidebar and composer panels, with styling scoped to the theme. Keeps dark mode while enabled. Requires the DSH theme client service from 0.2.1-rc.2 or later.",
+          "zh": "提供近黑色 Matrix 配色、玻璃侧栏与输入面板，样式限定在主题作用域内，启用期间保持暗色模式。需要 DSH 0.2.1-rc.2 或更高版本的主题服务。"
+        },
+        "category": "appearance"
+      },
+      "sourceCommit": "df867d52f93eba15530777f0a48f8cc617c57225",
+      "repository": {
+        "url": "https://github.com/SShiRkiT/dsh-matrix-theme",
+        "id": 1430970274,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "archive": {
+        "compressedBytes": 458547,
+        "unpackedBytes": 535540,
+        "decodedBytes": 552960,
+        "entries": 22
+      },
+      "integrity": "sha512-i1MPbLGOabBdodPIIGNCQJ9RNk3jX6DUoA2f/lznLf4XzltYEihBMewiZrYrEHYD+Nw7aW9T/lWYAYSD0bEwWw==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-matrix-theme",
+        "version": "0.9.0",
+        "license": "MIT",
+        "repository": "https://github.com/SShiRkiT/dsh-matrix-theme",
+        "repositorySource": "package",
+        "sourceCommit": "df867d52f93eba15530777f0a48f8cc617c57225",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/SShiRkiT/dsh-matrix-theme",
+          "commit": "df867d52f93eba15530777f0a48f8cc617c57225"
+        },
+        "tarball": "https://codeload.github.com/SShiRkiT/dsh-matrix-theme/tar.gz/df867d52f93eba15530777f0a48f8cc617c57225",
+        "integrity": "sha512-i1MPbLGOabBdodPIIGNCQJ9RNk3jX6DUoA2f/lznLf4XzltYEihBMewiZrYrEHYD+Nw7aW9T/lWYAYSD0bEwWw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 16,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 458547,
+          "unpackedBytes": 535540,
+          "decodedBytes": 552960,
+          "entries": 22,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "归档、身份、许可、入口与本轮定向静态安全审查未发现收录阻断项。",
+      "securityReview": "Host 无行为；客户端静态样式/主题 token 和同源品牌 DOM。未发现已审路径阻断项。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 62,
+      "key": "mobile",
+      "name": "dsh-mobile",
+      "decision": "update",
+      "reviewedVersion": "0.6.17",
+      "previousVersion": "0.6.16",
+      "input": {
+        "name": "dsh-mobile",
+        "version": "0.6.17",
+        "title": {
+          "en": "DSH Mobile",
+          "zh": "DSH Mobile"
+        },
+        "description": {
+          "en": "Use DSH on your computer from a phone browser or the Android app over LAN or optional remote tunnels (Tailscale, cpolar, cloudflared, FRP), with HTTPS and device pairing.",
+          "zh": "通过局域网或可选的远程通道（Tailscale、cpolar、cloudflared、FRP），用手机浏览器或 Android App 安全地使用电脑上的 DSH，支持 HTTPS 和设备配对。"
+        },
+        "category": "integrations"
+      },
+      "sourceCommit": "90587ebabb047066d875c747597adaeabca293b4",
+      "repository": {
+        "url": "https://github.com/saya-ch/dsh-mobile",
+        "id": 1334817483,
+        "visibility": "public",
+        "archived": false,
+        "license": "Apache-2.0"
+      },
+      "registry": {
+        "latest": "0.6.17",
+        "publishedAt": "2026-10-25T10:01:34.677Z",
+        "publisher": "saya-ch",
+        "maintainers": [
+          "saya-ch"
+        ]
+      },
+      "archive": {
+        "compressedBytes": 27201720,
+        "unpackedBytes": 71494176,
+        "decodedBytes": 71541248,
+        "entries": 61
+      },
+      "integrity": "sha512-N/8cSss+hor38LZcawqZ60JyY0KBUyY1sNGpKbmC3mH7HfxCnhqFmblh1KJ8N3rZ2IUgeB5H8i24DE27zSRevw==",
+      "sourceComparisons": [
+        {
+          "path": "package/lib/cli.js",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        },
+        {
+          "path": "package/lib/client.js",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        },
+        {
+          "path": "package/packages/question-fixes/lib/client.js",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        },
+        {
+          "path": "package/lib/mobile-compat.js",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        },
+        {
+          "path": "package/lib/mobile-layout.js",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        },
+        {
+          "path": "package/lib/extension-worker-runtime.mjs",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        },
+        {
+          "path": "package/lib/index.mjs",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        },
+        {
+          "path": "package/packages/question-fixes/lib/index.mjs",
+          "inSource": false,
+          "sameBytes": false,
+          "sameText": false
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "licenseFiles": [
+        "package/LICENSE",
+        "package/packages/question-fixes/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-mobile",
+        "version": "0.6.17",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/saya-ch/dsh-mobile",
+        "repositorySource": "package",
+        "metadataUrl": "https://registry.npmjs.org/dsh-mobile",
+        "tarball": "https://registry.npmjs.org/dsh-mobile/-/dsh-mobile-0.6.17.tgz",
+        "integrity": "sha512-N/8cSss+hor38LZcawqZ60JyY0KBUyY1sNGpKbmC3mH7HfxCnhqFmblh1KJ8N3rZ2IUgeB5H8i24DE27zSRevw==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 61,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 27201720,
+          "unpackedBytes": 71494176,
+          "decodedBytes": 71541248,
+          "entries": 61,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-08-15T06:45:45.364Z",
+          "last30Days": 24,
+          "last90Days": 93
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "归档、身份、许可、入口与本轮定向静态安全审查未发现收录阻断项。",
+      "securityReview": "独立核查配对、会话/CSRF、Host/Origin/CIDR、HTTP/WS、上游 Cookie 和本地管理；发布 bundle 对应控制段一致。未发现已审认证边界阻断项；二进制、Android、所有扩展/隧道/界面实现未穷尽。",
+      "archiveReviewRetired": true
+    },
+    {
+      "issue": 62,
+      "key": "persona",
+      "name": "@gulagala001/dsh-persona-plugin",
+      "decision": "defer-update",
+      "reviewedVersion": "0.2.0-dsh.0.2.1-rc.3",
+      "previousVersion": "0.1.0-dsh.0.2.1-rc.2",
+      "sourceCommit": "7627d0427a7a785d2c6ea83378202c0c0aa6a534",
+      "repository": {
+        "url": "https://github.com/gulagala001/dsh-persona-plugin",
+        "id": 1429682818,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "archive": {
+        "compressedBytes": 117534,
+        "unpackedBytes": 224241,
+        "decodedBytes": 266240,
+        "entries": 52
+      },
+      "integrity": "sha512-TXWj04DsQ42LNslI5/rHqsmKke7uXP/FCvdYi4wktHD82yMX7hlaEveop4PBGQLM6VUE6DomgkN0pSKW5UOJ7w==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "structuralOkay": false,
+      "structuralError": "Client entry package/lib/client.js is missing from published archive",
+      "reason": "Git 归档仍缺 exports[\"./client\"] 指向的 lib/client.js，保留已审旧版 0.1.0-dsh.0.2.1-rc.2。",
+      "securityReview": "Git 归档仍缺 exports[\"./client\"] 指向的 lib/client.js，保留已审旧版 0.1.0-dsh.0.2.1-rc.2。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 62,
+      "key": "theme",
+      "name": "@gulagala001/dsh-theme-plugin",
+      "decision": "defer-update",
+      "reviewedVersion": "0.2.6-dsh.0.2.1-rc.3",
+      "previousVersion": "0.2.1-dsh.0.2.1-rc.2",
+      "sourceCommit": "c110faa38f5ece96aa090348e0627bd5fca09e01",
+      "repository": {
+        "url": "https://github.com/gulagala001/dsh-theme-plugin",
+        "id": 1427170372,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "archive": {
+        "compressedBytes": 7560896,
+        "unpackedBytes": 9368893,
+        "decodedBytes": 9512960,
+        "entries": 191
+      },
+      "integrity": "sha512-9kCwDNdm3BgAb+I2HVKmXCyA/O1U3l6HvwfIec75HpyYp2UIZ3xeIPUacMPM5Gllt/ARV2Rr3S9GD9iqce3tow==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "structuralOkay": false,
+      "structuralError": "Client entry package/lib/client.js is missing from published archive",
+      "reason": "Git 归档仍缺 exports[\"./client\"] 指向的 lib/client.js；另确认 Windows 归档解包的路径包含关系检查有缺陷。旧配置不变，线上仍被客户端校验排除。",
+      "securityReview": "Git 归档仍缺 exports[\"./client\"] 指向的 lib/client.js；另确认 Windows 归档解包的路径包含关系检查有缺陷。旧配置不变，线上仍被客户端校验排除。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 81,
+      "key": "decision",
+      "name": "dsh-decision-engine",
+      "decision": "defer-update",
+      "reviewedVersion": "0.7.0",
+      "sourceCommit": "d3952766c4a77a87f99456a5acfbe13860520c4c",
+      "repository": {
+        "url": "https://github.com/zuosus/dsh-decision-engine",
+        "id": 1430767531,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.7.0",
+        "publishedAt": "2026-10-25T16:28:20.108Z",
+        "publisher": "zuos",
+        "maintainers": [
+          "zuos"
+        ],
+        "gitHead": "d3952766c4a77a87f99456a5acfbe13860520c4c"
+      },
+      "archive": {
+        "compressedBytes": 122571,
+        "unpackedBytes": 360425,
+        "decodedBytes": 379392,
+        "entries": 24
+      },
+      "integrity": "sha512-+d73yTp7p/tVneHpLxP9IMKjluEdq2J1UYHRX2kQvOZA9Bx1wNJBtrvWh7LFV/Qcr4RzxTV/N95bY2tqoqR/BQ==",
+      "sourceComparisons": [
+        {
+          "path": "package/lib/adapters/agent.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/config-file.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/credentials.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/decision-cache.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/decision-points.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/endpoint-fallback.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/engine.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/home-paths.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/providers.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/adapters/route.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/points/spec.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/adapters/tools.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/adapters/translate.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/scripts/migrate-profile.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-decision-engine",
+        "version": "0.7.0",
+        "license": "MIT",
+        "repository": "https://github.com/zuosus/dsh-decision-engine",
+        "repositorySource": "package",
+        "sourceCommit": "d3952766c4a77a87f99456a5acfbe13860520c4c",
+        "metadataUrl": "https://registry.npmjs.org/dsh-decision-engine",
+        "tarball": "https://registry.npmjs.org/dsh-decision-engine/-/dsh-decision-engine-0.7.0.tgz",
+        "integrity": "sha512-+d73yTp7p/tVneHpLxP9IMKjluEdq2J1UYHRX2kQvOZA9Bx1wNJBtrvWh7LFV/Qcr4RzxTV/N95bY2tqoqR/BQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 24,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/bf8a477072418b9dd0983445ebd083d54a670d3cdee8badaeedcbeda5236c50a.svg",
+            "mime": "image/svg+xml",
+            "bytes": 918,
+            "sha256": "bf8a477072418b9dd0983445ebd083d54a670d3cdee8badaeedcbeda5236c50a"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 122571,
+          "unpackedBytes": 360425,
+          "decodedBytes": 379392,
+          "entries": 24,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-25T02:41:14.617Z",
+          "last30Days": 8,
+          "last90Days": 8
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "授权软缓存只按工具、命令族和风险词标记复用低风险分数，不能区分不同代码、目标或会话。enforce 时会跳过本次附加风险判断；宿主原生检查仍在，不声称无条件执行绕过。暂不替换旧包。",
+      "securityReview": "授权软缓存只按工具、命令族和风险词标记复用低风险分数，不能区分不同代码、目标或会话。enforce 时会跳过本次附加风险判断；宿主原生检查仍在，不声称无条件执行绕过。暂不替换旧包。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 82,
+      "key": "screen",
+      "name": "dsh-plugin-screen-control",
+      "decision": "add",
+      "reviewedVersion": "0.2.4",
+      "input": {
+        "name": "dsh-plugin-screen-control",
+        "title": {
+          "en": "Windows Screen Control",
+          "zh": "Windows 后台屏幕操控"
+        },
+        "description": {
+          "en": "Capture, OCR and control Windows background windows through a bundled Rust engine. Windows x64 only; declares DSH ^0.2.0-rc.2 and Node.js ^22.19 or >=24. Grants screen capture, mouse and keyboard capabilities.",
+          "zh": "通过随包 Rust 引擎截取、识别和操控 Windows 后台窗口，提供鼠标与键盘工具。仅限 Windows x64，声明适配 DSH ^0.2.0-rc.2，需 Node.js ^22.19 或 >=24。"
+        },
+        "category": "tools"
+      },
+      "sourceCommit": "9596fefd0179d89141b3392a849136af155a6785",
+      "repository": {
+        "url": "https://github.com/ShawwiMA/dsh-plugin-screen-control",
+        "id": 1433305784,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.2.4",
+        "publishedAt": "2026-10-25T14:42:31.978Z",
+        "publisher": "shawwima",
+        "maintainers": [
+          "shawwima"
+        ],
+        "gitHead": "9596fefd0179d89141b3392a849136af155a6785"
+      },
+      "archive": {
+        "compressedBytes": 789315,
+        "unpackedBytes": 1566431,
+        "decodedBytes": 1574400,
+        "entries": 9
+      },
+      "integrity": "sha512-cwF5j5S/zKNQPZLgse/i4e1DFN9w94qRc5Y5t+Z+WmINvSd2vi56rO6+9lUOiIYfLoLS6bpmMCj0SmlvQ7ZGbg==",
+      "sourceComparisons": [
+        {
+          "path": "package/lib/bridge.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-plugin-screen-control",
+        "version": "0.2.4",
+        "license": "MIT",
+        "repository": "https://github.com/ShawwiMA/dsh-plugin-screen-control",
+        "repositorySource": "package",
+        "sourceCommit": "9596fefd0179d89141b3392a849136af155a6785",
+        "metadataUrl": "https://registry.npmjs.org/dsh-plugin-screen-control",
+        "tarball": "https://registry.npmjs.org/dsh-plugin-screen-control/-/dsh-plugin-screen-control-0.2.4.tgz",
+        "integrity": "sha512-cwF5j5S/zKNQPZLgse/i4e1DFN9w94qRc5Y5t+Z+WmINvSd2vi56rO6+9lUOiIYfLoLS6bpmMCj0SmlvQ7ZGbg==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 9,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 789315,
+          "unpackedBytes": 1566431,
+          "decodedBytes": 1574400,
+          "entries": 9,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-25T14:40:55.115Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "归档、身份、许可、入口与本轮定向静态安全审查未发现收录阻断项。",
+      "securityReview": "已追踪本地桥、随机命名管道、引擎选择及源码入口；未发现已审路径的收录阻断项。未反编译/复现编译原生二进制，未审全部 Rust 图像/UIA 实现。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 83,
+      "key": "qq",
+      "name": "dsh-qq-gateway",
+      "decision": "defer-add",
+      "reviewedVersion": "1.0.1",
+      "sourceCommit": "a2106dc3c65190b57b61d28486f27a77e8f925e9",
+      "repository": {
+        "url": "https://github.com/ShawwiMA/dsh-qq-gateway",
+        "id": 1433310220,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "1.0.1",
+        "publishedAt": "2026-10-25T15:44:36.39Z",
+        "publisher": "shawwima",
+        "maintainers": [
+          "shawwima"
+        ]
+      },
+      "archive": {
+        "compressedBytes": 101827,
+        "unpackedBytes": 308273,
+        "decodedBytes": 326656,
+        "entries": 22
+      },
+      "integrity": "sha512-3zBd6xFdXu+VG8zDolYDA1lRmzflZlH+TMb+op9h+i09zY2hEMH+uylxwfMk5/AkT8feHQYaoQwV72Dnl1cTQA==",
+      "sourceComparisons": [
+        {
+          "path": "package/lib/gateway/actions.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/authz.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/config.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/container-proxy.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/docker.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/events.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/gateway.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/human-delay.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/markdown-image.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/media.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/mute.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/protocol.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/shutdown.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/status-server.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/tools.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/ws.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/gateway/shutdown-helper.mjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-qq-gateway",
+        "version": "1.0.1",
+        "license": "MIT",
+        "repository": "https://github.com/ShawwiMA/dsh-qq-gateway",
+        "repositorySource": "package",
+        "metadataUrl": "https://registry.npmjs.org/dsh-qq-gateway",
+        "tarball": "https://registry.npmjs.org/dsh-qq-gateway/-/dsh-qq-gateway-1.0.1.tgz",
+        "integrity": "sha512-3zBd6xFdXu+VG8zDolYDA1lRmzflZlH+TMb+op9h+i09zY2hEMH+uylxwfMk5/AkT8feHQYaoQwV72Dnl1cTQA==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 22,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 101827,
+          "unpackedBytes": 308273,
+          "decodedBytes": 326656,
+          "entries": 22,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-25T14:33:26.745Z",
+          "last30Days": 3,
+          "last90Days": 3
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "默认空 token 的独立 WebSocket 未认证对端且不校验 Origin；最新连接可接收动作/回复。另有认证前 URL 解析异常未捕获、接收帧/分片无大小上限。暂缓收录。",
+      "securityReview": "默认空 token 的独立 WebSocket 未认证对端且不校验 Origin；最新连接可接收动作/回复。另有认证前 URL 解析异常未捕获、接收帧/分片无大小上限。暂缓收录。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 84,
+      "key": "subdsh",
+      "name": "dsh-subagent-dsh",
+      "decision": "defer-add",
+      "reviewedVersion": "0.1.0",
+      "sourceCommit": "78c7f4bc7b75c76a30ed8fc6d5284c3674ce8a73",
+      "repository": {
+        "url": "https://github.com/leicheng42/dsh-subagent-dsh",
+        "id": 1433368740,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "archive": {
+        "compressedBytes": 14568,
+        "unpackedBytes": 39089,
+        "decodedBytes": 61440,
+        "entries": 18
+      },
+      "integrity": "sha512-raeVWFohhup9yBCiJGgxOpq3QLIRHP9rZHPmES94khn7GzGGoUuRG6w7gIbWgM+TvVYLNIvMg7pmgOTyWYFCZQ==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-subagent-dsh",
+        "version": "0.1.0",
+        "license": "MIT",
+        "repository": "https://github.com/leicheng42/dsh-subagent-dsh",
+        "repositorySource": "package",
+        "sourceCommit": "78c7f4bc7b75c76a30ed8fc6d5284c3674ce8a73",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/leicheng42/dsh-subagent-dsh",
+          "commit": "78c7f4bc7b75c76a30ed8fc6d5284c3674ce8a73"
+        },
+        "tarball": "https://codeload.github.com/leicheng42/dsh-subagent-dsh/tar.gz/78c7f4bc7b75c76a30ed8fc6d5284c3674ce8a73",
+        "integrity": "sha512-raeVWFohhup9yBCiJGgxOpq3QLIRHP9rZHPmES94khn7GzGGoUuRG6w7gIbWgM+TvVYLNIvMg7pmgOTyWYFCZQ==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "filesChecked": 13,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 14568,
+          "unpackedBytes": 39089,
+          "decodedBytes": 61440,
+          "entries": 18,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "AbortSignal.timeout 被直接作为 Promise.race 元素，会立即完成等待，不能实现启动握手超时/失败回收。静态确认功能问题，未宣称安全漏洞。",
+      "securityReview": "AbortSignal.timeout 被直接作为 Promise.race 元素，会立即完成等待，不能实现启动握手超时/失败回收。静态确认功能问题，未宣称安全漏洞。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 85,
+      "key": "auto-review",
+      "name": "@aghost-prj/dsh-auto-review-model",
+      "decision": "add",
+      "reviewedVersion": "0.1.0",
+      "input": {
+        "name": "@aghost-prj/dsh-auto-review-model",
+        "title": {
+          "en": "Auto-review Model",
+          "zh": "自动审查专用模型"
+        },
+        "description": {
+          "en": "Choose a separate provider, model and reasoning effort for the experimental DSH authorization reviewer while preserving native policy and conversation routing. Requires the host Auto review component; no DSH version range is declared.",
+          "zh": "为 DSH 实验性自动授权审查单独指定提供方、模型和推理档位，保留原生策略与主对话路由。依赖宿主 Auto review 组件，包内未声明适用的 DSH 版本。"
+        },
+        "category": "workflow"
+      },
+      "sourceCommit": "8fb24a3efd36f2d238ae885dea467f42d41a3a8b",
+      "repository": {
+        "url": "https://github.com/AghostPrj/dsh-auto-review-model",
+        "id": 1433382692,
+        "visibility": "public",
+        "archived": false
+      },
+      "registry": {
+        "latest": "0.1.0",
+        "publishedAt": "2026-10-25T17:56:21.888Z",
+        "publisher": "agh0st",
+        "maintainers": [
+          "agh0st"
+        ],
+        "gitHead": "0c70ae819d01f1723c5058f59eb1cc2fe1c95390"
+      },
+      "archive": {
+        "compressedBytes": 39136,
+        "unpackedBytes": 145479,
+        "decodedBytes": 158208,
+        "entries": 15
+      },
+      "integrity": "sha512-aNdObSoy9U4znq0q5ndFPq2WxAp6L5BiwGB79VPcgJHtYjpmAgIVqwItd+CZjL2KBzsC0BLdl6aWcY++aJN25Q==",
+      "sourceComparisons": [
+        {
+          "path": "package/client/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/policy.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/src/client/client.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/src/index.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/policy.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/src/policy.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "licenseFiles": [],
+      "sourceLicenseFiles": [],
+      "evidence": {
+        "name": "@aghost-prj/dsh-auto-review-model",
+        "version": "0.1.0",
+        "license": "MIT",
+        "repository": "https://github.com/AghostPrj/dsh-auto-review-model",
+        "repositorySource": "package",
+        "sourceCommit": "0c70ae819d01f1723c5058f59eb1cc2fe1c95390",
+        "metadataUrl": "https://registry.npmjs.org/%40aghost-prj%2Fdsh-auto-review-model",
+        "tarball": "https://registry.npmjs.org/@aghost-prj/dsh-auto-review-model/-/dsh-auto-review-model-0.1.0.tgz",
+        "integrity": "sha512-aNdObSoy9U4znq0q5ndFPq2WxAp6L5BiwGB79VPcgJHtYjpmAgIVqwItd+CZjL2KBzsC0BLdl6aWcY++aJN25Q==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client/client.js"
+        ],
+        "filesChecked": 15,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/12dca36ec7685b73fd0cec55d428acc0066a7fd55d7583aae9536fad7ae13dd8.svg",
+            "mime": "image/svg+xml",
+            "bytes": 1030,
+            "sha256": "12dca36ec7685b73fd0cec55d428acc0066a7fd55d7583aae9536fad7ae13dd8"
+          },
+          "localized": [],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 39136,
+          "unpackedBytes": 145479,
+          "decodedBytes": 158208,
+          "entries": 15,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-25T17:55:25.537Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "归档、身份、许可、入口与本轮定向静态安全审查未发现收录阻断项。",
+      "securityReview": "实际 npm 运行文件与公开更名提交完全一致。仅改写匹配的 reviewer 路由，保留原选项，错误不生成允许结论；最终授权仍由宿主 reviewer 决定。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 86,
+      "key": "bili",
+      "name": "dsh-bili-mini",
+      "decision": "defer-add",
+      "reviewedVersion": "0.2.0",
+      "sourceCommit": "592aace7b1c28084ea27067b9d906ec3ff1ed59f",
+      "repository": {
+        "url": "https://github.com/tuanzhanghao/dsh-bili-mini",
+        "id": 1432183169,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.2.0",
+        "publishedAt": "2026-10-25T03:15:48.278Z",
+        "publisher": "tuanzhanghao",
+        "maintainers": [
+          "tuanzhanghao"
+        ],
+        "gitHead": "592aace7b1c28084ea27067b9d906ec3ff1ed59f"
+      },
+      "archive": {
+        "compressedBytes": 339875,
+        "unpackedBytes": 1247645,
+        "decodedBytes": 1266688,
+        "entries": 22
+      },
+      "integrity": "sha512-BfCS0C+Ctubm/lAHsRyZ0KhrSpHT+5zx24Jgf8qS2ELOarmulYMeBGxN2pXVVpJaGIjP+vLxs2BVsMn6/5g+3A==",
+      "sourceComparisons": [
+        {
+          "path": "package/vendor/qrcode-generator.cjs",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/vendor/artplayer-plugin-danmuku.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/vendor/artplayer.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/auth.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/bili.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/danmaku.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/vendor/dash.all.min.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "licenseFiles": [
+        "package/LICENSE",
+        "package/vendor/LICENSE.artplayer",
+        "package/vendor/LICENSE.artplayer-plugin-danmuku",
+        "package/vendor/LICENSE.dashjs",
+        "package/vendor/LICENSE.qrcode-generator"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-bili-mini",
+        "version": "0.2.0",
+        "license": "MIT",
+        "repository": "https://github.com/tuanzhanghao/dsh-bili-mini",
+        "repositorySource": "package",
+        "sourceCommit": "592aace7b1c28084ea27067b9d906ec3ff1ed59f",
+        "metadataUrl": "https://registry.npmjs.org/dsh-bili-mini",
+        "tarball": "https://registry.npmjs.org/dsh-bili-mini/-/dsh-bili-mini-0.2.0.tgz",
+        "integrity": "sha512-BfCS0C+Ctubm/lAHsRyZ0KhrSpHT+5zx24Jgf8qS2ELOarmulYMeBGxN2pXVVpJaGIjP+vLxs2BVsMn6/5g+3A==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/client.js"
+        ],
+        "filesChecked": 22,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/c419ff172f49ec1af43946c003908bdfad7b0cc94d6002033f7ff8902777a680.svg",
+            "mime": "image/svg+xml",
+            "bytes": 317,
+            "sha256": "c419ff172f49ec1af43946c003908bdfad7b0cc94d6002033f7ff8902777a680"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 339875,
+          "unpackedBytes": 1247645,
+          "decodedBytes": 1266688,
+          "entries": 22,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-24T15:00:59.425Z",
+          "last30Days": 4,
+          "last90Days": 4
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "Cookie-bearing 请求目的地与重定向限制有效，但原始 webServer 接口的继承鉴权/跨站策略在可用源码中未得到证明；登录轮询未绑定本机发起的二维码。需补充控制证据或修复后再收录，不指认为已确认 CSRF/隐私泄漏。",
+      "securityReview": "Cookie-bearing 请求目的地与重定向限制有效，但原始 webServer 接口的继承鉴权/跨站策略在可用源码中未得到证明；登录轮询未绑定本机发起的二维码。需补充控制证据或修复后再收录，不指认为已确认 CSRF/隐私泄漏。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 87,
+      "key": "translate",
+      "name": "dsh-game-translate",
+      "decision": "add",
+      "reviewedVersion": "0.3.8",
+      "input": {
+        "name": "dsh-game-translate",
+        "version": "0.3.8",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/S0ra233/DSH-game-translate",
+          "commit": "9a0c891da98381ca7c631ed0de23a44c13ca5997",
+          "integrity": "sha512-XlaSTLE8e3H09mD1YFOjJmwhtXQw0Wp5cBot4G7urEpdyGC3A2SBnzsauh60+adaWoDTUA+Xkp8jbxvuXfUAzg==",
+          "publishedAt": "2026-10-26T00:54:41Z"
+        },
+        "title": {
+          "en": "Game Translation",
+          "zh": "游戏翻译"
+        },
+        "description": {
+          "en": "Extract, translate and review game text with grouped reading, model delegation and verified writes into an independent copy. Requires DSH 0.2.1-rc.3, Node.js >=24.9 and Python; includes a Windows native UI. Model calls consume tokens.",
+          "zh": "提取、翻译和双栏审校游戏文本，支持分组阅读、多模型委托及独立副本写回核验。需 DSH 0.2.1-rc.3、Node.js >=24.9 与 Python，附 Windows 原生界面；模型调用消耗 token。"
+        },
+        "category": "tools"
+      },
+      "sourceCommit": "9a0c891da98381ca7c631ed0de23a44c13ca5997",
+      "repository": {
+        "url": "https://github.com/S0ra233/DSH-game-translate",
+        "id": 1433758138,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "archive": {
+        "compressedBytes": 806606,
+        "unpackedBytes": 2919355,
+        "decodedBytes": 3092480,
+        "entries": 225
+      },
+      "integrity": "sha512-XlaSTLE8e3H09mD1YFOjJmwhtXQw0Wp5cBot4G7urEpdyGC3A2SBnzsauh60+adaWoDTUA+Xkp8jbxvuXfUAzg==",
+      "licenseFiles": [
+        "package/LICENSE",
+        "package/python/vendor/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-game-translate",
+        "version": "0.3.8",
+        "license": "MIT",
+        "repository": "https://github.com/S0ra233/DSH-game-translate",
+        "repositorySource": "package",
+        "sourceCommit": "9a0c891da98381ca7c631ed0de23a44c13ca5997",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/S0ra233/DSH-game-translate",
+          "commit": "9a0c891da98381ca7c631ed0de23a44c13ca5997"
+        },
+        "tarball": "https://codeload.github.com/S0ra233/DSH-game-translate/tar.gz/9a0c891da98381ca7c631ed0de23a44c13ca5997",
+        "integrity": "sha512-XlaSTLE8e3H09mD1YFOjJmwhtXQw0Wp5cBot4G7urEpdyGC3A2SBnzsauh60+adaWoDTUA+Xkp8jbxvuXfUAzg==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/dist/client.js"
+        ],
+        "filesChecked": 190,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/723b03cb470fe75a972e9ea2f85fd0e4a27d42a69241e6084a0b8ea9bd61e155.svg",
+            "mime": "image/svg+xml",
+            "bytes": 327,
+            "sha256": "723b03cb470fe75a972e9ea2f85fd0e4a27d42a69241e6084a0b8ea9bd61e155"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 806606,
+          "unpackedBytes": 2919355,
+          "decodedBytes": 3092480,
+          "entries": 225,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "归档、身份、许可、入口与本轮定向静态安全审查未发现收录阻断项。",
+      "securityReview": "已审真实会话/工作区绑定、子代理限制、Python argv、取消与输出限制、目录 admission、写回确认及原生 WebView 边界。未发现已审路径阻断项；全部引擎解析器/依赖及生成 UI 未穷尽。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 88,
+      "key": "env",
+      "name": "@woosau/dsh-custom-env",
+      "decision": "add",
+      "reviewedVersion": "0.1.0",
+      "input": {
+        "name": "@woosau/dsh-custom-env",
+        "title": {
+          "en": "Custom Environment",
+          "zh": "自定义环境变量"
+        },
+        "description": {
+          "en": "Manage DSH_HOME/.env in Settings, update the running host environment and synchronize Windows/macOS user variables. Compare and install the dsh CLI launcher on PATH. Uses native koffi, which may require build approval; declares DSH >=0.2.0.",
+          "zh": "在设置中管理 DSH_HOME/.env，热更新 Host 环境并同步 Windows/macOS 用户变量，可检查和安装 PATH 上的 dsh CLI。会修改当前用户环境；原生依赖 koffi 可能需允许构建，声明适配 DSH >=0.2.0。"
+        },
+        "category": "tools"
+      },
+      "sourceCommit": "9b2552933ebef7606fdd94dbf1644190901302e2",
+      "repository": {
+        "url": "https://github.com/ownduck/dsh-custom-env",
+        "id": 1432024036,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "registry": {
+        "latest": "0.1.0",
+        "publishedAt": "2026-10-26T05:17:24.738Z",
+        "publisher": "woosau",
+        "maintainers": [
+          "woosau"
+        ],
+        "gitHead": "9b2552933ebef7606fdd94dbf1644190901302e2"
+      },
+      "archive": {
+        "compressedBytes": 36899,
+        "unpackedBytes": 143014,
+        "decodedBytes": 170496,
+        "entries": 32
+      },
+      "integrity": "sha512-Zr7ksi1kTueUVMQQWq47D2pihUd+McGp2TFhgIvB4NwKl0Kpj7OAalO01Y5g4u5dszuUiHK+FgOebAnPwciC3Q==",
+      "sourceComparisons": [
+        {
+          "path": "package/lib/client.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/index.js",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/typert.host.js",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/typert.remote-client.js",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/env-file.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/client/EnvSettingsSection.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/cli-path/index.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/client/index.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/index.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/os-user-env/index.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/cli-path/inspect-active.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/client/locales.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/cli-path/macos.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/os-user-env/macos.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/client/mount.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/names.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/cli-path/paths.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/cli-path/resolve-expected.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/cli-path/status.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/typert.host.d.ts",
+          "inSource": true,
+          "sameBytes": false,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/typert.remote-client.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/types.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/cli-path/windows.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/lib/types/os-user-env/windows.d.ts",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        },
+        {
+          "path": "package/cordis.patch.yml",
+          "inSource": true,
+          "sameBytes": true,
+          "sameText": true
+        }
+      ],
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "sourceLicenseFiles": [
+        "LICENSE"
+      ],
+      "evidence": {
+        "name": "@woosau/dsh-custom-env",
+        "version": "0.1.0",
+        "license": "MIT",
+        "repository": "https://github.com/ownduck/dsh-custom-env",
+        "repositorySource": "package",
+        "sourceCommit": "9b2552933ebef7606fdd94dbf1644190901302e2",
+        "metadataUrl": "https://registry.npmjs.org/%40woosau%2Fdsh-custom-env",
+        "tarball": "https://registry.npmjs.org/@woosau/dsh-custom-env/-/dsh-custom-env-0.1.0.tgz",
+        "integrity": "sha512-Zr7ksi1kTueUVMQQWq47D2pihUd+McGp2TFhgIvB4NwKl0Kpj7OAalO01Y5g4u5dszuUiHK+FgOebAnPwciC3Q==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 32,
+        "display": {
+          "icon": {
+            "status": "absent"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 36899,
+          "unpackedBytes": 143014,
+          "decodedBytes": 170496,
+          "entries": 32,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "releases": {
+          "firstPublished": "2026-10-26T05:15:47.591Z",
+          "last30Days": 2,
+          "last90Days": 2
+        },
+        "checks": [
+          "registry-identity",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "main-file-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "归档、身份、许可、入口与本轮定向静态安全审查未发现收录阻断项。",
+      "securityReview": "已审真实发布 Host/客户端/RPC 与系统变量/CLI 路径写入，参数数组、JSON stdin、变量名/启动项限制有效。Typert 身份验证依赖宿主；无单独监听器或模型工具。",
+      "archiveReviewRetired": false
+    },
+    {
+      "issue": 89,
+      "key": "pinned",
+      "name": "dsh-pinned-panel",
+      "decision": "add",
+      "reviewedVersion": "0.3.0",
+      "input": {
+        "name": "dsh-pinned-panel",
+        "version": "0.3.0",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/OuQiL/dsh-pinned-panel",
+          "commit": "c6be7577b64e759e79d978cf42aef5cea88c805b",
+          "integrity": "sha512-/PstBhPZV5M7t/GRdfTpZqJ6L/lJMhR1R6jvLSV2yLp4F3coBKacv5JLnlsFmuqCJAXenKPMzhdtp5ANx5rH7A==",
+          "publishedAt": "2026-10-26T05:49:57Z"
+        },
+        "title": {
+          "en": "Pinned Sessions",
+          "zh": "跨工作区置顶会话"
+        },
+        "description": {
+          "en": "Collect pinned sessions across workspaces in one collapsible group at the top of the sidebar, opening them in their original workspace. Uses host pin state and no network. Depends on sidebar DOM structure; no DSH version range is declared.",
+          "zh": "把各工作区的置顶会话汇总到侧栏顶部可折叠分组，点击仍在原工作区打开。直接使用宿主置顶状态，无网络请求；依赖侧栏 DOM 结构，包内未声明适用的 DSH 版本。"
+        },
+        "category": "interface"
+      },
+      "sourceCommit": "c6be7577b64e759e79d978cf42aef5cea88c805b",
+      "repository": {
+        "url": "https://github.com/OuQiL/dsh-pinned-panel",
+        "id": 1432813523,
+        "visibility": "public",
+        "archived": false,
+        "license": "MIT"
+      },
+      "archive": {
+        "compressedBytes": 21416,
+        "unpackedBytes": 60807,
+        "decodedBytes": 81920,
+        "entries": 20
+      },
+      "integrity": "sha512-/PstBhPZV5M7t/GRdfTpZqJ6L/lJMhR1R6jvLSV2yLp4F3coBKacv5JLnlsFmuqCJAXenKPMzhdtp5ANx5rH7A==",
+      "licenseFiles": [
+        "package/LICENSE"
+      ],
+      "evidence": {
+        "name": "dsh-pinned-panel",
+        "version": "0.3.0",
+        "license": "MIT",
+        "repository": "https://github.com/OuQiL/dsh-pinned-panel",
+        "repositorySource": "package",
+        "sourceCommit": "c6be7577b64e759e79d978cf42aef5cea88c805b",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/OuQiL/dsh-pinned-panel",
+          "commit": "c6be7577b64e759e79d978cf42aef5cea88c805b"
+        },
+        "tarball": "https://codeload.github.com/OuQiL/dsh-pinned-panel/tar.gz/c6be7577b64e759e79d978cf42aef5cea88c805b",
+        "integrity": "sha512-/PstBhPZV5M7t/GRdfTpZqJ6L/lJMhR1R6jvLSV2yLp4F3coBKacv5JLnlsFmuqCJAXenKPMzhdtp5ANx5rH7A==",
+        "patch": [
+          "package/cordis.patch.yml"
+        ],
+        "clientEntries": [
+          "package/lib/client.js"
+        ],
+        "filesChecked": 15,
+        "display": {
+          "icon": {
+            "status": "included",
+            "source": "published-package",
+            "path": "icon.svg",
+            "url": "icons/39ed9423affd401803dc2a155c5b3f99f6f824b4459c1d5b991adf9a170a9aae.svg",
+            "mime": "image/svg+xml",
+            "bytes": 443,
+            "sha256": "39ed9423affd401803dc2a155c5b3f99f6f824b4459c1d5b991adf9a170a9aae"
+          },
+          "localized": [
+            "en",
+            "zh"
+          ],
+          "warnings": []
+        },
+        "archive": {
+          "compressedBytes": 21416,
+          "unpackedBytes": 60807,
+          "decodedBytes": 81920,
+          "entries": 20,
+          "maxUnpackedBytes": 104857600,
+          "downloadTimeoutMs": 30000,
+          "reviewedBudget": false
+        },
+        "lifecycleScripts": [],
+        "checks": [
+          "git-commit-pinned",
+          "sha512-integrity",
+          "archive-manifest-identity",
+          "bundle-patch-present",
+          "client-entry-present"
+        ],
+        "limitations": [
+          "No runtime installation test",
+          "No code audit",
+          "Patch references and transitive dependencies are not validated"
+        ]
+      },
+      "structuralOkay": true,
+      "reason": "归档、身份、许可、入口与本轮定向静态安全审查未发现收录阻断项。",
+      "securityReview": "完整客户端已读：React 文本渲染，读取宿主置顶集，用户点击调用官方打开/取消置顶接口；仅保存折叠状态。无新增 Host、网络或动态代码执行。",
+      "archiveReviewRetired": false
+    }
+  ],
+  "replies": [
+    {
+      "issue": 81,
+      "replyLanguage": "en",
+      "body": "Thanks for submitting. The authorization soft cache can reuse a low-risk result for different tool arguments. Please bind authorization caching to the full call/context, or disable soft reuse for this check; we will review the replacement after that fix.\n\nWe now apply stricter static security checks. Once accepted and listed, your plugin will receive a Reviewed badge for the reviewed release.",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/81#issuecomment-6410224580",
+      "postedAt": "2026-10-26T07:03:00.4547852Z"
+    },
+    {
+      "issue": 82,
+      "replyLanguage": "zh",
+      "body": "感谢提交！已核查，将收录，并注明 Windows x64 和版本要求 🙂\n\n目前已加强静态安全审查，通过上架后会显示「已审查」标签。",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/82#issuecomment-6410227041",
+      "postedAt": "2026-10-26T07:03:11.4584378Z"
+    },
+    {
+      "issue": 83,
+      "replyLanguage": "zh",
+      "body": "感谢提交。请先默认启用非空令牌认证并限制 Origin，同时补上握手 URL 异常处理和帧/消息大小上限；这些入口问题修复后再复核。\n\n目前已加强静态安全审查，通过上架后会显示「已审查」标签。",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/83#issuecomment-6410228907",
+      "postedAt": "2026-10-26T07:03:18.8850131Z"
+    },
+    {
+      "issue": 84,
+      "replyLanguage": "zh",
+      "body": "感谢补充。启动等待把 AbortSignal.timeout 直接放进 Promise.race，会立即返回，握手超时未生效。请改成真正等待并拒绝的超时 Promise，补上未就绪/启动失败的回收验证后再复核。\n\n目前已加强静态安全审查，通过上架后会显示「已审查」标签。",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/84#issuecomment-6410230224",
+      "postedAt": "2026-10-26T07:03:24.3037055Z"
+    },
+    {
+      "issue": 85,
+      "replyLanguage": "zh",
+      "body": "感谢提交！已核对正式包和更名源码，将收录，并注明依赖宿主 Auto review 组件 😄\n\n目前已加强静态安全审查，通过上架后会显示「已审查」标签。",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/85#issuecomment-6410231442",
+      "postedAt": "2026-10-26T07:03:28.9124628Z"
+    },
+    {
+      "issue": 86,
+      "replyLanguage": "zh",
+      "body": "感谢提交。暂未确认 /bili-mini 原始接口的宿主鉴权与跨站保护，请补充对应实现或加上显式校验，并将登录轮询绑定本机发起的二维码，再复核。\n\n目前已加强静态安全审查，通过上架后会显示「已审查」标签。",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/86#issuecomment-6410232939",
+      "postedAt": "2026-10-26T07:03:35.2492478Z"
+    },
+    {
+      "issue": 87,
+      "replyLanguage": "zh",
+      "body": "感谢提交！将按提供的固定 Git 提交收录，并注明 DSH 0.2.1-rc.3、Node/Python 与模型调用要求 😁\n\n目前已加强静态安全审查，通过上架后会显示「已审查」标签。",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/87#issuecomment-6410234657",
+      "postedAt": "2026-10-26T07:03:43.4470395Z"
+    },
+    {
+      "issue": 88,
+      "replyLanguage": "zh",
+      "body": "感谢补充！已核查 npm 0.1.0，将按正式包收录，并注明环境修改和 koffi 要求 😊\n\n目前已加强静态安全审查，通过上架后会显示「已审查」标签。",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/88#issuecomment-6410237107",
+      "postedAt": "2026-10-26T07:03:52.9271474Z"
+    },
+    {
+      "issue": 89,
+      "replyLanguage": "zh",
+      "body": "感谢提交！已核查，将按固定 Git 提交收录，并注明侧栏结构兼容限制 😃\n\n目前已加强静态安全审查，通过上架后会显示「已审查」标签。",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/89#issuecomment-6410238074",
+      "postedAt": "2026-10-26T07:03:56.9142739Z"
+    },
+    {
+      "issue": 59,
+      "replyLanguage": "zh",
+      "body": "感谢补发 npm。视频流目前会在 start() 中持续读取并排入整个请求范围，慢客户端仍可能占用大文件大小的内存。请改成按消费需求读取并处理取消后发布新版，再迁移来源。\n\n目前已加强静态安全审查，通过上架后会显示「已审查」标签。",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/59#issuecomment-6410239459",
+      "postedAt": "2026-10-26T07:04:02.5280650Z"
+    },
+    {
+      "issue": 60,
+      "replyLanguage": "zh",
+      "body": "感谢补发！已核对 npm 0.1.1，将从固定 Git 来源切换为 npm 😀\n\n目前已加强静态安全审查，通过上架后会显示「已审查」标签。",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/60#issuecomment-6410240848",
+      "postedAt": "2026-10-26T07:04:08.1534036Z"
+    },
+    {
+      "issue": 61,
+      "replyLanguage": "zh",
+      "body": "感谢补发！npm 0.1.1 已核查，将切换到 npm 来源 ☺️\n\n目前已加强静态安全审查，通过上架后会显示「已审查」标签。",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/61#issuecomment-6410241945",
+      "postedAt": "2026-10-26T07:04:12.6831778Z"
+    },
+    {
+      "issue": 62,
+      "replyLanguage": "zh",
+      "body": "本轮将更新 Matrix 0.9.0、Mobile 0.6.17 和 Argo 2.9.9。主题 0.2.6、Persona 0.2.0（均带 -dsh.0.2.1-rc.3 后缀）的 Git 归档仍缺 lib/client.js；主题还需修复 Windows 解包路径校验。请提供修复后的完整包或固定提交，其他异常条目保持现状。\n\n目前已加强静态安全审查，通过版本上架后会显示「已审查」标签。",
+      "postedComment": "https://github.com/polang233/dsh-plugin-index/issues/62#issuecomment-6410243885",
+      "postedAt": "2026-10-26T07:04:21.0028457Z"
+    }
+  ],
+  "security": {
+    "scanId": "6728b5bc-edb8-4d73-b6ac-c2c452064c1f",
+    "mode": "targeted offline static admission review",
+    "coverage": "partial",
+    "confirmedFindings": [
+      {
+        "key": "qq",
+        "count": 3
+      },
+      {
+        "key": "theme",
+        "count": 1
+      },
+      {
+        "key": "decision",
+        "count": 1
+      }
+    ],
+    "limitations": "No native binary reverse engineering, plugin execution or full dependency/vendor audit. Host-supplied controls are identified as assumptions. No absolute safety claim.",
+    "status": "completed",
+    "severityCounts": {
+      "low": 1,
+      "medium": 4
+    }
+  },
+  "notes": [
+    "通过项仅写入本地配置；未发评论、关闭 Issue、提交或推送。",
+    "安全审查覆盖本轮具体版本的实际发布代码与公开源码；不把强权限功能本身认定为恶意。",
+    "Auto-review 的 registry gitHead 指向更名前提交；实际运行文件与公开 release commit 8fb24a3efd36f2d238ae885dea467f42d41a3a8b 完全一致。",
+    "Mobile 0.6.17 的解压流小于标准 100 MiB，移除旧 archiveReview 预算例外，仍固定本轮审核版本。Argo 刷新固定版本、源码提交和 repositoryReview 哈希。",
+    "视频预览原固定 Git 版也有无 backpressure 的读流问题。本轮保留现状，不把暂缓迁移描述成旧版已经安全。",
+    "主题旧配置仍保留且线上排除。Persona 保留有完整客户端的已审旧固定版；未从新代码推断旧代码同样有安全问题。",
+    "AGENTS.md 仅保存在本机并通过 .git/info/exclude 排除，不提交。",
+    "本地仅复核本批条目；全量构建、测试与发布继续交给 GitHub Actions。"
+  ],
+  "checks": {
+    "fullCatalogBuild": false,
+    "pluginInstalled": false,
+    "pluginActivated": false,
+    "commentsPosted": true
+  },
+  "validation": {
+    "checkedAt": "2026-10-26T06:30:24.044Z",
+    "targetedEntries": 10,
+    "officialFormat": "passed",
+    "syntaxChecked": 45,
+    "runtimeImportClosure": [
+      {
+        "name": "@lifenrir/dsh-selection-quote",
+        "files": 2,
+        "missing": []
+      },
+      {
+        "name": "@lifenrir/dsh-external-task-context",
+        "files": 2,
+        "missing": []
+      },
+      {
+        "name": "@taxueseek/argo-dsh",
+        "files": 6,
+        "missing": []
+      },
+      {
+        "name": "dsh-matrix-theme",
+        "files": 2,
+        "missing": []
+      },
+      {
+        "name": "dsh-mobile",
+        "files": 8,
+        "missing": []
+      },
+      {
+        "name": "dsh-plugin-screen-control",
+        "files": 3,
+        "missing": []
+      },
+      {
+        "name": "@aghost-prj/dsh-auto-review-model",
+        "files": 3,
+        "missing": []
+      },
+      {
+        "name": "dsh-game-translate",
+        "files": 13,
+        "missing": []
+      },
+      {
+        "name": "@woosau/dsh-custom-env",
+        "files": 4,
+        "missing": []
+      },
+      {
+        "name": "dsh-pinned-panel",
+        "files": 2,
+        "missing": []
+      }
+    ],
+    "unchangedExistingEntries": 892,
+    "fullCatalogBuild": false,
+    "pluginInstalled": false,
+    "pluginActivated": false,
+    "autoReviewSourceCommit": "8fb24a3efd36f2d238ae885dea467f42d41a3a8b"
+  },
+  "approvedAt": "2026-10-26T06:56:49.054Z",
+  "reviewLabels": {
+    "registry": "data/maintainer-reviews.json",
+    "historicalVersions": 69,
+    "historicalPackages": 59,
+    "currentSecurityReviews": 10,
+    "versionBound": true,
+    "validation": {
+      "checkedAt": "2026-10-26T07:01:31.156Z",
+      "entries": 10,
+      "allCurrentSecurityReviewsLabeled": true,
+      "languages": 3,
+      "registryVersions": 69,
+      "registryPackages": 59
+    },
+    "targetedTests": 43
+  },
+  "repliesPostedAt": "2026-10-26T07:06:36.092Z",
+  "publication": {
+    "branch": "main",
+    "fullValidation": "GitHub Actions",
+    "closeIssues": [
+      82,
+      85,
+      87,
+      88,
+      89
+    ]
+  }
+}
