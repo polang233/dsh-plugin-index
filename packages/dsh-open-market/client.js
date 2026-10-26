@@ -213,6 +213,7 @@ window.__ModuleLoader__.load({
       source: '数据来自开放插件市场', sourceLink: 'dshopen.org', newWindow: '在新窗口打开',
       recommendationPosition: '查看第 {number} 组推荐', settings: '设置', about: '关于',
       autoRotate: '今日推荐自动轮播', hideInstalled: '在横向列表中隐藏已安装的插件', showCheckup: '显示「我的插件体检」',
+      autoReview: '新对话自动使用「自动审查」', autoReviewHelp: '打开后，每个新对话都直接使用 DSH 的实验性「自动审查」权限，不用每次手动选择、确认两次；DSH 没开「自动审查」时会一并打开，可能需要重启 DSH 生效。自动审查由当前模型判断每次工具调用，可能误放行或误拒绝，并消耗额外 token。', autoReviewRestart: '已保存，重启 DSH 后生效', autoReviewFailed: '切换失败：{reason}',
       likes: '参与点赞', likesHelp: '点赞和安装会向 dshopen.org 发送匿名请求，用于推荐排序；每人每天每个插件计一次，点赞每 3 天减少 1。',
       like: '点赞', likedToday: '今天已经点过赞了', likeLimit: '今天点赞次数已达上限', likeFailed: '点赞失败，请稍后再试',
       website: '官网', websiteUrl: 'https://dshopen.org/zh/', repository: 'GitHub 仓库', submitPlugin: '提交插件', indexAddress: '索引地址'
@@ -241,6 +242,7 @@ window.__ModuleLoader__.load({
       source: 'Data from Open Plugin Market', sourceLink: 'dshopen.org', newWindow: 'Opens in a new window',
       recommendationPosition: 'Show recommendation group {number}', settings: 'Settings', about: 'About',
       autoRotate: 'Auto-rotate today’s picks', hideInstalled: 'Hide installed plugins in horizontal lists', showCheckup: 'Show my plugin checkup',
+      autoReview: 'Start new conversations in Auto review', autoReviewHelp: "Every new conversation uses DSH's experimental Auto review permission, so you no longer pick and confirm it each time. If Auto review is off in DSH it is switched on too, which may need a restart. Auto review asks the current model about each tool call; it can wrongly allow or refuse actions and uses extra tokens.", autoReviewRestart: 'Saved; restart DSH for it to take effect', autoReviewFailed: 'Could not switch: {reason}',
       likes: 'Join likes', likesHelp: 'Likes and installs send anonymous requests to dshopen.org for recommendation ranking; each person counts once per plugin per UTC day, and likes decrease by 1 every 3 days.',
       like: 'Like', likedToday: 'Already liked today', likeLimit: 'Daily like limit reached', likeFailed: 'Could not like this plugin. Please try again later',
       website: 'Website', websiteUrl: 'https://dshopen.org/', repository: 'GitHub repository', submitPlugin: 'Submit a plugin', indexAddress: 'Index address'
@@ -360,6 +362,7 @@ window.__ModuleLoader__.load({
       .opm-setting-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; max-width: 560px; padding: 6px 0; }
       .opm-setting-row + .opm-setting-row { border-top: 1px solid var(--dsw-alias-border-l2); }
       .opm-setting-label { color: var(--dsw-alias-label-primary); }
+      .opm-setting-separate { margin-top: 12px; border-top: 1px solid var(--dsw-alias-border-l2); }
       .opm-setting-help { max-width: 560px; margin-top: 2px !important; color: var(--dsw-alias-label-caption); font-size: 12px; }
       .opm-checkbox { display: flex; align-items: center; gap: 8px; cursor: pointer; }
       .opm-checkbox input { margin: 0; accent-color: var(--dsw-alias-button-primary-fill); }
@@ -1060,8 +1063,38 @@ window.__ModuleLoader__.load({
         return () => style.remove();
       }, 'open-market: styles');
       const t = ctx.locale.bind(NS);
+      // The Auto review switch is this package's second row; the plugin manager reads and saves it like any row.
+      const AUTO_REVIEW_ROW = 'open-market-auto-review';
+      function useAutoReviewRow() {
+        const [row, setRow] = React.useState({ status: 'loading' });
+        const read = React.useCallback(async () => {
+          const manager = pluginManager;
+          if (!manager) return setRow({ status: 'unavailable' });
+          const answer = await manager.listPlugins();
+          const entry = answer?.ok ? answer.value.find(item => item.patchId === AUTO_REVIEW_ROW) : undefined;
+          setRow(entry ? { status: 'ready', entryId: entry.entryId, enabled: !!entry.enabled } : { status: 'unavailable' });
+        }, []);
+        React.useEffect(() => { read().catch(() => setRow({ status: 'unavailable' })); }, [read]);
+        async function set(enabled) {
+          if (row.status !== 'ready') return;
+          setRow({ ...row, enabled, busy: true, note: '' });
+          try {
+            const answer = await pluginManager.setPluginEnabled(row.entryId, enabled);
+            const application = answer?.ok ? answer.value?.application : undefined;
+            if (!answer?.ok || application === 'failed') throw new Error(errorText(answer?.ok ? answer.value?.error : answer?.error, t('unknownError')));
+            await read();
+            if (application === 'restart-required') setRow(current => ({ ...current, note: t('autoReviewRestart') }));
+          } catch (error) {
+            await read().catch(() => {});
+            setRow(current => ({ ...current, note: t('autoReviewFailed').replace('{reason}', errorText(error, t('unknownError'))) }));
+          }
+        }
+        return [row, set];
+      }
+
       function SettingsSection({ view }) {
         const preferences = useSettings();
+        const [autoReview, setAutoReview] = useAutoReviewRow();
         if (view !== 'page') return null;
         function link(key, href) {
           return h('a', { key, className: 'opm-about-link', href, target: '_blank', rel: 'noopener noreferrer',
@@ -1077,7 +1110,16 @@ window.__ModuleLoader__.load({
                 : h('label', { className: 'opm-checkbox' },
                   h('input', { type: 'checkbox', checked: preferences[key], onChange: event => updateSettings(key, event.target.checked) }),
                   h('span', null, t(key))))),
-            h('p', { className: 'opm-setting-help' }, t('likesHelp'))),
+            h('p', { className: 'opm-setting-help' }, t('likesHelp')),
+            autoReview.status === 'ready' && h(React.Fragment, null,
+              h('div', { className: 'opm-setting-row opm-setting-separate' },
+                Switch ? h(React.Fragment, null, h('span', { className: 'opm-setting-label' }, t('autoReview')),
+                  h(Switch, { checked: autoReview.enabled, disabled: !!autoReview.busy, label: t('autoReview'), onChange: setAutoReview }))
+                  : h('label', { className: 'opm-checkbox' },
+                    h('input', { type: 'checkbox', checked: autoReview.enabled, disabled: !!autoReview.busy, onChange: event => setAutoReview(event.target.checked) }),
+                    h('span', null, t('autoReview')))),
+              h('p', { className: 'opm-setting-help' }, t('autoReviewHelp')),
+              autoReview.note && h('p', { className: 'opm-setting-help', role: 'status' }, autoReview.note))),
           h('section', { className: 'opm-settings-group', 'aria-label': t('about') }, h('h2', null, t('about')),
             link('website', t('websiteUrl')),
             link('repository', 'https://github.com/polang233/dsh-plugin-index'),

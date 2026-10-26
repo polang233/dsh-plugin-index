@@ -148,3 +148,49 @@ test('profile writes leave the HMR transaction that loads the plugin', async () 
 test('profile writes run directly without HMR', async () => {
   assert.equal(await outsideReload(services({}), async () => 'ran'), 'ran');
 });
+
+test('only brand-new top-level conversations count as new for Auto review', async () => {
+  const { isNewConversation } = await import('./auto-review/index.js');
+  const session = (header, firstLiveSeq = 0) => ({ header: { id: 's', isSeeded: false, ...header }, firstLiveSeq });
+  assert.equal(isNewConversation(session({})), true);
+  assert.equal(isNewConversation(session({}, 12)), false, 'restored from disk');
+  assert.equal(isNewConversation(session({ isSeeded: true })), false, 'forked or seeded');
+  assert.equal(isNewConversation(session({ origin: 'subagent' })), false, 'delegated child');
+  assert.equal(isNewConversation(session({ parentSession: 'p' })), false, 'child of another session');
+  assert.equal(isNewConversation(undefined), false);
+});
+
+test('Auto review is switched on only when it is shipped and off', async () => {
+  const { ensureAutoReviewBundle, AUTO_REVIEW_BUNDLE } = await import('./auto-review/index.js');
+  const manager = (bundle, application = 'applied') => {
+    const calls = [];
+    return { calls, listBundles: async () => bundle ? [bundle] : [], setBundleEnabled: async (...args) => { calls.push(args); return { application }; } };
+  };
+  const off = manager({ name: AUTO_REVIEW_BUNDLE, enabled: false });
+  assert.equal(await ensureAutoReviewBundle(off), 'enabled');
+  assert.deepEqual(off.calls, [[AUTO_REVIEW_BUNDLE, true]]);
+  assert.equal(await ensureAutoReviewBundle(manager({ name: AUTO_REVIEW_BUNDLE, enabled: false }, 'restart-required')), 'restart');
+  const on = manager({ name: AUTO_REVIEW_BUNDLE, enabled: true });
+  assert.equal(await ensureAutoReviewBundle(on), 'on');
+  assert.deepEqual(on.calls, []);
+  assert.equal(await ensureAutoReviewBundle(manager(undefined)), 'unavailable');
+  assert.equal(await ensureAutoReviewBundle(manager({ name: AUTO_REVIEW_BUNDLE, availability: 'missing' })), 'unavailable');
+});
+
+test('a new conversation switches to Auto review; others keep their preset', async () => {
+  const { apply } = await import('./auto-review/index.js');
+  const listeners = [];
+  const sets = [];
+  const ctx = {
+    logger: () => ({ warn() {}, info() {} }),
+    inject(names, callback) {
+      if (names[0] === 'permissionPresets') callback({ ...ctx, permissionPresets: { set: (session, name) => sets.push([session.header.id, name]) } });
+    },
+    on(event, listener) { if (event === 'session/created') listeners.push(listener); }
+  };
+  apply(ctx);
+  listeners[0]({ header: { id: 'new', isSeeded: false }, firstLiveSeq: 0 });
+  listeners[0]({ header: { id: 'old', isSeeded: false }, firstLiveSeq: 5 });
+  listeners[0]({ header: { id: 'child', isSeeded: false, origin: 'subagent' }, firstLiveSeq: 0 });
+  assert.deepEqual(sets, [['new', 'auto']]);
+});

@@ -1,5 +1,9 @@
 # Switches on Custom plugin markets once, adds the Open Plugin Market index to
 # Plugins → Discover and registers /open-market. Turning either off later is respected.
+# The second row, off by default, starts new conversations in Auto review.
 - insert:
     - id: open-market
       name: dsh-open-market
+    - id: open-market-auto-review
+      name: dsh-open-market/auto-review
+      disabled: true

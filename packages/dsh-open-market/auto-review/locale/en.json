@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Auto review for new conversations",
+    "description": "Starts every new conversation in Auto review, switching on DSH's experimental Auto review if needed, so you no longer pick and confirm it each time."
+  }
+}
