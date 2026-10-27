@@ -1040,6 +1040,18 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "dsh-qq-gateway",
+      "version": "1.0.7",
+      "integrity": "sha512-9Noo3g0td5LD5/QIUtMSXzLJPNkJjkGuHArq1m+GTKy1AVG2udq7Ou2bJ9x/OaOqme7AYzbcKZGkOzS0E5+C/Q==",
+      "repository": "https://github.com/ShawwiMA/dsh-qq-gateway",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T15:13:00.872Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
       "name": "dsh-quick-backup",
       "version": "0.2.0",
       "integrity": "sha512-RDfhXx9RiHH3+5IwAY9r+KC4p93OZQMucen4/4D8w0JtVZPx/uKy5v8qfQvdR5ya5sopteziA9hxs82qW+QVMw==",
