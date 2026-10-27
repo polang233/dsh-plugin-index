@@ -248,7 +248,7 @@ test('like and install share one daily vote, and a new UTC day allows another', 
   assert.notEqual(votes[0].hash, votes[1].hash);
 });
 
-test('likes and reads use the same salted daily hash, and IP, UA, and salt distinguish people', async t => {
+test('reads hash IP and UA, votes hash the address alone, and the salt separates both', async t => {
   const { env, sqlite } = likeEnvironment(t);
   await sendLike(env);
   await sendLike(env, 'dsh-pet', 'like', { ip: '192.0.2.2' });
@@ -258,13 +258,15 @@ test('likes and reads use the same salted daily hash, and IP, UA, and salt disti
     headers: { 'cf-connecting-ip': '192.0.2.1', 'user-agent': 'test-client' }
   }), env, { waitUntil: promise => waits.push(promise) });
   await Promise.all(waits);
-  const expected = createHash('sha256').update('test-salt|2026-10-24|192.0.2.1|test-client').digest('hex').slice(0, 24);
-  assert.equal(sqlite.prepare('SELECT hash FROM visitors').get().hash, expected);
-  assert.equal(sqlite.prepare('SELECT hash FROM like_votes WHERE hash = ?').get(expected).hash, expected);
+  const reader = createHash('sha256').update('test-salt|2026-10-24|192.0.2.1|test-client').digest('hex').slice(0, 24);
+  const voter = createHash('sha256').update('test-salt|like|2026-10-24|192.0.2.1').digest('hex').slice(0, 24);
+  assert.equal(sqlite.prepare('SELECT hash FROM visitors').get().hash, reader);
+  assert.equal(sqlite.prepare('SELECT hash FROM like_votes WHERE hash = ?').get(voter).hash, voter);
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM like_votes').get().count, 2);
   env.STATS_SALT = 'another-salt';
-  assert.deepEqual(await (await sendLike(env)).json(), { name: 'dsh-pet', likes: 4, counted: true });
+  assert.deepEqual(await (await sendLike(env)).json(), { name: 'dsh-pet', likes: 3, counted: true });
   const votes = sqlite.prepare('SELECT * FROM like_votes').all();
-  assert.equal(votes.length, 4);
+  assert.equal(votes.length, 3);
   assert.deepEqual(Object.keys(votes[0]).sort(), ['day', 'hash', 'name']);
   assert.ok(votes.every(vote => /^[a-f0-9]{24}$/.test(vote.hash)));
 });
@@ -313,6 +315,15 @@ test('the daily limit is 100 distinct plugins, duplicates remain successful, and
   assert.equal((await sendLike(env, names[100], 'like', { ip: '192.0.2.2' })).status, 200);
   t.mock.timers.setTime(Date.parse('2026-10-25T00:00:00Z'));
   assert.deepEqual(await (await sendLike(env, names[100])).json(), { name: names[100], likes: 2, counted: true });
+});
+
+test('a new user agent or another address in the same IPv6 /64 does not earn a second vote', async t => {
+  const { env } = likeEnvironment(t);
+  assert.equal((await (await sendLike(env)).json()).counted, true);
+  assert.deepEqual(await (await sendLike(env, 'dsh-pet', 'like', { ua: 'another-client' })).json(), { name: 'dsh-pet', likes: 1, counted: false });
+  assert.equal((await (await sendLike(env, 'dsh-pet', 'like', { ip: '2001:db8:0:1::5' })).json()).counted, true);
+  assert.deepEqual(await (await sendLike(env, 'dsh-pet', 'like', { ip: '2001:0db8:0000:0001:ffff::9' })).json(), { name: 'dsh-pet', likes: 2, counted: false });
+  assert.equal((await (await sendLike(env, 'dsh-pet', 'like', { ip: '2001:db8:0:2::5' })).json()).counted, true);
 });
 
 test('reads decay lazily, omit zero totals, and leave stored totals untouched', async t => {

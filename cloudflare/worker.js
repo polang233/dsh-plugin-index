@@ -60,6 +60,23 @@ async function visitorHash(request, env, day) {
   return [...new Uint8Array(digest).slice(0, 12)].map(byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
+// Like votes are keyed on the address alone: the user agent is free to change, so it would let one machine vote again
+// and again. IPv6 is cut to its /64, the block one host or home is usually given.
+async function voterHash(request, env, day) {
+  const ip = request.headers.get('cf-connecting-ip') ?? '';
+  const voter = ip.includes(':') ? expandIpv6(ip).slice(0, 4).join(':') + '::/64' : ip;
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${env.STATS_SALT ?? 'dshopen'}|like|${day}|${voter}`));
+  return [...new Uint8Array(digest).slice(0, 12)].map(byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function expandIpv6(ip) {
+  const [head, tail = ''] = ip.toLowerCase().split('%')[0].split('::');
+  const left = head ? head.split(':') : [];
+  const right = tail ? tail.split(':') : [];
+  const groups = ip.includes('::') ? [...left, ...Array(Math.max(0, 8 - left.length - right.length)).fill('0'), ...right] : left;
+  return groups.map(group => group.replace(/^0+(?=.)/, ''));
+}
+
 async function pluginNames(request, env, now) {
   let cached = PLUGIN_NAMES.get(env.ASSETS);
   if (!cached || cached.expires <= now) {
@@ -225,7 +242,7 @@ async function like(request, env) {
   if (!(await pluginNames(request, env, now)).has(name)) return likeJson({ error: 'unknown-plugin' }, 400);
   if (body.source !== 'like' && body.source !== 'install') return likeJson({ error: 'invalid-source' }, 400);
   const day = new Date(now).toISOString().slice(0, 10);
-  const hash = await visitorHash(request, env, day);
+  const hash = await voterHash(request, env, day);
   // D1 batches are transactions: only an inserted vote can increment the total.
   const cycles = 'MAX(0, CAST((julianday(excluded.decayed_at) - julianday(likes.decayed_at)) / 3 AS INTEGER))';
   const [vote, , total, seen] = await env.DB.batch([
