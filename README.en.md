@@ -37,7 +37,7 @@ https://dshopen.org/index.json
 dsh plugin --profile desktop add dsh-open-market
 ```
 
-It also adds an **Open Market** tab to the Plugins page: today's picks and rows ranked by likes and growth. Open a card for details, likes and install.
+It also adds an **Open Market** tab to the Plugins page: today's picks, rows ranked by likes and growth, and the whole catalog. Open a card for details, likes and install; save plugins to grouped favorites, and see updates for what you installed.
 
 ![The Open Market tab on the DSH Plugins page](docs/images/open-market-en.webp)
 
@@ -47,7 +47,7 @@ It also adds an **Open Market** tab to the Plugins page: today's picks and rows 
 
 ## Labels and sorting
 
-✅ Verified · 🔥 Rising · ⚡ Frequent updates (10+ releases in 30 days) · ◷ four update-age buckets · ↓ seven download tiers · ♥ likes from the website or the Open Market tab (once per person, plugin and day, including installs; each plugin loses one every three days). *Default* rotates ten front-page plugins daily from a weekly pool of about seventy qualified entries. *✨ Smart picks* also changes daily, with mostly random rotation and a small preference for recent updates and growth. Entries shown this week move down, and next week reshuffles the pool. *Random resources* reshuffles independently each day. The index rebuilds every six hours; rotation follows calendar days in UTC+8. See [metrics and exposure history](docs/market-display.md).
+✅ Verified · Reviewed by this market (see the [latest security review](docs/reviews/plugin-security-review-2026-10-27.md)) · 🔥 Rising · ⚡ Frequent updates (10+ releases in 30 days) · ◷ four update-age buckets · ↓ seven download tiers · ♥ likes from the website or the Open Market tab (once per person, plugin and day, including installs; each plugin loses one every three days). *Default* rotates ten front-page plugins daily from a weekly pool of about seventy qualified entries. *✨ Smart picks* also changes daily, with mostly random rotation and a small preference for recent updates and growth. Entries shown this week move down, and next week reshuffles the pool. *Random resources* reshuffles independently each day. The index rebuilds every six hours; rotation follows calendar days in UTC+8. See [metrics and exposure history](docs/market-display.md).
 
 ## Submit a plugin
 

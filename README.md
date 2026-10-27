@@ -37,7 +37,7 @@ https://dshopen.org/index.json
 dsh plugin --profile desktop add dsh-open-market
 ```
 
-它还会在「插件」页加一个 **开放市场** 标签：今日推荐、按点赞和增长排的推荐，点开卡片能看详情、点赞和安装。
+它还会在「插件」页加一个 **开放市场** 标签：今日推荐、按点赞和增长排的推荐，以及全部插件。点开卡片能看详情、点赞和安装；还能把插件分组收藏，查看已安装插件的更新。
 
 ![DSH「插件」页里的开放市场标签](docs/images/open-market-zh.webp)
 
@@ -50,6 +50,7 @@ dsh plugin --profile desktop add dsh-open-market
 | 标签 | 含义 |
 | --- | --- |
 | ✅ 经过验证 | 被其他插件市场的人工或源码级验证收录 |
+| 已审查 | 本站审查过当前版本，见[最近一次安全审查](docs/reviews/plugin-security-review-2026-10-27.md) |
 | 🔥 增长快 | 近 7 天下载量或 star 明显增长 |
 | ⚡ 更新勤 | 近 30 天发版 ≥ 10 次 |
 | ◷ 最近 / 本周 / 本月 / 三个月内更新 | 收录版本的发布时间 |

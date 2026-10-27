@@ -310,6 +310,114 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "@liustack/modlens",
+      "version": "3.27.1",
+      "integrity": "sha512-2s6wSgSNmOFILI+VLqwgAQcYR+lRmkpyzECGLrEhgMxVUWnZhmMKt3RW1AGw3TVuCs9LO2tOyiMpMIoXwmWH0A==",
+      "repository": "https://github.com/liustack/modlens",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T08:38:10.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "@michengai/dsh-archive-manager",
+      "version": "1.1.7",
+      "integrity": "sha512-JhncDYdFQSnus6MhftAF+J1RzqahodYncwsDFhPB/j5Er00ftXE0GoHSFyDwMWh3xdK3N/TY07k3ULeVtRK7PQ==",
+      "repository": "https://github.com/MichengAI/dsh-archive-manager",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T09:34:30.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "@michengai/dsh-codex-ui",
+      "version": "1.1.47",
+      "integrity": "sha512-raAjyjFZsH8pdjiRuyERnAz9YuSovx0ExL6b0IRWrqLGjUN7dfR89bL8pUjWCeZOrfriMDdLr58JuiFqPS+kRQ==",
+      "repository": "https://github.com/MichengAI/dsh-codex-ui",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T09:34:30.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "@michengai/dsh-skills-manager",
+      "version": "1.2.11",
+      "integrity": "sha512-VJjQMmKmP6hgI9Rcet8JjzhODHfya/gbrjvWZLQhpwOZzaFwm9QZsFKsz3Vlx5TdviAZUbNJ9HoQAnXPIV70cQ==",
+      "repository": "https://github.com/MichengAI/dsh-skills-manager",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T09:34:30.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "@nanmicoder/dsh-agent-teams",
+      "version": "0.1.26",
+      "integrity": "sha512-kaq+WWVHPACvaGaxyX4teRlmW/bnhqWlKFHERpfoN6HRAhMMWDMNIDwEUqFBGcm1Dggow++QrwDUSEEK2aYTyA==",
+      "repository": "https://github.com/NanmiCoder/dsh-agent-teams",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T09:31:24.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "@openviking/dsh-memory-plugin",
+      "version": "0.5.28",
+      "integrity": "sha512-SybJdIHYq1nO/bWaRP2a7RNP8I1wEe1egSPATiK9FklIxF4B5wpphd2j+i8jvBNYjeCuH196LdDNFJLiL7rfYw==",
+      "repository": "https://github.com/volcengine/OpenViking",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T08:37:27.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "@smalltailqwq/dsh-client-ui-skin-deep-whale-manager",
+      "version": "0.1.8",
+      "integrity": "sha512-DJ6nDLYSUrF4EZFS/CGVG1L1JGfAc456L1ySw4PjtMtBmyrHYFFNs+Ad71+/v+wpewuMkvdapCL8ini/D20SlA==",
+      "repository": "https://github.com/Small-tailqwq/dsh-deep-whale",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T09:31:24.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "@smalltailqwq/dsh-client-ui-skin-maid-atelier",
+      "version": "0.1.9",
+      "integrity": "sha512-J+AWyli4J1ib5KbiyuZ3wEoRBOQzx04GsFynYjKgE9Jn8k9YNrnEUwyTDAvN8Fs4j42MXVTFj00e9CNQJ3H99A==",
+      "repository": "https://github.com/Small-tailqwq/dsh-deep-whale",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T09:31:24.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "@smalltailqwq/dsh-client-ui-skin-orca-link",
+      "version": "0.1.9",
+      "integrity": "sha512-7z5PZ7YeuU5lF1bHwcnRYgRst+lr/NrXv25JJrYYv/sFYMsRqBJgMHR4Ynd4D8/s6Ha9iibwiWW46SY400gmKg==",
+      "repository": "https://github.com/Small-tailqwq/dsh-deep-whale",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T09:31:24.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
       "name": "@sunshaobei/dsh-balance-panel",
       "version": "3.1.0",
       "integrity": "sha512-FvvcI19ppJ72nzDUOhYXGcsVpD1ohnt7SVqayzRgjekgRPsTf9Nk1fziJHxWM9m4Ck4cOH6nv2gvVFHWe0Ohzw==",
@@ -382,6 +490,18 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "@tt-a1i/archify-dsh",
+      "version": "1.0.0",
+      "integrity": "sha512-ae5L+SyZngy3EzYnWHHfccAYJCZh5e9MTkEBh7mrwTMfpwpFtkIhiOg2vI5xnluCS8CSb+Ne1hi1kOWRQQtGBQ==",
+      "repository": "https://github.com/tt-a1i/archify",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T08:37:27.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
       "name": "@woosau/dsh-custom-env",
       "version": "0.1.0",
       "integrity": "sha512-Zr7ksi1kTueUVMQQWq47D2pihUd+McGp2TFhgIvB4NwKl0Kpj7OAalO01Y5g4u5dszuUiHK+FgOebAnPwciC3Q==",
@@ -392,6 +512,18 @@
       "reviewedAt": "2026-10-26T06:29:06.370Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@wxg-prc-cpg/browser-skill-dsh-plugin",
+      "version": "0.3.3",
+      "integrity": "sha512-YleWGGDN7re7arDD8PVgcIuTeMXHne4JKilLaKmvO9L1EzvOKNKVXZ3eHq7CXbgF7uooxRjnYviMH2QMRqZv+A==",
+      "repository": "https://github.com/Tencent/BrowserSkill",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T08:37:27.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
     },
     {
       "name": "@yyyzl/dsh-image-feedback",
@@ -442,6 +574,30 @@
       "reviewedAt": "2026-10-24T16:45:30.408Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "cc-safety-net",
+      "version": "2.6.16",
+      "integrity": "sha512-a1kHFof385Jy0qzHPYKds0NlIc+NSAyW5u7jDUpf6c06zCWfW6fpTeyUTFTRYIxWdUZOnPaAf47qFeeJNcWnjg==",
+      "repository": "https://github.com/kenryu42/cc-safety-net",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T09:31:24.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "dsh-better-sidebar",
+      "version": "0.28.0",
+      "integrity": "sha512-x7+/YmH/HrSlXWOBZkhL7qQqcDgZEnDcWrhR5GlizzUZjz+w84FbQ6jo8trJC9tyaQxMaNvXVnXwDxn4I330Ew==",
+      "repository": "https://github.com/omdsh-dev/DSH-better-sidebar",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T08:38:10.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
     },
     {
       "name": "dsh-bili-mini",
@@ -516,6 +672,18 @@
       "reviewedAt": "2026-10-26T15:56:08.949Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-context",
+      "version": "0.74.0",
+      "integrity": "sha512-BfqdeRBvZw+AgBMrTXp4SE8Iky6n5LRqVRUttwBZZ27sYW6jaJX2bjrFybO3QGddHioqA2rHZcc2Bb9q5vYPnw==",
+      "repository": "https://github.com/bowenliang123/dsh-context",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T08:39:19.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
     },
     {
       "name": "dsh-damage-pulse",
@@ -787,6 +955,30 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "dsh-ops",
+      "version": "0.4.1",
+      "integrity": "sha512-TBG6jsMCrMowoHTBCgOcAZ2p/4GLeJi0Pbpq6irqbCBQNumPmYq1WIACDlEheg9XMQcDOkcnNs7XZgVmU2dkYA==",
+      "repository": "https://github.com/T-Auto/dsh-ops",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T09:31:24.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "dsh-pet",
+      "version": "0.3.8",
+      "integrity": "sha512-E1ymE0/a1k2MJco2JDcWeqwMttjWNZWt5yMEN+jjKwWD+H2XT5OMUDmazMLhNnN5grmL9+lbE94iyEQMn5p+JA==",
+      "repository": "https://github.com/PC2005-cloud/dsh-pet",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T08:37:27.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
       "name": "dsh-pinned-panel",
       "version": "0.3.0",
       "integrity": "sha512-/PstBhPZV5M7t/GRdfTpZqJ6L/lJMhR1R6jvLSV2yLp4F3coBKacv5JLnlsFmuqCJAXenKPMzhdtp5ANx5rH7A==",
@@ -822,6 +1014,18 @@
       "reviewedAt": "2026-10-21T00:00:00.000Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-wallpaper-engine",
+      "version": "1.4.0",
+      "integrity": "sha512-9vZN7nTdVu3pQlUd3F9vitKonkrxqyiePe0fpme8xyRWJhZTdio3SBMyB1dqOkbKhus3Rc/8hIw1urhLg2UysQ==",
+      "repository": "https://github.com/elysia395/dsh-wallpaper-engine",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T09:31:24.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
     },
     {
       "name": "dsh-prompt-rewrite",
@@ -971,6 +1175,30 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "dsh-vision-router",
+      "version": "3.0.5",
+      "integrity": "sha512-ZZ4LaSeOk5DG9lAlAL/CCeDIMYd8ES/n1suDX0YS5xN1wgI55L/B8uAYunW5j0jC7Neh6NaFkM8c1HoeTdX8Lw==",
+      "repository": "https://github.com/ysr666/dsh-vision-router",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T09:31:24.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "dsh-whale-widget",
+      "version": "0.4.2",
+      "integrity": "sha512-aGDUfd3b2Abv4PoUn1KtnlasOIkoqgvIOR2+rAIEPDOt1qlHB7emlTq+4zdyoV5ZiicS+tkugPk86GyVUoDggQ==",
+      "repository": "https://github.com/MeteorNOX/DeepSeek-Balance-Whale-Widget",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T08:37:27.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
       "name": "dsh-workspace-graph",
       "version": "0.1.0",
       "integrity": "sha512-EF7+EOU8dtOf7KO7FijwroWM/D9IXgiTG1F9b6mKbjI6uvaT9n4V9fiov3KItHFFyuS780w6j9s2Apa1jS99KQ==",
@@ -993,6 +1221,18 @@
       "reviewedAt": "2026-10-26T14:45:00.985Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dshmarket",
+      "version": "1.66.47",
+      "integrity": "sha512-ffQjjjrinYesc5x8LeUYv3zBDNMtNmrLoC5hGAWInsxtvNf1XhLFzByamW/dGy7pkvHs8Tm/BSLKJc9jslk3/A==",
+      "repository": "https://github.com/dsh-market/dsh-market",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T08:37:27.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/plugin-security-review-2026-10-27.md"
     }
   ]
 }
