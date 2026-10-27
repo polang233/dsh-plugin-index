@@ -1016,6 +1016,18 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "dsh-plugin-status-board",
+      "version": "0.4.0",
+      "integrity": "sha512-YPGZWBSsyGnHaBvj1YxR5tfQ85B9S5s952OLmeAH1MmmtZY31WpftqYX0ZgK39eNF1rmcSMWS+mw7M9K5ludIA==",
+      "repository": "https://github.com/ccclucky/dsh-plugin-status-board",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T15:49:42.257Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
       "name": "dsh-plugin-wallpaper-engine",
       "version": "1.4.0",
       "integrity": "sha512-9vZN7nTdVu3pQlUd3F9vitKonkrxqyiePe0fpme8xyRWJhZTdio3SBMyB1dqOkbKhus3Rc/8hIw1urhLg2UysQ==",

@@ -11412,6 +11412,18 @@
         "en": "Preview and move session workspace files to a local trash when deleting a session; files can be restored. If a parent directory becomes a link, restore may follow it. Requires DSH >=0.2.0-rc.2 <0.3.0 and Node >=20.",
         "zh": "删除会话时预览并将工作区文件移入本地回收站，支持恢复。若上级目录变成链接，恢复可能跟随该链接。需 DSH >=0.2.0-rc.2 <0.3.0、Node >=20。"
       }
+    },
+    {
+      "name": "dsh-plugin-status-board",
+      "title": {
+        "en": "Session Status Board",
+        "zh": "会话状态看板"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Group sessions by decisions, running work and recent activity, with a floating board and inline answers for supported questions. Requires Node >=20; no explicit DSH version range is declared.",
+        "zh": "按待决策、执行中和近期记录分类展示会话，提供悬浮看板，并支持直接回答部分问题。需 Node >=20；未显式声明 DSH 兼容范围。"
+      }
     }
   ]
 }
