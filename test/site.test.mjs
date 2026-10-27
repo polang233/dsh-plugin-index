@@ -26,5 +26,5 @@ test('non-GitHub repositories do not display a fabricated count', () => {
 });
 
 test('hashed plugin icons are served as immutable', () => {
-  assert.match(HEADERS, /^\/icons\/\*\n  Cache-Control: public, max-age=31536000, immutable\n$/);
+  assert.match(HEADERS, /^\/icons\/\*\n  Cache-Control: public, max-age=31536000, immutable\n  Access-Control-Allow-Origin: \*\n  X-Content-Type-Options: nosniff\n  Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; img-src data:\n$/);
 });

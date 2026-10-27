@@ -188,7 +188,10 @@ function newestVersion(versions = []) {
 export const pluginPath = name => `plugins/${name}/`;
 // Cloudflare static assets read this file. Icon names are content hashes, so a browser may keep them for good
 // instead of revalidating each one whenever the DSH tab or the site opens.
-export const HEADERS = '/icons/*\n  Cache-Control: public, max-age=31536000, immutable\n';
+// The Open Market tab samples each logo's colour on a canvas, which needs CORS on the icons. An icon opened on its own
+// is still a document on dshopen.org, so it may not sniff types or run anything.
+export const HEADERS = '/icons/*\n  Cache-Control: public, max-age=31536000, immutable\n  Access-Control-Allow-Origin: *\n'
+  + "  X-Content-Type-Options: nosniff\n  Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; img-src data:\n";
 const depth = path => path.split('/').filter(Boolean).length;
 // A relative link from `from` (language folder + path) to `path` in `language`, so the site works under any base path.
 const link = (from, language, path = '') => '../'.repeat(depth(from)) + LANGUAGES[language].dir + path || './';
