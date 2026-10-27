@@ -81,8 +81,6 @@ star🌟是开发者最直接的鼓励，也是这里的推荐参考之一。用
   </picture>
 </a>
 
-[维护说明](docs/maintenance.zh-CN.md) · [GPL-3.0 许可证](LICENSE)
+[维护说明](docs/maintenance.zh-CN.md) · [GPL-3.0 许可证](LICENSE) · 友情链接：[LINUX DO](https://linux.do/)
 
 独立社区项目，与 DeepSeek 官方无隶属关系。各插件的版权和许可证归原作者所有。
-
-友情链接：[LINUX DO](https://linux.do/)

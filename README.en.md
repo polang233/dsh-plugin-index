@@ -72,8 +72,6 @@ A star is the simplest thank-you a developer gets, and it feeds the recommendati
   </picture>
 </a>
 
-[Maintenance](docs/maintenance.md) · [GPL-3.0 license](LICENSE)
+[Maintenance](docs/maintenance.md) · [GPL-3.0 license](LICENSE) · Friends: [LINUX DO](https://linux.do/)
 
 Independent community project, not affiliated with DeepSeek. Plugins retain their authors' copyrights and licenses.
-
-Friends: [LINUX DO](https://linux.do/)
