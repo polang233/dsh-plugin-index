@@ -61,6 +61,8 @@ pnpm test:browser
 
 通过后在 `data/maintainer-reviews.json` 添加具体版本、SHA-512、仓库、来源、日期、核查范围和记录路径。Git 还需完整提交。`package` 用于早期包结构核查，`static-security` 用于加入静态安全审查后的通过项；不要把历史核查升级成未做过的审计。版本或归档字节不匹配时自动失去本站标签，其他平台的审查依据独立保留。详见[标签说明](market-display.md)。
 
+公开记录路径统一使用 `docs/reviews/review-policy.md`。逐条 Issue 的详细笔记、证据、回复草稿及历史批次记录保存在被忽略的 `.local/` 目录，不提交逐日投稿日志。维护流程引用的具体来源证明和文案复核文件继续保留。
+
 批量收录可先将 issue、包名和回复草稿记录为 `schema: 1`、`entries: [{issue, name, replyLanguage, reply}]` 的 JSON。运行 `node scripts/preview-submissions.mjs <复核记录.json>`，仅检查这批发布归档并生成 `.local/submission-preview/` 下的索引、证据和回复预览，不安装插件、不改写已发布快照、不发评论。
 
 未指定 `version` 时跟踪 npm `latest`，索引每 6 小时构建一次；指定后固定为该版本。仓库核查和大包预算会固定版本，运行 `pnpm check:pins` 可列出已落后于 npm `latest` 的固定条目，需重新核查后升级。生成器最多并发读取四个来源，并重试临时网络错误。npm 包下载限于公共 npm registry，固定 Git 来源仅使用下文的 GitHub 提交归档；审核仓库图片使用独立的图标读取边界，不执行被收录插件的代码。全部来源与官方校验器通过后才允许发布。

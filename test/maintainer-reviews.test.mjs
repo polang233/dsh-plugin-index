@@ -9,7 +9,7 @@ import {reviewSummary} from '../scripts/site.mjs';
 const NOW = Date.parse('2026-10-26T12:00:00Z');
 const integrity = 'sha512-' + Buffer.alloc(64, 1).toString('base64');
 const plugin = {name: '@owner/plugin', repository: {url: 'https://github.com/owner/plugin'}, versions: [{version: '1.0.0', publishTimestamp: NOW / 1000 - 86400, source: {type: 'npm'}}]};
-const registry = {schema: 1, entries: [{name: plugin.name, version: '1.0.0', repository: plugin.repository.url, integrity, source: {type: 'npm'}, reviewedAt: '2026-10-26T00:00:00Z', scope: 'static-security', record: 'docs/reviews/issues-59-62-81-89-2026-10-26.json'}]};
+const registry = {schema: 1, entries: [{name: plugin.name, version: '1.0.0', repository: plugin.repository.url, integrity, source: {type: 'npm'}, reviewedAt: '2026-10-26T00:00:00Z', scope: 'static-security', record: 'docs/reviews/review-policy.md'}]};
 const evidence = {packages: [{name: plugin.name, version: '1.0.0', repository: plugin.repository.url, integrity, checks: ['sha512-integrity']}]};
 const display = (p = plugin, reviews = registry, checked = evidence, extra = {}) => applyMarketDisplay({format: 1, title: 'Test', metadata: {labels: {verified: {title: 'Old label'}}}, plugins: [p]}, {maintainerReviews: reviews, packageEvidence: checked, now: NOW, ...extra});
 
@@ -19,6 +19,7 @@ test('a maintainer review labels the exact checked release and retains its scope
   assert(result.index.plugins[0].metadata.labels.includes('verified'));
   assert.equal(result.index.metadata.labels.verified.title.zh, '✅ 已审查');
   assert.equal(signals.maintainerReview.version, '1.0.0');
+  assert.equal(signals.maintainerReview.record, 'https://github.com/polang233/dsh-plugin-index/blob/main/docs/reviews/review-policy.md');
   assert.match(reviewSummary(signals, 'zh'), /开放插件市场 · 静态安全审查 · v1\.0\.0 · 2026-10-26/);
   assert.match(reviewSummary({...signals, maintainerReview: {...signals.maintainerReview, scope: 'package'}}, 'en'), /Package checks/);
   assert.deepEqual(checkMarketDisplay(result.index, {repositories: {}}, {schema: 1, packages: {}}, result.display, undefined, {maintainerReviews: registry, packageEvidence: evidence}), {stars: 0, downloads: 0, identities: 0});
@@ -75,12 +76,18 @@ test('invalid, duplicate and untraceable local review records are rejected', () 
   const duplicate = structuredClone(registry);duplicate.entries.push(duplicate.entries[0]);assert.throws(() => validateMaintainerReviews(duplicate), /Invalid maintainer review/);
 });
 
-test('committed review ledger uses actual review records and grants no held security candidate a label', async () => {
+test('committed review ledger links to existing evidence and excludes held release bytes', async () => {
   const reviews = JSON.parse(await readFile(new URL('../data/maintainer-reviews.json', import.meta.url), 'utf8'));
   validateMaintainerReviews(reviews);
   for (const record of new Set(reviews.entries.map(r => r.record))) await readFile(new URL('../' + record, import.meta.url));
-  const recent = reviews.entries.filter(r => r.scope === 'static-security' && r.record.endsWith('issues-59-62-81-89-2026-10-26.json'));
-  assert.equal(recent.length, 10);
-  const batch = JSON.parse((await readFile(new URL('../docs/reviews/issues-59-62-81-89-2026-10-26.json', import.meta.url), 'utf8')).replace(/^\uFEFF/, ''));
-  for (const held of batch.reviews.filter(r => !r.input)) assert(!reviews.entries.some(r => r.name === held.name && r.version === held.reviewedVersion && r.integrity === held.integrity));
+  const held = [
+    ['@lifenrir/dsh-video-preview', '0.1.1', 'sha512-5vGUNEI+OdgJAxFCE+lBNGwXPYyJD0if5+mW6uP6hWBXY4pVnMbaB4T+O0MSNgNxnAyiQoB/GAzH4H+GGPM/Uw=='],
+    ['@gulagala001/dsh-persona-plugin', '0.2.0-dsh.0.2.1-rc.3', 'sha512-TXWj04DsQ42LNslI5/rHqsmKke7uXP/FCvdYi4wktHD82yMX7hlaEveop4PBGQLM6VUE6DomgkN0pSKW5UOJ7w=='],
+    ['@gulagala001/dsh-theme-plugin', '0.2.6-dsh.0.2.1-rc.3', 'sha512-9kCwDNdm3BgAb+I2HVKmXCyA/O1U3l6HvwfIec75HpyYp2UIZ3xeIPUacMPM5Gllt/ARV2Rr3S9GD9iqce3tow=='],
+    ['dsh-decision-engine', '0.7.0', 'sha512-+d73yTp7p/tVneHpLxP9IMKjluEdq2J1UYHRX2kQvOZA9Bx1wNJBtrvWh7LFV/Qcr4RzxTV/N95bY2tqoqR/BQ=='],
+    ['dsh-qq-gateway', '1.0.1', 'sha512-3zBd6xFdXu+VG8zDolYDA1lRmzflZlH+TMb+op9h+i09zY2hEMH+uylxwfMk5/AkT8feHQYaoQwV72Dnl1cTQA=='],
+    ['dsh-subagent-dsh', '0.1.0', 'sha512-raeVWFohhup9yBCiJGgxOpq3QLIRHP9rZHPmES94khn7GzGGoUuRG6w7gIbWgM+TvVYLNIvMg7pmgOTyWYFCZQ=='],
+    ['dsh-bili-mini', '0.2.0', 'sha512-BfCS0C+Ctubm/lAHsRyZ0KhrSpHT+5zx24Jgf8qS2ELOarmulYMeBGxN2pXVVpJaGIjP+vLxs2BVsMn6/5g+3A=='],
+  ];
+  for (const [name, version, digest] of held) assert(!reviews.entries.some(r => r.name === name && r.version === version && r.integrity === digest));
 });

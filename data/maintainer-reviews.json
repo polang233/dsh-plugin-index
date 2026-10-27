@@ -11,7 +11,7 @@
       },
       "reviewedAt": "2026-10-26T06:29:06.370Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-59-62-81-89-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@angelky7/dsh-browser-control",
@@ -23,7 +23,7 @@
       },
       "reviewedAt": "2026-10-24T16:45:30.408Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-71-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@chaiyahang/dsh-scratchpad",
@@ -35,7 +35,7 @@
       },
       "reviewedAt": "2026-10-25T05:28:57.222Z",
       "scope": "package",
-      "record": "docs/reviews/issues-31-62-74-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@dr-co/dsh-secret-form",
@@ -47,7 +47,7 @@
       },
       "reviewedAt": "2026-10-22T17:03:38.847Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@dr-co/dsh-skills",
@@ -59,7 +59,7 @@
       },
       "reviewedAt": "2026-10-23T09:32:26.009Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-followup-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@dr-co/dsh-speech-gate",
@@ -71,7 +71,7 @@
       },
       "reviewedAt": "2026-10-23T09:32:26.009Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-followup-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@ds-hu/dsh-acp-plus",
@@ -83,7 +83,7 @@
       },
       "reviewedAt": "2026-10-22T17:03:38.847Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@ds-hu/dsh-auto-task-center",
@@ -95,7 +95,7 @@
       },
       "reviewedAt": "2026-10-22T17:03:38.847Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@ds-hu/dsh-better-workspaces",
@@ -107,7 +107,7 @@
       },
       "reviewedAt": "2026-10-22T17:03:38.847Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@ds-hu/dsh-pocket",
@@ -119,7 +119,7 @@
       },
       "reviewedAt": "2026-10-22T17:03:38.847Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@dsh-ai-providers/cohere",
@@ -131,7 +131,7 @@
       },
       "reviewedAt": "2026-10-25T05:28:57.222Z",
       "scope": "package",
-      "record": "docs/reviews/issues-31-62-74-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@dsh-ai-providers/jina",
@@ -143,7 +143,7 @@
       },
       "reviewedAt": "2026-10-25T05:28:57.222Z",
       "scope": "package",
-      "record": "docs/reviews/issues-31-62-74-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@dsh-ai-providers/runtime",
@@ -155,7 +155,7 @@
       },
       "reviewedAt": "2026-10-25T05:28:57.222Z",
       "scope": "package",
-      "record": "docs/reviews/issues-31-62-74-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@feiwell/dsh-enhance-prompt",
@@ -168,7 +168,7 @@
       },
       "reviewedAt": "2026-10-25T05:28:57.222Z",
       "scope": "package",
-      "record": "docs/reviews/issues-31-62-74-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@gongfpp/dsh-novel-fish",
@@ -181,7 +181,7 @@
       },
       "reviewedAt": "2026-10-26T15:56:08.949Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-100-101-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@gulagala001/dsh-btw",
@@ -194,7 +194,7 @@
       },
       "reviewedAt": "2026-10-21T00:00:00.000Z",
       "scope": "package",
-      "record": "docs/reviews/plugin-submissions-2026-10-21.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@gulagala001/dsh-btw",
@@ -207,7 +207,7 @@
       },
       "reviewedAt": "2026-10-22T13:27:14.874Z",
       "scope": "package",
-      "record": "docs/reviews/maintenance-2026-10-22.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@gulagala001/dsh-persona-plugin",
@@ -220,7 +220,7 @@
       },
       "reviewedAt": "2026-10-22T17:03:38.847Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@gulagala001/dsh-theme-plugin",
@@ -233,7 +233,7 @@
       },
       "reviewedAt": "2026-10-21T00:00:00.000Z",
       "scope": "package",
-      "record": "docs/reviews/plugin-submissions-2026-10-21.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@hui-xu-ai/dsh-wensu",
@@ -245,7 +245,7 @@
       },
       "reviewedAt": "2026-10-24T16:45:30.408Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-71-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@kadima-code/dsh-session-mirror",
@@ -257,7 +257,7 @@
       },
       "reviewedAt": "2026-10-25T12:21:16.117Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-69-80-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@lifenrir/dsh-external-task-context",
@@ -270,7 +270,7 @@
       },
       "reviewedAt": "2026-10-23T09:32:26.009Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-followup-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@lifenrir/dsh-external-task-context",
@@ -282,7 +282,7 @@
       },
       "reviewedAt": "2026-10-26T06:29:06.370Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-59-62-81-89-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@lifenrir/dsh-selection-quote",
@@ -295,7 +295,7 @@
       },
       "reviewedAt": "2026-10-23T09:32:26.009Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-followup-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@lifenrir/dsh-selection-quote",
@@ -307,7 +307,7 @@
       },
       "reviewedAt": "2026-10-26T06:29:06.370Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-59-62-81-89-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@sunshaobei/dsh-balance-panel",
@@ -319,7 +319,7 @@
       },
       "reviewedAt": "2026-10-23T09:32:26.009Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-followup-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@sunshaobei/dsh-codex-auth",
@@ -331,7 +331,7 @@
       },
       "reviewedAt": "2026-10-23T09:32:26.009Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-followup-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@sunshaobei/dsh-input-history",
@@ -343,7 +343,7 @@
       },
       "reviewedAt": "2026-10-23T09:32:26.009Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-followup-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@sunshaobei/dsh-workflow",
@@ -355,7 +355,7 @@
       },
       "reviewedAt": "2026-10-23T09:32:26.009Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-followup-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@taxueseek/argo-dsh",
@@ -367,7 +367,7 @@
       },
       "reviewedAt": "2026-10-25T05:28:57.222Z",
       "scope": "package",
-      "record": "docs/reviews/issues-31-62-74-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@taxueseek/argo-dsh",
@@ -379,7 +379,7 @@
       },
       "reviewedAt": "2026-10-26T06:29:06.370Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-59-62-81-89-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@woosau/dsh-custom-env",
@@ -391,7 +391,7 @@
       },
       "reviewedAt": "2026-10-26T06:29:06.370Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-59-62-81-89-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@yyyzl/dsh-image-feedback",
@@ -404,7 +404,7 @@
       },
       "reviewedAt": "2026-10-23T09:32:26.009Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-followup-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@yyyzl/dsh-image-feedback",
@@ -417,7 +417,7 @@
       },
       "reviewedAt": "2026-10-23T15:59:28.272Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-64-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@zephinel/dsh-intelligent-ui",
@@ -429,7 +429,7 @@
       },
       "reviewedAt": "2026-10-22T17:03:38.847Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "brooks-lint",
@@ -441,7 +441,7 @@
       },
       "reviewedAt": "2026-10-24T16:45:30.408Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-71-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-bili-mini",
@@ -453,7 +453,7 @@
       },
       "reviewedAt": "2026-10-26T16:22:41.893Z",
       "scope": "static-security",
-      "record": "docs/reviews/issue-86-followup-2026-10-27.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-canteen-retention-check",
@@ -465,7 +465,7 @@
       },
       "reviewedAt": "2026-10-26T15:56:08.949Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-100-101-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-colorlab",
@@ -478,7 +478,7 @@
       },
       "reviewedAt": "2026-10-21T00:00:00.000Z",
       "scope": "package",
-      "record": "docs/reviews/plugin-submissions-2026-10-21.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-colorlab",
@@ -491,7 +491,7 @@
       },
       "reviewedAt": "2026-10-24T16:45:30.408Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-71-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-composer-predictions",
@@ -503,7 +503,7 @@
       },
       "reviewedAt": "2026-10-26T14:45:00.985Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-94-99-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-construction-doc-check",
@@ -515,7 +515,7 @@
       },
       "reviewedAt": "2026-10-26T15:56:08.949Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-100-101-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-damage-pulse",
@@ -527,7 +527,7 @@
       },
       "reviewedAt": "2026-10-22T17:01:43.173Z",
       "scope": "package",
-      "record": "docs/reviews/maintenance-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-damage-pulse",
@@ -539,7 +539,7 @@
       },
       "reviewedAt": "2026-10-25T12:21:16.117Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-69-80-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-deepseek-workbench",
@@ -552,7 +552,7 @@
       },
       "reviewedAt": "2026-10-21T00:00:00.000Z",
       "scope": "package",
-      "record": "docs/reviews/plugin-submissions-2026-10-21.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-doc-review",
@@ -564,7 +564,7 @@
       },
       "reviewedAt": "2026-10-25T12:21:16.117Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-69-80-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-error-atlas",
@@ -576,7 +576,7 @@
       },
       "reviewedAt": "2026-10-25T05:28:57.222Z",
       "scope": "package",
-      "record": "docs/reviews/issues-31-62-74-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-extensions",
@@ -589,7 +589,7 @@
       },
       "reviewedAt": "2026-10-22T17:03:38.847Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-find-bar",
@@ -601,7 +601,7 @@
       },
       "reviewedAt": "2026-10-24T16:45:30.408Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-71-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-flymemory",
@@ -613,7 +613,7 @@
       },
       "reviewedAt": "2026-10-26T10:22:20.175Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-59-62-90-93-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-game-translate",
@@ -626,7 +626,7 @@
       },
       "reviewedAt": "2026-10-26T06:29:06.370Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-59-62-81-89-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-global-todo",
@@ -638,7 +638,7 @@
       },
       "reviewedAt": "2026-10-21T00:00:00.000Z",
       "scope": "package",
-      "record": "docs/reviews/plugin-submissions-2026-10-21.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-im-gateway",
@@ -650,7 +650,7 @@
       },
       "reviewedAt": "2026-10-22T13:27:36.933Z",
       "scope": "package",
-      "record": "docs/reviews/maintenance-2026-10-22.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-jev-progress",
@@ -662,7 +662,7 @@
       },
       "reviewedAt": "2026-10-23T09:32:26.009Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-followup-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-kimi-assemble",
@@ -674,7 +674,7 @@
       },
       "reviewedAt": "2026-10-23T15:59:28.272Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-64-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-matrix-theme",
@@ -687,7 +687,7 @@
       },
       "reviewedAt": "2026-10-25T12:21:16.117Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-69-80-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-matrix-theme",
@@ -700,7 +700,7 @@
       },
       "reviewedAt": "2026-10-26T06:29:06.370Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-59-62-81-89-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-mcp-tools",
@@ -712,7 +712,7 @@
       },
       "reviewedAt": "2026-10-23T09:32:26.009Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-followup-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-mobile",
@@ -724,7 +724,7 @@
       },
       "reviewedAt": "2026-10-22T17:01:43.172Z",
       "scope": "package",
-      "record": "docs/reviews/maintenance-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-mobile",
@@ -736,7 +736,7 @@
       },
       "reviewedAt": "2026-10-26T06:29:06.370Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-59-62-81-89-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-mobile",
@@ -748,7 +748,7 @@
       },
       "reviewedAt": "2026-10-26T10:31:02.719Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-59-62-90-93-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-model-picker-control",
@@ -760,7 +760,7 @@
       },
       "reviewedAt": "2026-10-25T12:21:16.117Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-69-80-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-moodboard",
@@ -772,7 +772,7 @@
       },
       "reviewedAt": "2026-10-26T14:45:00.985Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-94-99-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-move-to-workspace",
@@ -784,7 +784,7 @@
       },
       "reviewedAt": "2026-10-26T14:45:00.985Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-94-99-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-pinned-panel",
@@ -797,7 +797,7 @@
       },
       "reviewedAt": "2026-10-26T06:29:06.370Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-59-62-81-89-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-plugin-screen-control",
@@ -809,7 +809,7 @@
       },
       "reviewedAt": "2026-10-26T06:29:06.370Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-59-62-81-89-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-plugin-session-fulltext",
@@ -821,7 +821,7 @@
       },
       "reviewedAt": "2026-10-21T00:00:00.000Z",
       "scope": "package",
-      "record": "docs/reviews/plugin-submissions-2026-10-21.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-prompt-rewrite",
@@ -833,7 +833,7 @@
       },
       "reviewedAt": "2026-10-26T14:45:00.985Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-94-99-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-quick-backup",
@@ -846,7 +846,7 @@
       },
       "reviewedAt": "2026-10-25T12:21:16.117Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-69-80-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-reforge",
@@ -858,7 +858,7 @@
       },
       "reviewedAt": "2026-10-23T09:32:26.009Z",
       "scope": "package",
-      "record": "docs/reviews/submissions-followup-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-rimlight",
@@ -870,7 +870,7 @@
       },
       "reviewedAt": "2026-10-25T12:21:16.117Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-69-80-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-safety-ledger-check",
@@ -882,7 +882,7 @@
       },
       "reviewedAt": "2026-10-26T15:56:08.949Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-100-101-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-session-notifier",
@@ -894,7 +894,7 @@
       },
       "reviewedAt": "2026-10-24T16:45:30.408Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-71-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-shared-bash",
@@ -907,7 +907,7 @@
       },
       "reviewedAt": "2026-10-22T17:01:43.172Z",
       "scope": "package",
-      "record": "docs/reviews/maintenance-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-shared-bash",
@@ -920,7 +920,7 @@
       },
       "reviewedAt": "2026-10-23T15:59:28.272Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-64-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-skill-cockpit",
@@ -932,7 +932,7 @@
       },
       "reviewedAt": "2026-10-24T16:45:30.408Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-71-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-skills-panel",
@@ -944,7 +944,7 @@
       },
       "reviewedAt": "2026-10-25T12:21:16.117Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-69-80-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-startlux-decision",
@@ -956,7 +956,7 @@
       },
       "reviewedAt": "2026-10-23T15:59:28.272Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-64-2026-10-23.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-synapse",
@@ -968,7 +968,7 @@
       },
       "reviewedAt": "2026-10-25T12:21:16.117Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-69-80-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-workspace-graph",
@@ -980,7 +980,7 @@
       },
       "reviewedAt": "2026-10-24T16:45:30.408Z",
       "scope": "package",
-      "record": "docs/reviews/issues-62-71-2026-10-25.json"
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "dsh-workspace-status",
@@ -992,7 +992,7 @@
       },
       "reviewedAt": "2026-10-26T14:45:00.985Z",
       "scope": "static-security",
-      "record": "docs/reviews/issues-94-99-2026-10-26.json"
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
