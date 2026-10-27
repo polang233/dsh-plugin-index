@@ -95,7 +95,7 @@ export async function checkPublished(indexUrl, {expectedNames, expectedTitle, ve
     const record = status.packages?.find(item => item.name === plugin.name);
     if (!record || record.version !== plugin.versions?.[0]?.version || !record.checks?.includes('sha512-integrity') || !record.checks.includes('bundle-patch-present')) throw new Error('Missing package evidence: ' + plugin.name);
     const source = plugin.versions[0].source;
-    if (source.type === 'git' && (!record.checks.includes('git-commit-pinned') || record.source?.url !== source.url || record.source?.commit !== source.commit)) throw new Error('Git source evidence mismatch: ' + plugin.name);
+    if (source.type === 'git' && (!record.checks.includes('git-commit-pinned') || record.source?.url !== source.url || record.source?.commit !== source.commit || record.source?.path !== source.path)) throw new Error('Git source evidence mismatch: ' + plugin.name);
   }
   const icons = [...new Set(index.plugins.map(plugin => plugin.icon).filter(Boolean))];
   let next = 0;

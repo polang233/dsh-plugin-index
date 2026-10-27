@@ -639,6 +639,22 @@ if (statsRoot) {
     const step = Math.max(1, [1, 2, 2.5, 5, 10].find(f => f * power >= rough) * power);
     return { step, ticks: Math.max(1, Math.ceil(max / step)) };
   };
+  // Keep whole-number catalog changes visible, with a little room around the observed range.
+  const seriesScale = (id, values) => {
+    const max = Math.max(...values);
+    if (id !== 'plugins') {
+      const { step, ticks } = niceScale(max);
+      return { min: 0, max: step * ticks, step, ticks };
+    }
+    const min = Math.min(...values);
+    const margin = Math.max(1, Math.ceil((max - min) * .2));
+    let lower = Math.max(0, min - margin);
+    const upper = Math.max(max + margin, lower + 4);
+    const { step } = niceScale(upper - lower);
+    lower = Math.max(0, Math.floor(lower / step) * step);
+    const ticks = Math.ceil((upper - lower) / step);
+    return { min: lower, max: lower + step * ticks, step, ticks };
+  };
 
   // Trends: loads, people, catalog size and GitHub stars over the same days, each switched on or off from its chip.
   // One line is drawn against its own axis; with several, each is scaled to its own range so their shapes compare,
@@ -665,14 +681,14 @@ if (statsRoot) {
     const plotH = height - pad.top - pad.bottom;
     const slot = days.length > 1 ? plotW / (days.length - 1) : plotW;
     const x = at => pad.left + (days.length > 1 ? slot * at : plotW / 2);
-    const scales = Object.fromEntries(shown.map(id => { const { step, ticks } = niceScale(Math.max(...days.map(day => valueOf(day, id) ?? 0))); return [id, step * ticks]; }));
-    const y = (id, value) => pad.top + plotH - value / scales[id] * plotH;
+    const scales = Object.fromEntries(shown.map(id => [id, seriesScale(id, days.map(day => valueOf(day, id) ?? 0))]));
+    const y = (id, value) => pad.top + plotH - (value - scales[id].min) / (scales[id].max - scales[id].min) * plotH;
     const root = svg('svg', { viewBox: `0 0 ${width} ${height}`, width, height, role: 'img', 'aria-label': shown.map(id => `${words.series[id]}: ${days.map(day => `${day.day} ${valueOf(day, id)}`).join(', ')}`).join('; ') });
     const axisId = shown[0];
     if (axisId) {
-      const { ticks } = niceScale(scales[axisId]);
+      const { min, step, ticks } = scales[axisId];
       for (let tick = 0; tick <= ticks; tick++) {
-        const value = scales[axisId] / ticks * tick;
+        const value = min + step * tick;
         root.append(svg('line', { x1: pad.left, x2: width - pad.right, y1: y(axisId, value), y2: y(axisId, value), class: tick ? 'grid' : 'baseline' }));
         const label = svg('text', { x: pad.left - 8, y: y(axisId, value) + 4, 'text-anchor': 'end', class: `axis series-${axisId}` });
         label.textContent = number.format(Math.round(value));
@@ -689,7 +705,8 @@ if (statsRoot) {
     for (const id of shown) {
       const points = days.map((day, at) => [x(at), y(id, valueOf(day, id) ?? 0)]);
       const line = points.map(([px, py], at) => `${at ? 'L' : 'M'}${px},${py}`).join('');
-      if (shown.length === 1) root.append(svg('path', { d: `${line}L${points.at(-1)[0]},${y(id, 0)}L${points[0][0]},${y(id, 0)}Z`, class: `series-area series-${id}` }));
+      if (shown.length === 1) root.append(svg('path', { d: `${line}L${points.at(-1)[0]},${pad.top + plotH}L${points[0][0]},${pad.top + plotH}Z`, class: `series-area series-${id}` }));
+      root.append(svg('path', { d: line, class: 'series-line-underlay', pathLength: 1 }));
       root.append(svg('path', { d: line, class: `series-line series-${id}`, pathLength: 1 }));
       points.forEach(([px, py], at) => root.append(svg('circle', { cx: px, cy: py, r: days[at].today ? 4.5 : 3, class: `series-point series-${id}${days[at].today ? ' is-today' : ''}` })));
     }

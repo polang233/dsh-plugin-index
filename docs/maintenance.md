@@ -186,7 +186,15 @@ pnpm build:site
 
 ## Pinned Git sources
 
-Maintainer-approved Git entries pin `version` and declare `source: {type: "git", url, commit, integrity, publishedAt}`. The source must be a canonical GitHub repository URL with a full commit SHA, SHA-512 of that commit archive, and a release date. The repository root must contain the complete installable package. The generator downloads from `codeload.github.com` without redirects and applies the existing archive limits, identity, patch and entry-point checks. DSH installs the root package at that commit through the official Git source type. Git entries have no npm download or release-activity data. Updating requires reviewing the new commit and archive hash. No installation or lifecycle scripts run during generation.
+Maintainer-approved Git entries pin `version` and declare `source: {type: "git", url, commit, integrity, publishedAt, path?}`. The source must be a canonical GitHub repository URL with a full commit SHA, SHA-512 of that commit archive, and a release date. The root, or the optional relative `path`, must contain the complete installable package. The generator downloads from `codeload.github.com` without redirects and applies the existing archive limits, identity, patch and entry-point checks to that directory. The official Git source tells DSH to install the same directory at that commit. Reviews bind the directory as well as the commit and archive. Git entries have no npm download or release-activity data. Updating requires reviewing the new commit and archive hash. No installation or lifecycle scripts run during generation.
+
+GitHub Release assets can be downloaded separately, but the current official market index supports npm and Git sources rather than a Release asset URL. A Release-only artifact therefore needs a matching installable npm package or Git directory to be listed.
+
+## dsh-open-market releases
+
+For each new plugin version, add a short matching section to `packages/dsh-open-market/CHANGELOG.md` and publish the package to npm as usual. Then run `python3 scripts/prepare-open-market-release.py .local/open-market-release` from the repository root. The command downloads the published npm archive, checks its SHA-512 and compares every published file against the package's `gitHead` commit. It writes the archive and release notes locally and prints the version, suggested tag and commit; it does not publish anything.
+
+Review those files and create a GitHub Release using the printed tag and commit, attaching the prepared `.tgz`. The npm package remains the default installation source. Release publication is a manual step; no scheduled job writes releases or tags.
 
 ## Author withdrawals
 

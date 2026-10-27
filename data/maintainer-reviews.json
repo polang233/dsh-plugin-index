@@ -637,19 +637,6 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
-      "name": "dsh-colorlab",
-      "version": "1.1.9",
-      "integrity": "sha512-r0bGlo5baWtI/1A/ji56SwLVbox9xQ6dedoNRel6W5wlunETiAPs6nVJZ1U4VHlSBgb4iM0Af6XtYe6C7WlIdg==",
-      "repository": "https://github.com/ruegg114514/dsh-colorlab",
-      "source": {
-        "type": "git",
-        "commit": "c4cf9481910c326ac7278ded2986f8d6c7e71634"
-      },
-      "reviewedAt": "2026-10-24T16:45:30.408Z",
-      "scope": "package",
-      "record": "docs/reviews/review-policy.md"
-    },
-    {
       "name": "dsh-composer-predictions",
       "version": "1.2.6",
       "integrity": "sha512-xPv91FmfBZ/0cliptHbXIYsqcPTpbTc8bbQ2FsChYWkRShG+sKIwgt9zVIIoHPW7sGLpGOmivA0sKEq+u9UNEg==",
@@ -793,6 +780,19 @@
         "commit": "9a0c891da98381ca7c631ed0de23a44c13ca5997"
       },
       "reviewedAt": "2026-10-26T06:29:06.370Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-game-translate",
+      "version": "0.9.3",
+      "integrity": "sha512-Sq9i/zjEifh5gF/A0+9KcZJ6G4O8loZYZQTGiGpSFs4w8rSPahYDlcTDaxell2pxzvGFdrjZf1jyveTM4GObFA==",
+      "repository": "https://github.com/S0ra233/DSH-game-translate",
+      "source": {
+        "type": "git",
+        "commit": "f9b24275a96501830bf1a2c82363e600d9bc4e69"
+      },
+      "reviewedAt": "2026-10-27T11:16:26.000Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
     },
@@ -1089,6 +1089,18 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "dsh-session-md-export",
+      "version": "0.1.0",
+      "integrity": "sha512-y3oQZDg+jjQQLI0r0OqivwXe3zCaBYeJmCDcWztr87hmSjOkjez7oeki4LNrQGEv57abyT8gv9/UWteUYn/04g==",
+      "repository": "https://github.com/yunfong/dsh-session-md-export",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-27T11:01:58.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
       "name": "dsh-session-notifier",
       "version": "1.0.3",
       "integrity": "sha512-x0R6AWRjUKMiS+G4iMif2x9r93xaNIga7+IH7307NHN+8qGbO+GfY5QjSPMrS7gD0+9BP0NPkkY+bFh2kB0CEw==",
@@ -1163,15 +1175,15 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
-      "name": "dsh-synapse",
-      "version": "0.5.4",
-      "integrity": "sha512-AK2PnY3qDn259TN1ctPpTGCOZgGX5lMnMunf2bl4t4I1RG1MCJpiVt5zLtYGL8gFeGFhbr1PPjLVmfX0HLfbNQ==",
-      "repository": "https://github.com/liangmianya/dsh-synapse",
+      "name": "dsh-table-ingest",
+      "version": "0.2.1",
+      "integrity": "sha512-DfTdzAlo9RuHHNWFeAieLAX8S4xyyC4HPRFIpkM3+ViAOIlVbkunufNAo5OA+QLXnGl3Zwcgzar+Rsu7Vl9e0w==",
+      "repository": "https://github.com/PerryLink/dsh-table-ingest",
       "source": {
         "type": "npm"
       },
-      "reviewedAt": "2026-10-25T12:21:16.117Z",
-      "scope": "package",
+      "reviewedAt": "2026-10-27T12:45:00.000Z",
+      "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
     },
     {

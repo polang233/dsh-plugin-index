@@ -911,10 +911,13 @@ body.is-leaving { opacity: 0; }
 [data-series="plugins"] .series-dot { background: var(--plugins); }
 [data-series="stars"] .series-dot { background: var(--stars); }
 .series-toggle[aria-pressed="false"] .series-dot { background: transparent; }
-.daily-chart .series-line { fill: none; stroke-width: 2.75; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; animation: line-draw .9s ease-out both; }
-.daily-chart.is-drawn .series-line { animation: none; }
+.daily-chart .grid { stroke-dasharray: 3 6; }
+.daily-chart .series-line, .daily-chart .series-line-underlay { fill: none; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; animation: line-draw .9s ease-out both; }
+.daily-chart .series-line-underlay { stroke: var(--ink); stroke-width: 6; opacity: .15; }
+.daily-chart .series-line { stroke-width: 3; }
+.daily-chart.is-drawn .series-line, .daily-chart.is-drawn .series-line-underlay { animation: none; }
 @keyframes line-draw { from { stroke-dashoffset: 1; } }
-.daily-chart .series-area { stroke: none; opacity: .1; }
+.daily-chart .series-area { stroke: none; opacity: .12; }
 .daily-chart .series-point { fill: var(--paper); stroke-width: 2.5; }
 .daily-chart .series-point.is-today { fill: currentColor; }
 .daily-chart .cursor { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 4 4; }

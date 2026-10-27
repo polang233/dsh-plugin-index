@@ -7,3 +7,9 @@ export function githubRepository(value) {
   if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(path)) return undefined;
   return { key: path.toLowerCase(), url: `https://github.com/${path}` };
 }
+
+/** Match the DSH index format's relative Git package directory. */
+export function validPackageDirectory(value) {
+  return typeof value === 'string' && value.length > 0
+    && value.split('/').every(part => /^[A-Za-z0-9._@+-]+$/.test(part) && part !== '.' && part !== '..');
+}

@@ -1,4 +1,4 @@
-import { githubRepository } from './github-repository.mjs';
+import { githubRepository, validPackageDirectory } from './github-repository.mjs';
 
 export const REVIEW_SOURCE = 'open-plugin-market';
 export const EMPTY_REVIEWS = { schema: 1, entries: [] };
@@ -14,7 +14,7 @@ export function validateMaintainerReviews(reviews) {
       || !['package', 'static-security'].includes(entry.scope) || !Number.isFinite(Date.parse(entry.reviewedAt))
       || !/^docs\/reviews\/[a-z0-9-]+\.(?:json|md)$/.test(entry.record ?? '')
       || !['npm', 'git'].includes(entry.source?.type)
-      || (entry.source.type === 'git' && !/^[a-f0-9]{40}$/.test(entry.source.commit ?? '')) || keys.has(key)) {
+      || (entry.source.type === 'git' && (!/^[a-f0-9]{40}$/.test(entry.source.commit ?? '') || (entry.source.path !== undefined && !validPackageDirectory(entry.source.path)))) || keys.has(key)) {
       throw new Error('Invalid maintainer review: ' + entry.name);
     }
     keys.add(key);
@@ -31,6 +31,7 @@ export function maintainerReviewFor(plugin, reviews, packageEvidence, now = Date
     && githubRepository(checked.repository)?.key === repo && Date.parse(review.reviewedAt) <= now
     && review.source.type === source?.type
     && (source.type !== 'git' || (source.commit === review.source.commit && checked.source?.commit === review.source.commit
+      && source.path === review.source.path && checked.source?.path === review.source.path
       && githubRepository(source.url)?.key === repo && githubRepository(checked.source?.url)?.key === repo)));
   // A later package-only check does not downgrade a source-security review of the same bytes.
   matches.sort((a, b) => Number(b.scope === 'static-security') - Number(a.scope === 'static-security') || Date.parse(b.reviewedAt) - Date.parse(a.reviewedAt));

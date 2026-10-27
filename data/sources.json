@@ -304,18 +304,6 @@
       "category": "integrations"
     },
     {
-      "name": "@dsh-plugins/dsh-env-inspector",
-      "title": {
-        "en": "@dsh-plugins/dsh-env-inspector",
-        "zh": "环境与端口检查"
-      },
-      "description": {
-        "en": "Inspect local tools, model configuration, hardware and listening ports, and export diagnostics.",
-        "zh": "检查系统、命令行工具、模型配置、硬件与监听端口，并导出诊断。"
-      },
-      "category": "tools"
-    },
-    {
       "name": "@dsh-plugins/dsh-llm-hub",
       "title": {
         "en": "@dsh-plugins/dsh-llm-hub",
@@ -11178,21 +11166,21 @@
     },
     {
       "name": "dsh-game-translate",
-      "version": "0.3.8",
+      "version": "0.9.3",
       "source": {
         "type": "git",
         "url": "https://github.com/S0ra233/DSH-game-translate",
-        "commit": "9a0c891da98381ca7c631ed0de23a44c13ca5997",
-        "integrity": "sha512-XlaSTLE8e3H09mD1YFOjJmwhtXQw0Wp5cBot4G7urEpdyGC3A2SBnzsauh60+adaWoDTUA+Xkp8jbxvuXfUAzg==",
-        "publishedAt": "2026-10-26T00:54:41Z"
+        "commit": "f9b24275a96501830bf1a2c82363e600d9bc4e69",
+        "integrity": "sha512-Sq9i/zjEifh5gF/A0+9KcZJ6G4O8loZYZQTGiGpSFs4w8rSPahYDlcTDaxell2pxzvGFdrjZf1jyveTM4GObFA==",
+        "publishedAt": "2026-10-27T03:58:52Z"
       },
       "title": {
         "en": "Game Translation",
         "zh": "游戏翻译"
       },
       "description": {
-        "en": "Extract, translate and review game text with grouped reading, model delegation and verified writes into an independent copy. Requires DSH 0.2.1-rc.3, Node.js >=24.9 and Python; includes a Windows native UI. Model calls consume tokens.",
-        "zh": "提取、翻译和双栏审校游戏文本，支持分组阅读、多模型委托及独立副本写回核验。需 DSH 0.2.1-rc.3、Node.js >=24.9 与 Python，附 Windows 原生界面；模型调用消耗 token。"
+        "en": "Extract, search, translate and review game text, with model delegation and verified writes into an independent copy. Requires DSH 0.2.1-rc.3, Node.js >=24.9 and Python 3.10+. The Windows native UI also needs .NET Framework 4.8 and WebView2 Runtime; model calls consume tokens.",
+        "zh": "提取、检索、翻译和审校游戏文本，支持多模型委托及独立副本写回核验。需 DSH 0.2.1-rc.3、Node.js >=24.9 和 Python 3.10+；Windows 原生界面还需 .NET Framework 4.8 与 WebView2 Runtime，模型调用消耗 token。"
       },
       "category": "tools"
     },
@@ -11354,6 +11342,30 @@
       "description": {
         "en": "Append a passage from a browser-local book below the real reasoning or tool output when you expand selected native chat regions. Imports EPUB/TXT/MD and remembers book progress without writing novel text to the conversation. Declares only DSH 0.2.1-rc.2 and Node >=22; depends on chat DOM. EPUB is text-only and excludes DRM.",
         "zh": "主动展开选中的原生聊天区域时，在真实思考或工具输出下追加本地小说，支持 EPUB/TXT/MD 导入和各书进度；小说不写入会话数据。仅声明兼容 DSH 0.2.1-rc.2、Node >=22，依赖聊天 DOM；EPUB 只取文字，不支持 DRM。"
+      }
+    },
+    {
+      "name": "dsh-session-md-export",
+      "title": {
+        "en": "Session to Markdown",
+        "zh": "会话导出为 Markdown"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Export session dialogue as a readable Markdown file from the session header or /md. Ordinary tool output and reasoning are omitted; exported dialogue may contain sensitive information. Requires DSH >=0.2.1-rc.3 <0.3.0.",
+        "zh": "通过会话标题栏或 /md 将对话导出为可读的 Markdown，过滤常规工具输出和思考过程；对话正文可能含敏感信息。需要 DSH >=0.2.1-rc.3 <0.3.0。"
+      }
+    },
+    {
+      "name": "dsh-table-ingest",
+      "title": {
+        "en": "Table Ingest",
+        "zh": "文档表格提取"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Extract tables from local DOCX, XLSX or CSV files into structured JSON, with table selection and a preview. Requires DSH >=0.2.1-0 <0.3.0 and Node ^22.19 or >=24.",
+        "zh": "从本地 DOCX、XLSX 或 CSV 文件提取表格为结构化 JSON，支持选表与预览。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
       }
     },
     {

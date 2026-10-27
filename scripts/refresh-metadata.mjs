@@ -23,7 +23,7 @@ const plugins = current.plugins.map(plugin => {
   if (!source || (source.version && source.version !== plugin.versions[0].version) || checked?.version !== plugin.versions[0].version || !checked.checks?.includes('sha512-integrity')) throw new Error('Unvalidated package version; run pnpm build: ' + plugin.name);
   const installed = plugin.versions[0].source;
   const changedSource = source.source
-    ? installed.type !== 'git' || installed.url !== source.source.url || installed.commit !== source.source.commit || checked.integrity !== source.source.integrity || Date.parse(source.source.publishedAt) !== plugin.versions[0].publishTimestamp * 1000
+    ? installed.type !== 'git' || installed.url !== source.source.url || installed.commit !== source.source.commit || installed.path !== source.source.path || checked.source?.path !== source.source.path || checked.integrity !== source.source.integrity || Date.parse(source.source.publishedAt) !== plugin.versions[0].publishTimestamp * 1000
     : installed.type !== 'npm';
   if (changedSource) throw new Error('Package source changed; run pnpm build: ' + plugin.name);
   return { ...plugin, ...(source.title ? { title: source.title } : {}), description: source.description ?? oldDisplay?.plugins?.[plugin.name]?.description ?? plugin.description };

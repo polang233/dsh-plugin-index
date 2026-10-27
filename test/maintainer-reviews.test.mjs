@@ -54,6 +54,18 @@ test('Git reviews bind the installed and checked source commit and cannot transf
   assert(!display(plugin, reviews, evidence).index.plugins[0].metadata.labels.includes('verified'));
 });
 
+test('Git reviews bind the package directory as well as the commit and archive', () => {
+  const commit = 'a'.repeat(40), source = {type: 'git', url: plugin.repository.url, commit, path: 'packages/plugin'};
+  const p = {...plugin, versions: [{...plugin.versions[0], source}]};
+  const reviews = structuredClone(registry); reviews.entries[0].source = {type: 'git', commit, path: source.path};
+  const checked = {packages: [{...evidence.packages[0], source}]};
+  assert(display(p, reviews, checked).index.plugins[0].metadata.labels.includes('verified'));
+  assert(!display({...p, versions: [{...p.versions[0], source: {...source, path: 'packages/other'}}]}, reviews, checked).index.plugins[0].metadata.labels.includes('verified'));
+  assert(!display(p, reviews, {packages: [{...checked.packages[0], source: {...source, path: undefined}}]}).index.plugins[0].metadata.labels.includes('verified'));
+  reviews.entries[0].source.path = '../plugin';
+  assert.throws(() => validateMaintainerReviews(reviews), /Invalid maintainer review/);
+});
+
 test('local checks coexist with external reviews without relabeling external work as our own', () => {
   const endorsements = {sources: {'awesome-dsh': {status: 'ok', repos: ['owner/plugin']}}};
   const result = display(plugin, registry, evidence, {endorsements});

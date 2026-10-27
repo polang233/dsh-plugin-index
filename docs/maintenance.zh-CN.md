@@ -77,7 +77,15 @@ pnpm test:browser
 
 ## 固定 Git 来源
 
-经维护者确认的 Git 条目通过 `source` 声明固定 GitHub 仓库、完整提交 SHA、源码归档 SHA-512 和发行时间，并固定 `version`。生成器从 `codeload.github.com` 下载该提交的归档，禁止重定向，沿用下载与解压预算，检查包名、版本、补丁和入口文件。安装源写为官方 `git` 类型，DSH 按固定提交安装根目录插件。Git 条目不请求 npm 下载量，也不生成 npm 发版活跃数据。升级需要更新提交与哈希。不执行插件安装或生命周期脚本。
+经维护者确认的 Git 条目通过 `source` 声明固定 GitHub 仓库、完整提交 SHA、源码归档 SHA-512 和发行时间，并固定 `version`。插件位于仓库子目录时，用可选的 `source.path` 指定相对路径；该目录须包含完整的可安装插件。生成器从 `codeload.github.com` 下载该提交的归档，禁止重定向，沿用下载与解压预算，检查指定目录的包名、版本、补丁和入口文件。安装源写为官方 `git` 类型，DSH 按固定提交安装同一目录；审查记录也绑定目录。Git 条目不请求 npm 下载量，也不生成 npm 发版活跃数据。升级需要重新核查提交与哈希。不执行插件安装或生命周期脚本。
+
+GitHub Release 附件可作为额外下载渠道，但当前官方市场索引不能直接使用 Release 附件地址。只有 Release 产物的插件需另提供可安装的 npm 包或固定 Git 目录，才能收录。
+
+### dsh-open-market 发版
+
+每次发布插件新版本时，在 `packages/dsh-open-market/CHANGELOG.md` 增加对应版本的简短说明，并照常发布 npm。然后在仓库根目录运行 `python scripts/prepare-open-market-release.py .local/open-market-release`：脚本下载 npm 已发布的归档，核对 SHA-512，并将每个发布文件与包元数据中的 `gitHead` 提交逐一比较。它只在本地生成附件和说明，并打印版本、建议标签和提交，不会自动发布。
+
+确认生成内容后，以打印的标签和提交创建 GitHub Release，并附上生成的 `.tgz`。默认安装来源仍为 npm；Release 和标签需要手动发布。
 
 ## 作者下架
 

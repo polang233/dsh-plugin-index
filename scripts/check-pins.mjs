@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
+import { validPackageDirectory } from './github-repository.mjs';
 
 // Lists what the six-hourly build cannot fix by itself: pinned entries a newer release has passed,
 // Git sources whose repository moved on, and packages the build had to keep or leave out.
@@ -12,10 +13,10 @@ const LONG_FAILURE_DAYS = 7;
 const githubHeaders = () => ({ accept: 'application/vnd.github+json', 'user-agent': 'dsh-plugin-index', ...(process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}) });
 
 // A dropped connection retries once; an entry that still cannot be read is reported next run instead of crashing this one.
-async function json(url, headers = {}) {
+async function json(url, headers = {}, fetchImpl = fetch) {
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      const response = await fetch(url, { headers, redirect: 'error', signal: AbortSignal.timeout(30_000) });
+      const response = await fetchImpl(url, { headers, redirect: 'error', signal: AbortSignal.timeout(30_000) });
       return response.ok ? await response.json() : undefined;
     } catch { /* Retry once. */ }
   }
@@ -23,17 +24,20 @@ async function json(url, headers = {}) {
 }
 
 /** Pinned npm releases behind `latest`, and Git sources whose default branch declares a newer version. */
-export async function staleEntries(packages) {
+export async function staleEntries(packages, {fetchImpl = fetch} = {}) {
   const stale = [];
   for (const entry of packages.filter(entry => entry.version)) {
     if (entry.source?.type === 'git') {
       const repo = entry.source.url.match(/^https:\/\/github\.com\/([^/]+\/[^/]+?)(?:\.git)?\/?$/)?.[1];
-      const head = repo && await json(`https://api.github.com/repos/${repo}/contents/package.json`, githubHeaders());
+      const dir = entry.source.path;
+      if (dir !== undefined && !validPackageDirectory(dir)) continue;
+      const path = dir === undefined ? 'package.json' : `${dir.split('/').map(encodeURIComponent).join('/')}/package.json`;
+      const head = repo && await json(`https://api.github.com/repos/${repo}/contents/${path}`, githubHeaders(), fetchImpl);
       const version = head?.content && JSON.parse(Buffer.from(head.content, 'base64').toString('utf8')).version;
       if (version && version !== entry.version) stale.push({ name: entry.name, pinned: entry.version, latest: version, kind: 'git', url: entry.source.url });
       continue;
     }
-    const metadata = await json(`https://registry.npmjs.org/${entry.name.replace('/', '%2F')}`, { accept: 'application/vnd.npm.install-v1+json' });
+    const metadata = await json(`https://registry.npmjs.org/${entry.name.replace('/', '%2F')}`, { accept: 'application/vnd.npm.install-v1+json' }, fetchImpl);
     const latest = metadata?.['dist-tags']?.latest;
     if (latest && latest !== entry.version) {
       stale.push({ name: entry.name, pinned: entry.version, latest, kind: 'npm', reviews: ['iconReview', 'repositoryReview', 'archiveReview'].filter(key => entry[key]) });

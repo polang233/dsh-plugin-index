@@ -11,7 +11,7 @@ body:
     id: plugin
     attributes:
       label: 插件地址 / Plugin link
-      description: 填写 npm 包名或源码仓库地址即可。 / npm package name or source repository URL.
+      description: 填写 npm 包名或源码仓库地址；插件位于子目录时请注明相对路径。 / npm package name or repository URL; include the relative path for a plugin in a subdirectory.
       placeholder: "@owner/dsh-plugin 或 https://github.com/owner/plugin"
     validations:
       required: true

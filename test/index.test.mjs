@@ -129,6 +129,42 @@ test('unsafe and duplicate archive paths reject cleanly', async () => {
   await assert.rejects(inspectArchive(archive([['package/../bad', 'x']])), /Unexpected|abort/);
   await assert.rejects(inspectArchive(archive([['package/package.json', '{}'], ['package/package.json', '{}']])), /Duplicate|abort/);
 });
+
+test('a pinned Git subdirectory checks its own files and produces the official install target', async () => {
+  const commit = 'a'.repeat(40), root = `repo-${commit}`, dir = 'packages/plugin';
+  const manifest = {name: '@example/dsh-plugin', version: '1.2.3', license: 'MIT', repository: 'https://github.com/example/repo', main: './host.js', exports: {'./client': './client.js'}, dsh: {bundle: {patch: './patch.yml'}, client: {platform: 'web'}}};
+  const bytes = archive([
+    [`${root}/README.md`, 'repository documentation'],
+    [`${root}/other/package.json`, '{"name":"unrelated"}'],
+    [`${root}/${dir}/package.json`, JSON.stringify(manifest)],
+    [`${root}/${dir}/host.js`, 'host'],
+    [`${root}/${dir}/client.js`, 'client'],
+    [`${root}/${dir}/patch.yml`, 'patch']
+  ]);
+  const source = {type: 'git', url: 'https://github.com/example/repo', commit, path: dir, integrity: `sha512-${createHash('sha512').update(bytes).digest('base64')}`, publishedAt: '2026-01-01T00:00:00Z'};
+  const input = {name: manifest.name, version: manifest.version, source};
+  const options = {fetchImpl: async url => {assert.equal(url, `https://codeload.github.com/example/repo/tar.gz/${commit}`); return new Response(bytes);}, now: Date.parse('2026-02-01')};
+  const built = await buildIndex({...config, requireSourceMetadata: true, packages: [input]}, options);
+  const plugin = parseMarketIndex(built.index, 'https://example.org/index.json').plugins[0];
+  assert.equal(plugin.repository.directory, dir);
+  assert.equal(plugin.versions[0].source.path, dir);
+  assert.equal(marketInstallTarget(plugin.name, plugin.versions[0]).spec, `git+https://github.com/example/repo.git#${commit}&path:/${dir}`);
+  assert.equal(built.evidence.packages[0].source.path, dir);
+  assert.deepEqual(built.evidence.packages[0].clientEntries, ['package/client.js']);
+});
+
+test('Git subdirectory validation rejects traversal and never falls back to another manifest', async () => {
+  const commit = 'a'.repeat(40), root = `repo-${commit}`;
+  const bytes = archive([[`${root}/package.json`, '{}'], [`${root}/other/patch.yml`, 'x']]);
+  const source = {type: 'git', url: 'https://github.com/example/repo', commit, path: 'missing', integrity: `sha512-${createHash('sha512').update(bytes).digest('base64')}`, publishedAt: '2026-01-01T00:00:00Z'};
+  const input = {name: '@example/dsh-plugin', version: '1.2.3', source};
+  const options = {fetchImpl: async () => new Response(bytes), now: Date.parse('2026-02-01')};
+  await assert.rejects(collectPackage(input, options), /no package\/package.json/);
+  for (const path of ['', '/plugin', '../plugin', 'a/../b', './plugin', 'a//b', 'a\\b', 'a/%2e%2e', 'a?b']) {
+    await assert.rejects(collectPackage({...input, source: {...source, path}}, {fetchImpl: () => assert.fail('invalid path must not fetch')}), /Invalid Git package directory/);
+  }
+  await assert.rejects(inspectArchive(archive([[`${root}/../escape`, 'x']]), {archiveRoot: root, packageSubdir: 'other'}), /Unexpected|abort/);
+});
 test('build metadata remains an exact installable version; prefixes are rejected', async () => {
   const { index } = await buildIndex(config, fixture({ version: '1.2.3+build.4' }));
   assert.equal(index.plugins[0].versions[0].version, '1.2.3+build.4');

@@ -45,7 +45,7 @@ DSH 的排序菜单固定包含「默认排序」和「发布时间」，索引�
 
 ## 验证来源
 
-本站记录保存在 `data/maintainer-reviews.json`，绑定包名、仓库、精确版本、SHA-512 与来源类型；Git 版本还绑定完整提交。构建时必须与实际归档检查证据相符才授予 `verified`。npm `latest` 更新、归档哈希变化或更换仓库后，旧记录不再适用，不为保留标签而锁定自动更新。
+本站记录保存在 `data/maintainer-reviews.json`，绑定包名、仓库、精确版本、SHA-512 与来源类型；Git 版本还绑定完整提交和使用的子目录。构建时必须与实际归档检查证据相符才授予 `verified`。npm `latest` 更新、归档哈希变化或更换仓库后，旧记录不再适用，不为保留标签而锁定自动更新。
 
 `scope: package` 表示早期包结构、来源及许可核查；`scope: static-security` 表示增加静态安全审查后的通过版本。网站标签提示和插件详情显示本站的范围、版本、日期及记录链接，`display.json` 的 `signals.verifiedBy` 保留审查方，`signals.maintainerReview` 保存本站依据。历史核查不能改写为完整安全审计，标签也不保证绝对安全。暂缓、缺少证据和已确认有未解决问题的版本不授予本站标签。
 

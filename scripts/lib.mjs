@@ -10,6 +10,7 @@ import { parseMarketIndex } from '@deepseek-ai/dsh-plugin-market-index';
 import { archiveBudget, DEFAULT_ARCHIVE_BYTES, MAX_ARCHIVE_BYTES, DEFAULT_DOWNLOAD_TIMEOUT, MAX_DOWNLOAD_TIMEOUT } from './limits.mjs';
 import { displayFiles, packageDisplay, MAX_DISPLAY_FILE_BYTES } from './package-display.mjs';
 import { reviewedIcon } from './reviewed-icon.mjs';
+import { validPackageDirectory } from './github-repository.mjs';
 
 export const REGISTRY = 'https://registry.npmjs.org/';
 export const VALIDATOR_VERSION = '0.2.1-rc.2';
@@ -62,9 +63,11 @@ export function verifyIntegrity(bytes, integrity) {
   if (!hashes.includes(actual)) throw new Error('Published tarball has no matching SHA-512 integrity');
 }
 
-export async function inspectArchive(bytes, { maxUnpackedBytes = DEFAULT_ARCHIVE_BYTES, readFiles = [], archiveRoot = 'package' } = {}) {
+export async function inspectArchive(bytes, { maxUnpackedBytes = DEFAULT_ARCHIVE_BYTES, readFiles = [], archiveRoot = 'package', packageSubdir } = {}) {
   if (!Number.isSafeInteger(maxUnpackedBytes) || maxUnpackedBytes < 1 || maxUnpackedBytes > MAX_ARCHIVE_BYTES) throw new Error('Archive budget must be between 1 byte and 256 MiB');
+  if (packageSubdir !== undefined && !validPackageDirectory(packageSubdir)) throw new Error('Invalid Git package directory');
   const files = new Set();
+  const seen = new Set();
   const requested = new Set(readFiles);
   const contents = new Map();
   let manifest;
@@ -75,8 +78,11 @@ export async function inspectArchive(bytes, { maxUnpackedBytes = DEFAULT_ARCHIVE
     if (!entry.path.startsWith(archiveRoot + '/') || entry.path.includes('\\') || entry.path.split('/').includes('..')) {
       throw new Error(`Unexpected archive path: ${entry.path}`);
     }
-    const path = 'package/' + entry.path.slice(archiveRoot.length + 1);
-    if (files.has(path)) throw new Error(`Duplicate archive entry: ${entry.path}`);
+    if (seen.has(entry.path)) throw new Error(`Duplicate archive entry: ${entry.path}`);
+    seen.add(entry.path);
+    const prefix = archiveRoot + '/' + (packageSubdir === undefined ? '' : packageSubdir + '/');
+    if (!entry.path.startsWith(prefix)) { entry.resume(); return; }
+    const path = 'package/' + entry.path.slice(prefix.length);
     files.add(path);
     if (path === 'package/package.json') {
       if (entry.size > 1024 * 1024) throw new Error('Package manifest is too large');
@@ -222,7 +228,7 @@ export function repositoryFrom(manifest) {
   url.username = ''; url.password = ''; url.search = ''; url.hash = '';
   url.pathname = url.pathname.replace(/\.git$/, '');
   const directory = manifest.repository?.directory;
-  const validDirectory = typeof directory === 'string' && directory.split('/').every(part => /^[A-Za-z0-9._@+-]+$/.test(part) && part !== '.' && part !== '..');
+  const validDirectory = validPackageDirectory(directory);
   return { url: url.href, ...(validDirectory ? { directory } : {}) };
 }
 
@@ -263,17 +269,18 @@ export const releasesOf = evidence => Object.fromEntries((evidence?.packages ?? 
 async function packageRelease(input, {fetchImpl, now}) {
   if (input.source !== undefined) {
     const source = input.source;
-    if (!source || typeof source !== 'object' || Object.keys(source).some(key => !['type', 'url', 'commit', 'integrity', 'publishedAt'].includes(key))) throw new Error('Unsupported Git source fields');
+    if (!source || typeof source !== 'object' || Object.keys(source).some(key => !['type', 'url', 'commit', 'path', 'integrity', 'publishedAt'].includes(key))) throw new Error('Unsupported Git source fields');
     const match = typeof source.url === 'string' && /^https:\/\/github\.com\/([A-Za-z0-9_-]+)\/([A-Za-z0-9_.-]+)$/.exec(source.url);
     if (source.type !== 'git' || !match || !/^[0-9a-f]{40}$/.test(source.commit)) throw new Error('Git source requires a canonical GitHub URL and immutable commit');
+    if (source.path !== undefined && !validPackageDirectory(source.path)) throw new Error('Invalid Git package directory');
     if (!semver.valid(input.version) || semver.valid(input.version) !== input.version || !/^sha512-[A-Za-z0-9+/]{86}==$/.test(source.integrity)) throw new Error('Git source requires an exact version and SHA-512 integrity');
     const time = Date.parse(source.publishedAt);
     if (!Number.isFinite(time) || time < 0 || time > now) throw new Error('Invalid Git release publication date');
     const tarball = `https://codeload.github.com/${match[1]}/${match[2]}/tar.gz/${source.commit}`;
-    const budget = {...archiveBudget(input, input.version, source.integrity), archiveRoot: `${match[2]}-${source.commit}`};
+    const budget = {...archiveBudget(input, input.version, source.integrity), archiveRoot: `${match[2]}-${source.commit}`, ...(source.path === undefined ? {} : {packageSubdir: source.path})};
     const bytes = await downloadArchive(tarball, {fetchImpl, timeoutMs: budget.timeoutMs});
     verifyIntegrity(bytes, source.integrity);
-    return {version: input.version, time, budget, bytes, published: {dist: {tarball, integrity: source.integrity}, gitHead: source.commit}, source: {type: 'git', url: source.url, commit: source.commit}};
+    return {version: input.version, time, budget, bytes, published: {dist: {tarball, integrity: source.integrity}, gitHead: source.commit}, source: {type: 'git', url: source.url, commit: source.commit, ...(source.path === undefined ? {} : {path: source.path})}};
   }
   const metadataUrl = `${REGISTRY}${encodeURIComponent(input.name)}`;
   const metadata = JSON.parse((await download(metadataUrl, { fetchImpl })).toString('utf8'));
@@ -300,8 +307,12 @@ export async function collectPackage(input, { fetchImpl = fetch, now = Date.now(
   const contents = readFiles.length ? (await inspectArchive(bytes, {...budget, readFiles})).contents : new Map();
   const display = packageDisplay(manifest, resolved, contents);
   const repositoryInfo = resolveRepository(manifest, input, version, published.dist.integrity);
-  const repository = repositoryInfo.repository;
+  let repository = repositoryInfo.repository;
   if (source.type === 'git' && repository?.url !== source.url) throw new Error('Git source differs from declared repository');
+  if (source.type === 'git' && source.path !== undefined) {
+    if (repository.directory && repository.directory !== source.path) throw new Error('Git package directory differs from declared repository directory');
+    repository = {...repository, directory: source.path};
+  }
   const reviewed = await reviewedIcon(input, { version, integrity: published.dist.integrity, repository: repositoryFrom(manifest), fetchImpl });
   if (reviewed) {
     display.evidence.publishedIcon = display.evidence.icon;
