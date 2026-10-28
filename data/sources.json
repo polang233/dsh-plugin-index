@@ -11573,13 +11573,13 @@
     },
     {
       "name": "spike-ltm",
-      "version": "0.2.0-rc.2",
+      "version": "0.2.0-rc.3",
       "source": {
         "type": "git",
         "url": "https://github.com/hcg91/spike-ltm",
-        "commit": "41dd23f56ef4d8e0564ffd4050034ef01ff7b454",
-        "integrity": "sha512-V/Xm4q7B8q+32S8MOiPK7KkWyzMSUBTfRXSZ8oWrZtCHfglE6BI1vXNhKq4dbbK4+n2u9538zf5V4NYhzfuzeA==",
-        "publishedAt": "2026-10-28T11:33:01Z"
+        "commit": "5adff7c0bdf46dc724874e1669499bdcc34103a4",
+        "integrity": "sha512-HVN7lW6VfluWOwI+5P0sM38qKMBNmvLTDckB9gj+f9T5gmcN2MNnjKv66FaLuGjww0eB5sUm37b/lE3KTR00Xg==",
+        "publishedAt": "2026-10-28T13:06:20Z"
       },
       "title": {
         "en": "Spike Long-Term Memory",
@@ -11650,6 +11650,30 @@
         "zh": "从招标主文件提取时间、保证金和投标要求；未匹配不等于不存在，补充文件需另行核对。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
       },
       "category": "tools"
+    },
+    {
+      "name": "dsh-runninghub-plugin",
+      "title": {
+        "en": "RunningHub Workflows",
+        "zh": "RunningHub 工作流"
+      },
+      "description": {
+        "en": "Run saved RunningHub ComfyUI workflows for images, video and audio. Requires a RunningHub API key; jobs consume account credits. No DSH compatibility range is declared.",
+        "zh": "调用 RunningHub 保存的 ComfyUI 工作流生成图片、视频和音频。需要 RunningHub API Key，任务消耗账户额度；未声明 DSH 兼容范围。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-weixin-ilink",
+      "title": {
+        "en": "Weixin iLink",
+        "zh": "微信 iLink"
+      },
+      "description": {
+        "en": "Connect a personal Weixin account for text, images and files; configure allowed senders before use. Uses a reverse-engineered protocol and can send proactive messages when enabled; consider a spare account. Requires Node >=22.13 and DSH >=0.2.1-alpha.4 <0.3.0.",
+        "zh": "接入个人微信的文字、图片和文件消息，使用前需配置允许的联系人。采用逆向协议，启用后可主动发消息，建议使用备用账号；需 Node >=22.13、DSH >=0.2.1-alpha.4 <0.3.0。"
+      },
+      "category": "integrations"
     }
   ]
 }

@@ -1484,6 +1484,43 @@
       "reviewedAt": "2026-10-28T12:09:45.137Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "spike-ltm",
+      "version": "0.2.0-rc.3",
+      "integrity": "sha512-HVN7lW6VfluWOwI+5P0sM38qKMBNmvLTDckB9gj+f9T5gmcN2MNnjKv66FaLuGjww0eB5sUm37b/lE3KTR00Xg==",
+      "repository": "https://github.com/hcg91/spike-ltm",
+      "source": {
+        "type": "git",
+        "commit": "5adff7c0bdf46dc724874e1669499bdcc34103a4"
+      },
+      "reviewedAt": "2026-10-28T15:20:40.160Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-runninghub-plugin",
+      "version": "0.3.3",
+      "integrity": "sha512-E/gJrexA9pw/NAn5tXU6z9SONIRbJwxyX7AqaCNiNP80sVZzpGBhwkaPhdWYBZAdUW02+So0EpYvGaBfcTOyXQ==",
+      "repository": "https://github.com/achenjins/dsh-runninghub-plugin",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-28T15:20:40.160Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-weixin-ilink",
+      "version": "0.7.2",
+      "integrity": "sha512-Got1Ms01qZDg4pw5ZmDISx7mUvjApx6+u8HEKKYXJDlFjSt0iKkh6Q2rM34+8PmB4IfnRwxragwV/OFdZrrLPg==",
+      "repository": "https://github.com/asd45183/dsh-weixin-ilink",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-28T15:20:40.160Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
