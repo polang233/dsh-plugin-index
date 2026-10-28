@@ -11210,9 +11210,9 @@
       "source": {
         "type": "git",
         "url": "https://github.com/OuQiL/dsh-pinned-panel",
-        "commit": "c6be7577b64e759e79d978cf42aef5cea88c805b",
-        "integrity": "sha512-/PstBhPZV5M7t/GRdfTpZqJ6L/lJMhR1R6jvLSV2yLp4F3coBKacv5JLnlsFmuqCJAXenKPMzhdtp5ANx5rH7A==",
-        "publishedAt": "2026-10-26T05:49:57Z"
+        "commit": "34192b12561db30daebe0ecda0e301581b24e891",
+        "integrity": "sha512-fNtqKD9RHlLBQbB1ccVXoPpuUHFwhHNemeAEslne7OGtKliQz6nPEnvQ1kW/1CV4a2m3u/Dfqlw/z1+e1yRN3g==",
+        "publishedAt": "2026-10-28T05:12:53Z"
       },
       "title": {
         "en": "Pinned Sessions",
@@ -11518,6 +11518,58 @@
         "zh": "按情绪和素材组挑选、预览表情包。需自备素材库与索引，并使用 Node >=22、Python 3.10+ 或 DSH 捆绑 Python；未声明 DSH 兼容范围。"
       },
       "category": "tools"
+    },
+    {
+      "name": "dsh-plugin-session-view",
+      "title": {
+        "en": "Session Plugin View",
+        "zh": "会话插件与能力"
+      },
+      "description": {
+        "en": "View a session’s plugins and skills from its header, and enable or disable installed bundles and configured MCP servers in the current profile. Requires DSH >=0.2.1-rc.3 <0.3.0-0.",
+        "zh": "在会话标题栏查看当前会话的插件和技能，并启停当前 profile 中的插件包与 MCP 服务。需 DSH >=0.2.1-rc.3 <0.3.0-0。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@deepseek-ai/dsh-mcp-settings",
+      "version": "1.0.5",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/phoenixlucky/dsh-mcp-settings",
+        "commit": "a731d3de18162e91c0f28e27b098ed3d2dba46cf",
+        "integrity": "sha512-ynXEYBGf1DJAsaZyrWfg5/gOlnrIPAzFsMmxMTRs9KsOnrsFvaI7V4undn1/InTTTNruya15esG1aM4fOnkq8w==",
+        "publishedAt": "2026-10-27T14:45:24Z"
+      },
+      "title": {
+        "en": "MCP Settings",
+        "zh": "MCP 设置"
+      },
+      "description": {
+        "en": "Manage MCP servers and optionally configure a Chrome connector and VISION-LIAO memory from Settings. Enables a local new-gold endpoint by default; requires a profile with the Settings UI. No DSH compatibility range is declared.",
+        "zh": "在设置中管理 MCP 服务，可选配置 Chrome 连接器和 VISION-LIAO 记忆。默认启用本机 new-gold 端点；需包含设置界面的 profile，未声明 DSH 兼容范围。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "@deepseek-ai/dsh-theme",
+      "version": "1.0.9",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/phoenixlucky/dsh-theme",
+        "commit": "bdbf63405da2f7430cacb1ba6adb528769442287",
+        "integrity": "sha512-RP6G67Gj5moY2vvZ0hmYpFPKQWJZAkCtFCUMroVuQX5V9f7upJiYkOWOQ2KBuTl1exSBJnoqDIT4dLbyzVF1Mg==",
+        "publishedAt": "2026-10-28T07:59:01Z"
+      },
+      "title": {
+        "en": "WJ Radiance Themes",
+        "zh": "WJ 星耀主题"
+      },
+      "description": {
+        "en": "Choose from six bundled themes and wallpapers, including VIP Golden Radiance, in the theme settings. The archive is about 37 MB; requires DSH >=0.2.1-rc.3 <0.3.0.",
+        "zh": "在主题设置中切换六款随包壁纸和配色，包含 VIP 金耀主题。归档约 37 MB；需 DSH >=0.2.1-rc.3 <0.3.0。"
+      },
+      "category": "appearance"
     }
   ]
 }

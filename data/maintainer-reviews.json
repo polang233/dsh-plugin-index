@@ -51,6 +51,32 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "@deepseek-ai/dsh-mcp-settings",
+      "version": "1.0.5",
+      "integrity": "sha512-ynXEYBGf1DJAsaZyrWfg5/gOlnrIPAzFsMmxMTRs9KsOnrsFvaI7V4undn1/InTTTNruya15esG1aM4fOnkq8w==",
+      "repository": "https://github.com/phoenixlucky/dsh-mcp-settings",
+      "source": {
+        "type": "git",
+        "commit": "a731d3de18162e91c0f28e27b098ed3d2dba46cf"
+      },
+      "reviewedAt": "2026-10-28T08:24:57.268Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@deepseek-ai/dsh-theme",
+      "version": "1.0.9",
+      "integrity": "sha512-RP6G67Gj5moY2vvZ0hmYpFPKQWJZAkCtFCUMroVuQX5V9f7upJiYkOWOQ2KBuTl1exSBJnoqDIT4dLbyzVF1Mg==",
+      "repository": "https://github.com/phoenixlucky/dsh-theme",
+      "source": {
+        "type": "git",
+        "commit": "bdbf63405da2f7430cacb1ba6adb528769442287"
+      },
+      "reviewedAt": "2026-10-28T08:24:57.268Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
       "name": "@dr-co/dsh-secret-form",
       "version": "0.3.0",
       "integrity": "sha512-b+KEL8nLN/D0p0la4YWVwAOa19a+MXYtW/bNcB1XH46QG019HRLHC1z1aPFsZ351i3H8awGKE91LAV38WpRf9w==",
@@ -1031,6 +1057,19 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "dsh-pinned-panel",
+      "version": "0.3.0",
+      "integrity": "sha512-fNtqKD9RHlLBQbB1ccVXoPpuUHFwhHNemeAEslne7OGtKliQz6nPEnvQ1kW/1CV4a2m3u/Dfqlw/z1+e1yRN3g==",
+      "repository": "https://github.com/OuQiL/dsh-pinned-panel",
+      "source": {
+        "type": "git",
+        "commit": "34192b12561db30daebe0ecda0e301581b24e891"
+      },
+      "reviewedAt": "2026-10-28T08:24:57.268Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
       "name": "dsh-plugin-screen-control",
       "version": "0.2.4",
       "integrity": "sha512-cwF5j5S/zKNQPZLgse/i4e1DFN9w94qRc5Y5t+Z+WmINvSd2vi56rO6+9lUOiIYfLoLS6bpmMCj0SmlvQ7ZGbg==",
@@ -1066,6 +1105,18 @@
       },
       "reviewedAt": "2026-10-21T00:00:00.000Z",
       "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-session-view",
+      "version": "1.0.1",
+      "integrity": "sha512-Ow8vDCMe24JyGu4ur5+sTybYJIlf9w3ZzAPqDEORXsb524ZPlGCH0orgM4pfJBsm5lfl4fuQaVOhXiOiakGdFw==",
+      "repository": "https://github.com/gcggcg/dsh-plugin-session-view",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-28T08:24:57.266Z",
+      "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
     },
     {
