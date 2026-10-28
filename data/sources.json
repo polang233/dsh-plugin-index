@@ -11570,6 +11570,26 @@
         "zh": "在主题设置中切换六款随包壁纸和配色，包含 VIP 金耀主题。归档约 37 MB；需 DSH >=0.2.1-rc.3 <0.3.0。"
       },
       "category": "appearance"
+    },
+    {
+      "name": "spike-ltm",
+      "version": "0.2.0-rc.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/hcg91/spike-ltm",
+        "commit": "41dd23f56ef4d8e0564ffd4050034ef01ff7b454",
+        "integrity": "sha512-V/Xm4q7B8q+32S8MOiPK7KkWyzMSUBTfRXSZ8oWrZtCHfglE6BI1vXNhKq4dbbK4+n2u9538zf5V4NYhzfuzeA==",
+        "publishedAt": "2026-10-28T11:33:01Z"
+      },
+      "title": {
+        "en": "Spike Long-Term Memory",
+        "zh": "Spike 长期记忆"
+      },
+      "description": {
+        "en": "Local long-term memory with automatic extraction and semantic recall. Requires Node.js 24; downloads a local embedding model and uses the configured model for extraction and review.",
+        "zh": "本地长期记忆，支持自动提炼和语义召回。需要 Node.js 24；会下载本地向量模型，并使用已配置的模型提炼和复核。"
+      },
+      "category": "memory"
     }
   ]
 }

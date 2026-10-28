@@ -1411,6 +1411,19 @@
       "reviewedAt": "2026-10-27T08:37:27.000Z",
       "scope": "static-security",
       "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "spike-ltm",
+      "version": "0.2.0-rc.2",
+      "integrity": "sha512-V/Xm4q7B8q+32S8MOiPK7KkWyzMSUBTfRXSZ8oWrZtCHfglE6BI1vXNhKq4dbbK4+n2u9538zf5V4NYhzfuzeA==",
+      "repository": "https://github.com/hcg91/spike-ltm",
+      "source": {
+        "type": "git",
+        "commit": "41dd23f56ef4d8e0564ffd4050034ef01ff7b454"
+      },
+      "reviewedAt": "2026-10-28T12:09:45.137Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
