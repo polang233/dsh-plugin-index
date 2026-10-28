@@ -11590,6 +11590,66 @@
         "zh": "本地长期记忆，支持自动提炼和语义召回。需要 Node.js 24；会下载本地向量模型，并使用已配置的模型提炼和复核。"
       },
       "category": "memory"
+    },
+    {
+      "name": "dsh-bid-health-check",
+      "title": {
+        "en": "Bid Response Locator",
+        "zh": "投标响应定位"
+      },
+      "description": {
+        "en": "Compare a RequirementsPack with a bid document to locate possible responses. Findings require human review; unsupported tables and attachments are omitted. Requires DSH >=0.2.1-0 <0.3.0 and Node ^22.19 or >=24.",
+        "zh": "对照招标要求清单定位投标文件中可能的响应，结果需人工核对，不覆盖表格和附件。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-excel-reconcile",
+      "title": {
+        "en": "Excel Reconcile",
+        "zh": "表格对账"
+      },
+      "description": {
+        "en": "Align two local Excel or CSV tables by key and compare selected fields with configured tolerances; produces reports and a difference workbook. Requires DSH >=0.2.1-0 <0.3.0 and Node ^22.19 or >=24.",
+        "zh": "按主键和容差对比两份本地 Excel 或 CSV 表格，生成对账报告和差异工作簿。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-invoice-ledger",
+      "title": {
+        "en": "Invoice Ledger Check",
+        "zh": "发票台账核对"
+      },
+      "description": {
+        "en": "Check a local invoice ledger for duplicate entries and arithmetic or field inconsistencies. It does not verify invoice authenticity; results need human review. Requires DSH >=0.2.1-0 <0.3.0 and Node ^22.19 or >=24.",
+        "zh": "核对本地发票台账中的重复记录、金额和字段异常；不验证发票真伪，结果需人工复核。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-payroll-audit",
+      "title": {
+        "en": "Payroll Parameter Check",
+        "zh": "工资表参数核对"
+      },
+      "description": {
+        "en": "Compare a local payroll table against supplied social-insurance, housing-fund and tax parameters; lists differences and rules it could not check. Does not file reports. Requires DSH >=0.2.1-0 <0.3.0 and Node ^22.19 or >=24.",
+        "zh": "按提供的社保、公积金和个税参数核对本地工资表，列出差异及无法执行的规则，不代申报。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-tender-requirements",
+      "title": {
+        "en": "Tender Requirements Extractor",
+        "zh": "招标要求提取"
+      },
+      "description": {
+        "en": "Extract dates, deposits and bid requirements from a tender document. Missing matches do not prove absence; supplementary documents need separate review. Requires DSH >=0.2.1-0 <0.3.0 and Node ^22.19 or >=24.",
+        "zh": "从招标主文件提取时间、保证金和投标要求；未匹配不等于不存在，补充文件需另行核对。需 DSH >=0.2.1-0 <0.3.0、Node ^22.19 或 >=24。"
+      },
+      "category": "tools"
     }
   ]
 }
