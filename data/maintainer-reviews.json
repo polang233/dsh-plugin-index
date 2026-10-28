@@ -38,6 +38,19 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "@deepseek-ai/dsh-client-ui-muyu",
+      "version": "0.1.4",
+      "integrity": "sha512-NaoK19kjD7o2Fg0jChfSJl0QxP+xp/bZRbV/ToWN+vmmHp2TzGtab9iwNXyIfvGIpFKNl+nWDLX0XMLhrg/06Q==",
+      "repository": "https://github.com/TongY1n/ui-muyu",
+      "source": {
+        "type": "git",
+        "commit": "f8d319b099d50faceeabe13e03cfab778a31490b"
+      },
+      "reviewedAt": "2026-10-28T04:36:01.886Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
       "name": "@dr-co/dsh-secret-form",
       "version": "0.3.0",
       "integrity": "sha512-b+KEL8nLN/D0p0la4YWVwAOa19a+MXYtW/bNcB1XH46QG019HRLHC1z1aPFsZ351i3H8awGKE91LAV38WpRf9w==",
@@ -380,6 +393,19 @@
       "reviewedAt": "2026-10-27T08:37:27.000Z",
       "scope": "static-security",
       "record": "docs/reviews/plugin-security-review-2026-10-27.md"
+    },
+    {
+      "name": "@rakan/dsh-sidebar-scroll",
+      "version": "0.1.1",
+      "integrity": "sha512-IyKAwWwLE03R8E+5PrwJyE09MAPnuFloV/uhZvbT1TDuMHarj5rKu7X2UG6eJWLYOISOK8GUGTpX3k3lv7IQeQ==",
+      "repository": "https://github.com/Rakanrkk/dsh-sidebar-scroll",
+      "source": {
+        "type": "git",
+        "commit": "b4bcf67095da406c5f988f204da98b8aac1579ba"
+      },
+      "reviewedAt": "2026-10-28T04:36:01.887Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     },
     {
       "name": "@smalltailqwq/dsh-client-ui-skin-deep-whale-manager",
@@ -845,6 +871,19 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "dsh-markup",
+      "version": "0.2.0",
+      "integrity": "sha512-3m0P43mrg/mEE+5PIRgt2tzP7kdQU/5xJYDfGNOc0hP+P9XsttS3BRLgsgFwRqAx0Nmhu2WZbd/60K8MJpBbew==",
+      "repository": "https://github.com/nickzhangcomes/dsh-markup",
+      "source": {
+        "type": "git",
+        "commit": "46de29035c083943e8cea0051724ddceb04ae2c2"
+      },
+      "reviewedAt": "2026-10-28T04:36:01.887Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
       "name": "dsh-matrix-theme",
       "version": "0.5.0",
       "integrity": "sha512-A+YDBXCahNB4cnhyP6dmhj46hRz0mNKCtTz+zj/Sl8xOgFGAeAPKRpg6PLPebxB+G+WENe3wWE2qp/D8otoUfw==",
@@ -1004,6 +1043,20 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "dsh-plugin-session-file-purge",
+      "version": "0.1.4",
+      "integrity": "sha512-33Vm02rLqa/iN8pYcuqsDrCUeiqBsTBKXQbBezh0OVY+W6RLG6NSQExNZwGXnk5xnxbrv8RffSOEIdJ2xGegVw==",
+      "repository": "https://github.com/FJHin/dsh-plugin-session-file-purge",
+      "source": {
+        "type": "git",
+        "commit": "f4069c1c5b9872f42afab2242188633741291873",
+        "path": "dsh-plugin-session-file-purge"
+      },
+      "reviewedAt": "2026-10-28T04:36:01.887Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
       "name": "dsh-plugin-session-fulltext",
       "version": "1.0.0",
       "integrity": "sha512-LlFZ7NHXr9Gg078ob7F4wUHJ69X0IFYTzOoKOCTc4YizTr+FM4QT8WdLB+8vfoPZmYwbfFrfCnoJtAXRzAmI5A==",
@@ -1024,6 +1077,18 @@
         "type": "npm"
       },
       "reviewedAt": "2026-10-27T15:49:42.257Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-status-board",
+      "version": "0.5.0",
+      "integrity": "sha512-dW1DKYnigFmSjdr/i3+nwE6FZUHlGpjVzpE6zXlG8kfrekRbb2YPVKrIIqY0wQ28nMK8aFsnWO4e6p6i6rGEMA==",
+      "repository": "https://github.com/ccclucky/dsh-plugin-status-board",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-28T04:36:01.887Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
     },
@@ -1199,6 +1264,19 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "dsh-stickers",
+      "version": "0.1.5",
+      "integrity": "sha512-HU7gxfzXQTdDy2Bfqo6GD4XJHKKn6yuoFOJnUPgQYLdv70JLgPEcCkpERiszKE8+pjL+BjsOAMvTYJzB38jyOg==",
+      "repository": "https://github.com/Akie-Star/dsh-stickers",
+      "source": {
+        "type": "git",
+        "commit": "322a11cfa605c6fa23161cbbd0790fb490ebe6d4"
+      },
+      "reviewedAt": "2026-10-28T04:36:01.887Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
       "name": "dsh-table-ingest",
       "version": "0.2.1",
       "integrity": "sha512-DfTdzAlo9RuHHNWFeAieLAX8S4xyyC4HPRFIpkM3+ViAOIlVbkunufNAo5OA+QLXnGl3Zwcgzar+Rsu7Vl9e0w==",
@@ -1207,6 +1285,19 @@
         "type": "npm"
       },
       "reviewedAt": "2026-10-27T12:45:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-usage-bar",
+      "version": "0.1.0",
+      "integrity": "sha512-DXOymU5H0ggsnT0kvaRyFzZnUCUtvFqlJ8Y4n1UIUhyDh4zLbLNgPsjVa87MUwxFvlTJff6fJ2M9t8CUprn5Eg==",
+      "repository": "https://github.com/jayden645253207-hub/dsh-usage-bar",
+      "source": {
+        "type": "git",
+        "commit": "6f182d4910309b51d28586e8ab822dfdabc24704"
+      },
+      "reviewedAt": "2026-10-28T04:36:01.887Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
     },

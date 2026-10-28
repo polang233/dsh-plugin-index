@@ -11053,14 +11053,22 @@
       "category": "tools"
     },
     {
-      "name": "dsh-doc-review",
+      "name": "dsh-markup",
+      "version": "0.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/nickzhangcomes/dsh-markup",
+        "commit": "46de29035c083943e8cea0051724ddceb04ae2c2",
+        "integrity": "sha512-3m0P43mrg/mEE+5PIRgt2tzP7kdQU/5xJYDfGNOc0hP+P9XsttS3BRLgsgFwRqAx0Nmhu2WZbd/60K8MJpBbew==",
+        "publishedAt": "2026-10-27T15:51:13Z"
+      },
       "title": {
-        "en": "Document Review",
-        "zh": "文档审阅与批注"
+        "en": "DSH Markup",
+        "zh": "DSH Markup · 对话批注与文档审阅"
       },
       "description": {
-        "en": "Annotate model replies, read documents, discuss comment threads and revise text, then bring a summary back to the conversation. Requires DSH 0.2.1-rc.3 or later. Reviews are stored in browser localStorage; model-assisted review consumes tokens.",
-        "zh": "给模型回复添加多处批注，以文档模式阅读、讨论评论和修订正文，再把摘要带回对话。需要 DSH 0.2.1-rc.3 或更高版本；记录保存在浏览器本地，模型辅助审阅会消耗 token。"
+        "en": "Annotate model replies, review documents and bring summaries back to a conversation. Previously dsh-doc-review; remove the old package before installing. Records stay in browser localStorage; model-assisted review uses tokens. Requires DSH >=0.2.1-rc.3.",
+        "zh": "批注模型回复、审阅文档并将摘要带回对话。原名 dsh-doc-review，安装前请先卸载旧包；记录保存在浏览器本地，模型辅助审阅消耗 token。需 DSH >=0.2.1-rc.3。"
       },
       "category": "interface"
     },
@@ -11394,14 +11402,14 @@
     },
     {
       "name": "dsh-plugin-session-file-purge",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "source": {
         "type": "git",
         "url": "https://github.com/FJHin/dsh-plugin-session-file-purge",
-        "commit": "ad507390440257afb2df8c2b72306ad67113d35f",
-        "path": "dsh-plugin-session-file-purge",
-        "integrity": "sha512-v2QFz+j6UW0ONjzP+P+Zh1GHh3FCtctSgqWoRDH4ye5+8JU6QTddyrkRE2hNy6GXq9ol0IziCQx73pYLVfaMTQ==",
-        "publishedAt": "2026-10-27T14:46:08Z"
+        "commit": "f4069c1c5b9872f42afab2242188633741291873",
+        "integrity": "sha512-33Vm02rLqa/iN8pYcuqsDrCUeiqBsTBKXQbBezh0OVY+W6RLG6NSQExNZwGXnk5xnxbrv8RffSOEIdJ2xGegVw==",
+        "publishedAt": "2026-10-27T15:21:24Z",
+        "path": "dsh-plugin-session-file-purge"
       },
       "title": {
         "en": "Session File Purge",
@@ -11409,8 +11417,8 @@
       },
       "category": "tools",
       "description": {
-        "en": "Preview and move session workspace files to a local trash when deleting a session; files can be restored. If a parent directory becomes a link, restore may follow it. Requires DSH >=0.2.0-rc.2 <0.3.0 and Node >=20.",
-        "zh": "删除会话时预览并将工作区文件移入本地回收站，支持恢复。若上级目录变成链接，恢复可能跟随该链接。需 DSH >=0.2.0-rc.2 <0.3.0、Node >=20。"
+        "en": "Preview and move selected session workspace files to a local trash when deleting a session; files can be restored. Requires DSH >=0.2.0-rc.2 <0.3.0 and Node >=20.",
+        "zh": "删除会话时预览并将选中的工作区文件移入本地回收站，支持恢复。需 DSH >=0.2.0-rc.2 <0.3.0、Node >=20。"
       }
     },
     {
@@ -11421,9 +11429,95 @@
       },
       "category": "interface",
       "description": {
-        "en": "Group sessions by decisions, running work and recent activity, with a floating board and inline answers for supported questions. Requires Node >=20; no explicit DSH version range is declared.",
-        "zh": "按待决策、执行中和近期记录分类展示会话，提供悬浮看板，并支持直接回答部分问题。需 Node >=20；未显式声明 DSH 兼容范围。"
+        "en": "Group sessions by decisions, running work, completed unread and recent activity, with a floating board and inline answers for supported questions. Requires Node >=20; no explicit DSH version range is declared.",
+        "zh": "按待决策、执行中、完成未读和近期记录分类展示会话，提供悬浮看板，并支持直接回答部分问题。需 Node >=20；未显式声明 DSH 兼容范围。"
       }
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-muyu",
+      "version": "0.1.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/TongY1n/ui-muyu",
+        "commit": "f8d319b099d50faceeabe13e03cfab778a31490b",
+        "integrity": "sha512-NaoK19kjD7o2Fg0jChfSJl0QxP+xp/bZRbV/ToWN+vmmHp2TzGtab9iwNXyIfvGIpFKNl+nWDLX0XMLhrg/06Q==",
+        "publishedAt": "2026-10-26T16:01:40Z"
+      },
+      "repositoryReview": {
+        "version": "0.1.4",
+        "integrity": "sha512-NaoK19kjD7o2Fg0jChfSJl0QxP+xp/bZRbV/ToWN+vmmHp2TzGtab9iwNXyIfvGIpFKNl+nWDLX0XMLhrg/06Q==",
+        "commit": "f8d319b099d50faceeabe13e03cfab778a31490b",
+        "url": "https://github.com/TongY1n/ui-muyu"
+      },
+      "title": {
+        "en": "Cyber Wooden Fish",
+        "zh": "赛博木鱼"
+      },
+      "description": {
+        "en": "A draggable wooden-fish widget that counts taps and stores its state in the browser. Maintained by TongY1n; requires DSH >=0.2.1-alpha.2 <0.3.0.",
+        "zh": "可拖拽的赛博木鱼，点击累计功德，状态保存在浏览器中。由 TongY1n 维护；需 DSH >=0.2.1-alpha.2 <0.3.0。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-usage-bar",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/jayden645253207-hub/dsh-usage-bar",
+        "commit": "6f182d4910309b51d28586e8ab822dfdabc24704",
+        "integrity": "sha512-DXOymU5H0ggsnT0kvaRyFzZnUCUtvFqlJ8Y4n1UIUhyDh4zLbLNgPsjVa87MUwxFvlTJff6fJ2M9t8CUprn5Eg==",
+        "publishedAt": "2026-10-28T03:05:29Z"
+      },
+      "title": {
+        "en": "Usage Bar",
+        "zh": "用量状态条"
+      },
+      "description": {
+        "en": "Show session token usage and an estimated CNY cost using bundled DeepSeek prices. It applies the current model and time to the whole session; other providers, model changes, peak changes and holidays can make the estimate inaccurate. No DSH compatibility range is declared.",
+        "zh": "显示会话 token 用量，并按内置 DeepSeek 价格估算人民币费用。以当前模型和时段计算整个会话，其他供应商、切换模型、跨时段及节假日会造成偏差；未声明 DSH 兼容范围。"
+      },
+      "category": "usage"
+    },
+    {
+      "name": "@rakan/dsh-sidebar-scroll",
+      "version": "0.1.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Rakanrkk/dsh-sidebar-scroll",
+        "commit": "b4bcf67095da406c5f988f204da98b8aac1579ba",
+        "integrity": "sha512-IyKAwWwLE03R8E+5PrwJyE09MAPnuFloV/uhZvbT1TDuMHarj5rKu7X2UG6eJWLYOISOK8GUGTpX3k3lv7IQeQ==",
+        "publishedAt": "2026-10-28T03:21:27Z"
+      },
+      "title": {
+        "en": "Sidebar Scroll",
+        "zh": "侧栏共用滚动"
+      },
+      "description": {
+        "en": "Make sidebar navigation, projects and sessions share a scroll area. Replaces the sidebar presentation; use one sidebar replacement at a time. Requires DSH 0.2.1-rc.3 and Node >=24.",
+        "zh": "让侧栏菜单、项目和会话共用滚动区。会替换侧栏展示组件，请同时只启用一个侧栏替换插件；需 DSH 0.2.1-rc.3、Node >=24。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-stickers",
+      "version": "0.1.5",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Akie-Star/dsh-stickers",
+        "commit": "322a11cfa605c6fa23161cbbd0790fb490ebe6d4",
+        "integrity": "sha512-HU7gxfzXQTdDy2Bfqo6GD4XJHKKn6yuoFOJnUPgQYLdv70JLgPEcCkpERiszKE8+pjL+BjsOAMvTYJzB38jyOg==",
+        "publishedAt": "2026-10-27T18:19:40Z"
+      },
+      "title": {
+        "en": "Big Fat Fish Stickers",
+        "zh": "大肥鱼表情包"
+      },
+      "description": {
+        "en": "Pick and preview stickers by emotion and collection. Uses your own image library and catalog; requires Node >=22 and Python 3.10+ or the DSH bundled Python. No DSH version range is declared.",
+        "zh": "按情绪和素材组挑选、预览表情包。需自备素材库与索引，并使用 Node >=22、Python 3.10+ 或 DSH 捆绑 Python；未声明 DSH 兼容范围。"
+      },
+      "category": "tools"
     }
   ]
 }
