@@ -11869,6 +11869,26 @@
         "integrity": "sha512-dovv+6tGj28Xt8/4y7c+2MOT4d809jWVxgoke83otIJuYbjpt+D1o+yBsFdIheVdRSpriLUrXqScwaPWq4BYow==",
         "publishedAt": "2026-10-29T13:55:49.000Z"
       }
+    },
+    {
+      "name": "dsh-ui-we2",
+      "version": "0.10.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/zgj980644897/dsh-ui-we2",
+        "commit": "84aa6abcfb6fa3a3f6cf1df5647c2634cc404b90",
+        "integrity": "sha512-sEZ/oasZeoJU4gcY/8A00Q3Pn1wLZZRx4SJ2QdCxjVESHMMUAxEi7l1VdEhTYa2pgdW0kD2Gi97p49837IkyXA==",
+        "publishedAt": "2026-10-29T14:03:36Z"
+      },
+      "title": {
+        "en": "WE2 Console",
+        "zh": "WE2 控制台"
+      },
+      "description": {
+        "en": "A paper and ink science-fiction theme for the DSH conversation interface. No DSH compatibility range is declared.",
+        "zh": "为 DSH 对话界面提供米白与墨黑科幻风格；未声明 DSH 兼容范围。"
+      },
+      "category": "appearance"
     }
   ]
 }
