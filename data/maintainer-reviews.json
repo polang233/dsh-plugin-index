@@ -1741,6 +1741,19 @@
       "reviewedAt": "2026-10-29T14:19:43.002Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ui-we2",
+      "version": "0.12.0",
+      "integrity": "sha512-Mmh+URX2OgksYS+AaV1vxAowU40oJG4aqMcw7KfIvZopL0jmv8RDzNPSoJgicHIaOSh2w9QDxWs0EF58G3oTJQ==",
+      "repository": "https://github.com/zgj980644897/dsh-ui-we2",
+      "source": {
+        "type": "git",
+        "commit": "60c61c928376ecffa1cc1bf3aea912dbdee354dd"
+      },
+      "reviewedAt": "2026-10-29T14:34:44.844Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
