@@ -56,6 +56,10 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
       - run: pnpm validate
       - run: pnpm test:browser
+      - name: Include domain ownership verification
+        run: |
+          mkdir -p public/.well-known/teo-verification
+          cp site/domain-verification/*.txt public/.well-known/teo-verification/
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
@@ -66,6 +70,7 @@ jobs:
         with:
           name: validated-index
           path: public/
+          include-hidden-files: true
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request' && vars.PUBLISH_INDEX == 'true'
         with:
