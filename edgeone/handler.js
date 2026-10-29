@@ -40,7 +40,12 @@ export async function onRequest(context) {
       return new Response(null, { headers: { 'content-type': 'application/json', 'cache-control': 'no-store', 'access-control-allow-origin': '*', 'x-dsh-release': release.expectedHash } });
     }
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: { 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET, HEAD' } });
-    return serveIndex(request, config, { cache: caches.default, store, waitUntil });
+    try { return await serveIndex(request, config, { cache: caches.default, store, waitUntil }); }
+    catch (error) {
+      console.error('Index gateway failed', error?.name ?? 'Error');
+      const diagnostic = secret && request.headers.get('authorization') === `Bearer ${secret}`;
+      return new Response(JSON.stringify(diagnostic ? { error: error?.name, detail: String(error?.message ?? '').slice(0, 200) } : { error: 'temporarily-unavailable' }), { status: 503, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', 'access-control-allow-origin': '*' } });
+    }
   }
   if (url.pathname.startsWith('/internal/')) return new Response('Not found', { status: 404 });
   const api = ['/stats.json', '/likes.json', '/api/like', '/api/stars'].includes(url.pathname) || url.pathname.startsWith('/badge/');

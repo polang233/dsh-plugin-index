@@ -179,7 +179,7 @@ jobs:
           exit 1
 
   edgeone:
-    needs: [build, check-mirrors]
+    needs: [build, cloudflare, deploy, check-mirrors]
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.PUBLISH_EDGEONE == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10

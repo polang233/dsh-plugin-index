@@ -3,27 +3,10 @@ const MAX_INDEX_BYTES = 25 * 1024 * 1024;
 async function readBounded(response, maxBytes) {
   const length = Number(response.headers.get('content-length'));
   if (Number.isFinite(length) && length > maxBytes) throw new Error('Index is too large');
-  const reader = response.body?.getReader();
-  if (!reader) throw new Error('Index response has no body');
-  const chunks = [];
-  let total = 0;
-  try {
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      total += value.byteLength;
-      if (total > maxBytes) throw new Error('Index is too large');
-      chunks.push(value);
-    }
-  } finally {
-    reader.releaseLock();
-  }
-  const bytes = new Uint8Array(total);
-  let offset = 0;
-  for (const chunk of chunks) {
-    bytes.set(chunk, offset);
-    offset += chunk.byteLength;
-  }
+  // Use the platform's native body decoder for fetched responses. Its stream
+  // chunks can differ from those produced by a locally constructed Response.
+  const bytes = new Uint8Array(await response.arrayBuffer());
+  if (bytes.byteLength > maxBytes) throw new Error('Index is too large');
   return bytes;
 }
 
