@@ -62,21 +62,19 @@ test('storage failures are not acknowledged, so the gateway can retain the event
   assert.equal(response.headers.get('cache-control'), 'no-store');
 });
 
-test('late events are acknowledged only after the historical report is updated', async t => {
+test('late events commit to the durable counter without rewriting D1 for every replay', async t => {
   const { env, counter } = fixture(t);
-  let fail = true;
   let batches = 0;
   env.DB = {
     prepare(sql) { return { bind(...values) { return { sql, values }; } }; },
-    async batch() { batches++; if (fail) throw new Error('synthetic D1 outage'); },
+    async batch() { batches++; throw new Error('synthetic D1 outage'); },
   };
   const tomorrow = now + 86_400_000;
   const request = await signedReadRequest(event, { endpoint, secret, now: tomorrow });
-  assert.equal((await receiveRead(request.clone(), env, tomorrow)).status, 503);
+  assert.equal((await receiveRead(request.clone(), env, tomorrow)).status, 200);
   assert.equal(counter.snapshot().reads, 1);
-  fail = false;
   const retried = await receiveRead(request.clone(), env, tomorrow);
   assert.deepEqual(await retried.json(), { accepted: true, duplicate: true });
   assert.equal(counter.snapshot().reads, 1);
-  assert.equal(batches, 2);
+  assert.equal(batches, 0);
 });

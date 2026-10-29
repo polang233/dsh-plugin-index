@@ -23,7 +23,8 @@ export async function syncReadSnapshot(db, snapshot, counterFromDay) {
     (day TEXT NOT NULL, country TEXT NOT NULL, reads INTEGER NOT NULL, readers INTEGER NOT NULL, PRIMARY KEY(day, country))`)];
   const delta = column => `MAX(0, ? - COALESCE((SELECT ${column} FROM read_counter_sync WHERE day = ? AND country = ?), 0))`;
   const watermark = (country, count, people) => db.prepare(`INSERT INTO read_counter_sync VALUES (?, ?, ?, ?)
-    ON CONFLICT(day, country) DO UPDATE SET reads = MAX(reads, excluded.reads), readers = MAX(readers, excluded.readers)`)
+    ON CONFLICT(day, country) DO UPDATE SET reads = MAX(reads, excluded.reads), readers = MAX(readers, excluded.readers)
+    WHERE excluded.reads > reads OR excluded.readers > readers`)
     .bind(day, country, count, people);
   statements.push(db.prepare(`INSERT INTO reads (day, reads, readers) VALUES (?, ${delta('reads')}, ${delta('readers')})
     ON CONFLICT(day) DO UPDATE SET reads = reads + excluded.reads, readers = readers + excluded.readers

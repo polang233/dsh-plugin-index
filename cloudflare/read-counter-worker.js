@@ -28,7 +28,12 @@ export class DailyReadStats extends DurableObject {
   async snapshot() { return this.counter.snapshot(); }
 
   async alarm() {
-    await syncReadSnapshot(this.env.DB, this.counter.snapshot(), this.env.COUNTER_FROM_DAY);
+    try { await syncReadSnapshot(this.env.DB, this.counter.snapshot(), this.env.COUNTER_FROM_DAY); }
+    catch {
+      await this.ctx.storage.setAlarm(Date.now() + 300_000);
+      console.error('Read report synchronization deferred');
+      return;
+    }
     const expires = Date.parse(this.counter.day + 'T00:00:00Z') + 32 * 86_400_000;
     if (Date.now() >= expires) await this.ctx.storage.deleteAll();
     else await this.ctx.storage.setAlarm(expires);

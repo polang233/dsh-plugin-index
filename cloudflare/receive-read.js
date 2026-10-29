@@ -1,6 +1,5 @@
 import { verifySignedRead } from '../shared/signed-read.js';
 import { isReadDay } from '../shared/read-event.js';
-import { syncReadSnapshot } from './sync-read-snapshot.js';
 
 function reply(body, status) {
   return new Response(JSON.stringify(body), { status, headers: {
@@ -23,7 +22,8 @@ export async function receiveRead(request, env, now = Date.now()) {
   try {
     const counter = env.READ_COUNTER.getByName(event.day);
     const inserted = await counter.ingest(event);
-    if (event.day < today) await syncReadSnapshot(env.DB, await counter.snapshot(), env.COUNTER_FROM_DAY);
+    // ingest() commits both the event and a durable synchronization alarm.
+    // Replaying yesterday's backlog must not rewrite every country per event.
     return reply({ accepted: true, duplicate: !inserted }, 200);
   } catch {
     // The sender retains the event for retry after an uncertain acknowledgement.
