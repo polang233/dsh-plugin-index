@@ -56,10 +56,12 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
       - run: pnpm validate
       - run: pnpm test:browser
-      - name: Include domain ownership verification
+      - name: Include domain and certificate verification
         run: |
           mkdir -p public/.well-known/teo-verification
+          mkdir -p public/.well-known/pki-validation
           cp site/domain-verification/*.txt public/.well-known/teo-verification/
+          cp site/certificate-verification/*.txt public/.well-known/pki-validation/
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
