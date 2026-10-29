@@ -11206,21 +11206,21 @@
     },
     {
       "name": "dsh-pinned-panel",
-      "version": "0.3.0",
+      "version": "0.5.0",
       "source": {
         "type": "git",
         "url": "https://github.com/OuQiL/dsh-pinned-panel",
-        "commit": "34192b12561db30daebe0ecda0e301581b24e891",
-        "integrity": "sha512-fNtqKD9RHlLBQbB1ccVXoPpuUHFwhHNemeAEslne7OGtKliQz6nPEnvQ1kW/1CV4a2m3u/Dfqlw/z1+e1yRN3g==",
-        "publishedAt": "2026-10-28T05:12:53Z"
+        "commit": "2fe06626901d14c4d2323f9db253ced12f712d28",
+        "integrity": "sha512-BJ24cu9ZSCvbH6J2p9h9cjYc3S/lk+dQVRwHZ1bFU2D/KPthSUZQx8ElU17OeACgWzef3pyG4nThfhMDuyjXvA==",
+        "publishedAt": "2026-10-29T06:02:15.000Z"
       },
       "title": {
         "en": "Pinned Sessions",
         "zh": "跨工作区置顶会话"
       },
       "description": {
-        "en": "Collect pinned sessions across workspaces in one collapsible group at the top of the sidebar, opening them in their original workspace. Uses host pin state and no network. Depends on sidebar DOM structure; no DSH version range is declared.",
-        "zh": "把各工作区的置顶会话汇总到侧栏顶部可折叠分组，点击仍在原工作区打开。直接使用宿主置顶状态，无网络请求；依赖侧栏 DOM 结构，包内未声明适用的 DSH 版本。"
+        "en": "Collect pinned sessions across workspaces in the sidebar, with rename, fork, unpin and archive actions. Depends on sidebar DOM structure; no DSH version range is declared.",
+        "zh": "在侧栏汇总跨工作区置顶会话，支持重命名、分叉、取消置顶及归档。依赖侧栏 DOM 结构，未声明 DSH 版本范围。"
       },
       "category": "interface"
     },
@@ -11461,21 +11461,21 @@
     },
     {
       "name": "dsh-usage-bar",
-      "version": "0.1.0",
+      "version": "1.0.0",
       "source": {
         "type": "git",
         "url": "https://github.com/jayden645253207-hub/dsh-usage-bar",
-        "commit": "6f182d4910309b51d28586e8ab822dfdabc24704",
-        "integrity": "sha512-DXOymU5H0ggsnT0kvaRyFzZnUCUtvFqlJ8Y4n1UIUhyDh4zLbLNgPsjVa87MUwxFvlTJff6fJ2M9t8CUprn5Eg==",
-        "publishedAt": "2026-10-28T03:05:29Z"
+        "commit": "ebc6b3690a07a2ef0f1fe9ff6a06798d50f7bfb5",
+        "integrity": "sha512-o/coCvfcpyosIuROxoV10mWV5ZaXtQ3tdakSprHCTsPhmPhYQG6Ko0xDc94lebRcAAnMMZjPNhGnaDnkEjAZpw==",
+        "publishedAt": "2026-10-29T06:04:05.000Z"
       },
       "title": {
         "en": "Usage Bar",
         "zh": "用量状态条"
       },
       "description": {
-        "en": "Show session token usage and an estimated CNY cost using bundled DeepSeek prices. It applies the current model and time to the whole session; other providers, model changes, peak changes and holidays can make the estimate inaccurate. No DSH compatibility range is declared.",
-        "zh": "显示会话 token 用量，并按内置 DeepSeek 价格估算人民币费用。以当前模型和时段计算整个会话，其他供应商、切换模型、跨时段及节假日会造成偏差；未声明 DSH 兼容范围。"
+        "en": "Display session token usage and estimated DeepSeek cost beneath the composer. Public holidays are not modelled; no DSH version range is declared.",
+        "zh": "在输入框下显示会话 token 用量和 DeepSeek 费用估算；未计算法定节假日，未声明 DSH 版本范围。"
       },
       "category": "usage"
     },
@@ -11674,6 +11674,201 @@
         "zh": "接入个人微信的文字、图片和文件消息，使用前需配置允许的联系人。采用逆向协议，启用后可主动发消息，建议使用备用账号；需 Node >=22.13、DSH >=0.2.1-alpha.4 <0.3.0。"
       },
       "category": "integrations"
+    },
+    {
+      "name": "dsh-bili-danmaku-lite",
+      "title": {
+        "en": "Bili Danmaku Lite",
+        "zh": "B站直播弹幕"
+      },
+      "description": {
+        "en": "Read and send live-room chat with optional AI replies and speech transcription. Requires Python, Bilibili credentials for sending, and user-approved rooms.",
+        "zh": "读取和发送直播弹幕，可选 AI 陪聊与语音转写。需要 Python，发送需 B 站凭据，直播间需由用户放行。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-composer-balance",
+      "title": {
+        "en": "Composer Balance",
+        "zh": "输入框余额"
+      },
+      "description": {
+        "en": "Display DeepSeek account balance and estimated session cost below the composer. Requires a configured DeepSeek API key.",
+        "zh": "在输入框下显示 DeepSeek 余额和会话费用估算，需要配置 DeepSeek API Key。"
+      },
+      "category": "usage"
+    },
+    {
+      "name": "@estelle-ge/dsh-plugin-session-cleaner",
+      "title": {
+        "en": "Session Cleaner",
+        "zh": "会话清理"
+      },
+      "description": {
+        "en": "Permanently delete sessions from the sidebar after confirmation and show or hide archived sessions. Requires DSH >=0.2.1-rc.3 <0.3.0.",
+        "zh": "在侧栏确认后永久删除会话，可显示或隐藏归档会话。需 DSH >=0.2.1-rc.3 <0.3.0。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "chatgpt-pro-research",
+      "title": {
+        "en": "ChatGPT Pro Research",
+        "zh": "ChatGPT 网页调研"
+      },
+      "description": {
+        "en": "Run resumable ChatGPT web research and save local reports. Requires Chrome and a manually signed-in ChatGPT account.",
+        "zh": "通过 ChatGPT 网页进行可恢复的调研并保存本地报告，需要 Chrome 和手动登录的 ChatGPT 账号。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "gpt-image-design",
+      "title": {
+        "en": "GPT Image Design",
+        "zh": "GPT 图片设计"
+      },
+      "description": {
+        "en": "Generate images and HTML demos through ChatGPT web, or images through a compatible API. Web use requires Chrome and login; API use requires a key and may incur charges.",
+        "zh": "通过 ChatGPT 网页生成图片和 HTML 演示，或使用兼容 API 生成图片。网页模式需要 Chrome 和登录；API 模式需要密钥且可能产生费用。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-continue-button",
+      "title": {
+        "en": "Continue Button",
+        "zh": "继续按钮"
+      },
+      "description": {
+        "en": "Add an editable one-click send button beside the composer. Requires DSH >=0.2.1-rc.2 <0.3.0.",
+        "zh": "在输入框旁添加可编辑文字的一键发送按钮。需 DSH >=0.2.1-rc.2 <0.3.0。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-markboard",
+      "title": {
+        "en": "Markboard",
+        "zh": "消息标记看板"
+      },
+      "description": {
+        "en": "Mark conversation messages, search them across sessions and jump back to their source. Marks are stored in the local browser.",
+        "zh": "标记对话消息，在侧栏跨会话搜索并跳回原文；标记保存在本地浏览器。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@sputnikzaychik/dsh-qq-bot",
+      "title": {
+        "en": "QQ Bot",
+        "zh": "QQ 机器人"
+      },
+      "description": {
+        "en": "Connect QQ adapters to DSH conversations with access controls and optional proactive messages. Requires an adapter and owner configuration.",
+        "zh": "通过 QQ 适配器连接 DSH 会话，支持权限控制和可选主动消息；需要配置适配器和拥有者。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "deepseek-harness-intelligent-ui",
+      "title": {
+        "en": "Intelligent UI",
+        "zh": "智能交互界面"
+      },
+      "description": {
+        "en": "Render model-generated interfaces, charts and sandboxed interactive widgets in DSH. Requires Node >=22.13.",
+        "zh": "在 DSH 中展示模型生成的界面、图表和沙箱交互组件，需要 Node >=22.13。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-mcp-skill-manage",
+      "title": {
+        "en": "MCP & Skill Manager",
+        "zh": "MCP 与技能管理"
+      },
+      "description": {
+        "en": "Manage and share agent skills and MCP server configuration across supported tools, including backup and restore. Requires DSH >=0.2.1-rc.3 <0.3.0.",
+        "zh": "跨支持的工具管理和共享技能及 MCP 配置，支持备份恢复。需 DSH >=0.2.1-rc.3 <0.3.0。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-ssh-manage",
+      "title": {
+        "en": "SSH Manager",
+        "zh": "SSH 管理"
+      },
+      "description": {
+        "en": "Manage SSH hosts, SFTP and terminal sessions, with encrypted saved passwords. Requires DSH >=0.2.1-rc.3 <0.3.0.",
+        "zh": "管理 SSH 主机、SFTP 和终端会话，可加密保存密码。需 DSH >=0.2.1-rc.3 <0.3.0。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@dr-co/dsh-websearch",
+      "title": {
+        "en": "Web Search",
+        "zh": "多供应商网页搜索"
+      },
+      "description": {
+        "en": "Search and retrieve pages through configurable providers; provider API keys may be required and usage may incur charges.",
+        "zh": "使用可配置的供应商搜索和读取网页；可能需要 API 密钥并产生费用。"
+      },
+      "category": "providers",
+      "version": "0.3.0",
+      "repositoryReview": {
+        "version": "0.3.0",
+        "integrity": "sha512-gIHqO57CyZW/OmcSCtLW/unntT6La2IwQ8fEiTlHjonesIBSKGKksh1k20AtFvCu582c9XF3OC3a0n9oQkdrUA==",
+        "commit": "1b1977494aa2a65d3bd759588616cbc2f3edd331",
+        "url": "https://github.com/unera/dsh-websearch"
+      }
+    },
+    {
+      "name": "dsh-cerebrum",
+      "title": {
+        "en": "Cerebrum",
+        "zh": "Cerebrum 记忆与情绪"
+      },
+      "description": {
+        "en": "Add local memory, personality and emotion tools with an optional dashboard. Its local API is enabled without a token by default; configure a token or disable the API if local access is a concern.",
+        "zh": "提供本地记忆、性格、情绪工具和可选看板。本机 API 默认开启且未设置令牌；如需限制本机访问，请配置令牌或关闭 API。"
+      },
+      "category": "memory"
+    },
+    {
+      "name": "dsh-xiaozhushou",
+      "title": {
+        "en": "小助手",
+        "zh": "小助手任务看板"
+      },
+      "description": {
+        "en": "Local task board with secretary, CEO and historian roles. Requires DSH 0.2.1-rc.3; role conversations use the configured model.",
+        "zh": "本地任务看板，包含秘书、CEO 和史官角色；需 DSH 0.2.1-rc.3，角色对话使用已配置模型。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-codex-sidechat",
+      "title": {
+        "en": "Sidechat",
+        "zh": "临时侧聊"
+      },
+      "description": {
+        "en": "Open temporary side conversations and return draft conclusions to the main chat. Replaces the host persistence and query components with adapters; requires DSH 0.2.1-rc.3 and Node >=22.19.",
+        "zh": "打开临时侧聊并向主线回传结论草稿。会以适配器替换宿主会话存储和查询组件；需 DSH 0.2.1-rc.3、Node >=22.19。"
+      },
+      "category": "interface",
+      "version": "0.2.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Admilkk/dsh-sidechat",
+        "commit": "dc949ef144fa4e34263a7b3f4c9582bd24053e2b",
+        "integrity": "sha512-dovv+6tGj28Xt8/4y7c+2MOT4d809jWVxgoke83otIJuYbjpt+D1o+yBsFdIheVdRSpriLUrXqScwaPWq4BYow==",
+        "publishedAt": "2026-10-29T13:55:49.000Z"
+      }
     }
   ]
 }
