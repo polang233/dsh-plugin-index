@@ -151,11 +151,14 @@ jobs:
         # Wrangler may still need permission to read routes and domains when the latest upload came from the dashboard.
         run: |
           tag="run-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          npx -y wrangler@4.151.1 versions upload --config cloudflare/wrangler.jsonc --tag "$tag" --strict
+          node -e 'const s=process.env.DSH_GATEWAY_AUTH_SECRET;if(!s||s.length<32)throw Error("Gateway signing secret missing");require("fs").writeFileSync(process.env.RUNNER_TEMP + "/gateway-secrets.json", JSON.stringify({GATEWAY_AUTH_SECRET:s}))'
+          npx -y wrangler@4.151.1 versions upload --config cloudflare/wrangler.jsonc --tag "$tag" --strict --keep-vars --secrets-file "$RUNNER_TEMP/gateway-secrets.json"
           npx -y wrangler@4.151.1 versions deploy --config cloudflare/wrangler.jsonc --version-tag "$tag@100" --yes
+        env:
+          DSH_GATEWAY_AUTH_SECRET: ${{ secrets.DSH_GATEWAY_AUTH_SECRET }}
       - name: Check dshopen.org without redirects
         if: env.CLOUDFLARE_API_TOKEN != ''
-        run: for attempt in 1 2 3; do node scripts/check-published.mjs https://dshopen.org/index.json && exit 0; sleep 60; done; exit 1
+        run: for attempt in 1 2 3; do node scripts/check-published.mjs https://dshopen.polang.workers.dev/index.json && exit 0; sleep 60; done; exit 1
 
   check-mirrors:
     needs: [deploy, cloudflare]
@@ -170,7 +173,39 @@ jobs:
       - name: Check both published indexes are identical
         run: |
           for attempt in 1 2 3; do
-            node scripts/check-mirror-equality.mjs && exit 0
+            node scripts/check-mirror-equality.mjs https://dshopen.polang.workers.dev/index.json https://polang233.github.io/dsh-plugin-index/index.json && exit 0
             if [ "$attempt" -lt 3 ]; then sleep 60; fi
+          done
+          exit 1
+
+  edgeone:
+    needs: [build, check-mirrors]
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.PUBLISH_EDGEONE == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.28.5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - uses: actions/download-artifact@v4
+        with:
+          name: validated-index
+          path: public/
+      - run: node scripts/package-edgeone.mjs public "$RUNNER_TEMP/edgeone-release"
+      - run: node scripts/deploy-edgeone.mjs "$RUNNER_TEMP/edgeone-release"
+        env:
+          EDGEONE_PAGES_API_TOKEN: ${{ secrets.EDGEONE_PAGES_API_TOKEN }}
+          EDGEONE_PAGES_API_REGION: global
+      - name: Check gateway and immutable release
+        run: |
+          for attempt in 1 2 3; do
+            node scripts/check-published.mjs https://network-probe.dshopen.org/index.json && exit 0
+            if [ "$attempt" -lt 3 ]; then sleep 30; fi
           done
           exit 1

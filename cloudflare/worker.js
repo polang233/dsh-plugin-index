@@ -5,6 +5,10 @@
 // With an analytics token, the country split instead comes from Cloudflare's own request analytics, which reach back
 // 30 days; it counts loads (not people) and is sampled, so D1 stays the source for every people count.
 
+import { receiveRead } from './receive-read.js';
+import { verifySignedRead } from '../shared/signed-read.js';
+import { verifySignedLike } from '../shared/signed-like.js';
+
 const COUNTED = new Set(['/index.json']);
 const PLUGIN_NAMES = new WeakMap();
 const BADGE_LOGO = new WeakMap();
@@ -12,6 +16,14 @@ const BADGE_LOGO = new WeakMap();
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (url.pathname === '/internal/read') return receiveRead(request, env);
+    // The authenticated gateway needs the same non-credential salt to preserve
+    // daily reader identities. It is never returned by public statistics APIs.
+    if (url.pathname === '/internal/config') {
+      const authenticated = await verifySignedRead(request, { secret: env.GATEWAY_AUTH_SECRET }).catch(() => null);
+      if (!authenticated) return new Response('Unauthorized', { status: 401 });
+      return new Response(JSON.stringify({ visitorSalt: env.STATS_SALT ?? 'dshopen' }), { headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
+    }
     if (url.pathname.startsWith('/badge/') && request.method === 'GET') return badge(request, env, url);
     if (url.pathname === '/likes.json' || url.pathname === '/api/like') {
       try {
@@ -21,7 +33,13 @@ export default {
             status: 204,
             headers: { 'access-control-allow-origin': '*', 'access-control-allow-methods': 'POST', 'access-control-allow-headers': 'content-type' }
           });
-          if (request.method === 'POST') return await like(request, env);
+          if (request.method === 'POST') {
+            if (request.headers.has('x-dsh-like-signature') || request.headers.has('x-dsh-voter')) {
+              request.gatewayVoter = await verifySignedLike(request, { secret: env.GATEWAY_AUTH_SECRET });
+              if (!request.gatewayVoter) return likeJson({ error: 'unauthorized' }, 403);
+            }
+            return await like(request, env);
+          }
         }
         return likeJson({ error: 'method-not-allowed' }, 405);
       } catch {
@@ -40,6 +58,11 @@ export default {
 async function count(request, env) {
   const day = new Date().toISOString().slice(0, 10);
   const hash = await visitorHash(request, env, day);
+  if (env.READ_COUNTER && day >= env.COUNTER_FROM_DAY) {
+    const country = /^[A-Z]{2}$/.test(request.cf?.country ?? '') ? request.cf.country : 'XX';
+    await env.READ_COUNTER.getByName(day).ingest({ id: crypto.randomUUID(), day, visitor: hash, country });
+    return;
+  }
   const seen = await env.DB.prepare('INSERT OR IGNORE INTO visitors (day, hash) VALUES (?, ?)').bind(day, hash).run();
   const unique = seen.meta.changes > 0 ? 1 : 0;
   await env.DB.prepare('INSERT INTO reads (day, reads, readers) VALUES (?, 1, ?) ON CONFLICT(day) DO UPDATE SET reads = reads + 1, readers = readers + ?')
@@ -63,6 +86,7 @@ async function visitorHash(request, env, day) {
 // Like votes are keyed on the address alone: the user agent is free to change, so it would let one machine vote again
 // and again. IPv6 is cut to its /64, the block one host or home is usually given.
 async function voterHash(request, env, day) {
+  if (request.gatewayVoter) return request.gatewayVoter;
   const ip = request.headers.get('cf-connecting-ip') ?? '';
   const voter = ip.includes(':') ? expandIpv6(ip).slice(0, 4).join(':') + '::/64' : ip;
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${env.STATS_SALT ?? 'dshopen'}|like|${day}|${voter}`));
@@ -281,7 +305,7 @@ async function stats(env, ctx) {
     ]);
     countries = { source: 'd1', metric: 'readers', since: first.results[0]?.day ?? null, last30Days: month.results, today: day.results };
   } catch { /* Table not created yet. */ }
-  countries = (await analyticsCountries(env, ctx)) ?? countries;
+  if (!env.READ_COUNTER) countries = (await analyticsCountries(env, ctx)) ?? countries;
   const body = {
     schema: 1,
     note: 'Reads of index.json, made when DSH loads or refreshes this market. Readers are distinct IP and user agent pairs per day.',

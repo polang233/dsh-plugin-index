@@ -1,0 +1,14 @@
+// Shared idempotent counter. The main Worker calls it through its binding.
+{
+  "name": "dshopen-read-counter",
+  "main": "read-counter-worker.js",
+  "compatibility_date": "2026-10-01",
+  "account_id": "f3ec0933397fd17fe1e7d472f4c95927",
+  "workers_dev": false,
+  "vars": { "COUNTER_FROM_DAY": "2026-10-29", "LEGACY_READ_DAY": "2026-10-29" },
+  "d1_databases": [{ "binding": "DB", "database_name": "dshopen-stats", "database_id": "408308fd-fe81-4fdd-8b5d-ce3447e53eb6" }],
+  "durable_objects": {
+    "bindings": [{ "name": "READ_COUNTER", "class_name": "DailyReadStats" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["DailyReadStats"] }]
+}
