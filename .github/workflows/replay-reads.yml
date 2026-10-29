@@ -1,0 +1,23 @@
+name: Replay queued market reads
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+permissions:
+  contents: read
+concurrency:
+  group: market-read-replay
+  cancel-in-progress: false
+jobs:
+  replay:
+    if: vars.PUBLISH_EDGEONE == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node scripts/replay-reads.mjs
+        env:
+          DSH_GATEWAY_AUTH_SECRET: ${{ secrets.DSH_GATEWAY_AUTH_SECRET }}

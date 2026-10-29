@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { DatabaseSync } from 'node:sqlite';
 import worker from '../cloudflare/worker.js';
+import { signedLikeRequest } from '../shared/signed-like.js';
 
 // A D1 stand-in that answers the statements stats() batches, by matching their SQL.
 function database() {
@@ -246,6 +247,19 @@ test('like and install share one daily vote, and a new UTC day allows another', 
   const votes = sqlite.prepare('SELECT * FROM like_votes ORDER BY day').all();
   assert.equal(votes.length, 2);
   assert.notEqual(votes[0].hash, votes[1].hash);
+});
+
+test('gateway votes dedupe with direct votes while forged identity headers are rejected', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  env.GATEWAY_AUTH_SECRET = 'synthetic-gateway-secret-with-32-characters';
+  await sendLike(env);
+  const incoming = new Request('https://gateway.example/api/like', { method: 'POST', body: JSON.stringify({ name: 'dsh-pet', source: 'install' }) });
+  const signed = await signedLikeRequest(incoming, { endpoint: 'https://dshopen.org/api/like', secret: env.GATEWAY_AUTH_SECRET, visitorSalt: env.STATS_SALT, ip: '192.0.2.1' });
+  const response = await worker.fetch(signed.clone(), env, {});
+  assert.equal((await response.json()).counted, false);
+  const forged = new Request(signed, { headers: { ...Object.fromEntries(signed.headers), 'x-dsh-voter': '0'.repeat(24) } });
+  assert.equal((await worker.fetch(forged, env, {})).status, 403);
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM like_votes').get().count, 1);
 });
 
 test('conditional index reads are counted but health checks and HEAD requests are not', async t => {

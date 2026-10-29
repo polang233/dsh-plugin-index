@@ -1,10 +1,13 @@
-// dshopen.org: the built site from public/, plus read counts for index.json.
+// Cloudflare origin: the built site and the shared statistics APIs.
 // Deploy: pnpm build, then `npx wrangler deploy --config cloudflare/wrangler.jsonc`.
 {
   "name": "dshopen",
   "main": "worker.js",
   "compatibility_date": "2026-10-01",
   "account_id": "f3ec0933397fd17fe1e7d472f4c95927",
+  "workers_dev": true,
+  "vars": { "COUNTER_FROM_DAY": "2026-10-29", "LEGACY_READ_DAY": "2026-10-29" },
+  "durable_objects": { "bindings": [{ "name": "READ_COUNTER", "class_name": "DailyReadStats", "script_name": "dshopen-read-counter" }] },
   // Every index request must reach the Worker so reads can be counted.
   "cache": { "enabled": false, "cross_version_cache": false },
   "assets": {
@@ -12,13 +15,10 @@
     "binding": "ASSETS",
     "not_found_handling": "404-page",
     // Only these paths run the Worker; everything else is served straight from the asset store.
-    "run_worker_first": ["/index.json", "/stats.json", "/likes.json", "/api/*", "/badge/*"]
+    "run_worker_first": ["/index.json", "/stats.json", "/likes.json", "/api/*", "/badge/*", "/internal/*"]
   },
   "d1_databases": [
     { "binding": "DB", "database_name": "dshopen-stats", "database_id": "408308fd-fe81-4fdd-8b5d-ce3447e53eb6" }
-  ],
-  "routes": [
-    { "pattern": "dshopen.org", "custom_domain": true }
   ],
   "observability": { "enabled": true }
 }

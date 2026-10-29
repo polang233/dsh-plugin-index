@@ -35,6 +35,8 @@
     "tar": "7.5.22"
   },
   "devDependencies": {
-    "@playwright/test": "1.64.1"
+    "@edgeone/pages-blob": "0.0.18",
+    "@playwright/test": "1.64.1",
+    "esbuild": "0.28.2"
   }
 }
