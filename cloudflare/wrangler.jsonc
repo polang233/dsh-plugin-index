@@ -5,6 +5,8 @@
   "main": "worker.js",
   "compatibility_date": "2026-10-01",
   "account_id": "f3ec0933397fd17fe1e7d472f4c95927",
+  // Match the active Worker's dashboard configuration when uploading a new version.
+  "cache": { "enabled": true, "cross_version_cache": false },
   "assets": {
     "directory": "../public",
     "binding": "ASSETS",

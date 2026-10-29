@@ -72,7 +72,8 @@ jobs:
           path: public/
 
   deploy:
-    needs: build
+    # Keep GitHub Pages on its last release if the Cloudflare upload fails.
+    needs: [build, cloudflare]
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.PUBLISH_INDEX == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -101,7 +102,8 @@ jobs:
   maintenance:
     # Keeps one issue listing failing packages and pins that fell behind upstream.
     needs: build
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    # Deployment-only fixes can skip issue updates without skipping build or publishing.
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, '[skip-maintenance]')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -138,14 +140,37 @@ jobs:
         with:
           name: validated-index
           path: public/
+      - name: Require a Cloudflare deployment token
+        if: env.CLOUDFLARE_API_TOKEN == ''
+        run: |
+          echo '::error::CLOUDFLARE_API_TOKEN is required to publish dshopen.org.'
+          exit 1
       - name: Deploy to dshopen.org
         if: env.CLOUDFLARE_API_TOKEN != ''
-        # Upload and promote a version instead of `wrangler deploy`, so CI never touches the dshopen.org
-        # domain binding and the token needs no zone permissions.
+        # Upload and promote a version instead of `wrangler deploy`, so CI does not change the domain binding.
+        # Wrangler may still need permission to read routes and domains when the latest upload came from the dashboard.
         run: |
           tag="run-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          npx -y wrangler@4.151.1 versions upload --config cloudflare/wrangler.jsonc --tag "$tag"
+          npx -y wrangler@4.151.1 versions upload --config cloudflare/wrangler.jsonc --tag "$tag" --strict
           npx -y wrangler@4.151.1 versions deploy --config cloudflare/wrangler.jsonc --version-tag "$tag@100" --yes
       - name: Check dshopen.org without redirects
         if: env.CLOUDFLARE_API_TOKEN != ''
         run: for attempt in 1 2 3; do node scripts/check-published.mjs https://dshopen.org/index.json && exit 0; sleep 60; done; exit 1
+
+  check-mirrors:
+    needs: [deploy, cloudflare]
+    if: always() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.PUBLISH_INDEX == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check both published indexes are identical
+        run: |
+          for attempt in 1 2 3; do
+            node scripts/check-mirror-equality.mjs && exit 0
+            if [ "$attempt" -lt 3 ]; then sleep 60; fi
+          done
+          exit 1
