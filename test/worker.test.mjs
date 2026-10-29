@@ -248,6 +248,23 @@ test('like and install share one daily vote, and a new UTC day allows another', 
   assert.notEqual(votes[0].hash, votes[1].hash);
 });
 
+test('conditional index reads are counted but health checks and HEAD requests are not', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  env.ASSETS.fetch = async () => new Response(null, { status: 304 });
+  const waits = [];
+  const ctx = { waitUntil: promise => waits.push(promise) };
+  const request = (method, agent) => new Request('https://dshopen.org/index.json', {
+    method, headers: { 'cf-connecting-ip': '192.0.2.1', 'user-agent': agent },
+  });
+  assert.equal((await worker.fetch(request('GET', 'test-client'), env, ctx)).status, 304);
+  await Promise.all(waits);
+  assert.equal(sqlite.prepare('SELECT reads FROM reads WHERE day = ?').get('2026-10-24').reads, 1);
+  waits.length = 0;
+  await worker.fetch(request('GET', 'dshopen-check'), env, ctx);
+  await worker.fetch(request('HEAD', 'test-client'), env, ctx);
+  assert.equal(waits.length, 0);
+});
+
 test('reads hash IP and UA, votes hash the address alone, and the salt separates both', async t => {
   const { env, sqlite } = likeEnvironment(t);
   await sendLike(env);

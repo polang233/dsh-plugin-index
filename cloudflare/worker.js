@@ -32,7 +32,7 @@ export default {
     if (url.pathname === '/api/stars' && request.method === 'GET') return edgeCached(request, ctx, 3600, () => repositoryStars(request, env));
     const response = await env.ASSETS.fetch(request);
     const own = request.headers.get('user-agent') === 'dshopen-check';
-    if (COUNTED.has(url.pathname) && request.method === 'GET' && response.ok && !own) ctx.waitUntil(count(request, env));
+    if (COUNTED.has(url.pathname) && request.method === 'GET' && (response.ok || response.status === 304) && !own) ctx.waitUntil(count(request, env));
     return response;
   }
 };
