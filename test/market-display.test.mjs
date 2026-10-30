@@ -156,7 +156,7 @@ test('star growth comes from the daily history and can mark a plugin as rising',
   const github = { repositories: { 'owner/plugin': repo } };
   const result = applyMarketDisplay(index, { github, now: NOW }).index;
   assert.equal(result.plugins[0].metadata.sortKeys['stars-week'], 12);
-  assert.equal(result.metadata.sortKeys['stars-week'].title.zh, '近 7 天新增 star');
+  assert.equal(result.metadata.sortKeys['stars-week'].title.zh, '▲ 近期增长');
 });
 
 test('verification from other markets binds to the repository or the exact version', () => {

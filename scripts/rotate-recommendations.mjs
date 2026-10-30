@@ -14,7 +14,9 @@ const downloads = await read('downloads.json');
 let previous;
 try { previous = await read('recommendations.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 const signals = Object.fromEntries(Object.entries(display.plugins).map(([name, value]) => [name, value.signals]));
-const {index, recommendations} = rotateRecommendations(current, {github, signals, previous});
+let added;
+try { added = await read('added.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+const {index, recommendations} = rotateRecommendations(current, {github, signals, added, previous});
 parseMarketIndex(index, 'https://polang233.github.io/dsh-plugin-index/index.json');
 checkRecommendationSnapshot(index, recommendations);
 evidence.market = {...evidence.market, recommendations: 'recommendations.json'};
@@ -23,4 +25,4 @@ for (const [name, value] of Object.entries({'index.json': index, 'status.json': 
   await writeFile(new URL(name, output), JSON.stringify(value, null, 2) + '\n');
 }
 await writeSite(index, evidence, github, downloads, display);
-console.log(JSON.stringify({day: recommendations.day, plugins: index.plugins.length, frontPages: recommendations.history.at(-1)}));
+console.log(JSON.stringify({round: recommendations.round, plugins: index.plugins.length, frontPages: recommendations.history.at(-1)}));

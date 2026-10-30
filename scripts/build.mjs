@@ -44,7 +44,8 @@ const endorsements = await collectEndorsements({ previous: await readJson(new UR
 const publishers = JSON.parse(await readFile(new URL('../data/publishers.json', import.meta.url), 'utf8'));
 const maintainerReviews = JSON.parse(await readFile(new URL('../data/maintainer-reviews.json', import.meta.url), 'utf8'));
 const previousRecommendations = await publishedSnapshot('recommendations.json') ?? await readJson(new URL('recommendations.json', output));
-const { index, display, recommendations } = applyMarketDisplay(built.index, { github, downloads, releases: releasesOf(built.evidence), endorsements, publishers, maintainerReviews, packageEvidence: built.evidence, previousRecommendations, now: Date.parse(downloads.generatedAt) });
+const added = trackAdded(built.index.plugins.map(plugin => plugin.name), await publishedSnapshot('added.json') ?? await readJson(new URL('added.json', output)));
+const { index, display, recommendations } = applyMarketDisplay(built.index, { github, downloads, releases: releasesOf(built.evidence), endorsements, publishers, maintainerReviews, packageEvidence: built.evidence, previousRecommendations, added, now: Date.parse(downloads.generatedAt) });
 const states = Object.values(github.repositories);
 const evidence = {
   ...built.evidence,
@@ -73,8 +74,7 @@ await writeFile(new URL('endorsements.json', output), `${JSON.stringify(endorsem
 await writeFile(new URL('endorsements.json', cache), `${JSON.stringify(endorsements, null, 2)}\n`);
 await writeFile(new URL('display.json', output), `${JSON.stringify(display, null, 2)}\n`);
 await writeFile(new URL('recommendations.json', output), `${JSON.stringify(recommendations, null, 2)}\n`);
-const previousAdded = await publishedSnapshot('added.json') ?? await readJson(new URL('added.json', output));
-await writeFile(new URL('added.json', output), `${JSON.stringify(trackAdded(index.plugins.map(plugin => plugin.name), previousAdded), null, 2)}\n`);
+await writeFile(new URL('added.json', output), `${JSON.stringify(added, null, 2)}\n`);
 // The project's own stars over time, for the stats page; an offline or failed run keeps the published history.
 // data/star-history.json seeds the history from before builds could read it.
 const stars = await collectStarHistory('polang233/dsh-plugin-index', { previous: await publishedSnapshot('stars.json') ?? await readJson(new URL('stars.json', output)) ?? await readJson(new URL('../data/star-history.json', import.meta.url)) });

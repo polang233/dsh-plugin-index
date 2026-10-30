@@ -137,7 +137,7 @@ export function applyGitHubStars(index, snapshot) {
     }
     return { ...plugin, metadata: { ...plugin.metadata, sortKeys } };
   });
-  if (measured) metadata.sortKeys[SORT_KEY] = { title: { en: 'GitHub stars', zh: 'GitHub 星标数' }, order: 'desc' };
+  if (measured) metadata.sortKeys[SORT_KEY] = { title: { en: '★ Most stars', zh: '★ 星数最多' }, order: 'desc' };
   const result = { ...index, metadata, plugins };
   parseMarketIndex(result, 'https://polang233.github.io/dsh-plugin-index/index.json');
   return result;

@@ -19,7 +19,7 @@
 
 A community **plugin market** and **plugin index** for DeepSeek Harness (DSH), listing hundreds of community plugins: tools, skills, memory, UI and workflows. Add it as an **index source** in the official Discover tab, install the plugin for a standalone Open Market page inside DSH, or search, filter and like plugins on [dshopen.org](https://dshopen.org/).
 
-**Stars aren't everything.** The default picks refresh every day and put fast-growing, actively shipped, genuinely good plugins first, with verification, downloads and stars as supporting signals. Established favourites can't hog the list, so new projects and newcomers' plugins get a chance at the first screen and a wider audience.
+**Stars aren't everything.** The default picks change every six hours and put fast-growing, actively shipped, genuinely good plugins first, with verification, downloads and stars as supporting signals. Established favourites can't hog the list, so new projects and newcomers' plugins get a chance at the first screen and a wider audience.
 
 ## Quick start
 
@@ -47,7 +47,7 @@ It also adds an **Open Market** tab to the Plugins page: today's picks, rows ran
 
 ## Labels and sorting
 
-✅ Verified · Reviewed by this market (see the [latest security review](docs/reviews/plugin-security-review-2026-10-27.md)) · 🔥 Rising · ⚡ Frequent updates (10+ releases in 30 days) · ◷ four update-age buckets · ↓ seven download tiers · ♥ likes from the website or the Open Market tab (once per person, plugin and day, including installs; each plugin loses one every three days). *Default* rotates ten front-page plugins daily from a weekly pool of about seventy qualified entries. *✨ Smart picks* also changes daily, with mostly random rotation and a small preference for recent updates and growth. Entries shown this week move down, and next week reshuffles the pool. *Random resources* reshuffles independently each day. The index rebuilds every six hours; rotation follows calendar days in UTC+8. See [metrics and exposure history](docs/market-display.md).
+✅ Verified · Reviewed by this market (see the [latest security review](docs/reviews/plugin-security-review-2026-10-27.md)) · 🔥 Rising · ⚡ Frequent updates (10+ releases in 30 days) · ◷ four update-age buckets · ↓ seven download tiers · ♥ likes from the website or the Open Market tab (once per person, plugin and day, including installs; each plugin loses one every three days). *Default* rotates ten front-page plugins every six hours from a weekly pool of about 280 qualified entries, weighted by quality, and at least 40% of each week's pool was not in the last one. *⊙ Smart picks* rotates on the same schedule, with mostly random rotation and a small preference for recent updates and growth, and keeps three of its ten front-page places for plugins listed in the last ten days. *⚄ Random resources* reshuffles independently each day. The index rebuilds every six hours; rotation follows calendar days in UTC+8. See [metrics and exposure history](docs/market-display.md).
 
 ## Submit a plugin
 

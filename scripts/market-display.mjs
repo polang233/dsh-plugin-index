@@ -95,7 +95,7 @@ export function validatePublishers(publishers) {
   }
 }
 
-export function applyMarketDisplay(index, { github = {}, downloads = {}, releases = {}, endorsements = {}, publishers = { schema: 1, entries: [] }, maintainerReviews = EMPTY_REVIEWS, packageEvidence = {}, previousRecommendations, now = Date.now() } = {}) {
+export function applyMarketDisplay(index, { github = {}, downloads = {}, releases = {}, endorsements = {}, publishers = { schema: 1, entries: [] }, maintainerReviews = EMPTY_REVIEWS, packageEvidence = {}, previousRecommendations, added, now = Date.now() } = {}) {
   validatePublishers(publishers);
   validateMaintainerReviews(maintainerReviews);
   const checked = new Map((packageEvidence.packages ?? []).map(record => [record.name, record]));
@@ -141,9 +141,9 @@ export function applyMarketDisplay(index, { github = {}, downloads = {}, release
     return { ...plugin, ...(Object.keys(composed).length ? { description: composed } : {}), metadata: { ...plugin.metadata, labels, sortKeys } };
   });
   for (const id of Object.keys(LABELS)) if (used.has(id)) metadata.labels[id] = { title: LABELS[id] };
-  if (withStarGrowth) metadata.sortKeys[STARS_WEEK] = { title: { en: 'New stars (7 days)', zh: '近 7 天新增 star' }, order: 'desc' };
+  if (withStarGrowth) metadata.sortKeys[STARS_WEEK] = { title: { en: '▲ Recent growth', zh: '▲ 近期增长' }, order: 'desc' };
   const signals = Object.fromEntries(Object.entries(display.plugins).map(([name, value]) => [name, value.signals]));
-  const {index: result, recommendations} = rotateRecommendations({ ...starred, metadata, plugins }, { github, signals, now, previous: previousRecommendations });
+  const {index: result, recommendations} = rotateRecommendations({ ...starred, metadata, plugins }, { github, signals, added, now, previous: previousRecommendations });
   parseMarketIndex(result, 'https://polang233.github.io/dsh-plugin-index/index.json');
   return { index: result, display, recommendations };
 }

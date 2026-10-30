@@ -45,7 +45,7 @@ const COPY = {
     footerBrowse: 'Browse', footerJoin: 'Take part', removePlugin: 'Request removal', footerIndex: 'Index URL',
     likesTitle: 'Most liked plugins', likesNote: 'Likes from the website and the Open Market tab; each plugin loses one every three days.', likesEmpty: 'No likes yet. Like a plugin in the directory and it shows up here.', liveNote: 'Live · refreshed every few minutes',
     tileNotes: { yesterday: 'Yesterday {value}', average: '{value} a day on average', added: '{value} new in the last 7 days', likedPlugins: 'Across {value} plugins' },
-    statPlugins: 'plugins', statCategories: 'categories', more: 'Show more', moreLoading: 'Loading…', moreFailed: 'Could not load more. Try again', sort: 'Sort', sorts: { default: 'Default', recommended: '✨ Smart picks', likes: '♥ Most liked', stars: 'Most stars', starsWeek: 'New stars (7 days)', published: 'Recently updated', random: 'Random' }, shown: 'Showing {shown} of {count}',
+    statPlugins: 'plugins', statCategories: 'categories', more: 'Show more', moreLoading: 'Loading…', moreFailed: 'Could not load more. Try again', sort: 'Sort', sorts: { default: 'Default', recommended: '⊙ Smart picks', likes: '♥ Most liked', stars: '★ Most stars', starsWeek: '▲ Recent growth', published: 'Recently updated', random: '⚄ Random' }, shown: 'Showing {shown} of {count}',
     description: 'DSH plugin market and plugin index for DeepSeek Harness: {count} community plugins (tools, skills, memory, UI and more), with daily picks by growth, updates and likes. Add one URL to browse and install them in DSH.',
     like: 'Like', liked: 'Liked today', likeTitle: 'Like this plugin (once a day)', likeFailed: 'Could not like it. Try again later', likeLimit: 'Daily like limit reached',
     ghLabel: 'GitHub: star the project',
@@ -53,7 +53,7 @@ const COPY = {
     faqTitle: 'Questions', faq: count => [
       ['Where can I find DSH plugins?', `DeepSeek Harness (DSH) can browse any plugin index from its Discover tab. Open Plugin Market lists ${count} community plugins: add https://dshopen.org/index.json as an index source to browse, search and install them inside DSH, or browse them here by category, growth and release date.`],
       ['How do I install a DSH plugin?', `Option 1: switch on Custom plugin markets under Plugins → Experimental plugins, go to Discover → Add index source, paste the index URL, then search for the plugin in Discover and install it. Option 2: run ${PLUGIN_COMMAND}, which does all of that for you and adds an Open Market tab to the Plugins page.`],
-      ['How are the picks ranked?', 'The default order refreshes every day and leads with plugins that are growing fast and shipping often, with verification, downloads, stars and likes as supporting signals. No author can flood the list, so new projects get a turn on the first screen.'],
+      ['How are the picks ranked?', 'The default order changes every six hours and leads with plugins that are growing fast and shipping often, with verification, downloads, stars and likes as supporting signals. No author can flood the list, so new projects get a turn on the first screen.'],
       ['Is this affiliated with DeepSeek?', 'No. Open Plugin Market is an independent community project. It uses the index format DSH\'s official plugin market reads, and DSH itself downloads and installs every plugin.'],
       ['How do I list my own plugin?', 'Open a request on GitHub with a public repository, an npm release and a license. Once listed, put the badge in your README: it shows your likes and links to your plugin\'s page here.']
     ],
@@ -63,7 +63,7 @@ const COPY = {
     eyebrow: 'The open DSH plugin market · plugin index · daily picks', intro: 'A plugin index with daily picks for DeepSeek Harness. Since the October 15 update DSH reads plugin markets, so copying the address below into Discover is all it takes to browse and install hundreds of community plugins.',
     address: 'Index URL', copy: 'Copy URL', copyTitle: 'Click to copy',
     copied: 'Copied', usage: '{readers} people using it today', usageNote: 'People whose DSH loaded this index today (UTC date), counted once per IP and user agent; neither is stored.', copySuccess: 'URL copied. Open DSH and add it as an index source.', details: 'Details', copyOpen: 'Copy name & open DSH', nameCopied: 'Copied, opening…', dshOpened: 'Opened, paste it', dshMissed: 'Copied, open DSH', getFailure: 'Name selected, copy it', getHint: 'Paste the name into DSH Discover search to install.', pluginName: 'Name', copyFailure: 'The address is selected. Press Ctrl+C or ⌘C, or use the selection menu to copy it.',
-    showcase: { title: 'How it looks in DSH', text: 'Stars aren\'t everything here. The default picks refresh every day and put fast-growing, actively shipped, genuinely good plugins first, with verification, downloads and stars as supporting signals.', points: ['No single author can flood the list, so a newcomer can make the first screen', 'Rising, Frequent updates and Reviewed labels at a glance', 'Default order, ✨ Smart picks and Random: every visit turns up something new'], image: 'dsh-discover-en.webp', alt: 'The Discover tab of DeepSeek Harness listing Open Plugin Market plugins with labels and install buttons' },
+    showcase: { title: 'How it looks in DSH', text: 'Stars aren\'t everything here. The default picks change every six hours and put fast-growing, actively shipped, genuinely good plugins first, with verification, downloads and stars as supporting signals.', points: ['No single author can flood the list, so a newcomer can make the first screen', 'Rising, Frequent updates and Reviewed labels at a glance', 'Default order, ⊙ Smart picks and Random: every visit turns up something new'], image: 'dsh-discover-en.webp', alt: 'The Discover tab of DeepSeek Harness listing Open Plugin Market plugins with labels and install buttons' },
     zoom: 'Enlarge screenshot', close: 'Close', stepAlts: ['The Custom plugin markets switch under Plugins → Experimental plugins', 'The Add index source button in Discover', 'The index source dialog with the dshopen.org URL and the Add button'],
     setup: 'Quick start', steps: [
       ['Turn on the market', 'Plugins → Experimental → Custom plugin markets'],
@@ -107,7 +107,7 @@ const COPY = {
     footerBrowse: '浏览', footerJoin: '参与', removePlugin: '申请下架', footerIndex: '索引地址',
     likesTitle: '点赞最多的插件', likesNote: '来自网站和「开放市场」标签的点赞，每个插件每 3 天减 1。', likesEmpty: '还没有点赞。去插件目录给喜欢的插件点个赞，它就会出现在这里。', liveNote: '实时 · 每隔几分钟更新',
     tileNotes: { yesterday: '昨日 {value}', average: '日均 {value}', added: '近 7 天新增 {value}', likedPlugins: '来自 {value} 个插件' },
-    statPlugins: '个插件', statCategories: '个分类', more: '查看更多', moreLoading: '正在加载…', moreFailed: '加载失败，点击重试', sort: '排序', sorts: { default: '默认排序', recommended: '✨ 智能推荐', likes: '♥ 点赞最多', stars: 'star 最多', starsWeek: '近 7 天新增 star', published: '最近更新', random: '随机' }, shown: '已显示 {shown} / {count}',
+    statPlugins: '个插件', statCategories: '个分类', more: '查看更多', moreLoading: '正在加载…', moreFailed: '加载失败，点击重试', sort: '排序', sorts: { default: '默认排序', recommended: '⊙ 智能推荐', likes: '♥ 点赞最多', stars: '★ 星数最多', starsWeek: '▲ 近期增长', published: '最近更新', random: '⚄ 随机' }, shown: '已显示 {shown} / {count}',
     description: `DSH 插件市场与插件索引：收录 {count} 个 DeepSeek Harness 社区插件，工具、技能、记忆、界面应有尽有，每天按增长、更新和点赞推荐。复制索引地址，在 DSH「${ui('发现')}」里浏览和安装。`,
     like: '点赞', liked: '今天已点赞', likeTitle: '给这个插件点赞（每天一次）', likeFailed: '点赞失败，请稍后再试', likeLimit: '今天的点赞次数已用完',
     ghLabel: 'GitHub：给项目点个 Star',
@@ -115,7 +115,7 @@ const COPY = {
     faqTitle: '常见问题', faq: count => [
       ['DSH 插件在哪里找？', `DeepSeek Harness（DSH）的「${ui('发现')}」页可以添加插件索引源。开放插件市场收录了 ${count} 个社区插件，把 https://dshopen.org/index.json 添加为索引源后，就能在 DSH 里直接浏览、搜索和安装；也可以在本站按分类、增长和更新时间浏览。`],
       ['DSH 插件怎么安装？', `方法一：在「${ui('插件 → 实验性插件')}」中打开「${ui('自定义插件市场')}」，再到「${ui('发现 → 添加索引源')}」粘贴索引地址，然后在「${ui('发现')}」里搜索插件名并安装。方法二：运行 ${PLUGIN_COMMAND}，它会自动完成上面的设置，并在「${ui('插件')}」页加一个「开放市场」标签。`],
-      ['插件推荐是怎么排的？', '默认推荐每天更新，以最近增长快、更新勤的插件为主，同时参考验证、下载量、star 和点赞。同一作者不会霸榜，新项目和小开发者的作品也有机会上首屏。'],
+      ['插件推荐是怎么排的？', '默认推荐每 6 小时轮换，以最近增长快、更新勤的插件为主，同时参考验证、下载量、star 和点赞。同一作者不会霸榜，新项目和小开发者的作品也有机会上首屏。'],
       ['和 DeepSeek 官方是什么关系？', '开放插件市场是独立的社区项目，与 DeepSeek 官方无隶属关系。它使用 DSH 官方插件市场支持的索引格式，插件由 DSH 自己下载和安装。'],
       ['怎么把自己的插件提交到 DSH 插件市场？', '在 GitHub 上填写收录申请，提供公开源码、npm 包和许可证即可。收录后可以在 README 放上徽章，显示点赞数并链接到本站的插件页。']
     ],
@@ -125,7 +125,7 @@ const COPY = {
     eyebrow: 'DSH 开放插件市场 · 插件索引 · 每日插件推荐', intro: `DeepSeek Harness 的社区插件索引与每日推荐。10 月 15 日起 DSH 支持插件市场，复制下面的地址粘贴到「${ui('发现')}」，就能直接浏览、安装几百个社区插件。`,
     address: '索引地址', copy: '复制地址', copyTitle: '点击复制',
     copied: '已复制', usage: '今日已有 {readers} 位用户在使用', usageNote: '今天（UTC 日期）在 DSH 中加载过这份索引的用户数，按 IP 和 UA 每日去重，两者都不保存。', copySuccess: '地址已复制。打开 DSH，把它添加为索引源。', details: '详情', copyOpen: '复制插件名并打开 DSH', nameCopied: '已复制，正在打开…', dshOpened: '已打开，粘贴搜索', dshMissed: '已复制，请手动打开', getFailure: '已选中，请手动复制', getHint: `在 DSH「${ui('发现')}」里粘贴搜索即可安装。`, pluginName: '插件名', copyFailure: '地址已选中。按 Ctrl+C 或 ⌘C，或使用选中文字的菜单复制。',
-    showcase: { title: '在 DSH 里的样子', text: '不唯 star 🌟 论。默认推荐每天更新，以最近增长快、更新勤、优质的插件为主，同时参考验证、下载量和 star。', points: ['同一作者不会霸榜，小开发者的新作品也能上首屏', '增长快、更新勤、已审查等标签一眼可见', '默认排序、✨ 智能推荐和随机，每次都有新发现'], image: 'dsh-discover-zh.webp', alt: 'DeepSeek Harness 的「发现」页面，列出开放插件市场的插件、标签和安装按钮' },
+    showcase: { title: '在 DSH 里的样子', text: '不唯 star 🌟 论。默认推荐每 6 小时轮换，以最近增长快、更新勤、优质的插件为主，同时参考验证、下载量和 star。', points: ['同一作者不会霸榜，小开发者的新作品也能上首屏', '增长快、更新勤、已审查等标签一眼可见', '默认排序、⊙ 智能推荐和随机，每次都有新发现'], image: 'dsh-discover-zh.webp', alt: 'DeepSeek Harness 的「发现」页面，列出开放插件市场的插件、标签和安装按钮' },
     zoom: '放大截图', close: '关闭', stepAlts: [`「${ui('插件 → 实验性插件')}」中的「${ui('自定义插件市场')}」开关`, `「${ui('发现')}」里的「${ui('添加索引源')}」按钮`, '填好 dshopen.org 地址的索引源窗口和「添加」按钮'],
     setup: '最简单使用教程', steps: [
       ['开启市场', ui('插件 → 实验性插件 → 自定义插件市场')],
