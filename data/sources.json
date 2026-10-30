@@ -12024,6 +12024,26 @@
         "integrity": "sha512-dhSL+6gtlPW7sTnY//Bcz7MNOa4OWJ7/PqG66JBbHWQK3Bp6DFvg/QHG8tRmPxtySHtvsYY9YwJMKbdicl+JEg==",
         "publishedAt": "2026-10-29T16:59:43.000Z"
       }
+    },
+    {
+      "name": "dsh-conversation-import",
+      "title": {
+        "en": "Conversation Import",
+        "zh": "Codex 对话导入"
+      },
+      "description": {
+        "en": "Import local Codex conversations into DSH sessions with optional automatic sync. Requires local Codex data; macOS and Linux supported, Windows untested.",
+        "zh": "将本机 Codex 对话导入 DSH 会话，可选自动同步；需要本地 Codex 数据，支持 macOS 和 Linux，Windows 未测试。"
+      },
+      "category": "workflow",
+      "version": "0.1.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/kermars39-web/dsh-conversation-import",
+        "commit": "735e745e1dbdf765cd8438ed909b9dcd7bdc8774",
+        "integrity": "sha512-e5wCke7ZHCala4hfYIbGENcaHGKr6MYVOzLhfbE5h/DjOyN10p4TdjAVjnVhLbrJp6r3v+vq9sYQlpKKkVzr1A==",
+        "publishedAt": "2026-10-30T08:27:23.000Z"
+      }
     }
   ]
 }
