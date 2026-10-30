@@ -12082,6 +12082,26 @@
         "commit": "458f5d3a727089a4cc57f0e61c46d096b4c28c28",
         "url": "https://github.com/allanhao1986/dsh-better-skillmanager"
       }
+    },
+    {
+      "name": "dsh-wb400-guard",
+      "title": {
+        "en": "WorkBuddy 400 Guard",
+        "zh": "WorkBuddy 400 修复"
+      },
+      "description": {
+        "en": "Rewrite matching system, developer and assistant prompt fragments for the WorkBuddy China gateway to work around error 11128. Wraps global fetch; requires Node ^22.19 or >=24.",
+        "zh": "针对 WorkBuddy 国内网关 11128 错误改写 system、developer 和 assistant 消息中的指定片段；会包装全局 fetch，需要 Node ^22.19 或 >=24。"
+      },
+      "category": "integrations",
+      "version": "0.1.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/curo22/dsh-wb400-guard",
+        "commit": "24595e72af42317db1313aeaed3ecf0bb25feebf",
+        "integrity": "sha512-OxjcwHojfWJo6DuANqIWD74H9fCJw7qTQpj3ok16BvmJaDYlNnTadhX5jEE1iJKWob0v9O27Hx92jiwYT5LDCg==",
+        "publishedAt": "2026-10-30T07:54:50.000Z"
+      }
     }
   ]
 }

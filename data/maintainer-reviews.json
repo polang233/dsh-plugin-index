@@ -1919,6 +1919,19 @@
       "reviewedAt": "2026-10-30T09:04:39.043Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-wb400-guard",
+      "version": "0.1.4",
+      "integrity": "sha512-OxjcwHojfWJo6DuANqIWD74H9fCJw7qTQpj3ok16BvmJaDYlNnTadhX5jEE1iJKWob0v9O27Hx92jiwYT5LDCg==",
+      "repository": "https://github.com/curo22/dsh-wb400-guard",
+      "source": {
+        "type": "git",
+        "commit": "24595e72af42317db1313aeaed3ecf0bb25feebf"
+      },
+      "reviewedAt": "2026-10-30T09:30:11.482Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
