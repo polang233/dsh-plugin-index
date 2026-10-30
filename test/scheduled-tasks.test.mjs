@@ -12,6 +12,12 @@ test('replay follows the continuation and stops when the queue is empty', async 
   assert.deepEqual(bodies, [{ continuation: null }, { continuation: 'next' }]);
 });
 
+test('replay uses a redirect mode Workers accept and treats a redirect as a failure', async () => {
+  let mode;
+  await assert.rejects(replayReads({}, async (url, init) => { mode = init.redirect; return new Response(null, { status: 302 }); }), /HTTP 302/);
+  assert.equal(mode, 'manual');
+});
+
 test('replay reports events it had to keep, and stops after a bounded number of rounds', async () => {
   await assert.rejects(replayReads({}, async () => json({ delivered: 0, failed: 3 })), /3 events retained/);
   let calls = 0;

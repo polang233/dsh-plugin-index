@@ -13,7 +13,7 @@ export async function replayReads(env, fetchImpl = fetch) {
   let continuation = null;
   let delivered = 0;
   for (let round = 0; round < MAX_ROUNDS; round++) {
-    const response = await fetchImpl(REPLAY_URL, { method: 'POST', redirect: 'error', headers: { authorization: `Bearer ${env.GATEWAY_AUTH_SECRET}`, 'content-type': 'application/json' }, body: JSON.stringify({ continuation }) });
+    const response = await fetchImpl(REPLAY_URL, { method: 'POST', redirect: 'manual', headers: { authorization: `Bearer ${env.GATEWAY_AUTH_SECRET}`, 'content-type': 'application/json' }, body: JSON.stringify({ continuation }) });
     if (!response.ok) throw new Error(`Queue replay failed: HTTP ${response.status}`);
     const result = await response.json();
     delivered += result.delivered;
