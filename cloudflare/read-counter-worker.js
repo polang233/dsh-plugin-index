@@ -2,7 +2,7 @@ import { DurableObject } from 'cloudflare:workers';
 import { DailyReadCounter } from './daily-read-counter.js';
 import { receiveRead } from './receive-read.js';
 import { syncReadSnapshot } from './sync-read-snapshot.js';
-import { isReadDay } from '../shared/read-event.js';
+import { runScheduled } from './scheduled-tasks.js';
 
 export class DailyReadStats extends DurableObject {
   constructor(ctx, env) {
@@ -42,14 +42,5 @@ export class DailyReadStats extends DurableObject {
 
 export default {
   async fetch(request, env) { return receiveRead(request, env); },
-  async scheduled(controller, env) {
-    if (!isReadDay(env.COUNTER_FROM_DAY)) throw new Error('Counter start day is not configured');
-    const today = Date.parse(new Date(controller.scheduledTime).toISOString().slice(0, 10) + 'T00:00:00.000Z');
-    for (const offset of [0, 1]) {
-      const day = new Date(today - offset * 86_400_000).toISOString().slice(0, 10);
-      if (day < env.COUNTER_FROM_DAY) continue;
-      const snapshot = await env.READ_COUNTER.getByName(day).snapshot();
-      await syncReadSnapshot(env.DB, snapshot, env.COUNTER_FROM_DAY);
-    }
-  },
+  async scheduled(controller, env) { await runScheduled(controller, env); },
 };

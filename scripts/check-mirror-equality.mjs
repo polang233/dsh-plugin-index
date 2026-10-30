@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
+import { withRetries } from './retry.mjs';
 
 const MAX_BYTES = 25 * 1024 * 1024;
 const URLS = [
@@ -40,7 +41,7 @@ export async function compareMirrors(urls = URLS) {
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
-  compareMirrors(process.argv.length > 2 ? process.argv.slice(2) : URLS).then(result => {
+  withRetries(positionals => compareMirrors(positionals.length ? positionals : URLS)).then(result => {
     console.log(`Published indexes match: ${result.sha256} (${result.length} bytes, ${result.plugins} plugins)`);
   }).catch(error => {
     console.error(error.message);

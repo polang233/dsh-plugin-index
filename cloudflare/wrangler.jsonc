@@ -1,5 +1,5 @@
 // Cloudflare origin: the built site and the shared statistics APIs.
-// Deploy: pnpm build, then `npx wrangler deploy --config cloudflare/wrangler.jsonc`.
+// GitHub Actions uploads and promotes versions of this Worker; see .github/workflows/publish.yml.
 {
   "name": "dshopen",
   "main": "worker.js",

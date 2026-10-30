@@ -14,8 +14,8 @@ on:
       - '.github/*.md'
   workflow_dispatch:
   schedule:
-    # 00:17, 06:17, 12:17 and 18:17 in Asia/Taipei.
-    - cron: '17 4,10,16,22 * * *'
+    # The read-counter Worker requests the four daily builds; GitHub's clock is only a daily fallback.
+    - cron: '47 17 * * *'
 
 permissions:
   contents: read
@@ -33,17 +33,17 @@ jobs:
       options: --ipc=host
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
         with:
           version: 11.28.5
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           cache: pnpm
       - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: pnpm test
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: |
             .cache/github.json
@@ -62,21 +62,24 @@ jobs:
           mkdir -p public/.well-known/pki-validation
           cp site/domain-verification/*.txt public/.well-known/teo-verification/
           cp site/certificate-verification/*.txt public/.well-known/pki-validation/
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: browser-failure-details
           path: test-results/
           retention-days: 7
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: validated-index
           path: public/
           include-hidden-files: true
-      - uses: actions/upload-pages-artifact@v3
+          retention-days: 7
+      - uses: actions/upload-pages-artifact@v5
         if: github.event_name != 'pull_request' && vars.PUBLISH_INDEX == 'true'
         with:
           path: public/
+          # .well-known holds the domain and certificate proofs.
+          include-hidden-files: true
 
   deploy:
     # Keep GitHub Pages on its last release if the Cloudflare upload fails.
@@ -92,19 +95,18 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
       - name: Publish validated artifact
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
       - name: Check published catalog, icons and branding without redirects
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         # Pages and its CDN can serve a mix of old and new files for a minute after deploying.
-        run: |
-          for attempt in 1 2 3; do node scripts/check-published.mjs "${PAGE_URL%/}/index.json" && exit 0; sleep 60; done; exit 1
+        run: node scripts/check-published.mjs "${PAGE_URL%/}/index.json" --retries 3 --wait 60
 
   maintenance:
     # Keeps one issue listing failing packages and pins that fell behind upstream.
@@ -117,11 +119,11 @@ jobs:
       contents: read
       issues: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: validated-index
           path: public/
@@ -139,11 +141,11 @@ jobs:
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: validated-index
           path: public/
@@ -152,55 +154,52 @@ jobs:
         run: |
           echo '::error::CLOUDFLARE_API_TOKEN is required to publish dshopen.org.'
           exit 1
-      - name: Deploy to dshopen.org
-        if: env.CLOUDFLARE_API_TOKEN != ''
+      - name: Prepare the gateway secret
+        run: node -e 'const s=process.env.DSH_GATEWAY_AUTH_SECRET;if(!s||s.length<32)throw Error("Gateway signing secret missing");require("fs").writeFileSync(process.env.RUNNER_TEMP + "/gateway-secrets.json", JSON.stringify({GATEWAY_AUTH_SECRET:s}))'
+        env:
+          DSH_GATEWAY_AUTH_SECRET: ${{ secrets.DSH_GATEWAY_AUTH_SECRET }}
+      - name: Deploy the read counter and scheduler
+        # Its Durable Object backs the main Worker, so it goes first. This also applies its cron triggers.
+        run: npx -y wrangler@4.151.1 deploy --config cloudflare/read-counter.wrangler.jsonc --keep-vars --secrets-file "$RUNNER_TEMP/gateway-secrets.json"
+      - name: Deploy the Cloudflare origin
         # Upload and promote a version instead of `wrangler deploy`, so CI does not change the domain binding.
         # Wrangler may still need permission to read routes and domains when the latest upload came from the dashboard.
         run: |
           tag="run-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          node -e 'const s=process.env.DSH_GATEWAY_AUTH_SECRET;if(!s||s.length<32)throw Error("Gateway signing secret missing");require("fs").writeFileSync(process.env.RUNNER_TEMP + "/gateway-secrets.json", JSON.stringify({GATEWAY_AUTH_SECRET:s}))'
           npx -y wrangler@4.151.1 versions upload --config cloudflare/wrangler.jsonc --tag "$tag" --strict --keep-vars --secrets-file "$RUNNER_TEMP/gateway-secrets.json"
           npx -y wrangler@4.151.1 versions deploy --config cloudflare/wrangler.jsonc --version-tag "$tag@100" --yes
-        env:
-          DSH_GATEWAY_AUTH_SECRET: ${{ secrets.DSH_GATEWAY_AUTH_SECRET }}
-      - name: Check dshopen.org without redirects
-        if: env.CLOUDFLARE_API_TOKEN != ''
-        run: for attempt in 1 2 3; do node scripts/check-published.mjs https://dshopen.polang.workers.dev/index.json && exit 0; sleep 60; done; exit 1
+      - name: Check the Cloudflare origin without redirects
+        run: node scripts/check-published.mjs https://dshopen.polang.workers.dev/index.json --retries 3 --wait 60
 
   check-mirrors:
-    needs: [deploy, cloudflare]
-    if: always() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.PUBLISH_INDEX == 'true'
+    needs: deploy
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.PUBLISH_INDEX == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
       - name: Check both published indexes are identical
-        run: |
-          for attempt in 1 2 3; do
-            node scripts/check-mirror-equality.mjs https://dshopen.polang.workers.dev/index.json https://polang233.github.io/dsh-plugin-index/index.json && exit 0
-            if [ "$attempt" -lt 3 ]; then sleep 60; fi
-          done
-          exit 1
+        run: node scripts/check-mirror-equality.mjs https://dshopen.polang.workers.dev/index.json https://polang233.github.io/dsh-plugin-index/index.json --retries 3 --wait 60
 
   edgeone:
-    needs: [build, cloudflare, deploy, check-mirrors]
+    needs: check-mirrors
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.PUBLISH_EDGEONE == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
         with:
           version: 11.28.5
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           cache: pnpm
       - run: pnpm install --frozen-lockfile --ignore-scripts
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: validated-index
           path: public/
@@ -211,9 +210,6 @@ jobs:
           EDGEONE_PAGES_API_REGION: global
           DSH_GATEWAY_AUTH_SECRET: ${{ secrets.DSH_GATEWAY_AUTH_SECRET }}
       - name: Check gateway and immutable release
-        run: |
-          for attempt in 1 2 3; do
-            node scripts/check-published.mjs https://network-probe.dshopen.org/index.json && exit 0
-            if [ "$attempt" -lt 3 ]; then sleep 30; fi
-          done
-          exit 1
+        run: node scripts/check-published.mjs https://network-probe.dshopen.org/index.json --retries 3 --wait 30
+      - name: Check the public address
+        run: node scripts/check-published.mjs https://dshopen.org/index.json --retries 3 --wait 30
