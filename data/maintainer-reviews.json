@@ -1894,6 +1894,18 @@
       "reviewedAt": "2026-10-30T08:38:40.937Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-tools-manager",
+      "version": "1.0.4",
+      "integrity": "sha512-BYa9gnhUm+QsU8A+oHv/R4cV/lAxVxAdi4je6wA8RXnkHLGRHt7tB/ZAwEh5iZEKwBSInAHbUTOFyQCSxNo+WQ==",
+      "repository": "https://github.com/zingreqe/tools_manager",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-30T09:01:21.854Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

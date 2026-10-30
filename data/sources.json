@@ -12044,6 +12044,18 @@
         "integrity": "sha512-e5wCke7ZHCala4hfYIbGENcaHGKr6MYVOzLhfbE5h/DjOyN10p4TdjAVjnVhLbrJp6r3v+vq9sYQlpKKkVzr1A==",
         "publishedAt": "2026-10-30T08:27:23.000Z"
       }
+    },
+    {
+      "name": "dsh-tools-manager",
+      "title": {
+        "en": "Tools Manager",
+        "zh": "工具管理"
+      },
+      "description": {
+        "en": "Control built-in and plugin tools and customize the system prompt. Chat mode replaces the host prompt and can ask for approval before web calls; requires Node >=22.",
+        "zh": "管理内置及插件工具的开关和系统提示词。聊天模式会替换宿主提示词，可在网络调用前请求授权；需要 Node >=22。"
+      },
+      "category": "tools"
     }
   ]
 }
