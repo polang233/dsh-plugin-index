@@ -1754,6 +1754,133 @@
       "reviewedAt": "2026-10-29T14:34:44.844Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "fanframe",
+      "version": "1.10.0-beta.8",
+      "integrity": "sha512-teelDnEgVZyixY79g+Uj2hUOo00vGqF+eD4BbJSaW51f01MOpk9kETb3EqLOSydY/Fmh7HKoHszKb6LKHQwUrA==",
+      "repository": "https://github.com/AngleNaris/fanframe",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-30T08:15:46.233Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@woosau/dsh-skill-experts",
+      "version": "0.1.12",
+      "integrity": "sha512-J0eKiM8V+CZVCLSI3irayrHQx26gclpqDIE5oyywY+cw7C2/nxW1ecm4DDPEjvJ5ULNXnmNcoTWJR5AzpLhJAg==",
+      "repository": "https://github.com/ownduck/dsh-skill-experts",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-30T08:15:46.233Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-rightbar-tab-gestures",
+      "version": "1.0.1",
+      "integrity": "sha512-t+agL8FuE+Gm8xKREsWylIzxc6xlUoJP4MmgiPd8i8FvcvS2UbnNScxC17qWrwFrE1orQnnHEKsEd62rqKD24Q==",
+      "repository": "https://github.com/dmscode/dsh-rightbar-tab-gestures",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-30T08:15:46.233Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-peak-valley",
+      "version": "0.1.0",
+      "integrity": "sha512-oEHB2teDekBMsA4PgDi6G9+ZBgHWn5qZb86NnXx146GH74XffABxsCn/GHfwH6ad5mKKR05taWTQYq3GLpXnWg==",
+      "repository": "https://github.com/dmscode/dsh-peak-valley",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-30T08:15:46.233Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-call-me",
+      "version": "0.1.2",
+      "integrity": "sha512-36MBzSKrmQBLpluo+OPMsInCrSWjnFhsbTmOF7dtUfyZIEPARS9q/A4BxuACROg0SUXGPlrftd3VXhEZ71FU7g==",
+      "repository": "https://github.com/radres/dsh-plugin-call-me",
+      "source": {
+        "type": "git",
+        "commit": "9d23cce04692ff5a2126b398c4790e7786669aa6"
+      },
+      "reviewedAt": "2026-10-30T08:15:46.233Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-compact-manager",
+      "version": "1.0.0",
+      "integrity": "sha512-O9kPUjg6+vEuSkquX4n0WYgpbuqql5AOtdTfMuftI4LafD0HKUbg7CQ/0dGhM0/D9unQLbfySQVXyv8KairCsQ==",
+      "repository": "https://github.com/tony92921/dsh-compact-manager",
+      "source": {
+        "type": "git",
+        "commit": "e9c8bfffa229770d2148922d970725901f6503cb"
+      },
+      "reviewedAt": "2026-10-30T08:15:46.233Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-manager-wj",
+      "version": "1.2.1",
+      "integrity": "sha512-6fTzzCm0eKjWNKIioMb/dXF+wipAdBNKtERUuw5kaF2kODjtcQwWlwC2Q2VvltTBF8ebjma7VN54UmGlE7gFTw==",
+      "repository": "https://github.com/phoenixlucky/dsh-plugin-manager-wj",
+      "source": {
+        "type": "git",
+        "commit": "c0d313c25dd9506e5091a33472c47fcf3db71321"
+      },
+      "reviewedAt": "2026-10-30T08:15:46.233Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-proteus",
+      "version": "0.1.0",
+      "integrity": "sha512-dhSL+6gtlPW7sTnY//Bcz7MNOa4OWJ7/PqG66JBbHWQK3Bp6DFvg/QHG8tRmPxtySHtvsYY9YwJMKbdicl+JEg==",
+      "repository": "https://github.com/Phaenarete-Project/proteus",
+      "source": {
+        "type": "git",
+        "commit": "de19272833cea956c28527f9d0710f7d063f9bd2",
+        "path": "dsh-proteus"
+      },
+      "reviewedAt": "2026-10-30T08:15:46.233Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ui-we2",
+      "version": "0.13.2",
+      "integrity": "sha512-zWghttn5rmeNNInrNHVkvmSBFDaJIxCdvbjlKimpNZxD3Tk+QyVrdy9zQsnAp+hw+9msFeaByPDCSMY7zsiGIQ==",
+      "repository": "https://github.com/zgj980644897/dsh-ui-we2",
+      "source": {
+        "type": "git",
+        "commit": "e18f18ab46e727be0f569446e45a26f124899785"
+      },
+      "reviewedAt": "2026-10-30T08:15:46.233Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@gongfpp/dsh-novel-fish",
+      "version": "0.1.5",
+      "integrity": "sha512-taCw8+X1n1kMz4nuWqX8MPf6PWJ6ORT1h8N1gCqRRR2Zi8HEya7JnSwKUghLnY9VDGazn3vgTo7COJuUvMcVbw==",
+      "repository": "https://github.com/gongfpp/dsh-novel-fish",
+      "source": {
+        "type": "git",
+        "commit": "61a0e62d7caa06f3101b450277f3ef530e1561f8"
+      },
+      "reviewedAt": "2026-10-30T08:15:46.233Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

@@ -9044,8 +9044,8 @@
         "zh": "System One"
       },
       "description": {
-        "en": "Provide typed yes/no decisions, classifications and scores through System One services and agent tools.",
-        "zh": "通过 System One 服务和 Agent 工具进行是非判断、分类与评分，返回类型明确的结果。"
+        "en": "Connect multiple decision providers and models through one interface: Jev via TypeSafe, Clef via Cloudflare, Drex via Nace, self-hosted Laya, and compatible custom providers. Agents and plugins can classify content, filter candidates, score against criteria, or locate objects in images, then use structured results in their workflows.",
+        "zh": "用同一接口接入多种决策提供商与模型：在线可选 TypeSafe 提供的 Jev、Cloudflare 提供的 Clef、Nace 提供的 Drex；本地可连接 Laya，也支持兼容的自定义 provider。Agent 和插件可用它进行内容分类、候选筛选、按标准评分或图片定位，再用结构化结果继续自己的流程。"
       },
       "category": "tools"
     },
@@ -11334,13 +11334,13 @@
     },
     {
       "name": "@gongfpp/dsh-novel-fish",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "source": {
         "type": "git",
         "url": "https://github.com/gongfpp/dsh-novel-fish",
-        "commit": "7c25fa93c7c253a8b1925cc1ddff35a47064c633",
-        "integrity": "sha512-TGUIGsugVUtAFwpsfJmDz9GW0z/rAgysWRtK8osasJyLhjnKFpx29/ERbZMfkoNxTb6OJZrb/qnfGv3z9+eraw==",
-        "publishedAt": "2026-10-26T13:44:54Z"
+        "commit": "61a0e62d7caa06f3101b450277f3ef530e1561f8",
+        "integrity": "sha512-taCw8+X1n1kMz4nuWqX8MPf6PWJ6ORT1h8N1gCqRRR2Zi8HEya7JnSwKUghLnY9VDGazn3vgTo7COJuUvMcVbw==",
+        "publishedAt": "2026-10-29T14:02:01.000Z"
       },
       "title": {
         "en": "Novel Fish",
@@ -11872,13 +11872,13 @@
     },
     {
       "name": "dsh-ui-we2",
-      "version": "0.12.0",
+      "version": "0.13.2",
       "source": {
         "type": "git",
         "url": "https://github.com/zgj980644897/dsh-ui-we2",
-        "commit": "60c61c928376ecffa1cc1bf3aea912dbdee354dd",
-        "integrity": "sha512-Mmh+URX2OgksYS+AaV1vxAowU40oJG4aqMcw7KfIvZopL0jmv8RDzNPSoJgicHIaOSh2w9QDxWs0EF58G3oTJQ==",
-        "publishedAt": "2026-10-29T14:20:34Z"
+        "commit": "e18f18ab46e727be0f569446e45a26f124899785",
+        "integrity": "sha512-zWghttn5rmeNNInrNHVkvmSBFDaJIxCdvbjlKimpNZxD3Tk+QyVrdy9zQsnAp+hw+9msFeaByPDCSMY7zsiGIQ==",
+        "publishedAt": "2026-10-29T14:44:16.000Z"
       },
       "title": {
         "en": "WE2 Console",
@@ -11889,6 +11889,141 @@
         "zh": "为 DSH 对话界面提供米白与墨黑科幻风格；未声明 DSH 兼容范围。"
       },
       "category": "appearance"
+    },
+    {
+      "name": "fanframe",
+      "title": {
+        "en": "FanFrame",
+        "zh": "繁界"
+      },
+      "description": {
+        "en": "FanFrame (繁界, “Fanxing’s realm”) lightly polishes the DeepSeek Harness Desktop UI with a unified sidebar, readable chat and subtle animations. The author reports testing with DSH 0.2.1-rc.3.",
+        "zh": "繁界意为“繁星的域界”，通过统一侧栏、聊天文字染色与细微动画，轻度打磨 DSH 桌面界面。作者报告已在 DSH 0.2.1-rc.3 验证。"
+      },
+      "category": "appearance"
+    },
+    {
+      "name": "@woosau/dsh-skill-experts",
+      "title": {
+        "en": "Skill Experts",
+        "zh": "技能专家"
+      },
+      "description": {
+        "en": "Manage skill experts with personas and skills, invoke them from the composer, and import or export expert packages. Requires Node ^22.19 or >=24.",
+        "zh": "在侧栏管理人格与技能组成的专家，通过输入栏召唤，并支持专家包导入导出。需要 Node ^22.19 或 >=24。"
+      },
+      "category": "skills"
+    },
+    {
+      "name": "dsh-rightbar-tab-gestures",
+      "title": {
+        "en": "Right Sidebar Tab Gestures",
+        "zh": "右侧栏标签手势"
+      },
+      "description": {
+        "en": "Close right sidebar tabs with middle-click or double-click. Depends on the host dock tab attributes.",
+        "zh": "通过鼠标中键或双击关闭右侧栏标签，依赖宿主 dock 标签属性。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-peak-valley",
+      "title": {
+        "en": "Peak and Off-Peak Strip",
+        "zh": "峰谷状态带"
+      },
+      "description": {
+        "en": "Show DeepSeek peak and off-peak periods and remaining time above the composer, with themes and custom CSS.",
+        "zh": "在输入框上方显示 DeepSeek 峰谷时段和剩余时间，支持主题和自定义 CSS。"
+      },
+      "category": "usage"
+    },
+    {
+      "name": "dsh-plugin-call-me",
+      "title": {
+        "en": "Call Me",
+        "zh": "电话通知"
+      },
+      "description": {
+        "en": "Call or text your phone from a DSH run using the hosted /call-me service; the phone app requires a paid subscription after its trial.",
+        "zh": "通过托管的 /call-me 服务在 DSH 运行时拨打电话或发送文字；手机应用试用后需要付费订阅。"
+      },
+      "category": "integrations",
+      "version": "0.1.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/radres/dsh-plugin-call-me",
+        "commit": "9d23cce04692ff5a2126b398c4790e7786669aa6",
+        "integrity": "sha512-36MBzSKrmQBLpluo+OPMsInCrSWjnFhsbTmOF7dtUfyZIEPARS9q/A4BxuACROg0SUXGPlrftd3VXhEZ71FU7g==",
+        "publishedAt": "2026-10-29T17:03:59.000Z"
+      }
+    },
+    {
+      "name": "dsh-compact-manager",
+      "title": {
+        "en": "Compact Manager",
+        "zh": "上下文压缩管理"
+      },
+      "description": {
+        "en": "Manage manual and automatic model or mechanical context compaction, with fallback models. Requires Node >=24 and the host compaction-basic plugin.",
+        "zh": "管理手动和自动的模型或机械上下文压缩，支持备用模型；需要 Node >=24，并保留宿主 compaction-basic 插件。"
+      },
+      "category": "tools",
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/tony92921/dsh-compact-manager",
+        "commit": "e9c8bfffa229770d2148922d970725901f6503cb",
+        "integrity": "sha512-O9kPUjg6+vEuSkquX4n0WYgpbuqql5AOtdTfMuftI4LafD0HKUbg7CQ/0dGhM0/D9unQLbfySQVXyv8KairCsQ==",
+        "publishedAt": "2026-10-30T04:30:51.000Z"
+      }
+    },
+    {
+      "name": "dsh-plugin-manager-wj",
+      "title": {
+        "en": "WJ Plugin Management",
+        "zh": "WJ 插件管理中心"
+      },
+      "description": {
+        "en": "View plugin health, configuration provenance and tool/MCP registrations; compatible hosts also support profile plugin controls.",
+        "zh": "查看插件健康、配置来源和工具/MCP 注册信息；兼容的宿主还支持 profile 插件控制。"
+      },
+      "category": "interface",
+      "version": "1.2.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/phoenixlucky/dsh-plugin-manager-wj",
+        "commit": "c0d313c25dd9506e5091a33472c47fcf3db71321",
+        "integrity": "sha512-6fTzzCm0eKjWNKIioMb/dXF+wipAdBNKtERUuw5kaF2kODjtcQwWlwC2Q2VvltTBF8ebjma7VN54UmGlE7gFTw==",
+        "publishedAt": "2026-10-30T07:52:00.000Z"
+      },
+      "repositoryReview": {
+        "version": "1.2.1",
+        "integrity": "sha512-6fTzzCm0eKjWNKIioMb/dXF+wipAdBNKtERUuw5kaF2kODjtcQwWlwC2Q2VvltTBF8ebjma7VN54UmGlE7gFTw==",
+        "commit": "c0d313c25dd9506e5091a33472c47fcf3db71321",
+        "url": "https://github.com/phoenixlucky/dsh-plugin-manager-wj"
+      }
+    },
+    {
+      "name": "dsh-proteus",
+      "title": {
+        "en": "Proteus",
+        "zh": "Proteus 数学解题"
+      },
+      "description": {
+        "en": "Structure exam mathematics problems, check candidate solutions and estimate rubric scores. Results are not formal proofs or authoritative grading; requires Node >=22.19.",
+        "zh": "按考试要求组织数学题、核对候选解答并预测步骤分；结果不是形式化证明或权威评分，需要 Node >=22.19。"
+      },
+      "category": "tools",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Phaenarete-Project/proteus",
+        "commit": "de19272833cea956c28527f9d0710f7d063f9bd2",
+        "path": "dsh-proteus",
+        "integrity": "sha512-dhSL+6gtlPW7sTnY//Bcz7MNOa4OWJ7/PqG66JBbHWQK3Bp6DFvg/QHG8tRmPxtySHtvsYY9YwJMKbdicl+JEg==",
+        "publishedAt": "2026-10-29T16:59:43.000Z"
+      }
     }
   ]
 }
