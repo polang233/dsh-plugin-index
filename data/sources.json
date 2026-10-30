@@ -12056,6 +12056,32 @@
         "zh": "管理内置及插件工具的开关和系统提示词。聊天模式会替换宿主提示词，可在网络调用前请求授权；需要 Node >=22。"
       },
       "category": "tools"
+    },
+    {
+      "name": "dsh-better-skillmanager",
+      "title": {
+        "en": "Better Skill Manager",
+        "zh": "技能管理器"
+      },
+      "description": {
+        "en": "Browse SkillHub, install and manage local skills, and preview or remove installed skills. Requires the desktop profile; no DSH compatibility range is declared.",
+        "zh": "浏览 SkillHub、安装和管理本地技能，支持预览与卸载；需要桌面 profile，未声明 DSH 兼容范围。"
+      },
+      "category": "skills",
+      "version": "1.1.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/allanhao1986/dsh-better-skillmanager",
+        "commit": "458f5d3a727089a4cc57f0e61c46d096b4c28c28",
+        "integrity": "sha512-rsCJTBXdV8HgTFjw7a6M6lT0ypIN+N8ygG1lwm2hfa35HGHKWdhRJLs7tM1suP3IychluKk3nkHR9jz5vnoz7A==",
+        "publishedAt": "2026-10-30T09:01:46.000Z"
+      },
+      "repositoryReview": {
+        "version": "1.1.2",
+        "integrity": "sha512-rsCJTBXdV8HgTFjw7a6M6lT0ypIN+N8ygG1lwm2hfa35HGHKWdhRJLs7tM1suP3IychluKk3nkHR9jz5vnoz7A==",
+        "commit": "458f5d3a727089a4cc57f0e61c46d096b4c28c28",
+        "url": "https://github.com/allanhao1986/dsh-better-skillmanager"
+      }
     }
   ]
 }
