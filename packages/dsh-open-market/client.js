@@ -11,13 +11,19 @@ window.__ModuleLoader__.load({
     try { Switch = require('@deepseek-ai/dsh-client-ui-primitives').Switch; } catch { /* Older hosts use the checkbox fallback. */ }
 
     const SETTINGS_KEY = 'dsh-open-market:settings';
-    const DEFAULT_SETTINGS = { autoRotate: true, hideInstalled: false, showCheckup: true, likes: true };
+    const DEFAULT_SETTINGS = { autoRotate: true, showInstalled: true, showCheckup: true, likes: true, registry: 'index', customRegistry: '', sidebarMarket: 'auto' };
+    const REGISTRY_CHOICES = ['index', 'dsh', 'npmmirror', 'custom'];
+    function normalizeSettings(saved) {
+      const result = Object.fromEntries(Object.entries(DEFAULT_SETTINGS).map(([key, fallback]) =>
+        [key, typeof saved?.[key] === typeof fallback ? saved[key] : fallback]));
+      // 0.2.5 stored the opposite switch, and it covered the rails only.
+      if (typeof saved?.showInstalled !== 'boolean' && typeof saved?.hideInstalled === 'boolean') result.showInstalled = !saved.hideInstalled;
+      if (!REGISTRY_CHOICES.includes(result.registry)) result.registry = DEFAULT_SETTINGS.registry;
+      if (!['auto', 'on', 'off'].includes(result.sidebarMarket)) result.sidebarMarket = DEFAULT_SETTINGS.sidebarMarket;
+      return result;
+    }
     function readSettings() {
-      try {
-        const saved = JSON.parse(window.localStorage.getItem(SETTINGS_KEY));
-        return Object.fromEntries(Object.entries(DEFAULT_SETTINGS).map(([key, fallback]) =>
-          [key, typeof saved?.[key] === 'boolean' ? saved[key] : fallback]));
-      } catch { return { ...DEFAULT_SETTINGS }; }
+      try { return normalizeSettings(JSON.parse(window.localStorage.getItem(SETTINGS_KEY))); } catch { return { ...DEFAULT_SETTINGS }; }
     }
     let settings = readSettings();
     const settingsListeners = new Set();
@@ -27,13 +33,33 @@ window.__ModuleLoader__.load({
       return () => settingsListeners.delete(listener);
     }
     function updateSettings(key, value) {
-      if (typeof value !== 'boolean' || settings[key] === value) return;
+      if (typeof value !== typeof DEFAULT_SETTINGS[key] || settings[key] === value) return;
       settings = { ...settings, [key]: value };
       try { window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch { /* Keep this session usable without storage. */ }
       settingsListeners.forEach(listener => listener());
     }
     function useSettings() {
       return React.useSyncExternalStore(subscribeSettings, getSettings, getSettings);
+    }
+
+    const NPMMIRROR_REGISTRY = 'https://registry.npmmirror.com/';
+    // pnpm compares registries with a trailing slash; a URL with credentials would leak them into DSH's install log.
+    function registryUrl(value) {
+      try {
+        const url = new URL(String(value).trim());
+        if ((url.protocol !== 'https:' && url.protocol !== 'http:') || url.username || url.password || url.search || url.hash) return null;
+        if (!url.pathname.endsWith('/')) url.pathname += '/';
+        return url.href;
+      } catch { return null; }
+    }
+    // DSH asks the registry named here first and falls back to the others it trusts. Only npm versions name one:
+    // a Git spec is fetched from its own host, whichever registry is chosen. Leaving it out uses DSH's own choice.
+    function installTarget(target, { registry: choice, customRegistry }) {
+      if (target.registry === undefined || choice === 'index') return target;
+      const { registry, ...rest } = target;
+      if (choice === 'dsh') return rest;
+      const chosen = choice === 'npmmirror' ? NPMMIRROR_REGISTRY : registryUrl(customRegistry);
+      return { ...rest, registry: chosen || registry };
     }
 
     // Favorites live in this browser profile: named groups of npm package names, any package, not only this index's.
@@ -106,6 +132,251 @@ window.__ModuleLoader__.load({
     const REPOSITORY_URL = 'https://github.com/' + REPOSITORY;
     const GITHUB_MARK = 'M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z';
     const LIKES_ORIGIN = 'https://dshopen.org';
+    const CONTRIBUTING_URL = REPOSITORY_URL + '/blob/main/.github/CONTRIBUTING.md';
+
+    // The catalog runs to megabytes and localStorage is synchronous and shared with favorites, so it lives in IndexedDB.
+    // Everything here is best effort: without storage the tab reads the market as it did before there was a cache.
+    const CACHE_DB = 'dsh-open-market';
+    const CACHE_STORE = 'cache';
+    const CACHE_SCHEMA = 1;
+    const CACHE_WAIT = 1500;
+    // The index rebuilds every six hours, so reading it more often returns the same document.
+    const REFRESH_INTERVAL = 6 * 60 * 60 * 1000;
+    const RETRY_INTERVAL = 15 * 60 * 1000;
+
+    function openCache() {
+      return new Promise((resolve, reject) => {
+        const request = window.indexedDB.open(CACHE_DB, 1);
+        request.onupgradeneeded = () => request.result.createObjectStore(CACHE_STORE);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+        request.onblocked = () => reject(new Error('blocked'));
+      });
+    }
+
+    async function withCache(mode, run) {
+      const database = await openCache();
+      try {
+        return await new Promise((resolve, reject) => {
+          const transaction = database.transaction(CACHE_STORE, mode);
+          const request = run(transaction.objectStore(CACHE_STORE));
+          transaction.oncomplete = () => resolve(request.result);
+          transaction.onerror = transaction.onabort = () => reject(transaction.error);
+        });
+      } finally {
+        database.close();
+      }
+    }
+
+    async function readCache(key) {
+      try { return await withCache('readonly', store => store.get(key)); } catch { return undefined; }
+    }
+
+    async function writeCache(key, value) {
+      try { await withCache('readwrite', store => store.put(value, key)); } catch { /* The next open reads the market again. */ }
+    }
+
+    // A storage that never answers must not hold up the market behind it.
+    function waitForCache(key) {
+      return Promise.race([readCache(key), new Promise(resolve => window.setTimeout(resolve, CACHE_WAIT))]);
+    }
+
+    function validCatalog(record) {
+      return record?.schema === CACHE_SCHEMA && record.index === INDEX_URL && Array.isArray(record.entries) && record.entries.length > 0
+        && Number.isFinite(record.syncedAt);
+    }
+
+    function needsRefresh({ syncedAt, attemptedAt }, now) {
+      return now - syncedAt >= REFRESH_INTERVAL && now - attemptedAt >= RETRY_INTERVAL;
+    }
+
+    function olderVersion(version, than) {
+      const parts = value => /^\d+\.\d+\.\d+$/.test(value) ? value.split('.').map(Number) : null;
+      const [a, b] = [parts(version), parts(than)];
+      if (!a || !b) return false;
+      const at = a.findIndex((part, index) => part !== b[index]);
+      return at >= 0 && a[at] < b[at];
+    }
+
+    // A cached snapshot can be hours old, while installs happen anywhere in DSH. Reading the bundles needs no network,
+    // so a restored catalog gets the same status the market service would give it.
+    function installationOf(entry, bundle) {
+      if (!bundle || (!bundle.installed && bundle.availability !== 'installation')) return { status: 'not-installed' };
+      const installedVersion = bundle.version;
+      const version = installedVersion === undefined ? {} : { installedVersion };
+      if (!bundle.installed) return { status: 'provided', ...version };
+      if (installedVersion === undefined) return { status: 'different-version' };
+      const offered = entry.defaultVersion ?? entry.versions?.[0]?.version;
+      if (installedVersion === offered) return { status: 'installed', ...version };
+      return { status: olderVersion(installedVersion, offered) ? 'update-available' : 'different-version', ...version };
+    }
+
+    function withInstallation(entries, bundles) {
+      const byName = new Map(bundles.map(bundle => [bundle.name, bundle]));
+      let changed = false;
+      const result = entries.map(entry => {
+        const installation = installationOf(entry, byName.get(entry.name));
+        if (installation.status === entry.installation?.status && installation.installedVersion === entry.installation?.installedVersion) return entry;
+        changed = true;
+        return { ...entry, installation };
+      });
+      return changed ? result : entries;
+    }
+
+    // One catalog for the tab and both settings surfaces. It outlives the tab, so coming back shows it at once.
+    let market = { status: 'loading', syncing: false, syncFailed: false, syncedAt: 0, attemptedAt: 0 };
+    const marketListeners = new Set();
+    const getMarket = () => market;
+    function subscribeMarket(listener) {
+      marketListeners.add(listener);
+      return () => marketListeners.delete(listener);
+    }
+    function updateMarket(patch) {
+      market = { ...market, ...patch };
+      marketListeners.forEach(listener => listener());
+    }
+    function useMarket() {
+      return React.useSyncExternalStore(subscribeMarket, getMarket, getMarket);
+    }
+
+    // Only the host reads the index. Each page is an explicit Remote result envelope.
+    async function readCatalog(remote, refresh) {
+      const entries = new Map();
+      let offset = 0;
+      let metadata;
+      let fetchedAt;
+      try {
+        for (;;) {
+          // Later pages name the first page's document, so a forced read fetches once and the pages stay consistent.
+          const position = offset ? { fetchedAt } : refresh ? { refresh: true } : {};
+          const answer = await remote.pluginMarket.search(INDEX_URL, {
+            sort: { kind: 'key', id: 'recommended', direction: 'desc' }, offset, limit: 100, ...position
+          });
+          if (!answer.ok) {
+            // The user removed our source from Discover; offer to add it back instead of an error.
+            const missing = /unknown-index/.test(String(answer.error?.code ?? '')) || /not a configured index/i.test(String(answer.error?.message ?? ''));
+            return missing ? { status: 'missing' } : { status: 'error', error: answer.error };
+          }
+          const page = answer.value;
+          if (!Array.isArray(page?.entries) || (page.nextOffset !== null &&
+              (!Number.isInteger(page.nextOffset) || page.nextOffset <= offset))) return { status: 'error', invalidPage: true };
+          if (offset === 0) { metadata = page.metadata; fetchedAt = page.fetchedAt; }
+          page.entries.forEach(entry => entries.set(entry.name, entry));
+          if (page.nextOffset === null) {
+            return { status: 'ready', entries: [...entries.values()], metadata, syncedAt: Number.isFinite(fetchedAt) ? fetchedAt : Date.now() };
+          }
+          offset = page.nextOffset;
+        }
+      } catch (error) {
+        return { status: 'error', error };
+      }
+    }
+
+    // The form DSH's market service gives each plugin, for hosts without that service. It cannot read engines.dsh here,
+    // so every version counts as compatible and pluginManager.inspect refuses the wrong ones when installing.
+    function listingOf(plugin) {
+      const versions = plugin.versions.map(version => {
+        const { source } = version;
+        const install = source.type === 'npm'
+          ? { spec: `${plugin.name}@${version.version}`, ...(source.registry === undefined ? {} : { registry: source.registry }) }
+          : { spec: `git+${source.url.endsWith('.git') ? source.url : source.url + '.git'}#${source.commit}${source.path === undefined ? '' : `&path:/${source.path}`}` };
+        return { ...version, install, compatibility: { compatible: true } };
+      });
+      const release = versions.find(version => !version.version.includes('-')) ?? versions[0];
+      return { ...plugin, versions, ...(release ? { defaultVersion: release.version } : {}), installation: { status: 'not-installed' } };
+    }
+
+    async function readIndexFile() {
+      try {
+        const response = await fetch(INDEX_URL, { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(30000) });
+        if (!response.ok) return { status: 'error', error: 'HTTP ' + response.status };
+        const index = await response.json();
+        if (!Array.isArray(index?.plugins)) return { status: 'error', invalidPage: true };
+        return { status: 'ready', entries: index.plugins.map(listingOf), metadata: index.metadata, syncedAt: Date.now() };
+      } catch (error) {
+        return { status: 'error', error };
+      }
+    }
+
+    // Outside the Plugins page there is no install dialog to open, so the steps it runs happen here, without its prompts.
+    async function installDirectly(manager, target, t) {
+      const service = manager();
+      if (!service?.inspect || !service.installBundle) return { ok: false, error: t('updateUnavailable') };
+      const inspected = await service.inspect(target.spec, { registry: target.registry });
+      if (!inspected?.ok) return inspected;
+      if (inspected.value.status === 'refused') return { ok: false, error: inspected.value.reason };
+      const { registry, selection, saveExact } = inspected.value;
+      const result = await service.installBundle(target.spec, { enabled: selection ?? true, requestId: crypto.randomUUID(), registry,
+        ...(saveExact === undefined ? {} : { saveExact }) });
+      if (!result?.ok) return result;
+      const { application, error, pendingBuilds } = result.value;
+      if (application === 'failed') return { ok: false, error: pendingBuilds?.length ? t('installNeedsDialog') : error ?? t('unknownError') };
+      return { ok: application !== 'cancelled', restart: application === 'restart-required', error: t('unknownError') };
+    }
+
+    let marketRemote;
+    let marketManager;
+    // True once the sidebar page exists; only then may the index be read without the market service.
+    let readsIndexFile = false;
+    let marketSync = null;
+    let marketSyncQueued = false;
+    // Never blocks the screen: with a catalog on screen a failed read only leaves it there.
+    function syncMarket({ refresh = false, again = false } = {}) {
+      if (marketSync) {
+        // Installation status may have changed after this read started.
+        if (again) marketSyncQueued = true;
+        return marketSync;
+      }
+      const remote = marketRemote;
+      if (!remote && !readsIndexFile) return Promise.resolve();
+      updateMarket({ syncing: true, syncFailed: false, attemptedAt: Date.now(), ...(market.entries ? {} : { status: 'loading' }) });
+      marketSync = (async () => {
+        const result = remote ? await readCatalog(remote, refresh) : await readIndexFile();
+        if (result.status === 'ready') {
+          const { entries, metadata, syncedAt } = result;
+          updateMarket({ status: 'ready', entries, metadata, syncedAt, syncing: false, error: undefined, invalidPage: false });
+          if (!remote) void refreshInstallation(marketManager);
+          void writeCache('market', { schema: CACHE_SCHEMA, index: INDEX_URL, entries, metadata, syncedAt });
+        } else if (result.status === 'missing') updateMarket({ status: 'missing', syncing: false });
+        else if (market.entries) updateMarket({ status: 'ready', syncing: false, syncFailed: true });
+        else updateMarket({ ...result, syncing: false, syncFailed: true });
+      })().finally(() => {
+        marketSync = null;
+        if (marketSyncQueued) {
+          marketSyncQueued = false;
+          void syncMarket();
+        }
+      });
+      return marketSync;
+    }
+
+    let marketRestored = null;
+    function restoreMarket() {
+      marketRestored ??= waitForCache('market').then(saved => {
+        if (!market.entries && validCatalog(saved)) {
+          updateMarket({ status: 'ready', entries: saved.entries, metadata: saved.metadata, syncedAt: saved.syncedAt });
+        }
+      });
+      return marketRestored;
+    }
+
+    async function refreshInstallation(manager) {
+      try {
+        const answer = await manager()?.listBundles?.();
+        if (!answer?.ok || !market.entries) return;
+        const entries = withInstallation(market.entries, answer.value);
+        if (entries !== market.entries) updateMarket({ entries });
+      } catch { /* The next market read brings the same status. */ }
+    }
+
+    async function enterMarket(manager) {
+      marketManager = manager;
+      await restoreMarket();
+      if (market.status === 'ready') {
+        void refreshInstallation(manager);
+        if (needsRefresh(market, Date.now())) void syncMarket();
+      } else void syncMarket();
+    }
     const LIKED_KEY = 'dsh-open-market:liked';
     const EMPTY_LIKES = {};
 
@@ -164,6 +435,11 @@ window.__ModuleLoader__.load({
       return Number.isSafeInteger(counts[name]) && counts[name] > 0 ? counts[name] : 0;
     }
 
+    function validLikes(value) {
+      if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+      return Object.fromEntries(Object.entries(value).filter(([, count]) => Number.isSafeInteger(count) && count > 0));
+    }
+
     // One attempt; a cold server can take several seconds, so the caller tries twice.
     async function fetchLikeCounts(signal) {
       const controller = new AbortController();
@@ -174,8 +450,10 @@ window.__ModuleLoader__.load({
         const response = await fetch(likesOrigin() + '/likes.json', { signal: controller.signal });
         if (!response.ok) throw new Error();
         const data = await response.json();
-        if (data?.schema !== 1 || !data.likes || typeof data.likes !== 'object' || Array.isArray(data.likes)) throw new Error();
-        return Object.fromEntries(Object.entries(data.likes).filter(([, count]) => Number.isSafeInteger(count) && count > 0));
+        if (data?.schema !== 1) throw new Error();
+        const counts = validLikes(data.likes);
+        if (!counts) throw new Error();
+        return counts;
       } finally {
         window.clearTimeout(timer);
         signal.removeEventListener('abort', abort);
@@ -187,21 +465,23 @@ window.__ModuleLoader__.load({
       const revisions = new Map(likesRevisions);
       let live = true;
       async function load() {
-        let counts = {};
+        let counts = null;
         for (let attempt = 0; attempt < 2 && live; attempt++) {
           try {
             counts = await fetchLikeCounts(controller.signal);
             break;
           } catch { /* Likes are optional; the rest of the market must always remain usable. */ }
         }
-        if (!live) return;
+        // Without an answer the last counts stay on screen.
+        if (!live || !counts) return;
         // A cached GET must not overwrite an optimistic vote or a newer POST response.
         for (const [name, revision] of likesRevisions) {
           if (revision !== revisions.get(name) || pendingLikes.has(name)) counts[name] = likeCount(likesState.counts, name);
         }
         updateLikes({ counts });
+        void writeCache('likes', { schema: CACHE_SCHEMA, counts });
       }
-      load();
+      void restoreLikes().then(load);
       return () => { live = false; controller.abort(); };
     }
 
@@ -244,6 +524,15 @@ window.__ModuleLoader__.load({
       }
     }
 
+    let likesRestored = null;
+    function restoreLikes() {
+      likesRestored ??= waitForCache('likes').then(saved => {
+        const counts = saved?.schema === CACHE_SCHEMA ? validLikes(saved.counts) : null;
+        if (counts && likesState.counts === EMPTY_LIKES) updateLikes({ counts });
+      });
+      return likesRestored;
+    }
+
     function useLikes(enabled) {
       const snapshot = React.useSyncExternalStore(subscribeLikes, getLikes, getLikes);
       React.useEffect(() => {
@@ -266,7 +555,7 @@ window.__ModuleLoader__.load({
       missingTitle: '开放插件市场不在索引源中', missingBody: '它可能在「发现」里被删掉了。添加后这里和「发现」都能看到。', addSource: '添加索引源',
       today: '今日推荐', recommended: '智能推荐', popular: '最受欢迎', trending: '增长最快',
       newest: '最新发布', health: '我已安装',
-      todayHint: '每天更新，按点赞和推荐加权', recommendedHint: '综合增长与维护情况', popularHint: '按近期点赞',
+      todayHint: '每天更新，按点赞和推荐加权', recommendedHint: '近期活跃，也留位置给新收录的插件', popularHint: '按近期点赞',
       trendingHint: '近 7 天下载增长', newestHint: '按发布时间', stars: 'GitHub star {count}',
       close: '关闭', homepage: '主页', sourceCode: '源码', marketPage: '在开放插件市场网站查看',
       copy: '复制', copied: '已复制', installCommand: '安装命令', likeCount: '点赞 {count}',
@@ -282,13 +571,21 @@ window.__ModuleLoader__.load({
       previous: '向左浏览 {section}', next: '向右浏览 {section}',
       source: '数据来自开放插件市场', sourceLink: 'dshopen.org', newWindow: '在新窗口打开',
       recommendationPosition: '查看第 {number} 组推荐', settings: '设置', about: '关于',
-      autoRotate: '今日推荐自动轮播', hideInstalled: '在横向列表中隐藏已安装的插件', showCheckup: '显示「我已安装」按钮',
+      autoRotate: '今日推荐自动轮播', showInstalled: '在推荐和全部插件中显示已安装的插件', showCheckup: '显示「我已安装」按钮', installing: '正在安装…', sidebarMarket: '在侧边栏显示开放市场', sidebarMarketHelp: '单独的全宽页面，适合「插件」页没有开放市场标签的旧版 DSH。从这里安装时不弹安装窗口；需要确认安装脚本的插件请到「插件」页安装。', installNeedsDialog: '这个插件需要确认安装脚本，请到「插件」页安装', installedRestart: '已安装，重启 DSH 后生效',
+      settingsDisplay: '显示', settingsData: '数据与同步', settingsDownload: '下载', settingsConversation: '对话',
+      syncData: '市场数据', syncNow: '同步最新数据', syncing: '正在同步…', syncedAt: '上次同步：{time}', neverSynced: '还没有同步过',
+      syncFailed: '同步失败，继续显示已有数据', syncUnavailable: '打开「自定义插件市场」后才能同步', syncHelp: '打开市场时先显示本机保存的数据，每 6 小时在后台更新一次，不影响正常浏览。',
+      registryLabel: '从哪个源下载', registryIndex: 'npm 官方源', registryDsh: '跟随 DSH 的安装源', registryNpmmirror: '中国大陆镜像源', registryCustom: '自定义地址',
+      registryPlaceholder: 'https://npm.example.com/', registryInvalid: '请输入以 http:// 或 https:// 开头、不含账号密码的地址',
+      registryHelp: '在开放市场里安装和更新 npm 插件时先问这个源，连不上或还没同步到这个包时，DSH 通常会改问另一个可信的源。Git 来源的插件直接从 GitHub 下载；DSH 自己的「发现」页不受这里影响。',
+      registryCustomHelp: '自定义地址只问这一个源，不会回退到其他源。需要登录的源，请把凭据放在本机的 ~/.npmrc 里。',
       autoReview: '新对话自动使用「自动审查」', autoReviewHelp: '打开后，每个新对话都直接使用 DSH 的实验性「自动审查」权限，不用每次手动选择、确认两次；DSH 没开「自动审查」时会一并打开，可能需要重启 DSH 生效。自动审查由当前模型判断每次工具调用，可能误放行或误拒绝，并消耗额外 token。', autoReviewRestart: '已保存，重启 DSH 后生效', autoReviewFailed: '切换失败：{reason}',
       likes: '参与点赞', likesHelp: '点赞和安装会向 dshopen.org 发送匿名请求，用于推荐排序；每人每天每个插件计一次，点赞每 3 天减少 1。',
       like: '点赞', likedToday: '今天已经点过赞了', likeLimit: '今天点赞次数已达上限', likeFailed: '点赞失败，请稍后再试',
-      browseAll: '翻阅全部 {count} 个插件', allPlugins: '全部插件', allHint: '{count} 个，按推荐排序', collapse: '收起',
+      browseAll: '翻阅全部 {count} 个插件', allPlugins: '全部插件', allHint: '{count} 个插件', sortBy: '排序', sortStars: '星数最多', collapse: '收起',
       upToDateGroup: '状态正常', noneInstalled: '还没有安装开放市场里的插件',
       starCta: '有帮助到你吗？支持我们只需要点 star 哦', starLink: '在 GitHub 上给 {repo} 点 star',
+      contributeCta: '你也有好的插件想要收录给我们？欢迎加入！', contributeEnd: '贡献指南', contributing: '贡献指南', contributingUrl: CONTRIBUTING_URL,
       favorites: '收藏夹', favorite: '收藏', unfavorite: '取消收藏', chooseGroup: '选择收藏夹', defaultGroup: '默认收藏夹',
       newGroup: '新建收藏夹', groupName: '收藏夹名称', save: '保存', cancel: '取消', rename: '重命名', deleteGroup: '删除收藏夹',
       deleteConfirm: '删除收藏夹「{name}」？里面的插件不会被卸载。', enableAll: '全部启用', disableAll: '全部停用',
@@ -308,7 +605,7 @@ window.__ModuleLoader__.load({
       missingTitle: 'Open Plugin Market is not an index source', missingBody: 'It may have been removed in Discover. Add it back to see it here and in Discover.', addSource: 'Add index source',
       today: 'Today’s picks', recommended: 'Recommended', popular: 'Most popular', trending: 'Fastest growing',
       newest: 'Newly published', health: 'Installed',
-      todayHint: 'Daily, weighted by likes and recommendations', recommendedHint: 'Growth and maintenance', popularHint: 'By recent likes',
+      todayHint: 'Daily, weighted by likes and recommendations', recommendedHint: 'Active plugins, with room for new listings', popularHint: 'By recent likes',
       trendingHint: '7-day download growth', newestHint: 'By publication date', stars: '{count} GitHub stars',
       close: 'Close', homepage: 'Homepage', sourceCode: 'Source code', marketPage: 'View on Open Plugin Market',
       copy: 'Copy', copied: 'Copied', installCommand: 'Install command', likeCount: '{count} likes',
@@ -324,13 +621,21 @@ window.__ModuleLoader__.load({
       sectionEmpty: 'No matching plugins yet', previous: 'Browse {section} left', next: 'Browse {section} right',
       source: 'Data from Open Plugin Market', sourceLink: 'dshopen.org', newWindow: 'Opens in a new window',
       recommendationPosition: 'Show recommendation group {number}', settings: 'Settings', about: 'About',
-      autoRotate: 'Auto-rotate today’s picks', hideInstalled: 'Hide installed plugins in horizontal lists', showCheckup: 'Show the Installed button',
+      autoRotate: 'Auto-rotate today’s picks', showInstalled: 'Show installed plugins in recommendations and All plugins', showCheckup: 'Show the Installed button', installing: 'Installing…', sidebarMarket: 'Show Open Market in the sidebar', sidebarMarketHelp: 'A separate full-width page, for older DSH versions without the Open Market tab on the Plugins page. Installs from it skip the install dialog; a plugin whose install scripts need approval has to be installed from Plugins.', installNeedsDialog: 'This plugin needs its install scripts approved. Install it from Plugins.', installedRestart: 'Installed. Restart DSH to use it.',
+      settingsDisplay: 'Display', settingsData: 'Data and sync', settingsDownload: 'Downloads', settingsConversation: 'Conversations',
+      syncData: 'Market data', syncNow: 'Sync latest data', syncing: 'Syncing…', syncedAt: 'Last synced: {time}', neverSynced: 'Not synced yet',
+      syncFailed: 'Sync failed; showing the data already here', syncUnavailable: 'Turn on Custom plugin markets to sync', syncHelp: 'The market opens with the data saved on this computer and updates in the background every six hours, so browsing is never held up.',
+      registryLabel: 'Download from', registryIndex: 'Official npm registry', registryDsh: 'Same as DSH', registryNpmmirror: 'Mainland China mirror', registryCustom: 'Custom address',
+      registryPlaceholder: 'https://npm.example.com/', registryInvalid: 'Enter an http:// or https:// address without a username or password',
+      registryHelp: 'Installs and updates of npm plugins from Open Market ask this registry first. When it is unreachable or has no copy of the package yet, DSH usually asks another trusted one. Git plugins download straight from GitHub, and DSH’s own Discover tab is not affected.',
+      registryCustomHelp: 'A custom address is asked alone, with no fallback. If it requires a login, keep the credentials in ~/.npmrc on this computer.',
       autoReview: 'Start new conversations in Auto review', autoReviewHelp: "Every new conversation uses DSH's experimental Auto review permission, so you no longer pick and confirm it each time. If Auto review is off in DSH it is switched on too, which may need a restart. Auto review asks the current model about each tool call; it can wrongly allow or refuse actions and uses extra tokens.", autoReviewRestart: 'Saved; restart DSH for it to take effect', autoReviewFailed: 'Could not switch: {reason}',
       likes: 'Join likes', likesHelp: 'Likes and installs send anonymous requests to dshopen.org for recommendation ranking; each person counts once per plugin per UTC day, and likes decrease by 1 every 3 days.',
       like: 'Like', likedToday: 'Already liked today', likeLimit: 'Daily like limit reached', likeFailed: 'Could not like this plugin. Please try again later',
-      browseAll: 'Browse all {count} plugins', allPlugins: 'All plugins', allHint: '{count}, in recommended order', collapse: 'Collapse',
+      browseAll: 'Browse all {count} plugins', allPlugins: 'All plugins', allHint: '{count} plugins', sortBy: 'Sort', sortStars: 'Most stars', collapse: 'Collapse',
       upToDateGroup: 'Up to date', noneInstalled: 'No plugins from Open Market are installed yet',
       starCta: 'Did this help you? A star is all it takes to support us', starLink: 'Star {repo} on GitHub',
+      contributeCta: 'Have a great plugin of your own? Come and join us!', contributeEnd: 'Contribute', contributing: 'Contributing guide', contributingUrl: CONTRIBUTING_URL,
       favorites: 'Favorites', favorite: 'Save to favorites', unfavorite: 'Remove from favorites', chooseGroup: 'Choose a group', defaultGroup: 'Default',
       newGroup: 'New group', groupName: 'Group name', save: 'Save', cancel: 'Cancel', rename: 'Rename', deleteGroup: 'Delete group',
       deleteConfirm: 'Delete the group “{name}”? Its plugins stay installed.', enableAll: 'Enable all', disableAll: 'Disable all',
@@ -349,7 +654,8 @@ window.__ModuleLoader__.load({
       .opm-root { min-width: 0; width: 100%; padding: 0 0 12px; box-sizing: border-box;
         color: var(--dsw-alias-label-primary); line-height: 1.5; }
       /* DSH puts a fixed 32px gap between the tab bar and the tab panel; pull the search halfway into it. */
-      .opm-market { margin-top: -16px; }
+      /* Rows bleed into the page gutter, so the edges fade there and leave the cards their full width. useRowBleed sizes it. */
+      .opm-market { margin-top: -16px; --opm-bleed: 8px; }
       .opm-root *, .opm-root *::before, .opm-root *::after { box-sizing: border-box; }
       .opm-root h2, .opm-root h3, .opm-root p { margin: 0; }
       .opm-root h2, .opm-root h3 { font-size: 14px; font-weight: 600; }
@@ -357,6 +663,10 @@ window.__ModuleLoader__.load({
       .opm-root :focus-visible { outline: 2px solid var(--dsw-alias-label-primary); outline-offset: 3px; }
       .opm-root ::selection { background: var(--dsw-alias-interactive-bg-active); color: var(--dsw-alias-label-primary); }
       .opm-section { margin-top: 12px; min-width: 0; }
+      .opm-page { height: 100%; min-height: 0; overflow: hidden auto; }
+      .opm-page-inner { width: 100%; max-width: 1120px; margin: 0 auto; padding: 32px 48px 24px; box-sizing: border-box; }
+      .opm-page-head h1 { margin: 0 0 16px; font-size: 20px; font-weight: 600; color: var(--dsw-alias-label-primary); }
+      .opm-page .opm-market { margin-top: 0; }
       .opm-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 22px; margin-bottom: 6px; }
       .opm-heading-copy { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
       .opm-heading-copy h2 { flex-shrink: 0; }
@@ -393,19 +703,23 @@ window.__ModuleLoader__.load({
       .opm-tag-active { color: var(--dsw-alias-button-info-fill); }
       .opm-tag-stars { color: var(--dsw-alias-label-secondary); font-variant-numeric: tabular-nums; }
       .opm-list { position: relative; display: flow-root; min-width: 0; }
-      .opm-arrow { position: absolute; z-index: 2; top: 50%; transform: translateY(-50%); width: 28px; height: 28px;
-        min-height: 28px; padding: 0; border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-full, var(--dsw-radius-lg));
-        background: var(--dsw-alias-settings-card-fill); box-shadow: var(--dsw-elevation-soft); color: var(--dsw-alias-label-primary);
-        font: inherit; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 150ms ease-out; }
-      .opm-arrow-previous { left: 4px; }
-      .opm-arrow-next { right: 4px; }
+      .opm-arrow { position: absolute; z-index: 2; top: 50%; display: inline-flex; align-items: center; justify-content: center;
+        width: 32px; height: 32px; padding: 0; border: 1px solid var(--dsw-alias-border-l2); border-radius: 50%;
+        background: color-mix(in srgb, var(--dsw-alias-bg-layer-1) 82%, transparent); box-shadow: var(--dsw-elevation-soft);
+        -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: var(--dsw-alias-label-primary);
+        cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(-50%) scale(.92);
+        transition: opacity 150ms ease-out, transform 150ms ease-out, border-color 150ms ease-out; }
+      .opm-arrow svg { width: 16px; height: 16px; }
+      .opm-arrow-previous { left: calc(-1 * var(--opm-bleed) + 4px); }
+      .opm-arrow-next { right: calc(-1 * var(--opm-bleed) + 4px); }
       .opm-section:hover .opm-arrow:not(:disabled), .opm-section:focus-within .opm-arrow:not(:disabled),
-      .opm-carousel:hover .opm-arrow:not(:disabled), .opm-carousel:focus-within .opm-arrow:not(:disabled) { opacity: 1; pointer-events: auto; }
-      .opm-arrow:disabled { visibility: hidden; }
+      .opm-carousel:hover .opm-arrow:not(:disabled), .opm-carousel:focus-within .opm-arrow:not(:disabled) { opacity: 1; pointer-events: auto; transform: translateY(-50%); }
+      .opm-arrow:hover:not(:disabled) { border-color: var(--dsw-alias-border-l3); transform: translateY(-50%) scale(1.08) !important; }
+      .opm-arrow:active:not(:disabled) { transform: translateY(-50%) scale(.96) !important; }
       .opm-rail, .opm-carousel-viewport { display: flex; align-items: stretch; gap: 10px; overflow-x: auto; overscroll-behavior-x: contain;
-        scrollbar-width: none; padding: 24px 8px; margin: -24px -8px; scroll-padding-inline: 8px; }
-      /* Rails start at staggered offsets, so only today's picks snap. */
-      .opm-carousel-viewport { scroll-snap-type: x proximity; }
+        scrollbar-width: none; padding: 24px var(--opm-bleed); margin: -24px calc(-1 * var(--opm-bleed)); scroll-padding-inline: var(--opm-bleed); }
+      /* Rails start at staggered offsets, so only today's picks snap, one gutter along (see restingOffset). */
+      .opm-carousel-viewport { scroll-snap-type: x proximity; scroll-padding-left: 0; }
       .opm-rail::-webkit-scrollbar, .opm-carousel-viewport::-webkit-scrollbar { display: none; }
       .opm-card { flex: 0 0 220px; width: 220px; min-width: 0; scroll-snap-align: start; padding: 12px;
         display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--dsw-alias-border-l2);
@@ -427,16 +741,16 @@ window.__ModuleLoader__.load({
       @property --opm-fade-start { syntax: '<length>'; inherits: true; initial-value: 0px; }
       @property --opm-fade-end { syntax: '<length>'; inherits: true; initial-value: 0px; }
       .opm-list-fade { --opm-fade-start: 0px; --opm-fade-end: 0px; transition: --opm-fade-start 200ms ease-out, --opm-fade-end 200ms ease-out; }
-      .opm-list-fade[data-fade-start] { --opm-fade-start: 64px; }
-      .opm-list-fade[data-fade-end] { --opm-fade-end: 64px; }
-      .opm-list-fade > .opm-rail {
+      .opm-list-fade[data-fade-start] { --opm-fade-start: calc(var(--opm-bleed) + 12px); }
+      .opm-list-fade[data-fade-end] { --opm-fade-end: calc(var(--opm-bleed) + 12px); }
+      .opm-list-fade > .opm-rail, .opm-list-fade > .opm-carousel-viewport {
         -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--opm-fade-start), #000 calc(100% - var(--opm-fade-end)), transparent);
         mask-image: linear-gradient(to right, transparent, #000 var(--opm-fade-start), #000 calc(100% - var(--opm-fade-end)), transparent); }
-      .opm-list-fade::before, .opm-list-fade::after { content: ''; position: absolute; z-index: 1; top: 0; bottom: 0; width: 48px;
+      .opm-list-fade::before, .opm-list-fade::after { content: ''; position: absolute; z-index: 1; top: 0; bottom: 0; width: var(--opm-bleed);
         pointer-events: none; opacity: 0; transition: opacity 200ms ease-out;
         -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-      .opm-list-fade::before { left: -8px; -webkit-mask-image: linear-gradient(to right, #000, transparent); mask-image: linear-gradient(to right, #000, transparent); }
-      .opm-list-fade::after { right: -8px; -webkit-mask-image: linear-gradient(to left, #000, transparent); mask-image: linear-gradient(to left, #000, transparent); }
+      .opm-list-fade::before { left: calc(-1 * var(--opm-bleed)); -webkit-mask-image: linear-gradient(to right, #000, transparent); mask-image: linear-gradient(to right, #000, transparent); }
+      .opm-list-fade::after { right: calc(-1 * var(--opm-bleed)); -webkit-mask-image: linear-gradient(to left, #000, transparent); mask-image: linear-gradient(to left, #000, transparent); }
       .opm-list-fade[data-fade-start]::before, .opm-list-fade[data-fade-end]::after { opacity: 1; }
       .opm-featured-slide { min-width: 0; flex-shrink: 0; display: flex; scroll-snap-align: start; }
       .opm-featured-card { width: 100%; flex: 1 1 auto; }
@@ -474,7 +788,19 @@ window.__ModuleLoader__.load({
         background: var(--dsw-alias-interactive-bg-hover); color: var(--dsw-alias-label-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
       .opm-footer-end svg { width: 13px; height: 13px; flex-shrink: 0; }
       .opm-footer-end .opm-footer-star { color: #e59a00; }
+      /* Both messages share one grid cell, so the pill keeps its width while they cross-fade. */
+      .opm-swap { display: inline-grid; align-items: center; }
+      .opm-swap > span { grid-area: 1 / 1; display: inline-flex; align-items: center; gap: 4px; opacity: 0; visibility: hidden;
+        transition: opacity 400ms ease-out, visibility 400ms; }
+      .opm-swap > span[data-on] { opacity: 1; visibility: visible; }
       .opm-browse { display: flex; justify-content: center; margin-top: 16px; }
+      /* The open catalog takes the page gutters too; its arrows ride along the screen while the grid scrolls. */
+      .opm-all-heading { flex-wrap: wrap; }
+      .opm-all-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; margin-left: auto; }
+      .opm-all-body { position: relative; margin-inline: calc(-1 * var(--opm-bleed)); }
+      .opm-all-arrows { position: sticky; z-index: 2; top: 45%; height: 0; }
+      .opm-all-arrows .opm-arrow-previous { left: 4px; }
+      .opm-all-arrows .opm-arrow-next { right: 4px; }
       .opm-installed-button small { color: var(--dsw-alias-state-warn-primary); font-size: 11px; font-weight: 600; }
       .opm-footer a { color: var(--dsw-alias-label-secondary); text-underline-offset: 3px; }
       .opm-footer a:hover { color: var(--dsw-alias-label-primary); }
@@ -482,14 +808,21 @@ window.__ModuleLoader__.load({
       .opm-skeleton-title { height: 22px; width: 45%; margin-bottom: 8px; }
       .opm-skeleton-search { height: 32px; max-width: 360px; border-radius: var(--dsw-radius-md); }
       .opm-skeleton-card { height: 148px; border: 0; background: var(--dsw-alias-bg-skeleton); }
-      .opm-settings { padding: 0; font-size: 13px; }
-      .opm-settings h2 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
-      .opm-settings-group + .opm-settings-group { margin-top: 18px; }
-      .opm-setting-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; max-width: 560px; padding: 6px 0; }
+      .opm-settings { display: flex; flex-direction: column; gap: 12px; max-width: 620px; padding: 0; font-size: 13px; }
+      .opm-settings-group { padding: 10px 12px; border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-md);
+        background: var(--dsw-alias-bg-module-platform); }
+      .opm-settings h2 { font-size: 13px; font-weight: 600; color: var(--dsw-alias-label-secondary); margin-bottom: 2px; }
+      .opm-setting-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 32px; padding: 4px 0; }
       .opm-setting-row + .opm-setting-row { border-top: 1px solid var(--dsw-alias-border-l2); }
+      .opm-setting-copy { display: flex; flex-direction: column; min-width: 0; }
       .opm-setting-label { color: var(--dsw-alias-label-primary); }
-      .opm-setting-separate { margin-top: 12px; border-top: 1px solid var(--dsw-alias-border-l2); }
-      .opm-setting-help { max-width: 560px; margin-top: 2px !important; color: var(--dsw-alias-label-caption); font-size: 12px; }
+      .opm-setting-value { color: var(--dsw-alias-label-secondary); font-size: 12px; font-variant-numeric: tabular-nums; }
+      .opm-setting-value-error { color: var(--dsw-alias-state-warn-primary); }
+      .opm-setting-help { margin-top: 2px !important; color: var(--dsw-alias-label-caption); font-size: 12px; }
+      .opm-setting-block { padding: 4px 0; }
+      .opm-setting-block .opm-chips { margin-top: 6px; }
+      .opm-setting-block .opm-input { width: 100%; height: 30px; margin-top: 8px; }
+      .opm-setting-block .opm-error { margin-top: 2px !important; font-size: 12px; }
       .opm-checkbox { display: flex; align-items: center; gap: 8px; cursor: pointer; }
       .opm-checkbox input { margin: 0; accent-color: var(--dsw-alias-button-primary-fill); }
       .opm-about-link { display: block; width: fit-content; padding: 4px 0;
@@ -529,7 +862,9 @@ window.__ModuleLoader__.load({
         background: none; color: var(--dsw-alias-label-tertiary); font: inherit; font-size: 16px; cursor: pointer; }
       .opm-search-clear:hover { background: var(--dsw-alias-interactive-bg-hover); color: var(--dsw-alias-label-primary); }
       .opm-result-count { margin-bottom: 8px !important; }
-      .opm-toolbar { display: flex; align-items: center; gap: 8px; max-width: 580px; }
+      .opm-toolbar { display: flex; align-items: center; gap: 8px; max-width: 620px; }
+      .opm-icon-button { width: 32px; padding: 0; }
+      .opm-icon-button svg { width: 16px; height: 16px; }
       .opm-toolbar .opm-search { flex: 1; min-width: 0; }
       .opm-favorites-button { gap: 5px; }
       .opm-favorites-button small { color: var(--dsw-alias-label-tertiary); font-size: 11px; font-variant-numeric: tabular-nums; }
@@ -597,7 +932,7 @@ window.__ModuleLoader__.load({
       .opm-featured-card .opm-icon { box-shadow: 0 10px 22px -10px var(--opm-accent); }
       @media (hover: none) { .opm-arrow { display: none; } }
       @media (prefers-reduced-motion: reduce) {
-        .opm-card, .opm-arrow, .opm-list-fade, .opm-list-fade::before, .opm-list-fade::after { transition: none; }
+        .opm-card, .opm-arrow, .opm-list-fade, .opm-list-fade::before, .opm-list-fade::after, .opm-swap > span { transition: none; }
         .opm-card:hover { transform: none; border-color: var(--dsw-alias-border-l3); }
       }
     `;
@@ -698,7 +1033,7 @@ window.__ModuleLoader__.load({
       return accent;
     }
 
-    const SECTION_GLYPHS = { today: '☀', recommended: '✦', popular: '♥', trending: '↗', newest: '✚', all: '▦' };
+    const SECTION_GLYPHS = { today: '☀', recommended: '⊙', popular: '♥', trending: '↗', newest: '✚', all: '▦' };
 
     function descriptionOf(entry, resolve, t) {
       const text = resolve(entry.description) || '';
@@ -787,9 +1122,9 @@ window.__ModuleLoader__.load({
         }, resolve(metadata?.labels?.[id]?.title) || id)));
     }
 
-    function InstallButton({ entry, t, resolve, install, openPackage, manager, onError, small, update }) {
+    function InstallButton({ entry, t, resolve, install, openPackage, manager, onError, onNotice, small, update, busyLabel = 'busy' }) {
       const [busy, setBusy] = React.useState(false);
-      const [phase, setPhase] = React.useState('busy');
+      const [phase, setPhase] = React.useState(busyLabel);
       const version = defaultVersionOf(entry);
       const status = entry.installation.status;
       const installed = status !== 'not-installed' && status !== 'update-available';
@@ -816,18 +1151,19 @@ window.__ModuleLoader__.load({
             const failure = removed.value?.error;
             if (failure) return { ok: false, error: failure.code === 'stop-profile' ? t('updateRestart') : failure };
             if (removed.value?.application === 'failed') return { ok: false, error: t('unknownError') };
-            setPhase('busy');
+            setPhase(busyLabel);
             return install({ ...version.install, title: titleOf(entry, resolve), version: version.version });
           }
           const answer = installed
             ? await openPackage(entry.name)
             : status === 'update-available' ? await startUpdate() : await startInstall();
           if (answer?.ok === false) onError(errorText(answer.error, t('unknownError')));
+          else if (answer?.restart) onNotice?.(t('installedRestart'));
         } catch (error) {
           onError(errorText(error, t('unknownError')));
         } finally {
           setBusy(false);
-          setPhase('busy');
+          setPhase(busyLabel);
         }
       }
       const updating = status === 'update-available' && version;
@@ -1039,12 +1375,51 @@ window.__ModuleLoader__.load({
           h('span', { className: 'opm-heading-hint', title: t(section + 'Hint') }, '· ' + t(section + 'Hint'))), children);
     }
 
+    function Chevron({ d }) {
+      return h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true },
+        h('path', { d }));
+    }
+
     function FloatingArrows({ title, t, start, end, move }) {
       return h(React.Fragment, null,
         h('button', { type: 'button', className: 'opm-arrow opm-arrow-previous', disabled: start,
-          'aria-label': t('previous').replace('{section}', title), onClick: () => move(-1) }, '←'),
+          'aria-label': t('previous').replace('{section}', title), onClick: () => move(-1) }, h(Chevron, { d: 'm15 6-6 6 6 6' })),
         h('button', { type: 'button', className: 'opm-arrow opm-arrow-next', disabled: end,
-          'aria-label': t('next').replace('{section}', title), onClick: () => move(1) }, '→'));
+          'aria-label': t('next').replace('{section}', title), onClick: () => move(1) }, h(Chevron, { d: 'm9 6 6 6-6 6' })));
+    }
+
+    function edgesOf(node) {
+      return { start: node.scrollLeft <= 1, end: node.scrollLeft + node.clientWidth >= node.scrollWidth - 1 };
+    }
+
+    // Scrolling reports every frame; an unchanged edge must not re-render the row's cards each time.
+    function sameEdges(next) {
+      return current => current.start === next.start && current.end === next.end && current.home === next.home ? current : next;
+    }
+
+    // DSH narrows its page gutter with the window, and a row wider than the gutter would scroll the whole page sideways.
+    const MAX_BLEED = 40;
+    function bleedFor(gutterLeft, gutterRight) {
+      return Math.max(8, Math.min(MAX_BLEED, Math.floor(Math.min(gutterLeft, gutterRight))));
+    }
+
+    function useRowBleed(root) {
+      React.useLayoutEffect(() => {
+        const node = root.current;
+        let page = node?.parentElement;
+        while (page && !/auto|scroll|hidden/.test(window.getComputedStyle(page).overflowX)) page = page.parentElement;
+        if (!node || !page) return;
+        function measure() {
+          const inner = node.getBoundingClientRect();
+          const outer = page.getBoundingClientRect();
+          node.style.setProperty('--opm-bleed', bleedFor(inner.left - outer.left, outer.left + page.clientWidth - inner.right) + 'px');
+        }
+        measure();
+        const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
+        observer?.observe(node);
+        observer?.observe(page);
+        return () => observer?.disconnect();
+      }, [root]);
     }
 
     function useReducedMotion() {
@@ -1064,31 +1439,35 @@ window.__ModuleLoader__.load({
       const viewport = React.useRef(null);
       const [visible, setVisible] = React.useState(1);
       const [index, setIndex] = React.useState(0);
-      const [edges, setEdges] = React.useState({ start: true, end: true });
+      const [edges, setEdges] = React.useState({ start: true, end: true, home: true });
       const [hovered, setHovered] = React.useState(false);
       const [focused, setFocused] = React.useState(false);
       const reduced = useReducedMotion();
       const count = Math.min(visible, entries.length || 1);
       const last = Math.max(0, entries.length - count);
       const position = Math.min(index, last);
+      // Slides rest one gutter along, so the leading card always sits under the fade instead of against the margin.
+      const restingOffset = node => parseFloat(window.getComputedStyle(node).paddingLeft);
       function measureScroll() {
         const node = viewport.current;
         if (!node) return;
+        const resting = restingOffset(node);
         const width = node.firstElementChild?.getBoundingClientRect().width;
-        if (width) setIndex(Math.max(0, Math.min(last, Math.round(node.scrollLeft / (width + 10)))));
-        setEdges({ start: node.scrollLeft <= 1, end: node.scrollLeft + node.clientWidth >= node.scrollWidth - 1 });
+        if (width) setIndex(Math.max(0, Math.min(last, Math.round((node.scrollLeft - resting) / (width + 10)))));
+        setEdges(sameEdges({ ...edgesOf(node), home: node.scrollLeft <= resting + 1 }));
       }
       function goTo(number, behavior = reduced ? 'auto' : 'smooth') {
         const node = viewport.current;
         const slide = node?.firstElementChild;
-        if (slide) node.scrollTo({ left: number * (slide.getBoundingClientRect().width + 10), behavior });
+        if (slide) node.scrollTo({ left: restingOffset(node) + number * (slide.getBoundingClientRect().width + 10), behavior });
       }
       React.useEffect(() => {
         const node = viewport.current;
         if (!node) return;
         function measure() {
-          // The 8px gutters protect hover shadows without changing the card area's width.
-          const width = node.clientWidth - 16;
+          // The gutters hold hover shadows and the edge fade without changing the card area's width.
+          const style = window.getComputedStyle(node);
+          const width = node.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
           setVisible(width >= 900 ? 3 : width >= 560 ? 2 : 1);
         }
         measure();
@@ -1097,7 +1476,9 @@ window.__ModuleLoader__.load({
         window.addEventListener('resize', measure);
         return () => { observer?.disconnect(); window.removeEventListener('resize', measure); };
       }, []);
-      React.useEffect(() => { goTo(0, 'auto'); setIndex(0); measureScroll(); }, [entries, count]);
+      // A background refresh can replace the entries; only a different line-up goes back to the start.
+      const lineup = entries.map(entry => entry.name).join('\n');
+      React.useEffect(() => { goTo(0, 'auto'); setIndex(0); measureScroll(); }, [lineup, count]);
       React.useEffect(() => {
         if (!autoRotate || reduced || hovered || focused || !last) return;
         const timer = window.setInterval(() => goTo(position >= last ? 0 : position + 1), 5000);
@@ -1112,12 +1493,12 @@ window.__ModuleLoader__.load({
           entries.length > 0 && h('div', { className: 'opm-dots' }, Array.from({ length: last + 1 }, (_, number) =>
             h('button', { type: 'button', className: 'opm-dot', key: number, 'aria-current': number === position ? 'true' : undefined,
               'aria-label': props.t('recommendationPosition').replace('{number}', number + 1), onClick: () => goTo(number) })))),
-        h('div', { className: 'opm-list' },
+        h('div', { className: 'opm-list opm-list-fade', 'data-fade-start': edges.start ? undefined : '', 'data-fade-end': edges.end ? undefined : '' },
           h('div', { className: 'opm-carousel-viewport', ref: viewport, onScroll: measureScroll }, entries.length ? entries.map(entry =>
             h('div', { key: entry.name, className: 'opm-featured-slide', style: { flexBasis: `calc((100% - ${(count - 1) * 10}px) / ${count})` } },
               h(PluginCard, { ...props, entry, featured: true })))
             : h('p', { className: 'opm-muted' }, props.t('sectionEmpty'))),
-          h(FloatingArrows, { title, t: props.t, start: edges.start, end: edges.end,
+          h(FloatingArrows, { title, t: props.t, start: edges.home, end: edges.end,
             move: direction => goTo(Math.max(0, Math.min(last, position + direction))) })));
     }
 
@@ -1129,6 +1510,7 @@ window.__ModuleLoader__.load({
       const rail = React.useRef(null);
       const staggered = React.useRef(false);
       const [edges, setEdges] = React.useState({ start: true, end: true });
+      const reduced = useReducedMotion();
       React.useLayoutEffect(() => {
         const node = rail.current;
         const card = node?.firstElementChild;
@@ -1138,7 +1520,7 @@ window.__ModuleLoader__.load({
       }, [entries, section]);
       function measure() {
         const node = rail.current;
-        if (node) setEdges({ start: node.scrollLeft <= 1, end: node.scrollLeft + node.clientWidth >= node.scrollWidth - 1 });
+        if (node) setEdges(sameEdges(edgesOf(node)));
       }
       React.useEffect(() => {
         measure();
@@ -1149,7 +1531,15 @@ window.__ModuleLoader__.load({
       }, [entries]);
       function scroll(direction) {
         const node = rail.current;
-        if (node) node.scrollBy({ left: direction * Math.max(230, node.clientWidth - 40), behavior: 'auto' });
+        const card = node?.firstElementChild;
+        if (!card) return;
+        // Whole pages from the nearest card, so a press from a staggered offset leaves a clean edge.
+        const step = card.getBoundingClientRect().width + 10;
+        const padding = parseFloat(window.getComputedStyle(node).paddingLeft) * 2;
+        const page = Math.max(1, Math.floor((node.clientWidth - padding + 10) / step));
+        const from = node.scrollLeft / step;
+        const start = direction > 0 ? Math.floor(from + 0.01) : Math.ceil(from - 0.01);
+        node.scrollTo({ left: (start + direction * page) * step, behavior: reduced ? 'auto' : 'smooth' });
       }
       const title = props.t(section);
       return h('section', { className: 'opm-section', 'aria-label': title },
@@ -1195,21 +1585,68 @@ window.__ModuleLoader__.load({
         actionError && h('p', { className: 'opm-error opm-action-error', role: 'alert' }, t('actionFailed') + ': ' + actionError));
     }
 
-    // Under the rails: one button that opens the whole catalog as a grid.
-    function AllPlugins({ entries, ...props }) {
+    const CATALOG_SORTS = { recommended: 'recommended', popular: 'popular', trending: 'trending', stars: 'sortStars', newest: 'newest' };
+    const sortValue = (entry, key) => entry.metadata?.sortKeys?.[key] ?? -1;
+    const rising = entry => (entry.metadata?.labels?.includes('trending') ? 1 : 0);
+
+    // Every order falls back on the recommended one, so plugins with no reading stay in a stable place.
+    function sortCatalog(entries, sort, counts) {
+      const order = {
+        popular: (a, b) => likeCount(counts, b.name) - likeCount(counts, a.name),
+        trending: (a, b) => rising(b) - rising(a) || sortValue(b, 'stars-week') - sortValue(a, 'stars-week'),
+        stars: (a, b) => sortValue(b, 'github-stars') - sortValue(a, 'github-stars'),
+        newest: (a, b) => latestPublication(b) - latestPublication(a)
+      }[sort];
+      return [...entries].sort((a, b) => order?.(a, b) || recommendedOrder(a, b));
+    }
+
+    // Under the rails: one button that opens the whole catalog as a grid. Its side arrows turn to the next order.
+    function AllPlugins({ entries, counts, ...props }) {
       const { t } = props;
       const [open, setOpen] = React.useState(false);
+      const [sort, setSort] = React.useState('recommended');
       const heading = React.useRef(null);
+      const section = React.useRef(null);
+      const body = React.useRef(null);
+      const sheet = React.useRef(null);
+      const turning = React.useRef(0);
+      const reduced = useReducedMotion();
+      const sorts = Object.keys(CATALOG_SORTS).filter(id => id !== 'popular' || props.likesEnabled);
+      const at = Math.max(0, sorts.indexOf(sort));
+      const sorted = React.useMemo(() => sortCatalog(entries, sorts[at], counts), [entries, sorts[at], counts]);
+      function turnTo(next) {
+        if (next === at || next < 0 || next >= sorts.length) return;
+        turning.current = next > at ? 1 : -1;
+        setSort(sorts[next]);
+      }
       React.useEffect(() => { if (open) heading.current?.focus({ preventScroll: true }); }, [open]);
+      React.useLayoutEffect(() => {
+        const direction = turning.current;
+        turning.current = 0;
+        if (!direction || !section.current) return;
+        // A new order starts from its top, even when the arrows were pressed far down the grid.
+        if (section.current.getBoundingClientRect().top < 0) section.current.scrollIntoView({ block: 'start' });
+        if (reduced || !sheet.current?.animate) return;
+        // The sheet slides in from the side it was turned towards; the clip keeps that out of the page's width.
+        body.current.style.overflowX = 'clip';
+        sheet.current.animate([{ opacity: 0, transform: `translateX(${direction * 28}px)` }, { opacity: 1, transform: 'none' }], { duration: 220, easing: 'ease-out' })
+          .onfinish = () => { if (body.current) body.current.style.overflowX = ''; };
+      }, [at]);
       if (!open) return h('div', { className: 'opm-browse' },
         h('button', { type: 'button', className: 'opm-button', onClick: () => setOpen(true) }, t('browseAll').replace('{count}', entries.length)));
-      return h('section', { className: 'opm-section', 'aria-label': t('allPlugins') },
-        h('div', { className: 'opm-heading' },
+      return h('section', { className: 'opm-section', 'aria-label': t('allPlugins'), ref: section },
+        h('div', { className: 'opm-heading opm-all-heading' },
           h('div', { className: 'opm-heading-copy' }, h('span', { className: 'opm-glyph opm-glyph-all', 'aria-hidden': true }, SECTION_GLYPHS.all),
             h('h2', { ref: heading, tabIndex: -1 }, t('allPlugins')),
             h('span', { className: 'opm-heading-hint' }, '· ' + t('allHint').replace('{count}', entries.length))),
-          h('button', { type: 'button', className: 'opm-button opm-button-small', 'aria-expanded': true, onClick: () => setOpen(false) }, t('collapse'))),
-        h(CardGrid, { ...props, entries }));
+          h('div', { className: 'opm-all-controls' },
+            h('div', { className: 'opm-chips', role: 'group', 'aria-label': t('sortBy') }, sorts.map((id, number) =>
+              h('button', { type: 'button', key: id, className: 'opm-chip', 'aria-pressed': number === at, onClick: () => turnTo(number) }, t(CATALOG_SORTS[id])))),
+            h('button', { type: 'button', className: 'opm-button opm-button-small', 'aria-expanded': true, onClick: () => setOpen(false) }, t('collapse')))),
+        h('div', { className: 'opm-all-body', ref: body },
+          h('div', { className: 'opm-all-arrows' }, h(FloatingArrows, { title: t('allPlugins'), t, start: at === 0, end: at === sorts.length - 1,
+            move: direction => turnTo(at + direction) })),
+          h('div', { ref: sheet }, h(CardGrid, { ...props, entries: sorted }))));
     }
 
     // A plain search over the whole catalog at the top of the tab.
@@ -1221,7 +1658,11 @@ window.__ModuleLoader__.load({
           h('span', { 'aria-hidden': true }, '☆'), t('favorites'), count > 0 && h('small', null, count)),
         updates != null && h('button', { type: 'button', className: 'opm-button opm-favorites-button opm-installed-button', 'aria-haspopup': 'dialog',
           title: updates ? t('updates') + ' · ' + updates : undefined, onClick: event => onPanel('installed', event) },
-          t('health'), updates > 0 && h('small', null, '↑' + updates)));
+          t('health'), updates > 0 && h('small', null, '↑' + updates)),
+        h('button', { type: 'button', className: 'opm-button opm-icon-button', 'aria-haspopup': 'dialog', title: t('settings'), 'aria-label': t('settings'),
+          onClick: event => onPanel('settings', event) },
+          h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true },
+            h('path', { d: 'M4 7h10M18 7h2M4 17h2M10 17h10' }), h('circle', { cx: 16, cy: 7, r: 2 }), h('circle', { cx: 8, cy: 17, r: 2 }))));
     }
 
     function SearchBar({ t, query, setQuery }) {
@@ -1236,7 +1677,8 @@ window.__ModuleLoader__.load({
     // A grid of cards, 24 at a time.
     function CardGrid({ entries, ...props }) {
       const [limit, setLimit] = React.useState(24);
-      React.useEffect(() => setLimit(24), [entries]);
+      const lineup = entries.map(entry => entry.name).join('\n');
+      React.useEffect(() => setLimit(24), [lineup]);
       return h(React.Fragment, null,
         entries.length ? h('div', { className: 'opm-grid' }, entries.slice(0, limit).map(entry => h(PluginCard, { ...props, key: entry.name, entry })))
           : h('p', { className: 'opm-muted' }, props.t('noResults')),
@@ -1413,6 +1855,179 @@ window.__ModuleLoader__.load({
           : h('p', { className: 'opm-muted opm-note' }, t('emptyGroup')));
     }
 
+    // Each opening of the tab shows the other message first, and an open tab keeps taking turns.
+    const FOOTER_KEY = 'dsh-open-market:footer-turn';
+    let footerTurn;
+    function nextFooterTurn() {
+      if (footerTurn === undefined) {
+        try { footerTurn = Number(window.localStorage.getItem(FOOTER_KEY)) || 0; } catch { footerTurn = 0; }
+      }
+      footerTurn = (footerTurn + 1) % 2;
+      try { window.localStorage.setItem(FOOTER_KEY, String(footerTurn)); } catch { /* Turns simply restart next time. */ }
+      return footerTurn;
+    }
+
+    function FooterInvite({ t, stars }) {
+      const [inviting, setInviting] = React.useState(() => nextFooterTurn() === 0);
+      React.useEffect(() => {
+        const timer = window.setInterval(() => setInviting(value => !value), 30000);
+        return () => window.clearInterval(timer);
+      }, []);
+      const on = value => ({ 'data-on': value ? '' : undefined });
+      return h('a', { className: 'opm-footer-link', href: inviting ? t('contributingUrl') : REPOSITORY_URL, target: '_blank', rel: 'noopener noreferrer',
+        'aria-label': (inviting ? t('contributeCta') : t('starLink').replace('{repo}', REPOSITORY)) + ' · ' + t('newWindow') },
+        h('img', { className: 'opm-footer-mark', src: 'https://github.com/' + REPOSITORY.split('/')[0] + '.png?size=64', alt: '',
+          loading: 'lazy', referrerPolicy: 'no-referrer' }),
+        h('span', { className: 'opm-swap' }, h('span', on(!inviting), t('starCta')), h('span', on(inviting), t('contributeCta'))),
+        h('span', { className: 'opm-footer-end opm-swap', 'aria-hidden': true },
+          // The GitHub mark says whose star this is.
+          h('span', on(!inviting),
+            h('svg', { viewBox: '0 0 16 16', fill: 'currentColor' }, h('path', { d: GITHUB_MARK })),
+            h('span', { className: 'opm-footer-star' }, '★'),
+            Number.isSafeInteger(stars) && stars > 0 ? String(stars) : 'Star'),
+          h('span', on(inviting), t('contributeEnd'))));
+    }
+
+    function SettingSwitch({ label, checked, disabled, onChange }) {
+      // DSH's Switch uses its label for screen readers only, so the visible text sits beside it.
+      return h('div', { className: 'opm-setting-row' },
+        Switch ? h(React.Fragment, null, h('span', { className: 'opm-setting-label' }, label),
+          h(Switch, { checked, disabled, label, onChange }))
+          : h('label', { className: 'opm-checkbox' },
+            h('input', { type: 'checkbox', checked, disabled, onChange: event => onChange(event.target.checked) }),
+            h('span', null, label)));
+    }
+
+    function SyncRow({ t }) {
+      const { syncing, syncFailed, syncedAt } = useMarket();
+      React.useEffect(() => { void restoreMarket(); }, []);
+      const value = !marketRemote ? t('syncUnavailable') : syncing ? t('syncing') : syncFailed ? t('syncFailed')
+        : syncedAt ? t('syncedAt').replace('{time}', new Date(syncedAt).toLocaleString(t('dateLocale'))) : t('neverSynced');
+      function sync() {
+        void syncMarket({ refresh: true });
+        if (settings.likes) loadLikes();
+      }
+      return h('div', { className: 'opm-setting-row' },
+        h('div', { className: 'opm-setting-copy' }, h('span', { className: 'opm-setting-label' }, t('syncData')),
+          h('span', { className: 'opm-setting-value' + (syncFailed && !syncing ? ' opm-setting-value-error' : ''), role: 'status' }, value)),
+        h('button', { type: 'button', className: 'opm-button opm-button-small', disabled: syncing || !marketRemote, 'aria-busy': syncing, onClick: sync },
+          t(syncing ? 'syncing' : 'syncNow')));
+    }
+
+    function RegistryChoice({ t }) {
+      const preferences = useSettings();
+      const labelId = React.useId();
+      const [draft, setDraft] = React.useState(preferences.customRegistry);
+      const invalid = preferences.registry === 'custom' && !!draft.trim() && !registryUrl(draft);
+      function edit(value) {
+        setDraft(value);
+        const url = registryUrl(value);
+        // Only an address that works is kept; until then installs stay on the index's registry.
+        updateSettings('customRegistry', url || '');
+      }
+      return h('div', { className: 'opm-setting-block' },
+        h('span', { className: 'opm-setting-label', id: labelId }, t('registryLabel')),
+        h('div', { className: 'opm-chips', role: 'group', 'aria-labelledby': labelId },
+          REGISTRY_CHOICES.map(choice => h('button', { type: 'button', key: choice, className: 'opm-chip', 'aria-pressed': preferences.registry === choice,
+            onClick: () => updateSettings('registry', choice) }, t(REGISTRY_LABELS[choice])))),
+        preferences.registry === 'custom' && h('input', { className: 'opm-input', type: 'url', value: draft, placeholder: t('registryPlaceholder'),
+          'aria-label': t('registryCustom'), 'aria-invalid': invalid, spellCheck: false, autoCapitalize: 'off', onChange: event => edit(event.target.value) }),
+        invalid && h('p', { className: 'opm-error', role: 'alert' }, t('registryInvalid')),
+        h('p', { className: 'opm-setting-help' }, t('registryHelp')),
+        preferences.registry === 'custom' && h('p', { className: 'opm-setting-help' }, t('registryCustomHelp')));
+    }
+    const REGISTRY_LABELS = { index: 'registryIndex', dsh: 'registryDsh', npmmirror: 'registryNpmmirror', custom: 'registryCustom' };
+
+    // The Auto review switch is this package's second row; the plugin manager reads and saves it like any row.
+    const AUTO_REVIEW_ROW = 'open-market-auto-review';
+    function useAutoReviewRow(t, manager) {
+      const [row, setRow] = React.useState({ status: 'loading' });
+      const read = React.useCallback(async () => {
+        const service = manager();
+        if (!service) return setRow({ status: 'unavailable' });
+        const answer = await service.listPlugins();
+        const entry = answer?.ok ? answer.value.find(item => item.patchId === AUTO_REVIEW_ROW) : undefined;
+        setRow(entry ? { status: 'ready', entryId: entry.entryId, enabled: !!entry.enabled } : { status: 'unavailable' });
+      }, [manager]);
+      React.useEffect(() => { read().catch(() => setRow({ status: 'unavailable' })); }, [read]);
+      async function set(enabled) {
+        if (row.status !== 'ready') return;
+        setRow({ ...row, enabled, busy: true, note: '' });
+        try {
+          const answer = await manager().setPluginEnabled(row.entryId, enabled);
+          const application = answer?.ok ? answer.value?.application : undefined;
+          if (!answer?.ok || application === 'failed') throw new Error(errorText(answer?.ok ? answer.value?.error : answer?.error, t('unknownError')));
+          await read();
+          if (application === 'restart-required') setRow(current => ({ ...current, note: t('autoReviewRestart') }));
+        } catch (error) {
+          await read().catch(() => {});
+          setRow(current => ({ ...current, note: t('autoReviewFailed').replace('{reason}', errorText(error, t('unknownError'))) }));
+        }
+      }
+      return [row, set];
+    }
+
+    // One set of groups for the Open Market tab's settings panel and the plugin's own page under Installed.
+    // Whether the host has a sidebar, and whether our tab found a place on its Plugins page.
+    let sidebarHost = { supported: false, tab: false, settled: false };
+    const sidebarListeners = new Set();
+    const getSidebarHost = () => sidebarHost;
+    function updateSidebarHost(patch) {
+      sidebarHost = { ...sidebarHost, ...patch };
+      sidebarListeners.forEach(listener => listener());
+    }
+    function subscribeSidebarHost(listener) {
+      sidebarListeners.add(listener);
+      return () => sidebarListeners.delete(listener);
+    }
+    // Left alone, the page appears only where the tab cannot.
+    const sidebarWanted = (preference, host) => preference === 'auto' ? !host.tab : preference === 'on';
+
+    function SidebarSwitch({ t }) {
+      const host = React.useSyncExternalStore(subscribeSidebarHost, getSidebarHost, getSidebarHost);
+      const preferences = useSettings();
+      if (!host.supported) return null;
+      return h(React.Fragment, null,
+        h(SettingSwitch, { label: t('sidebarMarket'), checked: sidebarWanted(preferences.sidebarMarket, host),
+          onChange: value => updateSettings('sidebarMarket', value ? 'on' : 'off') }),
+        h('p', { className: 'opm-setting-help' }, t('sidebarMarketHelp')));
+    }
+
+    function SettingsGroups({ t, manager }) {
+      const preferences = useSettings();
+      const [autoReview, setAutoReview] = useAutoReviewRow(t, manager);
+      const toggle = key => h(SettingSwitch, { key, label: t(key), checked: preferences[key], onChange: value => updateSettings(key, value) });
+      function link(key, href) {
+        return h('a', { key, className: 'opm-about-link', href, target: '_blank', rel: 'noopener noreferrer',
+          'aria-label': t(key) + ' · ' + t('newWindow') }, t(key));
+      }
+      function group(key, ...children) {
+        return h('section', { className: 'opm-settings-group', 'aria-label': t(key) }, h('h2', null, t(key)), ...children);
+      }
+      return h('div', { className: 'opm-settings' },
+        group('settingsDisplay', toggle('autoRotate'), toggle('showInstalled'), toggle('showCheckup'), h(SidebarSwitch, { t })),
+        group('settingsData', h(SyncRow, { t }), h('p', { className: 'opm-setting-help' }, t('syncHelp')),
+          toggle('likes'), h('p', { className: 'opm-setting-help' }, t('likesHelp'))),
+        group('settingsDownload', h(RegistryChoice, { t })),
+        autoReview.status === 'ready' && group('settingsConversation',
+          h(SettingSwitch, { label: t('autoReview'), checked: autoReview.enabled, disabled: !!autoReview.busy, onChange: setAutoReview }),
+          h('p', { className: 'opm-setting-help' }, t('autoReviewHelp')),
+          autoReview.note && h('p', { className: 'opm-setting-help', role: 'status' }, autoReview.note)),
+        group('about',
+          link('website', t('websiteUrl')),
+          link('repository', REPOSITORY_URL),
+          link('contributing', t('contributingUrl')),
+          link('submitPlugin', REPOSITORY_URL + '/issues/new?template=plugin-add.yml'),
+          h('p', { className: 'opm-index-address' }, t('indexAddress'), h('code', null, INDEX_URL))));
+    }
+
+    function SettingsPanel({ t, manager, onClose, restoreFocus }) {
+      const headingId = React.useId();
+      return h(Dialog, { labelledBy: headingId, closeLabel: t('close'), onClose, restoreFocus, wide: true },
+        h('div', { className: 'opm-favorites-head' }, h('h2', { id: headingId }, t('settings'))),
+        h(SettingsGroups, { t, manager }));
+    }
+
     function Loading({ t }) {
       return h('div', { role: 'status', 'aria-label': t('loading'), 'aria-busy': true },
         h('div', { 'aria-hidden': true },
@@ -1424,7 +2039,7 @@ window.__ModuleLoader__.load({
             })))))));
     }
 
-    function OpenMarketTab({ t, remote, manager, resolve, install, openPackage }) {
+    function OpenMarketTab({ t, remote, manager, resolve, install, openPackage, busyLabel }) {
       const root = React.useRef(null);
       const [selected, setSelected] = React.useState(null);
       const closeDetails = React.useCallback(() => setSelected(null), []);
@@ -1434,10 +2049,8 @@ window.__ModuleLoader__.load({
       const restorePanel = React.useCallback(() => {
         (panel?.from?.isConnected ? panel.from : root.current)?.focus();
       }, [panel]);
-      const [state, setState] = React.useState({ status: 'loading' });
-      const [attempt, setAttempt] = React.useState(0);
-      // A reload after an install or removal keeps the current page on screen instead of the skeleton.
-      const quiet = React.useRef(false);
+      const state = useMarket();
+      useRowBleed(root);
       const [day, setDay] = React.useState(localDay);
       const preferences = useSettings();
       React.useEffect(() => {
@@ -1445,65 +2058,29 @@ window.__ModuleLoader__.load({
         let timer;
         const off = remote.$on('plugin-manager/changed', () => {
           window.clearTimeout(timer);
-          timer = window.setTimeout(() => { quiet.current = true; setAttempt(value => value + 1); }, 400);
+          timer = window.setTimeout(() => { void syncMarket({ again: true }); }, 400);
         });
         return () => { window.clearTimeout(timer); if (typeof off === 'function') off(); };
       }, [remote]);
       const likes = useLikes(preferences.likes);
       const counts = preferences.likes ? likes.counts : EMPTY_LIKES;
       React.useEffect(() => {
-        const timer = window.setInterval(() => setDay(localDay()), 60000);
+        const timer = window.setInterval(() => {
+          setDay(localDay());
+          if (market.status === 'ready' && needsRefresh(market, Date.now())) void syncMarket();
+        }, 60000);
         return () => window.clearInterval(timer);
       }, []);
       const [actionError, setActionError] = React.useState('');
+      const [actionNotice, setActionNotice] = React.useState('');
       const [query, setQuery] = React.useState('');
-      React.useEffect(() => {
-        let live = true;
-        if (!quiet.current) setState({ status: 'loading' });
-        quiet.current = false;
-        async function load() {
-          const entries = new Map();
-          let offset = 0;
-          let metadata;
-          try {
-            while (live) {
-              // Only the host reads the index. Each page is an explicit Remote result envelope.
-              const answer = await remote.pluginMarket.search(INDEX_URL, {
-                sort: { kind: 'key', id: 'recommended', direction: 'desc' }, offset, limit: 100
-              });
-              if (!live) return;
-              if (!answer.ok) {
-                // The user removed our source from Discover; offer to add it back instead of an error.
-                const missing = /unknown-index/.test(String(answer.error?.code ?? '')) || /not a configured index/i.test(String(answer.error?.message ?? ''));
-                setState(missing ? { status: 'missing' } : { status: 'error', error: answer.error });
-                return;
-              }
-              const page = answer.value;
-              if (!Array.isArray(page?.entries) || (page.nextOffset !== null &&
-                  (!Number.isInteger(page.nextOffset) || page.nextOffset <= offset))) {
-                setState({ status: 'error', invalidPage: true });
-                return;
-              }
-              if (offset === 0) metadata = page.metadata;
-              page.entries.forEach(entry => entries.set(entry.name, entry));
-              if (page.nextOffset === null) {
-                setState({ status: 'ready', entries: [...entries.values()], metadata });
-                return;
-              }
-              offset = page.nextOffset;
-            }
-          } catch (error) {
-            if (live) setState({ status: 'error', error });
-          }
-        }
-        load();
-        return () => { live = false; };
-      }, [remote, attempt]);
+      React.useEffect(() => { void enterMarket(manager); }, [remote, manager]);
 
       const sections = React.useMemo(() => {
         if (state.status !== 'ready') return null;
-        const entries = preferences.hideInstalled
-          ? state.entries.filter(entry => entry.installation.status === 'not-installed') : state.entries;
+        // Today's picks, the search and the panels keep their own rules; this only thins the browsing lists.
+        const entries = preferences.showInstalled
+          ? state.entries : state.entries.filter(entry => entry.installation.status === 'not-installed');
         const ranked = [...entries].sort(recommendedOrder);
         // Recommended, Fastest growing and Newly published never repeat a plugin; each takes the next unseen ones.
         const seen = new Set();
@@ -1521,11 +2098,11 @@ window.__ModuleLoader__.load({
             ['trending', take(ranked.filter(entry => entry.metadata?.labels?.includes('trending')))],
             ['newest', take([...entries].sort((a, b) => latestPublication(b) - latestPublication(a) || recommendedOrder(a, b)))]
           ].filter(([, list]) => list.length),
-          all: [...state.entries].sort(recommendedOrder),
+          all: [...entries].sort(recommendedOrder),
           updates: state.entries.filter(entry => entry.defaultVersion && entry.installation.status === 'update-available').length,
           stars: state.entries.find(entry => entry.name === 'dsh-open-market')?.metadata?.sortKeys?.['github-stars']
         };
-      }, [state, day, preferences.hideInstalled, counts]);
+      }, [state, day, preferences.showInstalled, counts]);
 
       const results = React.useMemo(() => {
         if (state.status !== 'ready' || !query.trim()) return null;
@@ -1541,11 +2118,12 @@ window.__ModuleLoader__.load({
         const listed = await remote.pluginMarket.listIndexes();
         const urls = listed.ok ? listed.value.map(source => source.url) : [];
         const added = urls.includes(INDEX_URL) ? { ok: true } : await remote.pluginMarket.setIndexes([...urls, INDEX_URL]);
-        if (added.ok) setAttempt(value => value + 1);
-        else setState({ status: 'error', error: added.error });
+        if (added.ok) void syncMarket();
+        else updateMarket({ status: 'error', error: added.error, invalidPage: false });
       }
 
-      const props = { t, resolve, install, openPackage, manager, metadata: state.metadata, onError: setActionError,
+      const installWith = React.useCallback(target => install(installTarget(target, getSettings())), [install]);
+      const props = { t, resolve, install: installWith, openPackage, manager, metadata: state.metadata, onError: setActionError, onNotice: setActionNotice, busyLabel,
         likesEnabled: preferences.likes, likes, onOpen: (entry, returnTarget) => setSelected({ entry, returnTarget }) };
       let content;
       if (state.status === 'loading') content = h(Loading, { t });
@@ -1555,7 +2133,7 @@ window.__ModuleLoader__.load({
       else if (state.status === 'error') content = h('div', { className: 'opm-state' },
         h('div', { role: 'alert' }, h('h2', null, t('failed')),
           h('p', { className: 'opm-muted opm-error-detail' }, state.invalidPage ? t('invalidPage') : errorText(state.error, t('unknownError')))),
-        h('button', { type: 'button', className: 'opm-button', onClick: () => setAttempt(value => value + 1) }, t('retry')));
+        h('button', { type: 'button', className: 'opm-button', onClick: () => void syncMarket() }, t('retry')));
       else {
         content = h(React.Fragment, null,
           h(Toolbar, { t, query, setQuery, updates: preferences.showCheckup ? sections.updates : null,
@@ -1563,7 +2141,8 @@ window.__ModuleLoader__.load({
           results ? h(SearchResults, { ...props, entries: results }) : h(React.Fragment, null,
             h(FeaturedCarousel, { ...props, entries: sections.daily, autoRotate: preferences.autoRotate && !selected && !panel }),
             sections.rails.map(([section, entries]) => h(PluginRail, { ...props, key: section, section, entries })),
-            h(AllPlugins, { ...props, entries: sections.all })),
+            h(AllPlugins, { ...props, entries: sections.all, counts })),
+          actionNotice && h('p', { className: 'opm-note opm-action-error', role: 'status' }, actionNotice),
           actionError && h('p', { className: 'opm-error opm-action-error', role: 'alert' }, t('actionFailed') + ': ' + actionError));
       }
       const detailEntry = selected && (state.entries?.find(entry => entry.name === selected.entry.name) || selected.entry);
@@ -1575,24 +2154,18 @@ window.__ModuleLoader__.load({
             h('img', { className: 'opm-footer-mark', src: new URL('/assets/apple-touch-icon.png', INDEX_URL).href, alt: '', loading: 'lazy', referrerPolicy: 'no-referrer' }),
             h('span', null, t('source')),
             h('span', { className: 'opm-footer-end' }, t('sourceLink'))),
-          h('a', { className: 'opm-footer-link', href: REPOSITORY_URL, target: '_blank', rel: 'noopener noreferrer',
-            'aria-label': t('starLink').replace('{repo}', REPOSITORY) + ' · ' + t('newWindow') },
-            h('img', { className: 'opm-footer-mark', src: 'https://github.com/' + REPOSITORY.split('/')[0] + '.png?size=64', alt: '',
-              loading: 'lazy', referrerPolicy: 'no-referrer' }),
-            h('span', null, t('starCta')),
-            // The GitHub mark says whose star this is.
-            h('span', { className: 'opm-footer-end', 'aria-hidden': true },
-              h('svg', { viewBox: '0 0 16 16', fill: 'currentColor' }, h('path', { d: GITHUB_MARK })),
-              h('span', { className: 'opm-footer-star' }, '★'),
-              Number.isSafeInteger(sections?.stars) && sections.stars > 0 ? String(sections.stars) : 'Star')))),
+          h(FooterInvite, { t, stars: sections?.stars }))),
         selected && h(PluginDetails, { ...props, entry: detailEntry, returnTarget: selected.returnTarget,
           marketRoot: root, onClose: closeDetails }),
         panel?.kind === 'favorites' && !selected && h(FavoritesPanel, { ...props, remote, entries: state.entries || [],
           onClose: closePanel, restoreFocus: restorePanel }),
         panel?.kind === 'installed' && !selected && h(InstalledPanel, { ...props, entries: state.entries || [],
-          onClose: closePanel, restoreFocus: restorePanel }));
+          onClose: closePanel, restoreFocus: restorePanel }),
+        panel?.kind === 'settings' && !selected && h(SettingsPanel, { t, manager, onClose: closePanel, restoreFocus: restorePanel }));
     }
 
+    const SIDEBAR_PANEL = 'open-market';
+    const SIDEBAR_SETTLE = 3000;
     const inject = ['slots', 'locale', 'remote'];
 
     function apply(ctx) {
@@ -1604,68 +2177,66 @@ window.__ModuleLoader__.load({
         return () => style.remove();
       }, 'open-market: styles');
       const t = ctx.locale.bind(NS);
-      // The Auto review switch is this package's second row; the plugin manager reads and saves it like any row.
-      const AUTO_REVIEW_ROW = 'open-market-auto-review';
-      function useAutoReviewRow() {
-        const [row, setRow] = React.useState({ status: 'loading' });
-        const read = React.useCallback(async () => {
-          const manager = pluginManager;
-          if (!manager) return setRow({ status: 'unavailable' });
-          const answer = await manager.listPlugins();
-          const entry = answer?.ok ? answer.value.find(item => item.patchId === AUTO_REVIEW_ROW) : undefined;
-          setRow(entry ? { status: 'ready', entryId: entry.entryId, enabled: !!entry.enabled } : { status: 'unavailable' });
-        }, []);
-        React.useEffect(() => { read().catch(() => setRow({ status: 'unavailable' })); }, [read]);
-        async function set(enabled) {
-          if (row.status !== 'ready') return;
-          setRow({ ...row, enabled, busy: true, note: '' });
-          try {
-            const answer = await pluginManager.setPluginEnabled(row.entryId, enabled);
-            const application = answer?.ok ? answer.value?.application : undefined;
-            if (!answer?.ok || application === 'failed') throw new Error(errorText(answer?.ok ? answer.value?.error : answer?.error, t('unknownError')));
-            await read();
-            if (application === 'restart-required') setRow(current => ({ ...current, note: t('autoReviewRestart') }));
-          } catch (error) {
-            await read().catch(() => {});
-            setRow(current => ({ ...current, note: t('autoReviewFailed').replace('{reason}', errorText(error, t('unknownError'))) }));
-          }
-        }
-        return [row, set];
+      const getManager = () => pluginManager;
+      const resolve = text => ctx.locale.resolveText(text);
+      let layout;
+      ctx.inject(['layout'], ctx => {
+        layout = ctx.layout;
+        ctx.effect(() => () => { layout = undefined; }, 'open-market: layout');
+      });
+      const openPackage = name => {
+        const navigation = ctx.get('pluginNavigation');
+        if (navigation) navigation.openBundle(name);
+        else layout?.selectPanel('plugins');
+      };
+      function SidebarPage() {
+        return h('div', { className: 'opm-page' }, h('div', { className: 'opm-page-inner' },
+          h('header', { className: 'opm-page-head', 'data-window-drag': true }, h('h1', null, t('title'))),
+          h(OpenMarketTab, { t, remote: ctx.remote, manager: getManager, resolve, openPackage, busyLabel: 'installing',
+            install: target => installDirectly(getManager, target, t) })));
       }
-
-      function SettingsSection({ view }) {
-        const preferences = useSettings();
-        const [autoReview, setAutoReview] = useAutoReviewRow();
-        if (view !== 'page') return null;
-        function link(key, href) {
-          return h('a', { key, className: 'opm-about-link', href, target: '_blank', rel: 'noopener noreferrer',
-            'aria-label': t(key) + ' · ' + t('newWindow') }, t(key));
+      function SidebarIcon({ size = 16 }) {
+        return h('svg', { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8,
+          strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true },
+          h('path', { d: 'M4 10h16v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1zM4 10l1.5-5h13L20 10M9 14h6' }));
+      }
+      let removeSidebar;
+      function syncSidebar() {
+        const preference = getSettings().sidebarMarket;
+        const decided = preference !== 'auto' || sidebarHost.settled;
+        const wanted = sidebarHost.supported && decided && sidebarWanted(preference, sidebarHost);
+        if (wanted && !removeSidebar) {
+          readsIndexFile = true;
+          const offPanel = ctx.slots.register({ name: 'main', key: SIDEBAR_PANEL, locale: NS }, SidebarPage);
+          const offRow = ctx.slots.register({ name: 'sidebar.panellist', id: SIDEBAR_PANEL, order: 1, label: () => t('title'), locale: NS }, SidebarIcon);
+          removeSidebar = () => {
+            if (layout?.panelInfo.getSnapshot().activePanelId === SIDEBAR_PANEL) layout.selectPanel(null);
+            offRow?.();
+            offPanel?.();
+          };
+        } else if (!wanted && decided && removeSidebar) {
+          readsIndexFile = false;
+          removeSidebar();
+          removeSidebar = undefined;
         }
-        return h('div', { className: 'opm-root opm-settings' },
-          h('section', { className: 'opm-settings-group', 'aria-label': t('settings') },
-            h('h2', null, t('settings')),
-            // DSH's Switch uses its label for screen readers only, so the visible text sits beside it.
-            Object.keys(DEFAULT_SETTINGS).map(key => h('div', { key, className: 'opm-setting-row' },
-              Switch ? h(React.Fragment, null, h('span', { className: 'opm-setting-label' }, t(key)),
-                h(Switch, { checked: preferences[key], label: t(key), onChange: value => updateSettings(key, value) }))
-                : h('label', { className: 'opm-checkbox' },
-                  h('input', { type: 'checkbox', checked: preferences[key], onChange: event => updateSettings(key, event.target.checked) }),
-                  h('span', null, t(key))))),
-            h('p', { className: 'opm-setting-help' }, t('likesHelp')),
-            autoReview.status === 'ready' && h(React.Fragment, null,
-              h('div', { className: 'opm-setting-row opm-setting-separate' },
-                Switch ? h(React.Fragment, null, h('span', { className: 'opm-setting-label' }, t('autoReview')),
-                  h(Switch, { checked: autoReview.enabled, disabled: !!autoReview.busy, label: t('autoReview'), onChange: setAutoReview }))
-                  : h('label', { className: 'opm-checkbox' },
-                    h('input', { type: 'checkbox', checked: autoReview.enabled, disabled: !!autoReview.busy, onChange: event => setAutoReview(event.target.checked) }),
-                    h('span', null, t('autoReview')))),
-              h('p', { className: 'opm-setting-help' }, t('autoReviewHelp')),
-              autoReview.note && h('p', { className: 'opm-setting-help', role: 'status' }, autoReview.note))),
-          h('section', { className: 'opm-settings-group', 'aria-label': t('about') }, h('h2', null, t('about')),
-            link('website', t('websiteUrl')),
-            link('repository', REPOSITORY_URL),
-            link('submitPlugin', REPOSITORY_URL + '/issues/new?template=plugin-add.yml'),
-            h('p', { className: 'opm-index-address' }, t('indexAddress'), h('code', null, INDEX_URL))));
+      }
+      ctx.effect(() => subscribeSettings(syncSidebar), 'open-market: sidebar setting');
+      ctx.effect(() => subscribeSidebarHost(syncSidebar), 'open-market: sidebar host');
+      ctx.slots.inject('sidebar.panellist', () => { updateSidebarHost({ supported: true }); });
+      // The market service can arrive after the sidebar, so the automatic choice waits a moment to avoid a passing row.
+      ctx.effect(() => {
+        const timer = window.setTimeout(() => updateSidebarHost({ settled: true }), SIDEBAR_SETTLE);
+        return () => {
+          window.clearTimeout(timer);
+          removeSidebar?.();
+          removeSidebar = undefined;
+          readsIndexFile = false;
+          sidebarHost = { supported: false, tab: false, settled: false };
+        };
+      }, 'open-market: sidebar page');
+      function SettingsSection({ view }) {
+        if (view !== 'page') return null;
+        return h('div', { className: 'opm-root' }, h(SettingsGroups, { t, manager: getManager }));
       }
       ctx.slots.inject('plugins.bundle.config', () => ctx.slots.register(
         { name: 'plugins.bundle.config', key: 'dsh-open-market' }, SettingsSection));
@@ -1693,7 +2264,10 @@ window.__ModuleLoader__.load({
       });
       // Custom markets may be off, unavailable, or still starting. Only the browsing tab needs this service.
       ctx.inject(['remote.pluginMarket'], ctx => {
-        const face = { remote: ctx.remote, manager: () => pluginManager, resolve: text => ctx.locale.resolveText(text) };
+        marketRemote = ctx.remote;
+        ctx.effect(() => () => { if (marketRemote === ctx.remote) marketRemote = undefined; }, 'open-market: market service');
+        const face = { remote: ctx.remote, manager: () => pluginManager, resolve };
+        ctx.slots.inject('plugins.tab', () => { updateSidebarHost({ tab: true }); });
         ctx.slots.inject('plugins.tab', () => ctx.slots.register({
           name: 'plugins.tab',
           id: 'open-market',
@@ -1706,6 +2280,8 @@ window.__ModuleLoader__.load({
       });
     }
 
-    return { apply, inject };
+    // Pure pieces for client.test.js; DSH reads only apply and inject.
+    const internals = { sortCatalog, listingOf, installDirectly, sidebarWanted, normalizeSettings, registryUrl, installTarget, bleedFor, needsRefresh, validCatalog, withInstallation, getMarket, syncMarket, enterMarket, REFRESH_INTERVAL, CACHE_SCHEMA, INDEX_URL };
+    return { apply, inject, internals };
   }
 });
