@@ -12102,6 +12102,30 @@
         "integrity": "sha512-OxjcwHojfWJo6DuANqIWD74H9fCJw7qTQpj3ok16BvmJaDYlNnTadhX5jEE1iJKWob0v9O27Hx92jiwYT5LDCg==",
         "publishedAt": "2026-10-30T07:54:50.000Z"
       }
+    },
+    {
+      "name": "dsh-effort-slider-universal",
+      "title": {
+        "en": "Universal Effort Slider",
+        "zh": "通用推理等级滑条"
+      },
+      "description": {
+        "en": "Adjust reasoning effort from the model menu, including suggested levels for models without declared efforts. Availability depends on provider support; requires Node >=22, with no DSH compatibility range declared.",
+        "zh": "在模型菜单调整推理等级，为未声明档位的模型提供建议档位；实际生效取决于提供商支持，需要 Node >=22，未声明 DSH 兼容范围。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-kimi-channel-guard",
+      "title": {
+        "en": "Kimi Channel Guard",
+        "zh": "Kimi 分流卫士"
+      },
+      "description": {
+        "en": "Patch three Subscriptions files on startup to separate reasoning, text and tool-call channels. Checked against 0.7.55; shared OpenAI-chat providers are affected. Backups and CLI restore are available; fully restart after patching, and uninstall does not restore files. Requires Node >=22.",
+        "zh": "启动时修改 Subscriptions 三个文件，分离思考、正文与工具调用；已核对 0.7.55，也影响共享 OpenAI-chat 路径的其他提供商。带备份及 CLI 回滚，补丁后需完整重启，卸载不会恢复文件；需要 Node >=22。"
+      },
+      "category": "integrations"
     }
   ]
 }

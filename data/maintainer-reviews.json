@@ -1932,6 +1932,30 @@
       "reviewedAt": "2026-10-30T09:30:11.482Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-effort-slider-universal",
+      "version": "2.0.0",
+      "integrity": "sha512-geBUGPehAmPXYuK/JcZyDe/kTxZC363QwYX9if+rekXiitMs/AYAsxS0jjAJ4EWoFrmK2vVO1Kzuni3+1k2uAg==",
+      "repository": "https://github.com/AkiNoYo-desu/dsh-effort-slider-universal",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-30T11:22:20.234Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-kimi-channel-guard",
+      "version": "1.0.0",
+      "integrity": "sha512-R4I5AyoH45rk2a01b5ZsuIJt/s6Qq5kBwq4W0FRx9aZDLicgSDdwBeTpfnTrZ65o3wIh22XaXoPknUL9Wpkjcw==",
+      "repository": "https://github.com/AkiNoYo-desu/dsh-kimi-channel-guard",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-30T11:22:20.237Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
