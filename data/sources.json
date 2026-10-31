@@ -12328,6 +12328,50 @@
         "zh": "让角色拥有安卓手机、QQ、事件记忆与日记，并可选配 microVM 电脑。需硬件虚拟化，首次手机组件下载约 2 GB，另需配置模型与账号访问。"
       },
       "category": "integrations"
+    },
+    {
+      "name": "dsh-selection-chat",
+      "title": {
+        "en": "Selection Chat",
+        "zh": "选区对话"
+      },
+      "description": {
+        "en": "Quote selected chat text or file previews into the current draft, add a comment, or open a side question. Side questions require @xywen97/dsh-sidechat.",
+        "zh": "把选中的聊天文字或文件预览加入当前输入框草稿，可添加评论或发起侧边提问；侧边提问需要 @xywen97/dsh-sidechat。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@xywen97/dsh-sidechat",
+      "title": {
+        "en": "DSH Sidechat",
+        "zh": "DSH 侧边聊天"
+      },
+      "description": {
+        "en": "Open a temporary conversation in the right sidebar, using the main conversation text as model context. Tabs are archived when closed or after a restart; the added context can increase model usage.",
+        "zh": "在右侧栏打开临时对话，将主对话文本作为模型上下文；关闭标签页或重启后归档，额外上下文可能增加模型消耗。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-plugin-sleep-not-permitted",
+      "title": {
+        "en": "sleep-not-permitted",
+        "zh": "sleep-not-permitted"
+      },
+      "description": {
+        "en": "Guard DSH tool calls against foreground waits, blocking wait tools, polling and interactive commands, with configurable budgets and background-task guidance.",
+        "zh": "限制 Agent 的前台等待、阻塞等待工具、轮询及交互式命令，支持配置等待预算和规则，并提示使用后台任务。"
+      },
+      "category": "workflow",
+      "version": "0.4.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/JJJACKsong/sleep-not-permitted",
+        "commit": "62690ee8010fde25abfa1dbb4d04cbc118e264bb",
+        "integrity": "sha512-Mpf07u5wJR8kflmowANTQ0Dj/lmZza+d/nmhUt8FPKi8ztSjMMTdqkUVmE+5+4vHmeE8dfW5NuBIRZ/oLBmDqw==",
+        "publishedAt": "2026-10-29T13:25:33.000Z"
+      }
     }
   ]
 }

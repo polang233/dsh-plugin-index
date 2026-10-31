@@ -23,6 +23,8 @@ Each section is in Chinese first, with the English in the quote block below it.
 
 提交[插件收录申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml)，提供 npm 包名或源码仓库地址，以及一句功能介绍，中文或英文均可。插件在仓库子目录时，请一并注明目录。作者也可以通过同一表单申请更正信息。
 
+可在补充信息中附上 Logo、截图、已验证的 DSH 版本和运行平台。兼容要求请写入包的 `engines.dsh` 或 DSH 相关 `peerDependencies`。
+
 目前收录的插件需要：
 
 - 有公开 npm 版本和发布时间，或经维护者确认的固定 Git 来源。
@@ -36,6 +38,8 @@ Each section is in Chinese first, with the English in the quote block below it.
 >
 > Open a [plugin request](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml) with the npm package name or source repository and one sentence on what it does, in Chinese or English. If the plugin lives in a subdirectory of the repository, give the directory too. Authors can use the same form to correct their listing.
 >
+> Optional details include a logo, screenshots, and the DSH versions and platforms you tested. Put compatibility requirements in the package's `engines.dsh` or DSH-related `peerDependencies`.
+>
 > A listed plugin currently needs:
 >
 > - A public npm release with a publish date, or a pinned Git source confirmed by a maintainer.
@@ -44,16 +48,6 @@ Each section is in Chinese first, with the English in the quote block below it.
 > - A clear purpose. Maintainers add a short description in Chinese and English when listing it.
 >
 > Do not submit keys, private repositories, tracking links or unfounded security claims. The listing review is not a full code audit or an install test.
-
-### DSH 版本兼容 · DSH compatibility
-
-不要求插件只支持最新版 DSH，也不要求把 DSH 兼容范围锁定在单一版本。支持旧版或预发布版 DSH 的插件同样欢迎提交；兼容范围较窄、只验证过某个版本，或暂未声明范围，都不会单独成为拒绝收录的理由。
-
-建议按实际依赖，通过 `engines.dsh` 或 DSH 相关的 `peerDependencies` 声明合理的版本范围。已知支持多个版本时不必锁死在单一版本；确实依赖特定版本或内部 API 时，也可以保留必要限制。申请中请区分「声明的兼容范围」和「实际验证过的版本、平台」。未声明范围不等于兼容所有版本；市场保留包的原始声明，安装时仍由 DSH 检查兼容性。
-
-> Plugins do not have to target the latest DSH or declare compatibility with only one exact DSH version. Plugins for older or prerelease DSH versions are welcome. A narrow range, testing on only one version, or a missing range does not by itself prevent listing.
->
-> We recommend declaring a reasonable range in `engines.dsh` or DSH-related `peerDependencies`, based on the plugin's actual dependencies. If multiple versions are known to work, there is no need to pin just one; keep necessary limits when a plugin depends on a specific version or internal API. Distinguish the declared range from the versions and platforms actually tested. A missing range does not mean every version is compatible. The market preserves the package's declarations, and DSH still checks compatibility when installing.
 
 ### Git 来源 · Git sources
 
