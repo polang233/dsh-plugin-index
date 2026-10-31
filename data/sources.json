@@ -12248,6 +12248,18 @@
         "integrity": "sha512-1VaNYdgBcH7XCDrUVGyDCs9jAZ8bNF2AdMVJd0PnD0oL5aopIaYPNMuraoxEW4mvJY6ggXQF0ieuc2hsTmleQA==",
         "publishedAt": "2026-10-27T13:41:01.000Z"
       }
+    },
+    {
+      "name": "dsh-shorekeeper",
+      "title": {
+        "en": "Shorekeeper",
+        "zh": "守岸人桌宠"
+      },
+      "description": {
+        "en": "Windows 10/11 x64 companion with task animations, voices, captions and balance display. First use separately downloads and runs a ~213 MiB application after a SHA-256 check; requires local DSH >=0.2.1-rc.5 <0.3.0 and Node >=22.",
+        "zh": "Windows 10/11 x64 守岸人桌宠，支持任务动画、语音字幕和余额显示；首次另行下载约 213 MiB 程序，经 SHA-256 核验后运行。需要本机 DSH >=0.2.1-rc.5 <0.3.0 和 Node >=22。"
+      },
+      "category": "appearance"
     }
   ]
 }

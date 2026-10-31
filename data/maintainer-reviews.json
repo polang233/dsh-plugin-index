@@ -2071,6 +2071,18 @@
       "reviewedAt": "2026-10-31T06:09:44.224Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-shorekeeper",
+      "version": "1.1.1",
+      "integrity": "sha512-lt3Je9YGBCcjXOlxtL4uXaf4HyZbZ+2Cn6znETc/5Y0vWL9TXOHzq0WQN1XuiTjtfY25yUw49WFu/RiPBQ0OLg==",
+      "repository": "https://github.com/Doya16/dsh-shorekeeper",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-31T06:15:55.046Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
