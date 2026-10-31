@@ -81,6 +81,14 @@ jobs:
           # .well-known holds the domain and certificate proofs.
           include-hidden-files: true
 
+  release-script:
+    # Only the plugin release needs this script, so a failure here does not hold back the site.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - run: python3 test/prepare-open-market-release.test.py
+
   deploy:
     # Keep GitHub Pages on its last release if the Cloudflare upload fails.
     needs: [build, cloudflare]
