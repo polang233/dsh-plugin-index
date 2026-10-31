@@ -11402,14 +11402,14 @@
     },
     {
       "name": "dsh-plugin-session-file-purge",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "source": {
         "type": "git",
         "url": "https://github.com/FJHin/dsh-plugin-session-file-purge",
-        "commit": "f4069c1c5b9872f42afab2242188633741291873",
-        "integrity": "sha512-33Vm02rLqa/iN8pYcuqsDrCUeiqBsTBKXQbBezh0OVY+W6RLG6NSQExNZwGXnk5xnxbrv8RffSOEIdJ2xGegVw==",
-        "publishedAt": "2026-10-27T15:21:24Z",
-        "path": "dsh-plugin-session-file-purge"
+        "commit": "f7150886068fbfaad9a6a5abcc8cc5f68ef1b69d",
+        "path": "dsh-plugin-session-file-purge",
+        "integrity": "sha512-E4TsaYAerBPBC8dmbNVCqr/8fu140axfAL1tzgN3arcRJPPqMjln4lu2iXe+czS+hOJq+LIcfuDOtMpf9XNrZA==",
+        "publishedAt": "2026-10-30T12:43:46.000Z"
       },
       "title": {
         "en": "Session File Purge",
@@ -12094,13 +12094,13 @@
         "zh": "针对 WorkBuddy 国内网关 11128 错误改写 system、developer 和 assistant 消息中的指定片段；会包装全局 fetch，需要 Node ^22.19 或 >=24。"
       },
       "category": "integrations",
-      "version": "0.1.4",
+      "version": "0.1.6",
       "source": {
         "type": "git",
         "url": "https://github.com/curo22/dsh-wb400-guard",
-        "commit": "24595e72af42317db1313aeaed3ecf0bb25feebf",
-        "integrity": "sha512-OxjcwHojfWJo6DuANqIWD74H9fCJw7qTQpj3ok16BvmJaDYlNnTadhX5jEE1iJKWob0v9O27Hx92jiwYT5LDCg==",
-        "publishedAt": "2026-10-30T07:54:50.000Z"
+        "commit": "3e59d6794b711819a6ec3be012e2ad3bc25bc72c",
+        "integrity": "sha512-NaGVg0ai2xlRzVUPnenKd2oRfZ1M15lA6bkb8gQFiajJMx4deV70Ftv02CE8/0gMhQTxbzeHSLHIuWQ3zunLpA==",
+        "publishedAt": "2026-10-31T01:35:26.000Z"
       }
     },
     {
@@ -12126,6 +12126,128 @@
         "zh": "启动时修改 Subscriptions 三个文件，分离思考、正文与工具调用；已核对 0.7.55，也影响共享 OpenAI-chat 路径的其他提供商。带备份及 CLI 回滚，补丁后需完整重启，卸载不会恢复文件；需要 Node >=22。"
       },
       "category": "integrations"
+    },
+    {
+      "name": "dsh-zcode-plan-bridge",
+      "title": {
+        "en": "ZCode Plan Bridge",
+        "zh": "ZCode Plan Bridge"
+      },
+      "description": {
+        "en": "Use a logged-in ZCode CLI agent as a model provider, with streaming text/reasoning and image input. Requires Node >=22, ZCode CLI and account quota. Agent permissions default to deny; the CLI runs with the current user privileges.",
+        "zh": "将已登录的 ZCode CLI agent 接为模型提供商，支持文本、思考流式输出与图片输入；需要 Node >=22、ZCode CLI 和账号额度。默认拒绝工具权限请求，CLI 仍以当前用户权限运行。"
+      },
+      "category": "providers"
+    },
+    {
+      "name": "@xrn1997/dsh-session-delete",
+      "title": {
+        "en": "Session Trash",
+        "zh": "会话回收站"
+      },
+      "description": {
+        "en": "Move individual or selected sessions to a trash bin, inspect their content and restore them. Explicit permanent deletion cannot be undone. Requires Node >=24.",
+        "zh": "将单个或多选会话移入回收站，可查看正文并恢复；显式彻底删除后不可恢复，需要 Node >=24。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "@xrn1997/dsh-novel",
+      "title": {
+        "en": "DSH Novel",
+        "zh": "DSH 小说"
+      },
+      "description": {
+        "en": "Read novels with Legado sources, cross-source search, a bookshelf, scrolling reader and local TXT/EPUB import. AI tools use the same library. Import only trusted book sources; sources may run scripts and access the network.",
+        "zh": "导入 Legado 书源，跨源搜索、管理书架、连续滚动阅读和导入本地 TXT/EPUB，AI 工具共用同一套书库。书源可运行脚本和联网，请仅导入可信来源。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-plugin-mattpocock-skills",
+      "title": {
+        "en": "Matt Pocock Skills",
+        "zh": "Matt Pocock 技能包"
+      },
+      "description": {
+        "en": "Provide 38 vendored Matt Pocock skills in DSH, preserving manual-only and model-invocable policies. This fixed Git package is distinct from similarly named npm packages; requires Node >=20.",
+        "zh": "为 DSH 提供 38 个内置 Matt Pocock 技能，保留手动专用和模型可调用的区分；使用固定 Git 来源，与同类 npm 包区分，需要 Node >=20。"
+      },
+      "category": "skills",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/HakurouKen/dsh-plugin-mattpocock-skills",
+        "commit": "6ce75e61c0a716c75630f06dcc718a0070b8dcb2",
+        "integrity": "sha512-jTpK7tSlD020PS1wCgWqEd6ocMd6XbaqZVdLErpK8FcSCXvDcQAkGYgrgVO650cC59Y4RFqZKnbohGoUxwngxQ==",
+        "publishedAt": "2026-10-30T12:55:37.000Z"
+      },
+      "repositoryReview": {
+        "version": "0.1.0",
+        "integrity": "sha512-jTpK7tSlD020PS1wCgWqEd6ocMd6XbaqZVdLErpK8FcSCXvDcQAkGYgrgVO650cC59Y4RFqZKnbohGoUxwngxQ==",
+        "commit": "6ce75e61c0a716c75630f06dcc718a0070b8dcb2",
+        "url": "https://github.com/HakurouKen/dsh-plugin-mattpocock-skills"
+      }
+    },
+    {
+      "name": "@local/dsh-prompt-suggestion",
+      "title": {
+        "en": "Prompt Suggestion",
+        "zh": "下一句预测"
+      },
+      "description": {
+        "en": "Predict the next user message as ghost text after a reply. Tab or Right Arrow inserts a draft without sending. Uses the configured model and may incur inference costs; requires Node >=22.12, with no DSH range declared.",
+        "zh": "回复结束后以灰色文字预测下一句，按 Tab 或右箭头只填入草稿；使用配置的模型并可能产生调用费用，需要 Node >=22.12，未声明 DSH 兼容范围。"
+      },
+      "category": "interface",
+      "version": "0.2.5",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/yepyeel/dsh-prompt-suggestion",
+        "commit": "929eef913566ae89cc4b3c67177872e792606414",
+        "integrity": "sha512-/KYz2IkHZzs2blQwqsnIFtx/4Isry8EMwIeRQi54KBpyT5/51f78A/q5fsMu577vuI7nIORdAcbL3pPBrubGnQ==",
+        "publishedAt": "2026-10-30T16:42:45.000Z"
+      }
+    },
+    {
+      "name": "dsh-session-inbox",
+      "title": {
+        "en": "Session Inbox",
+        "zh": "DSH 会话工作台"
+      },
+      "description": {
+        "en": "Compact session sidebar with project groups, working and attention sections, reversible Settle and an original-layout switch. Chinese UI; DSH compatibility is pinned to 0.2.1-rc.5, with macOS desktop validation reported by the author.",
+        "zh": "紧凑会话侧栏，支持项目分组、工作中、需要处理、可恢复 Settle 和原布局切换。界面为中文，兼容范围精确限定 DSH 0.2.1-rc.5，作者报告已验证 macOS 桌面版。"
+      },
+      "category": "interface",
+      "version": "0.3.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Tracest/dsh-session-inbox",
+        "commit": "ae8929f75a8c18dd8a92c2d742ff51b1f40cf4e5",
+        "integrity": "sha512-5cIiSjD0Xps2SZXC1O+hB9d8oj32MCx2SVyUTmiN8jDbF+h4loTvg2M6AkCNKdXWDG/CES2hQXvt5zemDVJyMQ==",
+        "publishedAt": "2026-10-31T03:07:29.000Z"
+      }
+    },
+    {
+      "name": "dsh-autostart",
+      "title": {
+        "en": "Windows Autostart",
+        "zh": "Windows 登录自启动"
+      },
+      "description": {
+        "en": "Register the current executable to start at Windows login and remove its registry value when disabled. Use the fixed Git source; the same-name npm package is a separate project. Requires the desktop executable, with no restart watchdog.",
+        "zh": "将当前程序写入 Windows 登录自启动项，禁用时移除该注册表值；使用固定 Git 来源，同名 npm 包是其他项目。应在桌面程序中使用，不含崩溃重启守护。"
+      },
+      "category": "integrations",
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/LLL-lyh0/dsh-autostart",
+        "commit": "300104b0851eaeac44074d829e275c9f2f178876",
+        "integrity": "sha512-1VaNYdgBcH7XCDrUVGyDCs9jAZ8bNF2AdMVJd0PnD0oL5aopIaYPNMuraoxEW4mvJY6ggXQF0ieuc2hsTmleQA==",
+        "publishedAt": "2026-10-27T13:41:01.000Z"
+      }
     }
   ]
 }

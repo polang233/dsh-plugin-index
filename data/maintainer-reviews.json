@@ -1956,6 +1956,121 @@
       "reviewedAt": "2026-10-30T11:22:20.237Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-zcode-plan-bridge",
+      "version": "0.5.2",
+      "integrity": "sha512-OaVYeSHrbxMMRBH0C99e4v0ssFdnQMQJA8GP6f4sMBYLyPRezWWqXO6xNcCUfiE4I7/1H9XFanncNB/EMN411A==",
+      "repository": "https://github.com/tangyixiao/dsh-zcode-plan-bridge",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-31T06:09:44.094Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@xrn1997/dsh-session-delete",
+      "version": "0.4.0",
+      "integrity": "sha512-VNMtnv1vfUpvq/GDM0klSpXkCcp+mirQLF83Q+6Rm/M4d2jLbHU7mo68gJjc4eNchpuPuIljq1cPeZSz+Rx6pw==",
+      "repository": "https://github.com/xrn1997/dsh-session-delete",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-31T06:09:44.117Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@xrn1997/dsh-novel",
+      "version": "0.8.2",
+      "integrity": "sha512-G+C46EMMCFb9T+bx4QckpOFBZRHLpii/iJxmLeheFbYjnAdkRhjI1Sdk1jntPbjwT0ZNk3iSHIWI9cNfaKz06g==",
+      "repository": "https://github.com/xrn1997/dsh-novel",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-31T06:09:44.173Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-mattpocock-skills",
+      "version": "0.1.0",
+      "integrity": "sha512-jTpK7tSlD020PS1wCgWqEd6ocMd6XbaqZVdLErpK8FcSCXvDcQAkGYgrgVO650cC59Y4RFqZKnbohGoUxwngxQ==",
+      "repository": "https://github.com/HakurouKen/dsh-plugin-mattpocock-skills",
+      "source": {
+        "type": "git",
+        "commit": "6ce75e61c0a716c75630f06dcc718a0070b8dcb2"
+      },
+      "reviewedAt": "2026-10-31T06:09:44.191Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@local/dsh-prompt-suggestion",
+      "version": "0.2.5",
+      "integrity": "sha512-/KYz2IkHZzs2blQwqsnIFtx/4Isry8EMwIeRQi54KBpyT5/51f78A/q5fsMu577vuI7nIORdAcbL3pPBrubGnQ==",
+      "repository": "https://github.com/yepyeel/dsh-prompt-suggestion",
+      "source": {
+        "type": "git",
+        "commit": "929eef913566ae89cc4b3c67177872e792606414"
+      },
+      "reviewedAt": "2026-10-31T06:09:44.200Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-session-inbox",
+      "version": "0.3.0",
+      "integrity": "sha512-5cIiSjD0Xps2SZXC1O+hB9d8oj32MCx2SVyUTmiN8jDbF+h4loTvg2M6AkCNKdXWDG/CES2hQXvt5zemDVJyMQ==",
+      "repository": "https://github.com/Tracest/dsh-session-inbox",
+      "source": {
+        "type": "git",
+        "commit": "ae8929f75a8c18dd8a92c2d742ff51b1f40cf4e5"
+      },
+      "reviewedAt": "2026-10-31T06:09:44.209Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-autostart",
+      "version": "1.0.0",
+      "integrity": "sha512-1VaNYdgBcH7XCDrUVGyDCs9jAZ8bNF2AdMVJd0PnD0oL5aopIaYPNMuraoxEW4mvJY6ggXQF0ieuc2hsTmleQA==",
+      "repository": "https://github.com/LLL-lyh0/dsh-autostart",
+      "source": {
+        "type": "git",
+        "commit": "300104b0851eaeac44074d829e275c9f2f178876"
+      },
+      "reviewedAt": "2026-10-31T06:09:44.212Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-session-file-purge",
+      "version": "0.1.5",
+      "integrity": "sha512-E4TsaYAerBPBC8dmbNVCqr/8fu140axfAL1tzgN3arcRJPPqMjln4lu2iXe+czS+hOJq+LIcfuDOtMpf9XNrZA==",
+      "repository": "https://github.com/FJHin/dsh-plugin-session-file-purge",
+      "source": {
+        "type": "git",
+        "commit": "f7150886068fbfaad9a6a5abcc8cc5f68ef1b69d",
+        "path": "dsh-plugin-session-file-purge"
+      },
+      "reviewedAt": "2026-10-31T06:09:44.220Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-wb400-guard",
+      "version": "0.1.6",
+      "integrity": "sha512-NaGVg0ai2xlRzVUPnenKd2oRfZ1M15lA6bkb8gQFiajJMx4deV70Ftv02CE8/0gMhQTxbzeHSLHIuWQ3zunLpA==",
+      "repository": "https://github.com/curo22/dsh-wb400-guard",
+      "source": {
+        "type": "git",
+        "commit": "3e59d6794b711819a6ec3be012e2ad3bc25bc72c"
+      },
+      "reviewedAt": "2026-10-31T06:09:44.224Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
