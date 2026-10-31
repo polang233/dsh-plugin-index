@@ -45,6 +45,16 @@ Each section is in Chinese first, with the English in the quote block below it.
 >
 > Do not submit keys, private repositories, tracking links or unfounded security claims. The listing review is not a full code audit or an install test.
 
+### DSH 版本兼容 · DSH compatibility
+
+不要求插件只支持最新版 DSH，也不要求把 DSH 兼容范围锁定在单一版本。支持旧版或预发布版 DSH 的插件同样欢迎提交；兼容范围较窄、只验证过某个版本，或暂未声明范围，都不会单独成为拒绝收录的理由。
+
+建议按实际依赖，通过 `engines.dsh` 或 DSH 相关的 `peerDependencies` 声明合理的版本范围。已知支持多个版本时不必锁死在单一版本；确实依赖特定版本或内部 API 时，也可以保留必要限制。申请中请区分「声明的兼容范围」和「实际验证过的版本、平台」。未声明范围不等于兼容所有版本；市场保留包的原始声明，安装时仍由 DSH 检查兼容性。
+
+> Plugins do not have to target the latest DSH or declare compatibility with only one exact DSH version. Plugins for older or prerelease DSH versions are welcome. A narrow range, testing on only one version, or a missing range does not by itself prevent listing.
+>
+> We recommend declaring a reasonable range in `engines.dsh` or DSH-related `peerDependencies`, based on the plugin's actual dependencies. If multiple versions are known to work, there is no need to pin just one; keep necessary limits when a plugin depends on a specific version or internal API. Distinguish the declared range from the versions and platforms actually tested. A missing range does not mean every version is compatible. The market preserves the package's declarations, and DSH still checks compatibility when installing.
+
 ### Git 来源 · Git sources
 
 尚未发布 npm 的插件可经维护者确认后按固定 GitHub 提交收录。请在收录申请中提供公开仓库地址、版本和完整提交 SHA；插件位于子目录时还需提供相对路径。选定目录须包含可安装的完整插件、`package.json`、补丁及构建产物。维护者核查归档并记录哈希；建议作者同时发布 npm 包。
@@ -57,11 +67,11 @@ GitHub Release 附件可以供用户下载或手动安装，但当前 DSH 市场
 
 ## 更新或补充信息 · Updates and corrections
 
-已有收录申请时，请在原 Issue 回复新版本、固定提交或补充材料。更正已收录插件的名称、介绍、仓库等信息，也可以使用[插件收录申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml)，注明包名和需要更正的内容。
+已有收录申请时，请在原 Issue 回复新版本、固定提交或补充材料，即使已经关闭也可以继续补充。更正已收录插件的名称、介绍、仓库等信息，也可以使用[插件收录申请](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml)，注明包名和需要更正的内容。
 
 默认跟踪 npm 的 `latest` 标签；固定版本或 Git 提交的插件需要维护者重新核查后升级。运行兼容范围以实际发布包中的声明为准。
 
-> If you already have an open request, reply there with the new version, pinned commit or extra material. To correct the name, description or repository of a listed plugin, use the [plugin request](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml) form with the package name and what needs changing.
+> If you already have a request, reply there with the new version, pinned commit or extra material, even if the Issue is closed. To correct the name, description or repository of a listed plugin, use the [plugin request](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml) form with the package name and what needs changing.
 >
 > Plugins follow the npm `latest` tag by default. Plugins pinned to a version or Git commit are upgraded after a maintainer checks them again. Runtime compatibility follows what the published package declares.
 
