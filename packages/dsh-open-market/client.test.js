@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {runInNewContext} from 'node:vm';
 
-async function client() {
+async function client({indexedDB} = {}) {
   let plugin;
   const window = {
+    indexedDB,
     localStorage: {getItem: () => null, setItem() {}},
     setTimeout: () => 0, clearTimeout() {},
     __ModuleLoader__: {load: module => {
@@ -16,7 +17,7 @@ async function client() {
     }}
   };
   runInNewContext(await readFile(new URL('./client.js', import.meta.url), 'utf8'), {
-    window, URL, crypto, document: {createElement: () => ({remove() {}}), head: {appendChild() {}}}
+    window, URL, crypto, AbortSignal, document: {createElement: () => ({remove() {}}), head: {appendChild() {}}}
   });
   return plugin;
 }
@@ -61,7 +62,7 @@ test('client starts without the optional market service and registers its tab wh
 const plain = value => JSON.parse(JSON.stringify(value));
 const tick = (ms = 5) => new Promise(resolve => setTimeout(resolve, ms));
 
-function fakeIndexedDB(saved = new Map()) {
+function fakeIndexedDB(saved = new Map(), onWrite = () => {}) {
   const later = callback => setTimeout(callback, 0);
   const database = {
     createObjectStore() {},
@@ -70,7 +71,7 @@ function fakeIndexedDB(saved = new Map()) {
       const transaction = {
         objectStore: () => ({
           get(key) { const request = {result: saved.get(key)}; later(() => transaction.oncomplete?.()); return request; },
-          put(value, key) { saved.set(key, value); later(() => transaction.oncomplete?.()); return {}; }
+          put(value, key) { saved.set(key, value); onWrite(); later(() => transaction.oncomplete?.()); return {}; }
         })
       };
       return transaction;
@@ -104,7 +105,7 @@ async function marketClient({indexedDB, search, storage = {}} = {}) {
   });
   plugin.apply(context());
   if (search) injections.get('remote.pluginMarket')(context({remote: {pluginMarket: {search}}}));
-  return plugin;
+  return Object.assign(plugin, { activateService: (name, remote) => injections.get(name)(context({ remote })) });
 }
 
 const entry = (name, status = 'not-installed', extra = {}) => ({name, defaultVersion: '1.2.0', versions: [{version: '1.2.0'}], installation: {status}, ...extra});
@@ -166,6 +167,21 @@ test('a restored catalog takes its installation status from the bundles', async 
   assert.equal(withInstallation(same, []), same, 'No change keeps the array, so nothing re-renders');
 });
 
+test('cached update status follows prerelease ordering and ignores build metadata', async () => {
+  const {internals: {withInstallation}} = await client();
+  for (const [installed, offered, update] of [
+    ['0.2.7-preview.1', '0.2.7', true], ['0.2.7', '0.2.7-preview.1', false],
+    ['0.2.7-alpha.9', '0.2.7-alpha.10', true], ['0.2.7-alpha', '0.2.7-alpha.1', true],
+    ['0.2.7-1', '0.2.7-alpha', true], ['0.2.7-beta', '0.2.7-alpha', false],
+    ['0.2.7+build.1', '0.2.7+build.2', false], ['0.2.7+build.9', '0.2.8', true],
+    ['0.2.7-alpha.9007199254740992', '0.2.7-alpha.9007199254740993', true],
+    ['not-semver', '0.2.7', false]
+  ]) {
+    const [result] = withInstallation([{name: 'demo', defaultVersion: offered, installation: {status: 'not-installed'}}], [{name: 'demo', installed: true, version: installed}]);
+    assert.equal(result.installation.status === 'update-available', update, `${installed} → ${offered}`);
+  }
+});
+
 test('a fresh cache opens without asking the market', async () => {
   const indexedDB = fakeIndexedDB();
   let searches = 0;
@@ -178,6 +194,19 @@ test('a fresh cache opens without asking the market', async () => {
   assert.equal(searches, 0);
   assert.equal(internals.getMarket().status, 'ready');
   assert.equal(internals.getMarket().entries[0].installation.status, 'installed');
+});
+
+test('a manager that arrives after cached data updates installation without reopening the tab', async () => {
+  const indexedDB = fakeIndexedDB();
+  const plugin = await marketClient({indexedDB});
+  indexedDB.saved.set('market', snapshot(plugin.internals));
+  await plugin.internals.enterMarket(noManager);
+  assert.equal(plugin.internals.getMarket().entries[0].installation.status, 'not-installed');
+  plugin.activateService('remote.pluginManager', {pluginManager: {
+    listBundles: async () => ({ok: true, value: [{name: 'a', installed: true, version: '1.1.0'}]})
+  }});
+  await tick();
+  assert.equal(plugin.internals.getMarket().entries[0].installation.status, 'update-available');
 });
 
 test('a stale cache shows first and refreshes behind it', async () => {
@@ -321,4 +350,162 @@ test('a sidebar install passes on refusals, pending scripts and restarts', async
   assert.equal(restart.ok, true);
   assert.equal(restart.restart, true);
   assert.equal((await installDirectly(() => undefined, {spec: 'a@1'}, t)).error, 'updateUnavailable');
+});
+
+const npmRelease = (version, extra = {}) => ({name: '@demo/plugin', version, dsh: {bundle: {patch: './cordis.patch.yml'}}, ...extra});
+const history = () => ({name: '@demo/plugin', versions: {
+  '1.0.0': npmRelease('1.0.0', {engines: {dsh: '>=0.1.7 <0.2.0'}}),
+  '2.0.0-beta.1': npmRelease('2.0.0-beta.1', {peerDependencies: {'@deepseek-ai/dsh-tools': '^0.2.1-rc.5', '@deepseek-ai/dsh-client': '^0.2.1-rc.5'}})
+}, time: {'1.0.0': '2026-01-01T00:00:00Z', '2.0.0-beta.1': '2026-02-01T00:00:00Z'}});
+
+test('other versions use publisher metadata without inheriting the listed version or review', async () => {
+  const {internals: {npmVersions, versionChoices, listingOf}} = await client();
+  const manifest = history();
+  Object.assign(manifest.versions, {
+    latest: npmRelease('latest'),
+    '3.0.0': npmRelease('3.0.0', {deprecated: 'removed'}),
+    '4.0.0': npmRelease('4.0.0', {dsh: {}}),
+    '5.0.0': npmRelease('5.0.0', {name: 'someone-else'}),
+    '6.0.0': npmRelease('wrong-version')
+  });
+  const versions = npmVersions('@demo/plugin', manifest);
+  assert.deepEqual(plain(versions.map(x => [x.version, x.requirements])), [
+    ['2.0.0-beta.1', ['^0.2.1-rc.5']], ['1.0.0', ['>=0.1.7 <0.2.0']]
+  ]);
+  assert.throws(() => npmVersions('another-package', manifest), /Invalid npm/);
+  const indexed = listingOf({name: '@demo/plugin', metadata: {labels: ['verified']}, versions: [
+    {version: '1.0.0', source: {type: 'npm', registry: 'https://registry.npmjs.org/'}, engines: {dsh: 'index-range'}}]});
+  indexed.versions[0].compatibility = {compatible: false};
+  const before = JSON.stringify(indexed);
+  const choices = versionChoices(indexed, versions, 'https://registry.npmjs.org/');
+  assert.equal(choices.length, 2, 'The listed release is not duplicated');
+  assert.equal(choices[0].requirements[0], 'index-range', 'Registry data does not override the verified index entry');
+  assert.equal(choices[0].compatibility.compatible, false);
+  assert.equal(choices[1].listed, false);
+  assert.equal(choices[1].metadata, undefined, 'The package badge is not assigned to a registry version');
+  assert.equal(choices[1].compatibility, undefined, 'No invented compatibility verdict');
+  assert.equal(choices[1].install.spec, '@demo/plugin@2.0.0-beta.1');
+  assert.equal(JSON.stringify(indexed), before);
+});
+
+test('version lookups respect the download source and never reinterpret a Git package as npm', async () => {
+  const {internals: {npmVersionRegistry, normalizeSettings, versionCommand}} = await client();
+  const entry = {name: '@demo/plugin', versions: [{version: '1.2.0', source: {type: 'npm', registry: 'https://registry.npmjs.org/'}}]};
+  assert.equal(npmVersionRegistry(entry, normalizeSettings({registry: 'npmmirror'})), 'https://registry.npmmirror.com/');
+  assert.equal(npmVersionRegistry(entry, normalizeSettings({registry: 'custom', customRegistry: 'https://packages.example.com/npm'})), 'https://packages.example.com/npm/');
+  assert.equal(npmVersionRegistry(entry, normalizeSettings({registry: 'dsh'})), 'https://registry.npmjs.org/');
+  assert.equal(versionCommand(entry, entry.versions[0]), 'dsh plugin --profile desktop add @demo/plugin@1.2.0');
+  const git = {version: '1.0.0', source: {type: 'git', url: 'https://github.com/owner/repo', commit: 'abc', path: 'plugins/a'}};
+  assert.equal(npmVersionRegistry({versions: [git]}, normalizeSettings({})), null);
+  assert.equal(versionCommand(entry, git), 'dsh plugin --profile desktop add "git+https://github.com/owner/repo.git#abc&path:/plugins/a"');
+});
+
+test('version metadata loads only when called, deduplicates in-flight reads, and persists projected data', async () => {
+  let started, saved;
+  const fetchStarted = new Promise(resolve => { started = resolve; });
+  const persisted = new Promise(resolve => { saved = resolve; });
+  const indexedDB = fakeIndexedDB(new Map(), () => saved());
+  const {internals: {loadNpmVersions, VERSION_CACHE_TTL}} = await client({indexedDB});
+  let reads = 0, release;
+  const fetchImpl = async (url, options) => {
+    reads++;
+    assert.equal(url, 'https://registry.npmjs.org/%40demo%2Fplugin');
+    assert.equal(options.credentials, 'omit');
+    started();
+    await new Promise(resolve => { release = resolve; });
+    return {ok: true, json: async () => history()};
+  };
+  assert.equal(reads, 0);
+  const options = {fetchImpl, now: 100000};
+  const first = loadNpmVersions('@demo/plugin', 'https://registry.npmjs.org/', options);
+  const second = loadNpmVersions('@demo/plugin', 'https://registry.npmjs.org/', options);
+  await fetchStarted;
+  assert.equal(reads, 1);
+  release();
+  assert.deepEqual(plain(await first), plain(await second));
+  await persisted;
+  await loadNpmVersions('@demo/plugin', 'https://registry.npmjs.org/', options);
+  assert.equal(reads, 1, 'The in-memory cache is reused');
+  const record = [...indexedDB.saved.values()][0];
+  assert.equal(record.versions[0].version, '2.0.0-beta.1');
+  assert.equal(record.versions[0].dsh, undefined, 'Only the projected version fields are stored');
+  const reopened = await client({indexedDB});
+  await reopened.internals.loadNpmVersions('@demo/plugin', 'https://registry.npmjs.org/', {now: 100001, fetchImpl: () => {throw Error('cache missed');}});
+  const expired = loadNpmVersions('@demo/plugin', 'https://registry.npmjs.org/', {now: 100000 + VERSION_CACHE_TTL, fetchImpl: async () => {
+    reads++; return {ok: true, json: async () => history()};
+  }});
+  await expired;
+  assert.equal(reads, 2, 'Expired data is read again');
+});
+
+test('a failed version request can retry, and distinct registries do not share cached data', async () => {
+  const {internals: {loadNpmVersions}} = await client();
+  await assert.rejects(loadNpmVersions('@demo/plugin', 'https://registry.npmjs.org/', {
+    fetchImpl: async () => ({ok: false, status: 503})
+  }), /HTTP 503/);
+  await assert.rejects(loadNpmVersions('@demo/plugin', 'https://registry.npmjs.org/', {
+    fetchImpl: async () => ({ok: true, json: async () => ({name: 'different', versions: {}})})
+  }), /Invalid npm/);
+  const fetchImpl = async () => ({ok: true, json: async () => history()});
+  assert.equal((await loadNpmVersions('@demo/plugin', 'https://registry.npmjs.org/', {fetchImpl})).length, 2);
+  let mirrorRead = false;
+  await loadNpmVersions('@demo/plugin', 'https://mirror.example/', {fetchImpl: async () => {mirrorRead = true; return fetchImpl();}});
+  assert.equal(mirrorRead, true);
+  await assert.rejects(loadNpmVersions('../private', 'https://registry.npmjs.org/', {fetchImpl}), /Invalid npm package source/);
+});
+
+test('choosing another version installs its exact target, and a failed removal keeps the current installation', async () => {
+  const {internals: {installVersion}} = await client();
+  const entry = {name: 'demo', installation: {status: 'installed', installedVersion: '2.0.0'}};
+  const version = {version: '1.0.0-beta.2', source: {type: 'npm', registry: 'https://registry.npmjs.org/'}};
+  const actions = [], phases = [];
+  const options = {t: key => key, title: 'Demo', install: async target => {actions.push(target); return {ok: true};},
+    manager: () => ({removeBundle: async name => {actions.push(name); return {ok: true, value: {}};}}), onPhase: phase => phases.push(phase)};
+  await installVersion(entry, version, options);
+  assert.equal(actions[0], 'demo');
+  assert.equal(actions[1].spec, 'demo@1.0.0-beta.2');
+  assert.equal(actions[1].version, '1.0.0-beta.2');
+  assert.equal(actions[1].title, 'Demo');
+  assert.deepEqual(phases, ['updating', 'busy']);
+  const answer = await installVersion(entry, version, {...options, manager: () => ({removeBundle: async () => ({ok: true, value: {error: {code: 'stop-profile'}}})})});
+  assert.equal(answer.error, 'updateRestart');
+  assert.equal(actions.length, 2, 'No install follows a refusal to remove');
+  const provided = await installVersion({...entry, installation: {status: 'provided'}}, version, options);
+  assert.equal(provided.error, 'providedVersion');
+  await installVersion({...entry, installation: {status: 'not-installed'}}, version, {...options, manager: () => {throw Error('unexpected removal');}});
+  assert.equal(actions.length, 3);
+});
+
+test('self-update is handed to the Host before removing the client that started it', async () => {
+  const {internals: {installVersion, installDirectly}} = await client();
+  const calls = [];
+  let service = {removeBundle: async () => {calls.push('client-remove'); service = undefined; return {ok: true, value: {}};}};
+  const entry = {name: 'dsh-open-market', installation: {status: 'installed', installedVersion: '0.2.6'}};
+  const version = {version: '0.2.7', source: {type: 'npm', registry: 'https://registry.npmjs.org/'}};
+  const answer = await installVersion(entry, version, {
+    t: key => key, manager: () => service, install: target => installDirectly(() => service, target, key => key),
+    selfUpdate: async target => {calls.push(target.spec); return {ok: true, restart: true};}
+  });
+  assert.equal(answer.ok, true);
+  assert.deepEqual(calls, ['dsh-open-market@0.2.7'], 'The client must never uninstall its own execution context');
+});
+
+test('self-update uses the authenticated local endpoint and reports unavailable, rejected and lost requests', async () => {
+  const {internals: {requestSelfUpdate}} = await client();
+  const t = key => key;
+  const target = {spec: 'dsh-open-market@0.2.7', version: '0.2.7', registry: 'https://mirror.example/'};
+  const success = await requestSelfUpdate(target, t, {fetchImpl: async (url, options) => {
+    assert.equal(url, 'dsh-open-market/self-update');
+    assert.equal(options.credentials, 'same-origin');
+    assert.equal(options.method, 'POST');
+    assert.deepEqual(JSON.parse(options.body), target);
+    assert.equal(options.signal, undefined, 'The update must not be tied to the tab lifecycle');
+    return {ok: true, json: async () => ({ok: true, restart: true})};
+  }});
+  assert.equal(success.restart, true);
+  for (const status of [404, 503]) assert.equal((await requestSelfUpdate(target, t, {fetchImpl: async () => ({ok: false, status})})).error, 'selfUpdateUnavailable');
+  for (const status of [401, 403]) assert.equal((await requestSelfUpdate(target, t, {fetchImpl: async () => ({ok: false, status})})).error, 'selfUpdateUnauthorized');
+  assert.equal((await requestSelfUpdate(target, t, {fetchImpl: async () => {throw Error('connection lost');}})).error, 'selfUpdateConnectionLost');
+  assert.equal((await requestSelfUpdate(target, t, {fetchImpl: async () => ({ok: true, json: async () => ({})})})).error, 'selfUpdateConnectionLost');
+  assert.equal((await requestSelfUpdate(target, t, {fetchImpl: async () => ({ok: true, json: async () => ({ok: false, code: 'stop-profile', error: 'Stop the profile'})})})).error, 'updateRestart');
 });

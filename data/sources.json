@@ -12216,17 +12216,17 @@
         "zh": "DSH 会话工作台"
       },
       "description": {
-        "en": "Compact session sidebar with project groups, working and attention sections, reversible Settle and an original-layout switch. Chinese UI; DSH compatibility is pinned to 0.2.1-rc.5, with macOS desktop validation reported by the author.",
-        "zh": "紧凑会话侧栏，支持项目分组、工作中、需要处理、可恢复 Settle 和原布局切换。界面为中文，兼容范围精确限定 DSH 0.2.1-rc.5，作者报告已验证 macOS 桌面版。"
+        "en": "Compact session sidebar with project groups, search, unread markers, reversible Settle, metadata backup with merge preview and an original-layout switch. Chinese UI; requires exactly DSH 0.2.1-rc.5. Author reports macOS desktop validation.",
+        "zh": "紧凑会话侧栏，支持项目分组、搜索、未读提示、可恢复整理、列表元数据备份与预览合并恢复，以及原布局切换。界面为中文，仅兼容 DSH 0.2.1-rc.5；作者报告已验证 macOS 桌面版。"
       },
       "category": "interface",
-      "version": "0.3.0",
+      "version": "0.4.1",
       "source": {
         "type": "git",
         "url": "https://github.com/Tracest/dsh-session-inbox",
-        "commit": "ae8929f75a8c18dd8a92c2d742ff51b1f40cf4e5",
-        "integrity": "sha512-5cIiSjD0Xps2SZXC1O+hB9d8oj32MCx2SVyUTmiN8jDbF+h4loTvg2M6AkCNKdXWDG/CES2hQXvt5zemDVJyMQ==",
-        "publishedAt": "2026-10-31T03:07:29.000Z"
+        "commit": "3aa8decbe4a0460d145425a60efd13bcd1f1418f",
+        "integrity": "sha512-OV2wWfzRo6SKrAPzhYJPdnJLP6EAvQnPyWwMnWy+VCgrni+66oxD8HL4HXH0/1o18NITmL7cqG9pla7xQXmffw==",
+        "publishedAt": "2026-10-31T11:53:50.000Z"
       }
     },
     {
@@ -12252,14 +12252,82 @@
     {
       "name": "dsh-shorekeeper",
       "title": {
-        "en": "Shorekeeper",
-        "zh": "守岸人桌宠"
+        "en": "Wuthering Waves · Shorekeeper Companion",
+        "zh": "鸣潮 · 守岸人桌宠"
       },
       "description": {
-        "en": "Windows 10/11 x64 companion with task animations, voices, captions and balance display. First use separately downloads and runs a ~213 MiB application after a SHA-256 check; requires local DSH >=0.2.1-rc.5 <0.3.0 and Node >=22.",
-        "zh": "Windows 10/11 x64 守岸人桌宠，支持任务动画、语音字幕和余额显示；首次另行下载约 213 MiB 程序，经 SHA-256 核验后运行。需要本机 DSH >=0.2.1-rc.5 <0.3.0 和 Node >=22。"
+        "en": "Bring the Shorekeeper from Wuthering Waves to your desktop with task expressions, voices, captions and customizable media. Requires Windows 10/11 x64, local DSH >=0.2.1-rc.5 <0.3.0 and Node >=22. First use downloads a separate ~213 MiB application after a SHA-256 check.",
+        "zh": "把《鸣潮》守岸人带到桌面，以任务表情、语音字幕、摸头互动和可自定义素材陪伴工作。支持 Windows 10/11 x64 本机 Harness；首次另行下载约 213 MiB 程序，经 SHA-256 校验后运行。需要 DSH >=0.2.1-rc.5 <0.3.0、Node >=22。"
       },
       "category": "appearance"
+    },
+    {
+      "name": "dsh-jump",
+      "title": {
+        "en": "DSH Jump",
+        "zh": "DSH 键盘跳跃导航"
+      },
+      "description": {
+        "en": "Press a shortcut to label visible interactive elements, then type a label to click or focus. Shortcuts are configurable and saved in the browser.",
+        "zh": "按快捷键为可见交互元素标上字母，再输入标签即可点击或聚焦；支持自定义快捷键，设置保存在浏览器。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "liarmttt-tavernweave-dsh",
+      "title": {
+        "en": "TavernWeave",
+        "zh": "TavernWeave"
+      },
+      "description": {
+        "en": "Create and inspect SillyTavern character cards and worldbooks with 23 bundled skills, an optional agent preset and a browser panel. Licensed for noncommercial use under PolyForm Noncommercial 1.0.0.",
+        "zh": "通过 23 个内置技能、可选 Agent 预设与浏览器面板制作和检查 SillyTavern 角色卡、世界书；采用 PolyForm Noncommercial 1.0.0，仅限非商业用途。"
+      },
+      "category": "skills"
+    },
+    {
+      "name": "dsh-whoop-easy-connect",
+      "title": {
+        "en": "WHOOP Easy Connect",
+        "zh": "WHOOP Easy Connect"
+      },
+      "description": {
+        "en": "Connect a personal WHOOP account to view recovery, strain, sleep and workout trends. Requires a WHOOP developer app, Client ID/Secret, an HTTPS OAuth callback and Node >=24.",
+        "zh": "连接个人 WHOOP 账号，查看恢复、负荷、睡眠和训练趋势；需自行创建 WHOOP 开发者应用、配置 Client ID/Secret 与 HTTPS OAuth 回调，需要 Node >=24。"
+      },
+      "category": "integrations",
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/ShawnRen57/dsh-whoop-easy-connect",
+        "commit": "a0d641e43c75915a12bf21b5a50a99e3601f3704",
+        "integrity": "sha512-Zs5QcX2ywpo57jDpmbPWV8+xq2/vxEAo7TP85z09p1n/e662S5lkN6HuC74DmQIuJj/CeBWzpGajlg+Z9z5wAg==",
+        "publishedAt": "2026-10-31T12:10:50.000Z"
+      }
+    },
+    {
+      "name": "@mineuchi/dsh-status-bar",
+      "title": {
+        "en": "Status Bar",
+        "zh": "余额状态栏"
+      },
+      "description": {
+        "en": "A bottom bar for DeepSeek, Codex and OpenRouter balances and quotas, plus internet radio. Requires the corresponding account or API key; radio streams from third-party services.",
+        "zh": "在底栏显示 DeepSeek、Codex 和 OpenRouter 余额及额度，附网络电台；需相应账号或 API Key，电台流来自第三方服务。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-dot-life",
+      "title": {
+        "en": "Dot Life",
+        "zh": "Dot Life 角色陪伴"
+      },
+      "description": {
+        "en": "A companion with an Android phone, QQ, event-based memory and a diary, plus an optional microVM computer. Requires virtualization, an approximately 2 GB initial Android SDK download and configured model/account access.",
+        "zh": "让角色拥有安卓手机、QQ、事件记忆与日记，并可选配 microVM 电脑。需硬件虚拟化，首次手机组件下载约 2 GB，另需配置模型与账号访问。"
+      },
+      "category": "integrations"
     }
   ]
 }

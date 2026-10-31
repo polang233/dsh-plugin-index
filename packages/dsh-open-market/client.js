@@ -181,6 +181,146 @@ window.__ModuleLoader__.load({
       return Promise.race([readCache(key), new Promise(resolve => window.setTimeout(resolve, CACHE_WAIT))]);
     }
 
+    const VERSION_CACHE_TTL = 60 * 60 * 1000;
+    const versionCache = new Map();
+    const versionRequests = new Map();
+    const EXACT_VERSION = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;
+
+    function npmVersionRegistry(entry, preferences) {
+      const version = entry.versions?.find(item => item.version === entry.defaultVersion) ?? entry.versions?.[0];
+      if (version?.source?.type !== 'npm') return null;
+      const registry = registryUrl(version.source.registry ?? 'https://registry.npmjs.org/');
+      if (!registry) return null;
+      return installTarget({ registry }, preferences).registry ?? registry;
+    }
+
+    function declaredDshRanges(manifest) {
+      if (typeof manifest.engines?.dsh === 'string') return [manifest.engines.dsh];
+      return [...new Set(Object.entries(manifest.peerDependencies ?? {})
+        .filter(([name, range]) => (name === '@deepseek-ai/dsh' || name.startsWith('@deepseek-ai/dsh-'))
+          && typeof range === 'string' && !range.startsWith('workspace:') && range !== '*')
+        .map(([, range]) => range))];
+    }
+
+    // Registry metadata is a version list, not a review or proof that the archive installs. DSH inspects the chosen package.
+    function npmVersions(name, metadata) {
+      if (metadata?.name !== name || !metadata.versions || typeof metadata.versions !== 'object' || Array.isArray(metadata.versions)) {
+        throw new Error('Invalid npm package metadata');
+      }
+      return Object.entries(metadata.versions).flatMap(([version, manifest]) => {
+        if (!EXACT_VERSION.test(version) || !manifest || manifest.name !== name || manifest.version !== version || manifest.deprecated) return [];
+        const patch = manifest.dsh?.bundle?.patch;
+        const patches = Array.isArray(patch) ? patch : [patch];
+        if (!patches.length || patches.some(file => typeof file !== 'string' || !file.trim())) return [];
+        const time = Date.parse(metadata.time?.[version]);
+        return [{ version, ...(Number.isFinite(time) ? { publishTimestamp: Math.floor(time / 1000) } : {}), requirements: declaredDshRanges(manifest) }];
+      }).sort((a, b) => (b.publishTimestamp ?? 0) - (a.publishTimestamp ?? 0) || b.version.localeCompare(a.version, 'en', { numeric: true }));
+    }
+
+    // No registry requests at startup or when opening a detail. Only an expanded version list calls this loader.
+    async function loadNpmVersions(name, registry, { fetchImpl = fetch, now = Date.now() } = {}) {
+      if (!validPackage(name) || registryUrl(registry) !== registry) throw new Error('Invalid npm package source');
+      const key = 'versions:' + registry + encodeURIComponent(name);
+      if (versionRequests.has(key)) return versionRequests.get(key);
+      const fresh = record => record?.schema === 1 && record.name === name && record.registry === registry
+        && Number.isFinite(record.loadedAt) && record.loadedAt <= now && now - record.loadedAt < VERSION_CACHE_TTL && Array.isArray(record.versions);
+      const request = (async () => {
+        let saved = versionCache.get(key);
+        if (!fresh(saved)) saved = await waitForCache(key);
+        if (fresh(saved)) { versionCache.set(key, saved); return saved.versions; }
+        const response = await fetchImpl(registry + encodeURIComponent(name), {
+          headers: { accept: 'application/json' }, credentials: 'omit', signal: AbortSignal.timeout(20000)
+        });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const versions = npmVersions(name, await response.json());
+        const record = { schema: 1, name, registry, loadedAt: now, versions };
+        versionCache.set(key, record);
+        void writeCache(key, record);
+        return versions;
+      })();
+      versionRequests.set(key, request);
+      try { return await request; } finally { versionRequests.delete(key); }
+    }
+
+    function versionInstall(entry, version) {
+      if (version.install) return version.install;
+      const source = version.source;
+      return source.type === 'npm'
+        ? { spec: `${entry.name}@${version.version}`, ...(source.registry ? { registry: source.registry } : {}) }
+        : { spec: `git+${source.url.replace(/\.git$/, '')}.git#${source.commit}${source.path === undefined ? '' : `&path:/${source.path}`}` };
+    }
+
+    function versionChoices(entry, versions = [], registry) {
+      const listed = entry.versions.map(version => ({ ...version, listed: true, requirements: version.engines?.dsh ? [version.engines.dsh] : [] }));
+      const known = new Set(listed.map(version => version.version));
+      return [...listed, ...versions.filter(version => !known.has(version.version)).map(version => ({ ...version,
+        listed: false, source: { type: 'npm', registry }, install: { spec: `${entry.name}@${version.version}`, registry }
+      }))];
+    }
+
+    function versionCommand(entry, version) {
+      const spec = versionInstall(entry, version).spec;
+      return 'dsh plugin --profile desktop add ' + (spec.includes('&') ? '"' + spec + '"' : spec);
+    }
+
+    async function requestSelfUpdate(target, t, { fetchImpl = fetch } = {}) {
+      // Resolve locale text before the request can unload the context that supplied t.
+      const unavailable = t('selfUpdateUnavailable'), unauthorized = t('selfUpdateUnauthorized'), lost = t('selfUpdateConnectionLost');
+      const restart = t('updateRestart'), scripts = t('installNeedsDialog');
+      try {
+        const response = await fetchImpl('dsh-open-market/self-update', {
+          method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify(target)
+        });
+        if (response.status === 401 || response.status === 403) return { ok: false, error: unauthorized };
+        if (!response.ok) return { ok: false, error: unavailable };
+        const answer = await response.json();
+        if (typeof answer?.ok !== 'boolean') return { ok: false, error: lost };
+        if (answer.code === 'stop-profile') return { ...answer, error: restart };
+        if (answer.code === 'install-needs-dialog') return { ...answer, error: scripts };
+        return answer;
+      } catch { return { ok: false, error: lost }; }
+    }
+
+    function updateSelf(target, t) {
+      const messages = { working: t('selfUpdating'), done: t('selfUpdated'), restart: t('selfUpdatedRestart'), failed: t('selfUpdateFailed'), recovery: t('selfUpdateRecovery'), close: t('close') };
+      // The notice belongs to this operation, not to the tab or plugin effects disposed by removal.
+      const node = document.createElement('div'), text = document.createElement('span'), close = document.createElement('button');
+      node.dataset.opmSelfUpdate = '';
+      node.style.cssText = 'position:fixed;right:16px;bottom:16px;z-index:2000;display:flex;align-items:start;gap:12px;max-width:calc(100vw - 32px);width:420px;box-sizing:border-box;padding:14px 16px;border:1px solid var(--dsw-alias-border-l2,#ddd);border-radius:12px;background:var(--dsw-alias-bg-layer-1,#fff);color:var(--dsw-alias-label-primary,#202124);box-shadow:0 8px 32px #0002;font:13px/1.6 sans-serif;';
+      text.style.cssText = 'flex:1;min-width:0;overflow-wrap:anywhere';
+      text.setAttribute('role', 'status'); text.setAttribute('aria-live', 'polite');
+      text.textContent = messages.working + ' ' + target.version;
+      close.type = 'button'; close.textContent = '×'; close.setAttribute('aria-label', messages.close);
+      close.style.cssText = 'border:0;background:transparent;color:inherit;font:inherit;cursor:pointer;padding:0 3px';
+      close.onclick = () => node.remove();
+      node.append(text, close); document.body.appendChild(node);
+      return requestSelfUpdate(target, t).then(answer => {
+        text.textContent = answer.ok ? answer.restart ? messages.restart : messages.done : messages.failed + ': ' + errorText(answer.error, messages.failed) + ' ' + messages.recovery;
+        return answer;
+      });
+    }
+
+    async function installVersion(entry, version, { install, manager, t, title = entry.name, onPhase = () => {}, busyLabel = 'busy', selfUpdate = updateSelf }) {
+      if (entry.installation.status === 'provided') return { ok: false, error: t('providedVersion') };
+      if (entry.name === 'dsh-open-market' && entry.installation.status !== 'not-installed') {
+        onPhase('selfUpdating');
+        const answer = await selfUpdate(installTarget({ ...versionInstall(entry, version), title, version: version.version }, getSettings()), t);
+        return { ...answer, selfUpdate: true };
+      }
+      if (entry.installation.status !== 'not-installed') {
+        const service = manager?.();
+        if (!service?.removeBundle) return { ok: false, error: t('updateUnavailable') };
+        onPhase('updating');
+        const removed = await service.removeBundle(entry.name);
+        if (!removed?.ok) return removed ?? { ok: false, error: t('unknownError') };
+        const failure = removed.value?.error;
+        if (failure) return { ok: false, error: failure.code === 'stop-profile' ? t('updateRestart') : failure };
+        if (removed.value?.application === 'failed') return { ok: false, error: t('unknownError') };
+        onPhase(busyLabel);
+      }
+      return install({ ...versionInstall(entry, version), title, version: version.version });
+    }
+
     function validCatalog(record) {
       return record?.schema === CACHE_SCHEMA && record.index === INDEX_URL && Array.isArray(record.entries) && record.entries.length > 0
         && Number.isFinite(record.syncedAt);
@@ -191,11 +331,19 @@ window.__ModuleLoader__.load({
     }
 
     function olderVersion(version, than) {
-      const parts = value => /^\d+\.\d+\.\d+$/.test(value) ? value.split('.').map(Number) : null;
-      const [a, b] = [parts(version), parts(than)];
+      const [a, b] = [EXACT_VERSION.exec(version), EXACT_VERSION.exec(than)];
       if (!a || !b) return false;
-      const at = a.findIndex((part, index) => part !== b[index]);
-      return at >= 0 && a[at] < b[at];
+      for (let i = 1; i <= 3; i++) if (a[i] !== b[i]) return BigInt(a[i]) < BigInt(b[i]);
+      if (!a[4] || !b[4]) return !!a[4] && !b[4];
+      const left = a[4].split('.'), right = b[4].split('.');
+      for (let i = 0; i < Math.max(left.length, right.length); i++) {
+        if (left[i] === right[i]) continue;
+        if (left[i] === undefined || right[i] === undefined) return left[i] === undefined;
+        const numericLeft = /^\d+$/.test(left[i]), numericRight = /^\d+$/.test(right[i]);
+        if (numericLeft !== numericRight) return numericLeft;
+        return numericLeft ? BigInt(left[i]) < BigInt(right[i]) : left[i] < right[i];
+      }
+      return false;
     }
 
     // A cached snapshot can be hours old, while installs happen anywhere in DSH. Reading the bundles needs no network,
@@ -363,9 +511,12 @@ window.__ModuleLoader__.load({
     async function refreshInstallation(manager) {
       try {
         const answer = await manager()?.listBundles?.();
-        if (!answer?.ok || !market.entries) return;
-        const entries = withInstallation(market.entries, answer.value);
-        if (entries !== market.entries) updateMarket({ entries });
+        if (!answer?.ok) return;
+        if (market.entries) {
+          const entries = withInstallation(market.entries, answer.value);
+          if (entries !== market.entries) updateMarket({ entries });
+        }
+        return answer.value;
       } catch { /* The next market read brings the same status. */ }
     }
 
@@ -559,6 +710,18 @@ window.__ModuleLoader__.load({
       trendingHint: '近 7 天下载增长', newestHint: '按发布时间', stars: 'GitHub star {count}',
       close: '关闭', homepage: '主页', sourceCode: '源码', marketPage: '在开放插件市场网站查看',
       copy: '复制', copied: '已复制', installCommand: '安装命令', likeCount: '点赞 {count}',
+      otherVersions: '其他版本', versionsLoading: '正在读取版本…', versionsFailed: '版本列表读取失败',
+      versionsHelp: '其他 npm 版本未经过本站审查；兼容范围由作者声明，安装时由 DSH 检查。',
+      gitVersionsHelp: 'Git 来源只列出索引已确认的固定提交，不自动读取标签。',
+      noOtherVersions: '没有其他可安装的版本', listedVersion: '当前收录', prereleaseVersion: '预发布',
+      unreviewedVersion: '本站未审查', dshRangeUnknown: '未声明 DSH 范围', switchVersion: '切换到此版本',
+      versionAction: '{action} {version}', moreVersions: '显示更多版本', copyVersion: '复制 {version} 的安装命令',
+      providedVersion: '随 DSH 提供',
+      selfUpdating: '正在更新开放市场…', selfUpdated: '开放市场已更新，可重新打开市场。', selfUpdatedRestart: '开放市场已更新，重启 DSH 后生效。',
+      selfUpdateFailed: '开放市场更新未完成', selfUpdateUnavailable: '自更新服务不可用，请从「插件」页或使用安装命令更新。',
+      selfUpdateRecovery: '若已卸载，请从「插件」页重新安装开放市场。',
+      selfUpdateUnauthorized: '请先登录当前 DSH，再更新开放市场。', selfUpdateConnectionLost: '连接中断，宿主可能仍在更新；请到「插件 → 已安装」确认结果。',
+      selfUpdateHint: '开放市场由宿主继续完成自更新，期间市场页面可能暂时关闭。',
       noCompatibleVersion: '这个插件没有兼容当前 DSH 的版本', dateLocale: 'zh-CN',
       updates: '可更新', incompatibleGroup: '不兼容当前 DSH',
       upToDate: '已安装的插件都是最新的',
@@ -609,6 +772,18 @@ window.__ModuleLoader__.load({
       trendingHint: '7-day download growth', newestHint: 'By publication date', stars: '{count} GitHub stars',
       close: 'Close', homepage: 'Homepage', sourceCode: 'Source code', marketPage: 'View on Open Plugin Market',
       copy: 'Copy', copied: 'Copied', installCommand: 'Install command', likeCount: '{count} likes',
+      otherVersions: 'Other versions', versionsLoading: 'Loading versions…', versionsFailed: 'Could not load versions',
+      versionsHelp: 'Other npm versions have not been reviewed here. Compatibility ranges are publisher declarations; DSH checks the package when installing.',
+      gitVersionsHelp: 'Git sources list only the fixed commits in this index. Tags are not loaded automatically.',
+      noOtherVersions: 'No other installable versions', listedVersion: 'Listed version', prereleaseVersion: 'Prerelease',
+      unreviewedVersion: 'Not reviewed here', dshRangeUnknown: 'No DSH range declared', switchVersion: 'Switch to this version',
+      versionAction: '{action} {version}', moreVersions: 'Show more versions', copyVersion: 'Copy the install command for {version}',
+      providedVersion: 'Provided by DSH',
+      selfUpdating: 'Updating Open Market…', selfUpdated: 'Open Market updated. You can reopen the market.', selfUpdatedRestart: 'Open Market updated. Restart DSH to use it.',
+      selfUpdateFailed: 'Open Market update did not finish', selfUpdateUnavailable: 'Self-update is unavailable. Update from Plugins or with the install command.',
+      selfUpdateRecovery: 'If Open Market was removed, reinstall it from Plugins.',
+      selfUpdateUnauthorized: 'Sign in to this DSH before updating Open Market.', selfUpdateConnectionLost: 'Connection lost. The Host may still be updating; check the version under Plugins → Installed.',
+      selfUpdateHint: 'DSH completes Open Market’s self-update even if the market page closes temporarily.',
       noCompatibleVersion: 'This plugin has no version compatible with your DSH', dateLocale: 'en',
       updates: 'Updates available', incompatibleGroup: 'Incompatible with this DSH version',
       upToDate: 'Installed plugins are all up to date',
@@ -849,6 +1024,20 @@ window.__ModuleLoader__.load({
       .opm-panel-actions { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
       .opm-panel-actions .opm-like, .opm-panel-actions .opm-favorite .opm-button { min-height: 32px; }
       .opm-compatibility { margin-top: 16px !important; }
+      .opm-versions { margin-top: 20px; border-top: 1px solid var(--dsw-alias-border-l2); padding-top: 12px; }
+      .opm-versions-toggle { display: flex; align-items: center; gap: 8px; width: 100%; border: 0; padding: 6px 0;
+        background: transparent; color: var(--dsw-alias-label-primary); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; text-align: left; }
+      .opm-versions-toggle > span:last-child { margin-left: auto; color: var(--dsw-alias-label-secondary); }
+      .opm-versions-note { margin: 6px 0 10px !important; color: var(--dsw-alias-label-secondary); font-size: 12px; line-height: 1.6; }
+      .opm-version-list { list-style: none; margin: 0; padding: 0; }
+      .opm-version-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; padding: 12px 0; border-bottom: 1px solid var(--dsw-alias-border-l2); }
+      .opm-version-copy { flex: 1; min-width: min(190px, 100%); overflow-wrap: anywhere; }
+      .opm-version-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 4px; }
+      .opm-version-heading strong { margin-right: 3px; font-size: 13px; font-weight: 600; }
+      .opm-version-meta { color: var(--dsw-alias-label-secondary); font-size: 11px; line-height: 1.6; }
+      .opm-version-actions { display: flex; gap: 6px; margin-left: auto; }
+      .opm-version-error { flex-basis: 100%; font-size: 12px; }
+      .opm-versions-status { display: flex; align-items: center; gap: 10px; font-size: 12px; margin: 10px 0 !important; }
       /* A plain search over the whole catalog sits at the top. */
       .opm-search { position: relative; display: flex; align-items: center; max-width: 360px; }
       .opm-search-icon { position: absolute; left: 11px; width: 15px; height: 15px; color: var(--dsw-alias-label-tertiary); pointer-events: none; }
@@ -1122,7 +1311,7 @@ window.__ModuleLoader__.load({
         }, resolve(metadata?.labels?.[id]?.title) || id)));
     }
 
-    function InstallButton({ entry, t, resolve, install, openPackage, manager, onError, onNotice, small, update, busyLabel = 'busy' }) {
+    function InstallButton({ entry, t, resolve, install, openPackage, manager, onError, onNotice, small, update, busyLabel = 'busy', disabled = false, onBusyChange }) {
       const [busy, setBusy] = React.useState(false);
       const [phase, setPhase] = React.useState(busyLabel);
       const version = defaultVersionOf(entry);
@@ -1131,8 +1320,9 @@ window.__ModuleLoader__.load({
       const label = !version ? 'incompatible' : installed ? 'installed' : status === 'update-available'
         ? (update ? 'update' : 'updateAvailable') : 'install';
       async function act() {
-        if (busy || !version) return;
+        if (busy || disabled || !version) return;
         setBusy(true);
+        onBusyChange?.(true);
         onError('');
         try {
           function startInstall() {
@@ -1143,34 +1333,27 @@ window.__ModuleLoader__.load({
           // DSH's install refuses a package that is already there, so an update removes it first, as DSH's own
           // Update for official plugins does; the install dialog then installs the new version.
           async function startUpdate() {
-            const service = manager?.();
-            if (!service?.removeBundle) return { ok: false, error: t('updateUnavailable') };
-            setPhase('updating');
-            const removed = await service.removeBundle(entry.name);
-            if (!removed?.ok) return removed;
-            const failure = removed.value?.error;
-            if (failure) return { ok: false, error: failure.code === 'stop-profile' ? t('updateRestart') : failure };
-            if (removed.value?.application === 'failed') return { ok: false, error: t('unknownError') };
-            setPhase(busyLabel);
-            return install({ ...version.install, title: titleOf(entry, resolve), version: version.version });
+            return installVersion(entry, version, { install, manager, t, title: titleOf(entry, resolve), onPhase: setPhase, busyLabel });
           }
           const answer = installed
             ? await openPackage(entry.name)
             : status === 'update-available' ? await startUpdate() : await startInstall();
+          if (answer?.selfUpdate) return;
           if (answer?.ok === false) onError(errorText(answer.error, t('unknownError')));
           else if (answer?.restart) onNotice?.(t('installedRestart'));
         } catch (error) {
           onError(errorText(error, t('unknownError')));
         } finally {
           setBusy(false);
+          onBusyChange?.(false);
           setPhase(busyLabel);
         }
       }
       const updating = status === 'update-available' && version;
       return h('button', {
         type: 'button', className: 'opm-button' + (version && !installed ? ' opm-button-primary' : '') + (small ? ' opm-button-small' : ''),
-        disabled: !version || busy, onClick: event => { event.stopPropagation(); return act(); }, 'aria-busy': busy,
-        title: updating && !busy ? t('updateHint') : undefined,
+        disabled: !version || busy || disabled, onClick: event => { event.stopPropagation(); return act(); }, 'aria-busy': busy,
+        title: updating && !busy ? t(entry.name === 'dsh-open-market' ? 'selfUpdateHint' : 'updateHint') : undefined,
         'aria-label': t(busy ? phase : label) + ' · ' + titleOf(entry, resolve)
       }, t(busy ? phase : label));
     }
@@ -1313,11 +1496,97 @@ window.__ModuleLoader__.load({
           : h(React.Fragment, null, h(Tags, { entry, metadata, resolve, t, limit: 2 }), actions));
     }
 
+    function OtherVersions({ entry, t, resolve, install, manager, onError, onNotice, busyLabel = 'busy', disabled = false, onBusyChange }) {
+      const preferences = useSettings();
+      const registry = npmVersionRegistry(entry, preferences);
+      const key = entry.name + '\0' + registry;
+      const listId = React.useId();
+      const [expanded, setExpanded] = React.useState(false);
+      const [state, setState] = React.useState({ key, status: 'idle', versions: [] });
+      const [limit, setLimit] = React.useState(20);
+      const [busy, setBusy] = React.useState({ version: null, phase: busyLabel });
+      const [copied, setCopied] = React.useState(null);
+      const [attempt, setAttempt] = React.useState(0);
+      const [actionError, setActionError] = React.useState(null);
+      React.useEffect(() => {
+        if (!expanded || !registry) return;
+        let cancelled = false;
+        setState({ key, status: 'loading', versions: [] });
+        setLimit(20);
+        loadNpmVersions(entry.name, registry).then(
+          versions => { if (!cancelled) setState({ key, status: 'ready', versions }); },
+          () => { if (!cancelled) setState({ key, status: 'error', versions: [] }); }
+        );
+        return () => { cancelled = true; };
+      }, [expanded, entry.name, registry, attempt]);
+      React.useEffect(() => {
+        if (!copied) return;
+        const timer = window.setTimeout(() => setCopied(null), 1800);
+        return () => window.clearTimeout(timer);
+      }, [copied]);
+      const currentState = state.key === key ? state : { status: 'loading', versions: [] };
+      const choices = versionChoices(entry, registry && currentState.status === 'ready' ? currentState.versions : [], registry);
+      async function choose(version) {
+        if (busy.version || disabled) return;
+        setBusy({ version: version.version, phase: busyLabel });
+        onBusyChange?.(true);
+        setActionError(null);
+        onError('');
+        try {
+          const answer = await installVersion(entry, version, { install, manager, t, title: titleOf(entry, resolve), busyLabel,
+            onPhase: phase => setBusy({ version: version.version, phase }) });
+          if (answer?.selfUpdate) return;
+          if (answer?.ok === false) setActionError({ version: version.version, text: errorText(answer.error, t('unknownError')) });
+          else { void sendLike(entry.name, 'install'); if (answer?.restart) onNotice?.(t('installedRestart')); }
+        } catch (error) { setActionError({ version: version.version, text: errorText(error, t('unknownError')) }); }
+        finally { setBusy({ version: null, phase: busyLabel }); onBusyChange?.(false); }
+      }
+      async function copy(version) {
+        try { await navigator.clipboard.writeText(versionCommand(entry, version)); setCopied(version.version); } catch { /* Clipboard access is optional. */ }
+      }
+      return h('section', { className: 'opm-versions' },
+        h('button', { type: 'button', className: 'opm-versions-toggle', 'aria-expanded': expanded, 'aria-controls': listId,
+          onClick: () => setExpanded(value => !value) }, t('otherVersions'), h('span', { 'aria-hidden': true }, expanded ? '−' : '+')),
+        expanded && h('div', { id: listId },
+          h('p', { className: 'opm-versions-note' }, t(registry ? 'versionsHelp' : 'gitVersionsHelp')),
+          !['not-installed', 'provided'].includes(entry.installation.status) && h('p', { className: 'opm-versions-note' }, t(entry.name === 'dsh-open-market' ? 'selfUpdateHint' : 'updateHint')),
+          registry && currentState.status === 'loading' && h('p', { className: 'opm-versions-status', role: 'status' }, t('versionsLoading')),
+          registry && currentState.status === 'error' && h('div', { className: 'opm-versions-status', role: 'alert' },
+            t('versionsFailed'), h('button', { type: 'button', className: 'opm-button opm-button-small', onClick: () => setAttempt(value => value + 1) }, t('retry'))),
+          h('ul', { className: 'opm-version-list', 'aria-label': t('otherVersions') }, choices.slice(0, limit).map(version => {
+            const current = entry.installation.installedVersion === version.version;
+            const provided = entry.installation.status === 'provided';
+            const blocked = version.compatibility?.compatible === false && !version.compatibility.exempted;
+            const switching = entry.installation.status !== 'not-installed';
+            const label = provided ? 'providedVersion' : current ? 'installed' : blocked ? 'incompatible' : switching ? 'switchVersion' : 'install';
+            const active = busy.version === version.version;
+            const action = t(active ? busy.phase : label);
+            const date = Number.isFinite(version.publishTimestamp) ? new Date(version.publishTimestamp * 1000).toLocaleDateString(t('dateLocale')) : '';
+            return h('li', { key: version.version, className: 'opm-version-row', 'data-version': version.version },
+              h('div', { className: 'opm-version-copy' },
+                h('div', { className: 'opm-version-heading' }, h('strong', null, version.version),
+                  h('span', { className: 'opm-tag' }, t(version.listed ? 'listedVersion' : 'unreviewedVersion')),
+                  version.version.split('+')[0].includes('-') && h('span', { className: 'opm-tag' }, t('prereleaseVersion')),
+                  current && h('span', { className: 'opm-tag' }, t('installed'))),
+                h('p', { className: 'opm-version-meta' }, [date, version.requirements.length ? 'DSH: ' + version.requirements.join(' ∩ ') : t('dshRangeUnknown')].filter(Boolean).join(' · '))),
+              h('div', { className: 'opm-version-actions' },
+                h('button', { type: 'button', className: 'opm-button opm-button-small', onClick: () => copy(version),
+                  'aria-label': t('copyVersion').replace('{version}', version.version) }, t(copied === version.version ? 'copied' : 'copy')),
+                h('button', { type: 'button', className: 'opm-button opm-button-small', disabled: provided || current || blocked || !!busy.version || disabled,
+                  title: switching && !current && !provided ? t(entry.name === 'dsh-open-market' ? 'selfUpdateHint' : 'updateHint') : undefined, 'aria-busy': active,
+                  'aria-label': t('versionAction').replace('{action}', action).replace('{version}', version.version), onClick: () => choose(version) }, action)),
+              actionError?.version === version.version && h('p', { className: 'opm-error opm-version-error', role: 'alert' }, actionError.text));
+          })),
+          registry && currentState.status === 'ready' && choices.length === entry.versions.length && h('p', { className: 'opm-versions-note' }, t('noOtherVersions')),
+          choices.length > limit && h('button', { type: 'button', className: 'opm-button opm-button-small opm-more', onClick: () => setLimit(value => value + 20) }, t('moreVersions'))));
+    }
+
     function PluginDetails({ entry, returnTarget, marketRoot, onClose, ...props }) {
       const { t, resolve, metadata, likes } = props;
       const headingId = React.useId();
       const [copied, setCopied] = React.useState(false);
       const [actionError, setActionError] = React.useState('');
+      const [installing, setInstalling] = React.useState(false);
       const title = titleOf(entry, resolve);
       const latest = entry.versions?.[0];
       const version = entry.defaultVersion || latest?.version;
@@ -1327,7 +1596,7 @@ window.__ModuleLoader__.load({
       const status = entry.installation.status;
       const installation = status === 'not-installed' ? t('notInstalled') : status === 'update-available'
         ? t('updateAvailable') : t('installed') + (entry.installation.installedVersion ? ' ' + entry.installation.installedVersion : '');
-      const command = 'dsh plugin --profile desktop add ' + entry.name;
+      const command = latest ? versionCommand(entry, defaultVersionOf(entry) ?? latest) : 'dsh plugin --profile desktop add ' + entry.name;
       // A like can reorder a rail or today's picks while this dialog is open.
       const restoreFocus = React.useCallback(() => {
         const available = node => node?.isConnected && !node.closest('[inert]');
@@ -1365,8 +1634,9 @@ window.__ModuleLoader__.load({
           h('div', { className: 'opm-panel-actions' },
             props.likesEnabled && h(LikeButton, { ...props, entry }),
             h(FavoriteButton, { name: entry.name, title, t }),
-            h(InstallButton, { ...props, entry, update: true, onError: setActionError })),
-          actionError && h('p', { className: 'opm-error', role: 'alert' }, t('actionFailed') + ': ' + actionError));
+            h(InstallButton, { ...props, entry, update: true, onError: setActionError, disabled: installing, onBusyChange: setInstalling })),
+          actionError && h('p', { className: 'opm-error', role: 'alert' }, t('actionFailed') + ': ' + actionError),
+          h(OtherVersions, { ...props, key: entry.name, entry, onError: setActionError, disabled: installing, onBusyChange: setInstalling }));
     }
 
     function SectionHeading({ section, t, children }) {
@@ -2249,8 +2519,8 @@ window.__ModuleLoader__.load({
         ctx.effect(() => () => { pluginManager = undefined; }, 'open-market: plugin manager');
         let known;
         const installed = async () => {
-          const answer = await ctx.remote.pluginManager.listBundles();
-          return answer?.ok ? new Set(answer.value.filter(bundle => bundle.installed).map(bundle => bundle.name)) : undefined;
+          const bundles = await refreshInstallation(() => ctx.remote.pluginManager);
+          return bundles ? new Set(bundles.filter(bundle => bundle.installed).map(bundle => bundle.name)) : undefined;
         };
         installed().then(names => { known ??= names; }, () => {});
         ctx.effect(() => ctx.remote.$on('plugin-manager/changed', change => {
@@ -2280,8 +2550,10 @@ window.__ModuleLoader__.load({
       });
     }
 
-    // Pure pieces for client.test.js; DSH reads only apply and inject.
-    const internals = { sortCatalog, listingOf, installDirectly, sidebarWanted, normalizeSettings, registryUrl, installTarget, bleedFor, needsRefresh, validCatalog, withInstallation, getMarket, syncMarket, enterMarket, REFRESH_INTERVAL, CACHE_SCHEMA, INDEX_URL };
+    // Test seams; DSH reads only apply and inject.
+    const internals = { sortCatalog, listingOf, installDirectly, sidebarWanted, normalizeSettings, registryUrl, installTarget, bleedFor, needsRefresh, validCatalog, withInstallation, getMarket, syncMarket, enterMarket, REFRESH_INTERVAL, CACHE_SCHEMA, INDEX_URL,
+      npmVersionRegistry, declaredDshRanges, npmVersions, loadNpmVersions, versionChoices, versionInstall, versionCommand, installVersion, requestSelfUpdate, VERSION_CACHE_TTL,
+      PluginDetails, OtherVersions, zh, en, styles: STYLES };
     return { apply, inject, internals };
   }
 });

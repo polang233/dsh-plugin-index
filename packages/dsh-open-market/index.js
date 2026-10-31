@@ -1,5 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { createSelfUpdateHandler, SELF_UPDATE_PATH } from './self-update.js';
 
 export const name = 'dsh-open-market';
 // The row id our patch inserts; it differs from the package name so the Plugins page does not show the same name twice.
@@ -131,6 +132,11 @@ export function apply(ctx, config = {}) {
   const dir = ctx.get?.('profileContext')?.dir;
   const logger = ctx.logger?.('dsh-open-market') ?? ctx.logger;
   const warn = what => error => logger?.warn?.('Could not %s: %s', what, error?.message ?? error);
+
+  ctx.inject(['webServer', 'connection', 'pluginManager'], scope => {
+    scope.effect(() => scope.webServer.register({ kind: 'exact', path: SELF_UPDATE_PATH,
+      handler: createSelfUpdateHandler(scope.pluginManager, scope.connection) }), 'dsh-open-market: self-update');
+  });
 
   ctx.inject(['pluginManager'], ctx => {
     // Without hot reload a switched-off plugin keeps running until the next start, so it sees its own change;

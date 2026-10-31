@@ -2083,6 +2083,92 @@
       "reviewedAt": "2026-10-31T06:15:55.046Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-jump",
+      "version": "0.1.0",
+      "integrity": "sha512-aSFS0hlF1d3hL6O/73wjYRLnfo4P6Mq2CW8G1L52T4QVKkq3wJMDoBxxFFXKNC/5NVoXFxNb8G+MxKWNuuwnEw==",
+      "repository": "https://github.com/Lionad-Morotar/dsh-plugins",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-31T13:30:42.703Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "liarmttt-tavernweave-dsh",
+      "version": "2.3.6",
+      "integrity": "sha512-QhLmBVPJNhCQ8Ae24E2H7YOpnjYddXdlt4BGvGzpMNAPiF4gTeXLm/ZC0xmJZJFMUbSW1o8VaYFA8Ym9q+9Asg==",
+      "repository": "https://github.com/LiarMTTT/TavernWeave",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-31T13:30:42.846Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-whoop-easy-connect",
+      "version": "1.0.0",
+      "integrity": "sha512-Zs5QcX2ywpo57jDpmbPWV8+xq2/vxEAo7TP85z09p1n/e662S5lkN6HuC74DmQIuJj/CeBWzpGajlg+Z9z5wAg==",
+      "repository": "https://github.com/ShawnRen57/dsh-whoop-easy-connect",
+      "source": {
+        "type": "git",
+        "commit": "a0d641e43c75915a12bf21b5a50a99e3601f3704"
+      },
+      "reviewedAt": "2026-10-31T13:30:42.874Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@mineuchi/dsh-status-bar",
+      "version": "1.0.0",
+      "integrity": "sha512-uWHg7MB9+LgmxFYnKVCO+JTu8cO8gfGUpnrXOEQSpRDIHiLT+ILKalWgf9ZTU3J8kMvGn1aTMOMtDQa4fqRbGg==",
+      "repository": "https://github.com/Mineuchi-code/dsh-statusbar",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-31T13:30:42.880Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-dot-life",
+      "version": "0.10.18",
+      "integrity": "sha512-OMh0hxPgHJmkCwSH4cKnSbjWmDjPxw28GmVK2uYLcsWMnDOlhbJzLUK292+pDxwJmBO2ZG06tsiNdxRlpHzwJQ==",
+      "repository": "https://github.com/Kevinwu901113/dsh-dot",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-31T13:30:42.896Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-shorekeeper",
+      "version": "1.1.2",
+      "integrity": "sha512-EeGne6CkrbRcp8yyCqzml+F2Pd0W3B3so6MMf5JLBSfgIkAKZjcQYOlHd5RYnXTHuysVXQaHl8PNZs2QKPV/Jg==",
+      "repository": "https://github.com/Doya16/dsh-shorekeeper",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-10-31T13:30:42.905Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-session-inbox",
+      "version": "0.4.1",
+      "integrity": "sha512-OV2wWfzRo6SKrAPzhYJPdnJLP6EAvQnPyWwMnWy+VCgrni+66oxD8HL4HXH0/1o18NITmL7cqG9pla7xQXmffw==",
+      "repository": "https://github.com/Tracest/dsh-session-inbox",
+      "source": {
+        "type": "git",
+        "commit": "3aa8decbe4a0460d145425a60efd13bcd1f1418f"
+      },
+      "reviewedAt": "2026-10-31T13:30:42.936Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
