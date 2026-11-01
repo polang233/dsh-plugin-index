@@ -2305,6 +2305,19 @@
       "reviewedAt": "2026-11-01T15:16:52.511Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-pinned-panel",
+      "version": "0.6.0",
+      "integrity": "sha512-76UbENJkxVvWcyVmtZVY09uh7gvg1elm+FPPiJFVYF9DNvmSGkhYNGgpLoMVpzrFpniw1wN5GjDnk36fXxCYYg==",
+      "repository": "https://github.com/OuQiL/dsh-pinned-panel",
+      "source": {
+        "type": "git",
+        "commit": "f4671c55bae5f99399f5593234c45f27a207e72c"
+      },
+      "reviewedAt": "2026-11-01T15:38:00.930Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

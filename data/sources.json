@@ -11206,21 +11206,21 @@
     },
     {
       "name": "dsh-pinned-panel",
-      "version": "0.5.0",
+      "version": "0.6.0",
       "source": {
         "type": "git",
         "url": "https://github.com/OuQiL/dsh-pinned-panel",
-        "commit": "2fe06626901d14c4d2323f9db253ced12f712d28",
-        "integrity": "sha512-BJ24cu9ZSCvbH6J2p9h9cjYc3S/lk+dQVRwHZ1bFU2D/KPthSUZQx8ElU17OeACgWzef3pyG4nThfhMDuyjXvA==",
-        "publishedAt": "2026-10-29T06:02:15.000Z"
+        "commit": "f4671c55bae5f99399f5593234c45f27a207e72c",
+        "integrity": "sha512-76UbENJkxVvWcyVmtZVY09uh7gvg1elm+FPPiJFVYF9DNvmSGkhYNGgpLoMVpzrFpniw1wN5GjDnk36fXxCYYg==",
+        "publishedAt": "2026-11-01T05:10:02.000Z"
       },
       "title": {
         "en": "Pinned Sessions",
         "zh": "跨工作区置顶会话"
       },
       "description": {
-        "en": "Collect pinned sessions across workspaces in the sidebar, with rename, fork, unpin and archive actions. Depends on sidebar DOM structure; no DSH version range is declared.",
-        "zh": "在侧栏汇总跨工作区置顶会话，支持重命名、分叉、取消置顶及归档。依赖侧栏 DOM 结构，未声明 DSH 版本范围。"
+        "en": "Collect pinned sessions across workspaces in the sidebar, with rename, fork, unpin and archive actions. Expand archived sessions and restore them with the host API. Depends on sidebar DOM structure.",
+        "zh": "在侧栏汇总跨工作区置顶会话，支持重命名、分叉、取消置顶及归档；可展开已归档会话并通过宿主接口恢复。依赖侧栏 DOM 结构。"
       },
       "category": "interface"
     },
