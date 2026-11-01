@@ -2218,6 +2218,93 @@
       "reviewedAt": "2026-10-31T19:46:56.150Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-app-updater",
+      "version": "1.3.4",
+      "integrity": "sha512-+MNIgMmZupV+WcZMpZ6bIWkoKtzOlMfE7wy8LjSK4LVjz2aTOfkRUG8NV2ThPQJ2qFzhuUrfMgfI2xmgClQtsg==",
+      "repository": "https://github.com/19952730389/dsh-app-updater",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-01T15:16:52.438Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-workflow-map",
+      "version": "0.3.9",
+      "integrity": "sha512-xnfVQLdMnELqkxddXh5n4hHzl/NsRBRPHYg4/bpr57MeoSPq06J1csY/5MG1a6MH8Svj/TuLYnMsmyarApGPlA==",
+      "repository": "https://github.com/Joz739/dsh-workflow-map",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-01T15:16:52.476Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ui-muyu",
+      "version": "0.1.6",
+      "integrity": "sha512-JrOev80Qe8OHwIYKuCs1gXBAOMeGYVoJ4VLa2WFs6vz8YF5W9Cv6uUcLI66BdNcupzRh4dc2+dYdF3iInWcZXw==",
+      "repository": "https://github.com/TongY1n/ui-muyu",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-01T15:16:52.480Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-rea",
+      "version": "1.3.0",
+      "integrity": "sha512-l7irq6RxRKUJhBrPgKlTvxpKJbPBByjNlrKl9AF/bOTOFfsGuRJQptiNg2ilwfLm8iROgK/gBPzQnw0VEjXpow==",
+      "repository": "https://github.com/Fanqi89/dsh-rea",
+      "source": {
+        "type": "git",
+        "commit": "e3fcbfe27b342e40f0ee5e98b6629da2e1f7c090"
+      },
+      "reviewedAt": "2026-11-01T15:16:52.487Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-stylebook",
+      "version": "0.1.0-beta.1",
+      "integrity": "sha512-SE6tmeRen+B4YR2rb1hndS2mG3l6KhqbsNTiXL+V7oTOuqhombN7PkPbL367GFdN4dxszzbQeADqmASha5N9SQ==",
+      "repository": "https://github.com/tsuixl/dsh-stylebook",
+      "source": {
+        "type": "git",
+        "commit": "ec4f74a281100faf270afb9dc208fa1d1ac90f7b"
+      },
+      "reviewedAt": "2026-11-01T15:16:52.491Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-why-reject-me",
+      "version": "0.3.3",
+      "integrity": "sha512-gdUuTfkhIBiPJVKu6pMIONSzA+XOp3OCwbPUvj3w6a3rkHAmFpj2glmbeUNHGoOm+0YIxQn0w2MzrFXQa6av3A==",
+      "repository": "https://github.com/Jorgen233/dsh-why-reject-me",
+      "source": {
+        "type": "git",
+        "commit": "e0be40d4ac2cf08e3c76c2a98af27559d030628d"
+      },
+      "reviewedAt": "2026-11-01T15:16:52.496Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-conversation-tree",
+      "version": "0.1.3",
+      "integrity": "sha512-TUr1lamenNuse2cr235WhEiXZeIz3RR5ywn7Got+SKfg/zLzJn8LTtxhsiDceI7jTbVxYH0NeYeQ1nsEDDLKpQ==",
+      "repository": "https://github.com/chriswang/dsh-conversation-tree",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-01T15:16:52.511Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

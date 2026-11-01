@@ -11434,32 +11434,6 @@
       }
     },
     {
-      "name": "@deepseek-ai/dsh-client-ui-muyu",
-      "version": "0.1.4",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/TongY1n/ui-muyu",
-        "commit": "f8d319b099d50faceeabe13e03cfab778a31490b",
-        "integrity": "sha512-NaoK19kjD7o2Fg0jChfSJl0QxP+xp/bZRbV/ToWN+vmmHp2TzGtab9iwNXyIfvGIpFKNl+nWDLX0XMLhrg/06Q==",
-        "publishedAt": "2026-10-26T16:01:40Z"
-      },
-      "repositoryReview": {
-        "version": "0.1.4",
-        "integrity": "sha512-NaoK19kjD7o2Fg0jChfSJl0QxP+xp/bZRbV/ToWN+vmmHp2TzGtab9iwNXyIfvGIpFKNl+nWDLX0XMLhrg/06Q==",
-        "commit": "f8d319b099d50faceeabe13e03cfab778a31490b",
-        "url": "https://github.com/TongY1n/ui-muyu"
-      },
-      "title": {
-        "en": "Cyber Wooden Fish",
-        "zh": "赛博木鱼"
-      },
-      "description": {
-        "en": "A draggable wooden-fish widget that counts taps and stores its state in the browser. Maintained by TongY1n; requires DSH >=0.2.1-alpha.2 <0.3.0.",
-        "zh": "可拖拽的赛博木鱼，点击累计功德，状态保存在浏览器中。由 TongY1n 维护；需 DSH >=0.2.1-alpha.2 <0.3.0。"
-      },
-      "category": "interface"
-    },
-    {
       "name": "dsh-usage-bar",
       "version": "1.0.0",
       "source": {
@@ -12372,6 +12346,120 @@
         "integrity": "sha512-Mpf07u5wJR8kflmowANTQ0Dj/lmZza+d/nmhUt8FPKi8ztSjMMTdqkUVmE+5+4vHmeE8dfW5NuBIRZ/oLBmDqw==",
         "publishedAt": "2026-10-29T13:25:33.000Z"
       }
+    },
+    {
+      "name": "dsh-app-updater",
+      "title": {
+        "en": "App Updater",
+        "zh": "应用更新"
+      },
+      "description": {
+        "en": "Check and update local applications on Windows with winget and macOS with Homebrew. Downloads and installs software; administrator approval may be required. Keep the optional legacy loopback mode disabled unless needed.",
+        "zh": "检查并更新本机应用，Windows 使用 winget，macOS 更新需 Homebrew。会下载和安装软件，可能触发管理员授权；旧宿主回环兼容模式建议保持关闭。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-workflow-map",
+      "title": {
+        "en": "Workflow Map",
+        "zh": "工作流地图"
+      },
+      "description": {
+        "en": "Show the current conversation as a step map with progress sources, tools and file types. Queue a prompt for the next step of a running agent and revoke it before consumption.",
+        "zh": "将当前会话显示为分步地图，标注进度来源、工具和文件类型；可向运行中的 Agent 下一步追加提示，并在取用前撤回。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-ui-muyu",
+      "title": {
+        "en": "Cyber Wooden Fish",
+        "zh": "赛博木鱼"
+      },
+      "description": {
+        "en": "A draggable wooden-fish widget that counts taps and saves its state in the browser. Maintained by TongY1n.",
+        "zh": "可拖拽的赛博木鱼，点击累计功德，状态保存在浏览器中，由 TongY1n 维护。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-rea",
+      "title": {
+        "en": "REA",
+        "zh": "REA"
+      },
+      "description": {
+        "en": "Connect REA reverse engineering tools through a local MCP server. Starts rea-agents@6.4.0 via npx; requires Node.js, network access for initial setup and any native tools needed by the selected provider.",
+        "zh": "通过本地 MCP 服务接入 REA 逆向工具。使用 npx 启动 rea-agents@6.4.0，需 Node.js、首次下载网络，以及相应功能所需的原生工具。"
+      },
+      "category": "integrations",
+      "version": "1.3.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Fanqi89/dsh-rea",
+        "commit": "e3fcbfe27b342e40f0ee5e98b6629da2e1f7c090",
+        "integrity": "sha512-l7irq6RxRKUJhBrPgKlTvxpKJbPBByjNlrKl9AF/bOTOFfsGuRJQptiNg2ilwfLm8iROgK/gBPzQnw0VEjXpow==",
+        "publishedAt": "2026-10-21T07:51:34.000Z"
+      },
+      "repositoryReview": {
+        "version": "1.3.0",
+        "integrity": "sha512-l7irq6RxRKUJhBrPgKlTvxpKJbPBByjNlrKl9AF/bOTOFfsGuRJQptiNg2ilwfLm8iROgK/gBPzQnw0VEjXpow==",
+        "commit": "e3fcbfe27b342e40f0ee5e98b6629da2e1f7c090",
+        "url": "https://github.com/Fanqi89/dsh-rea"
+      }
+    },
+    {
+      "name": "dsh-stylebook",
+      "title": {
+        "en": "Stylebook",
+        "zh": "Stylebook"
+      },
+      "description": {
+        "en": "Manage interface and code fonts, sizes, weights, three-color themes and named appearance presets in Settings. Uses fonts available on the client; verified by the author on Windows DSH 0.2.1-rc.5.",
+        "zh": "在外观设置统一管理界面与代码字体、字号、字重、三色主题和命名外观方案。使用客户端已有字体；作者实测 Windows DSH 0.2.1-rc.5。"
+      },
+      "category": "appearance",
+      "version": "0.1.0-beta.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/tsuixl/dsh-stylebook",
+        "commit": "ec4f74a281100faf270afb9dc208fa1d1ac90f7b",
+        "integrity": "sha512-SE6tmeRen+B4YR2rb1hndS2mG3l6KhqbsNTiXL+V7oTOuqhombN7PkPbL367GFdN4dxszzbQeADqmASha5N9SQ==",
+        "publishedAt": "2026-11-01T11:49:09.000Z"
+      }
+    },
+    {
+      "name": "dsh-why-reject-me",
+      "title": {
+        "en": "Why Reject Me",
+        "zh": "拒绝原因"
+      },
+      "description": {
+        "en": "Add an optional reason to tool approval rejections and include it in the failed tool result for the model. Keeps subagent approval behavior unchanged.",
+        "zh": "在工具权限审批中填写可选的拒绝原因，随失败的工具结果交给模型；子智能体沿用宿主审批行为。"
+      },
+      "category": "workflow",
+      "version": "0.3.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Jorgen233/dsh-why-reject-me",
+        "commit": "e0be40d4ac2cf08e3c76c2a98af27559d030628d",
+        "integrity": "sha512-gdUuTfkhIBiPJVKu6pMIONSzA+XOp3OCwbPUvj3w6a3rkHAmFpj2glmbeUNHGoOm+0YIxQn0w2MzrFXQa6av3A==",
+        "publishedAt": "2026-10-30T15:52:58.000Z"
+      }
+    },
+    {
+      "name": "dsh-conversation-tree",
+      "title": {
+        "en": "Conversation Tree",
+        "zh": "对话树"
+      },
+      "description": {
+        "en": "Organize sessions by workspace and topic in a collapsible band beside the conversation. Open existing sessions and let the assistant manage the tree through nine model tools; stores the map locally.",
+        "zh": "在会话旁的可折叠栏按工作区、主题组织对话，可打开已有会话，并通过九个模型工具读写对话树，映射数据保存在本机。"
+      },
+      "category": "interface"
     }
   ]
 }
