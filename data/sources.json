@@ -12516,6 +12516,62 @@
         "integrity": "sha512-Bcak5+Y9m63fg6yT5a3NnskNrrPF1sLvZ37wzCqklBCRBVzsGcMTVQBhT7u+GfaMPk8s86ean/MRSaFMj3eprw==",
         "publishedAt": "2026-11-02T06:18:26.000Z"
       }
+    },
+    {
+      "name": "dsh-napcat-bridge",
+      "title": {
+        "en": "NapCat Bridge",
+        "zh": "NapCat QQ 桥接"
+      },
+      "description": {
+        "en": "Connect QQ groups and private chats to DSH through NapCat, with chat memory, media and scheduled replies. Requires NapCat, a shared token and Node >=22.12; private chats default to workspace-write and groups to read-only.",
+        "zh": "通过 NapCat 将 QQ 群聊和私聊接入 DSH，支持记忆、图片文件与主动回复。需另配 NapCat、共享 Token 和 Node >=22.12；私聊默认 workspace-write，群聊默认只读。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-plugin-wechat-dingtalk-bridge",
+      "title": {
+        "en": "WeChat DingTalk Bridge",
+        "zh": "微信钉钉桥接"
+      },
+      "description": {
+        "en": "Forward DingTalk private messages and group mentions to a personal WeChat bot, with configurable batching. Requires account authorization and the DWS CLI; optional global installation of DWS 1.0.66 uses the configured registry after confirmation.",
+        "zh": "将钉钉私信与群聊 @ 消息合并推送到个人微信机器人，可调合并间隔。需授权账号并配置 DWS CLI；可在确认后从配置的源全局安装固定的 DWS 1.0.66。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-vibekey-focus",
+      "title": {
+        "en": "VibeKey Focus",
+        "zh": "VibeKey 输入框聚焦"
+      },
+      "description": {
+        "en": "Keep the composer focused for VibeKey or IME dictation, and navigate approval and question cards with a keyboard or knob. Enter allows once and Esc rejects on approval cards; provides no recording or speech recognition. Depends on DSH DOM markers.",
+        "zh": "为 VibeKey 或输入法听写保持对话框焦点，支持键盘、旋钮导航审批和提问卡片。审批时 Enter 允许一次、Esc 拒绝；不含录音或语音识别，依赖 DSH 的 DOM 标记。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@qwqbig/dsh-archive-delete",
+      "title": {
+        "en": "Archive Trash and Storage Overview",
+        "zh": "归档回收站与存储概览"
+      },
+      "description": {
+        "en": "Move archived conversations and dedicated subagents to recoverable trash, restore or permanently delete selected logs, and inspect storage usage. For macOS/Windows DSH Desktop 0.2.1-rc.3 or 0.2.1-rc.5 with JSONL storage and Node >=24. Permanent deletion cannot be undone; shared attachments and project files remain.",
+        "zh": "将归档会话与专属子代理移入回收站，按需恢复或永久清除，并查看存储占用。适用于 macOS/Windows 的 DSH Desktop 0.2.1-rc.3、0.2.1-rc.5，需 JSONL 存储和 Node >=24。永久清除不可撤销，保留共享附件和项目文件。"
+      },
+      "category": "tools",
+      "version": "0.0.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/QwQBiG/dsh-archive-delete",
+        "commit": "ff2f106243690790f798eade1d8f567dc83273fe",
+        "integrity": "sha512-t+R7lP3IpR9LtNyEgDWtsXKPiHG5W6+NWNB+iQIDdyamZMsGroKSXbiCykIHHtw2Vszq3zAzpDHkHY4WEQLhWw==",
+        "publishedAt": "2026-11-02T04:06:59.000Z"
+      }
     }
   ]
 }

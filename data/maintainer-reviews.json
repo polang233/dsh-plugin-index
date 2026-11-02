@@ -2418,6 +2418,55 @@
       "reviewedAt": "2026-11-02T08:24:42.756Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-napcat-bridge",
+      "version": "0.2.6",
+      "integrity": "sha512-s4HIRalEir28foxA1XrIlbcroD3SaOEOuUZX9LplMFEikuueynRTtQGnLdn0WbTgWYtEdowEh+0BjVH4SSNGsw==",
+      "repository": "https://github.com/Jiangsubei/dsh-napcat-bridge",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-02T10:17:59.920Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-wechat-dingtalk-bridge",
+      "version": "0.1.3",
+      "integrity": "sha512-MNZEgomUumahrm4amupni6K9Y0FLb8zbArg3+bNVR1mKUxs7V0FgzRqJW3ptAzTdPrWsaOJw+dmoLYGYppZ0AQ==",
+      "repository": "https://github.com/gcggcg/dsh-plugin-wechat-dingtalk",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-02T10:17:59.920Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-vibekey-focus",
+      "version": "0.1.0",
+      "integrity": "sha512-Sf2rPd5fYDX/B2tBOyZAZMnHa55joE5KZR+Q/zBGWjUh8iZsLZZF+NO3bv1C2k654+SelY65Jby/Z8AS90ztYw==",
+      "repository": "https://github.com/agengogogo/dsh-vibekey-focus",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-02T10:17:59.920Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@qwqbig/dsh-archive-delete",
+      "version": "0.0.3",
+      "integrity": "sha512-t+R7lP3IpR9LtNyEgDWtsXKPiHG5W6+NWNB+iQIDdyamZMsGroKSXbiCykIHHtw2Vszq3zAzpDHkHY4WEQLhWw==",
+      "repository": "https://github.com/QwQBiG/dsh-archive-delete",
+      "source": {
+        "type": "git",
+        "commit": "ff2f106243690790f798eade1d8f567dc83273fe"
+      },
+      "reviewedAt": "2026-11-02T10:17:59.920Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
