@@ -2318,6 +2318,93 @@
       "reviewedAt": "2026-11-01T15:38:00.930Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-better-skillmanager",
+      "version": "1.3.2",
+      "integrity": "sha512-uWyUffR+xm1cOfUWk5LNWOU08PB1or+Q/OinCZmSmN2yiWLF8rg31nFLbFoYGeoSz5jSutcbAQPPs3lZDUZt6A==",
+      "repository": "https://github.com/allanhao1986/dsh-better-skillmanager",
+      "source": {
+        "type": "git",
+        "commit": "e3b25934c7d6acd8d3e5a81ef623569d42662cc6"
+      },
+      "reviewedAt": "2026-11-02T07:52:38.308Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-app-updater",
+      "version": "1.3.7",
+      "integrity": "sha512-LPBFko6n42PXhXUmGh1hg4wfG5P/a5RlTeSZE/hVmR2xWe580CdJklNB19wmDGsABtqjis36zqK8xaZ4TU0plA==",
+      "repository": "https://github.com/19952730389/dsh-app-updater",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-02T07:52:38.319Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@chendaleiq/dsh-plugin-auto-update",
+      "version": "0.1.19",
+      "integrity": "sha512-p3FaY1Pqf79QSplkCb7pLNfLkqQeghA+fLelJM180/Ed0BVu5bFX9ASyAfOs7gq+gFBIyCCqPnheMxp4cxfl3Q==",
+      "repository": "https://github.com/chendaleiQ/dsh-plugin-auto-update",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-02T07:52:38.324Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-desktop-notify",
+      "version": "0.6.1",
+      "integrity": "sha512-XOu66g6C7u8dHCVER8i7xGERI4kAyNSSXdaCAhGxFFrzyoWTPu/QYTlFwuuymiR80fsPL3imlAvDWzpGOlOdFA==",
+      "repository": "https://github.com/chendaleiQ/dsh-plugin-desktop-notify",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-02T07:52:38.329Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-mini-remote",
+      "version": "0.2.6",
+      "integrity": "sha512-EGDI4tyF/UtGfNKg30VClPD4jHXiX4iGMw+QxtFEDIZoHUm6I0FdH1Bgeku+ruydCA3Uy8Z7sE7XE+9YS9QpHg==",
+      "repository": "https://github.com/xingzhen199186/dsh-mini-remote",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-02T07:52:38.430Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-conversation-import",
+      "version": "0.1.7",
+      "integrity": "sha512-AXa3xCveijMbpixXsFQizEGlm2dL+TPWMhjSyu4HdEjFzSCQVjZfz1YuDMHtjBrikom+Vi8+VISVOvKBslGrXw==",
+      "repository": "https://github.com/kermars39-web/dsh-conversation-import",
+      "source": {
+        "type": "git",
+        "commit": "f083bdb31ab26dabf9eb74947c73c4f3fde237b7"
+      },
+      "reviewedAt": "2026-11-02T07:52:38.435Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-working-changes",
+      "version": "0.1.1",
+      "integrity": "sha512-Bcak5+Y9m63fg6yT5a3NnskNrrPF1sLvZ37wzCqklBCRBVzsGcMTVQBhT7u+GfaMPk8s86ean/MRSaFMj3eprw==",
+      "repository": "https://github.com/xuex991/dsh-working-changes",
+      "source": {
+        "type": "git",
+        "commit": "69e421b35933a70f39f6ea8b8f879b66d210b826"
+      },
+      "reviewedAt": "2026-11-02T07:52:38.445Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

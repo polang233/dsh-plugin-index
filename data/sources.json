@@ -12010,13 +12010,13 @@
         "zh": "将本机 Codex 对话导入 DSH 会话，可选自动同步；需要本地 Codex 数据，支持 macOS 和 Linux，Windows 未测试。"
       },
       "category": "workflow",
-      "version": "0.1.2",
+      "version": "0.1.7",
       "source": {
         "type": "git",
         "url": "https://github.com/kermars39-web/dsh-conversation-import",
-        "commit": "735e745e1dbdf765cd8438ed909b9dcd7bdc8774",
-        "integrity": "sha512-e5wCke7ZHCala4hfYIbGENcaHGKr6MYVOzLhfbE5h/DjOyN10p4TdjAVjnVhLbrJp6r3v+vq9sYQlpKKkVzr1A==",
-        "publishedAt": "2026-10-30T08:27:23.000Z"
+        "commit": "f083bdb31ab26dabf9eb74947c73c4f3fde237b7",
+        "integrity": "sha512-AXa3xCveijMbpixXsFQizEGlm2dL+TPWMhjSyu4HdEjFzSCQVjZfz1YuDMHtjBrikom+Vi8+VISVOvKBslGrXw==",
+        "publishedAt": "2026-11-02T07:43:47.000Z"
       }
     },
     {
@@ -12038,22 +12038,22 @@
         "zh": "技能管理器"
       },
       "description": {
-        "en": "Browse SkillHub, install and manage local skills, and preview or remove installed skills. Requires the desktop profile; no DSH compatibility range is declared.",
-        "zh": "浏览 SkillHub、安装和管理本地技能，支持预览与卸载；需要桌面 profile，未声明 DSH 兼容范围。"
+        "en": "Browse SkillHub, install and manage local skills, and enable, disable or remove MCP servers. Desktop profile required; MCP removal writes a backup before editing the profile.",
+        "zh": "浏览 SkillHub、安装和管理本地技能，支持启停或移除 MCP 服务。需桌面 profile；移除 MCP 前会备份 profile 配置。"
       },
       "category": "skills",
-      "version": "1.1.2",
+      "version": "1.3.2",
       "source": {
         "type": "git",
         "url": "https://github.com/allanhao1986/dsh-better-skillmanager",
-        "commit": "458f5d3a727089a4cc57f0e61c46d096b4c28c28",
-        "integrity": "sha512-rsCJTBXdV8HgTFjw7a6M6lT0ypIN+N8ygG1lwm2hfa35HGHKWdhRJLs7tM1suP3IychluKk3nkHR9jz5vnoz7A==",
-        "publishedAt": "2026-10-30T09:01:46.000Z"
+        "commit": "e3b25934c7d6acd8d3e5a81ef623569d42662cc6",
+        "integrity": "sha512-uWyUffR+xm1cOfUWk5LNWOU08PB1or+Q/OinCZmSmN2yiWLF8rg31nFLbFoYGeoSz5jSutcbAQPPs3lZDUZt6A==",
+        "publishedAt": "2026-10-31T18:35:23.000Z"
       },
       "repositoryReview": {
-        "version": "1.1.2",
-        "integrity": "sha512-rsCJTBXdV8HgTFjw7a6M6lT0ypIN+N8ygG1lwm2hfa35HGHKWdhRJLs7tM1suP3IychluKk3nkHR9jz5vnoz7A==",
-        "commit": "458f5d3a727089a4cc57f0e61c46d096b4c28c28",
+        "version": "1.3.2",
+        "integrity": "sha512-uWyUffR+xm1cOfUWk5LNWOU08PB1or+Q/OinCZmSmN2yiWLF8rg31nFLbFoYGeoSz5jSutcbAQPPs3lZDUZt6A==",
+        "commit": "e3b25934c7d6acd8d3e5a81ef623569d42662cc6",
         "url": "https://github.com/allanhao1986/dsh-better-skillmanager"
       }
     },
@@ -12460,6 +12460,62 @@
         "zh": "在会话旁的可折叠栏按工作区、主题组织对话，可打开已有会话，并通过九个模型工具读写对话树，映射数据保存在本机。"
       },
       "category": "interface"
+    },
+    {
+      "name": "@chendaleiq/dsh-plugin-auto-update",
+      "title": {
+        "en": "Plugin Auto Update",
+        "zh": "插件自动更新"
+      },
+      "description": {
+        "en": "Update registry-installed plugin bundles through the host plugin manager. Enabled for all eligible packages by default; checks every six hours and updates up to five packages per run. Requires a restart to load the host half.",
+        "zh": "通过宿主插件管理器更新注册表安装的插件。默认对所有符合条件的包启用，每 6 小时检查，每轮最多更新 5 个；宿主部分需重启后加载。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-plugin-desktop-notify",
+      "title": {
+        "en": "Desktop Notify",
+        "zh": "桌面通知"
+      },
+      "description": {
+        "en": "Show desktop notifications and an app badge for completed, pending-action and failed sessions. Clicking a notification opens the session; window focus is not guaranteed on Windows. The optional local script interface has no independent authentication.",
+        "zh": "任务完成、等待操作或失败时显示桌面通知和应用图标待处理数，点击通知可定位会话；Windows 不保证窗口置于前台。可选的本地脚本接口没有独立认证。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-mini-remote",
+      "title": {
+        "en": "Mini Remote",
+        "zh": "Mini Remote 远程控制"
+      },
+      "description": {
+        "en": "Control a computer running DSH from a phone or another desktop. Supports remote commands, approvals and cross-machine tools; file writing, Shell and management permissions are disabled by default. Uses a generated access token, paired device credentials and optional network relays.",
+        "zh": "通过手机或另一台电脑远程操作 DSH，支持指令、审批和跨机工具。文件写入、Shell 和管理权限默认关闭；使用自动生成的访问口令、配对设备凭据，可选网络中继。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-working-changes",
+      "title": {
+        "en": "Working Changes",
+        "zh": "当前变更"
+      },
+      "description": {
+        "en": "Show files changed from HEAD above a conversation, per-file line counts and unified diffs in the right sidebar. Uses a temporary Git index; does not stage, commit or push changes.",
+        "zh": "在会话顶部显示相对 HEAD 变更的文件、增删行数，并在右侧栏查看统一差异。使用临时 Git 索引，不执行 stage、commit 或 push。"
+      },
+      "category": "development",
+      "version": "0.1.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/xuex991/dsh-working-changes",
+        "commit": "69e421b35933a70f39f6ea8b8f879b66d210b826",
+        "integrity": "sha512-Bcak5+Y9m63fg6yT5a3NnskNrrPF1sLvZ37wzCqklBCRBVzsGcMTVQBhT7u+GfaMPk8s86ean/MRSaFMj3eprw==",
+        "publishedAt": "2026-11-02T06:18:26.000Z"
+      }
     }
   ]
 }
