@@ -2405,6 +2405,19 @@
       "reviewedAt": "2026-11-02T07:52:38.445Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-conversation-import",
+      "version": "0.1.8",
+      "integrity": "sha512-2TM7bthGGPi9ZO4mXbi15xoNeKeSJXXr6tld3m5Hf0gqPbXT77gu9dZj/5aYqIY1MWFTs1/CYYcaOQtNZt5Oiw==",
+      "repository": "https://github.com/kermars39-web/dsh-conversation-import",
+      "source": {
+        "type": "git",
+        "commit": "f184b3b782a44ddf1f701627f729e3b493751268"
+      },
+      "reviewedAt": "2026-11-02T08:24:42.756Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

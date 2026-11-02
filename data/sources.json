@@ -12010,13 +12010,13 @@
         "zh": "将本机 Codex 对话导入 DSH 会话，可选自动同步；需要本地 Codex 数据，支持 macOS 和 Linux，Windows 未测试。"
       },
       "category": "workflow",
-      "version": "0.1.7",
+      "version": "0.1.8",
       "source": {
         "type": "git",
         "url": "https://github.com/kermars39-web/dsh-conversation-import",
-        "commit": "f083bdb31ab26dabf9eb74947c73c4f3fde237b7",
-        "integrity": "sha512-AXa3xCveijMbpixXsFQizEGlm2dL+TPWMhjSyu4HdEjFzSCQVjZfz1YuDMHtjBrikom+Vi8+VISVOvKBslGrXw==",
-        "publishedAt": "2026-11-02T07:43:47.000Z"
+        "commit": "f184b3b782a44ddf1f701627f729e3b493751268",
+        "integrity": "sha512-2TM7bthGGPi9ZO4mXbi15xoNeKeSJXXr6tld3m5Hf0gqPbXT77gu9dZj/5aYqIY1MWFTs1/CYYcaOQtNZt5Oiw==",
+        "publishedAt": "2026-11-02T08:03:01.000Z"
       }
     },
     {
