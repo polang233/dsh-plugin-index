@@ -345,6 +345,7 @@ function layout({ language, path, title, description, body, site, structured = [
   <meta name="description" content="${esc(description)}">
   ${onHome ? `<meta name="keywords" content="${esc(text.keywords)}">` : ''}
   <meta name="robots" content="index,follow">
+  <meta name="baidu-site-verification" content="codeva-9pYW4WJpFf" />
   <link rel="canonical" href="${canonical}">
   ${alternates}
   <link rel="icon" href="${root}favicon.ico" sizes="48x48">
