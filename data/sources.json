@@ -12572,6 +12572,38 @@
         "integrity": "sha512-t+R7lP3IpR9LtNyEgDWtsXKPiHG5W6+NWNB+iQIDdyamZMsGroKSXbiCykIHHtw2Vszq3zAzpDHkHY4WEQLhWw==",
         "publishedAt": "2026-11-02T04:06:59.000Z"
       }
+    },
+    {
+      "name": "@solvashq/dsh-theme",
+      "title": {
+        "en": "DSH Theme",
+        "zh": "DSH 主题"
+      },
+      "description": {
+        "en": "Customize theme palettes, light/dark colors, Latin/CJK/code fonts and interface text size. Preferences are saved per profile. Author-tested on DSH Desktop 0.2.1-rc.2 Web GUI.",
+        "zh": "调整主题配色、自定义明暗颜色、中英文字体、代码字体和界面字号，偏好随当前 profile 保存。作者验证环境为 DSH Desktop 0.2.1-rc.2 Web GUI。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-disk-manager",
+      "title": {
+        "en": "DSH Disk Manager",
+        "zh": "DSH 磁盘管理"
+      },
+      "description": {
+        "en": "Browse Windows volumes and session/workspace documents, create folders, drag files into chat, and move selected items to Recycle Bin after confirmation. Requires DSH >=0.2.1-rc.5 and Windows PowerShell 5.1.",
+        "zh": "浏览 Windows 卷和会话、工作区文档，支持新建目录、拖文件进对话，以及确认后将所选项目移入回收站。需 DSH >=0.2.1-rc.5 和 Windows PowerShell 5.1。"
+      },
+      "category": "interface",
+      "version": "0.4.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Ananpng123/dsh-disk-manager",
+        "commit": "0b6bdb23c38c6dd02efced38e1ed7ba0610d581b",
+        "integrity": "sha512-8xu/yNX3orsptb8aYCgHE/ZwXAWLDW//LZDpnmVsQ/dH5w2iE1+phwhIqM6U7bqHyG72HUZ3MCoM8LNqdObj2A==",
+        "publishedAt": "2026-11-02T08:17:14.000Z"
+      }
     }
   ]
 }

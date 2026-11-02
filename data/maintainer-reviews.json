@@ -2467,6 +2467,31 @@
       "reviewedAt": "2026-11-02T10:17:59.920Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@solvashq/dsh-theme",
+      "version": "1.4.0",
+      "integrity": "sha512-sOoeBOoXxAk8EJ5uRS9Fliz18Qeh8SXAEEWToMDo0IyJkwwNIbAlZl9b10+hjofgwaV8+jQS9lEEgJxBmpPmiQ==",
+      "repository": "https://github.com/SolvasHQ/dsh-theme",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-02T13:59:13.647Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-disk-manager",
+      "version": "0.4.2",
+      "integrity": "sha512-8xu/yNX3orsptb8aYCgHE/ZwXAWLDW//LZDpnmVsQ/dH5w2iE1+phwhIqM6U7bqHyG72HUZ3MCoM8LNqdObj2A==",
+      "repository": "https://github.com/Ananpng123/dsh-disk-manager",
+      "source": {
+        "type": "git",
+        "commit": "0b6bdb23c38c6dd02efced38e1ed7ba0610d581b"
+      },
+      "reviewedAt": "2026-11-02T13:59:13.647Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
