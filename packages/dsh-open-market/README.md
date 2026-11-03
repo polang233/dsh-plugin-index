@@ -1,15 +1,17 @@
 # dsh-open-market
 
-Brings [Open Plugin Market](https://dshopen.org/) into DeepSeek Harness. This community plugin index puts fast-growing, actively maintained and newly published plugins first, so small developers get seen.
+Discover and manage community plugins in DeepSeek Harness with [Open Plugin Market](https://dshopen.org/): category search, grouped favorites, version switching and updates.
 
-把开放插件市场加入 DeepSeek Harness 的「发现」。推荐偏向近期增长快、更新勤、刚上架的插件，让小开发者也能被看到。
+在 DeepSeek Harness 中发现和管理社区插件，支持分类搜索、收藏分组、版本切换与更新。
 
 ## 0.3.0 — What's new / 更新内容
 
 - Category filters and local synonym search make plugins easier to find. 分类与关键词可叠加筛选，同义词也能找到相关插件。
 - Open plugin details for screenshots and expand version-specific release notes. 打开详情查看截图，按需展开当前或历史版本的更新说明。
+- Previews prefer screenshots submitted by authors and selected by maintainers, with filtered README previews as a fallback. Release notes also support package-prefixed tags and the selected version in CHANGELOG. 预览优先使用作者提交、维护者选定的截图，缺少时识别 README 预览；更新说明支持包名前缀标签和 CHANGELOG 中的精确版本。
 - Favorites and settings persist in your DSH profile and migrate from browser storage. 收藏、分组和设置保存到当前 DSH profile，并自动迁移浏览器中的已有数据。
 - Updates run on the Host and attempt to restore the original version if replacement fails. 更新由宿主完成，替换失败时尝试恢复原版本；无法确认原来源时保留当前安装。
+- Self-updates retain the owning Cordis service and a lock that survives plugin reloads. An older installed version still runs its own updater; if it fails, update through DSH's Plugins page or CLI first. 自更新持有 Cordis 服务原实例，更新锁跨插件重载保留。旧版首次升级仍由旧代码执行，失败时请先通过 DSH「插件」页或命令安装新版。
 
 [Full release notes / 完整更新说明](https://github.com/polang233/dsh-plugin-index/blob/main/packages/dsh-open-market/CHANGELOG.md#030)
 
@@ -42,7 +44,7 @@ On the next start, `https://dshopen.org/index.json` appears in **Plugins → Dis
 - **Show Open Market in the sidebar** adds a separate full-width page. It is off by default where the Plugins page has the Open Market tab, and on where it does not. When DSH has no market service, that page reads `dshopen.org/index.json` itself. It installs without DSH's install dialog, so a plugin whose install scripts need approval has to be installed from Plugins.
 - The browsing tab appears when Custom plugin markets is available; an unavailable market service does not block DSH startup.
 - `/open-market` puts the index back and switches Custom plugin markets on again, for when you change your mind.
-- The plugin keeps its setup marker in `.dsh-open-market.json` and user preferences in `.dsh-open-market-user.json` within the profile. DSH fetches the index. The plugin requests likes from `dshopen.org` (turn off **Join likes** to stop them), plugin icons, the site mark and the maintainer's GitHub avatar. Opening details reads the public GitHub README for screenshots; expanding release notes queries the matching GitHub release or fixed-commit comparison. Expanding Other versions reads npm metadata from the selected registry. These public metadata requests omit browser credentials. Favorites and settings live in the profile with a browser cache; catalog and version caches stay in this browser.
+- The plugin keeps its setup marker in `.dsh-open-market.json` and user preferences in `.dsh-open-market-user.json` within the profile. DSH fetches the index. The plugin requests likes from `dshopen.org` (turn off **Join likes** to stop them), plugin icons, the site mark and the maintainer's GitHub avatar. Opening details reads the site's selected screenshots or the public GitHub README; expanding release notes reads a matching GitHub release, CHANGELOG or fixed-commit comparison. Expanding Other versions reads npm metadata from the selected registry. These public metadata requests omit browser credentials. Favorites and settings live in the profile with a browser cache; catalog and version caches stay in this browser.
 
 - 每个 profile 自动打开一次「插件 → 实验性插件 → 自定义插件市场」，DSH 在下次启动时生效。之后手动关掉，插件不会再打开。
 - 每个 profile 只添加一次索引源，追加在已有索引源之后，不会重复；删掉后不会被加回来，除非把插件关掉再打开。
@@ -56,7 +58,7 @@ On the next start, `https://dshopen.org/index.json` appears in **Plugins → Dis
 - **在侧边栏显示开放市场**会增加一个独立的全宽页面。「插件」页有开放市场标签时默认关闭，没有时默认打开。DSH 没有市场服务时，这个页面会自己读取 `dshopen.org/index.json`。从这里安装不弹 DSH 的安装窗口，需要确认安装脚本的插件请到「插件」页安装。
 - 「自定义插件市场」服务就绪后才显示市场标签，服务关闭或暂未启动时不会阻塞 DSH 启动。
 - 想恢复时输入 `/open-market`，会重新加入索引源，并在需要时打开自定义插件市场。
-- profile 目录中的 `.dsh-open-market.json` 保存初始化标记，`.dsh-open-market-user.json` 保存用户偏好；索引由 DSH 读取。插件会请求 `dshopen.org` 的点赞数据、插件图标和站点标志，以及 GitHub 上的维护者头像，关闭「参与点赞」后不再发送点赞请求。打开详情时才读取公开 GitHub README 的截图，展开更新说明才查询对应版本的 GitHub Release 或固定提交差异；展开其他版本才向所选 npm 源读取元数据。这些公开元数据请求不带浏览器登录凭据。收藏和设置保存在 profile 中，并在浏览器缓存；目录和版本缓存保留在当前浏览器。
+- profile 目录中的 `.dsh-open-market.json` 保存初始化标记，`.dsh-open-market-user.json` 保存用户偏好；索引由 DSH 读取。插件会请求 `dshopen.org` 的点赞数据、插件图标和站点标志，以及 GitHub 上的维护者头像，关闭「参与点赞」后不再发送点赞请求。打开详情时才读取本站选定的截图或公开 GitHub README，展开更新说明才读取对应版本的 GitHub Release、CHANGELOG 或固定提交差异；展开其他版本才向所选 npm 源读取元数据。这些公开元数据请求不带浏览器登录凭据。收藏和设置保存在 profile 中，并在浏览器缓存；目录和版本缓存保留在当前浏览器。
 
 To use a mirror, override the row in your profile's `cordis.patch.yml`:
 

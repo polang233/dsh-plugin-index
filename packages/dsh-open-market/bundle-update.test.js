@@ -37,6 +37,44 @@ test('a failed replacement restores the exact original version and disabled sele
   assert(installs.every(x => x[2].approvedBuilds === undefined));
 });
 
+test('a removal failure after deleting dependencies restores the original package', async () => {
+  for (const throws of [false, true]) {
+    const host = manager({removeBundle: async function() {
+      this.installed = false;
+      if (throws) throw Error('reload failed after removal');
+      return {application: 'failed', changed: true, error: {code: 'operation-error', message: 'reload failed after removal'}};
+    }});
+    const answer = await runBundleUpdate(host, input);
+    assert.equal(answer.ok, false);
+    assert.equal(answer.restored, true);
+    assert.equal(host.installed, true);
+    assert.equal(host.version, '1.0.0');
+    assert.deepEqual(host.calls.filter(call => call[0] === 'install').map(call => call[1]), ['demo@1.0.0']);
+  }
+});
+
+test('a removal failure after disabling restores the selection without deleting the existing package', async () => {
+  const host = manager({enabled: true,
+    removeBundle: async function() {this.enabled = false; return {application: 'failed', error: {code: 'bundle-in-use'}};},
+    setBundleEnabled: async function(name, enabled) {assert.equal(name, 'demo'); this.enabled = enabled; return {application: 'restart-required'};}
+  });
+  const answer = await runBundleUpdate(host, input);
+  assert.equal(answer.restored, true);
+  assert.equal(answer.restoreRestart, true);
+  assert.equal(host.enabled, true);
+  assert.equal(host.calls.some(call => call[0] === 'install'), false);
+});
+
+test('failed selection recovery reports the original source instead of claiming it was restored', async () => {
+  const host = manager({enabled: true,
+    removeBundle: async function() {this.enabled = false; return {application: 'failed'};},
+    setBundleEnabled: async () => ({application: 'failed', error: {code: 'bundle-in-use'}})
+  });
+  const answer = await runBundleUpdate(host, input);
+  assert.equal(answer.restored, false);
+  assert.equal(answer.restoreSpec, 'demo@1.0.0');
+});
+
 test('successful replacements verify the installed version and keep the original selection', async () => {
   const host = manager({installBundle: async function(spec, options) {
     this.installed = true; this.version = spec.slice(5); this.source = spec; this.enabled = options.enabled;
@@ -121,6 +159,49 @@ test('updates serialize on the Host and the lock is released after recovery', as
   resume();
   assert.equal((await first).restored, true);
   assert.equal((await runBundleUpdate(host, input)).restored, true);
+});
+
+test('Cordis caller proxies share the owning service and survive disposal of the updating plugin', async () => {
+  let disposed = false, resume, entered;
+  const ready = new Promise(resolve => {entered = resolve;});
+  const pause = new Promise(resolve => {resume = resolve;});
+  const host = manager({removeBundle: async function() {disposed = true; this.installed = false; return {application: 'applied'};}});
+  const install = host.installBundle;
+  host.installBundle = async function(...args) {entered(); await pause; return install.apply(this, args);};
+  const proxy = () => new Proxy(host, {get(target, key) {
+    if (key === Symbol.for('cordis.original')) return target;
+    if (disposed) throw Error('Caller context disposed');
+    return Reflect.get(target, key);
+  }});
+  const first = runBundleUpdate(proxy(), input);
+  await ready;
+  assert.equal((await runBundleUpdate(proxy(), input)).code, 'update-busy');
+  resume();
+  assert.equal((await first).restored, true);
+  assert.equal(host.version, '1.0.0');
+});
+
+test('native update success is checked against the actual installed version', async () => {
+  const host = manager();
+  host.listBundles = async () => [{name: 'demo', installed: true, version: host.version, source: 'demo@1.0.0', updatable: true}];
+  host.updateBundle = async () => ({result: {application: 'applied'}});
+  assert.equal((await runBundleUpdate(host, input)).ok, false);
+  host.updateBundle = async () => {host.version = '2.0.0'; return {result: {application: 'applied'}};};
+  assert.deepEqual(await runBundleUpdate(host, input), {ok: true, restart: false});
+});
+
+test('the update lock survives a reload of the updater module', async () => {
+  let entered, resume;
+  const ready = new Promise(resolve => {entered = resolve;});
+  const pause = new Promise(resolve => {resume = resolve;});
+  const host = manager(), install = host.installBundle;
+  host.installBundle = async function(...args) {entered(); await pause; return install.apply(this, args);};
+  const first = runBundleUpdate(host, input);
+  await ready;
+  const replacement = await import('./bundle-update.js?reload-test');
+  assert.equal((await replacement.runBundleUpdate(host, input)).code, 'update-busy');
+  resume();
+  assert.equal((await first).restored, true);
 });
 
 test('targets cannot select tags, aliases, arbitrary paths or credential URLs', () => {

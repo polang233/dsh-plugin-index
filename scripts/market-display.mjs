@@ -137,7 +137,9 @@ export function applyMarketDisplay(index, { github = {}, downloads = {}, release
     delete sortKeys[TRENDING];
     delete sortKeys[STARS_WEEK];
     if (Number.isSafeInteger(signals.starsWeek)) { sortKeys[STARS_WEEK] = signals.starsWeek; withStarGrowth++; }
-    display.plugins[plugin.name] = { description, labels: own, signals, ...(publisher ? { publisher: publisher.id } : {}) };
+    const screenshots = checked.get(plugin.name)?.display?.screenshots;
+    display.plugins[plugin.name] = { description, labels: own, signals,
+      ...(screenshots !== undefined ? {screenshots} : {}), ...(publisher ? { publisher: publisher.id } : {}) };
     return { ...plugin, ...(Object.keys(composed).length ? { description: composed } : {}), metadata: { ...plugin.metadata, labels, sortKeys } };
   });
   for (const id of Object.keys(LABELS)) if (used.has(id)) metadata.labels[id] = { title: LABELS[id] };

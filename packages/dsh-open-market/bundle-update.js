@@ -1,7 +1,9 @@
 import {randomUUID} from 'node:crypto';
 
 export const BUNDLE_UPDATE_PATH = '/dsh-open-market/update';
-const active = new WeakMap();
+// Replacement reloads this module too; the lock must outlive both copies of the bundle.
+const activeKey = Symbol.for('dsh-open-market.bundle-updates');
+const active = globalThis[activeKey] ??= new WeakMap();
 const exactVersion = /^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
 const packageName = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 const fixedGit = /^git\+https:\/\/github\.com\/[\w.-]+\/[\w.-]+(?:\.git)?#[a-f0-9]{40}(?:&path:\/[^\s?#&]+)?$/;
@@ -54,10 +56,13 @@ function newer(a, b) {
 /** Keep the native manager alive through removal, installation and restoration, even if the Client disappears. */
 export async function runBundleUpdate(manager, input) {
   const target = bundleUpdateTarget(input);
+  // Cordis binds injected service proxies to the caller's context. Self-removal disposes that context.
+  // The original service retains its owning context and also gives all callers the same update lock.
+  manager = manager?.[Symbol.for('cordis.original')] ?? manager;
   if (!manager?.listBundles || !manager.inspect || !manager.removeBundle || !manager.installBundle) return {ok: false, code: 'update-unavailable', error: 'Update service unavailable'};
   if (active.has(manager)) return {ok: false, code: 'update-busy', error: 'A plugin update is already running'};
   const operation = (async () => {
-    let original, rollback, removed = false, installedName;
+    let original, rollback, replacementStarted = false, installAttempted = false, installedName;
     let existingNames;
     try {
       const inventory = await manager.listBundles();
@@ -68,7 +73,11 @@ export async function runBundleUpdate(manager, input) {
       if (!rollback) return {ok: false, code: 'restore-unavailable', error: 'The original installation source is not available; the current version was kept'};
       if (target.version && original.updatable && newer(target.version, original.version) && typeof manager.updateBundle === 'function') {
         const result = await manager.updateBundle(target.name, target.version, {registry: target.registry, requestId: randomUUID()});
-        if (!failed(result.result)) return {ok: true, restart: result.result.application === 'restart-required'};
+        if (!failed(result.result)) {
+          const installed = (await manager.listBundles()).find(bundle => bundle.name === target.name);
+          if (!installed?.installed || installed.version !== target.version) return {ok: false, error: 'Installed version could not be verified'};
+          return {ok: true, restart: result.result.application === 'restart-required'};
+        }
         return {...failure(result.result), ...(result.restore ? {restored: !failed(result.restore), restoreRestart: result.restore.application === 'restart-required'} : {})};
       }
       const preflight = await manager.inspect(target.spec, {registry: target.registry});
@@ -79,12 +88,14 @@ export async function runBundleUpdate(manager, input) {
         const versions = await manager.listVersions(target.name);
         if (versions.status === 'listed') rollback.registry = versions.registry;
       }
+      // Removal may fail after disabling the bundle or changing dependencies. Recovery must inspect the disk state.
+      replacementStarted = true;
       const removal = await manager.removeBundle(target.name);
-      if (failed(removal)) return failure(removal);
-      removed = true;
+      if (failed(removal)) throw Object.assign(Error(reason(removal)), failure(removal));
       const inspection = await manager.inspect(target.spec, {registry: target.registry});
       if (inspection.status !== 'accepted') throw Error(inspection.reason || 'Update inspection unavailable');
       if ((inspection.name && inspection.name !== target.name) || (target.version && inspection.version && inspection.version !== target.version)) throw Error('Update package identity mismatch');
+      installAttempted = true;
       const result = await manager.installBundle(target.spec, {enabled: original.enabled ?? true, requestId: randomUUID(), registry: inspection.registry,
         ...(target.version ? {saveExact: true} : {})});
       installedName = result.bundle;
@@ -99,9 +110,19 @@ export async function runBundleUpdate(manager, input) {
       return {ok: true, restart: result.application === 'restart-required'};
     } catch (error) {
       const answer = {ok: false, error: error.message || String(error), ...(error.code ? {code: error.code} : {})};
-      if (!removed) return answer;
+      if (!replacementStarted) return answer;
       try {
         const current = (await manager.listBundles()).find(bundle => bundle.name === (installedName || target.name));
+        if (!installAttempted && current?.installed && current.version === original.version && originalTarget(current)?.spec === rollback.spec) {
+          // A rejected removal can leave the dependency intact but its selection switched off.
+          if (current.enabled === (original.enabled ?? true)) return answer;
+          if (typeof manager.setBundleEnabled !== 'function') throw Error('Original selection could not be restored');
+          const selection = await manager.setBundleEnabled(original.name, original.enabled ?? true);
+          if (failed(selection)) throw Error(reason(selection));
+          const restored = (await manager.listBundles()).find(bundle => bundle.name === original.name);
+          if (!restored?.installed || restored.version !== original.version || restored.enabled !== (original.enabled ?? true)) throw Error('Original selection could not be verified');
+          return {...answer, restored: true, restoreRestart: selection.application === 'restart-required'};
+        }
         if (current?.installed) {
           if (current.name !== original.name && existingNames.has(current.name)) throw Error('An unrelated installed bundle was preserved');
           const cleanup = await manager.removeBundle(current.name);

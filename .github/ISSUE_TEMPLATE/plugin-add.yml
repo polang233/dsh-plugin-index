@@ -23,7 +23,13 @@ body:
     validations:
       required: true
   - type: textarea
+    id: screenshots
+    attributes:
+      label: 插件实际效果 / Plugin screenshots
+      description: 可选，拖入 1–6 张真实使用截图，并为每张写一句说明。请勿提交 Logo、装饰边框或广告图；提交前遮盖密钥和个人信息。维护者确认后优先用于插件详情预览。 / Optional. Drop 1–6 screenshots of the plugin in use, each with a short caption. Exclude logos, borders and ads, and redact keys and personal information. Selected images take priority in plugin previews.
+      placeholder: "可直接拖入图片，也可粘贴公开的 GitHub 图片链接。 / Drop images here or paste public GitHub image links."
+  - type: textarea
     id: extra
     attributes:
       label: 补充信息 / Additional details
-      description: 可选，附上 Logo、截图或实际测试情况。 / Optional logo, screenshots or testing notes.
+      description: 可选，附上 Logo、已验证的 DSH 版本、平台或其他测试情况。 / Optional logo, tested DSH versions, platforms or other testing notes.

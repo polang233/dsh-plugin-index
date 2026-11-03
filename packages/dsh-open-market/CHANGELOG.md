@@ -1,5 +1,23 @@
 # dsh-open-market 更新记录
 
+## 0.3.1
+
+### 中文
+
+- 修复搜索遇到缺少标题或简介的插件时导致页面异常的问题，保留分类和同义词筛选。
+- 自更新持有 Cordis 服务原实例，更新锁跨重载保留。修复卸载已部分完成却报错时跳过恢复的问题：旧包仍在时恢复启用状态，已移除时恢复原版本；原生更新成功后核实实际版本。
+- 界面预览优先采用作者提交、维护者确认的截图，README 自动识别增加预览语境、装饰图和图片尺寸过滤。读取失败保留原文入口。
+- README 优先读取 Raw 文件，减少 GitHub API 限流影响；更新说明支持包名前缀标签，并在 Release 不可用时读取对应版本的 CHANGELOG。
+- 分类下拉框统一主题样式，更新安装列表简介，侧栏采用「鲸鱼与插件」单色图标。
+
+### English
+
+- Fixed search crashing when a plugin has no title or description.
+- Updates retain the original Cordis service and a lock across reloads. Partial removal failures restore the existing selection or reinstall the original release. Native update results are checked against the installed version.
+- Author-provided, maintainer-selected screenshots take priority. README previews filter decorative and small images and retain a source link when loading fails.
+- README loading prefers Raw files to reduce GitHub API requests. Release notes recognize package-prefixed tags and fall back to the selected version in CHANGELOG.
+- Styled the category selector, rewrote the installed-plugin summary and added a monochrome whale and plug sidebar icon.
+
 ## 0.3.0
 
 ### 中文

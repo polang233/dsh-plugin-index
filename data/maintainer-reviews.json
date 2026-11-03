@@ -2,6 +2,30 @@
   "schema": 1,
   "entries": [
     {
+      "name": "dsh-open-market",
+      "version": "0.3.1",
+      "integrity": "sha512-EngFudytpi4YTbBs3SCX+dEHm4s6adZGoFp1KJX7F8WBTzCYTgWW6Pg3pHRaqGTJiVE9s1Q1DqpFPMXr0BG6pA==",
+      "repository": "https://github.com/polang233/dsh-plugin-index",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T19:36:59.609Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-open-market",
+      "version": "0.3.0",
+      "integrity": "sha512-S1+Gbj+ky7RAYm9OOSPKEGWg2LUMKkdHWDpJfReSixwxwh5HijeyB2lQs8h9Hgkgln4AevL+3+qN64ECYp7AIA==",
+      "repository": "https://github.com/polang233/dsh-plugin-index",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T18:47:11.547Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
       "name": "@aghost-prj/dsh-auto-review-model",
       "version": "0.1.0",
       "integrity": "sha512-aNdObSoy9U4znq0q5ndFPq2WxAp6L5BiwGB79VPcgJHtYjpmAgIVqwItd+CZjL2KBzsC0BLdl6aWcY++aJN25Q==",

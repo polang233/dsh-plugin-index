@@ -25,6 +25,8 @@ Each section is in Chinese first, with the English in the quote block below it.
 
 可在补充信息中附上 Logo、截图、已验证的 DSH 版本和运行平台。兼容要求请写入包的 `engines.dsh` 或 DSH 相关 `peerDependencies`。
 
+「插件实际效果」可选填 1–6 张实际使用截图，每张配一句说明。请先遮盖密钥和个人信息，不要放 Logo、装饰边框或广告图。维护者选定的截图优先显示；没有选定截图时，插件会尝试识别 README 的截图或预览段落。
+
 目前收录的插件需要：
 
 - 有公开 npm 版本和发布时间，或经维护者确认的固定 Git 来源。
@@ -39,6 +41,8 @@ Each section is in Chinese first, with the English in the quote block below it.
 > Open a [plugin request](https://github.com/polang233/dsh-plugin-index/issues/new?template=plugin-add.yml) with the npm package name or source repository and one sentence on what it does, in Chinese or English. If the plugin lives in a subdirectory of the repository, give the directory too. Authors can use the same form to correct their listing.
 >
 > Optional details include a logo, screenshots, and the DSH versions and platforms you tested. Put compatibility requirements in the package's `engines.dsh` or DSH-related `peerDependencies`.
+>
+> The optional Plugin screenshots field accepts 1–6 images of the plugin in use, each with a short caption. Redact keys and personal information. Exclude logos, decorative borders and ads. Maintainer-selected images appear first; otherwise the plugin looks for screenshots or preview sections in the README.
 >
 > A listed plugin currently needs:
 >

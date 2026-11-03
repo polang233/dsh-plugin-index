@@ -660,6 +660,15 @@ test('local synonyms broaden search while exact matches rank first and category 
   assert.deepEqual(plain(filterCatalog(entries, 'does-not-exist', '', resolve)), []);
 });
 
+test('search respects the real host locale contract when optional title and description are absent', async () => {
+  const {internals: {filterCatalog}} = await client();
+  // DSH resolveText reads text.en for every non-string input.
+  const resolve = text => typeof text === 'string' ? text : text.zh ?? text.en;
+  const entries = [entry('untitled', 'not-installed'), entry('translated', 'not-installed', {title: {en: 'Notes', zh: '笔记'}, description: null})];
+  assert.deepEqual(plain(filterCatalog(entries, 'untitled', '', resolve).map(x => x.name)), ['untitled']);
+  assert.deepEqual(plain(filterCatalog(entries, '笔记', '', resolve).map(x => x.name)), ['translated']);
+});
+
 test('screenshots are extracted as safe GitHub image URLs without rendering README HTML', async () => {
   const {internals: {extractScreenshots}} = await client();
   const readme = '![预览](docs/screen.png)\n<img src="https://github.com/a/b/blob/main/demo.webp" alt="Screenshot">\n'
@@ -668,10 +677,70 @@ test('screenshots are extracted as safe GitHub image URLs without rendering READ
   assert.deepEqual(images.map(x => x.url), ['https://raw.githubusercontent.com/a/b/main/docs/screen.png', 'https://raw.githubusercontent.com/a/b/main/demo.webp']);
 });
 
+test('README extraction requires preview context and rejects decorative or tiny images and code samples', async () => {
+  const {internals: {extractScreenshots}} = await client();
+  const readme = '![Unrelated](art.png)\n# 界面预览\n![Main view](docs/main.png)\n![边框](docs/line.png)\n'
+    + '<img src="tiny-preview.png" width="32" height="32">\n![Preview banner](banner.png)\n'
+    + '```md\n![Preview](example.png)\n```\n<!-- ![Preview](hidden.png) -->';
+  assert.deepEqual(plain(extractScreenshots(readme, 'https://raw.githubusercontent.com/a/b/main/README.md').map(x => x.url)),
+    ['https://raw.githubusercontent.com/a/b/main/docs/main.png']);
+});
+
+test('curated screenshots override README guesses, including an explicit empty selection', async () => {
+  for (const images of [[], [{url: 'https://github.com/user-attachments/assets/preview-id', alt: 'Task panel'}]]) {
+    const requests = [];
+    const {internals} = await client({fetchImpl: async (url, options) => {
+      requests.push(url); assert.equal(options.credentials, 'omit');
+      return Response.json({schema: 1, plugins: {demo: {screenshots: images}}});
+    }});
+    const e = entry('demo', 'installed', {repository: {url: 'https://github.com/a/b'}});
+    const actual = plain(await internals.loadScreenshots(e));
+    assert.equal(actual.length, images.length);
+    if (actual.length) assert.equal(actual[0].origin, 'author');
+    await internals.loadScreenshots(e);
+    assert.equal(requests.length, 1, 'Author selection bypasses GitHub and is cached');
+  }
+});
+
+test('Raw README works without consuming GitHub API quota and honors package directories', async () => {
+  const requests = [];
+  const {internals} = await client({fetchImpl: async url => {
+    requests.push(url);
+    if (url.endsWith('/display.json')) return Response.json({schema: 1, plugins: {}});
+    assert.equal(url, 'https://raw.githubusercontent.com/a/b/HEAD/plugins/demo/README.md');
+    return new Response('![界面预览](screen.png)');
+  }});
+  const e = entry('demo', 'installed', {repository: {url: 'https://github.com/a/b', directory: 'plugins/demo'}});
+  assert.equal((await internals.loadScreenshots(e))[0].url, 'https://raw.githubusercontent.com/a/b/HEAD/plugins/demo/screen.png');
+  assert.equal(requests.length, 2);
+});
+
+test('release notes recognize our published package-v tag and isolate CHANGELOG versions on API rate limits', async () => {
+  const e = entry('dsh-open-market', 'installed', {repository: {url: 'https://github.com/polang233/dsh-plugin-index', directory: 'packages/dsh-open-market'}});
+  const version = {version: '0.3.0', source: {type: 'npm'}};
+  const {internals: tagged} = await client({fetchImpl: async url => url.endsWith('/dsh-open-market-v0.3.0')
+    ? Response.json({tag_name: 'dsh-open-market-v0.3.0', body: 'Our release'}) : new Response('', {status: 404})});
+  assert.equal((await tagged.loadReleaseNotes(e, version)).body, 'Our release');
+  const {internals: limited} = await client({fetchImpl: async url => url.includes('api.github.com') ? new Response('', {status: 403})
+    : new Response('# Changelog\n## 0.3.1\nNewer changes\n## [0.3.0] - 2026-11-03\n### Fixed\nSelected changes\n## 0.2.7\nOlder changes')});
+  const notes = await limited.loadReleaseNotes(e, version);
+  assert.equal(notes.body, '### Fixed\nSelected changes');
+  assert.match(notes.url, /packages\/dsh-open-market\/CHANGELOG.md$/);
+  assert.equal(limited.extractVersionNotes('## 1.0.0-beta.1\nBeta\n## 1.0.0\nStable', '1.0.0'), 'Stable');
+});
+
+test('detail streams stop at the size limit', async () => {
+  const {internals} = await client({fetchImpl: async url => url.endsWith('/display.json') ? new Response('', {status: 404})
+    : url.includes('api.github.com') ? new Response('x'.repeat(2 * 1024 * 1024 + 1)) : new Response('', {status: 404})});
+  await assert.rejects(internals.loadScreenshots(entry('demo', 'installed', {repository: {url: 'https://github.com/a/b'}})), /too large/);
+});
+
 test('details requests are lazy, cached and release notes match only the selected exact version', async () => {
   const requests = [];
   const plugin = await client({fetchImpl: async url => {
     requests.push(url);
+    if (url.endsWith('/display.json')) return {ok: true, text: async () => JSON.stringify({schema: 1, plugins: {}})};
+    if (url.startsWith('https://raw.githubusercontent.com/')) return {ok: false, status: 404};
     const value = url.endsWith('/readme') ? {encoding: 'base64', content: Buffer.from('![预览](screen.png)').toString('base64'), download_url: 'https://raw.githubusercontent.com/a/b/main/README.md'}
       : url.includes('/v1.0.0') ? null : {tag_name: '1.0.0', body: 'Version one changes'};
     return {ok: value !== null, status: value === null ? 404 : 200, text: async () => JSON.stringify(value)};
@@ -681,10 +750,10 @@ test('details requests are lazy, cached and release notes match only the selecte
   const images = await plugin.internals.loadScreenshots(e);
   assert.equal(images.length, 1);
   await plugin.internals.loadScreenshots(e);
-  assert.equal(requests.length, 1, 'Repeated details reuse the successful README fetch');
+  assert.equal(requests.length, 3, 'Repeated details reuse the successful preview catalog and README fetch');
   const release = await plugin.internals.loadReleaseNotes(e, e.versions[0]);
   assert.equal(release.body, 'Version one changes');
-  assert.equal(requests.length, 3);
+  assert.equal(requests.length, 5);
   assert(!requests.some(url => url.includes('/latest')));
   assert.equal(await plugin.internals.loadReleaseNotes({...e, repository: {url: 'https://example.com/a/b'}}, e.versions[0]), null);
 });
@@ -695,7 +764,7 @@ test('failed detail requests can retry and update failures display restoration s
   const e = entry('demo', 'installed', {repository: {url: 'https://github.com/a/b'}});
   await assert.rejects(internals.loadScreenshots(e));
   await assert.rejects(internals.loadScreenshots(e));
-  assert.equal(attempts, 2);
+  assert.equal(attempts, 6, 'Each retry checks the catalog, Raw README and GitHub API');
   const result = await internals.requestBundleUpdate({name: 'demo', spec: 'demo@2.0.0'}, key => key, {fetchImpl: async (_url, options) => {
     assert.equal(options.credentials, 'same-origin');
     assert.equal(JSON.parse(options.body).name, 'demo');
@@ -751,7 +820,7 @@ test('self-update uses the authenticated local endpoint and reports unavailable,
   const t = key => key;
   const target = {spec: 'dsh-open-market@0.2.7', version: '0.2.7', registry: 'https://mirror.example/'};
   const success = await requestSelfUpdate(target, t, {fetchImpl: async (url, options) => {
-    assert.equal(url, 'dsh-open-market/self-update');
+    assert.equal(url, '/dsh-open-market/self-update');
     assert.equal(options.credentials, 'same-origin');
     assert.equal(options.method, 'POST');
     assert.deepEqual(JSON.parse(options.body), target);

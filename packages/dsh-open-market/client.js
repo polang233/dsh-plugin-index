@@ -275,14 +275,33 @@ window.__ModuleLoader__.load({
         return url.protocol === 'https:' && url.hostname === 'github.com' && !url.username && !url.password && match ? match[1] + '/' + match[2] : null;
       } catch { return null; }
     }
+    async function detailText(response, limit) {
+      if (+response.headers?.get('content-length') > limit) { await response.body?.cancel(); throw Error('Project details too large'); }
+      if (!response.body?.getReader) {
+        const text = await response.text();
+        if (text.length > limit) throw Error('Project details too large');
+        return text;
+      }
+      const reader = response.body.getReader(), decoder = new TextDecoder();
+      let bytes = 0, text = '';
+      try {
+        while (true) {
+          const {done, value} = await reader.read();
+          if (done) break;
+          bytes += value.byteLength;
+          if (bytes > limit) throw Error('Project details too large');
+          text += decoder.decode(value, {stream: true});
+        }
+        return text + decoder.decode();
+      } finally { await reader.cancel(); reader.releaseLock(); }
+    }
     async function githubJson(path) {
       const response = await fetch('https://api.github.com/repos/' + path, {
         headers: {accept: 'application/vnd.github+json'}, credentials: 'omit', signal: AbortSignal.timeout(15000)
       });
       if (response.status === 404) return null;
-      if (!response.ok) throw Error('Project details unavailable');
-      const text = await response.text();
-      if (text.length > 2 * 1024 * 1024) throw Error('Project details too large');
+      if (!response.ok) throw Object.assign(Error('Project details unavailable'), {status: response.status});
+      const text = await detailText(response, 2 * 1024 * 1024);
       return JSON.parse(text);
     }
     function cachedDetail(key, load) {
@@ -299,46 +318,111 @@ window.__ModuleLoader__.load({
         if (url.protocol !== 'https:' || url.username || url.password) return null;
         if (url.hostname === 'github.com' && /\/blob\//.test(url.pathname)) url = new URL('https://raw.githubusercontent.com' + url.pathname.replace('/blob/', '/'));
         if (!['raw.githubusercontent.com', 'github.com', 'user-images.githubusercontent.com', 'private-user-images.githubusercontent.com'].includes(url.hostname)) return null;
-        if (/badge|shields|logo|(?:^|[\/_.-])icon[\/_.-]|avatar|\.svg(?:$|\?)/i.test(url.href)) return null;
+        if (/badge|shields|logo|(?:^|[\/_.-])icon[\/_.-]|avatar|banner|divider|separator|border|spacer|footer|header|\.svg(?:$|\?)/i.test(url.href)) return null;
         if (!/\.(?:png|jpe?g|webp|gif)(?:$|\?)/i.test(url.href) && !(url.hostname === 'github.com' && url.pathname.includes('/user-attachments/assets/'))) return null;
         return url.href;
       } catch { return null; }
     }
     function extractScreenshots(markdown, base) {
       const pictures = [];
-      const add = (value, alt, position) => {
+      // Code examples and comments often contain image snippets rather than actual previews.
+      markdown = markdown.replace(/```[^\n]*\n[\s\S]*?```|<!--[\s\S]*?-->/g, value => value.replace(/[^\n]/g, ' '));
+      const preview = /screenshot|screen[-_ ]?shot|preview|demo|界面|截图|效果|预览|演示/i;
+      const decoration = /badge|logo|icon|avatar|banner|border|divider|separator|spacer|sponsor|star[-_ ]?history|徽章|标志|边框|分隔|赞助|二维码/i;
+      const add = (value, alt, position, tag = '') => {
         const url = screenshotUrl(value, base);
-        if (url && !/badge|logo|icon|徽章|标志/i.test(alt) && !pictures.some(item => item.url === url)) pictures.push({url, alt, position});
+        const heading = [...markdown.slice(0, position).matchAll(/^#{1,6}\s+(.+)$/gm)].at(-1)?.[1] || '';
+        const width = /\bwidth\s*=\s*["']?(\d+)/i.exec(tag)?.[1], height = /\bheight\s*=\s*["']?(\d+)/i.exec(tag)?.[1];
+        if ((width && +width < 180) || (height && +height < 100) || (width && height && +width / +height > 5)) return;
+        if (url && !decoration.test(alt + ' ' + value) && preview.test(alt + ' ' + value + ' ' + heading)
+          && !pictures.some(item => item.url === url)) pictures.push({url, alt: alt.slice(0, 200), position});
       };
       for (const match of markdown.matchAll(/!\[([^\]]*)\]\(\s*(?:<([^>]+)>|([^\s)]+))(?:\s+["'][^)]*)?\s*\)/g)) add(match[2] || match[3], match[1], match.index);
-      for (const match of markdown.matchAll(/<img\b[^>]*\bsrc\s*=\s*["']([^"']+)["'][^>]*>/gi)) add(match[1], /\balt\s*=\s*["']([^"']*)["']/i.exec(match[0])?.[1] || '', match.index);
+      for (const match of markdown.matchAll(/<img\b[^>]*\bsrc\s*=\s*["']([^"']+)["'][^>]*>/gi)) add(match[1], /\balt\s*=\s*["']([^"']*)["']/i.exec(match[0])?.[1] || '', match.index, match[0]);
       return pictures.sort((a, b) => a.position - b.position).slice(0, 6).map(({url, alt}) => ({url, alt}));
     }
-    function loadScreenshots(entry) {
+    async function rawProjectFile(repo, file, ref = 'HEAD') {
+      const url = 'https://raw.githubusercontent.com/' + repo + '/' + encodeURIComponent(ref) + '/' + file.split('/').map(encodeURIComponent).join('/');
+      const response = await fetch(url, {credentials: 'omit', signal: AbortSignal.timeout(10000)});
+      if (response.status === 404) return null;
+      if (!response.ok) throw Object.assign(Error('Project file unavailable'), {status: response.status});
+      const text = await detailText(response, 1024 * 1024);
+      return {text, url};
+    }
+    function projectDirectory(entry, source) {
+      const directory = source?.path || entry.repository?.directory;
+      return typeof directory === 'string' && directory.split('/').every(part => part && part !== '.' && part !== '..') ? directory + '/' : '';
+    }
+    function curatedScreenshots(entry) {
+      return cachedDetail('curated-screenshots', async () => {
+        const response = await fetch(new URL('display.json', INDEX_URL).href, {credentials: 'omit', signal: AbortSignal.timeout(8000)});
+        if (!response.ok) throw Error('Preview catalog unavailable');
+        const text = await detailText(response, 2 * 1024 * 1024);
+        const catalog = JSON.parse(text);
+        if (catalog.schema !== 1 || !catalog.plugins) throw Error('Invalid preview catalog');
+        return catalog.plugins;
+      }).then(plugins => {
+        const images = plugins[entry.name]?.screenshots;
+        if (!Array.isArray(images)) return undefined;
+        return images.slice(0, 6).flatMap(image => {
+          const url = screenshotUrl(image?.url);
+          return url ? [{url, alt: typeof image.alt === 'string' ? image.alt.slice(0, 200) : '', origin: 'author'}] : [];
+        });
+      }, () => undefined);
+    }
+    async function loadScreenshots(entry) {
+      const curated = await curatedScreenshots(entry);
+      if (curated !== undefined) return curated;
       const repo = githubRepository(entry);
-      if (!repo) return Promise.resolve([]);
+      if (!repo) return [];
       const source = defaultVersionOf(entry)?.source ?? entry.versions?.[0]?.source;
       const ref = source?.type === 'git' ? source.commit : null;
-      const directory = source?.path || entry.repository?.directory;
-      const relative = typeof directory === 'string' && directory.split('/').every(part => part && part !== '.' && part !== '..') ? directory : '';
+      const relative = projectDirectory(entry, source);
       return cachedDetail('screens:' + repo + ':' + relative + ':' + (ref || 'default'), async () => {
+        let failure;
+        // Raw files do not consume the unauthenticated GitHub API quota.
+        for (const file of [...new Set([relative + 'README.md', 'README.md'])]) {
+          try {
+            const readme = await rawProjectFile(repo, file, ref || 'HEAD');
+            if (readme) return extractScreenshots(readme.text, readme.url).map(image => ({...image, origin: 'readme'}));
+          } catch (error) { failure = error; }
+        }
         const query = ref ? '?ref=' + encodeURIComponent(ref) : '';
-        let readme = relative ? await githubJson(repo + '/contents/' + relative.split('/').map(encodeURIComponent).join('/') + '/README.md' + query) : null;
+        let readme = relative ? await githubJson(repo + '/contents/' + relative.split('/').filter(Boolean).map(encodeURIComponent).join('/') + '/README.md' + query) : null;
         if (!readme) readme = await githubJson(repo + '/readme' + query);
-        if (!readme) return [];
+        if (!readme) { if (failure) throw failure; return []; }
         if (readme.encoding !== 'base64' || typeof readme.content !== 'string' || readme.content.length > 1400000) throw Error('Invalid project readme');
         const markdown = new TextDecoder().decode(Uint8Array.from(atob(readme.content.replace(/\s/g, '')), char => char.charCodeAt(0)));
-        return extractScreenshots(markdown, readme.download_url || 'https://raw.githubusercontent.com/' + repo + '/' + (ref || 'HEAD') + '/README.md');
+        return extractScreenshots(markdown, readme.download_url || 'https://raw.githubusercontent.com/' + repo + '/' + (ref || 'HEAD') + '/' + relative + 'README.md').map(image => ({...image, origin: 'readme'}));
       });
+    }
+    function extractVersionNotes(markdown, version) {
+      const headings = [...markdown.matchAll(/^(#{1,6})\s+(.+)$/gm)];
+      const at = headings.findIndex(heading => /(?:^|[\s\[@/]|-v)v?(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?)(?=$|[\s\]])/.exec(heading[2])?.[1] === version);
+      if (at < 0) return null;
+      const heading = headings[at], end = headings.slice(at + 1).find(next => next[1].length <= heading[1].length)?.index ?? markdown.length;
+      return markdown.slice(heading.index + heading[0].length, end).trim().slice(0, 60000) || null;
     }
     function loadReleaseNotes(entry, version) {
       const repo = githubRepository(entry);
       if (!repo || !EXACT_VERSION.test(version.version)) return Promise.resolve(null);
-      return cachedDetail('release:' + repo + ':' + version.version + ':' + (version.source?.commit || ''), async () => {
-        const tags = [...new Set(['v' + version.version, version.version, entry.name + '@' + version.version, entry.name.split('/').at(-1) + '@' + version.version])];
+      return cachedDetail('release:' + repo + ':' + entry.name + ':' + version.version + ':' + (version.source?.commit || '') + ':' + (entry.installation?.source || ''), async () => {
+        const short = entry.name.split('/').at(-1);
+        const tags = [...new Set(['v' + version.version, version.version, entry.name + '-v' + version.version, short + '-v' + version.version, entry.name + '@' + version.version, short + '@' + version.version])];
+        let failure;
         for (const tag of tags) {
-          const release = await githubJson(repo + '/releases/tags/' + encodeURIComponent(tag));
-          if (typeof release?.body === 'string' && tags.includes(release.tag_name)) return {body: release.body.slice(0, 60000), url: 'https://github.com/' + repo + '/releases/tag/' + encodeURIComponent(release.tag_name)};
+          try {
+            const release = await githubJson(repo + '/releases/tags/' + encodeURIComponent(tag));
+            if (typeof release?.body === 'string' && release.body.trim() && release.tag_name === tag) return {body: release.body.slice(0, 60000), url: 'https://github.com/' + repo + '/releases/tag/' + encodeURIComponent(tag)};
+          } catch (error) { failure = error; break; }
+        }
+        const relative = projectDirectory(entry, version.source), ref = version.source?.type === 'git' ? version.source.commit : 'HEAD';
+        for (const file of [...new Set([relative + 'CHANGELOG.md', 'CHANGELOG.md', relative + 'changelog.md'])]) {
+          try {
+            const changelog = await rawProjectFile(repo, file, ref);
+            const body = changelog && extractVersionNotes(changelog.text, version.version);
+            if (body) return {body, url: changelog.url};
+          } catch (error) { failure ??= error; }
         }
         const previous = entry.installation?.source;
         const sha = version.source?.type === 'git' && version.source.commit;
@@ -347,6 +431,7 @@ window.__ModuleLoader__.load({
           const comparison = await githubJson(repo + '/compare/' + old + '...' + sha);
           if (comparison?.commits?.length) return {body: comparison.commits.slice(0, 30).map(item => '• ' + item.commit.message.split('\n')[0]).join('\n'), url: 'https://github.com/' + repo + '/compare/' + old + '...' + sha};
         }
+        if (failure) throw failure;
         return null;
       });
     }
@@ -357,7 +442,7 @@ window.__ModuleLoader__.load({
       const restart = t('updateRestart'), scripts = t('installNeedsDialog');
       const outcomeText = updateTexts(t);
       try {
-        const response = await fetchImpl('dsh-open-market/self-update', {
+        const response = await fetchImpl('/dsh-open-market/self-update', {
           method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify(target)
         });
         if (response.status === 401 || response.status === 403) return { ok: false, error: unauthorized };
@@ -926,7 +1011,8 @@ window.__ModuleLoader__.load({
       profileSaved: '收藏和设置已保存在当前 DSH 配置中', profileSaving: '正在保存收藏和设置…',
       profileFailed: '收藏和设置暂存本机，尚未保存到当前 DSH 配置。',
       screenshots: '界面预览', screenshotsEmpty: '作者暂无可展示的截图', detailLoading: '正在加载…',
-      detailFailed: '暂时无法加载，可重试或打开项目页面。', releaseNotes: '更新说明',
+      detailFailed: '项目内容读取失败，可重试或打开原文。', detailRateLimited: 'GitHub 请求额度已用完，请稍后重试或打开原文。', releaseNotes: '更新说明',
+      screenshotsAuthor: '作者提供的实际效果', screenshotsReadme: '从项目 README 识别的预览', screenshotsUnavailable: '预览图片无法显示，请打开项目页面查看。',
       releaseEmpty: '未找到这个版本的更新说明', releaseSource: '查看原始说明',
       restoreUnavailable: '无法确认原安装来源，已保留当前版本。请从「插件」页管理此插件。',
       updateBusy: '另一个插件正在更新，请稍后重试', updateRestored: '原版本已恢复',
@@ -998,7 +1084,8 @@ window.__ModuleLoader__.load({
       profileSaved: 'Favorites and settings are saved in this DSH profile', profileSaving: 'Saving favorites and settings…',
       profileFailed: 'Favorites and settings are cached here, but have not been saved to this DSH profile.',
       screenshots: 'Screenshots', screenshotsEmpty: 'No screenshots provided yet', detailLoading: 'Loading…',
-      detailFailed: 'Could not load. Retry or open the project page.', releaseNotes: 'Release notes',
+      detailFailed: 'Could not read project content. Retry or open the source.', detailRateLimited: 'GitHub request limit reached. Retry later or open the source.', releaseNotes: 'Release notes',
+      screenshotsAuthor: 'Previews provided by the author', screenshotsReadme: 'Previews identified in the project README', screenshotsUnavailable: 'Preview images could not be displayed. Open the project page to view them.',
       releaseEmpty: 'No release notes found for this version', releaseSource: 'View original notes',
       restoreUnavailable: 'The original source could not be confirmed. The current version was kept. Manage this plugin from Plugins.',
       updateBusy: 'Another plugin is updating. Try again shortly.', updateRestored: 'The original version was restored',
@@ -1298,8 +1385,15 @@ window.__ModuleLoader__.load({
       .opm-icon-button { width: 32px; padding: 0; }
       .opm-icon-button svg { width: 16px; height: 16px; }
       .opm-toolbar .opm-search { flex: 1 1 220px; min-width: min(100%, 180px); }
-      .opm-category { min-height: 32px; max-width: 180px; min-width: 100px; padding: 4px 8px; border: 1px solid var(--dsw-alias-border-l2);
-        border-radius: var(--dsw-radius-sm); background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-primary); font: inherit; }
+      .opm-category-wrap { position: relative; display: inline-flex; max-width: 180px; min-width: 116px; }
+      .opm-root select.opm-category { appearance: none; -webkit-appearance: none; width: 100%; height: 32px; padding: 0 30px 0 11px;
+        border: 1px solid var(--dsw-alias-border-l2, #737780); border-radius: var(--dsw-radius-sm, 8px);
+        background: var(--dsw-alias-button-elevated-fill, Canvas); color: var(--dsw-alias-label-primary, CanvasText);
+        font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; text-overflow: ellipsis; }
+      .opm-root select.opm-category:hover { background: var(--dsw-alias-interactive-bg-hover, ButtonFace); }
+      .opm-category option { background: var(--dsw-alias-bg-layer-1, Canvas); color: var(--dsw-alias-label-primary, CanvasText); }
+      .opm-category-wrap > svg { position: absolute; right: 10px; top: 10px; width: 12px; height: 12px;
+        color: var(--dsw-alias-label-secondary, CanvasText); pointer-events: none; }
       .opm-screenshots { display: flex; gap: 10px; overflow-x: auto; padding: 4px 0 10px; scroll-snap-type: x proximity; }
       .opm-screenshots a { flex: 0 0 auto; max-width: 100%; scroll-snap-align: start; }
       .opm-screenshots img { display: block; max-width: 100%; width: auto; height: 190px; object-fit: contain;
@@ -1385,7 +1479,7 @@ window.__ModuleLoader__.load({
     }
 
     function titleOf(entry, resolve) {
-      return resolve(entry.title) || entry.name;
+      return resolve(entry.title ?? '') || entry.name;
     }
 
     // Each plugin gets a stable hue from its name, for the soft tint behind its card and icon.
@@ -1479,7 +1573,7 @@ window.__ModuleLoader__.load({
     const SECTION_GLYPHS = { today: '☀', recommended: '⊙', popular: '♥', trending: '↗', newest: '✚', all: '▦' };
 
     function descriptionOf(entry, resolve, t) {
-      const text = resolve(entry.description) || '';
+      const text = resolve(entry.description ?? '') || '';
       return text.replace(/^\s*★\s*[\d,.]+\s*│\s*/, '').trim() || t('noDescription');
     }
 
@@ -1838,22 +1932,32 @@ window.__ModuleLoader__.load({
     function Screenshots({entry, t}) {
       const [state, setState] = React.useState({status: 'loading'});
       const [attempt, setAttempt] = React.useState(0);
+      const [broken, setBroken] = React.useState(() => new Set());
       const source = defaultVersionOf(entry)?.source ?? entry.versions?.[0]?.source;
       React.useEffect(() => {
         let live = true;
         setState({status: 'loading'});
-        loadScreenshots(entry).then(images => { if (live) setState({status: 'ready', images}); }, () => { if (live) setState({status: 'error'}); });
+        setBroken(new Set());
+        loadScreenshots(entry).then(images => { if (live) setState({status: 'ready', images}); }, error => { if (live) setState({status: 'error', error}); });
         return () => { live = false; };
       }, [entry.name, source?.commit, attempt]);
-      if (!githubRepository(entry)) return null;
+      const images = state.images?.filter(image => !broken.has(image.url)) || [];
+      const rejectImage = url => setBroken(previous => new Set([...previous, url]));
+      const project = githubRepository(entry);
       return h('section', {className: 'opm-detail-section', 'aria-label': t('screenshots')}, h('h3', null, t('screenshots')),
         state.status === 'loading' ? h('p', {className: 'opm-muted', role: 'status'}, t('detailLoading'))
-          : state.status === 'error' ? h('div', null, h('p', {className: 'opm-muted'}, t('detailFailed')),
+          : state.status === 'error' ? h('div', null, h('p', {className: 'opm-muted'}, t([403, 429].includes(state.error?.status) ? 'detailRateLimited' : 'detailFailed')),
             h('button', {type: 'button', className: 'opm-button opm-button-small', onClick: () => setAttempt(value => value + 1)}, t('retry')))
-            : state.images.length ? h('div', {className: 'opm-screenshots'}, state.images.map((image, index) =>
+            : images.length ? h('div', null, h('p', {className: 'opm-muted'}, t(images[0].origin === 'author' ? 'screenshotsAuthor' : 'screenshotsReadme')),
+              h('div', {className: 'opm-screenshots'}, images.map((image, index) =>
               h('a', {key: image.url, href: image.url, target: '_blank', rel: 'noopener noreferrer', 'aria-label': (image.alt || t('screenshots') + ' ' + (index + 1)) + ' · ' + t('newWindow')},
-                h('img', {src: image.url, alt: image.alt || t('screenshots') + ' ' + (index + 1), loading: 'lazy', referrerPolicy: 'no-referrer'}))))
-              : h('p', {className: 'opm-muted'}, t('screenshotsEmpty')));
+                h('img', {src: image.url, alt: image.alt || t('screenshots') + ' ' + (index + 1), loading: 'lazy', referrerPolicy: 'no-referrer',
+                  onError: () => rejectImage(image.url), onLoad: event => {
+                    const node = event.currentTarget;
+                    if (image.origin !== 'author' && (node.naturalWidth < 180 || node.naturalHeight < 100 || node.naturalWidth / node.naturalHeight > 5)) rejectImage(image.url);
+                  }})))))
+              : h('p', {className: 'opm-muted'}, t(broken.size ? 'screenshotsUnavailable' : 'screenshotsEmpty')),
+        project && h('a', {href: 'https://github.com/' + project, target: '_blank', rel: 'noopener noreferrer'}, t('releaseSource')));
     }
     function ReleaseNotes({entry, version, t}) {
       const [open, setOpen] = React.useState(false), [attempt, setAttempt] = React.useState(0);
@@ -1862,18 +1966,19 @@ window.__ModuleLoader__.load({
         if (!open) return;
         let live = true;
         setState({status: 'loading'});
-        loadReleaseNotes(entry, version).then(notes => { if (live) setState({status: 'ready', notes}); }, () => { if (live) setState({status: 'error'}); });
+        loadReleaseNotes(entry, version).then(notes => { if (live) setState({status: 'ready', notes}); }, error => { if (live) setState({status: 'error', error}); });
         return () => { live = false; };
       }, [open, entry.name, version.version, version.source?.commit, attempt]);
       if (!githubRepository(entry)) return null;
       return h('details', {className: 'opm-release', open, onToggle: event => setOpen(event.currentTarget.open)},
         h('summary', null, t('releaseNotes') + ' · ' + version.version),
         open && (state.status === 'loading' ? h('p', {className: 'opm-muted', role: 'status'}, t('detailLoading'))
-          : state.status === 'error' ? h('div', null, h('p', {className: 'opm-muted'}, t('detailFailed')),
+          : state.status === 'error' ? h('div', null, h('p', {className: 'opm-muted'}, t([403, 429].includes(state.error?.status) ? 'detailRateLimited' : 'detailFailed')),
             h('button', {type: 'button', className: 'opm-button opm-button-small', onClick: () => setAttempt(value => value + 1)}, t('retry')))
             : state.notes ? h('div', null, h('div', {className: 'opm-release-text'}, state.notes.body.replace(/^#{1,6}\s+/gm, '').replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')),
               h('a', {href: state.notes.url, target: '_blank', rel: 'noopener noreferrer'}, t('releaseSource')))
-              : h('p', {className: 'opm-muted'}, t('releaseEmpty'))));
+              : h('p', {className: 'opm-muted'}, t('releaseEmpty'))),
+        open && !state.notes && h('a', {href: 'https://github.com/' + githubRepository(entry) + '/releases', target: '_blank', rel: 'noopener noreferrer'}, t('releaseSource')));
     }
 
     function PluginDetails({ entry, returnTarget, marketRoot, onClose, ...props }) {
@@ -2234,8 +2339,8 @@ window.__ModuleLoader__.load({
       const terms = searchText(query).trim().split(/\s+/).filter(Boolean);
       const groups = terms.map(term => SEARCH_ALIASES.find(group => group.includes(term)) ?? [term]);
       return entries.filter(entry => !category || entry.metadata?.category === category).map(entry => {
-        const text = searchText([entry.name, titleOf(entry, resolve), entry.author, resolve(entry.description),
-          ...(typeof entry.description === 'object' ? Object.values(entry.description) : []), ...(entry.metadata?.keywords || [])].join(' '));
+        const text = searchText([entry.name, titleOf(entry, resolve), entry.author, resolve(entry.description ?? ''),
+          ...(entry.description && typeof entry.description === 'object' ? Object.values(entry.description) : []), ...(entry.metadata?.keywords || [])].join(' '));
         return {entry, exact: terms.filter(term => text.includes(term)).length,
           matches: groups.every(group => group.some(term => text.includes(term)))};
       }).filter(item => item.matches).sort((a, b) => b.exact - a.exact || recommendedOrder(a.entry, b.entry)).map(item => item.entry);
@@ -2245,9 +2350,10 @@ window.__ModuleLoader__.load({
       const { groups } = useFavorites();
       const count = new Set(groups.flatMap(group => group.names)).size;
       return h('div', { className: 'opm-toolbar' }, h(SearchBar, { t, query, setQuery }),
-        h('select', {className: 'opm-category', value: category, 'aria-label': t('category'), onChange: event => setCategory(event.target.value)},
+        h('span', {className: 'opm-category-wrap'}, h('select', {className: 'opm-category', value: category, 'aria-label': t('category'), onChange: event => setCategory(event.target.value)},
           h('option', {value: ''}, t('allCategories')),
-          Object.entries(categories).map(([id, info]) => h('option', {key: id, value: id}, resolve(info.title) || id))),
+          Object.entries(categories).map(([id, info]) => h('option', {key: id, value: id}, resolve(info.title ?? '') || id))),
+          h('svg', {viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, 'aria-hidden': true}, h('path', {d: 'm4 6 4 4 4-4'}))),
         h('button', { type: 'button', className: 'opm-button opm-favorites-button', 'aria-haspopup': 'dialog', onClick: event => onPanel('favorites', event) },
           h('span', { 'aria-hidden': true }, '☆'), t('favorites'), count > 0 && h('small', null, count)),
         updates != null && h('button', { type: 'button', className: 'opm-button opm-favorites-button opm-installed-button', 'aria-haspopup': 'dialog',
@@ -2814,9 +2920,10 @@ window.__ModuleLoader__.load({
             install: target => installDirectly(getManager, target, t) })));
       }
       function SidebarIcon({ size = 16 }) {
-        return h('svg', { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8,
-          strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true },
-          h('path', { d: 'M4 10h16v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1zM4 10l1.5-5h13L20 10M9 14h6' }));
+        return h('svg', { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.7,
+            strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true },
+          h('path', { d: 'M7.5 8C4.5 8.5 2.5 11 3 14c.6 4 4.1 6 8.2 5.5 2.4-.2 4.1-1.4 5.8-3.7L21 18v-8l-4 2.2c-.4-1.9-1.5-3.1-3.3-3.8M9 2.5V5m4-2.5V5M8 5h6v2a3 3 0 0 1-6 0zM10 15c.9 1.1 2.2 1.5 3.5 1.3' }),
+          h('circle', {cx: 6.4, cy: 12.4, r: .8, fill: 'currentColor', stroke: 'none'}));
       }
       let removeSidebar;
       function syncSidebar() {
@@ -2903,7 +3010,7 @@ window.__ModuleLoader__.load({
       npmVersionRegistry, declaredDshRanges, npmVersions, loadNpmVersions, versionChoices, versionInstall, versionCommand, installVersion, requestSelfUpdate, VERSION_CACHE_TTL,
       PluginDetails, OtherVersions, countSelfInstall, supportMarket, updateSettings, getLikes, FooterInvite,
       hydrateProfile, getProfileStatus, getSettings, getFavorites, writeFavorites, filterCatalog, requestBundleUpdate,
-      extractScreenshots, loadScreenshots, loadReleaseNotes, ReleaseNotes, Screenshots, zh, en, styles: STYLES };
+      extractScreenshots, extractVersionNotes, loadScreenshots, loadReleaseNotes, ReleaseNotes, Screenshots, zh, en, styles: STYLES };
     return { apply, inject, internals };
   }
 });

@@ -10,6 +10,7 @@ import { parseMarketIndex } from '@deepseek-ai/dsh-plugin-market-index';
 import { archiveBudget, DEFAULT_ARCHIVE_BYTES, MAX_ARCHIVE_BYTES, DEFAULT_DOWNLOAD_TIMEOUT, MAX_DOWNLOAD_TIMEOUT } from './limits.mjs';
 import { displayFiles, packageDisplay, MAX_DISPLAY_FILE_BYTES } from './package-display.mjs';
 import { reviewedIcon } from './reviewed-icon.mjs';
+import { validateScreenshots } from './screenshots.mjs';
 import { validPackageDirectory } from './github-repository.mjs';
 
 export const REGISTRY = 'https://registry.npmjs.org/';
@@ -306,6 +307,8 @@ export async function collectPackage(input, { fetchImpl = fetch, now = Date.now(
   const readFiles = [resolved.icon, ...Object.values(resolved.locales)].filter(path => path && files.has(path));
   const contents = readFiles.length ? (await inspectArchive(bytes, {...budget, readFiles})).contents : new Map();
   const display = packageDisplay(manifest, resolved, contents);
+  const screenshots = validateScreenshots(input.screenshots);
+  if (screenshots !== undefined) display.evidence.screenshots = screenshots;
   const repositoryInfo = resolveRepository(manifest, input, version, published.dist.integrity);
   let repository = repositoryInfo.repository;
   if (source.type === 'git' && repository?.url !== source.url) throw new Error('Git source differs from declared repository');
