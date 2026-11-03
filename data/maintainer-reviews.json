@@ -2492,6 +2492,229 @@
       "reviewedAt": "2026-11-02T13:59:13.647Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-agents-visualization",
+      "version": "0.1.2",
+      "integrity": "sha512-rDin4fqWpWarER0xWvE6HqZjPGEQAlZQCiVyvvkvkYvDKWrSzoBUri2aq4RypC5Lm8xdE/D9GLyb/A1lhiB+1w==",
+      "repository": "https://github.com/LINGTIAN303/dsh-agents-visualization",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-workflow-canvas-sidebar",
+      "version": "0.17.0-rc.3",
+      "integrity": "sha512-a+8MGITg1NCJR0b+U6a6iaJjP5WLRJBn7MIduhQg9IDCSBltEzEzI/tT0iv6pxg4OquChQ1jgIyWRGkcR9w9Xw==",
+      "repository": "https://github.com/zzz123123lll/workflow-canvas-sidebar",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-rtk-workbench",
+      "version": "0.2.0",
+      "integrity": "sha512-dbkgb5QG8uAt1xfpOKPbqkj8gcqNvuLp9T2dBVvap7hxkb0drCDXtqBRpVnCOPlZx5DCn9KK0C5lWyeDoe/1fQ==",
+      "repository": "https://github.com/YunaAloft/dsh-rtk-workbench",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-soniox",
+      "version": "0.2.0",
+      "integrity": "sha512-R20nyeIShK+iH8RPGldHrZTqWWfnFwVycjnVCV4z/91AsP1O/FgUh5Fyji9/yju+HFe6Sdw7c/sobgISgKhOFQ==",
+      "repository": "https://github.com/XimilalaXiang/dsh-soniox",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-smart-selection-translate",
+      "version": "0.1.2",
+      "integrity": "sha512-/zOTX67tC1df5W40FAEJgE0SEqoFe8crYPASuGSVcdWOJNRklj2eZU/Mdr6aD6nNsowPhpwkYCMFKHV0aGQWxw==",
+      "repository": "https://github.com/Sunshine334419520/smart-selection-translate",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-as-mcp",
+      "version": "0.52.84",
+      "integrity": "sha512-7U66AlAbcbGqys30Dz2KA7XHZhPClniloZNB2PLlrDnKe0YXoMV/9v/h29Ghtd1asfZ/COf7zUqqrG7KvsPhnw==",
+      "repository": "https://github.com/xiseliuli/dsh-as-mcp",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-workflow-timeline",
+      "version": "1.0.0",
+      "integrity": "sha512-OsXvcLch3IDqPcAbKn3emuzon/rxJZDRu/RkRPL2EjkO2I7Eq9YVRDpdYmnLnpHrDNsHzDVD9/El8iOB2ut5wQ==",
+      "repository": "https://github.com/ruaruaTon/dsh-workflow-timeline",
+      "source": {
+        "type": "git",
+        "commit": "3ad7c1f9ebb0ed883430a3a0c81d2eb938982740"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-edit-rerun",
+      "version": "1.0.0",
+      "integrity": "sha512-c0cnSpEAiNn52wX5zdoNe3DW4KBh4k9gd39OiqTqIA0EQn+GMRe0mpCvvsJh+rYz/mAa4H5c7zLiPKp0PAaBWQ==",
+      "repository": "https://github.com/jinchenwu1220/dsh-edit-rerun",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-codex-style-computer-use",
+      "version": "1.2.3",
+      "integrity": "sha512-ypGO9n70W72CNIuRS4znQmiXzL6Q0CQIhKlCNij12EvZO8BTZU4knkRT9Z6Q7ea7tmB8grYH8sKco9KM0fkO4g==",
+      "repository": "https://github.com/ltmroberthk915/dsh-computer-use",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-markdown-typora",
+      "version": "0.3.4",
+      "integrity": "sha512-q728u5ORwk/o27FeDSFDKvdl48C1m1IAcp2btrXscPXQlxGHk/6BPF+0oVsHQPvBIgrdYz7QzaKqblV+O4XfvA==",
+      "repository": "https://github.com/ltmroberthk915/markpilot",
+      "source": {
+        "type": "git",
+        "commit": "f149e8e9429a5fa6a5e809f2e5ac8e2521a79904",
+        "path": "dsh-markdown-typora"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ntfy-notifier",
+      "version": "1.2.0",
+      "integrity": "sha512-VG49y2wa6Lv+yVPMVz05Fq/aUq5gMcJ7PARDUrJ4c/FMvQn9OdS+564MjmRLBNXMUViACOqnpTycOK06dJaW1A==",
+      "repository": "https://github.com/liangmz/dsh-ntfy-notifier-plugin",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-push-privacy-guard",
+      "version": "0.2.1",
+      "integrity": "sha512-rY3M+FPC29jXHtu6+UiFk7c0WDmdyddLU+5/jpjcdVQR6ebHS2itz+hGB5codiGHDNCXL6cTH/b0auC2lBBEUg==",
+      "repository": "https://github.com/lizhijie429/dsh-push-privacy-guard",
+      "source": {
+        "type": "git",
+        "commit": "756cc68b1a152856e01c83479b8e5ff11ef8c317"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-companion-memory",
+      "version": "0.3.2",
+      "integrity": "sha512-hlTnV+rFcdlNIZTKBpgFcejhWAlwIVkU1HqSphN5Lic0B1HcAWu1wlNXAROGrABSAAEKgJYqs6LD2rEHWx54NQ==",
+      "repository": "https://github.com/123zxs345/dsh-plugin-companion-memory",
+      "source": {
+        "type": "git",
+        "commit": "de820c269927264370d865e6d83e60959c7f74fb"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-session-norms",
+      "version": "1.0.0",
+      "integrity": "sha512-YuhG1PDE7o6psaeQll/0BSN6aX4hKwlUGNR9DgOydLRSgaSk+jfzlwTW7FZafyQ6DAIxgR+JgP/E1TLlzvCr+w==",
+      "repository": "https://github.com/phoenixlucky/dsh-session-norms",
+      "source": {
+        "type": "git",
+        "commit": "fea59779818886474746fbb036afba1a42133926"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-shorekeeper",
+      "version": "1.1.4",
+      "integrity": "sha512-3SZg1AFDj9DcuPoinAoTxmnrR7EKEuWM+8n5LWEF+hUO/wWAm9dUGS20f15ibAIs18d6k3FXtGwPyYKkDa1xnA==",
+      "repository": "https://github.com/Doya16/dsh-shorekeeper",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-wechat-dingtalk-bridge",
+      "version": "0.1.4",
+      "integrity": "sha512-H8KqIuixhDmI72XN6rz5RqsUbH4BeVcJXkxUqNF1gJLtkWszyEwkSPGvle071ynSITW5s8KGP3nlBTiMP9B0eg==",
+      "repository": "https://github.com/gcggcg/dsh-plugin-wechat-dingtalk",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-select-quote",
+      "version": "0.3.20",
+      "integrity": "sha512-bPzCbXHZRbh5blkGNeSGwj73F7SC3oJB4bMA4MaUM6VQpmnwfg3U6DSpEpVbp8f6skXNRjZKVvGmQIC7G1ZIvw==",
+      "repository": "https://github.com/latte03/dsh-select-quote",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-03T15:20:40.700Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-working-changes",
+      "version": "0.5.3",
+      "integrity": "sha512-xccqInBJQDWlPRu10z8KDGpdvE79fLB005JDepsuZJrUCGj5KqCqm51cIbOGxUouO3y9dVoeUkbPrUuTLJ8o+Q==",
+      "repository": "https://github.com/xuex991/dsh-working-changes",
+      "source": {
+        "type": "git",
+        "commit": "9d3f21a617d735257c9e3855193dcb68d3b5f07b"
+      },
+      "reviewedAt": "2026-11-03T15:24:05.916Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

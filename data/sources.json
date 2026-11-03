@@ -8906,10 +8906,10 @@
         "zh": "划选批注"
       },
       "description": {
-        "en": "Attach selected conversation text to the next message as editable annotations, retaining source highlights and jump-back links.",
-        "zh": "把对话中的选中文字作为可编辑批注附到下一条消息，保留原文高亮和回跳入口。"
+        "en": "Adds selection annotations, in-place translation, sidebar subagent questions and default-browser link opening to DSH. The selected text rides along with your next message, the source keeps its highlight and ordinal mark for jumping back, the menu opens on selection or from the right-click menu, and the translation model can be picked separately.",
+        "zh": "为 DSH 增加划词批注、引用、划词翻译、侧边子代理提问，链接用默认浏览器打开。选中的原文连同评论随下一条消息交给模型，正文保留高亮与序号角标、可跳回原文；菜单可划词浮出或从右键打开，翻译可单独指定模型。"
       },
-      "category": "interface"
+      "category": "tools"
     },
     {
       "name": "dsh-service-portal",
@@ -12504,17 +12504,17 @@
         "zh": "当前变更"
       },
       "description": {
-        "en": "Show files changed from HEAD above a conversation, per-file line counts and unified diffs in the right sidebar. Uses a temporary Git index; does not stage, commit or push changes.",
-        "zh": "在会话顶部显示相对 HEAD 变更的文件、增删行数，并在右侧栏查看统一差异。使用临时 Git 索引，不执行 stage、commit 或 push。"
+        "en": "Show uncommitted changes and the local commit history of one or more Git repositories in the current DSH workspace, with per-file line counts and unified diffs. Read-only; uses a temporary Git index and does not stage, commit or push.",
+        "zh": "显示当前 DSH 工作区中一个或多个 Git 仓库的未提交改动和本地提交历史，支持逐文件增删行数与统一差异。只读；使用临时 Git 索引，不执行 stage、commit 或 push。"
       },
       "category": "development",
-      "version": "0.1.1",
+      "version": "0.5.3",
       "source": {
         "type": "git",
         "url": "https://github.com/xuex991/dsh-working-changes",
-        "commit": "69e421b35933a70f39f6ea8b8f879b66d210b826",
-        "integrity": "sha512-Bcak5+Y9m63fg6yT5a3NnskNrrPF1sLvZ37wzCqklBCRBVzsGcMTVQBhT7u+GfaMPk8s86ean/MRSaFMj3eprw==",
-        "publishedAt": "2026-11-02T06:18:26.000Z"
+        "commit": "9d3f21a617d735257c9e3855193dcb68d3b5f07b",
+        "integrity": "sha512-xccqInBJQDWlPRu10z8KDGpdvE79fLB005JDepsuZJrUCGj5KqCqm51cIbOGxUouO3y9dVoeUkbPrUuTLJ8o+Q==",
+        "publishedAt": "2026-11-03T09:07:24.000Z"
       }
     },
     {
@@ -12604,6 +12604,175 @@
         "integrity": "sha512-8xu/yNX3orsptb8aYCgHE/ZwXAWLDW//LZDpnmVsQ/dH5w2iE1+phwhIqM6U7bqHyG72HUZ3MCoM8LNqdObj2A==",
         "publishedAt": "2026-11-02T08:17:14.000Z"
       }
+    },
+    {
+      "name": "dsh-agents-visualization",
+      "title": {
+        "en": "Agent Rules Editor",
+        "zh": "智能体规则管理"
+      },
+      "description": {
+        "en": "View and edit project and global AGENTS.md-style rule files for DSH and other AI tools, with Markdown preview and version-safe writes. Requires DSH 0.2.1-rc.5; changes are written to the selected rule files.",
+        "zh": "查看和编辑 DSH 及其他 AI 工具的项目级、全局规则文件，支持 Markdown 预览和版本校验写入。需要 DSH 0.2.1-rc.5，保存时会修改选中的规则文件。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-workflow-canvas-sidebar",
+      "version": "0.17.0-rc.3",
+      "title": {
+        "en": "Workflow Canvas",
+        "zh": "工作流画布"
+      },
+      "description": {
+        "en": "A visual project workspace for goals, source material, module conversations, revisions and versioned deliverables, with bundled Python for document processing. For Windows x64 and DSH 0.2.1-rc.5; model work uses the account configured in DSH.",
+        "zh": "把目标、资料、模块会话、修订和版本化成果放进同一画布，并内置 Python 处理文档。适用于 Windows x64 和 DSH 0.2.1-rc.5；模型任务使用 DSH 中已配置的账号。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-rtk-workbench",
+      "title": {
+        "en": "RTK Workbench",
+        "zh": "RTK 工具输出压缩"
+      },
+      "description": {
+        "en": "Rewrite supported shell commands and compress large tool results through rtk, falling back to the original when rtk is unavailable or rejects the rewrite. Platform binaries arrive through optional npm packages; requires Node >=22.19.",
+        "zh": "通过 rtk 改写受支持的 shell 命令并压缩较大的工具结果；rtk 不可用或拒绝改写时回退原命令。平台二进制由可选 npm 包安装，需要 Node >=22.19。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-soniox",
+      "title": {
+        "en": "Soniox Speech",
+        "zh": "Soniox 语音"
+      },
+      "description": {
+        "en": "Adds Soniox speech-to-text and text-to-speech through your own API key. Recordings and text to synthesize are sent to Soniox; generated audio is cached locally under DSH_HOME. Requires a Soniox key and DSH >=0.2.1-rc.1.",
+        "zh": "使用自己的 API Key 接入 Soniox 语音识别与合成。录音和待朗读文本会发送到 Soniox，生成的音频缓存在本机 DSH_HOME。需要 Soniox Key 和 DSH >=0.2.1-rc.1。"
+      },
+      "category": "providers"
+    },
+    {
+      "name": "dsh-smart-selection-translate",
+      "title": {
+        "en": "Smart Selection Translate",
+        "zh": "划词翻译"
+      },
+      "description": {
+        "en": "Translate selected English text in place with word definitions, phonetics and pronunciation, or sentence translation. Dictionary and audio requests go to Youdao or Bing; translation uses the DSH model. Author-tested on DSH 0.2.1-rc.3.",
+        "zh": "选中英文后就地查看释义、音标、发音或整句翻译。词典与发音请求发送到有道或必应，翻译使用 DSH 模型。作者验证环境为 DSH 0.2.1-rc.3。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-as-mcp",
+      "title": {
+        "en": "DSH as MCP",
+        "zh": "DSH MCP 服务"
+      },
+      "description": {
+        "en": "Expose a running DSH instance as an authenticated MCP server for creating workspaces and sessions, driving agents, editing files and running shell jobs. Listens on loopback by default and requires a bearer token, but grants broad machine access when enabled.",
+        "zh": "把运行中的 DSH 暴露为带 Bearer Token 的 MCP 服务，可创建工作区、驱动会话、读写文件并运行 shell 任务。默认仅监听回环地址，但启用后会给予外部调用者较大本机权限。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-workflow-timeline",
+      "title": {
+        "en": "Workflow Timeline",
+        "zh": "工作流时间线"
+      },
+      "description": {
+        "en": "Show workflow stages and subagents on a timeline, configure model and concurrency for each stage, and reopen subagent conversations from the panel. Run names and stage settings persist under ~/.dsh; requires DSH >=0.2.1-rc.3.",
+        "zh": "在时间线中查看工作流阶段和子代理，为每个阶段配置模型与并发，并从面板打开子代理对话。运行名称与阶段设置保存在 ~/.dsh，需要 DSH >=0.2.1-rc.3。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-edit-rerun",
+      "title": {
+        "en": "Edit and Rerun",
+        "zh": "编辑重跑"
+      },
+      "description": {
+        "en": "List real user prompts from a session, edit one, fork the session before that turn and place the revised prompt in the new composer without sending it. Requires DSH 0.2.1-rc.5 and Node >=22; the first turn cannot be rerun.",
+        "zh": "列出一段会话里真实的用户提示词，修改其中一条，在该轮之前分叉会话，并把改后的文本预填进新输入框而不自动发送。需要 DSH 0.2.1-rc.5 和 Node >=22，第一轮不可重跑。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-codex-style-computer-use",
+      "title": {
+        "en": "Desktop Computer Use",
+        "zh": "桌面电脑操控"
+      },
+      "description": {
+        "en": "Observe Windows with screenshots and UI Automation, then click, type, scroll or send keys and verify the result. Standard mode requires approval for each action; Windows x64 and Node >=22, with native helpers bundled in the package.",
+        "zh": "通过截图和 UI Automation 观察 Windows，再执行点击、输入、滚动或按键并回读验证。默认 standard 模式每个动作都要审批；仅支持 Windows x64，需 Node >=22，包内附带原生组件。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-markdown-typora",
+      "title": {
+        "en": "Markdown Editor",
+        "zh": "Markdown 编辑器"
+      },
+      "description": {
+        "en": "Edit Markdown in the DSH right sidebar with live formulas, table cells, offline Mermaid and KaTeX, and selection-to-chat insertion. Saves use version checks. Requires DSH >=0.2.0-rc.2 and Node >=20; installed from a subdirectory of the MarkPilot repository.",
+        "zh": "在 DSH 右侧栏编辑 Markdown，支持公式即时编辑、表格单元格、离线 Mermaid 和 KaTeX，并可将选区插入对话。保存带版本校验。需要 DSH >=0.2.0-rc.2 和 Node >=20，从 MarkPilot 仓库子目录安装。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-ntfy-notifier",
+      "title": {
+        "en": "ntfy Notifications",
+        "zh": "ntfy 系统通知"
+      },
+      "description": {
+        "en": "Subscribe to one or more ntfy servers and channels and turn messages into Windows toast notifications. Supports an optional Bearer token; message content is displayed but never executed.",
+        "zh": "订阅一个或多个 ntfy 服务器与频道，把消息转换成 Windows 系统通知。支持可选 Bearer Token；只显示消息内容，不执行消息中的任何内容。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-push-privacy-guard",
+      "title": {
+        "en": "Push Privacy Guard",
+        "zh": "推送隐私检查"
+      },
+      "description": {
+        "en": "Before git commit, git push or gh repo sync runs through DSH, scan the content that would be committed or uploaded for keys, private keys, credentials, absolute paths and personal data. Suspicious content requires one-time approval; manual terminals outside DSH are not covered.",
+        "zh": "在 DSH 执行 git commit、git push 或 gh repo sync 前，只读检查将要提交或上传的密钥、私钥、凭据、绝对路径和个人信息。发现内容时请求一次性授权；不覆盖 DSH 之外的人工终端操作。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-plugin-companion-memory",
+      "title": {
+        "en": "Companion Memory",
+        "zh": "情感陪伴记忆"
+      },
+      "description": {
+        "en": "Maintain a selective, layered memory of the user across conversations, with profile-local SQLite storage and model-led summarization. Requires DSH 0.2.1-rc.2 and Node >=24; semantic recall needs a configured Hindsight service.",
+        "zh": "跨会话维护选择性、分层的用户记忆，数据保存在当前 profile 的本地 SQLite，并由模型提炼总结。需要 DSH 0.2.1-rc.2 和 Node >=24；语义召回需另外配置 Hindsight 服务。"
+      },
+      "category": "memory"
+    },
+    {
+      "name": "dsh-session-norms",
+      "title": {
+        "en": "Session Transcript View",
+        "zh": "会话规范视图"
+      },
+      "description": {
+        "en": "Show the current session as numbered turns with user messages, assistant replies and tool calls, plus counters and a Markdown copy action. Read-only and web-only; tested on DSH 0.2.2-alpha.2.",
+        "zh": "把当前会话按轮次展开，显示用户消息、助手回复和工具调用，并提供统计与复制 Markdown。只读且仅支持 Web；作者验证环境为 DSH 0.2.2-alpha.2。"
+      },
+      "category": "interface"
     }
   ]
 }
