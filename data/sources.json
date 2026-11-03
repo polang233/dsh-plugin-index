@@ -12693,7 +12693,9 @@
       "source": {
         "type": "git",
         "url": "https://github.com/ruaruaTon/dsh-workflow-timeline",
-        "commit": "3ad7c1f9ebb0ed883430a3a0c81d2eb938982740"
+        "commit": "3ad7c1f9ebb0ed883430a3a0c81d2eb938982740",
+        "integrity": "sha512-OsXvcLch3IDqPcAbKn3emuzon/rxJZDRu/RkRPL2EjkO2I7Eq9YVRDpdYmnLnpHrDNsHzDVD9/El8iOB2ut5wQ==",
+        "publishedAt": "2026-11-03T08:12:14.000Z"
       }
     },
     {
@@ -12736,6 +12738,8 @@
         "type": "git",
         "url": "https://github.com/ltmroberthk915/markpilot",
         "commit": "f149e8e9429a5fa6a5e809f2e5ac8e2521a79904",
+        "integrity": "sha512-q728u5ORwk/o27FeDSFDKvdl48C1m1IAcp2btrXscPXQlxGHk/6BPF+0oVsHQPvBIgrdYz7QzaKqblV+O4XfvA==",
+        "publishedAt": "2026-10-31T04:55:08.000Z",
         "path": "dsh-markdown-typora"
       }
     },
@@ -12766,7 +12770,9 @@
       "source": {
         "type": "git",
         "url": "https://github.com/lizhijie429/dsh-push-privacy-guard",
-        "commit": "756cc68b1a152856e01c83479b8e5ff11ef8c317"
+        "commit": "756cc68b1a152856e01c83479b8e5ff11ef8c317",
+        "integrity": "sha512-rY3M+FPC29jXHtu6+UiFk7c0WDmdyddLU+5/jpjcdVQR6ebHS2itz+hGB5codiGHDNCXL6cTH/b0auC2lBBEUg==",
+        "publishedAt": "2026-11-03T07:25:56.000Z"
       }
     },
     {
@@ -12784,7 +12790,9 @@
       "source": {
         "type": "git",
         "url": "https://github.com/123zxs345/dsh-plugin-companion-memory",
-        "commit": "de820c269927264370d865e6d83e60959c7f74fb"
+        "commit": "de820c269927264370d865e6d83e60959c7f74fb",
+        "integrity": "sha512-hlTnV+rFcdlNIZTKBpgFcejhWAlwIVkU1HqSphN5Lic0B1HcAWu1wlNXAROGrABSAAEKgJYqs6LD2rEHWx54NQ==",
+        "publishedAt": "2026-11-03T14:54:58.000Z"
       }
     },
     {
@@ -12802,7 +12810,9 @@
       "source": {
         "type": "git",
         "url": "https://github.com/phoenixlucky/dsh-session-norms",
-        "commit": "fea59779818886474746fbb036afba1a42133926"
+        "commit": "fea59779818886474746fbb036afba1a42133926",
+        "integrity": "sha512-YuhG1PDE7o6psaeQll/0BSN6aX4hKwlUGNR9DgOydLRSgaSk+jfzlwTW7FZafyQ6DAIxgR+JgP/E1TLlzvCr+w==",
+        "publishedAt": "2026-11-03T14:55:10.000Z"
       }
     }
   ]
