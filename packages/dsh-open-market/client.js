@@ -26,6 +26,7 @@ window.__ModuleLoader__.load({
       try { return normalizeSettings(JSON.parse(window.localStorage.getItem(SETTINGS_KEY))); } catch { return { ...DEFAULT_SETTINGS }; }
     }
     let settings = readSettings();
+    const settingsDirty = new Set();
     const settingsListeners = new Set();
     const getSettings = () => settings;
     function subscribeSettings(listener) {
@@ -35,7 +36,9 @@ window.__ModuleLoader__.load({
     function updateSettings(key, value) {
       if (typeof value !== typeof DEFAULT_SETTINGS[key] || settings[key] === value) return;
       settings = { ...settings, [key]: value };
+      settingsDirty.add(key);
       try { window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch { /* Keep this session usable without storage. */ }
+      persistProfile('settings');
       settingsListeners.forEach(listener => listener());
     }
     function useSettings() {
@@ -62,7 +65,7 @@ window.__ModuleLoader__.load({
       return { ...rest, registry: chosen || registry };
     }
 
-    // Favorites live in this browser profile: named groups of npm package names, any package, not only this index's.
+    // Named groups of package names, saved in the Host profile with a browser cache.
     const FAVORITES_KEY = 'dsh-open-market:favorites';
     const DEFAULT_GROUP = 'default';
     const PACKAGE_NAME = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
@@ -90,6 +93,7 @@ window.__ModuleLoader__.load({
     function writeFavorites(next) {
       favorites = normalizeFavorites(next);
       try { window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites)); } catch { /* Keep this session usable without storage. */ }
+      persistProfile('favorites');
       favoritesListeners.forEach(listener => listener());
     }
     function useFavorites() {
@@ -263,10 +267,95 @@ window.__ModuleLoader__.load({
       return 'dsh plugin --profile desktop add ' + (spec.includes('&') ? '"' + spec + '"' : spec);
     }
 
+    const detailCache = new Map();
+    function githubRepository(entry) {
+      try {
+        const url = new URL(repositoryOf(entry));
+        const match = /^\/([\w.-]+)\/([\w.-]+?)(?:\.git)?\/?$/.exec(url.pathname);
+        return url.protocol === 'https:' && url.hostname === 'github.com' && !url.username && !url.password && match ? match[1] + '/' + match[2] : null;
+      } catch { return null; }
+    }
+    async function githubJson(path) {
+      const response = await fetch('https://api.github.com/repos/' + path, {
+        headers: {accept: 'application/vnd.github+json'}, credentials: 'omit', signal: AbortSignal.timeout(15000)
+      });
+      if (response.status === 404) return null;
+      if (!response.ok) throw Error('Project details unavailable');
+      const text = await response.text();
+      if (text.length > 2 * 1024 * 1024) throw Error('Project details too large');
+      return JSON.parse(text);
+    }
+    function cachedDetail(key, load) {
+      const old = detailCache.get(key);
+      if (old && Date.now() - old.time < VERSION_CACHE_TTL) return old.promise;
+      const record = {time: Date.now(), promise: null};
+      record.promise = load().catch(error => { if (detailCache.get(key) === record) detailCache.delete(key); throw error; });
+      detailCache.set(key, record);
+      return record.promise;
+    }
+    function screenshotUrl(value, base) {
+      try {
+        let url = new URL(value, base);
+        if (url.protocol !== 'https:' || url.username || url.password) return null;
+        if (url.hostname === 'github.com' && /\/blob\//.test(url.pathname)) url = new URL('https://raw.githubusercontent.com' + url.pathname.replace('/blob/', '/'));
+        if (!['raw.githubusercontent.com', 'github.com', 'user-images.githubusercontent.com', 'private-user-images.githubusercontent.com'].includes(url.hostname)) return null;
+        if (/badge|shields|logo|(?:^|[\/_.-])icon[\/_.-]|avatar|\.svg(?:$|\?)/i.test(url.href)) return null;
+        if (!/\.(?:png|jpe?g|webp|gif)(?:$|\?)/i.test(url.href) && !(url.hostname === 'github.com' && url.pathname.includes('/user-attachments/assets/'))) return null;
+        return url.href;
+      } catch { return null; }
+    }
+    function extractScreenshots(markdown, base) {
+      const pictures = [];
+      const add = (value, alt, position) => {
+        const url = screenshotUrl(value, base);
+        if (url && !/badge|logo|icon|徽章|标志/i.test(alt) && !pictures.some(item => item.url === url)) pictures.push({url, alt, position});
+      };
+      for (const match of markdown.matchAll(/!\[([^\]]*)\]\(\s*(?:<([^>]+)>|([^\s)]+))(?:\s+["'][^)]*)?\s*\)/g)) add(match[2] || match[3], match[1], match.index);
+      for (const match of markdown.matchAll(/<img\b[^>]*\bsrc\s*=\s*["']([^"']+)["'][^>]*>/gi)) add(match[1], /\balt\s*=\s*["']([^"']*)["']/i.exec(match[0])?.[1] || '', match.index);
+      return pictures.sort((a, b) => a.position - b.position).slice(0, 6).map(({url, alt}) => ({url, alt}));
+    }
+    function loadScreenshots(entry) {
+      const repo = githubRepository(entry);
+      if (!repo) return Promise.resolve([]);
+      const source = defaultVersionOf(entry)?.source ?? entry.versions?.[0]?.source;
+      const ref = source?.type === 'git' ? source.commit : null;
+      const directory = source?.path || entry.repository?.directory;
+      const relative = typeof directory === 'string' && directory.split('/').every(part => part && part !== '.' && part !== '..') ? directory : '';
+      return cachedDetail('screens:' + repo + ':' + relative + ':' + (ref || 'default'), async () => {
+        const query = ref ? '?ref=' + encodeURIComponent(ref) : '';
+        let readme = relative ? await githubJson(repo + '/contents/' + relative.split('/').map(encodeURIComponent).join('/') + '/README.md' + query) : null;
+        if (!readme) readme = await githubJson(repo + '/readme' + query);
+        if (!readme) return [];
+        if (readme.encoding !== 'base64' || typeof readme.content !== 'string' || readme.content.length > 1400000) throw Error('Invalid project readme');
+        const markdown = new TextDecoder().decode(Uint8Array.from(atob(readme.content.replace(/\s/g, '')), char => char.charCodeAt(0)));
+        return extractScreenshots(markdown, readme.download_url || 'https://raw.githubusercontent.com/' + repo + '/' + (ref || 'HEAD') + '/README.md');
+      });
+    }
+    function loadReleaseNotes(entry, version) {
+      const repo = githubRepository(entry);
+      if (!repo || !EXACT_VERSION.test(version.version)) return Promise.resolve(null);
+      return cachedDetail('release:' + repo + ':' + version.version + ':' + (version.source?.commit || ''), async () => {
+        const tags = [...new Set(['v' + version.version, version.version, entry.name + '@' + version.version, entry.name.split('/').at(-1) + '@' + version.version])];
+        for (const tag of tags) {
+          const release = await githubJson(repo + '/releases/tags/' + encodeURIComponent(tag));
+          if (typeof release?.body === 'string' && tags.includes(release.tag_name)) return {body: release.body.slice(0, 60000), url: 'https://github.com/' + repo + '/releases/tag/' + encodeURIComponent(release.tag_name)};
+        }
+        const previous = entry.installation?.source;
+        const sha = version.source?.type === 'git' && version.source.commit;
+        const old = typeof previous === 'string' && /#([a-f0-9]{40})(?:&|$)/.exec(previous)?.[1];
+        if (sha && old && previous.split('#', 1)[0].replace(/^git\+/, '').replace(/\.git$/, '') === 'https://github.com/' + repo && old !== sha) {
+          const comparison = await githubJson(repo + '/compare/' + old + '...' + sha);
+          if (comparison?.commits?.length) return {body: comparison.commits.slice(0, 30).map(item => '• ' + item.commit.message.split('\n')[0]).join('\n'), url: 'https://github.com/' + repo + '/compare/' + old + '...' + sha};
+        }
+        return null;
+      });
+    }
+
     async function requestSelfUpdate(target, t, { fetchImpl = fetch } = {}) {
       // Resolve locale text before the request can unload the context that supplied t.
       const unavailable = t('selfUpdateUnavailable'), unauthorized = t('selfUpdateUnauthorized'), lost = t('selfUpdateConnectionLost');
       const restart = t('updateRestart'), scripts = t('installNeedsDialog');
+      const outcomeText = updateTexts(t);
       try {
         const response = await fetchImpl('dsh-open-market/self-update', {
           method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify(target)
@@ -276,9 +365,38 @@ window.__ModuleLoader__.load({
         const answer = await response.json();
         if (typeof answer?.ok !== 'boolean') return { ok: false, error: lost };
         if (answer.code === 'stop-profile') return { ...answer, error: restart };
-        if (answer.code === 'install-needs-dialog') return { ...answer, error: scripts };
-        return answer;
+        if (answer.code === 'install-needs-dialog') return updateOutcome({...answer, error: scripts}, outcomeText);
+        return updateOutcome(answer, outcomeText);
       } catch { return { ok: false, error: lost }; }
+    }
+
+    function updateTexts(t) {
+      const keys = ['restoreUnavailable', 'updateBusy', 'updateRestoredRestart', 'updateRestored', 'unknownError', 'updateRestoreFailed', 'updateUnavailable'];
+      const messages = Object.fromEntries(keys.map(key => [key, t(key)]));
+      return key => messages[key];
+    }
+    function updateOutcome(answer, t) {
+      let error = answer.error;
+      if (answer.code === 'restore-unavailable') error = t('restoreUnavailable');
+      else if (answer.code === 'update-busy') error = t('updateBusy');
+      else if (answer.code === 'update-unavailable') error = t('updateUnavailable');
+      if (answer.restored === true) error = errorText(error, t('unknownError')) + ' · ' + t(answer.restoreRestart ? 'updateRestoredRestart' : 'updateRestored');
+      else if (answer.restored === false) error = errorText(error, t('unknownError')) + ' · ' + t('updateRestoreFailed') + (answer.restoreSpec ? ' ' + answer.restoreSpec : '');
+      return {...answer, ...(error ? {error} : {})};
+    }
+    async function requestBundleUpdate(target, t, {fetchImpl = fetch} = {}) {
+      const outcomeText = updateTexts(t);
+      try {
+        const response = await fetchImpl('/dsh-open-market/update', {method: 'POST', credentials: 'same-origin',
+          headers: {'content-type': 'application/json'}, body: JSON.stringify(target)});
+        if (response.status === 401 || response.status === 403) return {ok: false, error: t('selfUpdateUnauthorized')};
+        if (!response.ok) return {ok: false, error: t('updateUnavailable')};
+        const answer = await response.json();
+        if (typeof answer?.ok !== 'boolean') return {ok: false, error: t('updateConnectionLost')};
+        if (answer.code === 'stop-profile') return {...answer, error: t('updateRestart')};
+        if (answer.code === 'install-needs-dialog') answer.error = t('installNeedsDialog');
+        return updateOutcome(answer, outcomeText);
+      } catch { return {ok: false, error: t('updateConnectionLost')}; }
     }
 
     function updateSelf(target, t) {
@@ -295,12 +413,12 @@ window.__ModuleLoader__.load({
       close.onclick = () => node.remove();
       node.append(text, close); document.body.appendChild(node);
       return requestSelfUpdate(target, t).then(answer => {
-        text.textContent = answer.ok ? answer.restart ? messages.restart : messages.done : messages.failed + ': ' + errorText(answer.error, messages.failed) + ' ' + messages.recovery;
+        text.textContent = answer.ok ? answer.restart ? messages.restart : messages.done : messages.failed + ': ' + errorText(answer.error, messages.failed) + (answer.restored === false ? ' ' + messages.recovery : '');
         return answer;
       });
     }
 
-    async function installVersion(entry, version, { install, manager, t, title = entry.name, onPhase = () => {}, busyLabel = 'busy', selfUpdate = updateSelf }) {
+    async function installVersion(entry, version, { install, t, title = entry.name, onPhase = () => {}, busyLabel = 'busy', selfUpdate = updateSelf, update = requestBundleUpdate }) {
       if (entry.installation.status === 'provided') return { ok: false, error: t('providedVersion') };
       if (entry.name === 'dsh-open-market' && entry.installation.status !== 'not-installed') {
         onPhase('selfUpdating');
@@ -308,15 +426,8 @@ window.__ModuleLoader__.load({
         return { ...answer, selfUpdate: true };
       }
       if (entry.installation.status !== 'not-installed') {
-        const service = manager?.();
-        if (!service?.removeBundle) return { ok: false, error: t('updateUnavailable') };
         onPhase('updating');
-        const removed = await service.removeBundle(entry.name);
-        if (!removed?.ok) return removed ?? { ok: false, error: t('unknownError') };
-        const failure = removed.value?.error;
-        if (failure) return { ok: false, error: failure.code === 'stop-profile' ? t('updateRestart') : failure };
-        if (removed.value?.application === 'failed') return { ok: false, error: t('unknownError') };
-        onPhase(busyLabel);
+        return update({name: entry.name, ...installTarget(versionInstall(entry, version), getSettings())}, t);
       }
       return install({ ...versionInstall(entry, version), title, version: version.version });
     }
@@ -363,8 +474,9 @@ window.__ModuleLoader__.load({
       const byName = new Map(bundles.map(bundle => [bundle.name, bundle]));
       let changed = false;
       const result = entries.map(entry => {
-        const installation = installationOf(entry, byName.get(entry.name));
-        if (installation.status === entry.installation?.status && installation.installedVersion === entry.installation?.installedVersion) return entry;
+        const bundle = byName.get(entry.name);
+        const installation = {...installationOf(entry, bundle), ...(bundle?.source ? {source: bundle.source} : {})};
+        if (installation.status === entry.installation?.status && installation.installedVersion === entry.installation?.installedVersion && installation.source === entry.installation?.source) return entry;
         changed = true;
         return { ...entry, installation };
       });
@@ -529,6 +641,112 @@ window.__ModuleLoader__.load({
       } else void syncMarket();
     }
     const LIKED_KEY = 'dsh-open-market:liked';
+    const SELF_INSTALL_KEY = 'dsh-open-market:install-counted';
+    let selfInstallCounted = false;
+    try { selfInstallCounted = window.localStorage.getItem(SELF_INSTALL_KEY) === '1'; } catch { /* Keep a session marker without storage. */ }
+    function markSelfInstallCounted() {
+      selfInstallCounted = true;
+      try { window.localStorage.setItem(SELF_INSTALL_KEY, '1'); } catch { /* Keep the session marker. */ }
+      persistProfile('installCounted');
+    }
+    function countSelfInstall() {
+      if (!profileReady || selfInstallCounted || !settings.likes) return;
+      resetLikedDay();
+      if (likesState.names.has('dsh-open-market') && !pendingLikes.has('dsh-open-market')) markSelfInstallCounted();
+      else void sendLike('dsh-open-market', 'install');
+    }
+    function supportMarket() { void sendLike('dsh-open-market', 'like'); }
+    let profileReady = false, profileLoading;
+    let profileStatus = 'loading', profileWrites = Promise.resolve();
+    const profileListeners = new Set(), profileDirty = new Set();
+    const getProfileStatus = () => profileStatus;
+    function setProfileStatus(value) { profileStatus = value; profileListeners.forEach(listener => listener()); }
+    function profileValues() { return {settings, favorites, installCounted: selfInstallCounted, footerTurn}; }
+    async function profileRequest(patch, initialize = false) {
+      const response = await fetch('/dsh-open-market/state', {
+        method: 'POST', credentials: 'same-origin', headers: {'content-type': 'application/json'},
+        body: JSON.stringify({patch, initialize}), signal: AbortSignal.timeout(10000)
+      });
+      if (!response.ok) throw Error('Preferences unavailable');
+      const data = await response.json();
+      if (!data?.ok || data.state?.schema !== 1) throw Error('Invalid preferences');
+      return data.state;
+    }
+    function persistProfile(field) {
+      if (field) profileDirty.add(field);
+      if (!profileReady) return profileWrites;
+      setProfileStatus('saving');
+      profileWrites = profileWrites.then(async () => {
+        const values = profileValues(), patch = Object.fromEntries([...profileDirty].map(key => [key, values[key]]));
+        if (Object.keys(patch).length) {
+          await profileRequest(patch);
+          const current = profileValues();
+          for (const key of Object.keys(patch)) if (current[key] === patch[key]) {
+            profileDirty.delete(key);
+            if (key === 'settings') settingsDirty.clear();
+          }
+        }
+        setProfileStatus(profileDirty.size ? 'saving' : 'ready');
+      }).catch(() => setProfileStatus('error'));
+      return profileWrites;
+    }
+    function hydrateProfile() {
+      if (profileLoading) return profileLoading;
+      setProfileStatus('loading');
+      const initialFavorites = favorites;
+      profileLoading = (async () => {
+        try {
+          // The Host initializes missing fields only, so another browser's saved choices win over this cache.
+          const saved = await profileRequest(profileValues(), true);
+          if (saved.settings) {
+            const local = settings;
+            settings = normalizeSettings(saved.settings);
+            for (const key of settingsDirty) settings[key] = local[key];
+          }
+          if (saved.favorites) favorites = profileDirty.has('favorites')
+            ? mergeFavoriteChanges(normalizeFavorites(saved.favorites), initialFavorites, favorites) : normalizeFavorites(saved.favorites);
+          if (!profileDirty.has('installCounted')) selfInstallCounted = saved.installCounted === true;
+          if (!profileDirty.has('footerTurn') && (saved.footerTurn === 0 || saved.footerTurn === 1)) footerTurn = saved.footerTurn;
+          try {
+            window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+            window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+            window.localStorage.setItem(SELF_INSTALL_KEY, selfInstallCounted ? '1' : '0');
+            window.localStorage.setItem(FOOTER_KEY, String(footerTurn));
+          } catch { /* The Host copy remains authoritative without browser storage. */ }
+          profileReady = true;
+          setProfileStatus('ready');
+          settingsListeners.forEach(listener => listener());
+          favoritesListeners.forEach(listener => listener());
+          if (profileDirty.size) void persistProfile();
+          countSelfInstall();
+          return true;
+        } catch { setProfileStatus('error'); return false; }
+        finally { profileLoading = undefined; }
+      })();
+      return profileLoading;
+    }
+    function mergeFavoriteChanges(remote, before, after) {
+      const groups = remote.groups.map(group => ({...group, names: [...group.names]}));
+      for (const previous of before.groups) {
+        if (previous.id !== DEFAULT_GROUP && !after.groups.some(group => group.id === previous.id)) {
+          const index = groups.findIndex(group => group.id === previous.id);
+          if (index >= 0) groups.splice(index, 1);
+        }
+      }
+      for (const local of after.groups) {
+        const previous = before.groups.find(group => group.id === local.id);
+        let group = groups.find(group => group.id === local.id);
+        if (!previous) { if (!group) groups.push({...local, names: [...local.names]}); continue; }
+        const removed = previous.names.filter(name => !local.names.includes(name));
+        const added = local.names.filter(name => !previous.names.includes(name));
+        if (!group && (added.length || local.name !== previous.name)) groups.push(group = {...local, names: []});
+        if (group) {
+          if (local.name !== previous.name) group.name = local.name;
+          group.names = [...new Set([...group.names.filter(name => !removed.includes(name)), ...added])];
+        }
+      }
+      return normalizeFavorites({schema: 1, groups});
+    }
     const EMPTY_LIKES = {};
 
     function likesOrigin() {
@@ -616,6 +834,8 @@ window.__ModuleLoader__.load({
       const revisions = new Map(likesRevisions);
       let live = true;
       async function load() {
+        if (!profileReady && !await hydrateProfile()) return;
+        if (!settings.likes) return;
         let counts = null;
         for (let attempt = 0; attempt < 2 && live; attempt++) {
           try {
@@ -637,6 +857,7 @@ window.__ModuleLoader__.load({
     }
 
     async function sendLike(name, source) {
+      if (!profileReady && !await hydrateProfile()) return;
       if (!settings.likes) return;
       resetLikedDay();
       if (likesState.names.has(name)) return;
@@ -658,6 +879,7 @@ window.__ModuleLoader__.load({
         if (!response.ok) throw new Error();
         const data = await response.json();
         if (data?.name !== name || !Number.isSafeInteger(data.likes) || data.likes < 0 || typeof data.counted !== 'boolean') throw new Error();
+        if (name === 'dsh-open-market') markSelfInstallCounted();
         resetLikedDay();
         if (pendingLikes.get(name) === request) setLikeCount(name, data.likes);
       } catch {
@@ -700,6 +922,16 @@ window.__ModuleLoader__.load({
 
     const NS = 'openMarket';
     const zh = {
+      category: '分类', allCategories: '全部分类',
+      profileSaved: '收藏和设置已保存在当前 DSH 配置中', profileSaving: '正在保存收藏和设置…',
+      profileFailed: '收藏和设置暂存本机，尚未保存到当前 DSH 配置。',
+      screenshots: '界面预览', screenshotsEmpty: '作者暂无可展示的截图', detailLoading: '正在加载…',
+      detailFailed: '暂时无法加载，可重试或打开项目页面。', releaseNotes: '更新说明',
+      releaseEmpty: '未找到这个版本的更新说明', releaseSource: '查看原始说明',
+      restoreUnavailable: '无法确认原安装来源，已保留当前版本。请从「插件」页管理此插件。',
+      updateBusy: '另一个插件正在更新，请稍后重试', updateRestored: '原版本已恢复',
+      updateRestoredRestart: '原版本已恢复，重启 DSH 后生效', updateRestoreFailed: '原版本恢复失败，请从「插件」页重新安装：',
+      updateConnectionLost: '连接中断，宿主可能仍在更新或恢复。请在「插件 → 已安装」检查版本。',
       title: '开放市场', loading: '正在读取开放插件市场…',
       searchPlaceholder: '搜索插件名称、作者或描述',
       resultCount: '{count} 个插件', noResults: '没有找到匹配的插件', showMore: '显示更多', clearSearch: '清除', failed: '读取失败', retry: '重试',
@@ -726,9 +958,9 @@ window.__ModuleLoader__.load({
       updates: '可更新', incompatibleGroup: '不兼容当前 DSH',
       upToDate: '已安装的插件都是最新的',
       install: '安装', notInstalled: '未安装', installed: '已安装', updateAvailable: '有更新', update: '更新',
-      incompatible: '不兼容', busy: '正在打开…', updating: '正在卸载旧版本…', actionFailed: '无法打开插件操作',
-      updateHint: '先卸载当前版本，再打开新版本的安装', updateRestart: '这个插件正在运行，DSH 重启后才能更新，请重启后再试',
-      updateUnavailable: '当前 DSH 不支持在这里更新，请到「已安装」里卸载后重新安装',
+      incompatible: '不兼容', busy: '正在打开…', updating: '正在检查并更新…', actionFailed: '无法完成插件操作',
+      updateHint: '先检查目标版本，替换失败时恢复原版本', updateRestart: '这个插件正在运行，DSH 重启后才能更新，请重启后再试',
+      updateUnavailable: '当前无法使用带恢复的更新，请先从「插件」页更新开放市场；原插件已保留。',
       unknownError: '未知错误', invalidPage: '市场返回了无效的分页数据', unknownVersion: '版本未知',
       noDescription: '暂无描述', sectionEmpty: '暂无符合条件的插件',
       previous: '向左浏览 {section}', next: '向右浏览 {section}',
@@ -743,7 +975,7 @@ window.__ModuleLoader__.load({
       registryHelp: '在开放市场里安装和更新 npm 插件时先问这个源，连不上或还没同步到这个包时，DSH 通常会改问另一个可信的源。Git 来源的插件直接从 GitHub 下载；DSH 自己的「发现」页不受这里影响。',
       registryCustomHelp: '自定义地址只问这一个源，不会回退到其他源。需要登录的源，请把凭据放在本机的 ~/.npmrc 里。',
       autoReview: '新对话自动使用「自动审查」', autoReviewHelp: '打开后，每个新对话都直接使用 DSH 的实验性「自动审查」权限，不用每次手动选择、确认两次；DSH 没开「自动审查」时会一并打开，可能需要重启 DSH 生效。自动审查由当前模型判断每次工具调用，可能误放行或误拒绝，并消耗额外 token。', autoReviewRestart: '已保存，重启 DSH 后生效', autoReviewFailed: '切换失败：{reason}',
-      likes: '参与点赞', likesHelp: '点赞和安装会向 dshopen.org 发送匿名请求，用于推荐排序；每人每天每个插件计一次，点赞每 3 天减少 1。',
+      likes: '参与点赞', likesHelp: '点赞和安装会向 dshopen.org 发送匿名请求，用于推荐排序。首次运行和点击市场页底部链接也为市场插件计一次支持；每人每天每个插件计一次，点赞每 3 天减少 1。',
       like: '点赞', likedToday: '今天已经点过赞了', likeLimit: '今天点赞次数已达上限', likeFailed: '点赞失败，请稍后再试',
       browseAll: '翻阅全部 {count} 个插件', allPlugins: '全部插件', allHint: '{count} 个插件', sortBy: '排序', sortStars: '星数最多', collapse: '收起',
       upToDateGroup: '状态正常', noneInstalled: '还没有安装开放市场里的插件',
@@ -762,6 +994,16 @@ window.__ModuleLoader__.load({
       website: '官网', websiteUrl: 'https://dshopen.org/zh/', repository: 'GitHub 仓库', submitPlugin: '提交插件', indexAddress: '索引地址'
     };
     const en = {
+      category: 'Category', allCategories: 'All categories',
+      profileSaved: 'Favorites and settings are saved in this DSH profile', profileSaving: 'Saving favorites and settings…',
+      profileFailed: 'Favorites and settings are cached here, but have not been saved to this DSH profile.',
+      screenshots: 'Screenshots', screenshotsEmpty: 'No screenshots provided yet', detailLoading: 'Loading…',
+      detailFailed: 'Could not load. Retry or open the project page.', releaseNotes: 'Release notes',
+      releaseEmpty: 'No release notes found for this version', releaseSource: 'View original notes',
+      restoreUnavailable: 'The original source could not be confirmed. The current version was kept. Manage this plugin from Plugins.',
+      updateBusy: 'Another plugin is updating. Try again shortly.', updateRestored: 'The original version was restored',
+      updateRestoredRestart: 'The original version was restored; restart DSH to use it', updateRestoreFailed: 'Restoration failed. Reinstall from Plugins:',
+      updateConnectionLost: 'Connection lost. The Host may still be updating or restoring. Check the version under Plugins → Installed.',
       title: 'Open Market', loading: 'Loading Open Plugin Market…',
       searchPlaceholder: 'Search plugins by name, author or description',
       resultCount: '{count} plugins', noResults: 'No matching plugins', showMore: 'Show more', clearSearch: 'Clear', failed: 'Could not load the market', retry: 'Retry',
@@ -788,9 +1030,9 @@ window.__ModuleLoader__.load({
       updates: 'Updates available', incompatibleGroup: 'Incompatible with this DSH version',
       upToDate: 'Installed plugins are all up to date',
       install: 'Install', notInstalled: 'Not installed', installed: 'Installed', updateAvailable: 'Update available', update: 'Update',
-      incompatible: 'Incompatible', busy: 'Opening…', updating: 'Removing the old version…', actionFailed: 'Could not open the plugin action',
-      updateHint: 'Removes the current version, then opens the install for the new one', updateRestart: 'This plugin is running; restart DSH, then update it',
-      updateUnavailable: 'This DSH cannot update plugins from here; uninstall it under Installed and install it again',
+      incompatible: 'Incompatible', busy: 'Opening…', updating: 'Checking and updating…', actionFailed: 'Could not complete the plugin action',
+      updateHint: 'Checks the target and restores the original version if replacement fails', updateRestart: 'This plugin is running; restart DSH, then update it',
+      updateUnavailable: 'Update with recovery is unavailable. Update Open Market from Plugins first; the current plugin was kept.',
       unknownError: 'Unknown error', invalidPage: 'The market returned invalid pagination data', unknownVersion: 'Unknown version',
       noDescription: 'No description available',
       sectionEmpty: 'No matching plugins yet', previous: 'Browse {section} left', next: 'Browse {section} right',
@@ -805,7 +1047,7 @@ window.__ModuleLoader__.load({
       registryHelp: 'Installs and updates of npm plugins from Open Market ask this registry first. When it is unreachable or has no copy of the package yet, DSH usually asks another trusted one. Git plugins download straight from GitHub, and DSH’s own Discover tab is not affected.',
       registryCustomHelp: 'A custom address is asked alone, with no fallback. If it requires a login, keep the credentials in ~/.npmrc on this computer.',
       autoReview: 'Start new conversations in Auto review', autoReviewHelp: "Every new conversation uses DSH's experimental Auto review permission, so you no longer pick and confirm it each time. If Auto review is off in DSH it is switched on too, which may need a restart. Auto review asks the current model about each tool call; it can wrongly allow or refuse actions and uses extra tokens.", autoReviewRestart: 'Saved; restart DSH for it to take effect', autoReviewFailed: 'Could not switch: {reason}',
-      likes: 'Join likes', likesHelp: 'Likes and installs send anonymous requests to dshopen.org for recommendation ranking; each person counts once per plugin per UTC day, and likes decrease by 1 every 3 days.',
+      likes: 'Join likes', likesHelp: 'Likes and installs send anonymous requests to dshopen.org for recommendation ranking. First launch and market footer links also count as support for Open Market; each person counts once per plugin per UTC day, and likes decrease by 1 every 3 days.',
       like: 'Like', likedToday: 'Already liked today', likeLimit: 'Daily like limit reached', likeFailed: 'Could not like this plugin. Please try again later',
       browseAll: 'Browse all {count} plugins', allPlugins: 'All plugins', allHint: '{count} plugins', sortBy: 'Sort', sortStars: 'Most stars', collapse: 'Collapse',
       upToDateGroup: 'Up to date', noneInstalled: 'No plugins from Open Market are installed yet',
@@ -1037,6 +1279,7 @@ window.__ModuleLoader__.load({
       .opm-version-meta { color: var(--dsw-alias-label-secondary); font-size: 11px; line-height: 1.6; }
       .opm-version-actions { display: flex; gap: 6px; margin-left: auto; }
       .opm-version-error { flex-basis: 100%; font-size: 12px; }
+      .opm-version-row > .opm-release { flex-basis: 100%; min-width: 0; margin: 0; border: 0; padding-top: 4px; }
       .opm-versions-status { display: flex; align-items: center; gap: 10px; font-size: 12px; margin: 10px 0 !important; }
       /* A plain search over the whole catalog sits at the top. */
       .opm-search { position: relative; display: flex; align-items: center; max-width: 360px; }
@@ -1051,10 +1294,21 @@ window.__ModuleLoader__.load({
         background: none; color: var(--dsw-alias-label-tertiary); font: inherit; font-size: 16px; cursor: pointer; }
       .opm-search-clear:hover { background: var(--dsw-alias-interactive-bg-hover); color: var(--dsw-alias-label-primary); }
       .opm-result-count { margin-bottom: 8px !important; }
-      .opm-toolbar { display: flex; align-items: center; gap: 8px; max-width: 620px; }
+      .opm-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; max-width: 820px; }
       .opm-icon-button { width: 32px; padding: 0; }
       .opm-icon-button svg { width: 16px; height: 16px; }
-      .opm-toolbar .opm-search { flex: 1; min-width: 0; }
+      .opm-toolbar .opm-search { flex: 1 1 220px; min-width: min(100%, 180px); }
+      .opm-category { min-height: 32px; max-width: 180px; min-width: 100px; padding: 4px 8px; border: 1px solid var(--dsw-alias-border-l2);
+        border-radius: var(--dsw-radius-sm); background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-primary); font: inherit; }
+      .opm-screenshots { display: flex; gap: 10px; overflow-x: auto; padding: 4px 0 10px; scroll-snap-type: x proximity; }
+      .opm-screenshots a { flex: 0 0 auto; max-width: 100%; scroll-snap-align: start; }
+      .opm-screenshots img { display: block; max-width: 100%; width: auto; height: 190px; object-fit: contain;
+        border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-md); }
+      .opm-detail-section { margin: 16px 0; }
+      .opm-detail-section h3, .opm-release summary { font-size: 13px; font-weight: 600; margin: 0 0 8px; }
+      .opm-release { border-top: 1px solid var(--dsw-alias-border-l2); padding-top: 12px; margin: 12px 0; }
+      .opm-release summary { cursor: pointer; }
+      .opm-release-text { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 320px; overflow-y: auto; line-height: 1.65; }
       .opm-favorites-button { gap: 5px; }
       .opm-favorites-button small { color: var(--dsw-alias-label-tertiary); font-size: 11px; font-variant-numeric: tabular-nums; }
       /* Favorite: a star toggle, plus a group picker once there is more than one group. */
@@ -1330,8 +1584,7 @@ window.__ModuleLoader__.load({
             void sendLike(entry.name, 'install');
             return answer;
           }
-          // DSH's install refuses a package that is already there, so an update removes it first, as DSH's own
-          // Update for official plugins does; the install dialog then installs the new version.
+          // The Host owns replacement and restoration even if the Client closes.
           async function startUpdate() {
             return installVersion(entry, version, { install, manager, t, title: titleOf(entry, resolve), onPhase: setPhase, busyLabel });
           }
@@ -1575,10 +1828,52 @@ window.__ModuleLoader__.load({
                 h('button', { type: 'button', className: 'opm-button opm-button-small', disabled: provided || current || blocked || !!busy.version || disabled,
                   title: switching && !current && !provided ? t(entry.name === 'dsh-open-market' ? 'selfUpdateHint' : 'updateHint') : undefined, 'aria-busy': active,
                   'aria-label': t('versionAction').replace('{action}', action).replace('{version}', version.version), onClick: () => choose(version) }, action)),
-              actionError?.version === version.version && h('p', { className: 'opm-error opm-version-error', role: 'alert' }, actionError.text));
+              actionError?.version === version.version && h('p', { className: 'opm-error opm-version-error', role: 'alert' }, actionError.text),
+              h(ReleaseNotes, {entry, version, t}));
           })),
           registry && currentState.status === 'ready' && choices.length === entry.versions.length && h('p', { className: 'opm-versions-note' }, t('noOtherVersions')),
           choices.length > limit && h('button', { type: 'button', className: 'opm-button opm-button-small opm-more', onClick: () => setLimit(value => value + 20) }, t('moreVersions'))));
+    }
+
+    function Screenshots({entry, t}) {
+      const [state, setState] = React.useState({status: 'loading'});
+      const [attempt, setAttempt] = React.useState(0);
+      const source = defaultVersionOf(entry)?.source ?? entry.versions?.[0]?.source;
+      React.useEffect(() => {
+        let live = true;
+        setState({status: 'loading'});
+        loadScreenshots(entry).then(images => { if (live) setState({status: 'ready', images}); }, () => { if (live) setState({status: 'error'}); });
+        return () => { live = false; };
+      }, [entry.name, source?.commit, attempt]);
+      if (!githubRepository(entry)) return null;
+      return h('section', {className: 'opm-detail-section', 'aria-label': t('screenshots')}, h('h3', null, t('screenshots')),
+        state.status === 'loading' ? h('p', {className: 'opm-muted', role: 'status'}, t('detailLoading'))
+          : state.status === 'error' ? h('div', null, h('p', {className: 'opm-muted'}, t('detailFailed')),
+            h('button', {type: 'button', className: 'opm-button opm-button-small', onClick: () => setAttempt(value => value + 1)}, t('retry')))
+            : state.images.length ? h('div', {className: 'opm-screenshots'}, state.images.map((image, index) =>
+              h('a', {key: image.url, href: image.url, target: '_blank', rel: 'noopener noreferrer', 'aria-label': (image.alt || t('screenshots') + ' ' + (index + 1)) + ' · ' + t('newWindow')},
+                h('img', {src: image.url, alt: image.alt || t('screenshots') + ' ' + (index + 1), loading: 'lazy', referrerPolicy: 'no-referrer'}))))
+              : h('p', {className: 'opm-muted'}, t('screenshotsEmpty')));
+    }
+    function ReleaseNotes({entry, version, t}) {
+      const [open, setOpen] = React.useState(false), [attempt, setAttempt] = React.useState(0);
+      const [state, setState] = React.useState({status: 'loading'});
+      React.useEffect(() => {
+        if (!open) return;
+        let live = true;
+        setState({status: 'loading'});
+        loadReleaseNotes(entry, version).then(notes => { if (live) setState({status: 'ready', notes}); }, () => { if (live) setState({status: 'error'}); });
+        return () => { live = false; };
+      }, [open, entry.name, version.version, version.source?.commit, attempt]);
+      if (!githubRepository(entry)) return null;
+      return h('details', {className: 'opm-release', open, onToggle: event => setOpen(event.currentTarget.open)},
+        h('summary', null, t('releaseNotes') + ' · ' + version.version),
+        open && (state.status === 'loading' ? h('p', {className: 'opm-muted', role: 'status'}, t('detailLoading'))
+          : state.status === 'error' ? h('div', null, h('p', {className: 'opm-muted'}, t('detailFailed')),
+            h('button', {type: 'button', className: 'opm-button opm-button-small', onClick: () => setAttempt(value => value + 1)}, t('retry')))
+            : state.notes ? h('div', null, h('div', {className: 'opm-release-text'}, state.notes.body.replace(/^#{1,6}\s+/gm, '').replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')),
+              h('a', {href: state.notes.url, target: '_blank', rel: 'noopener noreferrer'}, t('releaseSource')))
+              : h('p', {className: 'opm-muted'}, t('releaseEmpty'))));
     }
 
     function PluginDetails({ entry, returnTarget, marketRoot, onClose, ...props }) {
@@ -1622,6 +1917,8 @@ window.__ModuleLoader__.load({
               h('p', { className: 'opm-version' }, [version, published].filter(Boolean).join(' · ')))),
           h(Tags, { entry, metadata, resolve, t }),
           h('p', { className: 'opm-description opm-panel-description' }, descriptionOf(entry, resolve, t)),
+          h(Screenshots, {key: entry.name, entry, t}),
+          latest && h(ReleaseNotes, {key: entry.name + ':' + version, entry, version: defaultVersionOf(entry) || latest, t}),
           h('div', { className: 'opm-muted opm-panel-info' },
             category && h('span', null, resolve(metadata?.categories?.[category]?.title) || category),
             h('span', null, t('likeCount').replace('{count}', likeCount(likes.counts, entry.name))),
@@ -1919,11 +2216,38 @@ window.__ModuleLoader__.load({
           h('div', { ref: sheet }, h(CardGrid, { ...props, entries: sorted }))));
     }
 
-    // A plain search over the whole catalog at the top of the tab.
-    function Toolbar({ t, query, setQuery, onPanel, updates }) {
+    const SEARCH_ALIASES = [
+      ['笔记', '记事本', '便笺', '便签', 'note', 'notes', 'notepad'],
+      ['待办', '任务清单', 'todo', 'to-do', 'task'], ['截图', '截屏', 'screenshot', 'capture'],
+      ['翻译', '翻譯', 'translate', 'translation'], ['记忆', '記憶', 'memory'],
+      ['主题', '主題', '皮肤', '外观', 'theme', 'skin', 'appearance'],
+      ['语音', '語音', '朗读', 'tts', 'speech', 'voice'], ['听写', '听写输入', 'dictation', 'stt'],
+      ['图片', '图像', '生图', 'image', 'images'], ['视频', '影片', 'video'],
+      ['搜索', '搜寻', '搜尋', 'search'], ['备份', '備份', 'backup'],
+      ['恢复', '還原', 'restore', 'recovery'], ['工作流', 'workflow'],
+      ['浏览器', '瀏覽器', 'browser'], ['文件', '檔案', 'file', 'files'],
+      ['终端', '終端', 'terminal'], ['费用', '費用', '成本', 'cost', 'billing'],
+      ['用量', 'usage'], ['技能', 'skill', 'skills'], ['收藏', 'favorite', 'bookmark']
+    ];
+    const searchText = value => String(value ?? '').normalize('NFKC').toLowerCase();
+    function filterCatalog(entries, query, category, resolve) {
+      const terms = searchText(query).trim().split(/\s+/).filter(Boolean);
+      const groups = terms.map(term => SEARCH_ALIASES.find(group => group.includes(term)) ?? [term]);
+      return entries.filter(entry => !category || entry.metadata?.category === category).map(entry => {
+        const text = searchText([entry.name, titleOf(entry, resolve), entry.author, resolve(entry.description),
+          ...(typeof entry.description === 'object' ? Object.values(entry.description) : []), ...(entry.metadata?.keywords || [])].join(' '));
+        return {entry, exact: terms.filter(term => text.includes(term)).length,
+          matches: groups.every(group => group.some(term => text.includes(term)))};
+      }).filter(item => item.matches).sort((a, b) => b.exact - a.exact || recommendedOrder(a.entry, b.entry)).map(item => item.entry);
+    }
+
+    function Toolbar({ t, query, setQuery, category, setCategory, categories, resolve, onPanel, updates }) {
       const { groups } = useFavorites();
       const count = new Set(groups.flatMap(group => group.names)).size;
       return h('div', { className: 'opm-toolbar' }, h(SearchBar, { t, query, setQuery }),
+        h('select', {className: 'opm-category', value: category, 'aria-label': t('category'), onChange: event => setCategory(event.target.value)},
+          h('option', {value: ''}, t('allCategories')),
+          Object.entries(categories).map(([id, info]) => h('option', {key: id, value: id}, resolve(info.title) || id))),
         h('button', { type: 'button', className: 'opm-button opm-favorites-button', 'aria-haspopup': 'dialog', onClick: event => onPanel('favorites', event) },
           h('span', { 'aria-hidden': true }, '☆'), t('favorites'), count > 0 && h('small', null, count)),
         updates != null && h('button', { type: 'button', className: 'opm-button opm-favorites-button opm-installed-button', 'aria-haspopup': 'dialog',
@@ -2127,24 +2451,39 @@ window.__ModuleLoader__.load({
 
     // Each opening of the tab shows the other message first, and an open tab keeps taking turns.
     const FOOTER_KEY = 'dsh-open-market:footer-turn';
-    let footerTurn;
+    const FOOTER_INTERVAL = 10000;
+    let footerTurn = 0;
     function nextFooterTurn() {
-      if (footerTurn === undefined) {
-        try { footerTurn = Number(window.localStorage.getItem(FOOTER_KEY)) || 0; } catch { footerTurn = 0; }
-      }
-      footerTurn = (footerTurn + 1) % 2;
-      try { window.localStorage.setItem(FOOTER_KEY, String(footerTurn)); } catch { /* Turns simply restart next time. */ }
-      return footerTurn;
+      let previous = footerTurn;
+      try {
+        const saved = window.localStorage.getItem(FOOTER_KEY);
+        if (saved === '0' || saved === '1') previous = Number(saved);
+      } catch { /* Use the last message from this session. */ }
+      return (previous + 1) % 2;
+    }
+    function rememberFooterTurn(turn) {
+      footerTurn = turn;
+      try { window.localStorage.setItem(FOOTER_KEY, String(turn)); } catch { /* Keep the session's last message. */ }
+      persistProfile('footerTurn');
     }
 
     function FooterInvite({ t, stars }) {
       const [inviting, setInviting] = React.useState(() => nextFooterTurn() === 0);
+      const [hovered, setHovered] = React.useState(false);
+      const [focused, setFocused] = React.useState(false);
       React.useEffect(() => {
-        const timer = window.setInterval(() => setInviting(value => !value), 30000);
+        rememberFooterTurn(inviting ? 0 : 1);
+      }, [inviting]);
+      React.useEffect(() => {
+        if (hovered || focused) return;
+        const timer = window.setInterval(() => setInviting(value => !value), FOOTER_INTERVAL);
         return () => window.clearInterval(timer);
-      }, []);
+      }, [hovered, focused]);
       const on = value => ({ 'data-on': value ? '' : undefined });
       return h('a', { className: 'opm-footer-link', href: inviting ? t('contributingUrl') : REPOSITORY_URL, target: '_blank', rel: 'noopener noreferrer',
+        onClick: supportMarket,
+        onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false),
+        onFocus: () => setFocused(true), onBlur: () => setFocused(false),
         'aria-label': (inviting ? t('contributeCta') : t('starLink').replace('{repo}', REPOSITORY)) + ' · ' + t('newWindow') },
         h('img', { className: 'opm-footer-mark', src: 'https://github.com/' + REPOSITORY.split('/')[0] + '.png?size=64', alt: '',
           loading: 'lazy', referrerPolicy: 'no-referrer' }),
@@ -2276,7 +2615,7 @@ window.__ModuleLoader__.load({
       }
       return h('div', { className: 'opm-settings' },
         group('settingsDisplay', toggle('autoRotate'), toggle('showInstalled'), toggle('showCheckup'), h(SidebarSwitch, { t })),
-        group('settingsData', h(SyncRow, { t }), h('p', { className: 'opm-setting-help' }, t('syncHelp')),
+        group('settingsData', h(ProfileStatus, {t}), h(SyncRow, { t }), h('p', { className: 'opm-setting-help' }, t('syncHelp')),
           toggle('likes'), h('p', { className: 'opm-setting-help' }, t('likesHelp'))),
         group('settingsDownload', h(RegistryChoice, { t })),
         autoReview.status === 'ready' && group('settingsConversation',
@@ -2289,6 +2628,13 @@ window.__ModuleLoader__.load({
           link('contributing', t('contributingUrl')),
           link('submitPlugin', REPOSITORY_URL + '/issues/new?template=plugin-add.yml'),
           h('p', { className: 'opm-index-address' }, t('indexAddress'), h('code', null, INDEX_URL))));
+    }
+
+    function ProfileStatus({t}) {
+      const status = React.useSyncExternalStore(listener => { profileListeners.add(listener); return () => profileListeners.delete(listener); }, getProfileStatus, getProfileStatus);
+      return h('div', {className: 'opm-setting-copy', role: 'status'},
+        h('p', {className: 'opm-setting-help'}, t(status === 'error' ? 'profileFailed' : status === 'ready' ? 'profileSaved' : 'profileSaving')),
+        status === 'error' && h('button', {type: 'button', className: 'opm-button opm-button-small', onClick: () => void hydrateProfile()}, t('retry')));
     }
 
     function SettingsPanel({ t, manager, onClose, restoreFocus }) {
@@ -2344,6 +2690,7 @@ window.__ModuleLoader__.load({
       const [actionError, setActionError] = React.useState('');
       const [actionNotice, setActionNotice] = React.useState('');
       const [query, setQuery] = React.useState('');
+      const [category, setCategory] = React.useState('');
       React.useEffect(() => { void enterMarket(manager); }, [remote, manager]);
 
       const sections = React.useMemo(() => {
@@ -2375,14 +2722,9 @@ window.__ModuleLoader__.load({
       }, [state, day, preferences.showInstalled, counts]);
 
       const results = React.useMemo(() => {
-        if (state.status !== 'ready' || !query.trim()) return null;
-        const terms = query.normalize('NFKC').toLowerCase().split(/\s+/).filter(Boolean);
-        return [...state.entries].sort(recommendedOrder).filter(entry => {
-          const haystack = [entry.name, titleOf(entry, resolve), entry.author, resolve(entry.description), ...(entry.metadata?.keywords || [])]
-            .join(' ').normalize('NFKC').toLowerCase();
-          return terms.every(term => haystack.includes(term));
-        });
-      }, [state, query, resolve]);
+        if (state.status !== 'ready' || (!query.trim() && !category)) return null;
+        return filterCatalog(state.entries, query, category, resolve);
+      }, [state, query, category, resolve]);
 
       async function addSource() {
         const listed = await remote.pluginMarket.listIndexes();
@@ -2406,7 +2748,8 @@ window.__ModuleLoader__.load({
         h('button', { type: 'button', className: 'opm-button', onClick: () => void syncMarket() }, t('retry')));
       else {
         content = h(React.Fragment, null,
-          h(Toolbar, { t, query, setQuery, updates: preferences.showCheckup ? sections.updates : null,
+          h(Toolbar, { t, query, setQuery, category, setCategory, categories: state.metadata?.categories || {}, resolve,
+            updates: preferences.showCheckup ? sections.updates : null,
             onPanel: (kind, event) => setPanel({ kind, from: event.currentTarget }) }),
           results ? h(SearchResults, { ...props, entries: results }) : h(React.Fragment, null,
             h(FeaturedCarousel, { ...props, entries: sections.daily, autoRotate: preferences.autoRotate && !selected && !panel }),
@@ -2420,6 +2763,7 @@ window.__ModuleLoader__.load({
         h('div', { inert: selected || panel ? '' : undefined }, content,
         h('div', { className: 'opm-footer' },
           h('a', { className: 'opm-footer-link', href: t('websiteUrl'), target: '_blank', rel: 'noopener noreferrer',
+            onClick: supportMarket,
             'aria-label': t('source') + ' ' + t('sourceLink') + ' · ' + t('newWindow') },
             h('img', { className: 'opm-footer-mark', src: new URL('/assets/apple-touch-icon.png', INDEX_URL).href, alt: '', loading: 'lazy', referrerPolicy: 'no-referrer' }),
             h('span', null, t('source')),
@@ -2439,6 +2783,10 @@ window.__ModuleLoader__.load({
     const inject = ['slots', 'locale', 'remote'];
 
     function apply(ctx) {
+      ctx.effect(() => {
+        void hydrateProfile();
+        return subscribeSettings(countSelfInstall);
+      }, 'open-market: count first launch');
       ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'open-market: dictionaries');
       ctx.effect(() => {
         const style = document.createElement('style');
@@ -2553,7 +2901,9 @@ window.__ModuleLoader__.load({
     // Test seams; DSH reads only apply and inject.
     const internals = { sortCatalog, listingOf, installDirectly, sidebarWanted, normalizeSettings, registryUrl, installTarget, bleedFor, needsRefresh, validCatalog, withInstallation, getMarket, syncMarket, enterMarket, REFRESH_INTERVAL, CACHE_SCHEMA, INDEX_URL,
       npmVersionRegistry, declaredDshRanges, npmVersions, loadNpmVersions, versionChoices, versionInstall, versionCommand, installVersion, requestSelfUpdate, VERSION_CACHE_TTL,
-      PluginDetails, OtherVersions, zh, en, styles: STYLES };
+      PluginDetails, OtherVersions, countSelfInstall, supportMarket, updateSettings, getLikes, FooterInvite,
+      hydrateProfile, getProfileStatus, getSettings, getFavorites, writeFavorites, filterCatalog, requestBundleUpdate,
+      extractScreenshots, loadScreenshots, loadReleaseNotes, ReleaseNotes, Screenshots, zh, en, styles: STYLES };
     return { apply, inject, internals };
   }
 });

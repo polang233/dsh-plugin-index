@@ -1,5 +1,23 @@
 # dsh-open-market 更新记录
 
+## 0.3.0
+
+### 中文
+
+- 新增分类筛选和本地同义词搜索。分类可与关键词叠加，完整字面匹配优先展示。
+- 插件详情按需加载项目 README 中的界面截图；更新说明按版本展开读取，历史版本也可单独查看。请求结果缓存一小时，读取失败可重试。
+- 收藏、分组、设置及首次运行标记改为保存在当前 DSH profile，自动迁移已有浏览器数据；后台读取期间的本地修改会保留，保存失败时可重试。
+- 更新和切换版本交给宿主完成。优先使用宿主原生更新恢复接口；替换失败时尝试恢复原版本或固定 Git 提交及启用状态。无法确认原安装来源时保留当前版本，恢复失败会明确提示。
+- 右下角链接每次打开先显示与上次最后看到的不同文案，自动轮换间隔改为 10 秒；鼠标悬停或键盘聚焦时暂停轮换。
+
+### English
+
+- Added category filters and local synonym search. Categories work together with keywords, and literal matches appear first.
+- Plugin details load screenshots from the project's README on demand. Expand release notes for the selected version, including individual historical versions. Successful requests are cached for one hour; failed requests can be retried.
+- Favorites, groups, settings and first-launch state now persist in the current DSH profile, with automatic migration from browser storage. Local edits made during loading are preserved, and failed saves can be retried.
+- The Host now owns updates and version switches. It prefers the native update and recovery API; failed replacements attempt to restore the original version or pinned Git commit and enabled state. If the original source cannot be confirmed, the current installation is kept. Failed restoration is reported explicitly.
+- The bottom-right link opens with a different message from the last one shown and rotates every 10 seconds. Rotation pauses while hovered or focused.
+
 ## 0.2.7
 
 - 插件详情增加「其他版本」，展开后按需读取 npm 元数据，按发布时间列出可安装版本；支持预发布标记、作者声明的 DSH 兼容范围和精确版本安装、复制命令。

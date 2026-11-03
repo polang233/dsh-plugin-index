@@ -1,6 +1,8 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createSelfUpdateHandler, SELF_UPDATE_PATH } from './self-update.js';
+import {createProfileStateHandler, PROFILE_STATE_PATH} from './profile-state.js';
+import {createBundleUpdateHandler, BUNDLE_UPDATE_PATH} from './bundle-update.js';
 
 export const name = 'dsh-open-market';
 // The row id our patch inserts; it differs from the package name so the Plugins page does not show the same name twice.
@@ -136,6 +138,12 @@ export function apply(ctx, config = {}) {
   ctx.inject(['webServer', 'connection', 'pluginManager'], scope => {
     scope.effect(() => scope.webServer.register({ kind: 'exact', path: SELF_UPDATE_PATH,
       handler: createSelfUpdateHandler(scope.pluginManager, scope.connection) }), 'dsh-open-market: self-update');
+    scope.effect(() => scope.webServer.register({kind: 'exact', path: BUNDLE_UPDATE_PATH,
+      handler: createBundleUpdateHandler(scope.pluginManager, scope.connection)}), 'dsh-open-market: update with recovery');
+  });
+  ctx.inject(['webServer', 'connection'], scope => {
+    scope.effect(() => scope.webServer.register({kind: 'exact', path: PROFILE_STATE_PATH,
+      handler: createProfileStateHandler(dir, scope.connection)}), 'dsh-open-market: profile preferences');
   });
 
   ctx.inject(['pluginManager'], ctx => {

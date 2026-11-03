@@ -3,21 +3,31 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {runInNewContext} from 'node:vm';
 
-async function client({indexedDB} = {}) {
+async function client({indexedDB, stored = new Map(), fetchImpl = async (url, options) => ({
+  ok: true, json: async () => ({name: JSON.parse(options.body).name, likes: 1, counted: true})
+}), clock = Date, react = {createElement() {}}, windowOverrides = {}, profileState = {schema: 1}, profileFetch} = {}) {
   let plugin;
   const window = {
     indexedDB,
-    localStorage: {getItem: () => null, setItem() {}},
+    localStorage: {getItem: key => stored.get(key) ?? null, setItem: (key, value) => stored.set(key, value)},
     setTimeout: () => 0, clearTimeout() {},
     __ModuleLoader__: {load: module => {
       plugin = module.factory(name => {
-        if (name === 'react') return {createElement() {}};
+        if (name === 'react') return react;
         throw new Error('Optional module unavailable: ' + name);
       });
-    }}
+    }},
+    ...windowOverrides
   };
   runInNewContext(await readFile(new URL('./client.js', import.meta.url), 'utf8'), {
-    window, URL, crypto, AbortSignal, document: {createElement: () => ({remove() {}}), head: {appendChild() {}}}
+    window, URL, crypto, AbortSignal, AbortController, TextDecoder, atob, fetch: async (url, options) => {
+      if (url !== '/dsh-open-market/state') return fetchImpl(url, options);
+      if (profileFetch) return profileFetch(url, options);
+      const {patch, initialize} = JSON.parse(options.body);
+      for (const [key, value] of Object.entries(patch)) if (!initialize || !Object.hasOwn(profileState, key)) profileState[key] = value;
+      return {ok: true, json: async () => ({ok: true, state: JSON.parse(JSON.stringify(profileState))})};
+    }, Date: clock,
+    document: {createElement: () => ({remove() {}}), head: {appendChild() {}}}
   });
   return plugin;
 }
@@ -61,6 +71,106 @@ test('client starts without the optional market service and registers its tab wh
 
 const plain = value => JSON.parse(JSON.stringify(value));
 const tick = (ms = 5) => new Promise(resolve => setTimeout(resolve, ms));
+
+test('first launch and footer support share a daily vote, with a persistent first-launch marker', async () => {
+  const stored = new Map(), votes = [];
+  const fetchImpl = async (url, options) => {
+    const vote = JSON.parse(options.body); votes.push(vote);
+    return {ok: true, json: async () => ({name: vote.name, likes: votes.length, counted: true})};
+  };
+  const {internals: first} = await client({stored, fetchImpl});
+  await first.hydrateProfile();
+  first.countSelfInstall(); first.countSelfInstall(); first.supportMarket();
+  await tick();
+  assert.deepEqual(votes, [{name: 'dsh-open-market', source: 'install'}]);
+  assert.equal(stored.get('dsh-open-market:install-counted'), '1');
+  const tomorrow = Date.now() + 86400000;
+  class Tomorrow extends Date { constructor(...args) { super(...(args.length ? args : [tomorrow])); } }
+  const {internals: next} = await client({stored, fetchImpl, clock: Tomorrow});
+  await next.hydrateProfile();
+  next.countSelfInstall(); await tick();
+  assert.equal(votes.length, 1, 'Restart on a later day must not count another installation');
+  next.supportMarket(); next.supportMarket(); await tick();
+  assert.deepEqual(votes[1], {name: 'dsh-open-market', source: 'like'});
+  assert.equal(votes.length, 2, 'Footer supports once on the next UTC day');
+});
+
+test('disabled likes suppress both self-install and footer support; failed requests can retry', async () => {
+  const stored = new Map([['dsh-open-market:settings', JSON.stringify({likes: false})]]);
+  let requests = 0, succeeds = false;
+  const {internals} = await client({stored, fetchImpl: async () => {
+    requests++;
+    if (!succeeds) throw new Error('offline');
+    return {ok: true, json: async () => ({name: 'dsh-open-market', likes: 3, counted: false})};
+  }});
+  await internals.hydrateProfile();
+  internals.countSelfInstall(); internals.supportMarket(); await tick();
+  assert.equal(requests, 0);
+  internals.updateSettings('likes', true); internals.countSelfInstall(); await tick();
+  assert.notEqual(stored.get('dsh-open-market:install-counted'), '1');
+  assert.equal(internals.getLikes().names.has('dsh-open-market'), false);
+  succeeds = true;
+  internals.countSelfInstall(); await tick();
+  assert.equal(requests, 2);
+  assert.equal(stored.get('dsh-open-market:install-counted'), '1', 'An already-counted server vote still completes first launch');
+});
+
+test('footer reopens opposite the last visible message and rotates every ten seconds without changing a focused link', async () => {
+  const stored = new Map(), timers = new Map();
+  let states = [], effects = [], cursor = 0, pending = [], timerId = 0;
+  const react = {
+    createElement: (type, props, ...children) => ({type, props, children}),
+    useState(initial) {
+      const id = cursor++;
+      if (!(id in states)) {
+        states[id] = typeof initial === 'function' ? initial() : initial;
+        if (typeof initial === 'function') assert.equal(initial(), states[id], 'Initializer replay must not consume another message');
+      }
+      return [states[id], value => { states[id] = typeof value === 'function' ? value(states[id]) : value; }];
+    },
+    useEffect(setup, deps) {
+      const id = cursor++, old = effects[id];
+      if (!old || deps.some((dep, index) => dep !== old.deps[index])) pending.push(() => {
+        old?.dispose?.(); effects[id] = {deps, dispose: setup()};
+      });
+    }
+  };
+  const {internals: {FooterInvite}} = await client({stored, react, windowOverrides: {
+    setInterval: (callback, ms) => { const id = ++timerId; timers.set(id, {callback, ms}); return id; },
+    clearInterval: id => timers.delete(id)
+  }});
+  const render = () => {
+    cursor = 0; pending = [];
+    const result = FooterInvite({t: key => key === 'contributingUrl' ? 'https://example.org/contribute' : key, stars: 5});
+    pending.forEach(run => run());
+    return result;
+  };
+  const unmount = () => { effects.forEach(effect => effect?.dispose?.()); states = []; effects = []; };
+  let link = render();
+  assert.equal(link.props.href, 'https://github.com/polang233/dsh-plugin-index');
+  assert.equal([...timers.values()][0].ms, 10000);
+  [...timers.values()][0].callback();
+  link = render();
+  assert.equal(link.props.href, 'https://example.org/contribute');
+  unmount();
+  link = render();
+  assert.equal(link.props.href, 'https://github.com/polang233/dsh-plugin-index', 'Reopen must differ from the timed message last shown');
+  link.props.onMouseEnter(); link = render();
+  assert.equal(timers.size, 0);
+  link.props.onFocus(); link = render();
+  link.props.onMouseLeave(); link = render();
+  assert.equal(timers.size, 0, 'Leaving with the pointer must preserve keyboard focus');
+  link.props.onBlur(); link = render();
+  assert.equal(timers.size, 1);
+  unmount();
+  assert.equal(timers.size, 0);
+  assert.equal(render().props.href, 'https://example.org/contribute');
+  unmount();
+  const reopened = await client({stored, react});
+  cursor = 0; pending = [];
+  assert.equal(reopened.internals.FooterInvite({t: key => key, stars: 5}).props.href,
+    'https://github.com/polang233/dsh-plugin-index', 'Last displayed message survives a new client instance');
+});
 
 function fakeIndexedDB(saved = new Map(), onWrite = () => {}) {
   const later = callback => setTimeout(callback, 0);
@@ -454,26 +564,172 @@ test('a failed version request can retry, and distinct registries do not share c
   await assert.rejects(loadNpmVersions('../private', 'https://registry.npmjs.org/', {fetchImpl}), /Invalid npm package source/);
 });
 
-test('choosing another version installs its exact target, and a failed removal keeps the current installation', async () => {
+test('changing an installed version is handed to the Host while new installs use the normal dialog', async () => {
   const {internals: {installVersion}} = await client();
   const entry = {name: 'demo', installation: {status: 'installed', installedVersion: '2.0.0'}};
   const version = {version: '1.0.0-beta.2', source: {type: 'npm', registry: 'https://registry.npmjs.org/'}};
   const actions = [], phases = [];
   const options = {t: key => key, title: 'Demo', install: async target => {actions.push(target); return {ok: true};},
-    manager: () => ({removeBundle: async name => {actions.push(name); return {ok: true, value: {}};}}), onPhase: phase => phases.push(phase)};
+    update: async target => {actions.push(target); return {ok: true};}, onPhase: phase => phases.push(phase)};
   await installVersion(entry, version, options);
-  assert.equal(actions[0], 'demo');
-  assert.equal(actions[1].spec, 'demo@1.0.0-beta.2');
-  assert.equal(actions[1].version, '1.0.0-beta.2');
-  assert.equal(actions[1].title, 'Demo');
-  assert.deepEqual(phases, ['updating', 'busy']);
-  const answer = await installVersion(entry, version, {...options, manager: () => ({removeBundle: async () => ({ok: true, value: {error: {code: 'stop-profile'}}})})});
+  assert.equal(actions[0].name, 'demo');
+  assert.equal(actions[0].spec, 'demo@1.0.0-beta.2');
+  assert.deepEqual(phases, ['updating']);
+  const answer = await installVersion(entry, version, {...options, update: async () => ({ok: false, error: 'updateRestart'})});
   assert.equal(answer.error, 'updateRestart');
-  assert.equal(actions.length, 2, 'No install follows a refusal to remove');
+  assert.equal(actions.length, 1, 'The Client must not fall back to removing a package itself');
   const provided = await installVersion({...entry, installation: {status: 'provided'}}, version, options);
   assert.equal(provided.error, 'providedVersion');
   await installVersion({...entry, installation: {status: 'not-installed'}}, version, {...options, manager: () => {throw Error('unexpected removal');}});
-  assert.equal(actions.length, 3);
+  assert.equal(actions.length, 2);
+  assert.equal(actions[1].title, 'Demo');
+});
+
+test('profile data replaces an empty browser cache and preserves explicit preferences across origins', async () => {
+  const profileState = {schema: 1, settings: {likes: false, autoRotate: false},
+    favorites: {schema: 1, groups: [{id: 'default', name: '', names: ['demo']}]}, installCounted: true, footerTurn: 1};
+  const first = await client({profileState});
+  await first.internals.hydrateProfile();
+  assert.equal(first.internals.getSettings().likes, false);
+  assert.equal(first.internals.getSettings().autoRotate, false);
+  assert.deepEqual(plain(first.internals.getFavorites().groups[0].names), ['demo']);
+  first.internals.updateSettings('showInstalled', false);
+  first.internals.writeFavorites({schema: 1, groups: [{id: 'default', name: '', names: ['demo', 'another']}]});
+  await tick();
+  const next = await client({profileState, stored: new Map()});
+  await next.internals.hydrateProfile();
+  assert.equal(next.internals.getSettings().showInstalled, false);
+  assert.equal(next.internals.getSettings().likes, false);
+  assert.deepEqual(plain(next.internals.getFavorites().groups[0].names), ['demo', 'another']);
+});
+
+test('offline profile loading keeps cached preferences and does not send a first-launch vote', async () => {
+  let votes = 0;
+  const stored = new Map([['dsh-open-market:settings', JSON.stringify({likes: false})]]);
+  const plugin = await client({stored, profileFetch: async () => {throw Error('offline');}, fetchImpl: async () => {votes++;}});
+  assert.equal(await plugin.internals.hydrateProfile(), false);
+  plugin.internals.countSelfInstall(); plugin.internals.supportMarket(); await tick();
+  assert.equal(votes, 0);
+  assert.equal(plugin.internals.getSettings().likes, false);
+  assert.equal(plugin.internals.getProfileStatus(), 'error');
+});
+
+test('local edits made while the profile loads are saved rather than overwritten by late state', async () => {
+  let release;
+  const waiting = new Promise(resolve => {release = resolve;});
+  const writes = [];
+  const plugin = await client({profileFetch: async (_url, options) => {
+    const request = JSON.parse(options.body); writes.push(request);
+    if (request.initialize) await waiting;
+    return {ok: true, json: async () => ({ok: true, state: {schema: 1, settings: {likes: false, autoRotate: true}, installCounted: true}})};
+  }});
+  const load = plugin.internals.hydrateProfile();
+  plugin.internals.updateSettings('autoRotate', false);
+  release(); await load; await tick();
+  assert.equal(plugin.internals.getSettings().autoRotate, false);
+  assert.equal(plugin.internals.getSettings().likes, false, 'An unrelated local edit must not override the profile opt-out');
+  assert(writes.some(x => !x.initialize && x.patch.settings?.autoRotate === false));
+});
+
+test('favorites added during hydration merge with the existing profile instead of erasing it', async () => {
+  let resume;
+  const wait = new Promise(resolve => {resume = resolve;});
+  const writes = [];
+  const plugin = await client({profileFetch: async (_url, options) => {
+    const request = JSON.parse(options.body); writes.push(request);
+    if (request.initialize) await wait;
+    return {ok: true, json: async () => ({ok: true, state: {schema: 1, installCounted: true,
+      settings: {likes: false}, favorites: {schema: 1, groups: [{id: 'default', name: '', names: ['existing']}]}}})};
+  }});
+  const loading = plugin.internals.hydrateProfile();
+  plugin.internals.writeFavorites({schema: 1, groups: [{id: 'default', name: '', names: ['new']}]});
+  resume(); await loading; await tick();
+  assert.deepEqual(plain(plugin.internals.getFavorites().groups[0].names), ['existing', 'new']);
+  assert.deepEqual(writes.find(x => !x.initialize).patch.favorites.groups[0].names, ['existing', 'new']);
+});
+
+test('local synonyms broaden search while exact matches rank first and category remains a constraint', async () => {
+  const {internals: {filterCatalog}} = await client();
+  const entries = [entry('notes', 'not-installed', {title: '笔记', description: 'Markdown notes', metadata: {category: 'tools'}}),
+    entry('notepad', 'not-installed', {title: '记事本', description: '简单记录', metadata: {category: 'tools'}}),
+    entry('memory', 'not-installed', {description: '笔记记忆', metadata: {category: 'memory'}})];
+  const resolve = value => typeof value === 'string' ? value : value?.zh || '';
+  assert.deepEqual(plain(filterCatalog(entries, '记事本', 'tools', resolve).map(x => x.name)), ['notepad', 'notes']);
+  assert.deepEqual(plain(filterCatalog(entries, '', 'memory', resolve).map(x => x.name)), ['memory']);
+  assert.deepEqual(plain(filterCatalog(entries, '记事本 markdown', 'tools', resolve).map(x => x.name)), ['notes']);
+  assert.deepEqual(plain(filterCatalog(entries, 'does-not-exist', '', resolve)), []);
+});
+
+test('screenshots are extracted as safe GitHub image URLs without rendering README HTML', async () => {
+  const {internals: {extractScreenshots}} = await client();
+  const readme = '![预览](docs/screen.png)\n<img src="https://github.com/a/b/blob/main/demo.webp" alt="Screenshot">\n'
+    + '![logo](logo.png) ![bad](javascript:alert(1)) ![tracker](https://tracker.example/a.png) ![svg](image.svg)';
+  const images = plain(extractScreenshots(readme, 'https://raw.githubusercontent.com/a/b/main/README.md'));
+  assert.deepEqual(images.map(x => x.url), ['https://raw.githubusercontent.com/a/b/main/docs/screen.png', 'https://raw.githubusercontent.com/a/b/main/demo.webp']);
+});
+
+test('details requests are lazy, cached and release notes match only the selected exact version', async () => {
+  const requests = [];
+  const plugin = await client({fetchImpl: async url => {
+    requests.push(url);
+    const value = url.endsWith('/readme') ? {encoding: 'base64', content: Buffer.from('![预览](screen.png)').toString('base64'), download_url: 'https://raw.githubusercontent.com/a/b/main/README.md'}
+      : url.includes('/v1.0.0') ? null : {tag_name: '1.0.0', body: 'Version one changes'};
+    return {ok: value !== null, status: value === null ? 404 : 200, text: async () => JSON.stringify(value)};
+  }});
+  assert.equal(requests.length, 0);
+  const e = entry('demo', 'installed', {repository: {url: 'https://github.com/a/b'}, versions: [{version: '1.0.0', source: {type: 'npm'}}]});
+  const images = await plugin.internals.loadScreenshots(e);
+  assert.equal(images.length, 1);
+  await plugin.internals.loadScreenshots(e);
+  assert.equal(requests.length, 1, 'Repeated details reuse the successful README fetch');
+  const release = await plugin.internals.loadReleaseNotes(e, e.versions[0]);
+  assert.equal(release.body, 'Version one changes');
+  assert.equal(requests.length, 3);
+  assert(!requests.some(url => url.includes('/latest')));
+  assert.equal(await plugin.internals.loadReleaseNotes({...e, repository: {url: 'https://example.com/a/b'}}, e.versions[0]), null);
+});
+
+test('failed detail requests can retry and update failures display restoration status', async () => {
+  let attempts = 0;
+  const {internals} = await client({fetchImpl: async () => {attempts++; throw Error('rate limited');}});
+  const e = entry('demo', 'installed', {repository: {url: 'https://github.com/a/b'}});
+  await assert.rejects(internals.loadScreenshots(e));
+  await assert.rejects(internals.loadScreenshots(e));
+  assert.equal(attempts, 2);
+  const result = await internals.requestBundleUpdate({name: 'demo', spec: 'demo@2.0.0'}, key => key, {fetchImpl: async (_url, options) => {
+    assert.equal(options.credentials, 'same-origin');
+    assert.equal(JSON.parse(options.body).name, 'demo');
+    return {ok: true, json: async () => ({ok: false, error: 'download failed', restored: true})};
+  }});
+  assert.match(result.error, /updateRestored/);
+});
+
+test('the release disclosure fetches nothing until opened and renders remote markup as text', async () => {
+  const states = [], effects = [];
+  let cursor = 0, pending = [], requests = 0;
+  const react = {
+    createElement: (type, props, ...children) => ({type, props, children}),
+    useState(initial) {const id = cursor++; if (!(id in states)) states[id] = initial; return [states[id], value => {states[id] = typeof value === 'function' ? value(states[id]) : value;}];},
+    useEffect(setup, deps) {
+      const id = cursor++, old = effects[id];
+      if (!old || deps.some((value, index) => value !== old.deps[index])) pending.push(() => {old?.dispose?.(); effects[id] = {deps, dispose: setup()};});
+    }
+  };
+  const plugin = await client({react, fetchImpl: async () => {
+    requests++;
+    return {ok: true, text: async () => JSON.stringify({tag_name: 'v1.0.0', body: '<script>untrusted()</script>\nUpdate details'})};
+  }});
+  const props = {entry: entry('demo', 'installed', {repository: {url: 'https://github.com/a/b'}}), version: {version: '1.0.0', source: {type: 'npm'}}, t: key => key};
+  const render = () => {cursor = 0; pending = []; const tree = plugin.internals.ReleaseNotes(props); pending.forEach(run => run()); return tree;};
+  let tree = render();
+  assert.equal(requests, 0);
+  tree.props.onToggle({currentTarget: {open: true}});
+  render(); await tick(); tree = render();
+  assert.equal(requests, 1);
+  const types = node => typeof node === 'object' && node ? [node.type, ...(node.children || []).flatMap(types)] : [];
+  assert(!types(tree).includes('script'));
+  assert(JSON.stringify(tree).includes('untrusted()'));
+  effects.forEach(effect => effect?.dispose?.());
 });
 
 test('self-update is handed to the Host before removing the client that started it', async () => {

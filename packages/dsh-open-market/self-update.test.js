@@ -7,15 +7,15 @@ const target = {spec: 'dsh-open-market@0.2.7', registry: 'https://registry.npmjs
 const gate = () => {let resolve; const promise = new Promise(done => {resolve = done;}); return {promise, resolve};};
 function nativeManager(extra = {}) {
   return {
-    installed: true, calls: [],
-    async listBundles() {this.calls.push('list'); return [{name: SELF_PACKAGE, installed: this.installed, enabled: true, removable: true}];},
+    installed: true, version: '0.2.6', calls: [],
+    async listBundles() {this.calls.push('list'); return [{name: SELF_PACKAGE, version: this.version, source: SELF_PACKAGE + '@' + this.version, installed: this.installed, enabled: true, removable: true}];},
     async inspect(spec, options) {
       this.calls.push(['inspect', spec, options]);
       return this.installed ? {status: 'refused', problem: 'already-installed', reason: 'already installed'}
-        : {status: 'accepted', name: SELF_PACKAGE, version: '0.2.7', registry: options.registry, saveExact: true};
+        : {status: 'accepted', name: SELF_PACKAGE, version: spec.slice(SELF_PACKAGE.length + 1), registry: options.registry, saveExact: true};
     },
     async removeBundle(name) {this.calls.push(['remove', name]); this.installed = false; await this.onRemove?.(); return {application: 'applied'};},
-    async installBundle(spec, options) {this.calls.push(['install', spec, options]); this.installed = true; return {application: 'restart-required'};},
+    async installBundle(spec, options) {this.calls.push(['install', spec, options]); this.installed = true; this.version = spec.slice(SELF_PACKAGE.length + 1); return {application: 'restart-required'};},
     ...extra
   };
 }
@@ -27,8 +27,8 @@ test('a Host-owned self-update completes after the plugin context is disposed', 
   const result = await runSelfUpdate(current.pluginManager, target);
   assert.equal(current, undefined);
   assert.deepEqual(result, {ok: true, restart: true});
-  assert.deepEqual(manager.calls.map(call => Array.isArray(call) ? call[0] : call), ['list', 'inspect', 'remove', 'inspect', 'install']);
-  const last = manager.calls.at(-1);
+  assert.deepEqual(manager.calls.map(call => Array.isArray(call) ? call[0] : call), ['list', 'inspect', 'remove', 'inspect', 'install', 'list']);
+  const last = manager.calls.at(-2);
   assert.equal(last[1], target.spec);
   assert.equal(last[2].enabled, true);
   assert.equal(last[2].saveExact, true);

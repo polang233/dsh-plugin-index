@@ -114,7 +114,7 @@ def prepare(output, metadata_path=None, archive_path=None):
     asset = output / f'{NAME}-{version}.tgz'
     release_notes = output / 'release-notes.md'
     asset.write_bytes(archive)
-    release_notes.write_text(f'{notes}\n\n默认安装仍使用 npm：\n\n```sh\ndsh plugin --profile desktop add {NAME}\n```\n\n附件是与 npm 相同的插件发布包，可直接下载。\n', encoding='utf-8')
+    release_notes.write_text(f'{notes}\n\n### Install / 安装\n\n```sh\ndsh plugin --profile desktop add {NAME}\n```\n\nThe attached archive is identical to the npm package.\n附件与 npm 发布包完全一致，可直接下载。\n', encoding='utf-8')
     print(f'version={version}')
     print(f'tag={NAME}-v{version}')
     print(f'commit={commit}')
