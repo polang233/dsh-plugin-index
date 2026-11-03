@@ -12688,7 +12688,13 @@
         "en": "Show workflow stages and subagents on a timeline, configure model and concurrency for each stage, and reopen subagent conversations from the panel. Run names and stage settings persist under ~/.dsh; requires DSH >=0.2.1-rc.3.",
         "zh": "在时间线中查看工作流阶段和子代理，为每个阶段配置模型与并发，并从面板打开子代理对话。运行名称与阶段设置保存在 ~/.dsh，需要 DSH >=0.2.1-rc.3。"
       },
-      "category": "workflow"
+      "category": "workflow",
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/ruaruaTon/dsh-workflow-timeline",
+        "commit": "3ad7c1f9ebb0ed883430a3a0c81d2eb938982740"
+      }
     },
     {
       "name": "dsh-edit-rerun",
@@ -12724,7 +12730,14 @@
         "en": "Edit Markdown in the DSH right sidebar with live formulas, table cells, offline Mermaid and KaTeX, and selection-to-chat insertion. Saves use version checks. Requires DSH >=0.2.0-rc.2 and Node >=20; installed from a subdirectory of the MarkPilot repository.",
         "zh": "在 DSH 右侧栏编辑 Markdown，支持公式即时编辑、表格单元格、离线 Mermaid 和 KaTeX，并可将选区插入对话。保存带版本校验。需要 DSH >=0.2.0-rc.2 和 Node >=20，从 MarkPilot 仓库子目录安装。"
       },
-      "category": "interface"
+      "category": "interface",
+      "version": "0.3.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/ltmroberthk915/markpilot",
+        "commit": "f149e8e9429a5fa6a5e809f2e5ac8e2521a79904",
+        "path": "dsh-markdown-typora"
+      }
     },
     {
       "name": "dsh-ntfy-notifier",
@@ -12748,7 +12761,13 @@
         "en": "Before git commit, git push or gh repo sync runs through DSH, scan the content that would be committed or uploaded for keys, private keys, credentials, absolute paths and personal data. Suspicious content requires one-time approval; manual terminals outside DSH are not covered.",
         "zh": "在 DSH 执行 git commit、git push 或 gh repo sync 前，只读检查将要提交或上传的密钥、私钥、凭据、绝对路径和个人信息。发现内容时请求一次性授权；不覆盖 DSH 之外的人工终端操作。"
       },
-      "category": "development"
+      "category": "development",
+      "version": "0.2.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/lizhijie429/dsh-push-privacy-guard",
+        "commit": "756cc68b1a152856e01c83479b8e5ff11ef8c317"
+      }
     },
     {
       "name": "dsh-plugin-companion-memory",
@@ -12760,7 +12779,13 @@
         "en": "Maintain a selective, layered memory of the user across conversations, with profile-local SQLite storage and model-led summarization. Requires DSH 0.2.1-rc.2 and Node >=24; semantic recall needs a configured Hindsight service.",
         "zh": "跨会话维护选择性、分层的用户记忆，数据保存在当前 profile 的本地 SQLite，并由模型提炼总结。需要 DSH 0.2.1-rc.2 和 Node >=24；语义召回需另外配置 Hindsight 服务。"
       },
-      "category": "memory"
+      "category": "memory",
+      "version": "0.3.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/123zxs345/dsh-plugin-companion-memory",
+        "commit": "de820c269927264370d865e6d83e60959c7f74fb"
+      }
     },
     {
       "name": "dsh-session-norms",
@@ -12772,7 +12797,13 @@
         "en": "Show the current session as numbered turns with user messages, assistant replies and tool calls, plus counters and a Markdown copy action. Read-only and web-only; tested on DSH 0.2.2-alpha.2.",
         "zh": "把当前会话按轮次展开，显示用户消息、助手回复和工具调用，并提供统计与复制 Markdown。只读且仅支持 Web；作者验证环境为 DSH 0.2.2-alpha.2。"
       },
-      "category": "interface"
+      "category": "interface",
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/phoenixlucky/dsh-session-norms",
+        "commit": "fea59779818886474746fbb036afba1a42133926"
+      }
     }
   ]
 }
