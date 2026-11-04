@@ -16,7 +16,7 @@ export function profilePatch(value) {
     } else if (key === 'footerTurn') {
       if (data !== 0 && data !== 1) throw Error('Invalid footer state');
     } else if (key === 'settings') {
-      const booleans = ['autoRotate', 'showInstalled', 'showCheckup', 'likes'];
+      const booleans = ['autoRotate', 'showInstalled', 'showCheckup', 'likes', 'theme'];
       if (!object(data) || Object.entries(data).some(([name, val]) => booleans.includes(name) ? typeof val !== 'boolean'
         : name === 'registry' ? !['index', 'dsh', 'npmmirror', 'custom'].includes(val)
         : name === 'sidebarMarket' ? !['auto', 'on', 'off'].includes(val)

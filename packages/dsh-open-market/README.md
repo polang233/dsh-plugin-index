@@ -4,16 +4,12 @@ Discover and manage community plugins in DeepSeek Harness with [Open Plugin Mark
 
 在 DeepSeek Harness 中发现和管理社区插件，支持分类搜索、收藏分组、版本切换与更新。
 
-## 0.3.0 — What's new / 更新内容
+## 0.3.2 — What's new / 更新内容
 
-- Category filters and local synonym search make plugins easier to find. 分类与关键词可叠加筛选，同义词也能找到相关插件。
-- Open plugin details for screenshots and expand version-specific release notes. 打开详情查看截图，按需展开当前或历史版本的更新说明。
-- Previews prefer screenshots submitted by authors and selected by maintainers, with filtered README previews as a fallback. Release notes also support package-prefixed tags and the selected version in CHANGELOG. 预览优先使用作者提交、维护者选定的截图，缺少时识别 README 预览；更新说明支持包名前缀标签和 CHANGELOG 中的精确版本。
-- Favorites and settings persist in your DSH profile and migrate from browser storage. 收藏、分组和设置保存到当前 DSH profile，并自动迁移浏览器中的已有数据。
-- Updates run on the Host and attempt to restore the original version if replacement fails. 更新由宿主完成，替换失败时尝试恢复原版本；无法确认原来源时保留当前安装。
-- Self-updates retain the owning Cordis service and a lock that survives plugin reloads. An older installed version still runs its own updater; if it fails, update through DSH's Plugins page or CLI first. 自更新持有 Cordis 服务原实例，更新锁跨插件重载保留。旧版首次升级仍由旧代码执行，失败时请先通过 DSH「插件」页或命令安装新版。
+- **Macaron theme**: an optional theme in the style of the [dshopen.org](https://dshopen.org/) website, covering the sidebar, conversations, code blocks, menus, dialogs and settings. Turn it on under Settings → Display; switching it off restores DSH right away. 新增可选的**马卡龙主题**，沿用 [dshopen.org](https://dshopen.org/zh/) 网站的风格，覆盖侧边栏、对话、代码块、菜单、对话框和设置页。在设置 → 显示里打开，关闭后立即恢复原样。
+- Coming from 0.2.7 or earlier? Take the first upgrade from DSH's Plugins page or the install command: older versions run their own updater, which could remove Open Market. 从 0.2.7 或更早版本升级时，第一次请到 DSH「插件」页或用安装命令更新：旧版用的是自己的更新代码，可能把开放市场卸载掉。
 
-[Full release notes / 完整更新说明](https://github.com/polang233/dsh-plugin-index/blob/main/packages/dsh-open-market/CHANGELOG.md#030)
+[Full release notes / 完整更新说明](https://github.com/polang233/dsh-plugin-index/blob/main/packages/dsh-open-market/CHANGELOG.md#032)
 
 ## Install / 安装
 
@@ -41,6 +37,7 @@ On the next start, `https://dshopen.org/index.json` appears in **Plugins → Dis
 - **Other versions** in a plugin's detail loads npm version metadata only when expanded, then caches the list on this computer for one hour. Releases are shown by publication date, with prerelease labels and publisher-declared DSH requirements; deprecated releases and releases without a bundle declaration are omitted. Each row installs or copies the exact version. Other npm versions have not been reviewed by this market, and DSH checks the chosen package when installing. Switching an installed version removes it first, as Update does. Git sources list only the fixed commits already in the index, without querying npm or Git tags.
 - Updating Open Market itself runs through an authenticated request to DSH. The Host continues the operation if the market page closes, and a separate notice shows the result. The original source must be known before removal. Failed replacements attempt restoration; if that also fails, reinstall from Plugins. Older versions need to receive this update through Plugins or the install command first.
 - Settings: the gear beside Installed on the Open Market tab, or the plugin's page under Installed. Both show the same groups: display, data and sync, downloads, conversations and links. **Download from** picks the npm registry for installs and updates started in this tab (official, DSH's own choice, the mainland China mirror or a custom address); Git plugins and DSH's Discover tab are not affected.
+- **Macaron theme** (Settings → Display, off by default) restyles DSH in the style of the [dshopen.org](https://dshopen.org/) website, with the whale maid in empty spaces only (the new-conversation screen, the bottom of the sidebar, the Open Market header and its empty states). It covers the sidebar, conversation list, messages, composer, buttons, inputs, menus, dialogs, tabs, settings, code blocks, scrollbars and the Open Market tab, and follows DSH's light or dark appearance with a matching night palette. Text keeps WCAG AA contrast or better than DSH's defaults, focus rings stay visible, and outlines are drawn with shadows so nothing changes size. It works through DSH's own color tokens plus a few scoped rules; switching it off removes everything at once, no reload needed. The choice is saved in the profile like the other settings. The Host serves the stylesheet and artwork from the package at `/dsh-open-market/theme/`.
 - **Show Open Market in the sidebar** adds a separate full-width page. It is off by default where the Plugins page has the Open Market tab, and on where it does not. When DSH has no market service, that page reads `dshopen.org/index.json` itself. It installs without DSH's install dialog, so a plugin whose install scripts need approval has to be installed from Plugins.
 - The browsing tab appears when Custom plugin markets is available; an unavailable market service does not block DSH startup.
 - `/open-market` puts the index back and switches Custom plugin markets on again, for when you change your mind.
@@ -55,6 +52,7 @@ On the next start, `https://dshopen.org/index.json` appears in **Plugins → Dis
 - 详情里的**其他版本**只在展开后读取 npm 版本元数据，并在本机缓存一小时。按发布时间列出版本，显示预发布标记和作者声明的 DSH 兼容范围，排除已弃用或未声明 bundle 的版本；每行可安装或复制精确版本的命令。其他 npm 版本未经过本站审查，安装时由 DSH 检查所选包。切换已安装版本会和「更新」一样先卸载旧版。Git 来源只展示索引已有的固定提交，不查询同名 npm 包或 Git 标签。
 - 开放市场自更新通过当前 DSH 的身份验证交给宿主完成，市场页面暂时关闭也会继续，独立提示显示结果。卸载前必须确认原安装来源；替换失败时尝试恢复旧版，恢复也失败时可从「插件」页重新安装。旧版本需先通过「插件」页或安装命令更新到本版。
 - 设置入口在开放市场「我已安装」右侧的齿轮，也在「已安装」里本插件的详情页中，两处内容相同，分为显示、数据与同步、下载、对话和关于。「从哪个源下载」决定在这个标签页里安装和更新 npm 插件时用哪个源（npm 官方源、跟随 DSH、中国大陆镜像源或自定义地址）；Git 来源的插件和 DSH 自己的「发现」页不受影响。
+- **马卡龙主题**（设置 → 显示，默认关闭）：沿用 [dshopen.org](https://dshopen.org/zh/) 网站的风格，鲸鱼女仆只出现在空白处（新对话页、侧边栏底部、开放市场顶部和空状态）。覆盖侧边栏、会话列表、消息、输入框、按钮、输入控件、菜单、对话框、标签页、设置、代码块、滚动条和开放市场标签；跟随 DSH 的浅色或深色外观，深色下使用对应的夜海配色。文字对比度达到 WCAG AA 或高于 DSH 默认值，焦点框保持可见，描边用阴影绘制，不改变任何元素尺寸。主题通过 DSH 自带的颜色变量和少量限定作用域的样式实现，关闭后立即全部移除，无需重新加载；选择和其他设置一样保存在 profile 中。样式表和插画由宿主从插件包内提供，路径为 `/dsh-open-market/theme/`。
 - **在侧边栏显示开放市场**会增加一个独立的全宽页面。「插件」页有开放市场标签时默认关闭，没有时默认打开。DSH 没有市场服务时，这个页面会自己读取 `dshopen.org/index.json`。从这里安装不弹 DSH 的安装窗口，需要确认安装脚本的插件请到「插件」页安装。
 - 「自定义插件市场」服务就绪后才显示市场标签，服务关闭或暂未启动时不会阻塞 DSH 启动。
 - 想恢复时输入 `/open-market`，会重新加入索引源，并在需要时打开自定义插件市场。
@@ -68,5 +66,11 @@ To use a mirror, override the row in your profile's `cordis.patch.yml`:
   config:
     indexUrl: https://example.com/index.json
 ```
+
+## Artwork / 插画
+
+The whale-maid poses in `theme/` (`whale-maid-wave`, `whale-maid-tea`, `whale-maid-peek`) were generated with OpenAI's GPT image model through Codex, using the dshopen.org whale-maid logo as the character reference, then trimmed and converted to WebP. Full-size PNGs stay in `theme/originals/` and are not published to npm.
+
+`theme/` 中的鲸鱼女仆姿势（挥手、喝茶、探头）由 Codex 调用 OpenAI GPT 图像模型生成，以 dshopen.org 的鲸鱼女仆标志为角色参考，之后裁边并转为 WebP。原尺寸 PNG 保留在 `theme/originals/`，不随 npm 包发布。
 
 GPL-3.0

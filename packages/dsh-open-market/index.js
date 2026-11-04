@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { createSelfUpdateHandler, SELF_UPDATE_PATH } from './self-update.js';
 import {createProfileStateHandler, PROFILE_STATE_PATH} from './profile-state.js';
 import {createBundleUpdateHandler, BUNDLE_UPDATE_PATH} from './bundle-update.js';
+import {createThemeAssetsHandler, THEME_PATH} from './theme-assets.js';
 
 export const name = 'dsh-open-market';
 // The row id our patch inserts; it differs from the package name so the Plugins page does not show the same name twice.
@@ -144,6 +145,11 @@ export function apply(ctx, config = {}) {
   ctx.inject(['webServer', 'connection'], scope => {
     scope.effect(() => scope.webServer.register({kind: 'exact', path: PROFILE_STATE_PATH,
       handler: createProfileStateHandler(dir, scope.connection)}), 'dsh-open-market: profile preferences');
+  });
+  // Public stylesheet and artwork of the optional theme; the Client only links them while the theme is on.
+  ctx.inject(['webServer'], scope => {
+    scope.effect(() => scope.webServer.register({kind: 'prefix', path: THEME_PATH,
+      handler: createThemeAssetsHandler()}), 'dsh-open-market: theme assets');
   });
 
   ctx.inject(['pluginManager'], ctx => {

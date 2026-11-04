@@ -1,0 +1,347 @@
+/*
+ * Open Market macaron theme for DSH, after dshopen.org: ink outlines, hard offset shadows,
+ * cream and macaron fills and the whale-maid mascot.
+ *
+ * Everything sits under body[data-opm-theme], so removing that attribute turns the theme off
+ * without a reload. Colours go through DSH's own --dsw-* tokens first; the few structural rules
+ * match stable data attributes or a CSS-module class name without its build hash,
+ * e.g. :is([class$="_bubble"], [class*="_bubble "]). Outlines and shadows are box-shadows only, so
+ * no box changes size. Text contrast is WCAG AA or better than DSH's defaults.
+ */
+
+/* ---------- Tokens: light ---------- */
+body[data-opm-theme]:not([data-ds-dark-theme]) {
+  --opm-cream: #fff9ee;
+  --opm-paper: #fff;
+  --opm-ink: #14284b;
+  --opm-slate: #4f6282;
+  --opm-blue: #2f6bff;
+  --opm-blue-text: #1b4fd6;
+  --opm-sky: #dcebff;
+  --opm-sky-soft: #eef4ff;
+  --opm-peach: #ffe3d6;
+  --opm-mint: #bff0d8;
+  --opm-lilac: #e6dcff;
+  --opm-sun: #ffc94d;
+  --opm-coral: #ff7a6b;
+  --opm-line: var(--opm-ink);
+  --opm-shadow: var(--opm-ink);
+  --opm-hover: #2f6bff14;
+  --opm-active: #2f6bff26;
+
+  --dsw-alias-bg-base: var(--opm-cream);
+  --dsw-alias-bg-layer-1: var(--opm-paper);
+  --dsw-alias-bg-layer-2: var(--opm-paper);
+  --dsw-alias-bg-layer-3: var(--opm-paper);
+  --dsw-alias-bg-module-platform: #f6eedd;
+  --dsw-alias-bg-multi-select: var(--opm-sky-soft);
+  --dsw-alias-bg-overlay: #f3ead8;
+  --dsw-alias-bg-skeleton: #14284b0f;
+  --dsw-alias-bg-mask-1: #14284b4d;
+  --dsw-alias-bg-mask-2: #14284b26;
+  --dsw-alias-bg-document-preview: #f6eedd;
+
+  --dsw-alias-label-primary: var(--opm-ink);
+  --dsw-alias-label-primary-dimmed: var(--opm-ink);
+  --dsw-alias-label-secondary: var(--opm-slate);
+  --dsw-alias-label-tertiary: #5a6b88;
+  --dsw-alias-label-caption: #717f99;
+  --dsw-alias-label-primary-bluish: #0e3074;
+  --dsw-alias-label-primary-foreground: #fff;
+  --dsw-alias-label-primary-inverted: #fff;
+  --dsw-alias-menu-icon: var(--opm-ink);
+  --dsw-alias-link: var(--opm-blue-text);
+  --dsw-alias-brand-text: var(--opm-ink);
+
+  --dsw-alias-border-l1: #14284b14;
+  --dsw-alias-border-l2: #14284b2e;
+  --dsw-alias-border-l2-darkmode-thin: #14284b2e;
+  --dsw-alias-border-l3: #14284b3d;
+  --dsw-alias-border-l4: #14284b5c;
+
+  --dsw-alias-button-primary-fill: var(--opm-ink);
+  --dsw-alias-button-primary-hover: #24407a;
+  --dsw-alias-button-primary-dimmed: #e9e1d0;
+  --dsw-alias-button-elevated-fill: var(--opm-paper);
+  --dsw-alias-button-floating-fill: var(--opm-paper);
+  --dsw-alias-button-floating-hover: var(--opm-sky-soft);
+  --dsw-alias-button-ghost-active-fill: var(--opm-sky);
+  --dsw-alias-button-ghost-active-hover: #cfe2ff;
+  --dsw-alias-button-ghost-active-border: var(--opm-ink);
+  --dsw-alias-button-info-fill: var(--opm-blue-text);
+  --dsw-alias-button-info-hover: var(--opm-blue);
+
+  --dsw-alias-interactive-bg-hover: var(--opm-hover);
+  --dsw-alias-interactive-bg-hover-solid: var(--opm-sky-soft);
+  --dsw-alias-interactive-bg-hover-accent: #2f6bff24;
+  --dsw-alias-interactive-bg-active: var(--opm-active);
+
+  --dsw-alias-state-business-primary: var(--opm-blue-text);
+  --dsw-alias-state-business-tertiary: var(--opm-sky);
+  --dsw-alias-brand-primary-new-colorprimary-new-color: var(--opm-blue);
+
+  --dsw-alias-markdown-code-block: #fffdf8;
+  --dsw-alias-markdown-code-block-banner: var(--opm-sky-soft);
+  --dsw-alias-markdown-inline-code: #f1ebff;
+  --dsw-alias-markdown-tag: var(--opm-sky-soft);
+  --dsw-alias-markdown-citation: var(--opm-sky);
+  --dsw-alias-markdown-placeholder: #f6eedd;
+  --dsw-alias-markdown-code-segment-unselected: #f6eedd;
+
+  --dsw-alias-scrollbar-bg-l1: #14284b33;
+  --dsw-alias-scrollbar-bg-l2: #14284b33;
+  --dsw-alias-scrollbar-hover-l1: #14284b66;
+  --dsw-alias-scrollbar-hover-l2: #14284b66;
+
+  --dsw-alias-tooltip-bg: var(--opm-ink);
+  --dsw-alias-toast-bg: var(--opm-ink);
+  --dsw-alias-turn-trigger-bg: var(--opm-paper);
+  --dsw-alias-turn-trigger-bg-hover: var(--opm-sky-soft);
+  --dsw-alias-menu-group-header-fill: #fffaf0f2;
+
+  --dsw-specific-sidebar-fill: var(--opm-sky-soft);
+  --dsw-specific-sidebar-nav-item-hover: #2f6bff14;
+  --dsw-specific-sidebar-nav-item-active: var(--opm-sky);
+  --dsw-specific-sidebar-nav-item-active-accent: var(--opm-sky);
+  --dsw-specific-bubble: var(--opm-peach);
+  --dsw-specific-bubble-highlight: #ffcdb8;
+  --dsw-specific-input-major: var(--opm-paper);
+  --dsw-specific-menu: var(--opm-paper);
+  --dsw-specific-selector: var(--opm-sky-soft);
+  --dsw-specific-tip: var(--opm-sky-soft);
+
+  --dsw-alias-settings-card-fill: var(--opm-paper);
+  --dsw-alias-settings-card-stroke: #14284b5c;
+}
+
+/* ---------- Tokens: dark, a night-sea version of the same palette ---------- */
+body[data-opm-theme][data-ds-dark-theme] {
+  --opm-cream: #0f1a2e;
+  --opm-paper: #17284a;
+  --opm-ink: #f6f0e4;
+  --opm-slate: #c9d3e6;
+  --opm-blue: #8fb0ff;
+  --opm-blue-text: #8fb0ff;
+  --opm-sky: #24396a;
+  --opm-sky-soft: #13213b;
+  --opm-peach: #4a3341;
+  --opm-mint: #1f4a3d;
+  --opm-lilac: #352d5c;
+  --opm-sun: #ffc94d;
+  --opm-coral: #ff9a8e;
+  --opm-line: #9fb6e8;
+  --opm-shadow: #050a14;
+  --opm-hover: #8fb0ff1f;
+  --opm-active: #8fb0ff33;
+
+  --dsw-alias-bg-base: var(--opm-cream);
+  --dsw-alias-bg-layer-1: var(--opm-paper);
+  --dsw-alias-bg-layer-2: var(--opm-paper);
+  --dsw-alias-bg-layer-3: #1b2e52;
+  --dsw-alias-bg-module-platform: #13213b;
+  --dsw-alias-bg-multi-select: #1b2e52;
+  --dsw-alias-bg-overlay: #13213b;
+
+  --dsw-alias-label-primary: var(--opm-ink);
+  --dsw-alias-label-primary-dimmed: var(--opm-ink);
+  --dsw-alias-label-secondary: var(--opm-slate);
+  --dsw-alias-label-tertiary: #a6b4cf;
+  --dsw-alias-label-caption: #8796b3;
+  --dsw-alias-label-primary-foreground: #0f1a2e;
+  --dsw-alias-menu-icon: var(--opm-ink);
+  --dsw-alias-link: var(--opm-blue-text);
+
+  --dsw-alias-border-l1: #9fb6e81a;
+  --dsw-alias-border-l2: #9fb6e833;
+  --dsw-alias-border-l2-darkmode-thin: #9fb6e833;
+  --dsw-alias-border-l3: #9fb6e847;
+  --dsw-alias-border-l4: #9fb6e866;
+
+  --dsw-alias-button-primary-fill: var(--opm-ink);
+  --dsw-alias-button-primary-hover: #ffffff;
+  --dsw-alias-button-elevated-fill: #1b2e52;
+  --dsw-alias-button-floating-fill: #1b2e52;
+  --dsw-alias-button-floating-hover: #24396a;
+  --dsw-alias-button-ghost-active-fill: var(--opm-sky);
+  --dsw-alias-button-ghost-active-border: var(--opm-line);
+
+  --dsw-alias-interactive-bg-hover: var(--opm-hover);
+  --dsw-alias-interactive-bg-active: var(--opm-active);
+  --dsw-alias-state-business-primary: var(--opm-blue-text);
+  --dsw-alias-state-business-tertiary: var(--opm-sky);
+
+  --dsw-alias-markdown-code-block: #13213b;
+  --dsw-alias-markdown-code-block-banner: #1b2e52;
+  --dsw-alias-markdown-inline-code: #2a2550;
+  --dsw-alias-markdown-tag: #1b2e52;
+
+  --dsw-alias-scrollbar-bg-l1: #9fb6e84d;
+  --dsw-alias-scrollbar-bg-l2: #9fb6e84d;
+  --dsw-alias-scrollbar-hover-l1: #9fb6e880;
+  --dsw-alias-scrollbar-hover-l2: #9fb6e880;
+
+  --dsw-specific-sidebar-fill: var(--opm-sky-soft);
+  --dsw-specific-sidebar-nav-item-hover: #8fb0ff1f;
+  --dsw-specific-sidebar-nav-item-active: var(--opm-sky);
+  --dsw-specific-sidebar-nav-item-active-accent: var(--opm-sky);
+  --dsw-specific-bubble: #2b3a63;
+  --dsw-specific-bubble-highlight: #34487a;
+  --dsw-specific-input-major: var(--opm-paper);
+  --dsw-specific-menu: var(--opm-paper);
+
+  --dsw-alias-settings-card-fill: var(--opm-paper);
+  --dsw-alias-settings-card-stroke: #9fb6e866;
+}
+
+/* ---------- Shared: type, focus, outlines ---------- */
+body[data-opm-theme] {
+  /* A rounded face when installed; DSH's font setting still wins over this default. */
+  --dsh-font-family-text-default: "Avenir Next Rounded", "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --dsw-focus-ring-color: var(--opm-blue);
+  --opm-ring: 0 0 0 1.5px var(--opm-line);
+  --opm-pop-sm: 2px 2px 0 var(--opm-shadow);
+  --opm-pop: 3px 3px 0 var(--opm-shadow);
+  --opm-pop-lg: 5px 5px 0 var(--opm-shadow);
+  --dsw-elevation-stroke-color: var(--opm-line);
+  --dsw-elevation-stroke: var(--opm-ring);
+  --dsw-elevation-soft: var(--opm-ring), var(--opm-pop);
+  --dsw-elevation-panel: var(--opm-ring), var(--opm-pop);
+  --dsw-elevation-prominent: var(--opm-ring), var(--opm-pop-lg);
+  --dsw-menu-surface-fill: var(--opm-paper);
+  --dsw-menu-backdrop-filter: none;
+  --dsw-mask-blur: none;
+}
+body[data-opm-theme] ::selection { background: var(--opm-sky); color: var(--opm-ink); }
+body[data-opm-theme][data-ds-dark-theme] ::selection { background: #34548f; color: #fff; }
+
+/* ---------- App frame and sidebar ---------- */
+body[data-opm-theme] :is([class$="_sidebarCol"], [class*="_sidebarCol "]) {
+  background: var(--dsw-specific-sidebar-fill);
+  border-right-color: transparent;
+}
+/* The ink edge is the centre column's outer shadow, painted over the sidebar, so neither column changes width. */
+body[data-opm-theme] :is([class$="_centerCol"], [class*="_centerCol "]) {
+  border-left-color: transparent;
+  box-shadow: -1.5px 0 0 var(--opm-line);
+}
+body[data-opm-theme] :is([class$="_newSession"], [class*="_newSession "]) {
+  background: var(--opm-paper);
+  border-color: transparent;
+  box-shadow: var(--opm-ring), var(--opm-pop-sm);
+  font-weight: 700;
+}
+body[data-opm-theme] :is([class$="_newSession"], [class*="_newSession "]):hover { background: var(--opm-sun); color: #14284b; }
+body[data-opm-theme] :is([class*="_sessionRow"], [class*="_panelRow"]):is([class*="_selected"], [aria-current="page"], [data-active]) {
+  box-shadow: inset 0 0 0 1.5px var(--opm-line);
+}
+
+/* ---------- Conversation ---------- */
+body[data-opm-theme] [data-composer-card] {
+  box-shadow: 0 0 0 2px var(--opm-line), 4px 4px 0 var(--opm-shadow);
+}
+body[data-opm-theme] [data-composer-card]:focus-within {
+  box-shadow: 0 0 0 2px var(--opm-line), 4px 4px 0 var(--opm-blue);
+}
+body[data-opm-theme] [data-chat-flow-kind="user"] :is([class$="_bubble"], [class*="_bubble "]) {
+  box-shadow: var(--opm-ring), var(--opm-pop-sm);
+  border-radius: 18px 18px 6px 18px;
+}
+body[data-opm-theme] .md-code-block {
+  box-shadow: var(--opm-ring), var(--opm-pop-sm);
+  border-radius: 14px;
+}
+body[data-opm-theme] .md-code-block :is(pre, code) { background: transparent; }
+body[data-opm-theme] :is([data-conversation-content], [class$="_markdown"]) :not(pre) > code {
+  border-radius: 6px;
+  color: var(--opm-ink);
+}
+body[data-opm-theme] [data-conversation-content] table { border-color: var(--dsw-alias-border-l3); }
+body[data-opm-theme] [data-conversation-content] blockquote { border-left-color: var(--opm-blue); }
+
+/* ---------- Controls ---------- */
+body[data-opm-theme] [role="tablist"]:has(> [class*="_indicator_"]) {
+  background: var(--opm-paper);
+  box-shadow: var(--opm-ring), var(--opm-pop-sm);
+}
+body[data-opm-theme] [role="tablist"] > [class*="_indicator_"] {
+  background: var(--opm-sun);
+  border-color: var(--opm-line);
+}
+/* The selected tab sits on sun yellow in both modes, so it keeps dark ink text. */
+body[data-opm-theme][data-ds-dark-theme] [role="tablist"]:has(> [class*="_indicator_"]) > [role="tab"][aria-selected="true"] { color: #14284b; }
+body[data-opm-theme] [role="switch"] { box-shadow: var(--opm-ring); }
+body[data-opm-theme] [role="switch"][aria-checked="true"] { background: var(--opm-blue-text); }
+body[data-opm-theme][data-ds-dark-theme] [role="switch"][aria-checked="true"] { background: var(--opm-blue); }
+body[data-opm-theme] button:is([class*="_primary_"], [class$="_primary"]):not([role]) { box-shadow: var(--opm-pop-sm); }
+body[data-opm-theme] [data-menu-material] { box-shadow: var(--opm-ring), var(--opm-pop); }
+body[data-opm-theme] :is([role="dialog"], [role="alertdialog"]):not([data-menu-material]) {
+  box-shadow: 0 0 0 2px var(--opm-line), var(--opm-pop-lg);
+}
+
+/* ---------- Mascot: only in empty space, never over content ---------- */
+body[data-opm-theme] [data-content-phase="hero"] :is([class$="_headline"], [class*="_headline "]) { position: relative; }
+body[data-opm-theme] [data-content-phase="hero"] :is([class$="_headline"], [class*="_headline "])::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  width: 112px;
+  height: 112px;
+  margin-left: -56px;
+  background: url("whale-maid-wave.webp") center bottom / contain no-repeat;
+  pointer-events: none;
+}
+@media (max-height: 560px) {
+  body[data-opm-theme] [data-content-phase="hero"] :is([class$="_headline"], [class*="_headline "])::before { display: none; }
+}
+body[data-opm-theme] :is([class$="_footArea"], [class*="_footArea "]) { position: relative; }
+body[data-opm-theme] :is([class$="_footArea"], [class*="_footArea "])::after {
+  content: "";
+  position: absolute;
+  right: 6px;
+  bottom: 0;
+  width: 64px;
+  height: 40px;
+  background: url("whale-maid-peek.webp") center bottom / contain no-repeat;
+  pointer-events: none;
+}
+/* The collapsed icon rail has no free space for her. */
+body[data-opm-theme] :is([data-sidebar-collapsed="true"], [class$="_collapsed"], [class*="_collapsed "]) :is([class$="_footArea"], [class*="_footArea "])::after { display: none; }
+
+/* ---------- Open Market ---------- */
+body[data-opm-theme] .opm-card,
+body[data-opm-theme] .opm-featured-card,
+body[data-opm-theme] .opm-state {
+  border-color: transparent;
+  box-shadow: var(--opm-ring), var(--opm-pop-sm);
+}
+body[data-opm-theme] .opm-card:hover { box-shadow: var(--opm-ring), var(--opm-pop); }
+body[data-opm-theme] .opm-button:not(.opm-button-primary) { box-shadow: var(--opm-ring); }
+body[data-opm-theme] .opm-button-primary { box-shadow: var(--opm-pop-sm); }
+body[data-opm-theme] .opm-search input { border-color: var(--opm-line); }
+body[data-opm-theme] .opm-search input:focus { box-shadow: 3px 3px 0 var(--opm-blue); }
+body[data-opm-theme] .opm-tag { border-color: var(--dsw-alias-border-l4); border-radius: 999px; }
+body[data-opm-theme] .opm-panel { box-shadow: 0 0 0 2px var(--opm-line), var(--opm-pop-lg); }
+/* She peeks over the top edge of the market, right of the Plugins tabs, where the page has no controls. */
+body[data-opm-theme] .opm-market { position: relative; }
+body[data-opm-theme] .opm-market::before {
+  content: "";
+  position: absolute;
+  right: 4px;
+  bottom: 100%;
+  width: 84px;
+  height: 56px;
+  background: url("whale-maid-peek.webp") center bottom / contain no-repeat;
+  pointer-events: none;
+}
+body[data-opm-theme] .opm-state,
+body[data-opm-theme] .opm-search-empty {
+  min-height: 96px;
+  padding-left: 96px;
+  background: url("whale-maid-tea.webp") 16px center / auto 72px no-repeat;
+}
+body[data-opm-theme] .opm-search-empty { display: flex; align-items: center; }
+
+@media (prefers-reduced-motion: no-preference) {
+  body[data-opm-theme] .opm-card { transition: box-shadow .15s ease-out; }
+}

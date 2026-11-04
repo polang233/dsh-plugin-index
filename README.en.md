@@ -39,9 +39,15 @@ dsh plugin --profile desktop add dsh-open-market
 
 It also adds an **Open Market** tab to the Plugins page: today's picks, rows ranked by likes and growth, and the whole catalog. Open a card for details, likes and install; save plugins to grouped favorites, and see updates for what you installed.
 
-> Still on Open Market 0.2.7 or earlier? For the first upgrade, update it under Plugins → Installed in DSH or run the command above again. Older versions could uninstall themselves when updating from the Open Market tab; 0.3.0 fixed this.
-
 ![The Open Market tab on the DSH Plugins page](docs/images/open-market-en.webp)
+
+### Macaron theme
+
+Open Market also ships an optional theme in the style of the [dshopen.org](https://dshopen.org/) website. It covers the sidebar, conversations, code blocks, menus, dialogs and settings, follows DSH's light or dark appearance and leaves the layout alone. Turn on **Macaron theme** in the Open Market settings; turning it off restores DSH right away.
+
+<p><img src="docs/images/theme-market-zh.webp" alt="Open Market with the macaron theme" width="49%"> <img src="docs/images/theme-chat-zh.webp" alt="A conversation with code and a diff in the macaron theme" width="49%"></p>
+
+<img src="docs/images/theme-settings-zh.webp" alt="The Macaron theme switch in Open Market settings" width="49%">
 
 [![The Open Plugin Market website home](docs/images/home-en.webp)](https://dshopen.org/)
 

@@ -1,5 +1,19 @@
 # dsh-open-market 更新记录
 
+## 0.3.2
+
+### 中文
+
+- 新增可选的「马卡龙主题」（设置 → 显示，默认关闭），沿用 dshopen.org 网站的风格，覆盖侧边栏、会话列表、消息、输入框、菜单、对话框、标签页、设置、代码块、滚动条和开放市场；跟随 DSH 浅色或深色外观。开关即时生效，关闭后完全移除，选择保存在 profile 中。
+- 鲸鱼女仆只出现在空白处：新对话页、侧边栏底部、开放市场顶部和空状态。三张插画由 Codex 调用 OpenAI GPT 图像模型生成，以站点鲸鱼女仆标志为参考，合计约 45 KB。
+- 宿主新增只读路由 `/dsh-open-market/theme/`，只提供包内的样式表和插画。
+
+### English
+
+- Added an optional **Macaron theme** (Settings → Display, off by default) in the style of the dshopen.org website, covering the sidebar, conversation list, messages, composer, menus, dialogs, tabs, settings, code blocks, scrollbars and Open Market, following DSH's light or dark appearance. It switches on and off instantly, leaves nothing behind when off, and is saved in the profile.
+- The whale maid appears only in empty spaces: the new-conversation screen, the bottom of the sidebar, the Open Market header and empty states. The three poses were generated with OpenAI's GPT image model through Codex from the site's whale-maid logo, about 45 KB in total.
+- The Host serves the theme's stylesheet and artwork from the package at `/dsh-open-market/theme/`, read-only.
+
 ## 0.3.1
 
 ### 中文

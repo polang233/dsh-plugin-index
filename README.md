@@ -39,9 +39,15 @@ dsh plugin --profile desktop add dsh-open-market
 
 它还会在「插件」页加一个 **开放市场** 标签：今日推荐、按点赞和增长排的推荐，以及全部插件。点开卡片能看详情、点赞和安装；还能把插件分组收藏，查看已安装插件的更新。
 
-> 还在用 0.2.7 或更早版本的开放市场？第一次升级请到 DSH「插件 → 已安装」里更新，或重新运行上面的命令。旧版在「开放市场」标签里更新自己时可能把自己卸载掉，0.3.0 起已修复。
-
 ![DSH「插件」页里的开放市场标签](docs/images/open-market-zh.webp)
+
+### 马卡龙主题
+
+开放市场自带一套可选主题，沿用 [dshopen.org](https://dshopen.org/zh/) 网站的风格。侧边栏、对话、代码块、菜单、对话框和设置页都会跟着换，跟随 DSH 的浅色或深色外观，不改变布局。在开放市场的设置里打开「马卡龙主题」即可，关掉后立刻恢复原样。
+
+<p><img src="docs/images/theme-market-zh.webp" alt="马卡龙主题下的开放市场" width="49%"> <img src="docs/images/theme-chat-zh.webp" alt="马卡龙主题下的对话页，含代码块和 diff" width="49%"></p>
+
+<img src="docs/images/theme-settings-zh.webp" alt="开放市场设置里的「马卡龙主题」开关" width="49%">
 
 [![开放插件市场网站首页](docs/images/home-zh.webp)](https://dshopen.org/zh/)
 

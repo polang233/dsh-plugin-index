@@ -11,7 +11,7 @@ window.__ModuleLoader__.load({
     try { Switch = require('@deepseek-ai/dsh-client-ui-primitives').Switch; } catch { /* Older hosts use the checkbox fallback. */ }
 
     const SETTINGS_KEY = 'dsh-open-market:settings';
-    const DEFAULT_SETTINGS = { autoRotate: true, showInstalled: true, showCheckup: true, likes: true, registry: 'index', customRegistry: '', sidebarMarket: 'auto' };
+    const DEFAULT_SETTINGS = { autoRotate: true, showInstalled: true, showCheckup: true, likes: true, registry: 'index', customRegistry: '', sidebarMarket: 'auto', theme: false };
     const REGISTRY_CHOICES = ['index', 'dsh', 'npmmirror', 'custom'];
     function normalizeSettings(saved) {
       const result = Object.fromEntries(Object.entries(DEFAULT_SETTINGS).map(([key, fallback]) =>
@@ -1052,7 +1052,7 @@ window.__ModuleLoader__.load({
       previous: '向左浏览 {section}', next: '向右浏览 {section}',
       source: '数据来自开放插件市场', sourceLink: 'dshopen.org', newWindow: '在新窗口打开',
       recommendationPosition: '查看第 {number} 组推荐', settings: '设置', about: '关于',
-      autoRotate: '今日推荐自动轮播', showInstalled: '在推荐和全部插件中显示已安装的插件', showCheckup: '显示「我已安装」按钮', installing: '正在安装…', sidebarMarket: '在侧边栏显示开放市场', sidebarMarketHelp: '单独的全宽页面，适合「插件」页没有开放市场标签的旧版 DSH。从这里安装时不弹安装窗口；需要确认安装脚本的插件请到「插件」页安装。', installNeedsDialog: '这个插件需要确认安装脚本，请到「插件」页安装', installedRestart: '已安装，重启 DSH 后生效',
+      autoRotate: '今日推荐自动轮播', showInstalled: '在推荐和全部插件中显示已安装的插件', showCheckup: '显示「我已安装」按钮', installing: '正在安装…', sidebarMarket: '在侧边栏显示开放市场', theme: '马卡龙主题', themeHelp: '仿照 dshopen.org 的粗描边、硬阴影和马卡龙配色，并在空白处加入鲸鱼女仆。覆盖 DSH 的侧边栏、对话、菜单、对话框和设置；跟随 DSH 的浅色或深色外观，关闭后立即恢复原样。', sidebarMarketHelp: '单独的全宽页面，适合「插件」页没有开放市场标签的旧版 DSH。从这里安装时不弹安装窗口；需要确认安装脚本的插件请到「插件」页安装。', installNeedsDialog: '这个插件需要确认安装脚本，请到「插件」页安装', installedRestart: '已安装，重启 DSH 后生效',
       settingsDisplay: '显示', settingsData: '数据与同步', settingsDownload: '下载', settingsConversation: '对话',
       syncData: '市场数据', syncNow: '同步最新数据', syncing: '正在同步…', syncedAt: '上次同步：{time}', neverSynced: '还没有同步过',
       syncFailed: '同步失败，继续显示已有数据', syncUnavailable: '打开「自定义插件市场」后才能同步', syncHelp: '打开市场时先显示本机保存的数据，每 6 小时在后台更新一次，不影响正常浏览。',
@@ -1125,7 +1125,7 @@ window.__ModuleLoader__.load({
       sectionEmpty: 'No matching plugins yet', previous: 'Browse {section} left', next: 'Browse {section} right',
       source: 'Data from Open Plugin Market', sourceLink: 'dshopen.org', newWindow: 'Opens in a new window',
       recommendationPosition: 'Show recommendation group {number}', settings: 'Settings', about: 'About',
-      autoRotate: 'Auto-rotate today’s picks', showInstalled: 'Show installed plugins in recommendations and All plugins', showCheckup: 'Show the Installed button', installing: 'Installing…', sidebarMarket: 'Show Open Market in the sidebar', sidebarMarketHelp: 'A separate full-width page, for older DSH versions without the Open Market tab on the Plugins page. Installs from it skip the install dialog; a plugin whose install scripts need approval has to be installed from Plugins.', installNeedsDialog: 'This plugin needs its install scripts approved. Install it from Plugins.', installedRestart: 'Installed. Restart DSH to use it.',
+      autoRotate: 'Auto-rotate today’s picks', showInstalled: 'Show installed plugins in recommendations and All plugins', showCheckup: 'Show the Installed button', installing: 'Installing…', sidebarMarket: 'Show Open Market in the sidebar', theme: 'Macaron theme', themeHelp: 'Ink outlines, hard shadows and macaron colors from dshopen.org, with the whale maid in empty spaces. Covers the DSH sidebar, conversations, menus, dialogs and settings; follows the light or dark appearance and goes back to normal as soon as you switch it off.', sidebarMarketHelp: 'A separate full-width page, for older DSH versions without the Open Market tab on the Plugins page. Installs from it skip the install dialog; a plugin whose install scripts need approval has to be installed from Plugins.', installNeedsDialog: 'This plugin needs its install scripts approved. Install it from Plugins.', installedRestart: 'Installed. Restart DSH to use it.',
       settingsDisplay: 'Display', settingsData: 'Data and sync', settingsDownload: 'Downloads', settingsConversation: 'Conversations',
       syncData: 'Market data', syncNow: 'Sync latest data', syncing: 'Syncing…', syncedAt: 'Last synced: {time}', neverSynced: 'Not synced yet',
       syncFailed: 'Sync failed; showing the data already here', syncUnavailable: 'Turn on Custom plugin markets to sync', syncHelp: 'The market opens with the data saved on this computer and updates in the background every six hours, so browsing is never held up.',
@@ -2381,7 +2381,7 @@ window.__ModuleLoader__.load({
       React.useEffect(() => setLimit(24), [lineup]);
       return h(React.Fragment, null,
         entries.length ? h('div', { className: 'opm-grid' }, entries.slice(0, limit).map(entry => h(PluginCard, { ...props, key: entry.name, entry })))
-          : h('p', { className: 'opm-muted' }, props.t('noResults')),
+          : h('p', { className: 'opm-muted opm-search-empty' }, props.t('noResults')),
         entries.length > limit && h('button', { type: 'button', className: 'opm-button opm-more', onClick: () => setLimit(value => value + 24) }, props.t('showMore')));
     }
 
@@ -2720,7 +2720,8 @@ window.__ModuleLoader__.load({
         return h('section', { className: 'opm-settings-group', 'aria-label': t(key) }, h('h2', null, t(key)), ...children);
       }
       return h('div', { className: 'opm-settings' },
-        group('settingsDisplay', toggle('autoRotate'), toggle('showInstalled'), toggle('showCheckup'), h(SidebarSwitch, { t })),
+        group('settingsDisplay', toggle('autoRotate'), toggle('showInstalled'), toggle('showCheckup'), h(SidebarSwitch, { t }),
+          toggle('theme'), h('p', { className: 'opm-setting-help' }, t('themeHelp'))),
         group('settingsData', h(ProfileStatus, {t}), h(SyncRow, { t }), h('p', { className: 'opm-setting-help' }, t('syncHelp')),
           toggle('likes'), h('p', { className: 'opm-setting-help' }, t('likesHelp'))),
         group('settingsDownload', h(RegistryChoice, { t })),
@@ -2884,6 +2885,31 @@ window.__ModuleLoader__.load({
         panel?.kind === 'settings' && !selected && h(SettingsPanel, { t, manager, onClose: closePanel, restoreFocus: restorePanel }));
     }
 
+    // Optional macaron theme. theme/theme.css scopes every rule under this body attribute, so removing the attribute
+    // is enough to switch it off without a reload; the Host serves the stylesheet and artwork (theme-assets.js).
+    const THEME_ATTRIBUTE = 'data-opm-theme';
+    const THEME_LINK_ID = 'dsh-open-market-theme';
+    const themeHref = () => new URL('dsh-open-market/theme/theme.css', document.baseURI).href;
+    function syncTheme() {
+      const body = document.body;
+      if (!body) return;
+      const on = getSettings().theme === true;
+      let link = document.getElementById(THEME_LINK_ID);
+      if (on && !link) {
+        link = document.createElement('link');
+        link.id = THEME_LINK_ID;
+        link.rel = 'stylesheet';
+        link.href = themeHref();
+        document.head.appendChild(link);
+      } else if (!on && link) link.remove();
+      if (on) body.setAttribute(THEME_ATTRIBUTE, '');
+      else body.removeAttribute(THEME_ATTRIBUTE);
+    }
+    function removeTheme() {
+      document.getElementById?.(THEME_LINK_ID)?.remove();
+      document.body?.removeAttribute(THEME_ATTRIBUTE);
+    }
+
     const SIDEBAR_PANEL = 'open-market';
     const SIDEBAR_SETTLE = 3000;
     const inject = ['slots', 'locale', 'remote'];
@@ -2900,6 +2926,12 @@ window.__ModuleLoader__.load({
         document.head.appendChild(style);
         return () => style.remove();
       }, 'open-market: styles');
+      // Follows the setting live, including a value that arrives later from the profile; unloading the plugin removes it.
+      ctx.effect(() => {
+        syncTheme();
+        const off = subscribeSettings(syncTheme);
+        return () => { off(); removeTheme(); };
+      }, 'open-market: theme');
       const t = ctx.locale.bind(NS);
       const getManager = () => pluginManager;
       const resolve = text => ctx.locale.resolveText(text);
@@ -3010,7 +3042,8 @@ window.__ModuleLoader__.load({
       npmVersionRegistry, declaredDshRanges, npmVersions, loadNpmVersions, versionChoices, versionInstall, versionCommand, installVersion, requestSelfUpdate, VERSION_CACHE_TTL,
       PluginDetails, OtherVersions, countSelfInstall, supportMarket, updateSettings, getLikes, FooterInvite,
       hydrateProfile, getProfileStatus, getSettings, getFavorites, writeFavorites, filterCatalog, requestBundleUpdate,
-      extractScreenshots, extractVersionNotes, loadScreenshots, loadReleaseNotes, ReleaseNotes, Screenshots, zh, en, styles: STYLES };
+      extractScreenshots, extractVersionNotes, loadScreenshots, loadReleaseNotes, ReleaseNotes, Screenshots, zh, en, styles: STYLES,
+      syncTheme, THEME_ATTRIBUTE, THEME_LINK_ID };
     return { apply, inject, internals };
   }
 });
