@@ -1,7 +1,7 @@
 import {mkdir, readFile, writeFile} from 'node:fs/promises';
 import {validateBrandNames} from './catalog-copy.mjs';
 import {buildIndex} from './lib.mjs';
-import {normalizeEntries} from './submission-entries.mjs';
+import {catalogSizeAfterAdding, normalizeEntries} from './submission-entries.mjs';
 import {assertNotWithdrawn, readWithdrawn} from './withdrawn.mjs';
 
 // Inspect only the accepted submissions. Never install plugins or overwrite public/.
@@ -21,7 +21,7 @@ const output = new URL('../.local/submission-preview/', import.meta.url);
 await mkdir(new URL('icons/', output), {recursive: true});
 for (const asset of built.assets) await writeFile(new URL(asset.path, output), asset.bytes);
 const summary = {
-  catalogSizeAfterCommit: config.packages.length,
+  catalogSizeAfterCommit: catalogSizeAfterAdding(config.packages.length, entries),
   generatedAt: built.evidence.generatedAt,
   submissions: built.index.plugins.map(plugin => ({
     name: plugin.name, title: plugin.title, description: plugin.description,

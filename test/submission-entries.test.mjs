@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeEntries } from '../scripts/submission-entries.mjs';
+import { catalogSizeAfterAdding, normalizeEntries } from '../scripts/submission-entries.mjs';
 
 const listed = new Map([['listed-plugin', { name: 'listed-plugin', category: 'tools' }]]);
 
@@ -65,4 +65,24 @@ test('issue numbers and reply drafts must agree', () => {
   assert.throws(() => normalizeEntries({ schema: 1, entries: [{ issue: 12, name: 'a', reply: '   ' }] }), /needs a reply draft/);
   assert.throws(() => normalizeEntries({ schema: 1, entries: [{ name: 'a', reply: 'x' }] }), /no issue to reply to/);
   assert.throws(() => normalizeEntries({ schema: 1, entries: [{ issue: 12, name: 'a', reply: 5 }] }), /must be text/);
+});
+
+test('the reported catalog size includes discovered candidates', () => {
+  const entries = normalizeEntries({
+    schema: 1,
+    entries: [
+      { issue: 7, name: 'listed-plugin', reply: 'Thanks!' },
+      { name: 'brand-new' },
+      { name: 'also-new' },
+    ],
+  }, listed);
+  assert.equal(catalogSizeAfterAdding(100, entries), 102);
+});
+
+test('a submission-only batch keeps the catalog size', () => {
+  const entries = normalizeEntries({
+    schema: 1,
+    entries: [{ issue: 7, name: 'listed-plugin', reply: 'Thanks!' }],
+  }, listed);
+  assert.equal(catalogSizeAfterAdding(100, entries), 100);
 });

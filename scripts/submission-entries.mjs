@@ -31,3 +31,8 @@ export function normalizeEntries(review, listed = new Map()) {
     };
   });
 }
+
+/** The catalog size once the discovered candidates in this batch are added. */
+export function catalogSizeAfterAdding(listedSize, entries) {
+  return listedSize + entries.filter(entry => entry.discovery).length;
+}
