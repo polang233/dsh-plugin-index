@@ -6,7 +6,10 @@ const escapeRegExp = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const SITE = {
   en: { route: './', lang: 'en', brand: 'Open Plugin Market', selected: 'selected', updated: /Updated/ },
   zh: { route: './zh/', lang: 'zh-CN', brand: '开放插件市场', selected: '选中', updated: /更新/ },
-  tw: { route: './zh-tw/', lang: 'zh-TW', brand: '開放外掛市場', selected: '選中', updated: /更新/ }
+  tw: { route: './zh-tw/', lang: 'zh-TW', brand: '開放外掛市場', selected: '選中', updated: /更新/ },
+  // Japanese and Korean have no plugin pages of their own: their cards open the English ones.
+  ja: { route: './ja/', lang: 'ja', brand: 'Open Plugin Market', selected: '選択', updated: /更新/, plugins: 'en' },
+  ko: { route: './ko/', lang: 'ko', brand: 'Open Plugin Market', selected: '선택', updated: /업데이트/, plugins: 'en' }
 };
 // Likes, the project's star count and README badges come from dshopen.org and shields.io; tests never reach them.
 test.beforeEach(async ({ page }) => {
@@ -25,7 +28,7 @@ for (const language of Object.keys(SITE)) {
     await page.goto(route);
     await expect(page.locator('html')).toHaveAttribute('lang', SITE[language].lang);
     await expect(page.locator('#index-url')).toHaveValue(INDEX_URL);
-    await expect(page.locator('.languages > *')).toHaveCount(3);
+    await expect(page.locator('.languages > *')).toHaveCount(Object.keys(SITE).length);
     await expect(page.locator('.languages [aria-current]')).toHaveCount(1);
     const rows = page.locator('[data-plugin]');
     const index = await (await page.request.get('./index.json')).json();
@@ -163,14 +166,18 @@ for (const language of Object.keys(SITE)) {
     await page.goto(route);
     const card = page.locator('[data-plugin]').first();
     const name = (await card.locator('[data-get]').getAttribute('data-get')).trim();
+    const pages = SITE[language].plugins ?? language;
     await card.locator('.plugin-link').click();
-    await expect(page).toHaveURL(new RegExp(`plugins/${escapeRegExp(name)}/$`));
-    await expect(page.locator('html')).toHaveAttribute('lang', SITE[language].lang);
+    await expect(page).toHaveURL(new RegExp(`${escapeRegExp(SITE[pages].route.slice(2))}plugins/${escapeRegExp(name)}/$`));
+    await expect(page.locator('html')).toHaveAttribute('lang', SITE[pages].lang);
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.locator('.install-name .get-name')).toHaveText(name);
     await expect(page.locator('#index-url')).toHaveValue(INDEX_URL);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', new RegExp(`plugins/${escapeRegExp(name)}/$`));
-    await expect(page.locator('link[rel="alternate"]')).toHaveCount(5);
+    // One per language with plugin pages, plus zh-HK and x-default.
+    await expect(page.locator('link[rel="alternate"]')).toHaveCount(Object.values(SITE).filter(entry => !entry.plugins).length + 2);
+    // Japanese and Korean lead to their home page from here.
+    await expect(page.locator('.languages a[data-lang="ja"]')).toHaveAttribute('href', /(^|\/)ja\/$/);
     const structured = await page.locator('script[type="application/ld+json"]').allTextContents();
     expect(structured.map(item => JSON.parse(item)['@type'])).toEqual(['SoftwareApplication', 'BreadcrumbList']);
     // The language switch keeps the reader on the same plugin.
@@ -230,6 +237,20 @@ for (const language of Object.keys(SITE)) {
     await expect(page.locator('[data-daily-table] tr')).toHaveCount(2);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(errors).toEqual([]);
+  });
+}
+
+// The English home page is the x-default: a browser set to Japanese or Korean lands on its own language, unless the reader picked one.
+for (const [locale, lang] of [['ja-JP', 'ja'], ['ko-KR', 'ko'], ['zh-TW', 'zh-TW']]) {
+  test(`English home sends a ${locale} browser to its language`, async ({ browser, baseURL }) => {
+    const context = await browser.newContext({ locale });
+    const page = await context.newPage();
+    await page.goto(baseURL);
+    await expect(page.locator('html')).toHaveAttribute('lang', lang);
+    await page.evaluate(() => localStorage.setItem('opm-lang', 'en'));
+    await page.goto(baseURL);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await context.close();
   });
 }
 

@@ -21,7 +21,10 @@ const owned = id => OWN.has(id) || id.startsWith('publisher-') || id.startsWith(
 export function releaseAge(timestamp, now, language) {
   if (!Number.isFinite(timestamp) || timestamp < 0 || timestamp * 1000 > now) return undefined;
   const days = Math.floor((now - timestamp * 1000) / DAY);
-  return language === 'zh' ? (days === 0 ? '今天更新' : `${days} 天前更新`) : (days === 0 ? 'Updated today' : `Updated ${days} ${days === 1 ? 'day' : 'days'} ago`);
+  if (language === 'zh') return days === 0 ? '今天更新' : `${days} 天前更新`;
+  if (language === 'ja') return days === 0 ? '今日更新' : `${days}日前に更新`;
+  if (language === 'ko') return days === 0 ? '오늘 업데이트' : `${days}일 전 업데이트`;
+  return days === 0 ? 'Updated today' : `Updated ${days} ${days === 1 ? 'day' : 'days'} ago`;
 }
 
 /**

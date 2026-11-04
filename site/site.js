@@ -1,4 +1,4 @@
-// Remember an explicit language choice so the English page stops sending Chinese browsers to /zh/.
+// Remember an explicit language choice so the English page stops sending Chinese, Japanese or Korean browsers on.
 for (const link of document.querySelectorAll('[data-lang]')) {
   link.addEventListener('click', event => {
     try { localStorage.setItem('opm-lang', link.dataset.lang); } catch { /* Private mode. */ }

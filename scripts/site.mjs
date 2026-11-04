@@ -24,11 +24,26 @@ const defaultOutput = new URL('../public/', import.meta.url);
 
 // Site languages: the folder each lives in, its tags, its switcher label and which index language it reads.
 // Traditional Chinese is the Simplified page run through OpenCC with Taiwan phrasing (插件 → 外掛, 软件 → 軟體).
+// Japanese and Korean have their own interface copy; the index only carries English and Chinese plugin text, so they read English
+// descriptions and show the English DSH screenshots (DSH has no Japanese or Korean interface). They have a home and a stats page
+// but no plugin pages of their own (`plugins: 'en'`): those would be near-copies of the English ones, so their cards link there.
 export const LANGUAGES = {
   en: { dir: '', tag: 'en', locale: 'en_US', label: 'EN', name: 'English', data: 'en' },
   zh: { dir: 'zh/', tag: 'zh-CN', locale: 'zh_CN', label: '简', name: '简体中文', data: 'zh' },
-  tw: { dir: 'zh-tw/', tag: 'zh-TW', locale: 'zh_TW', label: '繁', name: '繁體中文', data: 'zh' }
+  tw: { dir: 'zh-tw/', tag: 'zh-TW', locale: 'zh_TW', label: '繁', name: '繁體中文', data: 'zh' },
+  ja: { dir: 'ja/', tag: 'ja', locale: 'ja_JP', label: '日', name: '日本語', data: 'en', plugins: 'en' },
+  ko: { dir: 'ko/', tag: 'ko', locale: 'ko_KR', label: '한', name: '한국어', data: 'en', plugins: 'en' }
 };
+// hreflang tags: Hong Kong readers get the Traditional page, everyone else without a match the English one.
+const HREFLANG = [['en', 'en'], ['zh-CN', 'zh'], ['zh-TW', 'tw'], ['zh-HK', 'tw'], ['ja', 'ja'], ['ko', 'ko'], ['x-default', 'en']];
+// The language whose plugin pages a language's cards open, and the languages a page exists in.
+const pluginLanguage = language => LANGUAGES[language].plugins ?? language;
+const isPluginPath = path => path.startsWith('plugins/');
+const languagesFor = path => Object.keys(LANGUAGES).filter(id => !isPluginPath(path) || pluginLanguage(id) === id);
+const hreflangFor = path => HREFLANG.filter(([, id]) => languagesFor(path).includes(id));
+// The language that words built at build time (dates, "updated 3 days ago", review notes) are written in; Traditional converts Simplified.
+const wording = language => language === 'tw' ? 'zh' : language;
+const INTL = { en: 'en-US', zh: 'zh-CN', tw: 'zh-TW', ja: 'ja-JP', ko: 'ko-KR' };
 const toTraditional = Converter({ from: 'cn', to: 'twp' });
 // DSH's own menus are in Simplified Chinese, so text marked with ui() keeps its exact wording on the Traditional pages.
 const ui = label => `\uE000${label}\uE001`;
@@ -37,9 +52,9 @@ const TAIWAN_TERMS = [['賬', '帳'], ['質量', '品質']];
 const traditional = html => html.split(/(\uE000[^\uE001]*\uE001)/).map(part => part.startsWith('\uE000') ? part : TAIWAN_TERMS.reduce((text, [from, to]) => text.replaceAll(from, to), toTraditional(part))).join('');
 const finish = (html, language) => (language === 'tw' ? traditional(html) : html).replace(/[\uE000\uE001]/g, '').replace(/[\t ]+$/gm, '');
 
-const COPY = {
+export const COPY = {
   en: {
-    brand: 'Open Plugin Market', title: 'Open Plugin Market · DSH plugin market | DeepSeek Harness plugin index & daily picks', keywords: 'DSH plugin market, DSH plugins, DSH plugin index, DeepSeek Harness plugins, DeepSeek Harness plugin market, DSH extensions, dsh plugin, best DSH plugins, Open Plugin Market', socialImage: 'social.png',
+    brand: 'Open Plugin Market', title: 'Open Plugin Market · DSH plugin market | DeepSeek Harness plugin index & daily picks', metaKeywords: 'DSH plugin market, DSH plugins, DSH plugin index, DeepSeek Harness plugins, DeepSeek Harness plugin market, DSH extensions, dsh plugin, best DSH plugins, Open Plugin Market', socialImage: 'social.png', alternateNames: ['DSH Plugin Market', 'DeepSeek Harness plugin index'], reviewScopes: { security: 'Static security review', package: 'Package checks' },
     methodIndex: 'Add the index', methodPlugin: 'Install the plugin', methods: 'Ways to set it up',
     pluginCommand: 'Run one line in a terminal:', pluginInApp: 'Or in DSH, open Plugins → Add plugin and enter the package name', pluginNote: 'Either way it switches on Custom plugin markets, adds this index and an Open Market tab to the Plugins page; restart DSH afterwards.',
     shotDiscover: 'Discover', shotMarket: 'Open Market tab', shotMarketAlt: 'The Open Market tab that dsh-open-market adds to the DSH Plugins page: today\'s picks and rows of recommended plugins', pageLink: 'Page',
@@ -101,7 +116,7 @@ const COPY = {
     statsLoading: 'Loading usage stats…', statsFailed: 'Usage stats are unavailable right now. Try again later.'
   },
   zh: {
-    brand: '开放插件市场', title: '开放插件市场 · DSH 插件市场 | DeepSeek Harness 插件索引与每日插件推荐', keywords: 'DSH 插件市场, DSH 插件, DSH 插件索引, DSH 插件推荐, DSH 插件下载, DSH 插件安装, DeepSeek Harness 插件, DeepSeek Harness 插件市场, DeepSeek 插件, dsh plugin, 开放插件市场', socialImage: 'social-zh.png',
+    brand: '开放插件市场', title: '开放插件市场 · DSH 插件市场 | DeepSeek Harness 插件索引与每日插件推荐', metaKeywords: 'DSH 插件市场, DSH 插件, DSH 插件索引, DSH 插件推荐, DSH 插件下载, DSH 插件安装, DeepSeek Harness 插件, DeepSeek Harness 插件市场, DeepSeek 插件, dsh plugin, 开放插件市场', socialImage: 'social-zh.png', alternateNames: ['DSH 插件市场', 'DSH 插件索引', 'Open Plugin Market'], reviewScopes: { security: '静态安全审查', package: '包结构核查' },
     methodIndex: '添加索引源', methodPlugin: '安装插件', methods: '两种使用方式',
     pluginCommand: '在终端输入一行命令：', pluginInApp: `或者在 DSH「${ui('插件 → 添加插件')}」里输入包名`, pluginNote: `两种方式都会自动打开「${ui('自定义插件市场')}」、加入本索引，并在「${ui('插件')}」页多出「开放市场」标签，重启 DSH 后生效。`,
     shotDiscover: `「${ui('发现')}」页`, shotMarket: '「开放市场」标签', shotMarketAlt: 'dsh-open-market 在 DSH「插件」页加入的「开放市场」标签：今日推荐和多行推荐列表', pageLink: '详情页',
@@ -159,6 +174,129 @@ const COPY = {
     unknownRegion: '未知', otherRegions: '其他 {count} 个', share: '占比', day: '日期', region: '国家或地区', showTable: '以表格查看',
     methodTitle: '统计方式', methodText: '一次加载就是读取一次 index.json。用户按 UTC 日期内不同的 IP 地址和 UA 组合计算：两者加上每日更换的盐值做哈希，只用于当天去重，从不保存。国家和地区来自 Cloudflare 网络位置，只用两个字母的国家或地区代号：按加载次数的分布读取自 Cloudflare 自带的近 30 天流量分析，不保留比国家更细的信息。各洲按联合国地理分区（M49）划分。Cloudflare 流量分析为抽样统计，按加载次数的分布是估算值。本项目自己的检查请求不计入。', rawStats: '原始数据（stats.json）',
     statsLoading: '正在加载使用统计…', statsFailed: '暂时无法获取使用统计，请稍后再试。'
+  },
+  // Japanese and Korean: DSH has no Japanese or Korean interface, so menu names stay as DSH's English interface shows them.
+  ja: {
+    brand: 'Open Plugin Market', title: 'Open Plugin Market · DSH プラグインマーケット | DeepSeek Harness プラグインインデックスと毎日のおすすめ', metaKeywords: 'DSH プラグイン, DSH プラグインマーケット, DSH プラグイン 一覧, DSH プラグイン おすすめ, DeepSeek Harness プラグイン, DeepSeek Harness 拡張機能, DeepSeek プラグイン, dsh plugin, Open Plugin Market', socialImage: 'social.png', alternateNames: ['DSH プラグインマーケット', 'DeepSeek Harness プラグインインデックス', 'DSH Plugin Market'], reviewScopes: { security: '静的セキュリティレビュー', package: 'パッケージ検査' },
+    categories: { interface: 'インターフェース', tools: 'ツール', skills: 'スキル', memory: 'メモリ', providers: 'モデルプロバイダー', usage: '使用量とコスト', integrations: '連携', appearance: '外観', workflow: 'ワークフローとエージェント', development: '開発と運用', knowledge: 'ナレッジとリサーチ' },
+    labels: { verified: '✅ 検証済み', trending: '🔥 急上昇', active: '⚡ 更新が活発' },
+    methodIndex: 'インデックスを追加', methodPlugin: 'プラグインを入れる', methods: '設定方法',
+    pluginCommand: 'ターミナルで 1 行実行します：', pluginInApp: 'または DSH の「Plugins → Add plugin」でパッケージ名を入力', pluginNote: 'どちらの方法でも「Custom plugin markets」がオンになり、このインデックスが追加され、Plugins ページに「Open Market」タブが加わります。設定後に DSH を再起動してください。',
+    shotDiscover: 'Discover', shotMarket: 'Open Market タブ', shotMarketAlt: 'dsh-open-market が DSH の Plugins ページに追加する Open Market タブ：今日のおすすめと、おすすめプラグインの一覧', pageLink: '詳細',
+    footerBrowse: '見る', footerJoin: '参加する', removePlugin: '掲載取り下げを依頼', footerIndex: 'インデックス URL',
+    likesTitle: 'いいねの多いプラグイン', likesNote: 'サイトと Open Market タブからのいいね。各プラグインは 3 日ごとに 1 減ります。', likesEmpty: 'まだいいねはありません。プラグイン一覧で気に入ったものにいいねすると、ここに表示されます。', liveNote: 'リアルタイム · 数分ごとに更新',
+    tileNotes: { yesterday: '昨日 {value}', average: '1 日平均 {value}', added: '直近 7 日で {value} 件追加', likedPlugins: '{value} 件のプラグインから' },
+    statPlugins: '件のプラグイン', statCategories: 'カテゴリ', more: 'もっと見る', moreLoading: '読み込み中…', moreFailed: '読み込めませんでした。もう一度お試しください', sort: '並べ替え', sorts: { default: '標準', recommended: '⊙ スマートおすすめ', likes: '♥ いいね順', stars: '★ スター順', starsWeek: '▲ 最近の伸び', published: '最近の更新', random: '⚄ ランダム' }, shown: '{count} 件中 {shown} 件を表示',
+    description: 'DeepSeek Harness（DSH）のプラグインマーケット兼プラグインインデックス。ツール、スキル、メモリ、UI など {count} 件のコミュニティプラグインを掲載し、伸び・更新・いいねをもとに毎日おすすめを紹介します。URL を 1 つ追加するだけで DSH から閲覧・インストールできます。',
+    like: 'いいね', liked: '今日はいいね済み', likeTitle: 'このプラグインにいいね（1 日 1 回）', likeFailed: 'いいねできませんでした。しばらくしてからお試しください', likeLimit: '今日のいいね上限に達しました',
+    ghLabel: 'GitHub：プロジェクトにスターを付ける',
+    altSetup: 'またはプラグインを入れて 1 ステップで：', altSetupNote: '「Custom plugin markets」をオンにしてこのインデックスを追加し、Plugins ページに Open Market タブも加えます。設定後に DSH を再起動してください。', copyCommand: 'コピー', copiedShort: 'コピー済み',
+    faqTitle: 'よくある質問', faq: count => [
+      ['DSH のプラグインはどこで探せますか？', `DeepSeek Harness（DSH）は Discover タブから任意のプラグインインデックスを閲覧できます。Open Plugin Market には ${count} 件のコミュニティプラグインが掲載されています。https://dshopen.org/index.json をインデックスソースとして追加すれば DSH 内で閲覧・検索・インストールでき、このサイトでもカテゴリ、伸び、公開日ごとに一覧できます。`],
+      ['DSH のプラグインはどうやってインストールしますか？', `方法 1：Plugins → Experimental plugins で「Custom plugin markets」をオンにし、Discover → Add index source でインデックス URL を貼り付けてから、Discover でプラグインを検索してインストールします。方法 2：${PLUGIN_COMMAND} を実行すると、上の設定がすべて自動で行われ、Plugins ページに Open Market タブが追加されます。`],
+      ['おすすめはどう決まりますか？', '標準の並び順は 6 時間ごとに入れ替わり、伸びが速く更新が活発なプラグインを優先します。検証、ダウンロード数、スター、いいねも補助的に考慮します。同じ作者が一覧を独占することはないので、新しいプロジェクトにも最初の画面に載るチャンスがあります。'],
+      ['DeepSeek の公式サービスですか？', 'いいえ。Open Plugin Market は独立したコミュニティプロジェクトです。DSH の公式プラグインマーケットが読み込むインデックス形式を使っており、プラグインのダウンロードとインストールは DSH 自身が行います。'],
+      ['自分のプラグインを掲載するには？', '公開リポジトリ、npm で公開したパッケージ、ライセンスを用意して、GitHub で掲載リクエストを送ってください。掲載後は README にバッジを貼れます。いいね数が表示され、このサイトのプラグインページにリンクします。']
+    ],
+    badgeTitle: 'README バッジ', badgeText: 'このプラグインの作者の方へ：README にこのバッジを貼ると、いいね数が表示され、このページにリンクします。', copyBadge: 'Markdown をコピー',
+    skip: '本文へスキップ', plugins: 'プラグイン', docs: 'ドキュメント', statsNav: '統計', language: '言語', nav: 'メインナビゲーション', home: 'ホーム',
+    headline: 'なんでもプラグインになる。<br><em>見つけるならここ。</em>',
+    eyebrow: 'オープンな DSH プラグインマーケット · プラグインインデックス · 毎日のおすすめ', intro: 'DeepSeek Harness 向けのプラグインインデックスと毎日のおすすめ。10 月 15 日のアップデートで DSH はプラグインマーケットに対応しました。下のアドレスを Discover に貼り付けるだけで、数百のコミュニティプラグインを閲覧・インストールできます。',
+    address: 'インデックス URL', copy: 'URL をコピー', copyTitle: 'クリックしてコピー',
+    copied: 'コピーしました', usage: '今日 {readers} 人が利用中', usageNote: '今日（UTC 日付）DSH でこのインデックスを読み込んだ人数。IP とユーザーエージェントの組で 1 日 1 回数え、どちらも保存しません。', copySuccess: 'URL をコピーしました。DSH を開いてインデックスソースとして追加してください。', details: '詳細', copyOpen: '名前をコピーして DSH を開く', nameCopied: 'コピーしました。開いています…', dshOpened: '開きました。貼り付けてください', dshMissed: 'コピー済み。DSH を開いてください', getFailure: '名前を選択しました。コピーしてください', getHint: '名前を DSH の Discover の検索欄に貼り付けるとインストールできます。', pluginName: '名前', copyFailure: 'アドレスを選択しました。Ctrl+C か ⌘C を押すか、選択メニューからコピーしてください。',
+    showcase: { title: 'DSH ではこう見えます', text: 'スター数だけでは決めません。標準のおすすめは 6 時間ごとに入れ替わり、伸びが速く、活発に更新され、本当に役立つプラグインを先に表示します。検証、ダウンロード数、スターは補助的な指標です。', points: ['同じ作者が一覧を独占しないので、新しい作品も最初の画面に載れます', '急上昇（Rising）、更新が活発（Frequent updates）、レビュー済み（Reviewed）などのラベルがひと目でわかります', '標準、⊙ スマートおすすめ、ランダム：開くたびに新しい発見があります'], image: 'dsh-discover-en.webp', alt: 'DeepSeek Harness の Discover タブ。Open Plugin Market のプラグインがラベルとインストールボタン付きで並んでいる' },
+    zoom: 'スクリーンショットを拡大', close: '閉じる', stepAlts: ['Plugins → Experimental plugins にある Custom plugin markets のスイッチ', 'Discover にある Add index source ボタン', 'dshopen.org の URL を入力したインデックスソースのダイアログと Add ボタン'],
+    setup: 'クイックスタート', steps: [
+      ['マーケットをオン', 'Plugins → Experimental → Custom plugin markets'],
+      ['ソースを追加', 'Discover → Add index source'],
+      ['URL を貼り付け', '上のアドレスを貼り付けたら完了です。']
+    ],
+    directory: 'プラグイン一覧', search: 'プラグインを検索', searchPlaceholder: '名前、パッケージ名、説明', category: 'カテゴリ', all: 'すべてのカテゴリ', other: 'その他',
+    results: '{total} 件中 {count} 件', initialCount: count => `${count} 件のプラグイン`,
+    noResults: '一致するプラグインはありません', noResultsHelp: '別のキーワードで検索するか、すべてのカテゴリを選んでください。', reset: '絞り込みを解除',
+    noJs: 'JavaScript が無効なため、最初のプラグインだけを表示しています。各プラグインには個別のページがあり、カードからリンクしています。',
+    noDescription: 'パッケージの作者による説明はありません。', version: 'バージョン', source: 'ソース', npm: 'npm パッケージ', website: 'ウェブサイト', compatibility: '対応 DSH', noVersion: 'バージョン未記載', released: '公開日',
+    contributeTitle: 'インデックスにプラグインを追加', contributeText: '便利な DSH プラグインをお持ちですか？パッケージかリポジトリのリンクを送ってください。', submit: 'プラグインを申請', readDocs: 'ドキュメントを読む',
+    independent: '独立したコミュニティプロジェクトです。', updated: 'インデックス更新日', unknownDate: '更新日時は不明です',
+    scope: '公開パッケージの検査は、インストールテストやコード監査の代わりにはなりません。バージョンの互換性はインストール時に DSH が確認します。',
+    raw: 'JSON インデックス', status: 'ビルドの詳細', stats: '利用統計', footerTagline: 'DeepSeek Harness のためのコミュニティプラグインマーケット。伸びが速く活発に更新されるプラグインを先に表示し、小さな開発者の作品も目に留まるようにしています。', starCta: 'GitHub でスターを付ける', starNote: 'このマーケットが役に立ったら、スターで応援してください。使っているプラグインにもぜひ。次のスターは、誰かがあなたのプラグインに付けるものかもしれません。', footerLinks: 'リンク', refresh: '6 時間ごとに再構築',
+    starsUnavailable: 'GitHub スター数を取得できません', fetched: '取得日時',
+    pluginTitle: title => `${title} — DeepSeek Harness（DSH）プラグイン · Open Plugin Market`,
+    pluginDescription: (title, description, { category } = {}) => `${title}：${description}${category ? ` カテゴリ：${category}。` : ' '}DeepSeek Harness（DSH）向けのコミュニティプラグインで、Open Plugin Market に掲載されています。`,
+    installPluginTitle: 'もっと簡単に：Open Market プラグインを入れる', installPluginNote: 'このインデックスを自動で追加し、Plugins ページに Open Market タブを加えます。そこで {name} を検索してインストールでき、新しいバージョンが出たらそこで更新できます。', install: 'DSH にインストール', installSteps: ['最初に一度だけ Open Plugin Market をインデックスソースとして追加します：Plugins → Experimental → Custom plugin markets をオンにし、Discover → Add index source でこの URL を貼り付けます。', 'プラグイン名をコピーし、DSH を開いて Discover の検索欄に貼り付け、インストールします。'],
+    facts: 'プラグイン情報', author: '作者', keywords: 'キーワード', related: '{category} のほかのプラグイン', browseAll: 'すべてのプラグインを見る', npmMonth: '直近 30 日の npm ダウンロード数', review: 'レビュー', reviewRecord: 'レビュー記録',
+    statsTitle: '利用統計 — Open Plugin Market', statsHeading: '利用統計', statsDescription: 'DeepSeek Harness で Open Plugin Market を毎日何人が使い、どの国や地域から利用しているか。直近 30 日の 1 日あたりの利用者数と読み込み回数を、国・地域別に公開しています。',
+    statsLead: 'DSH はこのマーケットを読み込むか更新するたびにインデックスを取得します。以下の数字はその取得から直接集計したもので、数分ごとに更新されます。',
+    statsTiles: { todayReaders: '今日の利用者', monthReaders: '直近 30 日の利用者', plugins: '掲載プラグイン', likes: 'いいね' },
+    monthReadersNote: '各日の利用者数の合計です。複数の日に DSH を使った人は、日ごとに 1 人として数えます。',
+    dailyTitle: '直近 30 日の推移', series: { reads: '読み込み', readers: '利用者', plugins: '掲載プラグイン', stars: 'GitHub スター' }, seriesLabel: '表示する系列', metricReaders: '利用者', metricReads: '読み込み', metric: '表示',
+    countriesTitle: '利用されている地域', countriesNote: '直近 30 日の利用者の割合。{since} から集計。', countriesNoteLoads: '直近 30 日の読み込みの割合。Cloudflare のトラフィック分析による推定値です。', regionsTitle: '国連の地理区分別', countriesSub: '国・地域別',
+    regions: { Asia: 'アジア', Americas: '南北アメリカ', Europe: 'ヨーロッパ', Oceania: 'オセアニア', Africa: 'アフリカ', Unknown: '不明' },
+    regionNames: { HK: '中国・香港特別行政区', MO: '中国・マカオ特別行政区', TW: '中国・台湾省' }, countriesEmpty: '国・地域のデータはまだ集計を始めていません。集計初日からここに表示されます。',
+    unknownRegion: '不明', otherRegions: 'その他 {count}', share: '割合', day: '日付', region: '国・地域', showTable: '表で見る',
+    methodTitle: '集計方法', methodText: '読み込みは index.json の取得 1 回です。利用者は UTC の 1 日のうちで異なる IP アドレスとユーザーエージェントの組で数えます。この組は日ごとに変わるソルトでハッシュ化して当日の重複除去にだけ使い、保存はしません。国・地域は Cloudflare のネットワーク上の位置から 2 文字のコードで取得します。読み込み数による内訳は Cloudflare 自身の直近 30 日のトラフィック分析から読み取り、国より細かい情報は保持しません。大陸は国連の地理区分（M49）に従います。Cloudflare のトラフィック分析はサンプリングに基づくため、読み込み数による内訳は推定値です。このプロジェクト自身によるチェックは数えていません。', rawStats: '生データ（stats.json）',
+    statsLoading: '利用統計を読み込み中…', statsFailed: '現在、利用統計を取得できません。しばらくしてからお試しください。'
+  },
+  ko: {
+    brand: 'Open Plugin Market', title: 'Open Plugin Market · DSH 플러그인 마켓 | DeepSeek Harness 플러그인 인덱스와 오늘의 추천', metaKeywords: 'DSH 플러그인, DSH 플러그인 마켓, DSH 플러그인 목록, DSH 플러그인 추천, DeepSeek Harness 플러그인, DeepSeek Harness 확장 기능, DeepSeek 플러그인, dsh plugin, Open Plugin Market', socialImage: 'social.png', alternateNames: ['DSH 플러그인 마켓', 'DeepSeek Harness 플러그인 인덱스', 'DSH Plugin Market'], reviewScopes: { security: '정적 보안 검토', package: '패키지 검사' },
+    categories: { interface: '인터페이스', tools: '도구', skills: '스킬', memory: '메모리', providers: '모델 제공자', usage: '사용량 및 비용', integrations: '통합', appearance: '외관', workflow: '워크플로 및 에이전트', development: '개발 및 운영', knowledge: '지식 및 리서치' },
+    labels: { verified: '✅ 검증됨', trending: '🔥 급상승', active: '⚡ 활발한 업데이트' },
+    methodIndex: '인덱스 추가', methodPlugin: '플러그인 설치', methods: '설정 방법',
+    pluginCommand: '터미널에서 한 줄을 실행하세요:', pluginInApp: '또는 DSH의 Plugins → Add plugin에서 패키지 이름을 입력하세요', pluginNote: '어느 방법이든 Custom plugin markets가 켜지고 이 인덱스가 추가되며, Plugins 페이지에 Open Market 탭이 생깁니다. 설정 후 DSH를 다시 시작하세요.',
+    shotDiscover: 'Discover', shotMarket: 'Open Market 탭', shotMarketAlt: 'dsh-open-market이 DSH Plugins 페이지에 추가하는 Open Market 탭: 오늘의 추천과 추천 플러그인 목록', pageLink: '자세히',
+    footerBrowse: '둘러보기', footerJoin: '참여하기', removePlugin: '게재 중단 요청', footerIndex: '인덱스 URL',
+    likesTitle: '좋아요가 많은 플러그인', likesNote: '웹사이트와 Open Market 탭에서 받은 좋아요입니다. 플러그인마다 3일에 1개씩 줄어듭니다.', likesEmpty: '아직 좋아요가 없습니다. 플러그인 목록에서 마음에 드는 플러그인에 좋아요를 누르면 여기에 표시됩니다.', liveNote: '실시간 · 몇 분마다 갱신',
+    tileNotes: { yesterday: '어제 {value}', average: '하루 평균 {value}', added: '최근 7일간 {value}개 추가', likedPlugins: '플러그인 {value}개에서' },
+    statPlugins: '개 플러그인', statCategories: '개 카테고리', more: '더 보기', moreLoading: '불러오는 중…', moreFailed: '불러오지 못했습니다. 다시 시도하세요', sort: '정렬', sorts: { default: '기본', recommended: '⊙ 스마트 추천', likes: '♥ 좋아요순', stars: '★ 스타순', starsWeek: '▲ 최근 상승', published: '최근 업데이트', random: '⚄ 무작위' }, shown: '{count}개 중 {shown}개 표시',
+    description: 'DeepSeek Harness(DSH) 플러그인 마켓이자 플러그인 인덱스입니다. 도구, 스킬, 메모리, UI 등 {count}개의 커뮤니티 플러그인을 모아 성장세, 업데이트, 좋아요를 바탕으로 매일 추천합니다. URL 하나만 추가하면 DSH에서 둘러보고 설치할 수 있습니다.',
+    like: '좋아요', liked: '오늘 좋아요 완료', likeTitle: '이 플러그인에 좋아요 (하루 한 번)', likeFailed: '좋아요를 누르지 못했습니다. 잠시 후 다시 시도하세요', likeLimit: '오늘의 좋아요 한도에 도달했습니다',
+    ghLabel: 'GitHub: 프로젝트에 스타 주기',
+    altSetup: '또는 플러그인을 설치해 한 번에:', altSetupNote: 'Custom plugin markets를 켜고 이 인덱스를 추가하며, Plugins 페이지에 Open Market 탭도 만들어 줍니다. 설정 후 DSH를 다시 시작하세요.', copyCommand: '복사', copiedShort: '복사됨',
+    faqTitle: '자주 묻는 질문', faq: count => [
+      ['DSH 플러그인은 어디서 찾나요?', `DeepSeek Harness(DSH)는 Discover 탭에서 어떤 플러그인 인덱스든 둘러볼 수 있습니다. Open Plugin Market에는 ${count}개의 커뮤니티 플러그인이 있습니다. https://dshopen.org/index.json을 인덱스 소스로 추가하면 DSH 안에서 둘러보고 검색하고 설치할 수 있으며, 이 사이트에서도 카테고리, 성장세, 출시일별로 볼 수 있습니다.`],
+      ['DSH 플러그인은 어떻게 설치하나요?', `방법 1: Plugins → Experimental plugins에서 Custom plugin markets를 켜고, Discover → Add index source에 인덱스 URL을 붙여 넣은 뒤 Discover에서 플러그인을 검색해 설치합니다. 방법 2: ${PLUGIN_COMMAND}를 실행하면 위 설정을 모두 자동으로 해 주고 Plugins 페이지에 Open Market 탭을 추가합니다.`],
+      ['추천 순위는 어떻게 정해지나요?', '기본 순서는 6시간마다 바뀌며, 빠르게 성장하고 자주 업데이트되는 플러그인을 앞에 둡니다. 검증 여부, 다운로드 수, 스타, 좋아요는 보조 지표로 참고합니다. 한 작성자가 목록을 독차지할 수 없어 새 프로젝트도 첫 화면에 오를 기회가 있습니다.'],
+      ['DeepSeek 공식 서비스인가요?', '아닙니다. Open Plugin Market은 독립적인 커뮤니티 프로젝트입니다. DSH 공식 플러그인 마켓이 읽는 인덱스 형식을 사용하며, 플러그인 다운로드와 설치는 DSH가 직접 합니다.'],
+      ['내 플러그인을 등록하려면 어떻게 하나요?', '공개 저장소, npm에 배포한 패키지, 라이선스를 갖춰 GitHub에서 등록 요청을 열어 주세요. 등록되면 README에 배지를 달 수 있습니다. 배지는 좋아요 수를 보여 주고 이 사이트의 플러그인 페이지로 연결됩니다.']
+    ],
+    badgeTitle: 'README 배지', badgeText: '이 플러그인의 작성자인가요? README에 이 배지를 넣으면 좋아요 수가 표시되고 이 페이지로 연결됩니다.', copyBadge: 'Markdown 복사',
+    skip: '본문으로 건너뛰기', plugins: '플러그인', docs: '문서', statsNav: '통계', language: '언어', nav: '주 메뉴', home: '홈',
+    headline: '무엇이든 플러그인이 됩니다.<br><em>여기서 찾아보세요.</em>',
+    eyebrow: '열린 DSH 플러그인 마켓 · 플러그인 인덱스 · 오늘의 추천', intro: 'DeepSeek Harness를 위한 플러그인 인덱스와 오늘의 추천입니다. 10월 15일 업데이트부터 DSH가 플러그인 마켓을 지원하므로, 아래 주소를 Discover에 붙여 넣기만 하면 수백 개의 커뮤니티 플러그인을 둘러보고 설치할 수 있습니다.',
+    address: '인덱스 URL', copy: 'URL 복사', copyTitle: '클릭하여 복사',
+    copied: '복사됨', usage: '오늘 {readers}명이 사용 중', usageNote: '오늘(UTC 날짜) DSH에서 이 인덱스를 불러온 사람 수입니다. IP와 사용자 에이전트 조합으로 하루 한 번만 세며, 둘 다 저장하지 않습니다.', copySuccess: 'URL을 복사했습니다. DSH를 열고 인덱스 소스로 추가하세요.', details: '자세히', copyOpen: '이름 복사 후 DSH 열기', nameCopied: '복사했습니다. 여는 중…', dshOpened: '열렸습니다. 붙여 넣으세요', dshMissed: '복사됨. DSH를 여세요', getFailure: '이름을 선택했습니다. 복사하세요', getHint: 'DSH Discover 검색창에 이름을 붙여 넣으면 설치할 수 있습니다.', pluginName: '이름', copyFailure: '주소를 선택했습니다. Ctrl+C 또는 ⌘C를 누르거나 선택 메뉴에서 복사하세요.',
+    showcase: { title: 'DSH에서는 이렇게 보입니다', text: '스타 수가 전부는 아닙니다. 기본 추천은 6시간마다 바뀌며, 빠르게 성장하고 꾸준히 업데이트되는 좋은 플러그인을 먼저 보여 줍니다. 검증 여부, 다운로드 수, 스타는 보조 지표입니다.', points: ['한 작성자가 목록을 독차지하지 않아 새로운 작품도 첫 화면에 오를 수 있습니다', '급상승(Rising), 활발한 업데이트(Frequent updates), 검토됨(Reviewed) 같은 라벨을 한눈에 볼 수 있습니다', '기본, ⊙ 스마트 추천, 무작위: 열 때마다 새로운 발견이 있습니다'], image: 'dsh-discover-en.webp', alt: 'DeepSeek Harness의 Discover 탭에 Open Plugin Market 플러그인이 라벨과 설치 버튼과 함께 나열된 모습' },
+    zoom: '스크린샷 확대', close: '닫기', stepAlts: ['Plugins → Experimental plugins에 있는 Custom plugin markets 스위치', 'Discover에 있는 Add index source 버튼', 'dshopen.org URL을 입력한 인덱스 소스 대화상자와 Add 버튼'],
+    setup: '빠른 시작', steps: [
+      ['마켓 켜기', 'Plugins → Experimental → Custom plugin markets'],
+      ['소스 추가', 'Discover → Add index source'],
+      ['URL 붙여 넣기', '위 주소를 붙여 넣으면 끝입니다.']
+    ],
+    directory: '플러그인 목록', search: '플러그인 검색', searchPlaceholder: '이름, 패키지 또는 설명', category: '카테고리', all: '전체 카테고리', other: '기타',
+    results: '{total}개 중 {count}개 플러그인', initialCount: count => `플러그인 ${count}개`,
+    noResults: '일치하는 플러그인이 없습니다', noResultsHelp: '다른 검색어를 입력하거나 전체 카테고리를 선택하세요.', reset: '필터 지우기',
+    noJs: 'JavaScript가 꺼져 있어 처음 몇 개의 플러그인만 표시됩니다. 각 플러그인에는 카드에서 연결되는 별도 페이지가 있습니다.',
+    noDescription: '패키지 작성자가 설명을 제공하지 않았습니다.', version: '버전', source: '소스', npm: 'npm 패키지', website: '웹사이트', compatibility: '필요한 DSH', noVersion: '버전 정보 없음', released: '출시일',
+    contributeTitle: '인덱스에 플러그인 추가', contributeText: '유용한 DSH 플러그인이 있나요? 패키지나 저장소 링크를 보내 주세요.', submit: '플러그인 제출', readDocs: '문서 읽기',
+    independent: '독립적인 커뮤니티 프로젝트입니다.', updated: '인덱스 업데이트', unknownDate: '업데이트 시간을 알 수 없습니다',
+    scope: '배포된 패키지 검사는 설치 테스트나 코드 감사를 대신하지 않습니다. 버전 호환성은 설치할 때 DSH가 확인합니다.',
+    raw: 'JSON 인덱스', status: '빌드 정보', stats: '사용 통계', footerTagline: 'DeepSeek Harness를 위한 커뮤니티 플러그인 마켓. 빠르게 성장하고 꾸준히 업데이트되는 플러그인을 먼저 보여 주어 작은 개발자도 눈에 띌 수 있게 합니다.', starCta: 'GitHub에서 스타 주기', starNote: '이 마켓이 도움이 됐다면 스타로 응원해 주세요. 사용하는 플러그인에도 스타를 남겨 주세요. 다음 스타는 누군가 여러분의 플러그인에 주는 것일지도 모릅니다.', footerLinks: '링크', refresh: '6시간마다 다시 빌드',
+    starsUnavailable: 'GitHub 스타 수를 가져올 수 없음', fetched: '가져온 시각',
+    pluginTitle: title => `${title} — DeepSeek Harness(DSH) 플러그인 · Open Plugin Market`,
+    pluginDescription: (title, description, { category } = {}) => `${title}: ${description}${category ? ` 카테고리: ${category}.` : ''} Open Plugin Market에 등록된 DeepSeek Harness(DSH) 커뮤니티 플러그인입니다.`,
+    installPluginTitle: '더 쉽게: Open Market 플러그인 설치', installPluginNote: '이 인덱스를 자동으로 추가하고 Plugins 페이지에 Open Market 탭을 만들어 줍니다. 그곳에서 {name}을(를) 검색해 설치하고, 새 버전이 나오면 그곳에서 업데이트할 수 있습니다.', install: 'DSH에 설치', installSteps: ['처음 한 번만 Open Plugin Market을 인덱스 소스로 추가합니다: Plugins → Experimental → Custom plugin markets를 켠 다음, Discover → Add index source에 이 URL을 붙여 넣으세요.', '플러그인 이름을 복사하고 DSH를 열어 Discover 검색창에 붙여 넣은 뒤 설치하세요.'],
+    facts: '플러그인 정보', author: '작성자', keywords: '키워드', related: '{category}의 다른 플러그인', browseAll: '전체 플러그인 보기', npmMonth: '최근 30일 npm 다운로드 수', review: '검토', reviewRecord: '검토 기록',
+    statsTitle: '사용 통계 — Open Plugin Market', statsHeading: '사용 통계', statsDescription: 'DeepSeek Harness에서 Open Plugin Market을 매일 몇 명이 어느 나라와 지역에서 사용하는지 보여 줍니다. 최근 30일간의 일별 사용자 수와 불러오기 횟수를 국가·지역별로 공개합니다.',
+    statsLead: 'DSH는 이 마켓을 불러오거나 새로 고칠 때마다 인덱스를 가져옵니다. 아래 숫자는 그 요청에서 바로 집계한 것으로, 몇 분마다 갱신됩니다.',
+    statsTiles: { todayReaders: '오늘 사용자', monthReaders: '최근 30일 사용자', plugins: '등록된 플러그인', likes: '좋아요' },
+    monthReadersNote: '날마다의 사용자 수를 더한 값입니다. 여러 날 DSH를 사용한 사람은 날마다 한 번씩 셉니다.',
+    dailyTitle: '최근 30일 추이', series: { reads: '불러오기', readers: '사용자', plugins: '등록된 플러그인', stars: 'GitHub 스타' }, seriesLabel: '표시할 항목', metricReaders: '사용자', metricReads: '불러오기', metric: '표시',
+    countriesTitle: '사용 지역', countriesNote: '최근 30일 사용자 비율. {since}부터 집계했습니다.', countriesNoteLoads: '최근 30일 불러오기 비율. Cloudflare 트래픽 분석에 따른 추정치입니다.', regionsTitle: 'UN 지리 구분별', countriesSub: '국가 또는 지역별',
+    regions: { Asia: '아시아', Americas: '아메리카', Europe: '유럽', Oceania: '오세아니아', Africa: '아프리카', Unknown: '알 수 없음' },
+    regionNames: { HK: '중국 홍콩 특별행정구', MO: '중국 마카오 특별행정구', TW: '중국 타이완성' }, countriesEmpty: '국가 및 지역 데이터는 아직 집계를 시작하지 않았습니다. 집계 첫날부터 여기에 표시됩니다.',
+    unknownRegion: '알 수 없음', otherRegions: '기타 {count}곳', share: '비율', day: '날짜', region: '국가 또는 지역', showTable: '표로 보기',
+    methodTitle: '집계 방법', methodText: '불러오기 1회는 index.json을 한 번 가져온 것입니다. 사용자는 UTC 하루 동안 서로 다른 IP 주소와 사용자 에이전트 조합의 수입니다. 이 조합은 매일 바뀌는 솔트와 함께 해시해 그날의 중복 제거에만 쓰고 저장하지 않습니다. 국가와 지역은 Cloudflare 네트워크 위치에서 두 글자 코드로 얻습니다. 불러오기 기준 분포는 Cloudflare 자체의 최근 30일 트래픽 분석에서 읽어 오며, 국가보다 자세한 정보는 보관하지 않습니다. 대륙은 UN 지리 구분(M49)을 따릅니다. Cloudflare 트래픽 분석은 표본 기반이므로 불러오기 기준 분포는 추정치입니다. 이 프로젝트 자체의 점검 요청은 집계하지 않습니다.', rawStats: '원본 데이터 (stats.json)',
+    statsLoading: '사용 통계를 불러오는 중…', statsFailed: '지금은 사용 통계를 가져올 수 없습니다. 잠시 후 다시 시도하세요.'
   }
 };
 // Traditional pages share the Simplified copy (converted when written) but have their own sharing card.
@@ -171,14 +309,18 @@ const SIGNALS = ['verified', 'trending', 'active'];
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const json = value => JSON.stringify(value).replace(/</g, '\\u003c');
 const localize = (value, language, fallback = '') => typeof value === 'string' ? value : value && typeof value === 'object' ? String(value[language] ?? (language === 'zh' ? value['zh-cn'] : undefined) ?? value.en ?? Object.values(value).find(item => typeof item === 'string') ?? fallback) : fallback;
-const numberFormat = language => new Intl.NumberFormat(language === 'zh' ? 'zh-CN' : 'en-US');
+const numberFormat = language => new Intl.NumberFormat(INTL[language] ?? 'en-US');
+// Category titles: the index names them in English and Chinese, other languages carry their own names in COPY.
+const categoryName = (categories, id, data, text, fallback) => text.categories?.[id] ?? localize(categories[id]?.title, data, fallback);
+// The README is Chinese, README.en.md English; Japanese and Korean readers get the English one.
+const docsFor = language => ['zh', 'tw'].includes(language) ? `${REPOSITORY}/blob/main/README.md` : DOCS;
 function safeUrl(value) {
   if (typeof value !== 'string') return undefined;
   try { const url = new URL(value); return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password ? url.href : undefined; } catch { return undefined; }
 }
 function dateLabel(value, language) {
   const date = new Date(value);
-  return Number.isFinite(date.getTime()) ? new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(date) : undefined;
+  return Number.isFinite(date.getTime()) ? new Intl.DateTimeFormat(language === 'en' ? 'en-GB' : INTL[language] ?? 'en-GB', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(date) : undefined;
 }
 function plainDescription(value) { return value.replace(/\s+/g, ' ').trim(); }
 function newestVersion(versions = []) {
@@ -203,7 +345,7 @@ export function renderStars(plugin, snapshot, language) {
   const repository = githubRepository(plugin.repository?.url);
   if (!repository) return '';
   const repo = snapshot?.repositories?.[repository.key];
-  const text = COPY[language === 'zh' ? 'zh' : 'en'];
+  const text = COPY[language] ?? COPY.en;
   const measured = repo && ['ok', 'stale'].includes(repo.status) && Number.isSafeInteger(repo.stars) && repo.stars >= 0 && Number.isFinite(Date.parse(repo.fetchedAt));
   if (!measured) return `<span class="stars-unavailable" data-stars-unavailable>${text.starsUnavailable}</span>`;
   const count = numberFormat(language).format(repo.stars);
@@ -215,24 +357,25 @@ export function renderStars(plugin, snapshot, language) {
 export function reviewSummary(signals = {}, language = 'en') {
   const review = signals.maintainerReview;
   if (review) {
-    const scope = language === 'en'
-      ? (review.scope === 'static-security' ? 'Static security review' : 'Package checks')
-      : (review.scope === 'static-security' ? '静态安全审查' : '包结构核查');
-    return `${language === 'en' ? 'Open Plugin Market' : '开放插件市场'} · ${scope} · v${review.version} · ${review.reviewedAt.slice(0, 10)}`;
+    const text = COPY[language] ?? COPY.en;
+    const scope = review.scope === 'static-security' ? text.reviewScopes.security : text.reviewScopes.package;
+    return `${text.brand} · ${scope} · v${review.version} · ${review.reviewedAt.slice(0, 10)}`;
   }
   return (signals.verifiedBy ?? []).map(id => SOURCES[id]?.title).filter(Boolean).join(' · ');
 }
 
 // Everything a card or a plugin page shows about one plugin, resolved once per language.
-function describe(plugin, data, context) {
+function describe(plugin, language, context) {
   const { categories, text, snapshot, downloads, display, labels, root } = context;
+  const data = LANGUAGES[language].data;
+  const words = wording(language);
   const name = localize(plugin.name, data);
   const packageName = localize(plugin.name, 'en', name);
   const title = localize(plugin.title, data, name);
   const description = plainDescription(localize(display.plugins?.[plugin.name]?.description ?? plugin.description, data, text.noDescription));
   const version = newestVersion(plugin.versions);
   const categoryId = plugin.metadata?.category ?? '';
-  const categoryTitle = localize(categories[categoryId]?.title, data, text.other);
+  const categoryTitle = categoryName(categories, categoryId, data, text, text.other);
   const sourceUrl = safeUrl(plugin.repository?.url) ?? safeUrl(version?.source?.type === 'git' ? version.source.url : undefined);
   const homepage = safeUrl(plugin.homepage);
   const npmUrl = version?.source?.type === 'npm' ? `https://www.npmjs.com/package/${packageName.split('/').map(encodeURIComponent).join('/')}` : undefined;
@@ -243,24 +386,24 @@ function describe(plugin, data, context) {
   if (!sourceUrl && homepage) links.push(`<a href="${esc(homepage)}" rel="noopener noreferrer">${esc(text.website)}</a>`);
   // Stable pastel tone per category so cards read as grouped without extra data.
   const tone = Array.from(categoryId).reduce((sum, char) => (sum * 31 + char.codePointAt(0)) % 997, 7) % 6;
-  const date = version?.publishTimestamp != null ? releaseAge(version.publishTimestamp, Date.parse(display.generatedAt), data) : undefined;
+  const date = version?.publishTimestamp != null ? releaseAge(version.publishTimestamp, Date.parse(display.generatedAt), words) : undefined;
   const npm = downloads.packages?.[plugin.name];
   const npmMeasured = npm && ['ok', 'stale'].includes(npm.status) && Number.isSafeInteger(npm.downloads) && npm.downloads >= 0;
   const npmTitle = npmMeasured ? `npm · ${npm.start} – ${npm.end} · ${text.fetched} ${npm.fetchedAt}` : '';
   const own = plugin.metadata?.labels ?? [];
   const signals = display.plugins?.[plugin.name]?.signals ?? {};
   const review = signals.maintainerReview?.version === version?.version ? signals.maintainerReview : undefined;
-  const reviewText = reviewSummary({ ...signals, maintainerReview: review }, data);
-  const badges = own.filter(id => id.startsWith('publisher-') && labels[id]).map(id => `<span class="publisher-badge" data-publisher="${esc(id)}">${esc(localize(labels[id].title, data))}</span>`).join('')
-    + SIGNALS.filter(id => own.includes(id) && labels[id]).map(id => `<span class="signal-badge" data-signal="${id}"${id === 'verified' && reviewText ? ` title="${esc(reviewText)}"` : ''}>${esc(localize(labels[id].title, data))}</span>`).join('');
+  const reviewText = reviewSummary({ ...signals, maintainerReview: review }, words);
+  const badges = own.filter(id => id.startsWith('publisher-') && labels[id]).map(id => `<span class="publisher-badge" data-publisher="${esc(id)}">${esc(text.labels?.[id] ?? localize(labels[id].title, data))}</span>`).join('')
+    + SIGNALS.filter(id => own.includes(id) && labels[id]).map(id => `<span class="signal-badge" data-signal="${id}"${id === 'verified' && reviewText ? ` title="${esc(reviewText)}"` : ''}>${esc(text.labels?.[id] ?? localize(labels[id].title, data))}</span>`).join('');
   const icon = typeof plugin.icon === 'string' && /^icons\/[a-f0-9]{64}\.(?:svg|png|jpg|webp)$/.test(plugin.icon) ? root + plugin.icon : undefined;
   // Likes come from the Worker at runtime; the button stays hidden without JavaScript.
   const likeButton = `<button type="button" class="like-button" data-like="${esc(packageName)}" title="${esc(text.likeTitle)}" aria-pressed="false" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.8 4 7.4 4c2 0 3.6 1.1 4.6 2.7C13 5.1 14.6 4 16.6 4c3.6 0 5.8 3.6 4.6 7.1-1.7 4.8-9.2 9.4-9.2 9.4z"/></svg><span class="visually-hidden">${esc(text.like)}</span><span data-like-count></span></button>`;
-  const detail = `${likeButton}${renderStars(plugin, snapshot, data)}
-      ${npmMeasured ? `<a class="npm-downloads" data-downloads="${npm.downloads}" href="${esc(npm.source)}" title="${esc(npmTitle)}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>${esc(numberFormat(data).format(npm.downloads))}</a>` : ''}
-      ${date ? `<time datetime="${esc(new Date(version.publishTimestamp * 1000).toISOString())}" title="${esc(dateLabel(version.publishTimestamp * 1000, data))}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>${esc(date)}</time>` : ''}`;
+  const detail = `${likeButton}${renderStars(plugin, snapshot, words)}
+      ${npmMeasured ? `<a class="npm-downloads" data-downloads="${npm.downloads}" href="${esc(npm.source)}" title="${esc(npmTitle)}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>${esc(numberFormat(words).format(npm.downloads))}</a>` : ''}
+      ${date ? `<time datetime="${esc(new Date(version.publishTimestamp * 1000).toISOString())}" title="${esc(dateLabel(version.publishTimestamp * 1000, words))}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>${esc(date)}</time>` : ''}`;
   const reviewUrl = review && safeUrl(review.record);
-  const facts = `<dt>${esc(text.pluginName)}</dt><dd class="get-name">${esc(packageName)}</dd><dt>${esc(text.version)}</dt><dd class="version">${version ? esc(version.version) : esc(text.noVersion)}</dd>${version?.engines?.dsh ? `<dt>${esc(text.compatibility)}</dt><dd>${esc(version.engines.dsh)}</dd>` : ''}${version?.publishTimestamp ? `<dt>${esc(text.released)}</dt><dd>${esc(dateLabel(version.publishTimestamp * 1000, data))}</dd>` : ''}${own.includes('verified') && reviewText ? `<dt>${esc(text.review)}</dt><dd>${esc(reviewText)}${reviewUrl ? ` · <a href="${esc(reviewUrl)}">${esc(text.reviewRecord)}</a>` : ''}</dd>` : ''}`;
+  const facts = `<dt>${esc(text.pluginName)}</dt><dd class="get-name">${esc(packageName)}</dd><dt>${esc(text.version)}</dt><dd class="version">${version ? esc(version.version) : esc(text.noVersion)}</dd>${version?.engines?.dsh ? `<dt>${esc(text.compatibility)}</dt><dd>${esc(version.engines.dsh)}</dd>` : ''}${version?.publishTimestamp ? `<dt>${esc(text.released)}</dt><dd>${esc(dateLabel(version.publishTimestamp * 1000, words))}</dd>` : ''}${own.includes('verified') && reviewText ? `<dt>${esc(text.review)}</dt><dd>${esc(reviewText)}${reviewUrl ? ` · <a href="${esc(reviewUrl)}">${esc(text.reviewRecord)}</a>` : ''}</dd>` : ''}`;
   const getButton = `<button type="button" class="get-copy" data-get="${esc(packageName)}" title="${esc(text.getHint)}" hidden><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>${esc(text.copyOpen)}</span></button>`;
   return { name, packageName, title, namedTitle: title && title !== name, description, version, categoryId, categoryTitle, links, tone, npm: npmMeasured ? npm : undefined, badges, icon, detail, facts, getButton, sourceUrl, homepage, npmUrl };
 }
@@ -272,9 +415,9 @@ function avatar(info, root, position = 0) {
 
 function pluginRow(plugin, language, context, position = 0, added = {}) {
   const { text, root, from } = context;
-  const info = describe(plugin, LANGUAGES[language].data, context);
+  const info = describe(plugin, language, context);
   const search = [info.name, info.packageName, info.title, info.description, ...(plugin.metadata?.keywords ?? [])].join(' ');
-  const href = link(from, language, pluginPath(plugin.name));
+  const href = link(from, pluginLanguage(language), pluginPath(plugin.name));
   // Sort values mirror the index's sort keys so the website offers the same orders as DSH.
   // "Recently updated" also surfaces new listings: whichever is later, the release or the day it joined the catalog.
   const recency = Math.max(...[info.version?.publishTimestamp, addedTimestamp(added, plugin.name)].filter(Number.isFinite));
@@ -314,7 +457,7 @@ const addressBar = text => `<label class="address-label visually-hidden" for="in
       </div>`;
 
 /**
- * The shell every page shares: head tags with alternates in all three languages, header, footer and messages.
+ * The shell every page shares: head tags with alternates in every language, header, footer and messages.
  * `path` is the page's address under the language folder; `site` carries the catalog numbers for the footer.
  */
 function layout({ language, path, title, description, body, site, structured = [], type = 'website', image }) {
@@ -323,19 +466,21 @@ function layout({ language, path, title, description, body, site, structured = [
   const root = '../'.repeat(depth(from));
   const home = link(from, language);
   const onHome = path === '';
-  const docsUrl = language === 'en' ? DOCS : `${REPOSITORY}/blob/main/README.md`;
+  const docsUrl = docsFor(language);
   const canonical = absolute(language, path);
   const social = `${ORIGIN}assets/${image ?? site.socialImages[text.socialImage] ?? text.socialImage}`;
-  const alternates = [['en', 'en'], ['zh-CN', 'zh'], ['zh-TW', 'tw'], ['zh-HK', 'tw'], ['x-default', 'en']]
+  const alternates = hreflangFor(path)
     .map(([tag, id]) => `<link rel="alternate" hreflang="${tag}" href="${absolute(id, path)}">`).join('\n  ');
+  // A language without this page (Japanese or Korean on a plugin page) links to its home page instead.
+  const target = id => link(from, id, languagesFor(path).includes(id) ? path : '');
   const switcher = Object.entries(LANGUAGES).map(([id, entry]) => id === language
     ? `<span lang="${entry.tag}" aria-current="page" title="${entry.name}">${entry.label}</span>`
-    : `<a href="${esc(link(from, id, path))}" lang="${entry.tag}" hreflang="${entry.tag}" data-lang="${id}" title="${entry.name}">${entry.label}</a>`).join('');
+    : `<a href="${esc(target(id))}" lang="${entry.tag}" hreflang="${entry.tag}" data-lang="${id}" title="${entry.name}">${entry.label}</a>`).join('');
   const messages = { usage: text.usage, copy: text.copy, copied: text.copied, copySuccess: text.copySuccess, copyFailure: text.copyFailure, nameCopied: text.nameCopied, dshOpened: text.dshOpened, dshMissed: text.dshMissed, getFailure: text.getFailure, results: text.results, more: text.more, moreLoading: text.moreLoading, moreFailed: text.moreFailed, shown: text.shown,
     like: text.like, liked: text.liked, likeTitle: text.likeTitle, likeFailed: text.likeFailed, likeLimit: text.likeLimit, copyCommand: text.copyCommand, copiedShort: text.copiedShort,
     statsUrl: STATS_URL, likesUrl: `${ORIGIN}likes.json`, likeApi: `${ORIGIN}api/like`, starsApi: `${ORIGIN}api/stars` };
   // The English home page is the x-default: send visitors on to their remembered or browser language.
-  const redirect = language === 'en' && onHome ? `<script>try{var l=localStorage.getItem('opm-lang'),n=navigator.language||'';if(!l)l=/^zh-(tw|hk|mo|hant)/i.test(n)?'tw':/^zh/i.test(n)?'zh':'';var d={zh:'zh/',tw:'zh-tw/'}[l];if(d)location.replace(d+location.search+location.hash)}catch(e){}</script>` : '';
+  const redirect = language === 'en' && onHome ? `<script>try{var l=localStorage.getItem('opm-lang'),n=navigator.language||'';if(!l)l=/^zh-(tw|hk|mo|hant)/i.test(n)?'tw':/^zh/i.test(n)?'zh':/^ja/i.test(n)?'ja':/^ko/i.test(n)?'ko':'';var d={zh:'zh/',tw:'zh-tw/',ja:'ja/',ko:'ko/'}[l];if(d)location.replace(d+location.search+location.hash)}catch(e){}</script>` : '';
   return finish(`<!doctype html>
 <html lang="${LANGUAGES[language].tag}" class="no-js">
 <head>
@@ -345,7 +490,7 @@ function layout({ language, path, title, description, body, site, structured = [
   <meta name="theme-color" content="#eef3f8">
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(description)}">
-  ${onHome ? `<meta name="keywords" content="${esc(text.keywords)}">` : ''}
+  ${onHome ? `<meta name="keywords" content="${esc(text.metaKeywords)}">` : ''}
   <meta name="robots" content="index,follow">
   <meta name="baidu-site-verification" content="codeva-9pYW4WJpFf" />
   <link rel="canonical" href="${canonical}">
@@ -357,7 +502,7 @@ function layout({ language, path, title, description, body, site, structured = [
   <meta property="og:type" content="${type}">
   <meta property="og:site_name" content="${esc(text.brand)}">
   <meta property="og:locale" content="${LANGUAGES[language].locale}">
-  ${Object.entries(LANGUAGES).filter(([id]) => id !== language).map(([, entry]) => `<meta property="og:locale:alternate" content="${entry.locale}">`).join('\n  ')}
+  ${Object.entries(LANGUAGES).filter(([id]) => id !== language && languagesFor(path).includes(id)).map(([, entry]) => `<meta property="og:locale:alternate" content="${entry.locale}">`).join('\n  ')}
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
   <meta property="og:url" content="${canonical}">
@@ -392,7 +537,7 @@ ${body}
       <nav aria-labelledby="footer-browse"><h2 id="footer-browse">${esc(text.footerBrowse)}</h2><ul class="footer-links"><li><a href="${onHome ? '' : esc(home)}#plugins">${esc(text.plugins)}</a></li><li><a href="${esc(link(from, language, 'stats/'))}">${esc(text.stats)}</a></li><li><a href="${root}index.json">${esc(text.raw)}</a></li><li><a href="${root}status.json">${esc(text.status)}</a></li></ul></nav>
       <nav aria-labelledby="footer-join"><h2 id="footer-join">${esc(text.footerJoin)}</h2><ul class="footer-links"><li><a href="${esc(SUBMIT)}">${esc(text.submit)}</a></li><li><a href="${esc(REMOVE)}">${esc(text.removePlugin)}</a></li><li><a href="${docsUrl}">${esc(text.readDocs)}</a></li><li><a href="${REPOSITORY}">GitHub</a></li></ul></nav>
     </div>
-    <div class="footer-bottom shell"><p>${esc(text.independent)} ${esc(text.scope)}</p><p class="footer-meta"><span class="footer-languages">${Object.entries(LANGUAGES).map(([id, entry]) => id === language ? `<span lang="${entry.tag}">${entry.name}</span>` : `<a href="${esc(link(from, id, path))}" lang="${entry.tag}" hreflang="${entry.tag}">${entry.name}</a>`).join('')}</span></p></div>
+    <div class="footer-bottom shell"><p>${esc(text.independent)} ${esc(text.scope)}</p><p class="footer-meta"><span class="footer-languages">${Object.entries(LANGUAGES).map(([id, entry]) => id === language ? `<span lang="${entry.tag}">${entry.name}</span>` : `<a href="${esc(target(id))}" lang="${entry.tag}" hreflang="${entry.tag}">${entry.name}</a>`).join('')}</span></p></div>
   </footer>
   ${onHome ? `<dialog class="shot-viewer" data-viewer><button type="button" class="viewer-close" data-viewer-close aria-label="${esc(text.close)}">×</button><img alt=""></dialog>` : ''}
   <script id="site-messages" type="application/json">${json(messages)}</script>
@@ -410,13 +555,13 @@ function homePage(index, language, context, rows, rest) {
   const countBy = id => plugins.filter(plugin => (plugin.metadata?.category ?? '') === id).length;
   const chip = (value, label, count, extra = '') => `<button type="button" class="chip" data-chip="${esc(value)}"${extra} aria-pressed="false">${esc(label)}<small>${count}</small></button>`;
   const categoriesHtml = chip('', text.all, plugins.length)
-    + site.usedCategories.map(id => chip(id, localize(categories[id]?.title, data, id), countBy(id))).join('')
+    + site.usedCategories.map(id => chip(id, categoryName(categories, id, data, text, id), countBy(id))).join('')
     + (hasUncategorized ? chip('__uncategorized__', text.other, countBy(''), ' data-uncategorized') : '');
-  const updated = site.updated[data];
+  const updated = site.updated[wording(language)];
   const sortIds = ['default', 'recommended', 'likes', 'stars', ...(plugins.some(plugin => Number.isFinite(plugin.metadata?.sortKeys?.['stars-week'])) ? ['starsWeek'] : []), 'published', 'random'];
   const sortChips = sortIds.map((id, at) => `<button type="button" class="chip" data-sort="${id}" aria-pressed="${at === 0}">${esc(text.sorts[id])}</button>`).join('');
   const stickers = ['tools', 'skills', 'memory'].filter(id => site.usedCategories.includes(id))
-    .map((id, at) => `<span class="sticker sticker-${at + 1}">${esc(localize(categories[id]?.title, data, id))}</span>`).join('');
+    .map((id, at) => `<span class="sticker sticker-${at + 1}">${esc(categoryName(categories, id, data, text, id))}</span>`).join('');
   const guide = data;
   const root = context.root;
   const faq = text.faq(plugins.length);
@@ -463,13 +608,13 @@ function homePage(index, language, context, rows, rest) {
       </div>
       <aside class="contribute" aria-labelledby="contribute-title" data-reveal>
         <h2 id="contribute-title">${esc(text.contributeTitle)}</h2><p>${esc(text.contributeText)}</p>
-        <div class="contribute-links"><a class="submit-link" href="${esc(SUBMIT)}">${esc(text.submit)}</a><a href="${language === 'en' ? DOCS : `${REPOSITORY}/blob/main/README.md`}">${esc(text.readDocs)}</a></div>
+        <div class="contribute-links"><a class="submit-link" href="${esc(SUBMIT)}">${esc(text.submit)}</a><a href="${docsFor(language)}">${esc(text.readDocs)}</a></div>
       </aside>
     </section>
     </div></section>`;
   const description = text.description.replace('{count}', plugins.length);
   const structured = [
-    { '@context': 'https://schema.org', '@type': 'WebSite', name: text.brand, alternateName: language === 'en' ? ['DSH Plugin Market', 'DeepSeek Harness plugin index'] : ['DSH 插件市场', 'DSH 插件索引', 'Open Plugin Market'], url: absolute(language), inLanguage: LANGUAGES[language].tag, description },
+    { '@context': 'https://schema.org', '@type': 'WebSite', name: text.brand, alternateName: text.alternateNames, url: absolute(language), inLanguage: LANGUAGES[language].tag, description },
     { '@context': 'https://schema.org', '@type': 'FAQPage', inLanguage: LANGUAGES[language].tag, mainEntity: faq.map(([question, answer]) => ({ '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer } })) }
   ];
   return layout({ language, path: '', title: text.title, description, body, site, structured });
@@ -477,15 +622,14 @@ function homePage(index, language, context, rows, rest) {
 
 // The shields.io badge the README section documents, for this plugin and the page's language.
 function readmeBadge(name, language, label) {
-  const endpoint = `${ORIGIN}badge/${name.replace('@', '%40')}.json${language === 'en' ? '?lang=en' : ''}`;
+  const endpoint = `${ORIGIN}badge/${name.replace('@', '%40')}.json${LANGUAGES[language].data === 'en' ? '?lang=en' : ''}`;
   const image = `https://img.shields.io/endpoint?url=${encodeURIComponent(endpoint)}`;
   return { image, markdown: `[![${label}](${image})](${absolute(language, pluginPath(name))})` };
 }
 
 function pluginPage(plugin, index, language, context, related) {
   const { text, site, root, from } = context;
-  const data = LANGUAGES[language].data;
-  const info = describe(plugin, data, context);
+  const info = describe(plugin, language, context);
   const heading = info.namedTitle ? info.title : info.packageName;
   const home = link(from, language);
   const categoryLink = info.categoryId ? `${home}#plugins` : undefined;
@@ -493,7 +637,7 @@ function pluginPage(plugin, index, language, context, related) {
   const author = typeof plugin.author === 'string' ? plugin.author : plugin.author?.name;
   const badge = readmeBadge(info.packageName, language, text.brand);
   const relatedItems = related.map(other => {
-    const item = describe(other, data, context);
+    const item = describe(other, language, context);
     return `<li><a class="related-card" href="${esc(link(from, language, pluginPath(other.name)))}"><span class="plugin-avatar" aria-hidden="true">${avatar(item, root)}</span><span class="related-text"><strong>${esc(item.namedTitle ? item.title : item.packageName)}</strong><span>${esc(item.description)}</span></span></a></li>`;
   }).join('');
   const body = `    <div class="detail shell">
@@ -515,7 +659,7 @@ function pluginPage(plugin, index, language, context, related) {
         </section>
         <section class="detail-panel" aria-labelledby="facts-title">
           <h2 id="facts-title">${esc(text.facts)}</h2>
-          <dl class="facts">${info.facts}${author ? `<dt>${esc(text.author)}</dt><dd>${esc(author)}</dd>` : ''}${info.categoryId ? `<dt>${esc(text.category)}</dt><dd><a href="${esc(categoryLink)}">${esc(info.categoryTitle)}</a></dd>` : ''}${info.npm ? `<dt>${esc(text.npmMonth)}</dt><dd>${esc(numberFormat(data).format(info.npm.downloads))}</dd>` : ''}</dl>
+          <dl class="facts">${info.facts}${author ? `<dt>${esc(text.author)}</dt><dd>${esc(author)}</dd>` : ''}${info.categoryId ? `<dt>${esc(text.category)}</dt><dd><a href="${esc(categoryLink)}">${esc(info.categoryTitle)}</a></dd>` : ''}${info.npm ? `<dt>${esc(text.npmMonth)}</dt><dd>${esc(numberFormat(wording(language)).format(info.npm.downloads))}</dd>` : ''}</dl>
           ${info.links.length ? `<p class="facts-links">${info.links.join('')}</p>` : ''}
           ${keywords.length ? `<h3>${esc(text.keywords)}</h3><ul class="keyword-list">${keywords.map(word => `<li>${esc(word)}</li>`).join('')}</ul>` : ''}
           <h3>${esc(text.badgeTitle)}</h3>
@@ -532,7 +676,7 @@ function pluginPage(plugin, index, language, context, related) {
     { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: heading, alternateName: info.namedTitle ? info.packageName : undefined, description: info.description, url, applicationCategory: 'DeveloperApplication', applicationSubCategory: info.categoryId ? info.categoryTitle : undefined, operatingSystem: 'DeepSeek Harness', softwareVersion: version?.version, datePublished: version?.publishTimestamp ? new Date(version.publishTimestamp * 1000).toISOString().slice(0, 10) : undefined, author: author ? { '@type': 'Person', name: author } : undefined, codeRepository: info.sourceUrl, downloadUrl: info.npmUrl, keywords: keywords.join(', ') || undefined, inLanguage: LANGUAGES[language].tag, offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' } },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ name: text.home, item: absolute(language) }, { name: text.plugins, item: `${absolute(language)}#plugins` }, { name: heading, item: url }].map((entry, at) => ({ '@type': 'ListItem', position: at + 1, ...entry })) }
   ];
-  return layout({ language, path: pluginPath(plugin.name), title: text.pluginTitle(heading), description: text.pluginDescription(heading, info.description.replace(/[。.]?$/, language === 'en' ? '.' : '。'), { category: info.categoryId ? info.categoryTitle : undefined, version: version?.version }), body, site, structured, type: 'article' });
+  return layout({ language, path: pluginPath(plugin.name), title: text.pluginTitle(heading), description: text.pluginDescription(heading, info.description.replace(/[。.]?$/, LANGUAGES[language].data === 'en' ? '.' : '。'), { category: info.categoryId ? info.categoryTitle : undefined, version: version?.version }), body, site, structured, type: 'article' });
 }
 
 function statsPage(language, context) {
@@ -579,13 +723,13 @@ function relatedPlugins(plugins, at) {
 
 function sitemap(paths, updated) {
   const lastmod = updated ? `<lastmod>${updated.slice(0, 10)}</lastmod>` : '';
-  const alternates = path => [['en', 'en'], ['zh-CN', 'zh'], ['zh-TW', 'tw'], ['zh-HK', 'tw'], ['x-default', 'en']].map(([tag, id]) => `<xhtml:link rel="alternate" hreflang="${tag}" href="${esc(absolute(id, path))}"/>`).join('');
-  const urls = paths.flatMap(path => Object.keys(LANGUAGES).map(id => `  <url><loc>${esc(absolute(id, path))}</loc>${lastmod}${alternates(path)}</url>`));
+  const alternates = path => hreflangFor(path).map(([tag, id]) => `<xhtml:link rel="alternate" hreflang="${tag}" href="${esc(absolute(id, path))}"/>`).join('');
+  const urls = paths.flatMap(path => languagesFor(path).map(id => `  <url><loc>${esc(absolute(id, path))}</loc>${lastmod}${alternates(path)}</url>`));
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`;
 }
 
 function notFound(css) {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Page not found — Open Plugin Market</title><link rel="icon" href="${ORIGIN}favicon.ico" sizes="48x48"><link rel="icon" href="${ORIGIN}assets/favicon.png" type="image/png" sizes="96x96"><style>${css}</style></head><body><header class="site-header shell"><a class="brand" href="${ORIGIN}"><img src="${ORIGIN}assets/mark-256.png" alt="" width="64" height="64"><span>Open Plugin Market</span></a></header><main class="shell hero"><h1>Page not found.</h1><p lang="zh-CN">页面不存在。</p><p lang="zh-TW">頁面不存在。</p><p>Open the plugin directory to continue.</p><p lang="zh-CN">返回插件目录，继续查找插件。</p><div class="contribute-links"><a class="submit-link" href="${ORIGIN}">English directory</a><a class="submit-link" href="${ORIGIN}zh/" lang="zh-CN">中文目录</a><a class="submit-link" href="${ORIGIN}zh-tw/" lang="zh-TW">繁體中文目錄</a></div></main></body></html>\n`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Page not found — Open Plugin Market</title><link rel="icon" href="${ORIGIN}favicon.ico" sizes="48x48"><link rel="icon" href="${ORIGIN}assets/favicon.png" type="image/png" sizes="96x96"><style>${css}</style></head><body><header class="site-header shell"><a class="brand" href="${ORIGIN}"><img src="${ORIGIN}assets/mark-256.png" alt="" width="64" height="64"><span>Open Plugin Market</span></a></header><main class="shell hero"><h1>Page not found.</h1><p lang="zh-CN">页面不存在。</p><p lang="zh-TW">頁面不存在。</p><p lang="ja">ページが見つかりません。</p><p lang="ko">페이지를 찾을 수 없습니다.</p><p>Open the plugin directory to continue.</p><p lang="zh-CN">返回插件目录，继续查找插件。</p><div class="contribute-links"><a class="submit-link" href="${ORIGIN}">English directory</a><a class="submit-link" href="${ORIGIN}zh/" lang="zh-CN">中文目录</a><a class="submit-link" href="${ORIGIN}zh-tw/" lang="zh-TW">繁體中文目錄</a><a class="submit-link" href="${ORIGIN}ja/" lang="ja">日本語のプラグイン一覧</a><a class="submit-link" href="${ORIGIN}ko/" lang="ko">한국어 플러그인 목록</a></div></main></body></html>\n`;
 }
 
 async function write(path, html, output) {
@@ -594,7 +738,7 @@ async function write(path, html, output) {
   await writeFile(file, html, 'utf8');
 }
 
-/** Write the static site in English, Simplified and Traditional Chinese alongside the canonical format-1 index. */
+/** Write the static site in English, Simplified and Traditional Chinese, Japanese and Korean alongside the canonical format-1 index. */
 export async function writeSite(index, evidence, snapshot = {}, downloads = {}, display = {}, {output = defaultOutput} = {}) {
   if (index?.format !== 1 || !Array.isArray(index.plugins)) throw new Error('writeSite expects a format-1 plugin index');
   await mkdir(new URL('assets/', output), { recursive: true });
@@ -619,7 +763,7 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
     plugins: plugins.length,
     usedCategories: [...new Set(plugins.map(plugin => plugin.metadata?.category).filter(Boolean))],
     verified: plugins.filter(plugin => plugin.metadata?.labels?.includes('verified')).length,
-    updated: { en: evidence?.generatedAt ? dateLabel(evidence.generatedAt, 'en') : undefined, zh: evidence?.generatedAt ? dateLabel(evidence.generatedAt, 'zh') : undefined },
+    updated: Object.fromEntries(['en', 'zh', 'ja', 'ko'].map(id => [id, evidence?.generatedAt ? dateLabel(evidence.generatedAt, id) : undefined])),
     socialImages
   };
   site.categories = site.usedCategories.length;
@@ -659,15 +803,16 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
     // Titles, icons and links for the stats page's likes ranking, which only knows package names.
     const statsContext = context('stats/');
     const names = Object.fromEntries(plugins.map(plugin => {
-      const info = describe(plugin, LANGUAGES[language].data, statsContext);
-      return [info.packageName, [info.namedTitle ? info.title : info.packageName, info.icon ?? null, link(statsContext.from, language, pluginPath(plugin.name))]];
+      const info = describe(plugin, language, statsContext);
+      return [info.packageName, [info.namedTitle ? info.title : info.packageName, info.icon ?? null, link(statsContext.from, pluginLanguage(language), pluginPath(plugin.name))]];
     }));
     await writeFile(new URL(LANGUAGES[language].dir + 'stats/plugins.json', output), finish(JSON.stringify(names), language), 'utf8');
     for (const path of ['', 'stats/']) pageVersions[absolute(language, path)] = null;
+    if (pluginLanguage(language) !== language) continue;
     for (const [at, plugin] of plugins.entries()) {
       const pageContext = context(pluginPath(plugin.name));
       await write(LANGUAGES[language].dir + pluginPath(plugin.name), pluginPage(plugin, index, language, pageContext, relatedPlugins(plugins, at)), output);
-      const info = describe(plugin, LANGUAGES[language].data, pageContext);
+      const info = describe(plugin, language, pageContext);
       const fingerprint = [info.title, info.packageName, info.description, info.version?.version, info.categoryId, info.sourceUrl, info.homepage, plugin.author, plugin.metadata?.keywords];
       pageVersions[absolute(language, pluginPath(plugin.name))] = createHash('sha256').update(JSON.stringify(fingerprint)).digest('hex').slice(0, 16);
     }

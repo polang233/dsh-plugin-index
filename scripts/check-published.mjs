@@ -112,16 +112,16 @@ export async function checkPublished(indexUrl, {expectedNames, expectedTitle, ve
     }
   }));
   // Every site language: the directory lists the whole index, the first cards in the page and the rest in the catalog
-  // file it names, and the first plugin has its own page.
+  // file it names, and the first plugin has its own page (Japanese and Korean cards open the English plugin pages).
   const cards = html => (html.match(/\bdata-plugin(?=[\s>])/g) ?? []).length;
-  for (const language of ['', 'zh/', 'zh-tw/']) {
+  for (const language of ['', 'zh/', 'zh-tw/', 'ja/', 'ko/']) {
     const pageUrl = new URL(language || './', indexUrl);
     const page = (await readUrl(pageUrl, fetchImpl)).bytes.toString('utf8');
     const rest = /\bdata-rest="([^"]+)"/.exec(page)?.[1]?.replaceAll('&amp;', '&');
     const restCards = rest ? cards(JSON.parse((await readUrl(new URL(rest, pageUrl), fetchImpl, 16 * 1024 * 1024)).bytes.toString('utf8')).html) : 0;
     if (cards(page) + restCards !== index.plugins.length || !page.includes('assets/mark-256.png')) throw new Error('Website does not match published index: ' + language);
     const first = index.plugins[0]?.name;
-    if (first) {
+    if (first && !['ja/', 'ko/'].includes(language)) {
       const packagePath = first.split('/').map(encodeURIComponent).join('/');
       const pluginPage = (await readUrl(new URL(`${language}plugins/${packagePath}/`, indexUrl), fetchImpl)).bytes.toString('utf8');
       if (!pluginPage.includes(`data-get="${first}"`)) throw new Error('Plugin page does not match published index: ' + language + first);

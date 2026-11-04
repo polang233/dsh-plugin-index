@@ -113,6 +113,8 @@ test('measured zero and unavailable stars remain distinct in default description
 test('release age never invents an age for future values', () => {
   assert.equal(releaseAge(NOW / 1000, NOW, 'zh'), '今天更新');
   assert.equal(releaseAge(NOW / 1000 - 86_400, NOW, 'en'), 'Updated 1 day ago');
+  assert.equal(releaseAge(NOW / 1000 - 3 * 86_400, NOW, 'ja'), '3日前に更新');
+  assert.equal(releaseAge(NOW / 1000, NOW, 'ko'), '오늘 업데이트');
   assert.equal(releaseAge(NOW / 1000 + 1, NOW, 'zh'), undefined);
   assert.equal(releaseAge(NaN, NOW, 'en'), undefined);
 });

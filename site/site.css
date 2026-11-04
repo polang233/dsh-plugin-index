@@ -24,6 +24,9 @@
 }
 /* Japanese rounded fonts lack many simplified characters; Chinese pages use a Chinese font first to avoid mixed glyphs. */
 html[lang="zh-CN"] { --font: "Avenir Next Rounded", "Nunito", "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; }
+/* Japanese pages keep the rounded Japanese font first; Korean pages need a Hangul font ahead of the Chinese ones. */
+html[lang="ja"] { --font: "Avenir Next Rounded", "Nunito", "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic UI", "Meiryo", "Noto Sans CJK JP", sans-serif; }
+html[lang="ko"] { --font: "Avenir Next Rounded", "Nunito", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", sans-serif; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
@@ -78,10 +81,10 @@ button { cursor: pointer; }
 .hero > .method-panels { grid-column: 1 / -1; grid-row: 3; margin-top: 4px; }
 h1 { margin: 0; max-width: 700px; font-size: clamp(46px, 6vw, 84px); line-height: 1.02; letter-spacing: -.045em; font-weight: 900; text-wrap: balance; }
 h1 em { font-style: normal; color: var(--blue); }
-html[lang="zh-CN"] h1 { font-size: clamp(42px, 5.2vw, 72px); line-height: 1.15; letter-spacing: -.03em; }
+html:is([lang="zh-CN"], [lang="ja"], [lang="ko"]) h1 { font-size: clamp(42px, 5.2vw, 72px); line-height: 1.15; letter-spacing: -.03em; }
 /* The landing headline is a short hook, smaller than a poster title so the URL stays in the first view. */
 .hero h1 { font-size: clamp(34px, 3.8vw, 48px); line-height: 1.12; letter-spacing: -.035em; }
-html[lang="zh-CN"] .hero h1 { font-size: clamp(32px, 3.5vw, 44px); line-height: 1.25; letter-spacing: -.02em; }
+html:is([lang="zh-CN"], [lang="ja"], [lang="ko"]) .hero h1 { font-size: clamp(32px, 3.5vw, 44px); line-height: 1.25; letter-spacing: -.02em; }
 .hero-lead { margin: 14px 0 22px; max-width: 680px; color: var(--slate); font-size: 17px; line-height: 1.7; font-weight: 600; text-wrap: pretty; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .address-label { display: block; margin: 0 0 8px 6px; font-size: 14px; font-weight: 800; }
@@ -284,7 +287,7 @@ h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); letter-spacing: -.03em; lin
   .app-frame { border-radius: 14px; }
   .sticker { font-size: 12px; padding: 3px 11px; }
   h1, .hero h1 { font-size: clamp(32px, 9vw, 42px); }
-  html[lang="zh-CN"] h1, html[lang="zh-CN"] .hero h1 { font-size: clamp(30px, 8.6vw, 40px); }
+  html:is([lang="zh-CN"], [lang="ja"], [lang="ko"]) h1, html:is([lang="zh-CN"], [lang="ja"], [lang="ko"]) .hero h1 { font-size: clamp(30px, 8.6vw, 40px); }
   .hero-lead { font-size: 16px; margin: 14px 0 20px; }
   .address-bar { flex-direction: column; align-items: stretch; gap: 4px; padding: 6px; border-radius: 20px; }
   /* Stacked on phones: one centered line, not stretched by the column flex. */
@@ -350,7 +353,7 @@ h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); letter-spacing: -.03em; lin
   .steps li { gap: 8px; padding: 8px 8px 10px; }
 }
 @media (min-width: 1001px) and (max-height: 740px) {
-  .hero h1, html[lang="zh-CN"] .hero h1 { font-size: 34px; }
+  .hero h1, html:is([lang="zh-CN"], [lang="ja"], [lang="ko"]) .hero h1 { font-size: 34px; }
   .step-shot { aspect-ratio: 16 / 6.6; }
 }
 
@@ -449,16 +452,22 @@ h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); letter-spacing: -.03em; lin
 
 /* Language switch: a sliding pill marks the current language and leans toward the other on hover. */
 .languages { position: relative; isolation: isolate; }
-.languages { --at: 0; display: grid; grid-template-columns: repeat(3, 1fr); }
-/* Each Chinese label in its own script's font, whatever the page language. */
+.languages { --at: 0; --n: 5; display: grid; grid-template-columns: repeat(var(--n), 1fr); }
+/* Each CJK label in its own script's font, whatever the page language. */
 .languages [lang="zh-CN"] { font-family: "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; }
 .languages [lang="zh-TW"] { font-family: "PingFang TC", "Microsoft JhengHei UI", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif; }
+.languages [lang="ja"] { font-family: "Hiragino Sans", "Yu Gothic UI", "Meiryo", "Noto Sans CJK JP", sans-serif; }
+.languages [lang="ko"] { font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", sans-serif; }
 .languages[data-current="zh"] { --at: 1; }
 .languages[data-current="tw"] { --at: 2; }
+.languages[data-current="ja"] { --at: 3; }
+.languages[data-current="ko"] { --at: 4; }
 .languages:has(> :nth-child(1):hover) { --at: 0; }
 .languages:has(> :nth-child(2):hover) { --at: 1; }
 .languages:has(> :nth-child(3):hover) { --at: 2; }
-.languages::before { content: ""; position: absolute; z-index: -1; top: 3px; bottom: 3px; left: calc(3px + var(--at) * ((100% - 10px) / 3 + 2px)); width: calc((100% - 10px) / 3); border-radius: 999px; background: var(--ink); transition: left .35s cubic-bezier(.5, 1.6, .4, 1); }
+.languages:has(> :nth-child(4):hover) { --at: 3; }
+.languages:has(> :nth-child(5):hover) { --at: 4; }
+.languages::before { content: ""; position: absolute; z-index: -1; top: 3px; bottom: 3px; left: calc(3px + var(--at) * ((100% - 6px - (var(--n) - 1) * 2px) / var(--n) + 2px)); width: calc((100% - 6px - (var(--n) - 1) * 2px) / var(--n)); border-radius: 999px; background: var(--ink); transition: left .35s cubic-bezier(.5, 1.6, .4, 1); }
 .languages a, .languages span { position: relative; transition: color .3s; }
 .languages [aria-current] { color: #fff; background: transparent; }
 .languages a:hover { color: #fff; background: transparent; }
