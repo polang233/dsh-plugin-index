@@ -2739,6 +2739,120 @@
       "reviewedAt": "2026-11-03T15:24:05.916Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@cjylzs/dsh-browser",
+      "version": "0.3.1",
+      "integrity": "sha512-LN1tSb3lAaDlD6iMKDUq6d/T8Mo9QGsgj0Bw3FaaD3etIcufVT6aU86xOkANhH8WUiS5KEq2vt7Dj+3Hm+JH+A==",
+      "repository": "https://github.com/CJYLZS/dsh-browser",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T02:41:27.404Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-agent-compare",
+      "version": "0.2.0-alpha.18",
+      "integrity": "sha512-Khp895uYnqN/mpB9PaumeMW9x8V87t6mRXOcNmH3VwduwK/moBvEA3YWKuT0Wfq0PXCllJ7fF4g22n63Mf0RQQ==",
+      "repository": "https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T02:41:27.404Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-2048",
+      "version": "0.2.0",
+      "integrity": "sha512-ysz6s2KLZ6NHA/wRbBXBIoTXngj8X2wubuJLAnU2EibOez/ekb9zRq93SbDZ4YBoMv7F0fGjTHRHPTYqzxDATA==",
+      "repository": "https://github.com/JJJACKsong/dsh-plugin-2048",
+      "source": {
+        "type": "git",
+        "commit": "873f944fc877988c8dc4a31c28404f5928bbcd2a"
+      },
+      "reviewedAt": "2026-11-04T02:41:27.404Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-animegarden",
+      "version": "0.1.8",
+      "integrity": "sha512-wW59ydNqeoW9b9xrAJyKSdIE2yescUJL+yUvz0siBrLwsGEjBcTe6nLSkYx9vK7WfVjnpe9igARgf16djFJNOw==",
+      "repository": "https://github.com/yjl9903/AnimeGarden",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T02:41:27.404Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-bug-gps",
+      "version": "1.0.0",
+      "integrity": "sha512-vyTevfiIi51Tnzbjq2LIdRZm014+3+vXr4GDlcnWQkMYkvUT8+BS0WsFBlxrcOxU1MlFmY05n2yyC3RVR6zSHg==",
+      "repository": "https://github.com/lijiaqi-AI-Product-Manager/dsh-bug-gps",
+      "source": {
+        "type": "git",
+        "commit": "9cab2a1285caef92c81453843098767005c43509"
+      },
+      "reviewedAt": "2026-11-04T02:41:27.404Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-cnki-agent",
+      "version": "0.5.0",
+      "integrity": "sha512-E50n1u9+1EVlsW7jnHO4Md9GaSbAYARqSH9p3zZKM4x4+KNf06/hfUJp1LVGTr4QfMTR2CD/rT0Ym0vdIecuAA==",
+      "repository": "https://github.com/Jerry113245/dsh-cnki-agent",
+      "source": {
+        "type": "git",
+        "commit": "ed91deb1f6c077778c2c43b153d211766c63d4e6"
+      },
+      "reviewedAt": "2026-11-04T02:41:27.404Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@local/skill-compiler",
+      "version": "5.0.2",
+      "integrity": "sha512-oqs3ZHz5CsqHD3VdEClpLMFqf3SlQA95PLrYPpAyqb5hW5cPqp4ngkWR9EFPaKKvwiXaaSl8ynjVwN99TF4pgg==",
+      "repository": "https://github.com/designerbyron/plugins-dsh",
+      "source": {
+        "type": "git",
+        "commit": "bbd5e38abae7a8817668615e1ba1be22b3e68d23",
+        "path": "skill-compiler"
+      },
+      "reviewedAt": "2026-11-04T02:41:27.404Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-pinned-panel",
+      "version": "0.7.0",
+      "integrity": "sha512-b1hugEE5rnBur28D4JfkfDydAgYhSkIhAJ4ZTZl+VTBHwYhFxugVPbkLcXsgt46CQHnI7llHmROiH0xyRp6EKQ==",
+      "repository": "https://github.com/OuQiL/dsh-pinned-panel",
+      "source": {
+        "type": "git",
+        "commit": "8b3c55981801eecc3dc4f292fd03cceb6924b9de"
+      },
+      "reviewedAt": "2026-11-04T02:41:27.404Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-shorekeeper",
+      "version": "1.2.0",
+      "integrity": "sha512-HPmhJoUrF2P95qGERA1YgOkgrDRiSChK55ZbyjeBa6h3SWihsQxsqQJzzI/DlxgBXTNDsW6cNSNa6TmBEgW8ZQ==",
+      "repository": "https://github.com/Doya16/dsh-shorekeeper",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T02:41:27.404Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

@@ -11206,21 +11206,21 @@
     },
     {
       "name": "dsh-pinned-panel",
-      "version": "0.6.0",
+      "version": "0.7.0",
       "source": {
         "type": "git",
         "url": "https://github.com/OuQiL/dsh-pinned-panel",
-        "commit": "f4671c55bae5f99399f5593234c45f27a207e72c",
-        "integrity": "sha512-76UbENJkxVvWcyVmtZVY09uh7gvg1elm+FPPiJFVYF9DNvmSGkhYNGgpLoMVpzrFpniw1wN5GjDnk36fXxCYYg==",
-        "publishedAt": "2026-11-01T05:10:02.000Z"
+        "commit": "8b3c55981801eecc3dc4f292fd03cceb6924b9de",
+        "integrity": "sha512-b1hugEE5rnBur28D4JfkfDydAgYhSkIhAJ4ZTZl+VTBHwYhFxugVPbkLcXsgt46CQHnI7llHmROiH0xyRp6EKQ==",
+        "publishedAt": "2026-11-04T01:29:08.000Z"
       },
       "title": {
         "en": "Pinned Sessions",
         "zh": "跨工作区置顶会话"
       },
       "description": {
-        "en": "Collect pinned sessions across workspaces in the sidebar, with rename, fork, unpin and archive actions. Expand archived sessions and restore them with the host API. Depends on sidebar DOM structure.",
-        "zh": "在侧栏汇总跨工作区置顶会话，支持重命名、分叉、取消置顶及归档；可展开已归档会话并通过宿主接口恢复。依赖侧栏 DOM 结构。"
+        "en": "Collect pinned conversations from every workspace at the top of the sidebar, with rename, fork, archive and unarchive actions plus live activity dots. Uses DSH session state and browser localStorage; depends on sidebar DOM structure.",
+        "zh": "在侧栏顶部汇总各工作区的置顶会话，支持重命名、分叉、归档、取消归档，并显示实时活动状态点。使用 DSH 会话状态和浏览器 localStorage，依赖侧栏 DOM 结构。"
       },
       "category": "interface"
     },
@@ -12230,8 +12230,8 @@
         "zh": "鸣潮 · 守岸人桌宠"
       },
       "description": {
-        "en": "Bring the Shorekeeper from Wuthering Waves to your desktop with task expressions, voices, captions and customizable media. Requires Windows 10/11 x64, local DSH >=0.2.1-rc.5 <0.3.0 and Node >=22. First use downloads a separate ~213 MiB application after a SHA-256 check.",
-        "zh": "把《鸣潮》守岸人带到桌面，以任务表情、语音字幕、摸头互动和可自定义素材陪伴工作。支持 Windows 10/11 x64 本机 Harness；首次另行下载约 213 MiB 程序，经 SHA-256 校验后运行。需要 DSH >=0.2.1-rc.5 <0.3.0、Node >=22。"
+        "en": "Bring the Shorekeeper from Wuthering Waves to your desktop with task expressions, voice responses and customizable animations. Requires Windows 10/11 x64, local DSH >=0.2.1-rc.5 <0.3.0 and Node >=22. First use separately downloads a ~229 MiB application after SHA-256 verification; later program updates retain personal settings and assets.",
+        "zh": "把《鸣潮》的守岸人带到桌面，随任务变换表情、用语音回应，并自定义动画、声音和台词。需 Windows 10/11 x64、本机 DSH >=0.2.1-rc.5 <0.3.0、Node >=22。首次另行下载约 229 MiB 程序并校验 SHA-256，后续程序更新保留个人设置与素材。"
       },
       "category": "appearance"
     },
@@ -12813,6 +12813,123 @@
         "commit": "fea59779818886474746fbb036afba1a42133926",
         "integrity": "sha512-YuhG1PDE7o6psaeQll/0BSN6aX4hKwlUGNR9DgOydLRSgaSk+jfzlwTW7FZafyQ6DAIxgR+JgP/E1TLlzvCr+w==",
         "publishedAt": "2026-11-03T14:55:10.000Z"
+      }
+    },
+    {
+      "name": "@cjylzs/dsh-browser",
+      "title": {
+        "en": "DSH Browser",
+        "zh": "DSH Browser"
+      },
+      "category": "integrations",
+      "description": {
+        "en": "Give each conversation its own local Chrome or Edge, with separate sign-ins, browser tools and a live sidebar you can control. Uses an installed browser and local CDP ports; requires DSH >=0.1.7-rc.1 and Node >=22.19.",
+        "zh": "为每个对话提供独立的本机 Chrome 或 Edge、登录态和浏览器工具，可在侧栏实时查看并接管。使用已安装的浏览器和本机 CDP 端口，需要 DSH >=0.1.7-rc.1、Node >=22.19。"
+      }
+    },
+    {
+      "name": "dsh-agent-compare",
+      "title": {
+        "en": "AgentCompare",
+        "zh": "AgentCompare"
+      },
+      "category": "development",
+      "description": {
+        "en": "Run two implementations in one DSH conversation, compare previews and checks, then review, adopt or undo a candidate. Needs a Git project, Chrome/Edge, a host process sandbox, DSH >=0.2.1-rc.3 <0.3.0 and Node ^22.22.2 || ^24.15.0 || >=26.0.0. Model and dependency requests use configured services.",
+        "zh": "在同一 DSH 对话中运行两版实现，对比预览与统一检查，再审阅、采用或撤回候选。需 Git 项目、Chrome/Edge、宿主进程沙箱、DSH >=0.2.1-rc.3 <0.3.0，以及 Node ^22.22.2 || ^24.15.0 || >=26.0.0。模型和依赖请求使用已有服务配置。"
+      }
+    },
+    {
+      "name": "dsh-plugin-2048",
+      "title": {
+        "en": "2048",
+        "zh": "2048"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Play 2048 from the sidebar while waiting for an agent, using arrow keys, WASD or touch gestures, with up to 30 undo steps. Board state and high scores stay in browser localStorage. Requires the web UI; author-tested on DSH 0.2.1-rc.2 Desktop.",
+        "zh": "等待 Agent 时从侧栏打开 2048，支持方向键、WASD、触屏滑动和最多 30 步撤销。棋盘与最高分保存在浏览器 localStorage。需要 Web 界面，作者验证环境为 DSH 0.2.1-rc.2 桌面版。"
+      },
+      "version": "0.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/JJJACKsong/dsh-plugin-2048",
+        "commit": "873f944fc877988c8dc4a31c28404f5928bbcd2a",
+        "integrity": "sha512-ysz6s2KLZ6NHA/wRbBXBIoTXngj8X2wubuJLAnU2EibOez/ekb9zRq93SbDZ4YBoMv7F0fGjTHRHPTYqzxDATA==",
+        "publishedAt": "2026-11-03T18:27:37.000Z"
+      }
+    },
+    {
+      "name": "dsh-plugin-animegarden",
+      "title": {
+        "en": "Anime Garden",
+        "zh": "Anime Garden"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Search Anime Garden animation torrents in conversations or a panel, filter releases and browse the seasonal calendar. Queries go to Anime Garden; playback uses KeepShare and magnet links can open your system torrent client. Requires DSH >=0.2.1-rc.5 and Node >=24.",
+        "zh": "在对话或面板中搜索 Anime Garden 动画 BT 资源，按字幕组与类型筛选，并查看新番周历。搜索请求发送到 Anime Garden，播放使用 KeepShare，磁力链接可唤起系统 BT 客户端。需要 DSH >=0.2.1-rc.5、Node >=24。"
+      }
+    },
+    {
+      "name": "dsh-bug-gps",
+      "title": {
+        "en": "BugGPS",
+        "zh": "BugGPS"
+      },
+      "category": "development",
+      "description": {
+        "en": "Record a browser bug, lock the expected result and compare candidate fixes against the original code. Runs local development commands and stores evidence in the project .buggps directory; Git worktrees are not a sandbox. For DSH 0.2.1-rc.5 headless/web; needs Git, pnpm >=10 and Chrome or Edge.",
+        "zh": "录制浏览器问题、固定预期，再将候选修复与原代码对照验证。会运行本地开发命令，并在项目 .buggps 目录保存证据；Git worktree 不提供沙箱隔离。适用于 DSH 0.2.1-rc.5 的 headless/web，需 Git、pnpm >=10、Chrome 或 Edge。"
+      },
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/lijiaqi-AI-Product-Manager/dsh-bug-gps",
+        "commit": "9cab2a1285caef92c81453843098767005c43509",
+        "integrity": "sha512-vyTevfiIi51Tnzbjq2LIdRZm014+3+vXr4GDlcnWQkMYkvUT8+BS0WsFBlxrcOxU1MlFmY05n2yyC3RVR6zSHg==",
+        "publishedAt": "2026-11-03T17:37:30.000Z"
+      }
+    },
+    {
+      "name": "dsh-cnki-agent",
+      "title": {
+        "en": "CNKIAgent",
+        "zh": "CNKIAgent 知网论文助手"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Search CNKI, organize a literature library and prepare reading, research and writing plans. Live CNKI search needs dsh-browser-cdp and local Edge; falls back to the host web search when unavailable. Can read selected local documents and save reports. Requires DSH >=0.2.0-rc.2 <0.3.0-0.",
+        "zh": "检索知网、整理文献库，并生成精读、选题与分步写作计划。真实知网检索需另装 dsh-browser-cdp 和本机 Edge，不可用时回退宿主网页搜索；可读取指定本地文档并保存报告。需要 DSH >=0.2.0-rc.2 <0.3.0-0。"
+      },
+      "version": "0.5.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Jerry113245/dsh-cnki-agent",
+        "commit": "ed91deb1f6c077778c2c43b153d211766c63d4e6",
+        "integrity": "sha512-E50n1u9+1EVlsW7jnHO4Md9GaSbAYARqSH9p3zZKM4x4+KNf06/hfUJp1LVGTr4QfMTR2CD/rT0Ym0vdIecuAA==",
+        "publishedAt": "2026-11-01T16:38:28.000Z"
+      }
+    },
+    {
+      "name": "@local/skill-compiler",
+      "title": {
+        "en": "LifeCode Skill-Compiler",
+        "zh": "LifeCode Skill-Compiler"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Turn reusable project knowledge or imported Markdown into proposed skills, review them and publish approved versions to project or global catalogs. Stores data under DSH_HOME/skill-compiler; session auto-approval is optional and explicitly enabled. Uses DSH 0.2.0-rc.2 packages; Spanish and English UI.",
+        "zh": "将项目中的可复用知识或导入的 Markdown 整理成技能草案，审阅后发布到项目或全局技能目录。数据保存在 DSH_HOME/skill-compiler；会话自动批准需主动开启。依赖 DSH 0.2.0-rc.2 系列包，界面支持西班牙语和英语。"
+      },
+      "version": "5.0.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/designerbyron/plugins-dsh",
+        "commit": "bbd5e38abae7a8817668615e1ba1be22b3e68d23",
+        "integrity": "sha512-oqs3ZHz5CsqHD3VdEClpLMFqf3SlQA95PLrYPpAyqb5hW5cPqp4ngkWR9EFPaKKvwiXaaSl8ynjVwN99TF4pgg==",
+        "publishedAt": "2026-10-23T22:16:57.000Z",
+        "path": "skill-compiler"
       }
     }
   ]
