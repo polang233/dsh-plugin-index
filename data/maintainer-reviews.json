@@ -2843,14 +2843,227 @@
       "record": "docs/reviews/review-policy.md"
     },
     {
+      "name": "dsh-film-analysis",
+      "version": "0.3.5",
+      "integrity": "sha512-ex5ZQXk5TKfNNSOG1rzGh6RoyvYfy1fmsnrvIXW+EMSiwGxLZROTEoDMb10AxEHdKQgETjkgOhjeLAdlBQciOA==",
+      "repository": "https://github.com/Raven-Jackdaw/dsh-film-analysis",
+      "source": {
+        "type": "git",
+        "commit": "8206142b56d13afca0fbaa5bb0b535c418875a5f"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.336Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-mathlab",
+      "version": "0.2.1",
+      "integrity": "sha512-ysXVUkWOEuoO+mtmDF5UM7T0Ze/t7dxPTj7CCYKmWYYlUfn7qcZYV6IAdsRDxsUw/TTiF/7Owuq/BRHKxz+5Rg==",
+      "repository": "https://github.com/FileXego/dsh-mathlab",
+      "source": {
+        "type": "git",
+        "commit": "5dbcb9d3c1826ac5b9ca7af81f0372aec498044e"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.434Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-today-fortune",
+      "version": "1.0.3",
+      "integrity": "sha512-6r5tFaRqfCkw8yADpZm9och9HXavWELR0yzcToDW4BpIM94UmSZGsLFh3gBS3uMMSPKA66hxwOfeinkVdE9b2g==",
+      "repository": "https://github.com/farmer002/dsh-today-fortune",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.443Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@jiang_li/dsh-im-companion",
+      "version": "1.4.2",
+      "integrity": "sha512-r6v6jnMXWWTKd8djr26ys80p/YicaCkAJkmYjbx6wbX2sMx2MmO8u283x/iWKEG5L3+wjL571b43OCssndh/tw==",
+      "repository": "https://github.com/zingreqe/dsh-im-companion",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.448Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-adhd-noise",
+      "version": "3.1.1",
+      "integrity": "sha512-s+v2EZ3l0HsMwXYq+QotwnkfyTkCSygZ8gli+iKn6o4hprmEyb/VUjrl8Wcwqi4CLCqzvnjb6jJL3WuEld8qJQ==",
+      "repository": "https://github.com/tommy00748-tech/dsh-adhd-noise",
+      "source": {
+        "type": "git",
+        "commit": "775a77d81486c5bd366b6e0036373dee3ced4b10"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.453Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-freeweb",
+      "version": "0.1.0",
+      "integrity": "sha512-HxA6pf+d4JYZwUyjftnnPurhPpd+u76PWTUMYgzawE3phYDi49uKpdrqDJwi0mNktHmi44/mG0bxjBquLQFS1w==",
+      "repository": "https://github.com/wiselfx/dsh-freeweb",
+      "source": {
+        "type": "git",
+        "commit": "bcb5af7c3121d09ec663bae23fb4dbbff61fd28c"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.456Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-liang-backdrop",
+      "version": "1.0.1",
+      "integrity": "sha512-Nviyns/0YOQ6fCcn2MKecLfOQ4UkXOTeA4H4uD+XylAvz2sx0cPY4L6Yl89rpxPZASgxUOKeTg4Y8KTv4XeDsw==",
+      "repository": "https://github.com/llllllyan/dsh-liang-backdrop",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.460Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@polunzh/dsh-task-notifier",
+      "version": "1.1.2",
+      "integrity": "sha512-sYQL+TYpq8/KEhgfIPQTqsi4kk4m+7DGiZTUbgq3IhXhRHkPIGKs5n3mHtrl69KV3fHJNho7DsqcImvo6Rj3xg==",
+      "repository": "https://github.com/polunzh/dsh-task-notifier",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.467Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-slipbox",
+      "version": "0.1.5",
+      "integrity": "sha512-fLLSooF5jeYaZGxoEQOg/BR6krIiQAGNWhTIoL+pEc/sXjmffuqAooUFsQPzzPNW/lQTmYaGnwLUyc52eiRbiQ==",
+      "repository": "https://github.com/xinyou9999/slipbox-skill",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.475Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-video-reader",
+      "version": "0.1.0",
+      "integrity": "sha512-UpC+M4axkUL71VFp6El4tshVBZDySa3DPJMUT39Gou3XJ3UDZDY+6jg/D+Z5Jj7zlvCqTU/PAFBmcXgoFN9eKg==",
+      "repository": "https://github.com/Kandecho/Video-Reader",
+      "source": {
+        "type": "git",
+        "commit": "f2656bf030ec94b9f6dfea22008c1d3168f4e4c6",
+        "path": "adapters/dsh"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.530Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-literature-hub",
+      "version": "2.1.3",
+      "integrity": "sha512-YfsngJEiszRQjIp0NIyfOMIF8oF4I9sD96gT20Dz+pAlCslDrQhAftolh0Ssm9/8Ku4R6n0SAySWdjFS9KT7cw==",
+      "repository": "https://github.com/3469915488-oss/dsh-literature-hub",
+      "source": {
+        "type": "git",
+        "commit": "b142ef18954056694e2644dbe81a03eaafc05d32"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.609Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-orchestrator",
+      "version": "0.6.5",
+      "integrity": "sha512-/QQFN0TtLlcpBSLCS8mDfCxknibugJxSj3wbqzQi7j93himkfkb5zqqg7P2DL9FyVUEqbrxs0na1hGXok53Nxw==",
+      "repository": "https://github.com/SShiRkiT/dsh-orchestrator",
+      "source": {
+        "type": "git",
+        "commit": "a47e09fa64e3a73b7b38f16c85850f385a71e036"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.618Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-2d-model-picker",
+      "version": "1.0.1",
+      "integrity": "sha512-a1qjmBhVmkPsUpk2dEWpagBw3JtSarhgg+fDTvUHUFRFfa0Afo1quDGHtqzeI/GcEcNdCM88hU2QnwucwJJgOA==",
+      "repository": "https://github.com/Fyerl/dsh-2d-model-picker",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.624Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
       "name": "dsh-shorekeeper",
-      "version": "1.2.0",
-      "integrity": "sha512-HPmhJoUrF2P95qGERA1YgOkgrDRiSChK55ZbyjeBa6h3SWihsQxsqQJzzI/DlxgBXTNDsW6cNSNa6TmBEgW8ZQ==",
+      "version": "1.2.2",
+      "integrity": "sha512-kDZjC9oX3BryWDcQPJ6ld5gv8fZU9vBm+KAjQ1VNJII7tWuBdGLf22WnJ9PVIgTiwNld1JDLKrqWI7nEgUKk4Q==",
       "repository": "https://github.com/Doya16/dsh-shorekeeper",
       "source": {
         "type": "npm"
       },
-      "reviewedAt": "2026-11-04T02:41:27.404Z",
+      "reviewedAt": "2026-11-04T16:04:27.632Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@ananyang/dsh-disk-manager",
+      "version": "0.4.3",
+      "integrity": "sha512-x/mYxar3p/q99gC5DXpsdQe0SyOhudpbRmBKaYTrsoI9j4ntN27lg9Nz4DmLQ78o5iO+A0lWDBjygIfu06CuCA==",
+      "repository": "https://github.com/Ananpng123/dsh-disk-manager",
+      "source": {
+        "type": "git",
+        "commit": "abebd0e9b440c845ddadfdc4e04c5bfda95465db"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.635Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-wechat-dingtalk-bridge",
+      "version": "0.1.5",
+      "integrity": "sha512-08UNtDa/ke1zp/P93v4tPovcWbZRMiUuv/UA+4+fdpAsOiU7L3+Is7lTl9/r3kxm8R0MIfZAKqFNmEHC21p5FQ==",
+      "repository": "https://github.com/gcggcg/dsh-plugin-wechat-dingtalk",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.639Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-bug-gps",
+      "version": "1.0.0",
+      "integrity": "sha512-CGfhaHK4QGhYLCuVjjt8auT/+gOXHPvppvyBZFoH5xMVxoIMkvf2S72sstgZMDRf+lBOq83QEfbOj5Fi9jJkjA==",
+      "repository": "https://github.com/lijiaqi-AI-Product-Manager/dsh-bug-gps",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.642Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-system1",
+      "version": "0.5.0",
+      "integrity": "sha512-YXK+nAe/ceGDWFfgBw4VdRhFkxHjP1k6J5YifulwefHpjB3qInK2fePfFVedJ5mCakqCtptpKtWBxMQ81cvdBg==",
+      "repository": "https://github.com/exoticknight/dsh-system1",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T16:04:27.654Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
     }

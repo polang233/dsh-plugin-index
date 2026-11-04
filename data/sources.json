@@ -9044,8 +9044,8 @@
         "zh": "System One"
       },
       "description": {
-        "en": "Connect multiple decision providers and models through one interface: Jev via TypeSafe, Clef via Cloudflare, Drex via Nace, self-hosted Laya, and compatible custom providers. Agents and plugins can classify content, filter candidates, score against criteria, or locate objects in images, then use structured results in their workflows.",
-        "zh": "用同一接口接入多种决策提供商与模型：在线可选 TypeSafe 提供的 Jev、Cloudflare 提供的 Clef、Nace 提供的 Drex；本地可连接 Laya，也支持兼容的自定义 provider。Agent 和插件可用它进行内容分类、候选筛选、按标准评分或图片定位，再用结构化结果继续自己的流程。"
+        "en": "Connect decision providers through one interface: Jev via TypeSafe, Clef via Cloudflare, Drex via Nace, Decider via meraGPT, self-hosted Laya and custom providers. Return structured classifications, scores, selections and image locations; supported media depend on the provider and model.",
+        "zh": "统一接入 TypeSafe 的 Jev、Cloudflare 的 Clef、Nace 的 Drex、meraGPT 的 Decider、自建 Laya 与自定义提供方，返回分类、评分、筛选及图片定位等结构化结果；媒体支持取决于提供方和模型。"
       },
       "category": "tools"
     },
@@ -12230,8 +12230,8 @@
         "zh": "鸣潮 · 守岸人桌宠"
       },
       "description": {
-        "en": "Bring the Shorekeeper from Wuthering Waves to your desktop with task expressions, voice responses and customizable animations. Requires Windows 10/11 x64, local DSH >=0.2.1-rc.5 <0.3.0 and Node >=22. First use separately downloads a ~229 MiB application after SHA-256 verification; later program updates retain personal settings and assets.",
-        "zh": "把《鸣潮》的守岸人带到桌面，随任务变换表情、用语音回应，并自定义动画、声音和台词。需 Windows 10/11 x64、本机 DSH >=0.2.1-rc.5 <0.3.0、Node >=22。首次另行下载约 229 MiB 程序并校验 SHA-256，后续程序更新保留个人设置与素材。"
+        "en": "Bring the Shorekeeper from Wuthering Waves to your desktop with task expressions, voices and customizable media. Requires Windows 10/11 x64, local DSH >=0.2.1-rc.5 <0.3.0 and Node >=22. First use downloads a separate ~229 MiB application; program updates validate a publisher-signed manifest.",
+        "zh": "把《鸣潮》的守岸人带到桌面，以任务表情、语音和可自定义素材陪伴工作。需 Windows 10/11 x64、本机 DSH >=0.2.1-rc.5 <0.3.0、Node >=22；首次另行下载约 229 MiB 程序，程序更新校验发布者签名清单。"
       },
       "category": "appearance"
     },
@@ -12586,23 +12586,23 @@
       "category": "interface"
     },
     {
-      "name": "dsh-disk-manager",
+      "name": "@ananyang/dsh-disk-manager",
       "title": {
         "en": "DSH Disk Manager",
         "zh": "DSH 磁盘管理"
       },
       "description": {
-        "en": "Browse Windows volumes and session/workspace documents, create folders, drag files into chat, and move selected items to Recycle Bin after confirmation. Requires DSH >=0.2.1-rc.5 and Windows PowerShell 5.1.",
-        "zh": "浏览 Windows 卷和会话、工作区文档，支持新建目录、拖文件进对话，以及确认后将所选项目移入回收站。需 DSH >=0.2.1-rc.5 和 Windows PowerShell 5.1。"
+        "en": "Browse Windows volumes and documents with per-folder size scans and a treemap, quote selected paths into chat, create folders and move items to Recycle Bin after confirmation. Requires DSH >=0.2.1-rc.5 and Windows PowerShell 5.1.",
+        "zh": "浏览 Windows 卷和文档，按目录统计大小、查看矩形树图并引用路径到对话；支持新建目录和确认后移入回收站。需 DSH >=0.2.1-rc.5、Windows PowerShell 5.1。"
       },
       "category": "interface",
-      "version": "0.4.2",
+      "version": "0.4.3",
       "source": {
         "type": "git",
         "url": "https://github.com/Ananpng123/dsh-disk-manager",
-        "commit": "0b6bdb23c38c6dd02efced38e1ed7ba0610d581b",
-        "integrity": "sha512-8xu/yNX3orsptb8aYCgHE/ZwXAWLDW//LZDpnmVsQ/dH5w2iE1+phwhIqM6U7bqHyG72HUZ3MCoM8LNqdObj2A==",
-        "publishedAt": "2026-11-02T08:17:14.000Z"
+        "commit": "abebd0e9b440c845ddadfdc4e04c5bfda95465db",
+        "integrity": "sha512-x/mYxar3p/q99gC5DXpsdQe0SyOhudpbRmBKaYTrsoI9j4ntN27lg9Nz4DmLQ78o5iO+A0lWDBjygIfu06CuCA==",
+        "publishedAt": "2026-11-04T10:05:39.000Z"
       }
     },
     {
@@ -12782,8 +12782,8 @@
         "zh": "情感陪伴记忆"
       },
       "description": {
-        "en": "Maintain a selective, layered memory of the user across conversations, with profile-local SQLite storage and model-led summarization. Requires DSH 0.2.1-rc.2 and Node >=24; semantic recall needs a configured Hindsight service.",
-        "zh": "跨会话维护选择性、分层的用户记忆，数据保存在当前 profile 的本地 SQLite，并由模型提炼总结。需要 DSH 0.2.1-rc.2 和 Node >=24；语义召回需另外配置 Hindsight 服务。"
+        "en": "Learn and revise a user profile across conversations, preserving original memories and distilling experiences into layered summaries for selective recall. Data stays in profile-local SQLite; summarization uses the model. Requires DSH 0.2.1-rc.2, Node >=24 and Hindsight for semantic recall.",
+        "zh": "跨会话学习并修正用户画像，保留原始记忆，将重要经历提炼为分层摘要并按相关性召回。数据保存在当前 profile 的本地 SQLite，提炼使用模型。需 DSH 0.2.1-rc.2、Node >=24，语义召回需 Hindsight 服务。"
       },
       "category": "memory",
       "version": "0.3.2",
@@ -12881,14 +12881,6 @@
       "description": {
         "en": "Record a browser bug, lock the expected result and compare candidate fixes against the original code. Runs local development commands and stores evidence in the project .buggps directory; Git worktrees are not a sandbox. For DSH 0.2.1-rc.5 headless/web; needs Git, pnpm >=10 and Chrome or Edge.",
         "zh": "录制浏览器问题、固定预期，再将候选修复与原代码对照验证。会运行本地开发命令，并在项目 .buggps 目录保存证据；Git worktree 不提供沙箱隔离。适用于 DSH 0.2.1-rc.5 的 headless/web，需 Git、pnpm >=10、Chrome 或 Edge。"
-      },
-      "version": "1.0.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/lijiaqi-AI-Product-Manager/dsh-bug-gps",
-        "commit": "9cab2a1285caef92c81453843098767005c43509",
-        "integrity": "sha512-vyTevfiIi51Tnzbjq2LIdRZm014+3+vXr4GDlcnWQkMYkvUT8+BS0WsFBlxrcOxU1MlFmY05n2yyC3RVR6zSHg==",
-        "publishedAt": "2026-11-03T17:37:30.000Z"
       }
     },
     {
@@ -12930,6 +12922,219 @@
         "integrity": "sha512-oqs3ZHz5CsqHD3VdEClpLMFqf3SlQA95PLrYPpAyqb5hW5cPqp4ngkWR9EFPaKKvwiXaaSl8ynjVwN99TF4pgg==",
         "publishedAt": "2026-10-23T22:16:57.000Z",
         "path": "skill-compiler"
+      }
+    },
+    {
+      "name": "dsh-film-analysis",
+      "version": "0.3.5",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Raven-Jackdaw/dsh-film-analysis",
+        "commit": "8206142b56d13afca0fbaa5bb0b535c418875a5f",
+        "integrity": "sha512-ex5ZQXk5TKfNNSOG1rzGh6RoyvYfy1fmsnrvIXW+EMSiwGxLZROTEoDMb10AxEHdKQgETjkgOhjeLAdlBQciOA==",
+        "publishedAt": "2026-11-04T06:53:39.000Z"
+      },
+      "title": {
+        "en": "Film Analysis",
+        "zh": "影视画面分析器"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Analyze video shots, transcripts and visual evidence, run segment-by-segment analysis jobs, and export reports. Requires local media tools; Whisper/OCR enhancements need additional Python packages. Model analysis uses your configured DSH model.",
+        "zh": "分析视频镜头、台词与画面证据，按分段任务深度拉片并导出报告。需要本地媒体工具，Whisper/OCR 增强需另配 Python 环境；模型分析使用 DSH 中配置的模型。"
+      }
+    },
+    {
+      "name": "dsh-mathlab",
+      "version": "0.2.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/FileXego/dsh-mathlab",
+        "commit": "5dbcb9d3c1826ac5b9ca7af81f0372aec498044e",
+        "integrity": "sha512-ysXVUkWOEuoO+mtmDF5UM7T0Ze/t7dxPTj7CCYKmWYYlUfn7qcZYV6IAdsRDxsUw/TTiF/7Owuq/BRHKxz+5Rg==",
+        "publishedAt": "2026-11-04T15:07:29.000Z"
+      },
+      "title": {
+        "en": "MathLab",
+        "zh": "MathLab 数学研究台"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Explore symbolic mathematics, algebra, logic and interactive explanations with local Python and SymPy. Optional Lean checks execute supplied Lean source on the local machine. Requires a Python environment with the engine dependencies; author-tested on Windows DSH 0.2.1-rc.5.",
+        "zh": "使用本机 Python/SymPy 进行符号计算、代数、逻辑与交互讲解。可选 Lean 检查会在本机执行提交的 Lean 源码，需另装相应工具；作者验证环境为 Windows、DSH 0.2.1-rc.5。"
+      }
+    },
+    {
+      "name": "dsh-today-fortune",
+      "title": {
+        "en": "Today Fortune",
+        "zh": "赛博小庙 · 每日运势"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Draw a daily fortune in a small temple overlay, track check-in streaks and export shareable cards. Calendar calculations and state stay in the browser; requires the DSH web UI.",
+        "zh": "在小庙浮层中每日抽签、查看运势、连续打卡并导出分享卡片。历法计算和状态保存在浏览器，需要 DSH Web 界面。"
+      }
+    },
+    {
+      "name": "@jiang_li/dsh-im-companion",
+      "title": {
+        "en": "IM Companion",
+        "zh": "主动消息"
+      },
+      "category": "integrations",
+      "description": {
+        "en": "Split IM replies into natural message segments and optionally start proactive conversations. Requires dsh-im; OneBot QQ support is optional. Proactive messaging is off by default and uses the selected conversations, model and messaging accounts when enabled.",
+        "zh": "将即时通讯回复分段发送，并可按设置主动发起聊天。需要 dsh-im，可选接入 OneBot QQ；主动消息默认关闭，启用后使用选定的会话、模型和通讯账号。"
+      }
+    },
+    {
+      "name": "dsh-adhd-noise",
+      "version": "3.1.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/tommy00748-tech/dsh-adhd-noise",
+        "commit": "775a77d81486c5bd366b6e0036373dee3ced4b10",
+        "integrity": "sha512-s+v2EZ3l0HsMwXYq+QotwnkfyTkCSygZ8gli+iKn6o4hprmEyb/VUjrl8Wcwqi4CLCqzvnjb6jJL3WuEld8qJQ==",
+        "publishedAt": "2026-11-04T06:32:04.000Z"
+      },
+      "title": {
+        "en": "ADHD Noise",
+        "zh": "ADHD 专注声景"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Generate white, pink and brown noise, rain and fan sounds with Web Audio, with volume, waveform visualization and a sleep timer. Audio is synthesized in the browser; requires the DSH web UI.",
+        "zh": "通过 Web Audio 合成白噪、粉噪、棕噪、雨声与风扇声，提供音量、波形和定时淡出。声音在浏览器生成，需要 DSH Web 界面。"
+      }
+    },
+    {
+      "name": "dsh-freeweb",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/wiselfx/dsh-freeweb",
+        "commit": "bcb5af7c3121d09ec663bae23fb4dbbff61fd28c",
+        "integrity": "sha512-HxA6pf+d4JYZwUyjftnnPurhPpd+u76PWTUMYgzawE3phYDi49uKpdrqDJwi0mNktHmi44/mG0bxjBquLQFS1w==",
+        "publishedAt": "2026-11-02T07:40:58.000Z"
+      },
+      "title": {
+        "en": "FreeWeb",
+        "zh": "FreeWeb 网页搜索"
+      },
+      "category": "providers",
+      "description": {
+        "en": "Add multi-engine web search with parallel queries and fallback across Startpage, DuckDuckGo and other services. Search queries leave the host for those engines; optional engines can use configured API keys. Requires Node >=20.3.",
+        "zh": "通过多引擎并发与回退接入 Startpage、DuckDuckGo 等网页搜索服务。查询会发送到相应引擎，可选引擎可使用已配置的 API Key。需要 Node >=20.3。"
+      }
+    },
+    {
+      "name": "dsh-liang-backdrop",
+      "title": {
+        "en": "Liang Backdrop",
+        "zh": "梁系背景"
+      },
+      "category": "appearance",
+      "description": {
+        "en": "Place a draggable character backdrop and control panel over DSH, with six levels, size and opacity controls. Settings stay in localStorage; portrait frames are downloaded from the upstream GitHub project on first use and cached locally.",
+        "zh": "在 DSH 中放置可拖拽的人物背景和控制面板，调整六段等级、尺寸与浓度。设置保存在 localStorage，人物图片首次使用时从上游 GitHub 下载并缓存在本机。"
+      }
+    },
+    {
+      "name": "@polunzh/dsh-task-notifier",
+      "title": {
+        "en": "Task Notifier",
+        "zh": "任务通知台"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Track running and completed sessions in a searchable task panel with persistent unread status, sound and browser notifications. macOS also supports system notifications; browser notifications require permission. Author-tested on DSH 0.2.1-rc.5.",
+        "zh": "在任务面板中搜索与筛选运行中、已完成会话，保留未读状态，并提供声音和浏览器通知。macOS 另支持系统通知，浏览器通知需授权；作者验证环境为 DSH 0.2.1-rc.5。"
+      }
+    },
+    {
+      "name": "dsh-slipbox",
+      "title": {
+        "en": "slipbox",
+        "zh": "slipbox · 卡片笔记"
+      },
+      "category": "memory",
+      "description": {
+        "en": "Create, tag, search and edit local Markdown card notes, with optional organization through the DSH model. Uses a portable library shared with other slipbox-capable agents; model-assisted work sends the relevant notes to that model. Requires Python >=3.10 and DSH >=0.2.1-rc.3 <0.3.0.",
+        "zh": "创建、标记、搜索和编辑本地 Markdown 卡片，可交给 DSH 模型整理，并与其他支持 slipbox 的智能体复用资料库。模型整理会发送相关笔记上下文；需 Python >=3.10、DSH >=0.2.1-rc.3 <0.3.0。"
+      }
+    },
+    {
+      "name": "dsh-video-reader",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Kandecho/Video-Reader",
+        "commit": "f2656bf030ec94b9f6dfea22008c1d3168f4e4c6",
+        "integrity": "sha512-UpC+M4axkUL71VFp6El4tshVBZDySa3DPJMUT39Gou3XJ3UDZDY+6jg/D+Z5Jj7zlvCqTU/PAFBmcXgoFN9eKg==",
+        "publishedAt": "2026-11-04T12:57:15.000Z",
+        "path": "adapters/dsh"
+      },
+      "title": {
+        "en": "Video Reader",
+        "zh": "Video Reader 视频阅读"
+      },
+      "category": "integrations",
+      "description": {
+        "en": "Connect an installed Video Reader core to DSH for timestamped video text, frames, queues and optional Scroll account workflows. Windows only; requires DSH >=0.2.2-rc.1, a separately installed core and VIDEO_READER_ROOT. Private delivery and scheduling need separate configuration.",
+        "zh": "将已安装的 Video Reader 核心接入 DSH，读取带时间文字与画面，管理队列，并可使用 Scroll 账号工作流。仅 Windows；需 DSH >=0.2.2-rc.1、另装核心并设置 VIDEO_READER_ROOT，私信与调度需单独配置。"
+      }
+    },
+    {
+      "name": "dsh-literature-hub",
+      "version": "2.1.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/3469915488-oss/dsh-literature-hub",
+        "commit": "b142ef18954056694e2644dbe81a03eaafc05d32",
+        "integrity": "sha512-YfsngJEiszRQjIp0NIyfOMIF8oF4I9sD96gT20Dz+pAlCslDrQhAftolh0Ssm9/8Ku4R6n0SAySWdjFS9KT7cw==",
+        "publishedAt": "2026-11-04T14:46:51.000Z"
+      },
+      "title": {
+        "en": "Literature Hub",
+        "zh": "文献库"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Read an Obsidian vault, import documents, annotate and take Markdown notes, with companion conversations and local Whisper transcription. PDF/Office conversion and transcription need separately configured local tools; model conversations use DSH.",
+        "zh": "阅读 Obsidian 仓库、导入文档、批注并保存 Markdown 笔记，支持伴读对话和本机 Whisper 转写。PDF/Office 转换与转写需另配本地工具，伴读使用 DSH 模型。"
+      }
+    },
+    {
+      "name": "dsh-orchestrator",
+      "version": "0.6.5",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/SShiRkiT/dsh-orchestrator",
+        "commit": "a47e09fa64e3a73b7b38f16c85850f385a71e036",
+        "integrity": "sha512-/QQFN0TtLlcpBSLCS8mDfCxknibugJxSj3wbqzQi7j93himkfkb5zqqg7P2DL9FyVUEqbrxs0na1hGXok53Nxw==",
+        "publishedAt": "2026-11-04T10:45:53.000Z"
+      },
+      "title": {
+        "en": "DSH Orchestrator",
+        "zh": "DSH Orchestrator 编排"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Use a planning agent to delegate work to a configured worker model and supervise workers with periodic checks. Calls go through native DSH subagents; workers and patrols use the configured model services. Author requirements: DSH >=0.2.1-rc.3 and Node >=22.",
+        "zh": "由规划代理向配置的工作模型分派任务，并周期巡检、纠偏子代理。通过 DSH 原生子代理服务执行，任务和巡检使用配置的模型；作者要求 DSH >=0.2.1-rc.3、Node >=22。"
+      }
+    },
+    {
+      "name": "dsh-2d-model-picker",
+      "title": {
+        "en": "2D Model Picker",
+        "zh": "二维模型选择器"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Select a model and reasoning effort together in a draggable two-dimensional grid, using the host model catalog and selection service. Author-tested on macOS Apple Silicon with DSH Desktop 0.2.1-rc.5; other platforms are unverified.",
+        "zh": "在可拖动的二维网格中同时选择模型与推理强度，使用宿主模型目录和选择服务。作者验证环境为 macOS Apple Silicon、DSH Desktop 0.2.1-rc.5，其他平台未验证。"
       }
     }
   ]
