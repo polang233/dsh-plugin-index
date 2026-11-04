@@ -3066,6 +3066,43 @@
       "reviewedAt": "2026-11-04T16:04:27.654Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-whale-pro",
+      "version": "0.4.4",
+      "integrity": "sha512-DRCg84Pa3ouW6mBr27glMR4iCDCkAVMEGwc9SKbnnHEuV9z/MsnTxJhLou3GZ8IXVvHZC6xYV9BarCXX3Ut12Q==",
+      "repository": "https://github.com/Cdkgfp/dsh-whale-pro",
+      "source": {
+        "type": "git",
+        "commit": "459a8c3287b3060e464cd7dff5fce5a0e43b02c3"
+      },
+      "reviewedAt": "2026-11-04T17:22:32.364Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@goodfun-studio/dsh-lot-trader",
+      "version": "0.1.8",
+      "integrity": "sha512-be0rTXwJlsQQrkOKHbHpP6dFBTbDZ/M3ZGjNocrHx8dsbiezhtwsHxff+9Ab1IkD3iEmKe52Iv/eMFxRv8BfKA==",
+      "repository": "https://github.com/Goodfun-Studio/lot-trader",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T17:22:32.364Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-douyin-mac",
+      "version": "0.1.12",
+      "integrity": "sha512-7pBC5GznN0pAZX+vVPmkFEkLzgrzVq/nor2CU2e7yMRH+dqJhZ2c31FMSmtMwN73yzrxfivbI8Oy7viUliD8tw==",
+      "repository": "https://github.com/asd45183/dsh-douyin-mac",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T17:22:32.364Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

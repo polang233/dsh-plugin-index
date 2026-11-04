@@ -13136,6 +13136,122 @@
         "en": "Select a model and reasoning effort together in a draggable two-dimensional grid, using the host model catalog and selection service. Author-tested on macOS Apple Silicon with DSH Desktop 0.2.1-rc.5; other platforms are unverified.",
         "zh": "在可拖动的二维网格中同时选择模型与推理强度，使用宿主模型目录和选择服务。作者验证环境为 macOS Apple Silicon、DSH Desktop 0.2.1-rc.5，其他平台未验证。"
       }
+    },
+    {
+      "name": "dsh-whale-pro",
+      "version": "0.4.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Cdkgfp/dsh-whale-pro",
+        "commit": "459a8c3287b3060e464cd7dff5fce5a0e43b02c3",
+        "integrity": "sha512-DRCg84Pa3ouW6mBr27glMR4iCDCkAVMEGwc9SKbnnHEuV9z/MsnTxJhLou3GZ8IXVvHZC6xYV9BarCXX3Ut12Q==",
+        "publishedAt": "2026-10-31T08:07:10.000Z"
+      },
+      "title": {
+        "en": "Whale Pro",
+        "zh": "小鲸鱼简洁版"
+      },
+      "category": "usage",
+      "description": {
+        "en": "A leaner fork of the DeepSeek balance whale for DSH Desktop: a status bar above the whale shows balance, grants, top-ups, today’s spend and the peak/off-peak timeline, with separately configurable automatic bubbles and sounds. All routes require DSH host authentication.",
+        "zh": "DeepSeek 余额小鲸鱼的简洁分支，适用于 DSH 桌面端：鲸鱼头顶常驻余额、赠金、充值余额、今日已用和峰谷时间线，自动提示泡泡与音效可分别设置。所有接口都需要 DSH 宿主认证。"
+      }
+    },
+    {
+      "name": "@goodfun-studio/dsh-lot-trader",
+      "title": {
+        "en": "Lot Trader",
+        "zh": "持仓操盘台"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Connect the local lot-trader ledger to DSH: six read tools and five write tools (buy, add, close, dividend, account) with host approval for every write, plus a sidebar position board. On first use it downloads the trade engine from the author’s GitHub Releases and installs it only if the SHA-256 matches. Records trades; it does not place orders.",
+        "zh": "把本机 lot-trader 操盘账本接入 DSH：6 个读工具、5 个写工具（买入、加仓、平仓、记分红、建账户），写操作都走宿主审批，侧栏提供持仓看板。首次使用会从作者 GitHub Releases 下载 trade 引擎，SHA-256 校验通过才安装。只记账，不下单。"
+      }
+    },
+    {
+      "name": "dsh-douyin-mac",
+      "title": {
+        "en": "Douyin Assistant for macOS",
+        "zh": "抖音助手（macOS）"
+      },
+      "category": "integrations",
+      "description": {
+        "en": "Browse Douyin in a dedicated Google Chrome window on macOS, send sampled frames to a configured vision model and update interests from real watch progress. Optional automation can reply to approved friends and groups, share videos and post public comments (off by default) from your account; check Douyin’s rules before enabling it.",
+        "zh": "在 macOS 专用 Google Chrome 窗口里刷抖音，把画面采样交给已配置的图片模型，按真实观看进度更新兴趣。可选的自动化会用你的账号回复许可好友和群聊、分享作品和发公开评论（默认关闭），开启前请留意抖音平台规则。"
+      }
+    },
+    {
+      "name": "dsh-continue-guard",
+      "version": "0.3.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/LLL-lyh0/dsh-continue-guard",
+        "commit": "85f05b22375e3c675b952d2843059a7899506292",
+        "integrity": "sha512-TkT+thIPvEJ0JBXSE6CD/+3t2tQ67c1DLvoxDCxGXSWr/o7BPBxaHRoSMEC/ePO/HiVRMKWfIV0Vx0X/hF5akA==",
+        "publishedAt": "2026-10-30T15:47:42.000Z"
+      },
+      "title": {
+        "en": "Continue Guard",
+        "zh": "继续守卫"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Add a Continue button below the composer and resume turns cut off by a network drop, an output limit or a host restart, through DSH’s own submission path; real refusals such as quota or permission are reported, not retried. Note: its local API checks Host/Origin but does not yet use DSH host authentication.",
+        "zh": "在输入框下方加「继续」按钮，回合因断网、输出上限或宿主重启中断时，通过 DSH 自身的提交链路自动续跑；额度、权限等真实拒绝如实报告，不反复重试。注意：本机接口目前只检查 Host/Origin，尚未接入 DSH 宿主认证。"
+      }
+    },
+    {
+      "name": "dsh-archived-digest",
+      "version": "0.5.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/LLL-lyh0/dsh-archived-digest",
+        "commit": "f2690a83ada383dc973d76ba2d8f80b8546b0b47",
+        "integrity": "sha512-17AzyVdz80tO0QsdVt55Scf6av1lTkk9R/vc1bSoClWQaKU1goLeVUpNeDZX0pVHxv6t9LSNBz2BWMkUNZ7WcA==",
+        "publishedAt": "2026-10-27T14:40:15.000Z"
+      },
+      "title": {
+        "en": "Archived Digest",
+        "zh": "归档提炼"
+      },
+      "category": "memory",
+      "description": {
+        "en": "Distill archived conversations into reusable skills, a fact ledger whose outdated entries retire, and topic clusters; ongoing sessions can be digested read-only, and memory self-checks only measure unless asked to rewrite. Note: its local API checks Host/Origin but does not yet use DSH host authentication.",
+        "zh": "把已归档会话提炼成可复用技能、会让过时事实退场的事实台账和主题簇；进行中的会话可只读增量提炼，记忆自检默认只测量不改写。注意：本机接口目前只检查 Host/Origin，尚未接入 DSH 宿主认证。"
+      }
+    },
+    {
+      "name": "dsh-skills-nexus",
+      "title": {
+        "en": "Skills Nexus",
+        "zh": "技能中枢"
+      },
+      "category": "skills",
+      "description": {
+        "en": "Manage DSH skills end to end: install, import, version, enable or disable them and keep them in sync across machines and agents. Note: its skill install, import and toggle endpoints check Origin but do not yet use DSH host authentication.",
+        "zh": "管理 DSH 技能的完整生命周期：安装、导入、版本管理、启停，以及跨机器、跨 Agent 同步。注意：技能安装、导入和启停接口目前只检查 Origin，尚未接入 DSH 宿主认证。"
+      }
+    },
+    {
+      "name": "dsh-subagent-dsh",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/leicheng42/dsh-subagent-dsh",
+        "commit": "78c7f4bc7b75c76a30ed8fc6d5284c3674ce8a73",
+        "integrity": "sha512-raeVWFohhup9yBCiJGgxOpq3QLIRHP9rZHPmES94khn7GzGGoUuRG6w7gIbWgM+TvVYLNIvMg7pmgOTyWYFCZQ==",
+        "publishedAt": "2026-10-25T16:02:08.000Z"
+      },
+      "title": {
+        "en": "DSH Subagent",
+        "zh": "DSH 子代理"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Run a task in a fresh, isolated DSH runtime (dsh --profile headless) with its own DSH_HOME, session and model routing, and return only the final answer to the parent session through the subagent_dsh tool. Note: the startup handshake timeout does not take effect yet, so a child that never becomes ready can keep the call waiting.",
+        "zh": "把任务交给全新、隔离的 DSH 运行时（dsh --profile headless）执行，独立 DSH_HOME、会话与模型路由，只通过 subagent_dsh 工具把最终回答带回父会话。注意：启动握手超时目前不生效，子运行时未就绪时调用可能一直等待。"
+      }
     }
   ]
 }
