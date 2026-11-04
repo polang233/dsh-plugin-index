@@ -65,6 +65,8 @@ pnpm test:browser
 
 批量收录可先将 issue、包名和回复草稿记录为 `schema: 1`、`entries: [{issue, name, replyLanguage, reply}]` 的 JSON。运行 `node scripts/preview-submissions.mjs <复核记录.json>`，仅检查这批发布归档并生成 `.local/submission-preview/` 下的索引、证据和回复预览，不安装插件、不改写已发布快照、不发评论。
 
+条目也可以不带 `issue`：这类是尚未收录的候选，只做索引检查、不生成回复草稿，包名记在 `summary.json` 的 `discovered` 里。两种条目可以混在同一批，已收录的条目仍按原样使用 `data/sources.json` 中的文案与分类。发现模式同样只写 `.local/`，不改变发布结果；官方格式校验仍需另跑 `node scripts/validate.mjs .local/submission-preview/index.json`。
+
 未指定 `version` 时跟踪 npm `latest`，索引每 6 小时构建一次；指定后固定为该版本。仓库核查和大包预算会固定版本，运行 `pnpm check:pins` 可列出已落后于 npm `latest` 的固定条目，需重新核查后升级。生成器最多并发读取四个来源，并重试临时网络错误。npm 包下载限于公共 npm registry，固定 Git 来源仅使用下文的 GitHub 提交归档；审核仓库图片使用独立的图标读取边界，不执行被收录插件的代码。全部来源与官方校验器通过后才允许发布。
 
 目前每个插件提供一个版本。兼容范围来自 `engines.dsh`，缺失时取 DSH peer dependencies 的交集。没有约束表示作者未声明范围，不代表已验证兼容。
