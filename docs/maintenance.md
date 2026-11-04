@@ -45,7 +45,7 @@ To reproduce a browser test failure locally, set `BROWSER_EXECUTABLE` to an exis
 
 - `data/sources.json`: package list, translations and categories.
 - `scripts/lib.mjs`: registry and archive checks, compatibility ranges, index generation.
-- `scripts/site.mjs` and `site/`: the website in English (`/`), Simplified Chinese (`/zh/`) and Traditional Chinese (`/zh-tw/`). Each language has a home page, a usage stats page (`stats/`) and one page per plugin (`plugins/<package>/`). Traditional Chinese is generated from the Simplified pages with OpenCC's Taiwan phrasing; DSH menu names wrapped in `ui()` keep their Simplified wording because DSH itself shows them that way. Plugin pages are rebuilt on every build and are not committed.
+- `scripts/site.mjs` and `site/`: the website in English (`/`), Simplified Chinese (`/zh/`), Traditional Chinese (`/zh-tw/`), Japanese (`/ja/`) and Korean (`/ko/`). Each language has a home page, a usage stats page (`stats/`) and one page per plugin (`plugins/<package>/`). Traditional Chinese is generated from the Simplified pages with OpenCC's Taiwan phrasing; DSH menu names wrapped in `ui()` keep their Simplified wording because DSH itself shows them that way. Japanese and Korean have their own interface copy and category names in `COPY`, but the index only carries English and Chinese plugin text, so those pages show English descriptions, the English DSH screenshots and DSH's English menu names. They only have a home page and a stats page: their plugin cards and likes ranking open the English plugin pages, plugin pages list hreflang alternates only for English and Chinese, and the sitemap and IndexNow manifest carry no Japanese or Korean plugin URLs. Plugin pages are rebuilt on every build and are not committed.
 - `public/index.json`: DSH format-1 index.
 - `public/status.json`: generation time and package-check evidence.
 
@@ -53,9 +53,15 @@ Use `pnpm build:site` for website-only changes and `pnpm preview` to open the re
 
 ## Updates
 
-Keep acceptance replies to one short, friendly sentence: `感谢！将在下个提交后收录 😊` for Chinese-speaking developers, or `Thanks! It'll be added in the next commit 😊` for other developers. Vary the smiling emoji. Reply and close accepted issues as authorized by the maintainer.
+New entries, replacements and upgrades all get a look at the code that was actually published: credentials and outbound data, route authentication, commands and file writes, and what happens on errors. The problems authors run into most are listed in the [contributing guide](../.github/CONTRIBUTING.md#常见退回原因--common-reasons-for-changes); point to it when asking for changes.
 
-New entries, replacements and upgrades also receive a static security review of the actual release code, covering credentials, outbound data, authentication/authorization, command/file operations and failure handling. Record the version and coverage limits. Replies may add: `We now apply stricter static security checks. Accepted releases receive a Reviewed badge.` Keep requests for fixes or evidence short.
+Decide by risk:
+
+- **Ask for changes**: credentials can leak, approval or permissions can be bypassed, files can be written outside the workspace, proxies or certificates can be changed without authentication, billing can be triggered, or routes have no Host/Origin check at all.
+- **List with a note in the description**: small, low-risk gaps, such as local routes that check Host/Origin but do not use host authentication yet, or a functional bug with no security impact. Put the note at the end of both descriptions in `data/sources.json` and remove it after the author's fix is reviewed.
+- **Do not list**: the purpose itself is out of scope, such as bypassing model safety limits.
+
+Keep replies short and polite, with one emoji; Chinese for Chinese submissions, English otherwise. For example: `Thanks for submitting 🎉 It passed the checks and will appear after the next build.` When asking for changes, say what to fix in a sentence or two and end with `then we'll review it again`; there is no need to describe the review process. Close issues with no reply from the author for 7 days, saying a reply or a new submission reopens the review. Close accepted issues once the listing is pushed.
 
 Record accepted releases in `data/maintainer-reviews.json` with exact version, SHA-512, repository, source, date, scope and review-record path. Git releases also require the full commit. Use `package` for historical package checks and `static-security` for releases that received the added security review. Do not retroactively claim an audit that was not performed. Version or archive changes remove the local badge until reviewed; external review evidence remains independent. See [label rules](market-display.md).
 
@@ -115,7 +121,7 @@ If GitHub is unavailable, a verified snapshot up to seven days old is kept with 
 2. Set the repository variable `PUBLISH_INDEX=true`.
 3. Run **Check and publish index** on `main`.
 
-The workflow runs unit tests, builds the catalog, checks all three website languages, plugin pages and the stats page in Chromium and validates the official format before uploading the Pages artifact. After deployment it checks the complete source allowlist, package evidence, the three language pages and a plugin page in each, every referenced icon hash and the project branding assets. All requests reject redirects. Pull requests never deploy.
+The workflow runs unit tests, builds the catalog, checks all five website languages, plugin pages and the stats page in Chromium and validates the official format before uploading the Pages artifact. After deployment it checks the complete source allowlist, package evidence, the home page in all five languages and a plugin page in English and Chinese, every referenced icon hash and the project branding assets. All requests reject redirects. Pull requests never deploy.
 
 The build job uses the official Playwright container based on Ubuntu 24.04, with browsers, runtime libraries and fonts already installed. This removes the apt and browser CDN installation steps from each run. Full package checks and browser tests still run. Keep the container tag in `.github/workflows/publish.yml` aligned with the `@playwright/test` version in `package.json` when upgrading.
 
@@ -130,7 +136,7 @@ node scripts/validate.mjs https://polang233.github.io/dsh-plugin-index/index.jso
 pnpm check:published
 ```
 
-DSH caches a successful index for ten minutes. If a custom domain is added later, update the site URL, canonical metadata, sitemap, copy target and documentation together, then verify the final JSON URL.
+DSH caches a successful index for ten minutes. The public address is `https://dshopen.org/index.json`; if it ever moves, update the site URL, canonical metadata, sitemap, copy target and documentation together, then verify the final JSON URL.
 
 ## Package checks
 
@@ -167,7 +173,9 @@ The Worker also serves likes for the Open Market tab of the `dsh-open-market` pl
 Each person likes a plugin at most once a day, and a like and an install share that once; each person has at most 100 a day. A person is the day's salted hash of IP and user agent, neither of which is stored. From its first like, each plugin loses one like every full three days, never below zero, settled lazily by date on reads and writes. Names missing from the current `index.json` are refused. The `likes` table and the daily `like_votes` table are in `cloudflare/schema.sql`; run the `d1 execute` above before deploying. The plugin has a setting to opt out of likes, which stops both requests.
 
 
-`sitemap.xml` lists every page in all three languages with `hreflang` alternates (`zh-TW` and `zh-HK` point to the Traditional pages). Submit `https://dshopen.org/sitemap.xml` once in Google Search Console and Bing Webmaster Tools; both pick up later changes on their own.
+`sitemap.xml` lists every English, Simplified and Traditional Chinese page, plus the Japanese and Korean home and stats pages, with `hreflang` alternates (`zh-TW` and `zh-HK` point to the Traditional pages). Submit `https://dshopen.org/sitemap.xml` once in Google Search Console and Bing Webmaster Tools.
+
+Bing, Yandex and other engines also hear about changes through IndexNow. Each build writes `page-versions.json` (one content fingerprint per page) and the key file at the site root; after the EdgeOne release, `scripts/indexnow.mjs` submits only pages whose fingerprint changed, plus the home and stats pages, which change every build. An IndexNow failure does not fail the release. Google does not support IndexNow and relies on the sitemap.
 
 ## Images
 
@@ -213,5 +221,11 @@ Authors ask for removal through a `[plugin-remove]` issue. After confirming the 
 ## Editorial copy and product names
 
 `data/sources.json` owns display names and bilingual descriptions. `data/brand-names.json` records reviewed product names; builds check that both display titles retain them. Author-provided Chinese aliases may appear alongside the original name. See the [2026-10-20 copy review](reviews/localization-2026-10-20.md).
+
+When writing descriptions:
+
+- Keep brand and product names as the author writes them, for example DeepSeek Bot, Flowglass, Pharos. Use a formal Chinese name from the author on its own or beside the original; without one, keep the original. Do not swap a name for a summary of what it does. Ordinary feature names can be translated naturally.
+- Say what it does, what it needs to run and any important limits. Put technical terms in context, such as privilege escalation approval or running outside the sandbox, and do not claim abilities or guarantees the author did not.
+- When a name is in doubt, check the author's README, the package's locale files or its manifest.
 
 `pnpm build:copy` refreshes the existing index, display snapshot and bilingual pages offline. It retains package versions, validation timestamps, metrics, ranks and exposure history. GitHub Actions builds new entries that are absent from the checked snapshot. Structured reviews can be replayed with `node scripts/apply-copy-review.mjs docs/reviews/localization-2026-10-20.json`; already-applied edits are skipped, and conflicting copy requires another review.

@@ -39,6 +39,8 @@ dsh plugin --profile desktop add dsh-open-market
 
 它还会在「插件」页加一个 **开放市场** 标签：今日推荐、按点赞和增长排的推荐，以及全部插件。点开卡片能看详情、点赞和安装；还能把插件分组收藏，查看已安装插件的更新。
 
+> 还在用 0.2.7 或更早版本的开放市场？第一次升级请到 DSH「插件 → 已安装」里更新，或重新运行上面的命令。旧版在「开放市场」标签里更新自己时可能把自己卸载掉，0.3.0 起已修复。
+
 ![DSH「插件」页里的开放市场标签](docs/images/open-market-zh.webp)
 
 [![开放插件市场网站首页](docs/images/home-zh.webp)](https://dshopen.org/zh/)

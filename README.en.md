@@ -39,6 +39,8 @@ dsh plugin --profile desktop add dsh-open-market
 
 It also adds an **Open Market** tab to the Plugins page: today's picks, rows ranked by likes and growth, and the whole catalog. Open a card for details, likes and install; save plugins to grouped favorites, and see updates for what you installed.
 
+> Still on Open Market 0.2.7 or earlier? For the first upgrade, update it under Plugins → Installed in DSH or run the command above again. Older versions could uninstall themselves when updating from the Open Market tab; 0.3.0 fixed this.
+
 ![The Open Market tab on the DSH Plugins page](docs/images/open-market-en.webp)
 
 [![The Open Plugin Market website home](docs/images/home-en.webp)](https://dshopen.org/)

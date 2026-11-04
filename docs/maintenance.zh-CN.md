@@ -45,7 +45,7 @@ pnpm test:browser
 
 - `data/sources.json`：收录列表、中英文介绍和分类。
 - `scripts/lib.mjs`：发布源和归档检查、兼容范围、索引生成。
-- `scripts/site.mjs` 与 `site/`：英文（`/`）、简体中文（`/zh/`）和繁体中文（`/zh-tw/`）网站。每种语言都有首页、使用统计页（`stats/`）和每个插件的独立页面（`plugins/<包名>/`）。繁体页面由简体页面经 OpenCC 台湾用语转换生成；用 `ui()` 标出的 DSH 菜单名称保持简体，因为 DSH 界面本身就是这样显示的。插件页面每次构建重新生成，不提交到仓库。
+- `scripts/site.mjs` 与 `site/`：英文（`/`）、简体中文（`/zh/`）、繁体中文（`/zh-tw/`）、日文（`/ja/`）和韩文（`/ko/`）网站。每种语言都有首页、使用统计页（`stats/`）和每个插件的独立页面（`plugins/<包名>/`）。繁体页面由简体页面经 OpenCC 台湾用语转换生成；用 `ui()` 标出的 DSH 菜单名称保持简体，因为 DSH 界面本身就是这样显示的。日文和韩文在 `COPY` 里有自己的界面文案和分类名，但索引只有英文和中文的插件描述，所以这两种语言的页面显示英文描述、英文版 DSH 截图和 DSH 英文界面的菜单名。它们只有首页和统计页：插件卡片和点赞排行链接到英文插件页，插件页的 hreflang 只列英文和中文，sitemap 和 IndexNow 清单里也没有日文、韩文插件页地址。插件页面每次构建重新生成，不提交到仓库。
 - `public/index.json`：DSH 格式 1 索引。
 - `public/status.json`：生成时间和逐包检查记录。
 
@@ -55,9 +55,15 @@ pnpm test:browser
 
 ## 更新收录
 
-回复收录申请时保持一句话、自然简短。中文示例：`感谢！将在下个提交后收录 😊`，可换用不同的微笑表情。非中文开发者用英文：`Thanks! It'll be added in the next commit 😊`。接纳后按维护者授权回复并关闭 issue。
+新增、替换和升级都要看一遍实际发布的代码：凭据和外发数据、接口认证、命令和文件操作、出错时怎么处理。作者常见的问题列在[贡献指南](../.github/CONTRIBUTING.md#常见退回原因--common-reasons-for-changes)里，退回时可以直接指过去。
 
-新增、替换及升级还需复核实际发布代码的安全问题，重点检查凭据、外发数据、接口认证与授权、命令/文件操作及失败处理。结论注明具体版本与覆盖限制。回复可补一句：`目前已加强静态安全审查，通过上架后会显示「已审查」标签。` 未通过项说明需要修复或补充的内容，保持简短。
+按风险决定怎么处理：
+
+- **退回修改**：凭据可能泄露、能绕过审批或提升权限、能写出工作区、未认证就能改代理或证书、会触发计费，或者接口连 Host/Origin 检查都没有。
+- **收录并在简介里提醒**：只差一步的低风险问题，例如本机接口已经检查 Host/Origin、只是还没接入宿主认证，或者是不涉及安全的功能 bug。提醒写在 `data/sources.json` 的中英文简介末尾，作者修好后复核并删掉提醒。
+- **不收录**：用途本身不合适，例如绕过模型安全限制。
+
+回复简短、礼貌、带一个表情，中文投稿用中文，其他用英文。例如：`感谢投稿 🎉 检查通过，下一次更新后上架。`；退回时一两句说清要改什么，`再复核` 即可，不用解释审查流程。作者 7 天没有回复的 issue 先关闭，并说明修好后回复或重新提交就会复核。收录推送后关闭对应 issue。
 
 通过后在 `data/maintainer-reviews.json` 添加具体版本、SHA-512、仓库、来源、日期、核查范围和记录路径。Git 还需完整提交。`package` 用于早期包结构核查，`static-security` 用于加入静态安全审查后的通过项；不要把历史核查升级成未做过的审计。版本或归档字节不匹配时自动失去本站标签，其他平台的审查依据独立保留。详见[标签说明](market-display.md)。
 
@@ -131,7 +137,7 @@ GitHub Actions 使用只读 `GITHUB_TOKEN`。本地可设置 `GITHUB_TOKEN` 或 
 2. 设置仓库变量 `PUBLISH_INDEX=true`。
 3. 在 `main` 分支运行 **Check and publish index**。
 
-工作流先运行单元测试、构建目录、使用 Chromium 检查三种语言的网站、插件页面和统计页并校验官方格式，再上传 Pages 产物。部署后核对完整收录集合、逐包检查记录、三种语言页面及其中的插件页面、所有引用图标的内容哈希与项目品牌图片，全部请求禁止重定向。PR 不触发部署。
+工作流先运行单元测试、构建目录、使用 Chromium 检查五种语言的网站、插件页面和统计页并校验官方格式，再上传 Pages 产物。部署后核对完整收录集合、逐包检查记录、五种语言的首页、英文和中文的插件页面、所有引用图标的内容哈希与项目品牌图片，全部请求禁止重定向。PR 不触发部署。
 
 构建任务使用 Playwright 官方的 Ubuntu 24.04 容器，浏览器、运行库和字体已预装，省去每轮从 apt 和浏览器 CDN 安装的步骤；全量包检查和浏览器测试照常执行。容器标签的版本需与 `package.json` 中的 `@playwright/test` 一致，升级依赖时一并更新 `.github/workflows/publish.yml`。
 
@@ -146,7 +152,7 @@ node scripts/validate.mjs https://polang233.github.io/dsh-plugin-index/index.jso
 pnpm check:published
 ```
 
-DSH 默认缓存十分钟。未来绑定自有域名时，要同时更新网站地址、canonical 元数据、sitemap、复制按钮目标和文档，再校验最终 JSON 地址。
+DSH 默认缓存十分钟。公开地址是 `https://dshopen.org/index.json`；以后如果要换地址，要同时更新网站地址、canonical 元数据、sitemap、复制按钮目标和文档，再校验最终 JSON 地址。
 
 ## 检查范围
 
@@ -190,7 +196,9 @@ Worker 同时提供点赞接口，供 `dsh-open-market` 插件的「开放市场
 规则：每人每天对同一个插件只计一次，点赞和安装共用这一次；每人每天最多 100 次；「一个人」按当天 IP 与浏览器标识的加盐哈希判断，不保存原文。每个插件从第一次被点赞起，每满 3 天点赞数减 1，最低为 0，读写时按日期惰性结算。不在当前 `index.json` 里的包名一律拒绝。点赞表 `likes` 与每日去重表 `like_votes` 也在 `cloudflare/schema.sql` 里，部署前运行上面的 `d1 execute` 建表。插件里可以关闭「参与点赞」，关闭后不会请求这两个接口。
 
 
-`sitemap.xml` 列出三种语言的全部页面，并带 `hreflang` 对应关系（`zh-TW` 和 `zh-HK` 指向繁体页面）。在 Google Search Console 和 Bing Webmaster Tools 各提交一次 `https://dshopen.org/sitemap.xml`，之后的更新会被自动抓取。
+`sitemap.xml` 列出英文、简体和繁体的全部页面，以及日文、韩文的首页和统计页，并带 `hreflang` 对应关系（`zh-TW` 和 `zh-HK` 指向繁体页面）。在 Google Search Console 和 Bing Webmaster Tools 各提交一次 `https://dshopen.org/sitemap.xml`。
+
+Bing、Yandex 等搜索引擎还通过 IndexNow 获知更新：每次构建生成 `page-versions.json`（每个页面一个内容指纹）和根目录的密钥文件，EdgeOne 发布后 `scripts/indexnow.mjs` 只提交指纹变化的页面和每次都会变的首页、统计页。IndexNow 出错不影响发布。Google 不支持 IndexNow，靠 sitemap 抓取。
 
 部署后的检查请求带 `dshopen-check` 这个 user-agent，不计入统计。
 
@@ -220,6 +228,12 @@ pnpm build:site
 ## 文案与品牌名称
 
 收录文案以 `data/sources.json` 为准。品牌身份记录在 `data/brand-names.json`，构建时检查中英文名称保留原名；作者提供的中文别名可并列展示。审核记录见 [2026-10-20 文案复核](reviews/localization-2026-10-20.md)。
+
+写简介时：
+
+- 品牌和产品名照作者的写法和大小写，例如 DeepSeek Bot、Flowglass、Pharos。作者给了正式中文名可以用，或与原名并列；没有就保留原文，不要拿功能概括代替名字。普通功能名可以自然翻译。
+- 说清楚做什么、需要什么环境、有什么重要限制。术语放进具体语境里写，例如「权限提升审批」「沙箱外执行」，不要逐词直译，也不要写出原说明里没有的能力或保证。
+- 拿不准名字时，看作者的 README、包里的语言文件或清单。
 
 仅改名称和描述时运行 `pnpm build:copy`。它更新 `public/index.json`、`public/display.json` 和双语网页，保留包版本、校验时间、指标、排序和推荐曝光记录，不访问网络。尚未写入公开快照的新收录会列在输出中，等待 GitHub Actions 完整构建。
 
