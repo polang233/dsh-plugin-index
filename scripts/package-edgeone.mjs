@@ -16,7 +16,9 @@ await cp(artifact, output, { recursive: true, filter: path => !['index.json', '_
 const snapshotPath = `/_catalog/${expectedHash}.json`;
 await mkdir(join(output, '_catalog'));
 await writeFile(join(output, snapshotPath), bytes);
-const release = { expectedHash, snapshotPath, cloudflareOrigin: 'https://dshopen.polang.workers.dev', githubIndex: 'https://polang233.github.io/dsh-plugin-index/index.json' };
+// EdgeOne sends unmatched paths to the edge function, so it carries the site's 404 page: crawlers report a bare text reply as a page without a title.
+const notFoundPage = await readFile(join(artifact, '404.html'), 'utf8');
+const release = { expectedHash, snapshotPath, cloudflareOrigin: 'https://dshopen.polang.workers.dev', githubIndex: 'https://polang233.github.io/dsh-plugin-index/index.json', notFoundPage };
 const headers = [];
 for (const line of (await readFile(join(artifact, '_headers'), 'utf8')).split(/\r?\n/)) {
   if (!line.trim() || line.trimStart().startsWith('#')) continue;

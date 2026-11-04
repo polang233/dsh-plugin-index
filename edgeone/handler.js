@@ -12,6 +12,11 @@ async function timedFetch(input, init = {}, milliseconds = 5000) {
   finally { clearTimeout(timer); }
 }
 
+function notFound(request) {
+  if (!release.notFoundPage || !['GET', 'HEAD'].includes(request.method)) return new Response('Not found', { status: 404 });
+  return new Response(request.method === 'HEAD' ? null : release.notFoundPage, { status: 404, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300' } });
+}
+
 export async function onRequest(context) {
   const { request, env } = context;
   const url = new URL(request.url);
@@ -49,7 +54,7 @@ export async function onRequest(context) {
   }
   if (url.pathname.startsWith('/internal/')) return new Response('Not found', { status: 404 });
   const api = ['/stats.json', '/likes.json', '/api/like', '/api/stars'].includes(url.pathname) || url.pathname.startsWith('/badge/');
-  if (!api) return new Response('Not found', { status: 404 });
+  if (!api) return notFound(request);
   let upstream;
   if (url.pathname === '/api/like' && request.method === 'POST') {
     upstream = await signedLikeRequest(request, { endpoint: origin + '/api/like', secret, visitorSalt: env.VISITOR_SALT, ip: request.eo.clientIp });

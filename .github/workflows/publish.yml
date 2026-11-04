@@ -211,6 +211,9 @@ jobs:
         with:
           name: validated-index
           path: public/
+      - name: Keep the live page manifest for IndexNow
+        # Read before this release replaces it; a missing manifest means every page is submitted once.
+        run: curl -fsS --max-time 30 -A dshopen-check https://dshopen.org/page-versions.json -o "$RUNNER_TEMP/previous-page-versions.json" || echo '{}' > "$RUNNER_TEMP/previous-page-versions.json"
       - run: node scripts/package-edgeone.mjs public "$RUNNER_TEMP/edgeone-release"
       - run: node scripts/deploy-edgeone.mjs "$RUNNER_TEMP/edgeone-release"
         env:
@@ -221,3 +224,7 @@ jobs:
         run: node scripts/check-published.mjs https://network-probe.dshopen.org/index.json --retries 3 --wait 30
       - name: Check the public address
         run: node scripts/check-published.mjs https://dshopen.org/index.json --retries 3 --wait 30
+      - name: Tell search engines about changed pages
+        # IndexNow is a courtesy to Bing, Yandex and others; an outage there must not mark the release as failed.
+        continue-on-error: true
+        run: node scripts/indexnow.mjs public/page-versions.json "$RUNNER_TEMP/previous-page-versions.json"

@@ -5,6 +5,7 @@ import { githubRepository } from './github-repository.mjs';
 import { releaseAge } from './market-display.mjs';
 import { addedTimestamp } from './added.mjs';
 import { SOURCES } from './endorsements.mjs';
+import { INDEXNOW_KEY } from './indexnow.mjs';
 
 const ORIGIN = 'https://dshopen.org/';
 const INDEX_URL = `${ORIGIN}index.json`;
@@ -108,7 +109,7 @@ const COPY = {
     likesTitle: '点赞最多的插件', likesNote: '来自网站和「开放市场」标签的点赞，每个插件每 3 天减 1。', likesEmpty: '还没有点赞。去插件目录给喜欢的插件点个赞，它就会出现在这里。', liveNote: '实时 · 每隔几分钟更新',
     tileNotes: { yesterday: '昨日 {value}', average: '日均 {value}', added: '近 7 天新增 {value}', likedPlugins: '来自 {value} 个插件' },
     statPlugins: '个插件', statCategories: '个分类', more: '查看更多', moreLoading: '正在加载…', moreFailed: '加载失败，点击重试', sort: '排序', sorts: { default: '默认排序', recommended: '⊙ 智能推荐', likes: '♥ 点赞最多', stars: '★ 星数最多', starsWeek: '▲ 近期增长', published: '最近更新', random: '⚄ 随机' }, shown: '已显示 {shown} / {count}',
-    description: `DSH 插件市场与插件索引：收录 {count} 个 DeepSeek Harness 社区插件，工具、技能、记忆、界面应有尽有，每天按增长、更新和点赞推荐。复制索引地址，在 DSH「${ui('发现')}」里浏览和安装。`,
+    description: `DSH 插件市场与插件索引：收录 {count} 个 DeepSeek Harness 社区插件，工具、技能、记忆、界面应有尽有，每天按增长、更新和点赞推荐。复制索引地址，在 DSH「${ui('发现')}」里浏览和安装；或安装开放市场插件，在「${ui('插件')}」页直接搜索、安装和一键更新。`,
     like: '点赞', liked: '今天已点赞', likeTitle: '给这个插件点赞（每天一次）', likeFailed: '点赞失败，请稍后再试', likeLimit: '今天的点赞次数已用完',
     ghLabel: 'GitHub：给项目点个 Star',
     altSetup: '或者安装插件，一步完成：', altSetupNote: `自动打开「${ui('自定义插件市场')}」并加入本索引，还会在「${ui('插件')}」页多一个「开放市场」标签，重启 DSH 后生效。`, copyCommand: '复制', copiedShort: '已复制',
@@ -143,10 +144,11 @@ const COPY = {
     raw: 'JSON 索引', status: '构建详情', stats: '使用统计', footerTagline: 'DeepSeek Harness 的社区插件市场。增长快、更新勤的插件优先展示，让小开发者也被看到。', starCta: '给项目点个 Star', starNote: '觉得好用就给我们点个 star 吧。用到的插件也别忘了给作者一个，没准下一个 star 就是别人点给你的。', footerLinks: '相关链接', refresh: '每 6 小时更新',
     starsUnavailable: 'GitHub star 暂不可用', fetched: '获取于',
     pluginTitle: title => `${title} — DeepSeek Harness（DSH）插件 · 开放插件市场`,
-    pluginDescription: (title, description) => `${title}：${description}DeepSeek Harness（DSH）社区插件，收录于开放插件市场。`,
+    // Search engines want about 120 characters; Chinese descriptions are short, so add the category, version and how to install.
+    pluginDescription: (title, description, { category, version } = {}) => `${title}：${description}${category ? `分类：${category}。` : ''}DeepSeek Harness（DSH）社区插件${version ? `，最新版本 ${version}` : ''}，收录于开放插件市场。可在 DSH「${ui('发现')}」里搜索安装，也可用开放市场插件一键更新。`,
     installPluginTitle: '更省事：安装开放市场插件', installPluginNote: `它会自动加入本索引，并在「${ui('插件')}」页多一个「开放市场」标签：在里面搜索「{name}」即可安装，以后有新版本也能在那里一键更新。`, install: '在 DSH 中安装', installSteps: [`先把开放插件市场添加为索引源（只需一次）：${ui('插件 → 实验性插件 → 自定义插件市场')}，再到「${ui('发现 → 添加索引源')}」粘贴这个地址。`, `复制插件名，打开 DSH，在「${ui('发现')}」里粘贴搜索即可安装。`],
     facts: '插件信息', author: '作者', keywords: '关键词', related: '更多「{category}」插件', browseAll: '浏览全部插件', npmMonth: '近 30 天 npm 下载量', review: '审查', reviewRecord: '审查记录',
-    statsTitle: '使用统计 — 开放插件市场', statsHeading: '使用统计', statsDescription: '开放插件市场在 DeepSeek Harness 中每天有多少人使用、来自哪里：近 30 天每日用户数和加载次数，以及国家和地区分布。',
+    statsTitle: '使用统计 — 开放插件市场', statsHeading: '使用统计', statsDescription: '开放插件市场的公开使用统计：DeepSeek Harness 用户每天有多少人在用、来自哪些国家和地区。这里展示近 30 天每日用户数和加载次数、地区分布、收录插件数与点赞趋势，数据直接来自索引读取，每隔几分钟更新。',
     statsLead: 'DSH 每次加载或刷新这个市场，都会读取一次索引。下面的数字直接来自这些读取，每隔几分钟更新。',
     statsTiles: { todayReaders: '今日用户', monthReaders: '近 30 天用户', plugins: '收录插件', likes: '累计点赞' },
     monthReadersNote: '每天用户数之和；同一个人在不同的日子使用，每天各算一次。',
@@ -530,7 +532,7 @@ function pluginPage(plugin, index, language, context, related) {
     { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: heading, alternateName: info.namedTitle ? info.packageName : undefined, description: info.description, url, applicationCategory: 'DeveloperApplication', applicationSubCategory: info.categoryId ? info.categoryTitle : undefined, operatingSystem: 'DeepSeek Harness', softwareVersion: version?.version, datePublished: version?.publishTimestamp ? new Date(version.publishTimestamp * 1000).toISOString().slice(0, 10) : undefined, author: author ? { '@type': 'Person', name: author } : undefined, codeRepository: info.sourceUrl, downloadUrl: info.npmUrl, keywords: keywords.join(', ') || undefined, inLanguage: LANGUAGES[language].tag, offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' } },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ name: text.home, item: absolute(language) }, { name: text.plugins, item: `${absolute(language)}#plugins` }, { name: heading, item: url }].map((entry, at) => ({ '@type': 'ListItem', position: at + 1, ...entry })) }
   ];
-  return layout({ language, path: pluginPath(plugin.name), title: text.pluginTitle(heading), description: text.pluginDescription(heading, info.description.replace(/[。.]?$/, language === 'en' ? '.' : '。')), body, site, structured, type: 'article' });
+  return layout({ language, path: pluginPath(plugin.name), title: text.pluginTitle(heading), description: text.pluginDescription(heading, info.description.replace(/[。.]?$/, language === 'en' ? '.' : '。'), { category: info.categoryId ? info.categoryTitle : undefined, version: version?.version }), body, site, structured, type: 'article' });
 }
 
 function statsPage(language, context) {
@@ -629,6 +631,8 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
   site.addedWeek = plugins.filter(plugin => (addedTimestamp(added, plugin.name) ?? 0) * 1000 > weekAgo).length;
   // Plugin pages are regenerated from scratch so withdrawn plugins do not linger.
   for (const language of Object.keys(LANGUAGES)) await rm(new URL(LANGUAGES[language].dir + 'plugins/', output), { recursive: true, force: true });
+  // What each page says, for IndexNow: after a release only pages whose fingerprint changed are submitted. Home and stats change every build (null).
+  const pageVersions = {};
   const shared = { categories: index.metadata?.categories ?? {}, snapshot, downloads, display, labels: index.metadata?.labels ?? {}, site, added };
   for (const language of Object.keys(LANGUAGES)) {
     const context = path => ({ ...shared, text: COPY[language], from: LANGUAGES[language].dir + path, root: '../'.repeat(depth(LANGUAGES[language].dir + path)) });
@@ -659,13 +663,20 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
       return [info.packageName, [info.namedTitle ? info.title : info.packageName, info.icon ?? null, link(statsContext.from, language, pluginPath(plugin.name))]];
     }));
     await writeFile(new URL(LANGUAGES[language].dir + 'stats/plugins.json', output), finish(JSON.stringify(names), language), 'utf8');
+    for (const path of ['', 'stats/']) pageVersions[absolute(language, path)] = null;
     for (const [at, plugin] of plugins.entries()) {
-      await write(LANGUAGES[language].dir + pluginPath(plugin.name), pluginPage(plugin, index, language, context(pluginPath(plugin.name)), relatedPlugins(plugins, at)), output);
+      const pageContext = context(pluginPath(plugin.name));
+      await write(LANGUAGES[language].dir + pluginPath(plugin.name), pluginPage(plugin, index, language, pageContext, relatedPlugins(plugins, at)), output);
+      const info = describe(plugin, LANGUAGES[language].data, pageContext);
+      const fingerprint = [info.title, info.packageName, info.description, info.version?.version, info.categoryId, info.sourceUrl, info.homepage, plugin.author, plugin.metadata?.keywords];
+      pageVersions[absolute(language, pluginPath(plugin.name))] = createHash('sha256').update(JSON.stringify(fingerprint)).digest('hex').slice(0, 16);
     }
   }
   await writeFile(new URL('sitemap.xml', output), sitemap(['', 'stats/', ...plugins.map(plugin => pluginPath(plugin.name))], evidence?.generatedAt), 'utf8');
   await copyFile(new URL('favicon.ico', source), new URL('favicon.ico', output));
   await writeFile(new URL('_headers', output), HEADERS, 'utf8');
+  await writeFile(new URL(`${INDEXNOW_KEY}.txt`, output), INDEXNOW_KEY, 'utf8');
+  await writeFile(new URL('page-versions.json', output), JSON.stringify({ schema: 1, pages: pageVersions }), 'utf8');
   await writeFile(new URL('robots.txt', output), `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}sitemap.xml\n`, 'utf8');
   await writeFile(new URL('404.html', output), notFound(await readFile(new URL('site.css', source), 'utf8')), 'utf8');
 }
