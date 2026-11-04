@@ -3103,6 +3103,30 @@
       "reviewedAt": "2026-11-04T17:22:32.364Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@dr-co/dsh-storage",
+      "version": "0.2.20",
+      "integrity": "sha512-AN2bx0kmXiuPp7XwSUVc7aePZJLXeRp06p9LRA/ZpttEAi42atYf01lR28E+I6XSSseFOM9aZLP4wkebLmXkkg==",
+      "repository": "https://github.com/unera/dsh-storage",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T19:13:06.147Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-open-market",
+      "version": "0.3.2",
+      "integrity": "sha512-93io8xmnRoch0rVr/jMYyUbv+KR33ITudN/lwYMhwkIjA2yQ42A2dF+OI/rf0yxqVCTi+LYk19/t03nwpp4X9w==",
+      "repository": "https://github.com/polang233/dsh-plugin-index",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-04T19:13:06.147Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

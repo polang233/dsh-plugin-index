@@ -13252,6 +13252,25 @@
         "en": "Run a task in a fresh, isolated DSH runtime (dsh --profile headless) with its own DSH_HOME, session and model routing, and return only the final answer to the parent session through the subagent_dsh tool. Note: the startup handshake timeout does not take effect yet, so a child that never becomes ready can keep the call waiting.",
         "zh": "把任务交给全新、隔离的 DSH 运行时（dsh --profile headless）执行，独立 DSH_HOME、会话与模型路由，只通过 subagent_dsh 工具把最终回答带回父会话。注意：启动握手超时目前不生效，子运行时未就绪时调用可能一直等待。"
       }
+    },
+    {
+      "name": "@dr-co/dsh-storage",
+      "title": {
+        "en": "Storage",
+        "zh": "存储与备份"
+      },
+      "description": {
+        "en": "Connect local folders, S3-compatible storage, WebDAV and Yandex Disk, with encrypted section-based backups, a portable backup of the core configuration and your own executable backup scripts. Note: the storage_write tool can upload any local file to a configured storage without an approval prompt.",
+        "zh": "接入本地目录、S3 兼容存储、WebDAV 和 Yandex Disk，支持按分区加密备份、可迁移的核心配置备份，以及自己编写的可执行备份脚本。注意：storage_write 工具可以不经审批把本机任意文件上传到已配置的存储。"
+      },
+      "category": "tools",
+      "version": "0.2.20",
+      "repositoryReview": {
+        "version": "0.2.20",
+        "integrity": "sha512-AN2bx0kmXiuPp7XwSUVc7aePZJLXeRp06p9LRA/ZpttEAi42atYf01lR28E+I6XSSseFOM9aZLP4wkebLmXkkg==",
+        "commit": "775ea0e8c2f2c1de31dfd7aef403f46626f03b15",
+        "url": "https://github.com/unera/dsh-storage"
+      }
     }
   ]
 }
