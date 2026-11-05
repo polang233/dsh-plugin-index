@@ -1,5 +1,15 @@
 # dsh-open-market 更新记录
 
+## 0.3.3
+
+### 中文
+
+- 修复 Dream Skin 等透明主题下「我已安装」、收藏夹、插件详情和设置弹窗背景透明、内容重叠的问题。弹窗挂载到页面外层，使用 DSH 的弹窗背景和遮罩模糊设置。
+
+### English
+
+- Fixed transparent backgrounds and overlapping content in Installed, favorites, plugin details and settings with themes such as Dream Skin. Dialogs now mount outside the page and use DSH's dialog background and mask blur settings.
+
 ## 0.3.2
 
 ### 中文

@@ -11334,22 +11334,14 @@
     },
     {
       "name": "@gongfpp/dsh-novel-fish",
-      "version": "0.1.5",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/gongfpp/dsh-novel-fish",
-        "commit": "61a0e62d7caa06f3101b450277f3ef530e1561f8",
-        "integrity": "sha512-taCw8+X1n1kMz4nuWqX8MPf6PWJ6ORT1h8N1gCqRRR2Zi8HEya7JnSwKUghLnY9VDGazn3vgTo7COJuUvMcVbw==",
-        "publishedAt": "2026-10-29T14:02:01.000Z"
-      },
       "title": {
         "en": "Novel Fish",
         "zh": "小说摸鱼"
       },
       "category": "interface",
       "description": {
-        "en": "Append a passage from a browser-local book below the real reasoning or tool output when you expand selected native chat regions. Imports EPUB/TXT/MD and remembers book progress without writing novel text to the conversation. Declares only DSH 0.2.1-rc.2 and Node >=22; depends on chat DOM. EPUB is text-only and excludes DRM.",
-        "zh": "主动展开选中的原生聊天区域时，在真实思考或工具输出下追加本地小说，支持 EPUB/TXT/MD 导入和各书进度；小说不写入会话数据。仅声明兼容 DSH 0.2.1-rc.2、Node >=22，依赖聊天 DOM；EPUB 只取文字，不支持 DRM。"
+        "en": "Append a passage from a browser-local EPUB/TXT/MD book below real reasoning or tool output when selected chat regions expand. Reading progress stays in the browser; novel text is not written to conversations. Requires DSH >=0.2.1-rc.2 <0.3.0-0 and Node >=22; EPUB is text-only and excludes DRM.",
+        "zh": "展开选中的聊天区域时，在真实思考或工具输出下追加本地 EPUB/TXT/MD 小说，并保存各书进度；小说不写入会话数据。需 DSH >=0.2.1-rc.2 <0.3.0-0、Node >=22，依赖聊天 DOM；EPUB 只取文字，不支持 DRM。"
       }
     },
     {
@@ -12849,14 +12841,6 @@
       "description": {
         "en": "Play 2048 from the sidebar while waiting for an agent, using arrow keys, WASD or touch gestures, with up to 30 undo steps. Board state and high scores stay in browser localStorage. Requires the web UI; author-tested on DSH 0.2.1-rc.2 Desktop.",
         "zh": "等待 Agent 时从侧栏打开 2048，支持方向键、WASD、触屏滑动和最多 30 步撤销。棋盘与最高分保存在浏览器 localStorage。需要 Web 界面，作者验证环境为 DSH 0.2.1-rc.2 桌面版。"
-      },
-      "version": "0.2.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/JJJACKsong/dsh-plugin-2048",
-        "commit": "873f944fc877988c8dc4a31c28404f5928bbcd2a",
-        "integrity": "sha512-ysz6s2KLZ6NHA/wRbBXBIoTXngj8X2wubuJLAnU2EibOez/ekb9zRq93SbDZ4YBoMv7F0fGjTHRHPTYqzxDATA==",
-        "publishedAt": "2026-11-03T18:27:37.000Z"
       }
     },
     {
@@ -12926,14 +12910,6 @@
     },
     {
       "name": "dsh-film-analysis",
-      "version": "0.3.5",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/Raven-Jackdaw/dsh-film-analysis",
-        "commit": "8206142b56d13afca0fbaa5bb0b535c418875a5f",
-        "integrity": "sha512-ex5ZQXk5TKfNNSOG1rzGh6RoyvYfy1fmsnrvIXW+EMSiwGxLZROTEoDMb10AxEHdKQgETjkgOhjeLAdlBQciOA==",
-        "publishedAt": "2026-11-04T06:53:39.000Z"
-      },
       "title": {
         "en": "Film Analysis",
         "zh": "影视画面分析器"
@@ -13270,6 +13246,199 @@
         "integrity": "sha512-AN2bx0kmXiuPp7XwSUVc7aePZJLXeRp06p9LRA/ZpttEAi42atYf01lR28E+I6XSSseFOM9aZLP4wkebLmXkkg==",
         "commit": "775ea0e8c2f2c1de31dfd7aef403f46626f03b15",
         "url": "https://github.com/unera/dsh-storage"
+      }
+    },
+    {
+      "name": "@local/todolist",
+      "title": {
+        "en": "TodoList",
+        "zh": "TodoList 便签墙"
+      },
+      "category": "workflow",
+      "version": "3.3.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Cherry020303/DSH-TodoList",
+        "commit": "86b0dca939c41a2a4756fe6750027d4979e7d429",
+        "integrity": "sha512-wrF6gVoa6cFY/wICRg9xknUN7GAnrnBGMbWv1Xpenc1VS2QDAl2+NzK8NdARAfrvhBxJdoVBczzM0EUoucD+QQ==",
+        "publishedAt": "2026-11-05T02:48:01.000Z"
+      },
+      "description": {
+        "en": "Organize personal todos on a dated sticky-note wall in the sidebar. Todo data stays in browser localStorage. Requires the DSH web UI; no DSH compatibility range is declared.",
+        "zh": "从侧栏打开按日期排列的个人待办便签墙，待办保存在浏览器 localStorage。需要 DSH Web 界面，未声明 DSH 兼容范围。"
+      }
+    },
+    {
+      "name": "dsh-opencode-go-panel",
+      "title": {
+        "en": "OpenCode Go Panel",
+        "zh": "OpenCode Go 面板"
+      },
+      "category": "usage",
+      "version": "1.1.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Wiselfx/dsh-opencode-go-panel",
+        "commit": "e1fe414c61cb6f9ce5c8898216588a771157351b",
+        "integrity": "sha512-gNY8TgKV38GuZ3P6w5CdnXB0XMLOP6mBe32y6LlESkp2qpWbNNTahaKV6ssO9ijRLmtRVDLmozS0yNyH+pJf+Q==",
+        "publishedAt": "2026-11-05T07:05:02.000Z"
+      },
+      "description": {
+        "en": "View OpenCode Go subscription allowances, model usage and rates from the sidebar, and connect an API key through authenticated DSH routes. Queries OpenCode services and stores the key on the host. Requires an OpenCode Go account; no DSH compatibility range is declared.",
+        "zh": "在侧栏查看 OpenCode Go 订阅额度、模型用量和价格，并通过已认证的 DSH 接口连接 API Key。会查询 OpenCode 服务，密钥保存在宿主端。需 OpenCode Go 账号，未声明 DSH 兼容范围。"
+      }
+    },
+    {
+      "name": "@local/turn-summary",
+      "title": {
+        "en": "Turn Summary",
+        "zh": "轮次摘要导航"
+      },
+      "category": "interface",
+      "version": "1.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/MarshallYYYY/DeepSeekHarnessPlugins",
+        "commit": "56360937f37bec6f5e30e69556643fafa44a2381",
+        "integrity": "sha512-o/rPWsiriDT6guQ9P4IspbfFOdM19JclkCVugNI8poZA6tDgonBNpGx+KJ0x4r9kRpaGh9ZAPSrZlyzRzX/5tg==",
+        "publishedAt": "2026-11-05T06:53:27.000Z",
+        "path": "turn-summary"
+      },
+      "description": {
+        "en": "Expand the conversation turn rail, preview prompt summaries and edit local navigation labels. Display preferences and custom labels stay in browser localStorage. Requires the DSH web UI and depends on its conversation DOM; no DSH compatibility range is declared.",
+        "zh": "切换加大的会话轮次导航条，预览提问摘要并编辑本地导航标签。显示偏好和标签保存在浏览器 localStorage，需 DSH Web 界面并依赖会话 DOM；未声明 DSH 兼容范围。"
+      }
+    },
+    {
+      "name": "dsh-session-marks",
+      "title": {
+        "en": "Session Marks",
+        "zh": "会话标注"
+      },
+      "category": "interface",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/jshonwang/dsh-session-marks",
+        "commit": "bdc8480e2fc63a4d3becd53659127f6a0d967cfb",
+        "integrity": "sha512-gJVXkIJ28XwESvbajZhiE2+DH59fLT+7OtXlE33ftGYy3+/d4v3yjyPnaLLcSrPJvylXbfdBnFK4qClAph5IKQ==",
+        "publishedAt": "2026-11-05T02:18:04.000Z"
+      },
+      "description": {
+        "en": "Select passages in replies, attach questions and combine them into a numbered follow-up. Annotations stay in browser storage until the user sends them as ordinary conversation text. Requires the web UI and Node >=20; no DSH compatibility range is declared.",
+        "zh": "划选回答片段并附上问题，汇总为带编号的追问。标注保存在浏览器，发送后才作为普通会话文本交给模型。需 Web 界面、Node >=20，未声明 DSH 兼容范围。"
+      }
+    },
+    {
+      "name": "dsh-todo-time-log",
+      "title": {
+        "en": "Todo Time Log",
+        "zh": "待办时间日志"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Track todo creation and completion times in table, board, Gantt and calendar views, with workspace file references, a /todo command and an agent tool. Data stays in local JSON; requires DSH >=0.2.0-rc.2 <0.2.3-0.",
+        "zh": "记录待办创建与完成时间，通过表格、看板、甘特图和日历查看，支持工作区文件引用、/todo 命令和 Agent 工具。数据保存在本地 JSON，需 DSH >=0.2.0-rc.2 <0.2.3-0。"
+      }
+    },
+    {
+      "name": "dsh-ganleme",
+      "title": {
+        "en": "Git Pulse",
+        "zh": "干了么"
+      },
+      "category": "tools",
+      "version": "0.2.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/From-WH/dsh-ganleme",
+        "commit": "f51235ebacdbdf20a77f353bfafc56907de7fb8f",
+        "integrity": "sha512-dK3Fh9ZdCn+Ufu99gU5jZ1GZmjQnCxKLL4hIk/ESUoaS/iyCjGn3U2MLOuKO046ReoHToQT5B1l1yt7jJ/XByQ==",
+        "publishedAt": "2026-11-05T08:28:06.000Z"
+      },
+      "description": {
+        "en": "Summarize Git commits and changed lines across workspaces and generate daily, weekly or monthly reports, optionally limited to your own Git identity. Runs local Git commands; optional plugin updates use the configured npm registry. Requires DSH >=0.2.1-rc.0.",
+        "zh": "统计各工作区的 Git 提交与变更行数，按全部作者或本人身份生成日报、周报和月报。使用本机 Git，可选从配置的 npm 源检查并更新插件；需 DSH >=0.2.1-rc.0。"
+      }
+    },
+    {
+      "name": "dsh-goal-budget",
+      "title": {
+        "en": "Goal Budget",
+        "zh": "Goal 资源预算"
+      },
+      "category": "usage",
+      "description": {
+        "en": "Set token, estimated cost and elapsed-time caps for DSH goals and block continuation when a cap is reached, with a per-model breakdown. Price accuracy depends on configured models and rates; automatic currency detection queries the official DeepSeek balance endpoint. Requires Node >=22; no DSH compatibility range is declared.",
+        "zh": "为 DSH Goal 设置 token、估算费用和运行时长上限，超限阻止续跑，并按模型展示明细。费用准确度取决于模型与价格配置；自动币种识别会查询 DeepSeek 官方余额接口。需 Node >=22，未声明 DSH 兼容范围。"
+      }
+    },
+    {
+      "name": "dsh-game-market",
+      "title": {
+        "en": "DSH Game Market",
+        "zh": "DSH 游戏市场"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Play five built-in games and install community games while following agent status, with saved progress and completion reminders. Community catalogs and game packages are downloaded; games run in isolated frames with instance credentials. Requires DSH >=0.2.0 <0.3.0 and Node >=20.",
+        "zh": "在 Agent 工作时游玩五款内置游戏或安装社区游戏，保留进度并显示任务状态与完成提醒。社区目录和游戏包需联网下载，游戏在隔离框架中运行并使用实例凭证。需 DSH >=0.2.0 <0.3.0、Node >=20。"
+      }
+    },
+    {
+      "name": "dsh-cost-voice",
+      "title": {
+        "en": "Cost Voice",
+        "zh": "每轮扣款语音播报"
+      },
+      "category": "usage",
+      "description": {
+        "en": "Announce each turn’s estimated cost using bundled Chinese audio clips, with voice, volume, quiet-hour and minimum-amount settings. Uses dsh-cost-meter when available, otherwise a local price snapshot; no external speech service. Requires DSH >=0.2.1-0 <0.3.0-0 and Node >=22.",
+        "zh": "用内置中文音频播报每轮估算费用，可设置音色、音量、静音时段和最小金额。优先使用 dsh-cost-meter，否则按本地价格快照估算；不调用外部语音服务。需 DSH >=0.2.1-0 <0.3.0-0、Node >=22。"
+      }
+    },
+    {
+      "name": "slumberpavilion",
+      "title": {
+        "en": "Slumber Pavilion",
+        "zh": "沉眠阁"
+      },
+      "category": "memory",
+      "description": {
+        "en": "Automatically move archived session logs and projection records out of DSH’s loading path into a local archive. Agent tools can list, read, restore, archive or permanently delete sessions; back up sessions before enabling. Requires Node >=22.15 for zstd support.",
+        "zh": "将已归档会话的日志与投影记录自动移出 DSH 加载目录，保存到本地归档区。Agent 工具可列出、读取、还原、归档或永久删除会话，启用前应备份会话。需支持 zstd 的 Node >=22.15。"
+      }
+    },
+    {
+      "name": "dsh-plugins-git-sync",
+      "title": {
+        "en": "DSH Plugin Git Sync",
+        "zh": "DSH 插件 Git 同步"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Back up, restore and synchronize plugin inventories and deployed skills through your own Git repository, with snapshots and conflict handling. Requires Git and repository access; synchronization can install plugins and update skill files. Plugin configuration values are excluded from backup. Requires Node >=22.19.",
+        "zh": "通过自己的 Git 仓库备份、恢复并同步插件清单与已部署技能，支持快照和冲突处理。需 Git 与仓库访问权限；同步可安装插件、更新技能文件，备份不包含插件配置值。需 Node >=22.19。"
+      }
+    },
+    {
+      "name": "@local/dsh-music-player",
+      "title": {
+        "en": "Music Player",
+        "zh": "音乐播放器"
+      },
+      "category": "interface",
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/daKeLinya0001/dsh-music-player",
+        "commit": "7d1d7a72304aae6aa614a8457589a977a023afc0",
+        "integrity": "sha512-RuLrDVrAmNH2O6AZX/YDntoDn0BljmHVED+wwY7EA4HQTUNwJScufJs9MGFnkOjV44Zt2LoWENKsCHgtNgnFyQ==",
+        "publishedAt": "2026-11-04T04:08:34.000Z"
+      },
+      "description": {
+        "en": "Import and play local audio with a spectrum display, persistent library and configurable shortcuts. Audio stays in browser IndexedDB; decoding depends on the browser’s supported formats. Requires the DSH web UI; no DSH compatibility range is declared.",
+        "zh": "导入并播放本地音频，提供频谱、持久曲库和可自定义快捷键。音频保存在浏览器 IndexedDB，格式支持取决于浏览器解码能力。需 DSH Web 界面，未声明 DSH 兼容范围。"
       }
     }
   ]

@@ -3127,6 +3127,217 @@
       "reviewedAt": "2026-11-04T19:13:06.147Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-shorekeeper",
+      "version": "1.2.3",
+      "integrity": "sha512-eo7zMxJhPBYkccvRJoBvylsB7EXFe/2CEMVjuHadhEzgLYv1ddixZ2dFNSqEVNyMELuHcRug2GimHE5GE9Jz5g==",
+      "repository": "https://github.com/Doya16/dsh-shorekeeper",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@gongfpp/dsh-novel-fish",
+      "version": "1.0.1",
+      "integrity": "sha512-sLnq/nSC69asITnDZM161Fn1cZZJ/GoOS33/2vxcLChTrmKCEZVAitV2FGJVLNwaE4V5FMqgtf1C5CPqVEevJg==",
+      "repository": "https://github.com/gongfpp/dsh-novel-fish",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-film-analysis",
+      "version": "0.3.9",
+      "integrity": "sha512-ZKn/6bZgErw/t26ma+sWW64xCJsJ0Cf3ptrhteOXKf24ehHlWGtXuz9Hh47o2qYTVIjmebzZToR3uBwFe4qN/g==",
+      "repository": "https://github.com/Raven-Jackdaw/dsh-film-analysis",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-2048",
+      "version": "0.2.1",
+      "integrity": "sha512-9mHaP7xR5YZsalwPE2L2+B2ztJb9+J3JecldQAFtLrij1lxsPthU1oaJcmb8pOPeslVzte6v/gO9Psz/I8FiTg==",
+      "repository": "https://github.com/JJJACKsong/dsh-plugin-2048",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-wechat-dingtalk-bridge",
+      "version": "0.1.6",
+      "integrity": "sha512-vsdFEnMaa2hjq0MB6RkuAAAolarLrS+TUyre8ivGMqrLjXRb+o7Z+zmbqNvlEygn2M6V4BSBVJX+YDtX/pQEVw==",
+      "repository": "https://github.com/gcggcg/dsh-plugin-wechat-dingtalk",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@local/todolist",
+      "version": "3.3.0",
+      "integrity": "sha512-wrF6gVoa6cFY/wICRg9xknUN7GAnrnBGMbWv1Xpenc1VS2QDAl2+NzK8NdARAfrvhBxJdoVBczzM0EUoucD+QQ==",
+      "repository": "https://github.com/Cherry020303/DSH-TodoList",
+      "source": {
+        "type": "git",
+        "commit": "86b0dca939c41a2a4756fe6750027d4979e7d429"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-opencode-go-panel",
+      "version": "1.1.1",
+      "integrity": "sha512-gNY8TgKV38GuZ3P6w5CdnXB0XMLOP6mBe32y6LlESkp2qpWbNNTahaKV6ssO9ijRLmtRVDLmozS0yNyH+pJf+Q==",
+      "repository": "https://github.com/Wiselfx/dsh-opencode-go-panel",
+      "source": {
+        "type": "git",
+        "commit": "e1fe414c61cb6f9ce5c8898216588a771157351b"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@local/turn-summary",
+      "version": "1.2.0",
+      "integrity": "sha512-o/rPWsiriDT6guQ9P4IspbfFOdM19JclkCVugNI8poZA6tDgonBNpGx+KJ0x4r9kRpaGh9ZAPSrZlyzRzX/5tg==",
+      "repository": "https://github.com/MarshallYYYY/DeepSeekHarnessPlugins",
+      "source": {
+        "type": "git",
+        "commit": "56360937f37bec6f5e30e69556643fafa44a2381",
+        "path": "turn-summary"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-session-marks",
+      "version": "0.1.0",
+      "integrity": "sha512-gJVXkIJ28XwESvbajZhiE2+DH59fLT+7OtXlE33ftGYy3+/d4v3yjyPnaLLcSrPJvylXbfdBnFK4qClAph5IKQ==",
+      "repository": "https://github.com/jshonwang/dsh-session-marks",
+      "source": {
+        "type": "git",
+        "commit": "bdc8480e2fc63a4d3becd53659127f6a0d967cfb"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-todo-time-log",
+      "version": "0.6.0",
+      "integrity": "sha512-gGKdjxzqS6PNyzWxGPVDcYyQJGvkhlJFqnFaQTxqttilHIxpfa4C+km5iiiAt4YowKEVLWXFkjtfaf0Zll/8cw==",
+      "repository": "https://github.com/FantasyStarry/dsh-todo-time-log",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ganleme",
+      "version": "0.2.1",
+      "integrity": "sha512-dK3Fh9ZdCn+Ufu99gU5jZ1GZmjQnCxKLL4hIk/ESUoaS/iyCjGn3U2MLOuKO046ReoHToQT5B1l1yt7jJ/XByQ==",
+      "repository": "https://github.com/From-WH/dsh-ganleme",
+      "source": {
+        "type": "git",
+        "commit": "f51235ebacdbdf20a77f353bfafc56907de7fb8f"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-goal-budget",
+      "version": "0.10.1",
+      "integrity": "sha512-cRQBMt/zvzlOm0jbN//kZWJ6oxKz7usfjftnx6pWmDaV3vJ0a6BSsFmzTYAZtorA21e82lJy8KY8LN9SPaEyiA==",
+      "repository": "https://github.com/boom-10/dsh-goal-budget",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-game-market",
+      "version": "1.5.7",
+      "integrity": "sha512-wW3gIoADkW1QTcZKo6t93Xfhg9ELeN+Kj50zlOGgBdW8OV/T1A6nrPE8uWN2Egf2QWSG4ji8RLgU6OLKDbztQA==",
+      "repository": "https://github.com/heswy/dsh-game-market",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-cost-voice",
+      "version": "1.1.1",
+      "integrity": "sha512-FU+raI2EmkDCR1WXMxueTWk1+LR/C6rl27A3k4Frc7xglybGcRthRJegUSLSCqLJWJa6E1F1aLv1p8svD1Q9Bw==",
+      "repository": "https://github.com/gongfpp/dsh-cost-voice",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "slumberpavilion",
+      "version": "0.1.0",
+      "integrity": "sha512-nTn38vnDt5s5iQC3LhsbpSmYckfm10/PmkyQvqq6KzYerLYrM+o0MSI9QBbPWDVUSXTwSZI1cvMgSsycxJJQcQ==",
+      "repository": "https://github.com/AngleNaris/slumberpavilion",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugins-git-sync",
+      "version": "0.2.11",
+      "integrity": "sha512-+4EzE8dDhJqyH2+wtIzeASwlBVqkDoNmMbU6XhhNUD7AvffeAP3u7OAZxZpwy2JeUrsrE3fdKQhfjWlXbwk1yg==",
+      "repository": "https://github.com/songni370/dsh-plugins-git-sync",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@local/dsh-music-player",
+      "version": "1.0.0",
+      "integrity": "sha512-RuLrDVrAmNH2O6AZX/YDntoDn0BljmHVED+wwY7EA4HQTUNwJScufJs9MGFnkOjV44Zt2LoWENKsCHgtNgnFyQ==",
+      "repository": "https://github.com/daKeLinya0001/dsh-music-player",
+      "source": {
+        "type": "git",
+        "commit": "7d1d7a72304aae6aa614a8457589a977a023afc0"
+      },
+      "reviewedAt": "2026-11-05T09:57:31.363Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

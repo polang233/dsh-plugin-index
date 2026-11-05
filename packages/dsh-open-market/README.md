@@ -4,12 +4,12 @@ Discover and manage community plugins in DeepSeek Harness with [Open Plugin Mark
 
 在 DeepSeek Harness 中发现和管理社区插件，支持分类搜索、收藏分组、版本切换与更新。
 
-## 0.3.2 — What's new / 更新内容
+## 0.3.3 — What's new / 更新内容
 
-- **Macaron theme**: an optional theme in the style of the [dshopen.org](https://dshopen.org/) website, covering the sidebar, conversations, code blocks, menus, dialogs and settings. Turn it on under Settings → Display; switching it off restores DSH right away. 新增可选的**马卡龙主题**，沿用 [dshopen.org](https://dshopen.org/zh/) 网站的风格，覆盖侧边栏、对话、代码块、菜单、对话框和设置页。在设置 → 显示里打开，关闭后立即恢复原样。
+- Fixed unreadable dialogs with transparent themes such as Dream Skin. Installed, favorites, plugin details and settings now use DSH's dialog background and mask blur settings. 修复 Dream Skin 等透明主题下弹窗内容重叠、难以辨认的问题，「我已安装」、收藏夹、插件详情和设置弹窗改用 DSH 的弹窗背景与遮罩模糊设置。
 - Coming from 0.2.7 or earlier? Take the first upgrade from DSH's Plugins page or the install command: older versions run their own updater, which could remove Open Market. 从 0.2.7 或更早版本升级时，第一次请到 DSH「插件」页或用安装命令更新：旧版用的是自己的更新代码，可能把开放市场卸载掉。
 
-[Full release notes / 完整更新说明](https://github.com/polang233/dsh-plugin-index/blob/main/packages/dsh-open-market/CHANGELOG.md#032)
+[Full release notes / 完整更新说明](https://github.com/polang233/dsh-plugin-index/blob/main/packages/dsh-open-market/CHANGELOG.md#033)
 
 ## Install / 安装
 

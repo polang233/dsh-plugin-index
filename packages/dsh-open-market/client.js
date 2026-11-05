@@ -6,7 +6,7 @@ window.__ModuleLoader__.load({
     const React = require('react');
     const h = React.createElement;
     let createPortal;
-    try { createPortal = require('react-dom').createPortal; } catch { /* Without a portal the group menu renders in place. */ }
+    try { createPortal = require('react-dom').createPortal; } catch { /* Older hosts render overlays in place. */ }
     let Switch;
     try { Switch = require('@deepseek-ai/dsh-client-ui-primitives').Switch; } catch { /* Older hosts use the checkbox fallback. */ }
 
@@ -1335,10 +1335,13 @@ window.__ModuleLoader__.load({
       .opm-index-address { margin-top: 6px !important; color: var(--dsw-alias-label-secondary); }
       .opm-index-address code { display: block; user-select: text; overflow-wrap: anywhere; font-size: 12px; }
       .opm-overlay { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center;
-        background: var(--dsw-alias-bg-mask-1); }
+        padding: 0; }
+      /* Keep the mask filter off the dialog's ancestors, like DSH's native Modal. */
+      .opm-overlay::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+        background: var(--dsw-alias-bg-mask-1); backdrop-filter: var(--dsw-mask-blur, none); }
       .opm-panel { position: relative; width: min(560px, calc(100% - 32px)); max-height: calc(100vh - 64px); overflow-y: auto;
-        padding: 24px; border-radius: var(--dsw-radius-lg); background: var(--dsw-alias-bg-layer-1);
-        box-shadow: var(--dsw-elevation-prominent); overscroll-behavior: contain; scrollbar-color: var(--dsw-alias-border-l3) var(--dsw-alias-bg-layer-1); }
+        padding: 24px; border-radius: var(--dsw-radius-lg); background: var(--dsw-alias-bg-layer-2, var(--dsw-alias-bg-layer-1));
+        box-shadow: var(--dsw-elevation-prominent); overscroll-behavior: contain; scrollbar-color: var(--dsw-alias-border-l3) var(--dsw-alias-bg-layer-2, var(--dsw-alias-bg-layer-1)); }
       .opm-panel-close { position: absolute; top: 12px; right: 12px; padding: 0; width: 28px; }
       .opm-panel-heading { display: flex; align-items: center; gap: 12px; padding-right: 28px; margin-bottom: 16px; }
       .opm-panel-heading h2 { font-size: 18px; overflow-wrap: anywhere; }
@@ -1806,10 +1809,12 @@ window.__ModuleLoader__.load({
           restoreFocus();
         };
       }, [onClose, restoreFocus]);
-      return h('div', { className: 'opm-overlay', onClick: event => { if (event.target === event.currentTarget) onClose(); } },
+      const overlay = h('div', { className: 'opm-root opm-overlay', onClick: event => { if (event.target === event.currentTarget) onClose(); } },
         h('section', { className: 'opm-panel' + (wide ? ' opm-panel-wide' : ''), role: 'dialog', 'aria-modal': true, 'aria-labelledby': labelledBy, tabIndex: -1, ref: panel },
           h('button', { type: 'button', className: 'opm-button opm-button-small opm-panel-close', onClick: onClose, 'aria-label': closeLabel }, '×'),
           children));
+      // Page-scoped theme tokens can make every layer transparent; dialogs inherit the body popup tokens instead.
+      return createPortal ? createPortal(overlay, document.body) : overlay;
     }
 
     function PluginCard(props) {
