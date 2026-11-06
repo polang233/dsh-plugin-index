@@ -12709,8 +12709,8 @@
         "zh": "桌面电脑操控"
       },
       "description": {
-        "en": "Observe Windows with screenshots and UI Automation, then click, type, scroll or send keys and verify the result. Standard mode requires approval for each action; Windows x64 and Node >=22, with native helpers bundled in the package.",
-        "zh": "通过截图和 UI Automation 观察 Windows，再执行点击、输入、滚动或按键并回读验证。默认 standard 模式每个动作都要审批；仅支持 Windows x64，需 Node >=22，包内附带原生组件。"
+        "en": "Windows desktop control with 19 tools, screenshots, bounded UI Automation, compact evidence, human handoff and approval controls. Includes native workers and a temporary kite pointer; Windows x64 and Node >=22.",
+        "zh": "提供 19 个 Windows 桌面工具、截图、有界 UI Automation、精简证据、人机接管与审批控制。内置原生组件和临时风筝指针；支持 Windows x64、Node >=22。"
       },
       "category": "tools"
     },
