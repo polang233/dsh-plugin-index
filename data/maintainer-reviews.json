@@ -3350,6 +3350,155 @@
       "reviewedAt": "2026-11-05T10:42:39.104Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-media-desk",
+      "version": "2.6.1",
+      "integrity": "sha512-z7lTky1u/s9EQRs7qPpS1I5pCD/5x6s5NSH9a4SRzRYS5meK/Cg1m7Ij9JSahXUO6Lpeqln0rWnSb+NgRmMSZw==",
+      "repository": "https://github.com/woniuniuniu/dsh-media-desk",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-06T04:47:36.114Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-see-now",
+      "version": "0.1.3",
+      "integrity": "sha512-AFOSY0irFz4rV7t/mMhn6Uox+kB7imT/WkvoyzUgC9rMcPALl/08xa8rx2u9POB0lA2YjRyT4PnZ8uZisczQPA==",
+      "repository": "https://github.com/SAOS-3624/dsh-see-now",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-06T04:47:36.114Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-media-converter",
+      "version": "1.2.1",
+      "integrity": "sha512-6obMBik9d4xbvK+rYBlFFI5+Y2BRRmmFshj+uHT06nouTYCRZ92Ea0y7XzlndLwiFuPFCoQ+qsXcl1+vIskTIQ==",
+      "repository": "https://github.com/a1121611810/dsh-media-converter",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-06T04:52:46.483Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-cleanup",
+      "version": "0.5.0",
+      "integrity": "sha512-8ImT3PGmJ3FgFYUWWx2Ai0KrDE4d+nyljDmyTIXLN+86fMBnq8SherEbWu2Jn7/p+LDRxy9ptIxv2aJoVjyM7w==",
+      "repository": "https://github.com/xiaoyangren6514/dsh-cleanup",
+      "source": {
+        "type": "git",
+        "commit": "858694d25208aee2d66b176cd08e503b22d272c3"
+      },
+      "reviewedAt": "2026-11-06T05:00:36.574Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-workbuddy-connect-community",
+      "version": "0.1.12",
+      "integrity": "sha512-D//VEAmLvcAs2vccZaZ74Y4RCXmkeYibNHNxCZtsIn4ZY9iVPSTM+qx6k638e4XSkbZuvgArVmYG3G2DyDzRpw==",
+      "repository": "https://github.com/tangyixiao/dsh-workbuddy-connect-community",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-06T07:32:59.664Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-long-context-budget",
+      "version": "0.2.1",
+      "integrity": "sha512-+71EGIUV7g9cZbkpq3WgYmip2ESolzqGzx2GzN+rzMrmN/qQymmwyCnuHxgiiXCWH9iA1DtUAUZpqcq5P9+sYg==",
+      "repository": "https://github.com/ASCII-58/long-context-budget",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-06T07:32:59.664Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-thanks-carl",
+      "version": "0.2.3",
+      "integrity": "sha512-4ErTb9eO1CAgv0jLIOgxppcP6QVIYPEdT7cpBPWlhpd/F59wSxBZ7No81/JyUnNvKoGMbTsYpXdZwmbhf92yHg==",
+      "repository": "https://github.com/gongfpp/dsh-thanks-carl",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-06T07:32:59.664Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@yunlai/dsh-workbench",
+      "version": "1.4.4",
+      "integrity": "sha512-vEX+50gZIB0Un3FJdzuDnmUU4ETRP3HsOPS0lIPkDarWQYWktcbO/g5L0q4nnUiBWAE4MKwcSwxCy9i3sKXHpg==",
+      "repository": "https://github.com/Chengyunlai/dsh-workbench",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-06T07:32:59.664Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@skyrocks/dsh-deepseek-cost",
+      "version": "0.2.2",
+      "integrity": "sha512-TBrTTbPVjSb3NwPi7SYYzLp7BEUpDUEm+6Yvu3WwAlL6MMY68TSpMuzHv3jNRUZI59qXXfD1G8HrreIIzfayYQ==",
+      "repository": "https://github.com/skyrocks/dsh-deepseek-cost",
+      "source": {
+        "type": "git",
+        "commit": "fdb1dba96c531e9473f2ad6a997881da1f5bd92d"
+      },
+      "reviewedAt": "2026-11-06T07:32:59.664Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-go-quota",
+      "version": "0.1.8",
+      "integrity": "sha512-ho/+r7zIkpghrF+iikkU141gJbF0aJu1JrheFw8b+/9UkScp535Vk/rjglWOiMnT0NLVlMBeQRdrPBY8i0cX9w==",
+      "repository": "https://github.com/skyrocks/dsh-go-quota",
+      "source": {
+        "type": "git",
+        "commit": "ae0f3a2a1458efcbe4845f6ed25c7cc6234cc9c2"
+      },
+      "reviewedAt": "2026-11-06T07:32:59.664Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-router-flash",
+      "version": "0.5.1",
+      "integrity": "sha512-M/Gn7rErvVOroXydxO7sWHoq5lFGLFlcZF1EWJS5tLiCoqPAKzoZ0eULJ9HAicd+wqbPJJEF4soL5Z9WyhKkcA==",
+      "repository": "https://github.com/taxueseek/dsh-router-flash",
+      "source": {
+        "type": "git",
+        "commit": "142fcd5e5268f60f48ebfd1e0c1ec684ba03d056"
+      },
+      "reviewedAt": "2026-11-06T07:32:59.664Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@local/deepseek-web-chat",
+      "version": "1.0.0",
+      "integrity": "sha512-41dSIli5K0Pf+sqmoHLzoVoHAq/32CCeWfbVzbv7c7pZWDERNOmvt/SemQg1cc1M+t3Vaks/HEJE3zPqgz8KFw==",
+      "repository": "https://github.com/Yuxuanshi0129/deepseek-web-chat-plugin",
+      "source": {
+        "type": "git",
+        "commit": "b1762ab84818e0c06fd24c930c781535a399c4a5"
+      },
+      "reviewedAt": "2026-11-06T07:32:59.664Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

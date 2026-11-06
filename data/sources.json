@@ -13440,6 +13440,190 @@
         "en": "Import and play local audio with a spectrum display, persistent library and configurable shortcuts. Audio stays in browser IndexedDB; decoding depends on the browser’s supported formats. Requires the DSH web UI; no DSH compatibility range is declared.",
         "zh": "导入并播放本地音频，提供频谱、持久曲库和可自定义快捷键。音频保存在浏览器 IndexedDB，格式支持取决于浏览器解码能力。需 DSH Web 界面，未声明 DSH 兼容范围。"
       }
+    },
+    {
+      "name": "dsh-media-desk",
+      "title": {
+        "en": "Media Desk",
+        "zh": "自媒体工作台"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Jot down an idea and get a voice-over script, titles, video covers, illustrations and black-and-white storyboard sketches. Uses your own text and image model keys; optional account imports go through the monid CLI. All routes require DSH host authentication.",
+        "zh": "记一句灵感，一键做出口播脚本、标题、视频封面、配图和黑白线稿分镜。文字与图片模型使用你自己配置的密钥；可选的账号导入通过 monid 命令行。所有接口都需要 DSH 宿主认证。"
+      }
+    },
+    {
+      "name": "dsh-see-now",
+      "title": {
+        "en": "See Now",
+        "zh": "实时看屏"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Let DSH watch a live screen, camera or video file: frames are scored by how much the picture changed, and only the ones that matter are packed into a single image. Captures your screen while running; speech recognition uses a service you configure. Settings routes check host authentication.",
+        "zh": "让 DSH 实时看屏幕、摄像头或视频文件：按画面变化量给帧打分，只把有变化的几帧拼进一张图。运行时会截取你的屏幕；语音识别使用你自己配置的服务。设置接口会检查宿主认证。"
+      }
+    },
+    {
+      "name": "dsh-media-converter",
+      "title": {
+        "en": "Media Converter",
+        "zh": "多媒体转换器"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Convert between 27 video, audio and image formats, trim, strip audio or video without re-encoding, export embedded subtitles, compress images and edit metadata, all through your local ffmpeg. The same engine is available to the agent as a tool. All routes require DSH host authentication.",
+        "zh": "用本机 ffmpeg 在 27 种视频、音频、图片格式间互转，支持裁剪、不重编码剥离音轨或画面、导出内嵌字幕、图片压缩和元数据改写；同一引擎也提供给 agent 作为工具。所有接口都需要 DSH 宿主认证。"
+      }
+    },
+    {
+      "name": "dsh-cleanup",
+      "version": "0.5.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/xiaoyangren6514/dsh-cleanup",
+        "commit": "858694d25208aee2d66b176cd08e503b22d272c3",
+        "integrity": "sha512-8ImT3PGmJ3FgFYUWWx2Ai0KrDE4d+nyljDmyTIXLN+86fMBnq8SherEbWu2Jn7/p+LDRxy9ptIxv2aJoVjyM7w==",
+        "publishedAt": "2026-11-05T12:27:04.000Z"
+      },
+      "title": {
+        "en": "Cleanup",
+        "zh": "清理工作区与会话"
+      },
+      "category": "development",
+      "description": {
+        "en": "Review and delete registered workspace directories, single or multiple sessions, or all sessions of one workspace while keeping the directory. Items go to a recoverable trash by default, live sessions are refused, and permanent deletion needs a typed confirmation. Routes use DSH host authentication.",
+        "zh": "复核后删除已注册工作区的目录、单个或多个会话，或清空某个工作区的全部会话并保留目录。默认移入可恢复的回收站，正在使用的会话会被拒绝，彻底删除需要输入名称确认。接口使用 DSH 宿主认证。"
+      }
+    },
+    {
+      "name": "dsh-workbuddy-connect-community",
+      "title": {
+        "en": "WorkBuddy Connect (Community)",
+        "zh": "WorkBuddy 连接（社区版）"
+      },
+      "category": "providers",
+      "description": {
+        "en": "Community-maintained WorkBuddy provider for DeepSeek Harness, with an account status panel for the domestic and international editions. Status and control routes require the host-authenticated owner.",
+        "zh": "社区维护的 WorkBuddy 模型渠道，附带国内版与国际版的账号状态面板。状态和控制接口都要求宿主登录的所有者身份。"
+      }
+    },
+    {
+      "name": "dsh-long-context-budget",
+      "title": {
+        "en": "Long Context Budget",
+        "zh": "上下文预算"
+      },
+      "category": "usage",
+      "description": {
+        "en": "Pick a context budget per session with a tiered slider next to the composer; past 70% of the budget it prunes for free, then compacts the oldest history before the next request. No network requests and no server routes.",
+        "zh": "在输入框旁用分档滑杆为每个会话选上下文预算；用到预算的 70% 后，先做零成本剪枝，再压缩最早的历史。不发网络请求，也不开服务端接口。"
+      }
+    },
+    {
+      "name": "dsh-thanks-carl",
+      "title": {
+        "en": "Thanks Carl",
+        "zh": "谢谢卡尔"
+      },
+      "category": "interface",
+      "description": {
+        "en": "A small easter egg when a task finishes, an optional desktop pet, and local water, meal and rest reminders. Works only inside the open web page; sends no system notifications or model requests.",
+        "zh": "任务完成时的小彩蛋，可选常驻桌宠，以及本地喝水、吃饭、休息提醒。只在打开的网页里工作，不发系统通知，也不发模型请求。"
+      }
+    },
+    {
+      "name": "@yunlai/dsh-workbench",
+      "title": {
+        "en": "Development Workbench",
+        "zh": "开发工作台"
+      },
+      "category": "development",
+      "description": {
+        "en": "Open source links from conversations at the referenced line, browse files, review Git diffs and history, debug with breakpoints, and save explanations as searchable Markdown memory cards. All routes sit behind the host connection.",
+        "zh": "从对话里点开源码并跳到指定行，浏览文件，查看 Git 差异和历史，断点调试，还能把讲解存成可搜索的 Markdown 记忆卡片。所有接口都在宿主连接认证之后。"
+      }
+    },
+    {
+      "name": "@skyrocks/dsh-deepseek-cost",
+      "version": "0.2.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/skyrocks/dsh-deepseek-cost",
+        "commit": "fdb1dba96c531e9473f2ad6a997881da1f5bd92d",
+        "integrity": "sha512-TBrTTbPVjSb3NwPi7SYYzLp7BEUpDUEm+6Yvu3WwAlL6MMY68TSpMuzHv3jNRUZI59qXXfD1G8HrreIIzfayYQ==",
+        "publishedAt": "2026-11-06T07:00:33.000Z"
+      },
+      "title": {
+        "en": "DeepSeek Cost",
+        "zh": "DeepSeek 花费"
+      },
+      "category": "usage",
+      "description": {
+        "en": "Show your DeepSeek account balance and spend for this turn, today, this week, this month and all time under the composer. Reads the API key from the DSH credentials service and sends it only to the DeepSeek API.",
+        "zh": "在输入框下方显示 DeepSeek 账号余额，以及本轮、今日、本周、本月和累计花费。API Key 从 DSH 凭据服务读取，只发往 DeepSeek 接口。"
+      }
+    },
+    {
+      "name": "dsh-go-quota",
+      "version": "0.1.8",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/skyrocks/dsh-go-quota",
+        "commit": "ae0f3a2a1458efcbe4845f6ed25c7cc6234cc9c2",
+        "integrity": "sha512-ho/+r7zIkpghrF+iikkU141gJbF0aJu1JrheFw8b+/9UkScp535Vk/rjglWOiMnT0NLVlMBeQRdrPBY8i0cX9w==",
+        "publishedAt": "2026-11-06T07:03:35.000Z"
+      },
+      "title": {
+        "en": "OpenCode Go Quota",
+        "zh": "OpenCode Go 额度"
+      },
+      "category": "usage",
+      "description": {
+        "en": "Show the 5-hour, weekly and monthly usage windows of an OpenCode Go plan under the composer, with progress bars and reset countdowns. The key comes from the DSH credentials service and goes only to the usage endpoint.",
+        "zh": "在输入框下方显示 OpenCode Go 套餐 5 小时、每周、每月三个额度窗口，带进度条和重置倒计时。Key 来自 DSH 凭据服务，只发往用量接口。"
+      }
+    },
+    {
+      "name": "dsh-router-flash",
+      "version": "0.5.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/taxueseek/dsh-router-flash",
+        "commit": "142fcd5e5268f60f48ebfd1e0c1ec684ba03d056",
+        "integrity": "sha512-M/Gn7rErvVOroXydxO7sWHoq5lFGLFlcZF1EWJS5tLiCoqPAKzoZ0eULJ9HAicd+wqbPJJEF4soL5Z9WyhKkcA==",
+        "publishedAt": "2026-11-06T00:58:06.000Z"
+      },
+      "title": {
+        "en": "Router Flash",
+        "zh": "探索模式预设"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "An agent preset for DeepSeek V4 Flash, matched by model id on any channel: the first turn offers only read, write, edit and the platform shell, and the full tool catalog opens after the first tool call. Delivered as a bundle patch, with no server routes.",
+        "zh": "面向 DeepSeek V4 Flash 的智能体预设「探索模式」，按模型 id 命中、与渠道无关：首轮只给读、写、改和平台 shell，首次调用工具后放开全部工具。以 bundle 补丁交付，不开服务端接口。"
+      }
+    },
+    {
+      "name": "@local/deepseek-web-chat",
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Yuxuanshi0129/deepseek-web-chat-plugin",
+        "commit": "b1762ab84818e0c06fd24c930c781535a399c4a5",
+        "integrity": "sha512-41dSIli5K0Pf+sqmoHLzoVoHAq/32CCeWfbVzbv7c7pZWDERNOmvt/SemQg1cc1M+t3Vaks/HEJE3zPqgz8KFw==",
+        "publishedAt": "2026-11-06T05:44:01.000Z"
+      },
+      "title": {
+        "en": "DeepSeek Web Chat",
+        "zh": "DeepSeek 网页版聊天"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Open the official chat.deepseek.com web chat in the built-in browser tab from a sidebar icon, with a system-browser fallback. Conversations stay on chat.deepseek.com; the plugin stores and proxies nothing.",
+        "zh": "从侧栏图标把官方 chat.deepseek.com 网页版打开到内置浏览器标签，也可改用系统浏览器。对话仍留在 chat.deepseek.com，插件不存储也不代理任何内容。"
+      }
     }
   ]
 }
