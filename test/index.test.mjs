@@ -218,6 +218,19 @@ test('with a previous snapshot, a transient failure keeps the last release and a
   await assert.rejects(buildIndex(catalog, { fetchImpl, retryDelayMs: 0, previous, maxFailures: 1 }), /2 packages failed, more than 1/);
   await assert.rejects(buildIndex(catalog, { fetchImpl, retryDelayMs: 0 }), /Cannot publish index/);
 });
+test('a retained package drops the previous labels and sort keys that this index does not declare', async () => {
+  const good = fixture();
+  const flaky = { name: '@example/flaky', metadata: { category: 'tools', keywords: [], labels: ['trending'], sortKeys: { recommended: 3 } }, versions: [{ version: '0.9.0', publishTimestamp: 1767225600, source: { type: 'npm' } }] };
+  const previous = { base: 'https://example.org/catalog/', index: { plugins: [flaky] }, evidence: { packages: [{ name: '@example/flaky', version: '0.9.0' }] } };
+  const fetchImpl = async (url, options) => {
+    if (String(url).includes('flaky')) throw new Error('The operation was aborted due to timeout');
+    return good.fetchImpl(url, options);
+  };
+  const catalog = { ...config, metadata: { categories: { tools: { title: { en: 'Tools', zh: '工具' } } } }, packages: [{ name: '@example/dsh-plugin' }, { name: '@example/flaky' }] };
+  const { index, evidence } = await buildIndex(catalog, { fetchImpl, retryDelayMs: 0, previous, now: Date.parse('2026-02-01') });
+  assert.equal(evidence.failures[0].retained, true);
+  assert.deepEqual(index.plugins[1].metadata, { category: 'tools', keywords: [] });
+});
 test('source policy prevents a package without repository and license from publishing', async () => {
   await assert.rejects(buildIndex({ ...config, requireSourceMetadata: true }, fixture()), /repository and declared license/);
 });

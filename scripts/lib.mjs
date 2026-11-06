@@ -430,6 +430,11 @@ async function settleFailures(errors, total, { previous, now = Date.now(), fetch
         if (icon) assets.push(icon);
         else { const { icon: missing, ...rest } = entry; kept = rest; }
       }
+      // Labels and sort keys are rewritten by the display step; the previous copy would reference ids this index does not declare yet.
+      if (kept.metadata) {
+        const { labels, sortKeys, ...metadata } = kept.metadata;
+        kept = { ...kept, metadata };
+      }
       failure.retained = true;
       failure.version = record.version;
       failure.result = { entry: kept, evidence: { ...record, retained: { since: failure.since, error: message } }, assets };
