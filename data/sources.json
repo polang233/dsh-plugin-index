@@ -12709,8 +12709,8 @@
         "zh": "桌面电脑操控"
       },
       "description": {
-        "en": "Windows desktop control for DeepSeek Harness with 19 tools and verified targeting: controls are addressed through their UI Automation identity and patterns, and numbered marks are checked against the live window before input, so a stale target is refused instead of mis-clicked. A known sequence runs in one computer_batch call (one model round trip); incremental observations and 2.0.0 compact receipts, normally at most about 6 KiB extra, keep context and token spend down. Human handoff, approval modes, a model-visible stop brake and prebuilt native workers; Windows x64, Node >=22.",
-        "zh": "给 DeepSeek Harness 的 Windows 桌面操控，19 个工具，定位可验证：控件按 UI Automation 的真实身份与控件模式寻址，编号标记在派发前对照实时窗口校验，过期目标拒绝而不是点错。已知流程用一次 computer_batch 跑完（一轮模型往返）；增量观察与 2.0.0 默认的精简回执（通常最多再加约 6 KiB）让上下文和 token 消耗更省。含人工接管、审批模式、能传进模型的停止刹车，原生组件随包提供；支持 Windows x64、Node ≥22。"
+        "en": "Windows computer use for DeepSeek Harness with 19 tools and verified targeting: controls come from UI Automation identity, and numbered marks are checked against the live window before input, so a stale target is refused, not mis-clicked. computer_batch runs a known sequence in one model round trip; 2.0.0 compact receipts and incremental observations cut token spend. Human handoff, approvals and prebuilt native workers; Windows x64, Node >=22.",
+        "zh": "给 DeepSeek Harness 的 Windows 桌面操控，19 个工具，定位可验证：控件按 UI Automation 的真实身份寻址，不猜坐标；编号标记在派发前对照实时窗口校验，过期目标拒绝而不是点错。一次 computer_batch 把已知流程压成一轮模型往返；2.0.0 精简回执与增量观察降低 token 消耗。含人工接管、审批与预置原生组件；Windows x64、Node ≥22。"
       },
       "category": "tools"
     },
