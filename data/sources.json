@@ -12374,22 +12374,22 @@
         "zh": "REA"
       },
       "description": {
-        "en": "Connect REA reverse engineering tools through a local MCP server. Starts rea-agents@6.4.0 via npx; requires Node.js, network access for initial setup and any native tools needed by the selected provider.",
-        "zh": "通过本地 MCP 服务接入 REA 逆向工具。使用 npx 启动 rea-agents@6.4.0，需 Node.js、首次下载网络，以及相应功能所需的原生工具。"
+        "en": "Expose REA reverse-engineering tools through MCP. Uses the Harness runtime with a prepared REA 6.4.0 install, or falls back to npx requiring network and npx on PATH. Native tools need separate setup; optional WSL support starts disabled.",
+        "zh": "通过 MCP 接入 REA 逆向工具。优先用宿主运行时启动已准备的 REA 6.4.0，否则回退到 npx，需要网络和可用的 npx。原生工具需另行准备，WSL 扩展默认关闭。"
       },
       "category": "integrations",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "source": {
         "type": "git",
         "url": "https://github.com/Fanqi89/dsh-rea",
-        "commit": "e3fcbfe27b342e40f0ee5e98b6629da2e1f7c090",
-        "integrity": "sha512-l7irq6RxRKUJhBrPgKlTvxpKJbPBByjNlrKl9AF/bOTOFfsGuRJQptiNg2ilwfLm8iROgK/gBPzQnw0VEjXpow==",
-        "publishedAt": "2026-10-21T07:51:34.000Z"
+        "commit": "5769b4e55246787cb7c09025725db8e34db93e81",
+        "integrity": "sha512-JQyn9LN1o1TBrTLTwTvw7NFZjyiN6bWOXNk6tK1PbGjys8zFifTtA4RXV/ZHAWp2jqjaD15+1CLufExwv3KFKQ==",
+        "publishedAt": "2026-11-07T04:38:26Z"
       },
       "repositoryReview": {
-        "version": "1.3.0",
-        "integrity": "sha512-l7irq6RxRKUJhBrPgKlTvxpKJbPBByjNlrKl9AF/bOTOFfsGuRJQptiNg2ilwfLm8iROgK/gBPzQnw0VEjXpow==",
-        "commit": "e3fcbfe27b342e40f0ee5e98b6629da2e1f7c090",
+        "version": "1.4.0",
+        "integrity": "sha512-JQyn9LN1o1TBrTLTwTvw7NFZjyiN6bWOXNk6tK1PbGjys8zFifTtA4RXV/ZHAWp2jqjaD15+1CLufExwv3KFKQ==",
+        "commit": "5769b4e55246787cb7c09025725db8e34db93e81",
         "url": "https://github.com/Fanqi89/dsh-rea"
       }
     },
@@ -13697,8 +13697,8 @@
       },
       "category": "tools",
       "description": {
-        "en": "Let the Agent read, click, type, scroll, capture and batch actions in the built-in sidebar browser. Requires DSH Desktop with its Electron webview; includes page JavaScript evaluation and uses the browser’s signed-in sessions.",
-        "zh": "让 Agent 在内置侧栏浏览器读取页面、点击、输入、滚动、截图并批量操作。需带 Electron webview 的 DSH 桌面版，支持执行页面 JavaScript，会使用浏览器已有登录状态。"
+        "en": "Let the Agent read, click, type, scroll, capture and batch actions in the built-in sidebar browser. Requires DSH Desktop with its Electron webview; supports local file pages and page JavaScript, and uses the browser’s signed-in sessions.",
+        "zh": "让 Agent 在内置侧栏浏览器读取页面、点击、输入、滚动、截图并批量操作。需带 Electron webview 的 DSH 桌面版，支持本机文件页面和页面 JavaScript，会使用浏览器已有登录状态。"
       }
     },
     {
@@ -13980,6 +13980,38 @@
       "description": {
         "en": "Turn local or online video into timestamped storyboard sheets, with scene cuts, subtitles, OCR and optional transcription. Requires FFmpeg/ffprobe; sites may need yt-dlp, and OCR or transcription need their own environment or service.",
         "zh": "将本地或在线视频整理为带时间码的分镜图，支持镜头切分、字幕、OCR 及可选语音转写。需准备 FFmpeg/ffprobe；站点下载可能需要 yt-dlp，OCR 和转写需另配运行环境或服务。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-prompt-craft",
+      "title": {
+        "en": "Prompt Craft",
+        "zh": "Prompt Craft（提示词打磨）"
+      },
+      "description": {
+        "en": "Preview a rewritten draft with the current or a chosen model, optionally using recent conversation context. Uses model tokens; choose a result to apply it, then send it yourself.",
+        "zh": "用当前或指定模型打磨草稿，可参考近期对话，预览后点「用这版」才写回输入框。会消耗模型额度，最终发送由你操作。"
+      },
+      "category": "interface",
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/scnu2024/dsh-prompt-craft",
+        "commit": "43671d3aa6dc5f40f44e24985f6441e00640242c",
+        "integrity": "sha512-dRGUhHljTWKHp5vIURCzRpLxqEEAm2tmdo3Vcrf70TU/V1hp7/ehHmPR1MkbPS08MnEVV4l3wnPfe9ZDVi2M4w==",
+        "publishedAt": "2026-11-07T15:45:27Z"
+      }
+    },
+    {
+      "name": "dsh-blender-plugin",
+      "title": {
+        "en": "DSH × Blender",
+        "zh": "DSH × Blender"
+      },
+      "description": {
+        "en": "Control Blender scenes, modeling and rendering with Python. Tested on Blender 4.2 LTS; GUI mode needs the bundled addon. The loopback execution bridge currently has no authentication.",
+        "zh": "通过 Python 操控 Blender 场景、建模和渲染。已测试 Blender 4.2 LTS，图形模式需安装配套 addon；本机执行桥接目前无认证。"
       },
       "category": "tools"
     }

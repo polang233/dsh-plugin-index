@@ -3894,6 +3894,44 @@
       "reviewedAt": "2026-11-07T15:57:23.812Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-sidebar-control",
+      "version": "0.2.1",
+      "integrity": "sha512-KiRzWSQZ8upU07zrD0vI/6I4CPIdBJQrOKYlySoBmaKWbMtmt/DDrRKV53Fay4GSM6lmWz3klfGo85pPME18+Q==",
+      "repository": "https://github.com/clusterstar1229/dsh-sidebar-control",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-07T18:22:08.156Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-prompt-craft",
+      "version": "1.0.0",
+      "integrity": "sha512-dRGUhHljTWKHp5vIURCzRpLxqEEAm2tmdo3Vcrf70TU/V1hp7/ehHmPR1MkbPS08MnEVV4l3wnPfe9ZDVi2M4w==",
+      "repository": "https://github.com/scnu2024/dsh-prompt-craft",
+      "source": {
+        "type": "git",
+        "commit": "43671d3aa6dc5f40f44e24985f6441e00640242c"
+      },
+      "reviewedAt": "2026-11-07T18:22:08.157Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-rea",
+      "version": "1.4.0",
+      "integrity": "sha512-JQyn9LN1o1TBrTLTwTvw7NFZjyiN6bWOXNk6tK1PbGjys8zFifTtA4RXV/ZHAWp2jqjaD15+1CLufExwv3KFKQ==",
+      "repository": "https://github.com/Fanqi89/dsh-rea",
+      "source": {
+        "type": "git",
+        "commit": "5769b4e55246787cb7c09025725db8e34db93e81"
+      },
+      "reviewedAt": "2026-11-07T18:22:08.158Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
