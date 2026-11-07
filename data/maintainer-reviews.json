@@ -3499,6 +3499,18 @@
       "reviewedAt": "2026-11-06T07:32:59.664Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-open-market",
+      "version": "0.4.0",
+      "integrity": "sha512-4IHhaXksTb2QBhBxkZZWW8SQrUqNsdVys6/E1DTICQSFZ1JhPKK6LUPAqt3nFiVTW/X5YQ3/nYcVS4R531OuIw==",
+      "repository": "https://github.com/polang233/dsh-plugin-index",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-07T14:09:47.224Z",
+      "scope": "package",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
