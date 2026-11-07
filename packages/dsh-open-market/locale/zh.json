@@ -1,6 +1,7 @@
 {
   "meta": {
     "title": "开放插件市场",
+    "detail": "DETAIL.zh.md",
     "description": "在 DSH 中发现和管理社区插件，支持分类搜索、收藏分组、版本切换与更新。"
   }
 }

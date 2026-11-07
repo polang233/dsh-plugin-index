@@ -25,7 +25,7 @@ export function runSelfUpdate(manager, input) {
   return runBundleUpdate(manager, {name: SELF_PACKAGE, ...target});
 }
 
-export function createSelfUpdateHandler(manager, connection) {
+export function createSelfUpdateHandler(manager, connection, {update = target => runSelfUpdate(manager, target)} = {}) {
   return async (req, res) => {
     const send = (status, result) => {
       if (res.destroyed || res.writableEnded) return;
@@ -47,8 +47,10 @@ export function createSelfUpdateHandler(manager, connection) {
       target = selfUpdateTarget(JSON.parse(raw));
     } catch { return send(400, { ok: false, error: 'Invalid self-update target' }); }
     // Unregistering this route stops new requests, not this job. Do not attach it to the request's AbortSignal or ctx.effect.
-    const result = await runSelfUpdate(manager, target);
-    if (!result.ok) console.warn('[dsh-open-market] Self-update failed: %s', result.error);
+    let result;
+    try { result = await update(target); }
+    catch { return send(503, {ok: false, code: 'management-unavailable'}); }
+    if (!result.ok) console.warn('[dsh-open-market] Self-update failed: %s', result.error ?? result.code);
     send(200, result);
   };
 }

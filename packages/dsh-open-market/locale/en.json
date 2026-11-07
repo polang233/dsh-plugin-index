@@ -1,6 +1,7 @@
 {
   "meta": {
     "title": "Open Plugin Market",
+    "detail": "DETAIL.md",
     "description": "Discover and manage community plugins in DSH with category search, grouped favorites, version switching and updates."
   }
 }

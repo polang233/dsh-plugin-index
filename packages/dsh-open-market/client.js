@@ -456,7 +456,8 @@ window.__ModuleLoader__.load({
     }
 
     function updateTexts(t) {
-      const keys = ['restoreUnavailable', 'updateBusy', 'updateRestoredRestart', 'updateRestored', 'unknownError', 'updateRestoreFailed', 'updateUnavailable'];
+      const keys = ['restoreUnavailable', 'updateBusy', 'updateRestoredRestart', 'updateRestored', 'unknownError', 'updateRestoreFailed', 'updateUnavailable',
+        'manageBusy', 'manageMonitor', 'manageUpdating', 'manageUnavailable', 'manageChanged'];
       const messages = Object.fromEntries(keys.map(key => [key, t(key)]));
       return key => messages[key];
     }
@@ -465,6 +466,11 @@ window.__ModuleLoader__.load({
       if (answer.code === 'restore-unavailable') error = t('restoreUnavailable');
       else if (answer.code === 'update-busy') error = t('updateBusy');
       else if (answer.code === 'update-unavailable') error = t('updateUnavailable');
+      else {
+        const key = {'tasks-active': 'manageBusy', 'task-monitor-unavailable': 'manageMonitor', 'management-busy': 'manageUpdating',
+          'management-unavailable': 'manageUnavailable', 'installation-changed': 'manageChanged'}[answer.code];
+        if (key) error = t(key);
+      }
       if (answer.restored === true) error = errorText(error, t('unknownError')) + ' · ' + t(answer.restoreRestart ? 'updateRestoredRestart' : 'updateRestored');
       else if (answer.restored === false) error = errorText(error, t('unknownError')) + ' · ' + t('updateRestoreFailed') + (answer.restoreSpec ? ' ' + answer.restoreSpec : '');
       return {...answer, ...(error ? {error} : {})};
@@ -503,8 +509,14 @@ window.__ModuleLoader__.load({
       });
     }
 
-    async function installVersion(entry, version, { install, t, title = entry.name, onPhase = () => {}, busyLabel = 'busy', selfUpdate = updateSelf, update = requestBundleUpdate }) {
+    async function installVersion(entry, version, { install, t, title = entry.name, onPhase = () => {}, busyLabel = 'busy', selfUpdate = updateSelf, update = requestBundleUpdate,
+      when = 'now', management = requestManagement }) {
       if (entry.installation.status === 'provided') return { ok: false, error: t('providedVersion') };
+      if (when === 'idle' && entry.installation.status !== 'not-installed') {
+        onPhase('manageQueuing');
+        const answer = await management({action: 'update', name: entry.name, ...installTarget(versionInstall(entry, version), getSettings()), when, requestId: crypto.randomUUID()});
+        return answer.ok ? answer : {...answer, error: managementMessage(answer, t)};
+      }
       if (entry.name === 'dsh-open-market' && entry.installation.status !== 'not-installed') {
         onPhase('selfUpdating');
         const answer = await selfUpdate(installTarget({ ...versionInstall(entry, version), title, version: version.version }, getSettings()), t);
@@ -1006,7 +1018,104 @@ window.__ModuleLoader__.load({
     }
 
     const NS = 'openMarket';
+    const managementLocale = {
+      zh: {
+        manageSearch: '搜索名称、包名或来源', manageAll: '全部', manageEnabled: '已启用', manageDisabled: '已停用', manageUpdates: '有更新',
+        manageProblems: '有问题', manageExternal: '未在本市场收录', manageGroup: '收藏分组', manageAllGroups: '所有分组',
+        manageCount: '{shown} / {total} 个插件', manageDetails: '详情', manageSettings: '设置与完整管理', manageUninstall: '卸载',
+        manageSelect: '选择 {name}', manageSelectAll: '选择当前结果', manageClear: '清空选择', manageSelected: '已选择 {count} 个',
+        manageCheck: '检查更新', manageChecking: '正在检查…', manageChecked: '更新检查已完成', manageCurrent: '当前版本', manageOffered: '可用版本',
+        manageNow: '立即更新', manageIdle: '空闲后更新', manageQueueSelected: '所选插件空闲后更新', manageRefresh: '刷新列表',
+        manageQueue: '更新队列', manageQueueEmpty: '暂无更新任务', manageQueued: '已加入空闲更新队列', manageCancel: '取消排队',
+        manageRetry: '重新排队', manageDismiss: '移除记录', manageReport: '复制管理报告', manageReportCopied: '报告已复制',
+        manageStateQueued: '已排队', manageStateWaiting: '等待空闲', manageStateRunning: '正在更新', manageStateSucceeded: '已完成',
+        manageStateFailed: '失败', manageStateCancelled: '已取消', manageStateInterrupted: '等待重新确认',
+        manageIdleHelp: '任务运行、等待审批或后台作业未结束时暂缓更新。维护期间的新输入会等待更新完成。',
+        manageBusy: '当前有任务运行，操作未执行。更新可选择「空闲后更新」。',
+        manageMonitor: '当前 DSH 无法确认安全维护窗口，操作未执行。可打开官方管理页查看。',
+        manageUpdating: '另一个管理操作正在执行，请稍后重试。', manageRestarted: 'Host 已重启，请重新确认后排队。',
+        manageUnavailable: '管理服务暂不可用，请刷新，或打开官方管理页。', manageRunning: '有 {count} 个运行中的任务',
+        manageReady: '任务空闲', manageMonitoring: '无法确认任务状态', manageReadonly: '此插件由宿主管理，操作受限',
+        manageSelf: '请在官方管理页停用或卸载开放市场，以保留操作结果。', manageRestart: '已保存，重启 DSH 后生效',
+        manageDone: '操作已完成', manageSource: '安装来源', manageRows: '组件与诊断', manageNoRows: '未声明独立组件',
+        manageNative: '打开官方详情', manageNativeUnavailable: '已打开插件页；此版本不支持定位详情。', manageTarget: '固定 Git 提交',
+        manageRemoveTitle: '确认卸载', manageRemoveHelp: '将通过 DSH 卸载此插件。插件另存的个人数据可能保留。',
+        manageConfirmName: '输入完整包名确认', manageCancelRemove: '保留插件', manageNotes: '市场资料', manageNoMarket: '此插件未在开放市场收录，仍可查看和管理本机安装。',
+        manageDocument: '本机插件说明', manageLoadDocument: '读取本机说明', manageNoDocument: '此插件没有提供说明文档。',
+        manageNoResults: '没有符合筛选条件的插件', manageNoSelection: '选择一个插件查看详情', manageQueuedCount: '队列 {count}',
+        manageCheckUnavailable: '当前宿主不支持此来源的版本检查', manageNoUpdate: '尚未发现更新，可点击「检查更新」',
+        manageChanged: '安装版本、来源或启用状态已改变，请刷新列表后重新选择更新。', manageStatus: '状态', manageFilter: '插件筛选',
+        manageMissing: '插件已不在本机安装列表中。', manageQueueFull: '更新队列已满，请先处理现有任务。',
+        manageQueuing: '正在排队…',
+        manageRowUnknown: '未加载或状态未知',
+        manageCustom: '自定义插件', manageSystem: '系统插件', manageSystemHelp: 'DSH 自带的运行支持与可选组件',
+        manageOverview: '运行概览与启动顺序', manageDiagnostics: '诊断与目录', manageLoaded: '已加载自定义插件',
+        manageErrorCount: '加载异常', manageRiskCount: '风险提示', manageRiskHelp: '基于已声明的兼容性、依赖和安装脚本，不代表完整安全审计。',
+        manageDirectories: '加载与配置位置', manageHome: 'DSH 数据目录', manageInstallation: 'DSH 加载目录', manageProfile: '当前配置目录',
+        managePackage: '插件加载目录', manageConfiguration: 'DSH 插件配置目录', manageSharedConfig: '与当前 DSH 配置共用；独立数据目录由插件自行决定。',
+        manageOpenDirectory: '打开目录', manageArchived: '归档内，打开所在目录', manageDirectoryUnavailable: '此目录暂不可用',
+        manageDiagnosticUnavailable: '当前宿主暂不能提供扩展诊断', manageCompatibility: 'DSH 版本兼容性',
+        manageCompatible: '兼容', manageIncompatible: '不兼容', manageUndeclared: '未声明范围', manageExempted: '已豁免版本限制', manageUnknown: '未知',
+        manageDependencies: '依赖关系', manageDependents: '被这些插件依赖', manageNoDependencies: '没有声明运行依赖',
+        manageDependencySatisfied: '满足', manageDependencyMissing: '缺失', manageDependencyMismatch: '版本不符',
+        manageDependencyOptional: '可选，未安装', manageDependencyUnverified: '特殊来源，未核对范围', manageDependencyUnknown: '无法核对',
+        manageOrder: '配置层顺序', manageRuntimeOrder: '运行实例顺序', manageOrderHelp: '顺序决定插件补丁的合并位置，不代表异步启动完成时间。系统层保持固定；依赖应排在使用它的插件前。',
+        manageOrderSaved: '保存启动顺序', manageOrderReset: '放弃调整', manageOrderUp: '前移 {name}', manageOrderDown: '后移 {name}',
+        manageOrderEmpty: '没有已启用的自定义插件可调整', manageOrderFailed: '加载顺序未能应用，已尝试恢复原配置。',
+        manageDependencyOrder: '请将被依赖的插件排在前面：', manageInstallScripts: '声明了安装脚本', manageDependencyRisk: '依赖需要处理',
+        manageCompatibilityRisk: '版本兼容性需要确认', manageNoRisks: '未发现上述诊断项的风险提示', manageNotSelected: '未加入启动配置',
+        manageActive: '运行中', manageLoading: '正在加载', managePending: '等待加载', manageUnloading: '正在卸载', manageFailed: '加载失败',
+      },
+      en: {
+        manageSearch: 'Search names, packages or sources', manageAll: 'All', manageEnabled: 'Enabled', manageDisabled: 'Disabled', manageUpdates: 'Updates',
+        manageProblems: 'Problems', manageExternal: 'Outside this market', manageGroup: 'Favorite group', manageAllGroups: 'All groups',
+        manageCount: '{shown} / {total} plugins', manageDetails: 'Details', manageSettings: 'Settings and full management', manageUninstall: 'Uninstall',
+        manageSelect: 'Select {name}', manageSelectAll: 'Select these results', manageClear: 'Clear selection', manageSelected: '{count} selected',
+        manageCheck: 'Check updates', manageChecking: 'Checking…', manageChecked: 'Update check complete', manageCurrent: 'Installed version', manageOffered: 'Available version',
+        manageNow: 'Update now', manageIdle: 'Update when idle', manageQueueSelected: 'Update selected when idle', manageRefresh: 'Refresh',
+        manageQueue: 'Update queue', manageQueueEmpty: 'No update tasks', manageQueued: 'Added to the idle update queue', manageCancel: 'Cancel queued update',
+        manageRetry: 'Queue again', manageDismiss: 'Remove record', manageReport: 'Copy management report', manageReportCopied: 'Report copied',
+        manageStateQueued: 'Queued', manageStateWaiting: 'Waiting for idle', manageStateRunning: 'Updating', manageStateSucceeded: 'Completed',
+        manageStateFailed: 'Failed', manageStateCancelled: 'Cancelled', manageStateInterrupted: 'Needs confirmation',
+        manageIdleHelp: 'Updates wait for running turns, approvals and background work. New input waits during maintenance.',
+        manageBusy: 'Tasks are running; nothing changed. Choose Update when idle to queue an update.',
+        manageMonitor: 'This DSH cannot establish a safe maintenance window; nothing changed. You can open native management.',
+        manageUpdating: 'Another management operation is running. Try again shortly.', manageRestarted: 'The Host restarted. Confirm the update before queuing it again.',
+        manageUnavailable: 'Management is unavailable. Refresh or open native management.', manageRunning: '{count} tasks running',
+        manageReady: 'Tasks idle', manageMonitoring: 'Task state unavailable', manageReadonly: 'This plugin is managed by the Host; some controls are unavailable',
+        manageSelf: 'Disable or uninstall Open Market from native management to retain the result.', manageRestart: 'Saved; restart DSH to apply',
+        manageDone: 'Operation completed', manageSource: 'Installation source', manageRows: 'Components and diagnostics', manageNoRows: 'No separate components declared',
+        manageNative: 'Open native details', manageNativeUnavailable: 'Opened Plugins; this version cannot navigate to a detail page.', manageTarget: 'Pinned Git commit',
+        manageRemoveTitle: 'Confirm uninstall', manageRemoveHelp: 'DSH will uninstall this plugin. Personal data stored separately by the plugin may remain.',
+        manageConfirmName: 'Type the full package name to confirm', manageCancelRemove: 'Keep plugin', manageNotes: 'Market information', manageNoMarket: 'This plugin is outside Open Market. You can still inspect and manage its local installation.',
+        manageDocument: 'Local plugin documentation', manageLoadDocument: 'Read local documentation', manageNoDocument: 'This plugin provides no documentation.',
+        manageNoResults: 'No plugins match these filters', manageNoSelection: 'Select a plugin to view its details', manageQueuedCount: 'Queue {count}',
+        manageCheckUnavailable: 'This Host cannot check versions for this source', manageNoUpdate: 'No update found yet. Use Check updates to look for newer versions.',
+        manageChanged: 'The installed version, source or selection changed. Refresh the list and choose the update again.', manageStatus: 'Status', manageFilter: 'Plugin filters',
+        manageMissing: 'This plugin is no longer installed.', manageQueueFull: 'The update queue is full. Finish or cancel existing tasks first.',
+        manageQueuing: 'Queuing…',
+        manageRowUnknown: 'Not loaded or state unknown',
+        manageCustom: 'Custom plugins', manageSystem: 'System plugins', manageSystemHelp: 'DSH runtime support and optional components',
+        manageOverview: 'Runtime overview and load order', manageDiagnostics: 'Diagnostics and directories', manageLoaded: 'Custom plugins loaded',
+        manageErrorCount: 'Load problems', manageRiskCount: 'Risk indicators', manageRiskHelp: 'Based on declared compatibility, dependencies and install scripts. This is not a full security audit.',
+        manageDirectories: 'Loading and configuration locations', manageHome: 'DSH data directory', manageInstallation: 'DSH installation directory', manageProfile: 'Current profile directory',
+        managePackage: 'Plugin directory', manageConfiguration: 'DSH plugin configuration directory', manageSharedConfig: 'Shared with this DSH profile. Plugins choose their own separate data directories.',
+        manageOpenDirectory: 'Open directory', manageArchived: 'Inside an archive; open its parent directory', manageDirectoryUnavailable: 'This directory is unavailable',
+        manageDiagnosticUnavailable: 'This Host cannot provide extended diagnostics', manageCompatibility: 'DSH version compatibility',
+        manageCompatible: 'Compatible', manageIncompatible: 'Incompatible', manageUndeclared: 'No range declared', manageExempted: 'Version exemption active', manageUnknown: 'Unknown',
+        manageDependencies: 'Dependencies', manageDependents: 'Required by', manageNoDependencies: 'No runtime dependencies declared',
+        manageDependencySatisfied: 'Satisfied', manageDependencyMissing: 'Missing', manageDependencyMismatch: 'Version mismatch',
+        manageDependencyOptional: 'Optional, not installed', manageDependencyUnverified: 'Special source; range unverified', manageDependencyUnknown: 'Unable to verify',
+        manageOrder: 'Bundle layer order', manageRuntimeOrder: 'Runtime entry order', manageOrderHelp: 'Order controls how plugin patches merge, not when asynchronous startup finishes. System layers stay fixed. Put dependencies before their consumers.',
+        manageOrderSaved: 'Save load order', manageOrderReset: 'Discard changes', manageOrderUp: 'Move {name} earlier', manageOrderDown: 'Move {name} later',
+        manageOrderEmpty: 'No enabled custom plugins to reorder', manageOrderFailed: 'Could not apply load order; restoration was attempted.',
+        manageDependencyOrder: 'Put required plugins first:', manageInstallScripts: 'Install scripts declared', manageDependencyRisk: 'Dependency needs attention',
+        manageCompatibilityRisk: 'Compatibility needs confirmation', manageNoRisks: 'No indicators found in these diagnostic checks', manageNotSelected: 'Not selected for startup',
+        manageActive: 'Running', manageLoading: 'Loading', managePending: 'Waiting to load', manageUnloading: 'Unloading', manageFailed: 'Load failed',
+      },
+    };
     const zh = {
+      ...managementLocale.zh,
       category: '分类', allCategories: '全部分类',
       profileSaved: '收藏和设置已保存在当前 DSH 配置中', profileSaving: '正在保存收藏和设置…',
       profileFailed: '收藏和设置暂存本机，尚未保存到当前 DSH 配置。',
@@ -1023,7 +1132,7 @@ window.__ModuleLoader__.load({
       resultCount: '{count} 个插件', noResults: '没有找到匹配的插件', showMore: '显示更多', clearSearch: '清除', failed: '读取失败', retry: '重试',
       missingTitle: '开放插件市场不在索引源中', missingBody: '它可能在「发现」里被删掉了。添加后这里和「发现」都能看到。', addSource: '添加索引源',
       today: '今日推荐', recommended: '智能推荐', popular: '最受欢迎', trending: '增长最快',
-      newest: '最新发布', health: '我已安装',
+      newest: '最新发布', health: '插件管理',
       todayHint: '每天更新，按点赞和推荐加权', recommendedHint: '近期活跃，也留位置给新收录的插件', popularHint: '按近期点赞',
       trendingHint: '近 7 天下载增长', newestHint: '按发布时间', stars: 'GitHub star {count}',
       close: '关闭', homepage: '主页', sourceCode: '源码', marketPage: '在开放插件市场网站查看',
@@ -1052,7 +1161,7 @@ window.__ModuleLoader__.load({
       previous: '向左浏览 {section}', next: '向右浏览 {section}',
       source: '数据来自开放插件市场', sourceLink: 'dshopen.org', newWindow: '在新窗口打开',
       recommendationPosition: '查看第 {number} 组推荐', settings: '设置', about: '关于',
-      autoRotate: '今日推荐自动轮播', showInstalled: '在推荐和全部插件中显示已安装的插件', showCheckup: '显示「我已安装」按钮', installing: '正在安装…', sidebarMarket: '在侧边栏显示开放市场', theme: '马卡龙主题', themeHelp: '仿照 dshopen.org 的粗描边、硬阴影和马卡龙配色，并在空白处加入鲸鱼女仆。覆盖 DSH 的侧边栏、对话、菜单、对话框和设置；跟随 DSH 的浅色或深色外观，关闭后立即恢复原样。', sidebarMarketHelp: '单独的全宽页面，适合「插件」页没有开放市场标签的旧版 DSH。从这里安装时不弹安装窗口；需要确认安装脚本的插件请到「插件」页安装。', installNeedsDialog: '这个插件需要确认安装脚本，请到「插件」页安装', installedRestart: '已安装，重启 DSH 后生效',
+      autoRotate: '今日推荐自动轮播', showInstalled: '在推荐和全部插件中显示已安装的插件', showCheckup: '显示插件管理的更新数量', installing: '正在安装…', sidebarMarket: '在侧边栏显示开放市场', theme: '马卡龙主题', themeHelp: '仿照 dshopen.org 的粗描边、硬阴影和马卡龙配色，并在空白处加入鲸鱼女仆。覆盖 DSH 的侧边栏、对话、菜单、对话框和设置；跟随 DSH 的浅色或深色外观，关闭后立即恢复原样。', sidebarMarketHelp: '单独的全宽页面，适合「插件」页没有开放市场标签的旧版 DSH。从这里安装时不弹安装窗口；需要确认安装脚本的插件请到「插件」页安装。', installNeedsDialog: '这个插件需要确认安装脚本，请到「插件」页安装', installedRestart: '已安装，重启 DSH 后生效',
       settingsDisplay: '显示', settingsData: '数据与同步', settingsDownload: '下载', settingsConversation: '对话',
       syncData: '市场数据', syncNow: '同步最新数据', syncing: '正在同步…', syncedAt: '上次同步：{time}', neverSynced: '还没有同步过',
       syncFailed: '同步失败，继续显示已有数据', syncUnavailable: '打开「自定义插件市场」后才能同步', syncHelp: '打开市场时先显示本机保存的数据，每 6 小时在后台更新一次，不影响正常浏览。',
@@ -1080,6 +1189,7 @@ window.__ModuleLoader__.load({
       website: '官网', websiteUrl: 'https://dshopen.org/zh/', repository: 'GitHub 仓库', submitPlugin: '提交插件', indexAddress: '索引地址'
     };
     const en = {
+      ...managementLocale.en,
       category: 'Category', allCategories: 'All categories',
       profileSaved: 'Favorites and settings are saved in this DSH profile', profileSaving: 'Saving favorites and settings…',
       profileFailed: 'Favorites and settings are cached here, but have not been saved to this DSH profile.',
@@ -1096,7 +1206,7 @@ window.__ModuleLoader__.load({
       resultCount: '{count} plugins', noResults: 'No matching plugins', showMore: 'Show more', clearSearch: 'Clear', failed: 'Could not load the market', retry: 'Retry',
       missingTitle: 'Open Plugin Market is not an index source', missingBody: 'It may have been removed in Discover. Add it back to see it here and in Discover.', addSource: 'Add index source',
       today: 'Today’s picks', recommended: 'Recommended', popular: 'Most popular', trending: 'Fastest growing',
-      newest: 'Newly published', health: 'Installed',
+      newest: 'Newly published', health: 'Manage plugins',
       todayHint: 'Daily, weighted by likes and recommendations', recommendedHint: 'Active plugins, with room for new listings', popularHint: 'By recent likes',
       trendingHint: '7-day download growth', newestHint: 'By publication date', stars: '{count} GitHub stars',
       close: 'Close', homepage: 'Homepage', sourceCode: 'Source code', marketPage: 'View on Open Plugin Market',
@@ -1125,7 +1235,7 @@ window.__ModuleLoader__.load({
       sectionEmpty: 'No matching plugins yet', previous: 'Browse {section} left', next: 'Browse {section} right',
       source: 'Data from Open Plugin Market', sourceLink: 'dshopen.org', newWindow: 'Opens in a new window',
       recommendationPosition: 'Show recommendation group {number}', settings: 'Settings', about: 'About',
-      autoRotate: 'Auto-rotate today’s picks', showInstalled: 'Show installed plugins in recommendations and All plugins', showCheckup: 'Show the Installed button', installing: 'Installing…', sidebarMarket: 'Show Open Market in the sidebar', theme: 'Macaron theme', themeHelp: 'Ink outlines, hard shadows and macaron colors from dshopen.org, with the whale maid in empty spaces. Covers the DSH sidebar, conversations, menus, dialogs and settings; follows the light or dark appearance and goes back to normal as soon as you switch it off.', sidebarMarketHelp: 'A separate full-width page, for older DSH versions without the Open Market tab on the Plugins page. Installs from it skip the install dialog; a plugin whose install scripts need approval has to be installed from Plugins.', installNeedsDialog: 'This plugin needs its install scripts approved. Install it from Plugins.', installedRestart: 'Installed. Restart DSH to use it.',
+      autoRotate: 'Auto-rotate today’s picks', showInstalled: 'Show installed plugins in recommendations and All plugins', showCheckup: 'Show the update count on Manage plugins', installing: 'Installing…', sidebarMarket: 'Show Open Market in the sidebar', theme: 'Macaron theme', themeHelp: 'Ink outlines, hard shadows and macaron colors from dshopen.org, with the whale maid in empty spaces. Covers the DSH sidebar, conversations, menus, dialogs and settings; follows the light or dark appearance and goes back to normal as soon as you switch it off.', sidebarMarketHelp: 'A separate full-width page, for older DSH versions without the Open Market tab on the Plugins page. Installs from it skip the install dialog; a plugin whose install scripts need approval has to be installed from Plugins.', installNeedsDialog: 'This plugin needs its install scripts approved. Install it from Plugins.', installedRestart: 'Installed. Restart DSH to use it.',
       settingsDisplay: 'Display', settingsData: 'Data and sync', settingsDownload: 'Downloads', settingsConversation: 'Conversations',
       syncData: 'Market data', syncNow: 'Sync latest data', syncing: 'Syncing…', syncedAt: 'Last synced: {time}', neverSynced: 'Not synced yet',
       syncFailed: 'Sync failed; showing the data already here', syncUnavailable: 'Turn on Custom plugin markets to sync', syncHelp: 'The market opens with the data saved on this computer and updates in the background every six hours, so browsing is never held up.',
@@ -1225,6 +1335,10 @@ window.__ModuleLoader__.load({
       /* Rails start at staggered offsets, so only today's picks snap, one gutter along (see restingOffset). */
       .opm-carousel-viewport { scroll-snap-type: x proximity; scroll-padding-left: 0; }
       .opm-rail::-webkit-scrollbar, .opm-carousel-viewport::-webkit-scrollbar { display: none; }
+      .opm-rail, .opm-carousel-viewport { user-select: none; -webkit-user-select: none; }
+      .opm-rail img, .opm-carousel-viewport img { -webkit-user-drag: none; }
+      :is(.opm-rail, .opm-carousel-viewport)[data-dragging="true"] { scroll-snap-type: none; scroll-behavior: auto; }
+      :is(.opm-rail, .opm-carousel-viewport)[data-dragging="true"], :is(.opm-rail, .opm-carousel-viewport)[data-dragging="true"] * { cursor: grabbing !important; }
       .opm-card { flex: 0 0 220px; width: 220px; min-width: 0; scroll-snap-align: start; padding: 12px;
         display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--dsw-alias-border-l2);
         border-radius: var(--dsw-radius-md); background: var(--dsw-alias-bg-module-platform); cursor: pointer;
@@ -1422,6 +1536,92 @@ window.__ModuleLoader__.load({
       .opm-menu-item span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .opm-menu-check { flex: 0 0 14px; color: #e59a00; }
       .opm-panel-wide { width: min(680px, calc(100% - 32px)); }
+      .opm-panel-management { width: min(1120px, calc(100vw - 32px)); height: min(850px, calc(100dvh - 48px));
+        max-height: calc(100dvh - 48px); display: flex; flex-direction: column; gap: 12px; overflow: hidden; padding: 20px; }
+      .opm-manage-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; padding-right: 36px; }
+      .opm-manage-head h2 { font-size: 18px; }
+      .opm-manage-controls, .opm-manage-actions, .opm-manage-bulk { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+      .opm-manage-search { flex: 1; min-width: 180px; height: 36px; padding: 0 10px; border: 1px solid var(--dsw-alias-border-l2);
+        border-radius: var(--dsw-radius-sm); background: var(--dsw-alias-bg-module-platform); color: inherit; font: inherit; }
+      .opm-manage-controls select { max-width: 220px; min-height: 34px; color: inherit; background: var(--dsw-alias-bg-layer-2);
+        border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-sm); padding: 4px 8px; font: inherit; }
+      .opm-manage-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+      .opm-manage-tabs button[aria-pressed="true"] { background: var(--dsw-alias-interactive-bg-active); border-color: var(--dsw-alias-border-l3); }
+      .opm-manage-body { display: grid; grid-template-columns: minmax(280px, .95fr) minmax(320px, 1.2fr); gap: 18px; min-height: 0; flex: 1; }
+      .opm-manage-column { min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 8px; }
+      .opm-manage-list { overflow: auto; overscroll-behavior: contain; list-style: none; margin: 0; padding: 0 4px 4px 0; flex: 1; }
+      .opm-manage-group > ul { list-style: none; margin: 0; padding: 0; }
+      .opm-manage-group-title { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600;
+        margin: 0; padding: 10px 4px; color: var(--dsw-alias-label-secondary); }
+      .opm-manage-group-title > span { font-weight: 400; font-variant-numeric: tabular-nums; }
+      .opm-system-group { margin-top: 12px; border-top: 1px solid var(--dsw-alias-border-l2); }
+      .opm-system-group > summary { cursor: pointer; display: list-item; list-style-position: inside; }
+      .opm-system-group > summary span { margin-left: 8px; }
+      .opm-system-group > p { padding: 0 4px 8px; font-size: 12px; }
+      .opm-status { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--dsw-alias-border-l2);
+        border-radius: 5px; padding: 2px 7px; font-size: 11px; line-height: 1.5; white-space: nowrap; font-weight: 500; }
+      .opm-status-on { color: #22643f; background: #e8f5ee; border-color: #b7d8c4; }
+      .opm-status-off { color: var(--dsw-alias-label-secondary); background: var(--dsw-alias-bg-module-platform); border-style: dashed; }
+      body[data-ds-dark-theme] .opm-status-on { color: #8bd8ad; background: #223a2d; border-color: #3a614b; }
+      .opm-manage-metrics { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; font-size: 12px; color: var(--dsw-alias-label-secondary); }
+      .opm-manage-overview { flex-shrink: 0; max-height: min(34vh, 260px); overflow: auto; font-size: 12px;
+        border-bottom: 1px solid var(--dsw-alias-border-l2); padding-bottom: 8px; }
+      .opm-manage-overview summary, .opm-plugin-diagnostics summary, .opm-components summary { cursor: pointer; font-weight: 500; padding: 6px 0; }
+      .opm-manage-overview h4 { margin: 12px 0 4px; font-size: 12px; }
+      .opm-directory { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 8px; align-items: center; margin: 10px 0; font-size: 12px; }
+      .opm-directory > span { grid-column: 1 / -1; }
+      .opm-directory code { overflow-wrap: anywhere; user-select: text; font-family: inherit; font-size: 12px; }
+      .opm-directory .opm-button { white-space: nowrap; }
+      .opm-load-order { margin: 8px 0; padding-left: 24px; }
+      .opm-load-order li { padding: 5px 0; }
+      .opm-load-order li > * { margin-right: 6px; }
+      .opm-load-order code { color: var(--dsw-alias-label-secondary); overflow-wrap: anywhere; font-size: 11px; }
+      .opm-plugin-diagnostics, .opm-components { margin-top: 14px; padding-top: 8px; border-top: 1px solid var(--dsw-alias-border-l1); }
+      .opm-dependencies { list-style: none; padding: 0; max-height: 300px; overflow: auto; }
+      .opm-dependencies li { display: flex; flex-direction: column; gap: 3px; padding: 7px 0; border-bottom: 1px solid var(--dsw-alias-border-l1); font-size: 12px; overflow-wrap: anywhere; }
+      .opm-manage-row { display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--dsw-alias-border-l1); padding: 4px 0; }
+      .opm-manage-row > input { flex: none; width: 16px; height: 16px; accent-color: var(--dsw-alias-button-primary-fill); }
+      .opm-manage-open { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; padding: 10px 8px; border: 0;
+        border-radius: var(--dsw-radius-sm); background: transparent; color: inherit; cursor: pointer; text-align: left; font: inherit; }
+      .opm-manage-open:hover { background: var(--dsw-alias-interactive-bg-hover); }
+      .opm-manage-open[aria-current="true"] { background: var(--dsw-alias-interactive-bg-active); }
+      .opm-manage-open .opm-icon { flex: none; width: 32px; height: 32px; }
+      .opm-manage-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 2px; }
+      .opm-manage-copy strong, .opm-manage-copy small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .opm-manage-copy small { color: var(--dsw-alias-label-secondary); font-size: 12px; }
+      .opm-manage-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
+      .opm-manage-badges .opm-tag { font-size: 10px; }
+      .opm-manage-detail { min-width: 0; overflow: auto; padding: 0 8px 12px 0; overscroll-behavior: contain; }
+      .opm-manage-detail h3 { font-size: 17px; margin: 0 0 4px; overflow-wrap: anywhere; }
+      .opm-manage-detail > section { border-top: 1px solid var(--dsw-alias-border-l1); margin-top: 16px; padding-top: 12px; }
+      .opm-manage-detail h4 { font-size: 13px; margin: 0 0 8px; }
+      .opm-manage-detail p { overflow-wrap: anywhere; }
+      .opm-manage-detail dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 12px; font-size: 12px; margin: 12px 0; }
+      .opm-manage-detail dt { color: var(--dsw-alias-label-secondary); }
+      .opm-manage-detail dd { margin: 0; overflow-wrap: anywhere; user-select: text; }
+      .opm-manage-native { width: 100%; justify-content: center; margin-top: 12px; }
+      .opm-manage-danger { color: var(--dsw-alias-state-danger-primary, #b54242); }
+      .opm-manage-remove { padding: 12px; border: 1px solid var(--dsw-alias-border-l3); border-radius: var(--dsw-radius-sm); margin-top: 12px; }
+      .opm-manage-remove label { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; font-size: 12px; }
+      .opm-manage-document { margin: 10px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; font-size: 12px; color: var(--dsw-alias-label-secondary); }
+      .opm-manage-queue { border-top: 1px solid var(--dsw-alias-border-l2); padding-top: 8px; max-height: 180px; overflow: auto; }
+      .opm-manage-queue summary { font-weight: 600; cursor: pointer; }
+      .opm-manage-queue ul { list-style: none; padding: 0; margin: 8px 0; }
+      .opm-manage-job { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 7px 0; border-top: 1px solid var(--dsw-alias-border-l1); }
+      .opm-manage-job > span:first-child { flex: 1; min-width: 160px; overflow-wrap: anywhere; }
+      .opm-manage-job p { width: 100%; }
+      .opm-manage-status { min-height: 18px; font-size: 12px; white-space: pre-wrap; }
+      @media (max-width: 760px) {
+        .opm-panel-management { width: calc(100vw - 16px); padding: 16px; height: auto; max-height: calc(100dvh - 24px); display: block; overflow-y: auto; }
+        .opm-panel-management > * + * { margin-top: 12px; }
+        .opm-manage-body { grid-template-columns: 1fr; grid-template-rows: minmax(180px, 35dvh) auto; gap: 12px; }
+        .opm-manage-detail { border-top: 1px solid var(--dsw-alias-border-l2); padding-top: 12px; overflow: visible; }
+        .opm-manage-queue { max-height: 130px; }
+      }
+      @media (max-height: 600px) and (min-width: 761px) {
+        .opm-panel-management { overflow-y: auto; }
+        .opm-manage-body { flex: none; height: 320px; }
+      }
       .opm-favorites-head { display: flex; align-items: center; gap: 6px; padding-right: 32px; margin-bottom: 12px; }
       .opm-favorites-head h2 { flex: 1; font-size: 18px; }
       .opm-chips { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -1659,7 +1859,7 @@ window.__ModuleLoader__.load({
           '★ ' + new Intl.NumberFormat(t('dateLocale'), { notation: 'compact', maximumFractionDigits: 1 }).format(stars)),
         selected.map(id => h('span', {
           key: id, className: 'opm-tag' + (['verified', 'trending', 'active'].includes(id) ? ' opm-tag-' + id : '')
-        }, resolve(metadata?.labels?.[id]?.title) || id)));
+        }, resolve(metadata?.labels?.[id]?.title ?? '') || id)));
     }
 
     function InstallButton({ entry, t, resolve, install, openPackage, manager, onError, onNotice, small, update, busyLabel = 'busy', disabled = false, onBusyChange }) {
@@ -1776,7 +1976,7 @@ window.__ModuleLoader__.load({
     }
 
     // A modal panel: Escape closes it, Tab stays inside, and the page behind does not scroll.
-    function Dialog({ labelledBy, closeLabel, onClose, restoreFocus, wide, children }) {
+    function Dialog({ labelledBy, closeLabel, onClose, restoreFocus, wide, panelClass = '', children }) {
       const panel = React.useRef(null);
       React.useEffect(() => {
         const node = panel.current;
@@ -1791,7 +1991,8 @@ window.__ModuleLoader__.load({
             event.stopPropagation();
             onClose();
           } else if (event.key === 'Tab') {
-            const controls = [...node.querySelectorAll('button:not(:disabled), a[href], input:not(.opm-file), [tabindex="0"]')];
+            const controls = [...node.querySelectorAll('button:not(:disabled), a[href], input:not(:disabled):not(.opm-file), select:not(:disabled), [tabindex="0"]')]
+              .filter(control => control.getClientRects().length > 0);
             const first = controls[0];
             const last = controls[controls.length - 1];
             if (!first) { event.preventDefault(); node.focus(); }
@@ -1806,11 +2007,11 @@ window.__ModuleLoader__.load({
         return () => {
           document.removeEventListener('keydown', keydown, true);
           document.body.style.overflow = previousOverflow;
-          restoreFocus();
+          restoreFocus?.();
         };
       }, [onClose, restoreFocus]);
       const overlay = h('div', { className: 'opm-root opm-overlay', onClick: event => { if (event.target === event.currentTarget) onClose(); } },
-        h('section', { className: 'opm-panel' + (wide ? ' opm-panel-wide' : ''), role: 'dialog', 'aria-modal': true, 'aria-labelledby': labelledBy, tabIndex: -1, ref: panel },
+        h('section', { className: 'opm-panel' + (wide ? ' opm-panel-wide' : '') + (panelClass ? ' ' + panelClass : ''), role: 'dialog', 'aria-modal': true, 'aria-labelledby': labelledBy, tabIndex: -1, ref: panel },
           h('button', { type: 'button', className: 'opm-button opm-button-small opm-panel-close', onClick: onClose, 'aria-label': closeLabel }, '×'),
           children));
       // Page-scoped theme tokens can make every layer transparent; dialogs inherit the body popup tokens instead.
@@ -1878,17 +2079,18 @@ window.__ModuleLoader__.load({
       }, [copied]);
       const currentState = state.key === key ? state : { status: 'loading', versions: [] };
       const choices = versionChoices(entry, registry && currentState.status === 'ready' ? currentState.versions : [], registry);
-      async function choose(version) {
+      async function choose(version, when = 'now') {
         if (busy.version || disabled) return;
         setBusy({ version: version.version, phase: busyLabel });
         onBusyChange?.(true);
         setActionError(null);
         onError('');
         try {
-          const answer = await installVersion(entry, version, { install, manager, t, title: titleOf(entry, resolve), busyLabel,
+          const answer = await installVersion(entry, version, { install, manager, t, title: titleOf(entry, resolve), busyLabel, when,
             onPhase: phase => setBusy({ version: version.version, phase }) });
           if (answer?.selfUpdate) return;
           if (answer?.ok === false) setActionError({ version: version.version, text: errorText(answer.error, t('unknownError')) });
+          else if (answer?.queued) onNotice?.(t('manageQueued'));
           else { void sendLike(entry.name, 'install'); if (answer?.restart) onNotice?.(t('installedRestart')); }
         } catch (error) { setActionError({ version: version.version, text: errorText(error, t('unknownError')) }); }
         finally { setBusy({ version: null, phase: busyLabel }); onBusyChange?.(false); }
@@ -1926,7 +2128,9 @@ window.__ModuleLoader__.load({
                   'aria-label': t('copyVersion').replace('{version}', version.version) }, t(copied === version.version ? 'copied' : 'copy')),
                 h('button', { type: 'button', className: 'opm-button opm-button-small', disabled: provided || current || blocked || !!busy.version || disabled,
                   title: switching && !current && !provided ? t(entry.name === 'dsh-open-market' ? 'selfUpdateHint' : 'updateHint') : undefined, 'aria-busy': active,
-                  'aria-label': t('versionAction').replace('{action}', action).replace('{version}', version.version), onClick: () => choose(version) }, action)),
+                  'aria-label': t('versionAction').replace('{action}', action).replace('{version}', version.version), onClick: () => choose(version) }, action),
+                switching && !provided && !current && !blocked && h('button', {type: 'button', className: 'opm-button opm-button-small', disabled: !!busy.version || disabled,
+                  'aria-label': t('versionAction').replace('{action}', t('manageIdle')).replace('{version}', version.version), onClick: () => choose(version, 'idle')}, t('manageIdle'))),
               actionError?.version === version.version && h('p', { className: 'opm-error opm-version-error', role: 'alert' }, actionError.text),
               h(ReleaseNotes, {entry, version, t}));
           })),
@@ -2099,6 +2303,60 @@ window.__ModuleLoader__.load({
       }, [root]);
     }
 
+    function attachHorizontalDrag(root) {
+      let gesture, suppress;
+      function down(event) {
+        if (event.pointerType !== 'mouse' || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        if (event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+        const rail = event.target.closest('.opm-rail, .opm-carousel-viewport');
+        if (!rail || !root.contains(rail) || rail.scrollWidth <= rail.clientWidth + 1) return;
+        gesture = {rail, id: event.pointerId, x: event.clientX, y: event.clientY, left: rail.scrollLeft, dragging: false};
+      }
+      function move(event) {
+        if (!gesture || event.pointerId !== gesture.id) return;
+        const dx = event.clientX - gesture.x, dy = event.clientY - gesture.y;
+        if (!gesture.dragging) {
+          if (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)) {gesture = undefined; return;}
+          if (Math.abs(dx) < 8 || Math.abs(dx) <= Math.abs(dy)) return;
+          gesture.dragging = true;
+          gesture.rail.dataset.dragging = 'true';
+          gesture.rail.setPointerCapture?.(event.pointerId);
+        }
+        event.preventDefault();
+        gesture.rail.scrollLeft = gesture.left - dx;
+      }
+      function finish(event) {
+        if (!gesture || event.pointerId !== gesture.id) return;
+        if (gesture.dragging) {
+          suppress = {rail: gesture.rail, until: event.timeStamp + 100};
+          delete gesture.rail.dataset.dragging;
+          if (gesture.rail.hasPointerCapture?.(event.pointerId)) gesture.rail.releasePointerCapture(event.pointerId);
+        }
+        gesture = undefined;
+      }
+      function click(event) {
+        if (!suppress || event.detail === 0) return;
+        if (event.timeStamp <= suppress.until && suppress.rail.contains(event.target)) {
+          event.preventDefault(); event.stopImmediatePropagation();
+        }
+        suppress = undefined;
+      }
+      function nativeDrag(event) { if (event.target.closest('.opm-rail, .opm-carousel-viewport')) event.preventDefault(); }
+      const doc = root.ownerDocument;
+      root.addEventListener('pointerdown', down, true);
+      root.addEventListener('click', click, true);
+      root.addEventListener('dragstart', nativeDrag);
+      doc.addEventListener('pointermove', move, {capture: true, passive: false});
+      doc.addEventListener('pointerup', finish, true);
+      doc.addEventListener('pointercancel', finish, true);
+      return () => {
+        if (gesture) delete gesture.rail.dataset.dragging;
+        root.removeEventListener('pointerdown', down, true); root.removeEventListener('click', click, true);
+        root.removeEventListener('dragstart', nativeDrag); doc.removeEventListener('pointermove', move, true);
+        doc.removeEventListener('pointerup', finish, true); doc.removeEventListener('pointercancel', finish, true);
+      };
+    }
+
     function useReducedMotion() {
       const [reduced, setReduced] = React.useState(() => !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
       React.useEffect(() => {
@@ -2228,38 +2486,396 @@ window.__ModuleLoader__.load({
           h(FloatingArrows, { title, t: props.t, start: edges.start, end: edges.end, move: scroll })));
     }
 
-    function HealthRow({ entry, update, ...props }) {
-      const title = titleOf(entry, props.resolve);
-      const current = entry.installation.installedVersion || props.t('unknownVersion');
-      return h('li', { className: 'opm-health-row' },
-        h(PluginIcon, { entry, title }),
-        h('div', { className: 'opm-health-copy' },
-          h('p', { className: 'opm-health-title' }, title),
-          h('p', { className: 'opm-version' }, update ? current + ' → ' + entry.defaultVersion : current)),
-        h(InstallButton, { ...props, entry, update, small: true }));
+    async function openNativePackage(name, {get, select, wait = () => new Promise(resolve => window.setTimeout(resolve, 50))}) {
+      let navigation = get();
+      if (typeof navigation?.openBundle !== 'function') {
+        select();
+        // Opening Plugins can mount the native navigation service on the next render.
+        for (let attempt = 0; attempt < 20; attempt++) {
+          navigation = get();
+          if (typeof navigation?.openBundle === 'function') break;
+          await wait();
+        }
+      }
+      if (typeof navigation?.openBundle !== 'function') return {ok: false};
+      await navigation.openBundle(name);
+      return {ok: true};
     }
 
-    // Installed plugins from this index: updates first, then versions this DSH cannot run, then the rest.
-    function InstalledPanel({ entries, onClose, restoreFocus, ...props }) {
-      const { t } = props;
-      const headingId = React.useId();
-      const [actionError, setActionError] = React.useState('');
-      const installed = entries.filter(entry => entry.installation.status !== 'not-installed')
-        .sort((a, b) => titleOf(a, props.resolve).localeCompare(titleOf(b, props.resolve), t('dateLocale')));
-      const incompatible = installed.filter(entry => !entry.defaultVersion);
-      const updates = installed.filter(entry => entry.defaultVersion && entry.installation.status === 'update-available');
-      const healthy = installed.filter(entry => entry.defaultVersion && entry.installation.status !== 'update-available');
-      function group(key, items, update) {
-        return items.length > 0 && h('div', { className: 'opm-health-group' },
-          h('h3', null, t(key) + ' · ' + items.length), h('ul', { className: 'opm-health-list' },
-            items.map(entry => h(HealthRow, { ...props, key: entry.name, entry, update, onError: setActionError }))));
+    function ManagementLauncher(props) {
+      const [open, setOpen] = React.useState(false);
+      const button = React.useRef(null);
+      const state = useMarket();
+      return h(React.Fragment, null,
+        h('button', {type: 'button', className: 'opm-button', ref: button, 'aria-haspopup': 'dialog', onClick: () => setOpen(true)}, props.t('health')),
+        open && h(InstalledPanel, {...props, metadata: state.metadata, entries: state.entries || [], onClose: () => setOpen(false), restoreFocus: () => button.current?.focus()}));
+    }
+
+    function managementMessage(answer, t) {
+      const key = {
+        'tasks-active': 'manageBusy', 'task-monitor-unavailable': 'manageMonitor', 'management-busy': 'manageUpdating',
+        'management-unavailable': 'manageUnavailable', 'host-restarted': 'manageRestarted', 'self-management': 'manageSelf',
+        'read-only': 'manageReadonly', 'restore-unavailable': 'restoreUnavailable', 'update-busy': 'manageUpdating',
+        'installation-changed': 'manageChanged', 'package-missing': 'manageMissing', 'queue-full': 'manageQueueFull',
+        'directory-unavailable': 'manageDirectoryUnavailable', 'diagnostics-unavailable': 'manageDiagnosticUnavailable',
+        'load-order-failed': 'manageOrderFailed', 'invalid-load-order': 'manageChanged',
+      }[answer?.code];
+      if (answer?.code === 'dependency-order') return t('manageDependencyOrder') + ' ' + answer.error;
+      if (answer?.code === 'load-order-failed') return t('manageOrderFailed') + (answer.error ? ' ' + errorText(answer.error, '') : '');
+      if (answer?.restored !== undefined) return updateOutcome(answer, t).error;
+      return key ? t(key) : errorText(answer?.error || answer?.code, t('unknownError'));
+    }
+
+    async function requestManagement(request, {fetchImpl = fetch, signal} = {}) {
+      const response = await fetchImpl('/dsh-open-market/manage', request === undefined ? {credentials: 'same-origin', signal}
+        : {method: 'POST', credentials: 'same-origin', headers: {'content-type': 'application/json'}, body: JSON.stringify(request), signal});
+      if (!response.ok) return {ok: false, code: 'management-unavailable'};
+      const result = await response.json();
+      return typeof result?.ok === 'boolean' ? result : {ok: false, code: 'management-unavailable'};
+    }
+
+    function catalogUpdate(bundle, entry) {
+      const version = entry && defaultVersionOf(entry);
+      if (!bundle.installed || !bundle.version || !version || !olderVersion(bundle.version, version.version)) return null;
+      const spec = version.install.spec;
+      if (spec.startsWith(bundle.name + '@') && bundle.source?.startsWith(bundle.name + '@')
+        && /^[a-zA-Z0-9~^<>=*| ._+-]+$/.test(bundle.source.slice(bundle.name.length + 1))) return version.install;
+      const gitIdentity = value => /^(git\+https:\/\/github\.com\/[^#]+)#([a-f0-9]{40})(&path:\/[^?#&]+)?$/.exec(value || '');
+      const before = gitIdentity(bundle.source), after = gitIdentity(spec);
+      return before && after && before[1].replace(/\.git$/, '') === after[1].replace(/\.git$/, '') && before[3] === after[3] ? version.install : null;
+    }
+
+    function managementComponentState(row, bundle, t) {
+      if (row.live?.diagnostic) return row.live.diagnostic;
+      if (row.live?.enabled === false || !bundle.enabled) return t('disabled');
+      const phase = {active: 'manageActive', loading: 'manageLoading', pending: 'managePending', failed: 'manageFailed', unloading: 'manageUnloading'}[row.live?.fiberPhase];
+      return phase ? t(phase) : t(row.live?.enabled ? 'enabled' : 'manageRowUnknown');
+    }
+
+    function ManagedStatus({bundle, t}) {
+      return h('span', {className: 'opm-status ' + (bundle.enabled ? 'opm-status-on' : 'opm-status-off')},
+        h('span', {'aria-hidden': true}, bundle.enabled ? '●' : '○'), t(bundle.enabled ? 'enabled' : 'disabled'));
+    }
+
+    function DirectoryLine({label, value, t, action, busy}) {
+      if (!value) return null;
+      return h('div', {className: 'opm-directory'}, h('span', {className: 'opm-muted'}, label),
+        h('code', null, value.path), h('button', {type: 'button', className: 'opm-button opm-button-small', disabled: busy,
+          title: value.archived ? t('manageArchived') : value.path,
+          onClick: () => action({action: 'open-directory', location: value.id})}, t('manageOpenDirectory')));
+    }
+
+    function RuntimeOverview({diagnostics, t, action, safe, busy, rows}) {
+      const [draft, setDraft] = React.useState([]);
+      React.useEffect(() => {setDraft(diagnostics?.customOrder ?? []);}, [diagnostics?.revision]);
+      if (!diagnostics?.available) return h('p', {className: 'opm-muted'}, t('manageDiagnosticUnavailable'));
+      const {environment} = diagnostics;
+      const changed = draft.join('\n') !== diagnostics.customOrder.join('\n');
+      const move = (index, delta) => setDraft(current => {const next = [...current]; [next[index], next[index + delta]] = [next[index + delta], next[index]]; return next;});
+      const order = h('ol', {className: 'opm-load-order'}, draft.map((name, index) => {
+        const title = rows.find(row => row.bundle.name === name)?.title ?? name;
+        return h('li', {key: name}, h('span', null, title), h('code', null, name),
+          h('button', {type: 'button', className: 'opm-button opm-button-small', disabled: busy || index === 0,
+            'aria-label': t('manageOrderUp').replace('{name}', title), onClick: () => move(index, -1)}, '↑'),
+          h('button', {type: 'button', className: 'opm-button opm-button-small', disabled: busy || index === draft.length - 1,
+            'aria-label': t('manageOrderDown').replace('{name}', title), onClick: () => move(index, 1)}, '↓'));
+      }));
+      return h('details', {className: 'opm-manage-overview'}, h('summary', null, t('manageOverview')),
+        h('p', {className: 'opm-muted'}, 'DSH ' + environment.runtimeVersion),
+        [['manageInstallation', 'installation'], ['manageHome', 'home'], ['manageProfile', 'profile']].map(([label, key]) =>
+          h(DirectoryLine, {key, label: t(label), value: environment[key], t, action, busy})),
+        h('p', {className: 'opm-muted'}, environment.patch),
+        h('h4', null, t('manageOrder')), h('p', {className: 'opm-muted'}, t('manageOrderHelp')),
+        draft.length ? order : h('p', {className: 'opm-muted'}, t('manageOrderEmpty')),
+        changed && h('div', {className: 'opm-manage-actions'},
+          h('button', {type: 'button', className: 'opm-button opm-button-primary', disabled: busy || !safe,
+            onClick: () => action({action: 'reorder', order: draft, revision: diagnostics.revision})}, t('manageOrderSaved')),
+          h('button', {type: 'button', className: 'opm-button', disabled: busy, onClick: () => setDraft(diagnostics.customOrder)}, t('manageOrderReset'))));
+    }
+
+    function PluginDiagnostics({item, t, action, busy}) {
+      if (!item) return null;
+      const compatibility = {compatible: 'manageCompatible', incompatible: 'manageIncompatible', undeclared: 'manageUndeclared', exempted: 'manageExempted', unknown: 'manageUnknown'};
+      const dependencyStatus = {satisfied: 'manageDependencySatisfied', missing: 'manageDependencyMissing', mismatch: 'manageDependencyMismatch',
+        'optional-missing': 'manageDependencyOptional', unverified: 'manageDependencyUnverified', unknown: 'manageDependencyUnknown'};
+      const dependencies = h('ul', {className: 'opm-dependencies'}, item.dependencies.map(dep => h('li', {key: dep.name},
+        h('strong', null, dep.name), h('span', {className: 'opm-muted'}, dep.requested + ' · ' + (dep.version || t('manageUnknown'))),
+        h('span', {className: ['missing', 'mismatch'].includes(dep.status) ? 'opm-error' : 'opm-muted'}, t(dependencyStatus[dep.status] || 'manageUnknown')))));
+      return h('details', {className: 'opm-plugin-diagnostics'}, h('summary', null, t('manageDiagnostics')),
+        h(DirectoryLine, {label: t('managePackage'), value: item.directory, t, action, busy}),
+        h(DirectoryLine, {label: t('manageConfiguration'), value: item.configuration, t, action, busy}),
+        h('p', {className: 'opm-muted'}, t('manageSharedConfig')),
+        h('dl', null, h('dt', null, t('manageOrder')), h('dd', null, item.order ?? t('manageNotSelected')),
+          h('dt', null, t('manageRuntimeOrder')), h('dd', null, item.runtimeOrder.join(', ') || t('manageRowUnknown')),
+          h('dt', null, t('manageCompatibility')), h('dd', null, t(compatibility[item.compatibility?.status] || 'manageUnknown'))),
+        item.compatibility?.requirements && h('pre', {className: 'opm-manage-document'}, JSON.stringify(item.compatibility.requirements, null, 2)),
+        item.error && h('p', {className: 'opm-error'}, item.error),
+        h('h4', null, t('manageDependencies')), item.dependencies.length ? dependencies : h('p', {className: 'opm-muted'}, t('manageNoDependencies')),
+        item.dependents.length > 0 && h('p', null, t('manageDependents') + ': ' + item.dependents.join(', ')),
+        h('h4', null, t('manageRiskCount')), h('p', {className: 'opm-muted'}, t('manageRiskHelp')),
+        item.risks.length ? h('ul', null, item.risks.map((risk, index) => h('li', {key: index},
+          t({'install-scripts': 'manageInstallScripts', dependency: 'manageDependencyRisk', compatibility: 'manageCompatibilityRisk'}[risk.code] || 'manageUnknown') + ': ' + risk.detail)))
+          : h('p', {className: 'opm-muted'}, t('manageNoRisks')));
+    }
+
+    function managementRows(bundles, entries, checks, plugins, resolve) {
+      const catalog = new Map(entries.map(entry => [entry.name, entry]));
+      const live = new Map(plugins.map(plugin => [plugin.entryId, plugin]));
+      return bundles.filter(bundle => bundle.installed || bundle.availability === 'installation').map(bundle => {
+        const entry = catalog.get(bundle.name);
+        const rows = (bundle.rows || []).map(row => ({...row, live: live.get(row.entryId)}));
+        const check = checks[bundle.name];
+        const offered = bundle.updatable && check?.status === 'listed' && check.installed === bundle.version
+          ? check.versions.find(version => version.bundle && !version.deprecated && !version.incompatible
+            && olderVersion(bundle.version, version.version) && (!version.prerelease || bundle.version?.includes('-'))) : null;
+        const target = offered ? {spec: bundle.name + '@' + offered.version, registry: check.registry} : catalogUpdate(bundle, entry);
+        return {bundle, entry, rows, target, system: !!(bundle.official || bundle.availability === 'installation'), title: entry ? titleOf(entry, resolve) : resolve(bundle.meta?.title ?? '') || bundle.name,
+          problem: !!(bundle.error || bundle.meta?.error || rows.some(row => row.live?.diagnostic || row.live?.fiberPhase === 'failed'))};
+      }).sort((a, b) => +a.system - +b.system || a.title.localeCompare(b.title));
+    }
+
+    function filterManaged(rows, {query = '', filter = 'all', names} = {}) {
+      const needle = searchText(query).trim();
+      return rows.filter(row => (!names || names.includes(row.bundle.name))
+        && (!needle || searchText([row.title, row.bundle.name, row.bundle.source].filter(Boolean).join(' ')).includes(needle))
+        && (filter === 'all' || filter === 'enabled' && row.bundle.enabled || filter === 'disabled' && !row.bundle.enabled
+          || filter === 'updates' && row.target || filter === 'problems' && row.problem || filter === 'external' && !row.entry));
+    }
+
+    function InstalledPanel({ entries = [], onClose, restoreFocus, remote, ...props }) {
+      const {t, resolve, manager, openPackage} = props;
+      const headingId = React.useId(), detailId = React.useId();
+      const {groups} = useFavorites();
+      const [inventory, setInventory] = React.useState({status: 'loading', bundles: [], plugins: [], management: null});
+      const [query, setQuery] = React.useState(''), [filter, setFilter] = React.useState('all'), [group, setGroup] = React.useState('');
+      const [selected, setSelected] = React.useState(''), [checked, setChecked] = React.useState([]), [checks, setChecks] = React.useState({});
+      const [busy, setBusy] = React.useState(false), [checking, setChecking] = React.useState(false), [note, setNote] = React.useState('');
+      const [removing, setRemoving] = React.useState(''), [confirmation, setConfirmation] = React.useState('');
+      const [documentState, setDocumentState] = React.useState(null);
+      const [systemOpen, setSystemOpen] = React.useState(false);
+      const alive = React.useRef(true), read = React.useRef(null), documentRequest = React.useRef(0);
+      React.useEffect(() => {
+        alive.current = true;
+        let reading = false;
+        const abort = new AbortController();
+        read.current = async () => {
+          if (reading) return;
+          reading = true;
+          try {
+            const service = manager();
+            const management = await requestManagement(undefined, {signal: abort.signal}).catch(() => null);
+            const [bundles, plugins] = management?.ok && management.inventory
+              ? [{ok: true, value: management.inventory.bundles}, {ok: true, value: management.inventory.plugins}]
+              : await Promise.all([service?.listBundles?.(), service?.listPlugins?.()]);
+            if (!bundles?.ok) throw Error(errorText(bundles?.error, t('manageUnavailable')));
+            if (alive.current) setInventory({status: 'ready', bundles: bundles.value, plugins: plugins?.ok ? plugins.value : [], management});
+          } catch (error) {
+            if (alive.current) setInventory(current => ({...current, status: current.bundles.length ? 'ready' : 'error', error: errorText(error, t('manageUnavailable'))}));
+          } finally { reading = false; }
+        };
+        void read.current();
+        const timer = window.setInterval(() => { void read.current?.(); }, 3000);
+        const off = remote?.$on?.('plugin-manager/changed', () => { void read.current?.(); });
+        return () => { alive.current = false; documentRequest.current++; abort.abort(); window.clearInterval(timer); off?.(); read.current = null; };
+      }, [manager, remote, t]);
+      const rows = React.useMemo(() => managementRows(inventory.bundles, entries, checks, inventory.plugins, resolve), [inventory.bundles, entries, checks, inventory.plugins, resolve]);
+      const shown = filterManaged(rows, {query, filter, names: groups.find(item => item.id === group)?.names});
+      const current = shown.find(row => row.bundle.name === selected) ?? shown.find(row => !row.system) ?? shown[0];
+      const diagnostics = inventory.management?.diagnostics;
+      const activity = inventory.management?.activity;
+      const available = inventory.management?.ok && activity?.available;
+      const safe = available && !activity.busy;
+      const jobs = inventory.management?.jobs ?? [];
+      const pendingNames = new Set(jobs.filter(job => ['queued', 'waiting', 'running'].includes(job.state)).map(job => job.request.name));
+      React.useEffect(() => {
+        documentRequest.current++; setDocumentState(null); setRemoving(''); setConfirmation('');
+      }, [current?.bundle.name]);
+      React.useEffect(() => {
+        setChecked(names => names.filter(name => inventory.bundles.some(bundle => bundle.name === name)));
+      }, [inventory.bundles]);
+      React.useEffect(() => {if (query.trim() || filter !== 'all' || group) setSystemOpen(true);}, [query, filter, group]);
+
+      const button = (label, onClick, disabled = false, className = '') => h('button', {type: 'button', className: 'opm-button opm-button-small ' + className, onClick, disabled}, label);
+      async function action(request) {
+        setBusy(true); setNote('');
+        try {
+          const answer = await requestManagement(request);
+          if (alive.current) setNote(answer.ok ? t(answer.queued ? 'manageQueued' : answer.restart ? 'manageRestart' : 'manageDone') : managementMessage(answer, t));
+          await read.current?.();
+          return answer;
+        } catch (error) { if (alive.current) setNote(errorText(error, t('manageUnavailable'))); return {ok: false}; }
+        finally { if (alive.current) setBusy(false); }
       }
-      return h(Dialog, { labelledBy: headingId, closeLabel: t('close'), onClose, restoreFocus, wide: true },
-        h('div', { className: 'opm-favorites-head' }, h('h2', { id: headingId }, t('health'))),
-        group('updates', updates, true), group('incompatibleGroup', incompatible, false), group('upToDateGroup', healthy, false),
-        installed.length === 0 && h('p', { className: 'opm-muted' }, t('noneInstalled')),
-        installed.length > 0 && !updates.length && h('p', { className: 'opm-note' }, t('upToDate')),
-        actionError && h('p', { className: 'opm-error opm-action-error', role: 'alert' }, t('actionFailed') + ': ' + actionError));
+      async function update(row, when) {
+        if (!row.target) return;
+        return action({action: 'update', name: row.bundle.name, ...installTarget(row.target, getSettings()), when, requestId: crypto.randomUUID()});
+      }
+      async function batch(kind) {
+        const targets = rows.filter(row => checked.includes(row.bundle.name));
+        setBusy(true); setNote('');
+        const results = [];
+        for (const row of targets) {
+          if (!alive.current) break;
+          if (kind === 'update' && !row.target) continue;
+          if (kind !== 'update' && (row.bundle.name === 'dsh-open-market' || row.bundle.readOnlyReason)) continue;
+          try {
+            const answer = await requestManagement(kind === 'update'
+              ? {action: 'update', name: row.bundle.name, ...installTarget(row.target, getSettings()), when: 'idle', requestId: crypto.randomUUID()}
+              : {action: 'toggle', name: row.bundle.name, enabled: kind === 'enable'});
+            results.push(row.title + ': ' + (answer.ok ? t(answer.queued ? 'manageQueued' : answer.restart ? 'manageRestart' : 'manageDone') : managementMessage(answer, t)));
+            if (!answer.ok && ['tasks-active', 'task-monitor-unavailable'].includes(answer.code)) break;
+          } catch (error) { results.push(row.title + ': ' + errorText(error, t('unknownError'))); }
+        }
+        if (alive.current) { setBusy(false); setNote(results.join('\n') || t('nothingToChange')); }
+        await read.current?.();
+      }
+      async function checkUpdates() {
+        setChecking(true); setNote('');
+        const service = manager(), targets = rows.filter(row => (!checked.length || checked.includes(row.bundle.name)) && row.bundle.installed);
+        const next = {};
+        for (let offset = 0; offset < targets.length; offset += 3) {
+          await Promise.all(targets.slice(offset, offset + 3).map(async row => {
+            try {
+              const answer = await service?.listVersions?.(row.bundle.name, {});
+              next[row.bundle.name] = answer?.ok ? answer.value : {status: 'refused', reason: errorText(answer?.error, t('manageCheckUnavailable'))};
+            } catch (error) { next[row.bundle.name] = {status: 'refused', reason: errorText(error, t('manageCheckUnavailable'))}; }
+          }));
+          if (!alive.current) return;
+        }
+        setChecks(current => ({...current, ...next})); setChecking(false); setNote(t('manageChecked'));
+      }
+      async function openNative(name) {
+        onClose();
+        try {
+          const answer = await openPackage(name);
+          if (answer?.ok === false) props.onNotice?.(t('manageNativeUnavailable'));
+        } catch { props.onNotice?.(t('manageNativeUnavailable')); }
+      }
+      async function loadDocument(name) {
+        const request = ++documentRequest.current;
+        setDocumentState({status: 'loading'});
+        try {
+          const answer = await manager()?.readBundleDetail?.(name, t('dateLocale'), {npmFileSources: []});
+          if (!alive.current || request !== documentRequest.current) return;
+          if (!answer?.ok) throw Error(errorText(answer?.error, t('manageUnavailable')));
+          setDocumentState(answer.value.status === 'found' ? {status: 'ready', markdown: answer.value.markdown} : {status: 'none'});
+        } catch (error) { if (alive.current && request === documentRequest.current) setDocumentState({status: 'error', error: errorText(error, t('manageUnavailable'))}); }
+      }
+      async function copyReport() {
+        const report = {generatedAt: new Date().toISOString(), plugins: rows.filter(row => !checked.length || checked.includes(row.bundle.name)).map(row => ({
+          name: row.bundle.name, version: row.bundle.version, enabled: row.bundle.enabled, source: row.bundle.source,
+          problem: row.bundle.error, components: row.rows.map(item => ({name: item.moduleName, state: item.live?.fiberPhase, diagnostic: item.live?.diagnostic})),
+        })), diagnostics, queue: jobs};
+        try { await navigator.clipboard.writeText(JSON.stringify(report, null, 2)); setNote(t('manageReportCopied')); }
+        catch (error) { setNote(errorText(error, t('unknownError'))); }
+      }
+      const detail = current && (() => {
+        const {bundle, entry, rows: components, target} = current;
+        const locked = busy || !safe || !!bundle.readOnlyReason || pendingNames.has(bundle.name);
+        return h('div', {className: 'opm-manage-detail', id: detailId, role: 'region', 'aria-label': t('manageDetails')},
+          h('h3', null, current.title), h('p', {className: 'opm-muted'}, bundle.name),
+          h('dl', null, h('dt', null, t('manageCurrent')), h('dd', null, bundle.version || t('unknownVersion')),
+            h('dt', null, t('manageSource')), h('dd', null, bundle.source || t(bundle.official ? 'providedVersion' : 'unknownVersion')),
+            h('dt', null, t('manageStatus')), h('dd', null, h(ManagedStatus, {bundle, t}))),
+          h('div', {className: 'opm-manage-actions'},
+            button(t(bundle.enabled ? 'disable' : 'enable'), () => action({action: 'toggle', name: bundle.name, enabled: !bundle.enabled}), locked || bundle.name === 'dsh-open-market'),
+            button(t('manageUninstall'), () => { setRemoving(bundle.name); setConfirmation(''); }, locked || !bundle.removable || bundle.name === 'dsh-open-market', 'opm-manage-danger')),
+          button(t('manageSettings'), () => openNative(bundle.name), false, 'opm-manage-native'),
+          bundle.readOnlyReason && h('p', {className: 'opm-note'}, t('manageReadonly')),
+          bundle.name === 'dsh-open-market' && h('p', {className: 'opm-note'}, t('manageSelf')),
+          bundle.error && h('p', {className: 'opm-error', role: 'status'}, errorText(bundle.error, t('unknownError'))),
+          removing === bundle.name && h('div', {className: 'opm-manage-remove', role: 'group', 'aria-label': t('manageRemoveTitle')},
+            h('strong', null, t('manageRemoveTitle')), h('p', null, t('manageRemoveHelp')),
+            h('label', null, t('manageConfirmName'), h('input', {className: 'opm-manage-search', value: confirmation, autoComplete: 'off', spellCheck: false, onChange: event => setConfirmation(event.target.value)})),
+            h('div', {className: 'opm-manage-actions'}, button(t('manageCancelRemove'), () => { setRemoving(''); setConfirmation(''); }),
+              button(t('manageUninstall'), async () => { const answer = await action({action: 'remove', name: bundle.name, confirmation}); if (answer?.ok) {setRemoving(''); setConfirmation('');} }, locked || confirmation !== bundle.name, 'opm-manage-danger'))),
+          h('section', null, h('h4', null, t('updates')),
+            target ? h(React.Fragment, null, h('p', {className: 'opm-version'}, bundle.version + ' → ' + (target.spec.startsWith(bundle.name + '@') ? target.spec.slice(bundle.name.length + 1) : entry?.defaultVersion || t('manageTarget'))),
+              h('div', {className: 'opm-manage-actions'}, button(t('manageNow'), () => update(current, 'now'), locked),
+                button(t('manageIdle'), () => update(current, 'idle'), busy || !available || !!bundle.readOnlyReason || pendingNames.has(bundle.name), 'opm-button-primary')))
+              : h('p', {className: 'opm-muted'}, checks[bundle.name]?.status === 'refused' ? checks[bundle.name].reason : t('manageNoUpdate'))),
+          h(PluginDiagnostics, {item: diagnostics?.bundles?.find(item => item.name === bundle.name), t, action, busy}),
+          h('details', {className: 'opm-components'}, h('summary', null, t('manageRows') + ' (' + components.length + ')'),
+            components.length ? h('ul', {className: 'opm-favorite-list'}, components.map(row => h('li', {key: row.rowId},
+              h('p', null, resolve(row.meta?.title ?? '') || row.moduleName),
+              h('p', {className: row.live?.diagnostic ? 'opm-error' : 'opm-muted'}, managementComponentState(row, bundle, t)))))
+              : h('p', {className: 'opm-muted'}, t('manageNoRows'))),
+          h('section', null, h('h4', null, t('manageNotes')),
+            entry ? h(React.Fragment, null, h('p', null, descriptionOf(entry, resolve, t)), h(Tags, {entry, metadata: props.metadata, resolve, t}),
+              h('div', {className: 'opm-manage-actions'}, h(FavoriteButton, {name: bundle.name, title: current.title, t}),
+                h('a', {className: 'opm-button opm-button-small', href: marketPageOf(entry, t), target: '_blank', rel: 'noopener noreferrer'}, t('marketPage'))))
+              : h(React.Fragment, null, h('p', {className: 'opm-muted'}, t('manageNoMarket')), bundle.description && h('p', null, bundle.description), h(FavoriteButton, {name: bundle.name, title: current.title, t}))),
+          h('section', null, h('h4', null, t('manageDocument')),
+            !documentState ? button(t('manageLoadDocument'), () => loadDocument(bundle.name))
+              : documentState.status === 'ready' ? h('pre', {className: 'opm-manage-document'}, documentState.markdown)
+              : h('p', {className: 'opm-muted', role: 'status'}, documentState.status === 'loading' ? t('detailLoading') : documentState.error || t('manageNoDocument'))));
+      })();
+      const renderRow = row => {
+        const name = row.bundle.name;
+        const badges = h('span', {className: 'opm-manage-badges'},
+          h(ManagedStatus, {bundle: row.bundle, t}),
+          row.target && h('span', {className: 'opm-tag'}, t('updateAvailable')),
+          row.problem && h('span', {className: 'opm-tag'}, t('manageProblems')),
+          pendingNames.has(name) && h('span', {className: 'opm-tag'}, t('manageStateQueued')));
+        const copy = h('span', {className: 'opm-manage-copy'}, h('strong', null, row.title),
+          h('small', {title: name + ' · ' + (row.bundle.version || t('unknownVersion'))}, name + ' · ' + (row.bundle.version || t('unknownVersion'))), badges);
+        return h('li', {key: name, className: 'opm-manage-row'},
+          h('input', {type: 'checkbox', checked: checked.includes(name), 'aria-label': t('manageSelect').replace('{name}', row.title),
+            onChange: event => setChecked(names => event.target.checked ? [...new Set([...names, name])] : names.filter(item => item !== name))}),
+          h('button', {type: 'button', className: 'opm-manage-open', 'aria-current': current?.bundle.name === name, 'aria-controls': detailId, onClick: () => setSelected(name)},
+            h(PluginIcon, {entry: row.entry || {name, icon: row.bundle.meta?.icon}, title: row.title}), copy));
+      };
+      const customRows = shown.filter(row => !row.system), systemRows = shown.filter(row => row.system);
+      const list = h('div', {className: 'opm-manage-list'},
+        h('section', {className: 'opm-manage-group', 'aria-label': t('manageCustom')},
+          h('h3', {className: 'opm-manage-group-title'}, t('manageCustom'), h('span', null, customRows.length)),
+          h('ul', null, customRows.map(renderRow))),
+        systemRows.length > 0 && h('details', {className: 'opm-manage-group opm-system-group', open: systemOpen,
+          onToggle: event => {if (event.target === event.currentTarget) setSystemOpen(event.currentTarget.open);}},
+          h('summary', {className: 'opm-manage-group-title'}, t('manageSystem'), h('span', null, systemRows.length)),
+          h('p', {className: 'opm-muted'}, t('manageSystemHelp')), h('ul', null, systemRows.map(renderRow))));
+      const queue = h('details', {className: 'opm-manage-queue', open: jobs.some(job => ['queued', 'waiting', 'running'].includes(job.state))},
+        h('summary', null, t('manageQueuedCount').replace('{count}', jobs.filter(job => ['queued', 'waiting', 'running'].includes(job.state)).length)),
+        !jobs.length ? h('p', {className: 'opm-muted'}, t('manageQueueEmpty')) : h('ul', null, [...jobs].reverse().map(job => {
+          let control;
+          if (['queued', 'waiting'].includes(job.state)) control = button(t('manageCancel'), () => action({action: 'cancel', id: job.id}), busy);
+          else if (['failed', 'interrupted'].includes(job.state)) control = h(React.Fragment, null,
+            button(t('manageRetry'), () => action({action: 'retry', id: job.id}), busy || job.result?.code === 'installation-changed'),
+            button(t('manageDismiss'), () => action({action: 'dismiss', id: job.id}), busy));
+          else if (job.state !== 'running') control = button(t('manageDismiss'), () => action({action: 'dismiss', id: job.id}), busy);
+          return h('li', {key: job.id, className: 'opm-manage-job'},
+            h('span', null, job.request.name + (job.request.version ? ' ' + job.request.version : '')),
+            h('span', {className: 'opm-muted'}, t('manageState' + job.state[0].toUpperCase() + job.state.slice(1))), control,
+            job.result && (!job.result.ok || job.result.restart) && h('p', {className: 'opm-muted'}, job.result.ok ? t('manageRestart') : managementMessage(job.result, t)));
+        })));
+      return h(Dialog, {labelledBy: headingId, closeLabel: t('close'), onClose, restoreFocus, panelClass: 'opm-panel-management'},
+        h('div', {className: 'opm-manage-head'}, h('h2', {id: headingId}, t('health')),
+          h('span', {className: 'opm-muted'}, t('manageCount').replace('{shown}', shown.length).replace('{total}', rows.length)),
+          h('span', {className: 'opm-muted', role: 'status'}, !available ? t('manageMonitoring') : activity.busy ? t('manageRunning').replace('{count}', Math.max(activity.running, activity.activities)) : t('manageReady'))),
+        diagnostics?.available && h('div', {className: 'opm-manage-metrics'},
+          h('span', null, t('manageLoaded') + ' ' + diagnostics.summary.loadedCustom + ' / ' + diagnostics.summary.custom),
+          h('span', {className: diagnostics.summary.errors ? 'opm-error' : undefined}, t('manageErrorCount') + ' ' + diagnostics.summary.errors),
+          h('span', null, t('manageRiskCount') + ' ' + diagnostics.summary.risks)),
+        h('div', {className: 'opm-manage-controls'}, h('input', {type: 'search', className: 'opm-manage-search', value: query, placeholder: t('manageSearch'), 'aria-label': t('manageSearch'), onChange: event => setQuery(event.target.value)}),
+          h('select', {value: group, 'aria-label': t('manageGroup'), onChange: event => setGroup(event.target.value)}, h('option', {value: ''}, t('manageAllGroups')),
+            groups.map(item => h('option', {key: item.id, value: item.id}, groupLabel(item, t)))),
+          button(t(checking ? 'manageChecking' : 'manageCheck'), checkUpdates, checking || inventory.status !== 'ready'),
+          button(t('manageRefresh'), () => read.current?.(), busy), button(t('manageReport'), copyReport, inventory.status !== 'ready')),
+        h('div', {className: 'opm-manage-tabs', role: 'group', 'aria-label': t('manageFilter')},
+          [['all', 'manageAll'], ['enabled', 'manageEnabled'], ['disabled', 'manageDisabled'], ['updates', 'manageUpdates'], ['problems', 'manageProblems'], ['external', 'manageExternal']]
+            .map(([value, label]) => h('button', {key: value, type: 'button', className: 'opm-button opm-button-small', 'aria-pressed': filter === value, onClick: () => setFilter(value)}, t(label)))),
+        h('p', {className: 'opm-manage-status', role: 'status', 'aria-live': 'polite'}, note || inventory.error || (!available ? t('manageMonitor') : t('manageIdleHelp'))),
+        h(RuntimeOverview, {diagnostics, t, action, safe, busy, rows}),
+        h('div', {className: 'opm-manage-body'},
+          h('div', {className: 'opm-manage-column'},
+            h('div', {className: 'opm-manage-bulk'},
+              button(t(checked.length ? 'manageClear' : 'manageSelectAll'), () => setChecked(checked.length ? [] : shown.map(row => row.bundle.name))),
+              h('span', {className: 'opm-muted'}, t('manageSelected').replace('{count}', checked.length)),
+              checked.length > 0 && h(React.Fragment, null, button(t('enableAll'), () => batch('enable'), busy || !safe), button(t('disableAll'), () => batch('disable'), busy || !safe),
+                button(t('manageQueueSelected'), () => batch('update'), busy || !available))),
+            inventory.status === 'loading' ? h('p', {role: 'status'}, t('detailLoading')) : list,
+            inventory.status !== 'loading' && !shown.length && h('p', {className: 'opm-muted'}, t('manageNoResults'))),
+          detail || h('p', {className: 'opm-muted'}, t('manageNoSelection'))), queue);
     }
 
     const CATALOG_SORTS = { recommended: 'recommended', popular: 'popular', trending: 'trending', stars: 'sortStars', newest: 'newest' };
@@ -2361,7 +2977,7 @@ window.__ModuleLoader__.load({
           h('svg', {viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, 'aria-hidden': true}, h('path', {d: 'm4 6 4 4 4-4'}))),
         h('button', { type: 'button', className: 'opm-button opm-favorites-button', 'aria-haspopup': 'dialog', onClick: event => onPanel('favorites', event) },
           h('span', { 'aria-hidden': true }, '☆'), t('favorites'), count > 0 && h('small', null, count)),
-        updates != null && h('button', { type: 'button', className: 'opm-button opm-favorites-button opm-installed-button', 'aria-haspopup': 'dialog',
+        h('button', { type: 'button', className: 'opm-button opm-favorites-button opm-installed-button', 'aria-haspopup': 'dialog',
           title: updates ? t('updates') + ' · ' + updates : undefined, onClick: event => onPanel('installed', event) },
           t('health'), updates > 0 && h('small', null, '↑' + updates)),
         h('button', { type: 'button', className: 'opm-button opm-icon-button', 'aria-haspopup': 'dialog', title: t('settings'), 'aria-label': t('settings'),
@@ -2424,8 +3040,6 @@ window.__ModuleLoader__.load({
       }, [readBundles, remote]);
 
       async function setEnabled(names, enabled) {
-        const service = manager();
-        if (!service?.setBundleEnabled) return setNote(t('toggleUnavailable'));
         const targets = names.filter(name => name !== 'dsh-open-market' && bundles.has(name) && bundles.get(name).enabled !== enabled);
         const skipped = !enabled && names.includes('dsh-open-market') && bundles.has('dsh-open-market');
         if (!targets.length) return setNote(t(skipped ? 'selfSkipped' : 'nothingToChange'));
@@ -2436,11 +3050,14 @@ window.__ModuleLoader__.load({
         const failures = [];
         for (const name of targets) {
           try {
-            const answer = await service.setBundleEnabled(name, enabled);
-            const application = answer?.ok ? answer.value?.application : undefined;
-            if (!answer?.ok || application === 'failed') throw new Error(errorText(answer?.ok ? answer.value?.error : answer?.error, t('unknownError')));
+            const answer = await requestManagement({action: 'toggle', name, enabled});
+            if (!answer.ok) {
+              failures.push(name + ': ' + managementMessage(answer, t));
+              if (['tasks-active', 'task-monitor-unavailable'].includes(answer.code)) break;
+              continue;
+            }
             changed++;
-            if (application === 'restart-required') restart = true;
+            if (answer.restart) restart = true;
           } catch (error) {
             failures.push(name + ': ' + errorText(error, t('unknownError')));
           }
@@ -2779,6 +3396,7 @@ window.__ModuleLoader__.load({
       }, [panel]);
       const state = useMarket();
       useRowBleed(root);
+      React.useEffect(() => root.current ? attachHorizontalDrag(root.current) : undefined, [root]);
       const [day, setDay] = React.useState(localDay);
       const preferences = useSettings();
       React.useEffect(() => {
@@ -2847,7 +3465,7 @@ window.__ModuleLoader__.load({
       }
 
       const installWith = React.useCallback(target => install(installTarget(target, getSettings())), [install]);
-      const props = { t, resolve, install: installWith, openPackage, manager, metadata: state.metadata, onError: setActionError, onNotice: setActionNotice, busyLabel,
+      const props = { t, resolve, remote, install: installWith, openPackage, manager, metadata: state.metadata, onError: setActionError, onNotice: setActionNotice, busyLabel,
         likesEnabled: preferences.likes, likes, onOpen: (entry, returnTarget) => setSelected({ entry, returnTarget }) };
       let content;
       if (state.status === 'loading') content = h(Loading, { t });
@@ -2873,6 +3491,8 @@ window.__ModuleLoader__.load({
       const detailEntry = selected && (state.entries?.find(entry => entry.name === selected.entry.name) || selected.entry);
       return h('div', { className: 'opm-root opm-market', ref: root, tabIndex: -1 },
         h('div', { inert: selected || panel ? '' : undefined }, content,
+        state.status !== 'ready' && h('button', {type: 'button', className: 'opm-button opm-installed-button', 'aria-haspopup': 'dialog',
+          onClick: event => setPanel({kind: 'installed', from: event.currentTarget})}, t('health')),
         h('div', { className: 'opm-footer' },
           h('a', { className: 'opm-footer-link', href: t('websiteUrl'), target: '_blank', rel: 'noopener noreferrer',
             onClick: supportMarket,
@@ -2945,11 +3565,7 @@ window.__ModuleLoader__.load({
         layout = ctx.layout;
         ctx.effect(() => () => { layout = undefined; }, 'open-market: layout');
       });
-      const openPackage = name => {
-        const navigation = ctx.get('pluginNavigation');
-        if (navigation) navigation.openBundle(name);
-        else layout?.selectPanel('plugins');
-      };
+      const openPackage = name => openNativePackage(name, {get: () => ctx.get('pluginNavigation'), select: () => layout?.selectPanel('plugins')});
       function SidebarPage() {
         return h('div', { className: 'opm-page' }, h('div', { className: 'opm-page-inner' },
           h('header', { className: 'opm-page-head', 'data-window-drag': true }, h('h1', null, t('title'))),
@@ -2998,7 +3614,8 @@ window.__ModuleLoader__.load({
       }, 'open-market: sidebar page');
       function SettingsSection({ view }) {
         if (view !== 'page') return null;
-        return h('div', { className: 'opm-root' }, h(SettingsGroups, { t, manager: getManager }));
+        return h('div', { className: 'opm-root' }, h(ManagementLauncher, {t, manager: getManager, remote: ctx.remote, resolve, openPackage}),
+          h(SettingsGroups, { t, manager: getManager }));
       }
       ctx.slots.inject('plugins.bundle.config', () => ctx.slots.register(
         { name: 'plugins.bundle.config', key: 'dsh-open-market' }, SettingsSection));
@@ -3046,6 +3663,8 @@ window.__ModuleLoader__.load({
     const internals = { sortCatalog, listingOf, installDirectly, sidebarWanted, normalizeSettings, registryUrl, installTarget, bleedFor, needsRefresh, validCatalog, withInstallation, getMarket, syncMarket, enterMarket, REFRESH_INTERVAL, CACHE_SCHEMA, INDEX_URL,
       npmVersionRegistry, declaredDshRanges, npmVersions, loadNpmVersions, versionChoices, versionInstall, versionCommand, installVersion, requestSelfUpdate, VERSION_CACHE_TTL,
       PluginDetails, OtherVersions, countSelfInstall, supportMarket, updateSettings, getLikes, FooterInvite,
+      InstalledPanel, ManagementLauncher, Toolbar, managementRows, filterManaged, requestManagement, managementMessage, openNativePackage,
+      attachHorizontalDrag, RuntimeOverview, PluginDiagnostics, Tags,
       hydrateProfile, getProfileStatus, getSettings, getFavorites, writeFavorites, filterCatalog, requestBundleUpdate,
       extractScreenshots, extractVersionNotes, loadScreenshots, loadReleaseNotes, ReleaseNotes, Screenshots, zh, en, styles: STYLES,
       syncTheme, THEME_ATTRIBUTE, THEME_LINK_ID };

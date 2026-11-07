@@ -4,7 +4,8 @@ import { mkdtemp, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { ensureIndex, ensureMarketBundle, forgetIfTurnedOff, openMarket, outsideReload, INDEX_URL, MARKET_BUNDLE } from './index.js';
+import {Readable} from 'node:stream';
+import { apply, ensureIndex, ensureMarketBundle, forgetIfTurnedOff, openMarket, outsideReload, INDEX_URL, MARKET_BUNDLE } from './index.js';
 
 function market(urls = []) {
   return {
@@ -13,6 +14,30 @@ function market(urls = []) {
     async setIndexes(next) { this.urls = next; }
   };
 }
+
+test('all registered management and update routes share task protection', async t => {
+  const routes = new Map(), disposers = [], listeners = new Set();
+  const agent = {id: 'busy', status: 'running', runMaintenance: () => assert.fail('Cannot reserve a running Agent')};
+  const bundles = ['demo', 'dsh-open-market'].map(name => ({name, installed: true, availability: 'profile', version: '1.0.0', source: name + '@^1.0.0', enabled: true, removable: true}));
+  const manager = {listBundles: () => bundles, inspect: () => assert.fail('Unsafe inspection'), removeBundle: () => assert.fail('Unsafe removal'), installBundle: () => assert.fail('Unsafe installation')};
+  const services = {agents: {list: () => [agent]}, workspaceRegistry: {list: () => []}};
+  const root = {get: key => services[key], on: (_name, listener) => {listeners.add(listener); return () => listeners.delete(listener);}, waterfall: () => []};
+  const scope = {...root, root, pluginManager: manager, connection: {requestRejection: () => undefined},
+    effect(setup) {const dispose = setup(); if (dispose) disposers.push(dispose);},
+    webServer: {register(route) {routes.set(route.path, route.handler); return () => routes.delete(route.path);}}};
+  t.after(() => {disposers.reverse().forEach(dispose => dispose()); assert.equal(listeners.size, 0);});
+  apply({...root, inject(names, setup) {if (names.join(',') === 'webServer,connection,pluginManager') setup(scope);}});
+  async function request(path, body) {
+    const req = Object.assign(Readable.from(body ? [JSON.stringify(body)] : []), {method: body ? 'POST' : 'GET', headers: {'content-type': 'application/json'}});
+    let result;
+    await routes.get(path)(req, {writeHead: status => assert.equal(status, 200), end: value => {result = JSON.parse(value);}});
+    return result;
+  }
+  assert.equal((await request('/dsh-open-market/update', {name: 'demo', spec: 'demo@2.0.0'})).code, 'tasks-active');
+  assert.equal((await request('/dsh-open-market/self-update', {spec: 'dsh-open-market@2.0.0'})).code, 'tasks-active');
+  assert.equal((await request('/dsh-open-market/manage', {action: 'toggle', name: 'demo', enabled: false})).code, 'tasks-active');
+  assert.equal((await request('/dsh-open-market/manage')).jobs.length, 2);
+});
 
 function manager(enabled = false, availability = 'installation', application = 'applied') {
   return {

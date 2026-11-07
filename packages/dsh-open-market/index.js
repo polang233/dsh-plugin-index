@@ -4,6 +4,7 @@ import { createSelfUpdateHandler, SELF_UPDATE_PATH } from './self-update.js';
 import {createProfileStateHandler, PROFILE_STATE_PATH} from './profile-state.js';
 import {createBundleUpdateHandler, BUNDLE_UPDATE_PATH} from './bundle-update.js';
 import {createThemeAssetsHandler, THEME_PATH} from './theme-assets.js';
+import {sharedManagement, createManagementHandler, MANAGEMENT_PATH} from './management.js';
 
 export const name = 'dsh-open-market';
 // The row id our patch inserts; it differs from the package name so the Plugins page does not show the same name twice.
@@ -132,15 +133,25 @@ export function outsideReload(ctx, write) {
 
 export function apply(ctx, config = {}) {
   const url = typeof config?.indexUrl === 'string' ? config.indexUrl : INDEX_URL;
-  const dir = ctx.get?.('profileContext')?.dir;
+  const profile = ctx.get?.('profileContext');
+  const dir = profile?.dir;
   const logger = ctx.logger?.('dsh-open-market') ?? ctx.logger;
   const warn = what => error => logger?.warn?.('Could not %s: %s', what, error?.message ?? error);
 
   ctx.inject(['webServer', 'connection', 'pluginManager'], scope => {
+    const root = scope.root ?? scope;
+    const controller = outsideReload(scope, () => sharedManagement({manager: scope.pluginManager, dir, profile,
+      get: key => root.get(key), events: root}));
+    void controller.ready.catch(warn('read the management queue'));
+    scope.effect(() => () => controller.close(), 'dsh-open-market: management queue');
+    scope.effect(() => scope.webServer.register({kind: 'exact', path: MANAGEMENT_PATH,
+      handler: createManagementHandler(controller, scope.connection)}), 'dsh-open-market: plugin management');
     scope.effect(() => scope.webServer.register({ kind: 'exact', path: SELF_UPDATE_PATH,
-      handler: createSelfUpdateHandler(scope.pluginManager, scope.connection) }), 'dsh-open-market: self-update');
+      handler: createSelfUpdateHandler(scope.pluginManager, scope.connection,
+        {update: target => controller.submit({action: 'update', name, ...target, when: 'now'})}) }), 'dsh-open-market: self-update');
     scope.effect(() => scope.webServer.register({kind: 'exact', path: BUNDLE_UPDATE_PATH,
-      handler: createBundleUpdateHandler(scope.pluginManager, scope.connection)}), 'dsh-open-market: update with recovery');
+      handler: createBundleUpdateHandler(scope.pluginManager, scope.connection,
+        {update: target => controller.submit({action: 'update', ...target, when: 'now'})})}), 'dsh-open-market: update with recovery');
   });
   ctx.inject(['webServer', 'connection'], scope => {
     scope.effect(() => scope.webServer.register({kind: 'exact', path: PROFILE_STATE_PATH,

@@ -1,5 +1,32 @@
 # dsh-open-market 更新记录
 
+## 0.4.0-dev.1
+
+Unreleased development snapshot. The published npm version remains 0.3.3.
+开发快照，尚未发布；npm 正式版仍为 0.3.3。
+
+### English
+
+- Replaced Installed with a complete local plugin manager, including bundles outside the market. System plugins start collapsed, state badges distinguish enabled and disabled bundles, and details open even for broken or incompatible plugins. Added native settings navigation, enable/disable, typed-confirmation uninstall, search, filters and bulk controls.
+- Added immediate and idle-queued updates, including exact-version switches. The Host owns a persistent queue with cancellation, retry, outcome history and installation identity checks. Reported tasks must be idle before mutation; new Agent input waits during maintenance. Host restarts require explicit retry, and failed replacements retain the existing recovery path.
+- Added runtime and configuration locations with directory shortcuts, loaded/error/risk counts, direct dependency and compatibility diagnostics, and management reports. Import-only dependencies with private manifest exports are resolved through the native package locator. Separate plugin data directories are not guessed, and risk indicators are metadata checks rather than a security audit.
+- Added custom bundle-layer order editing with fixed system positions, dependency checks, profile revision checks, native file locking and exclusive HMR reconciliation. Failed application restores the previous profile. Layer order describes patch composition, not asynchronous startup completion time.
+- Added horizontal mouse dragging from text, buttons and cards without selecting text or activating a button after a drag. Regular clicks, typing, touch scrolling and keyboard navigation remain available.
+- Added short localized native detail documents and management styling for DSH's default appearance and the Macaron theme. Fixed native RPC option arguments, disabled-component labels and missing label metadata in the native settings launcher.
+
+Task protection covers activity reported by the Host across all sessions. Independent background producers and operations started directly in native management do not share this gate. Older Hosts without the required APIs refuse protected mutations.
+
+### 中文
+
+- 将「我已安装」扩展为完整本机插件管理，包含市场外插件。系统插件默认折叠，启停使用独立标签，异常或不兼容插件仍可打开详情；补齐官方设置跳转、启停、输入包名确认卸载、搜索筛选和批量操作。
+- 支持立即更新、空闲后更新和精确版本切换。宿主持有持久化队列，支持取消、重试、结果记录和安装状态核对；已报告任务空闲后才修改插件，维护期间保留新输入。Host 重启后须重新确认，更新失败继续使用原有恢复机制。
+- 增加运行与配置目录、快捷打开、加载数与异常/风险计数、直接依赖和版本兼容性诊断，以及管理报告；仅支持导入且未导出清单的依赖通过原生目录定位继续核对。插件独立数据目录不做猜测，风险提示只代表元数据检查。
+- 支持调整自定义插件配置层顺序，保留系统层位置，校验依赖与配置版本，复用原生文件锁和 HMR 排他事务；应用失败时恢复原配置。顺序表示补丁合并位置，不代表异步启动完成时间。
+- 横向推荐行支持从文字、按钮或卡片按住拖动，拖动不会选中文字或误触按钮，保留普通单击、输入、触屏和键盘操作。
+- 官方详情改用简短中英文说明，管理页适配 DSH 默认外观和马卡龙主题；修复原生 RPC 可选参数、停用组件状态，以及官方设置入口缺少标签元数据时的异常。
+
+任务保护基于宿主报告的所有会话活动；独立后台生产者和直接在官方管理页发起的操作不共用此维护入口。旧版宿主缺少必要 API 时会拒绝受保护的修改。
+
 ## 0.3.3
 
 ### 中文

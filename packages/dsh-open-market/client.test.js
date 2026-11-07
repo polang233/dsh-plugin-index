@@ -834,3 +834,213 @@ test('self-update uses the authenticated local endpoint and reports unavailable,
   assert.equal((await requestSelfUpdate(target, t, {fetchImpl: async () => ({ok: true, json: async () => ({})})})).error, 'selfUpdateConnectionLost');
   assert.equal((await requestSelfUpdate(target, t, {fetchImpl: async () => ({ok: true, json: async () => ({ok: false, code: 'stop-profile', error: 'Stop the profile'})})})).error, 'updateRestart');
 });
+
+test('management uses the complete native inventory and keeps disabled, broken and outside-market details accessible', async () => {
+  const {internals: {managementRows, filterManaged}} = await client();
+  const bundles = [
+    {name: 'demo', version: '1.0.0', installed: true, enabled: false, source: 'demo@^1.0.0', updatable: true, rows: [{rowId: 'component', entryId: 'live'}]},
+    {name: 'local-only', installed: true, enabled: true, source: 'file:/plugins/local', rows: [], meta: {title: 'Local plugin'}},
+    {name: 'shipped', availability: 'installation', installed: false, enabled: true, readOnlyReason: 'system-plugin', rows: []},
+    {name: 'not-installed', availability: 'missing', installed: false, rows: []},
+  ];
+  const catalog = [entry('demo', 'incompatible', {title: 'Demo', defaultVersion: '2.0.0', versions: [{version: '2.0.0', install: {spec: 'demo@2.0.0'}}]})];
+  const checks = {demo: {status: 'listed', installed: '1.0.0', registry: 'https://registry.example/', versions: [
+    {version: '3.0.0', bundle: true, incompatible: true}, {version: '2.1.0-beta.1', bundle: true, prerelease: true},
+    {version: '2.0.0', bundle: true}, {version: '1.0.0', bundle: true},
+  ]}};
+  const rows = managementRows(bundles, catalog, checks, [{entryId: 'live', fiberPhase: 'failed', diagnostic: 'Bad configuration'}], value => typeof value === 'string' ? value : value.en);
+  assert.deepEqual(plain(rows.map(row => row.bundle.name)), ['demo', 'local-only', 'shipped']);
+  assert.equal(rows[0].problem, true);
+  assert.equal(rows[0].target.spec, 'demo@2.0.0');
+  assert.deepEqual(plain(filterManaged(rows, {query: 'LOCAL'}).map(row => row.bundle.name)), ['local-only']);
+  assert.deepEqual(plain(filterManaged(rows, {filter: 'disabled'}).map(row => row.bundle.name)), ['demo']);
+  assert.deepEqual(plain(filterManaged(rows, {filter: 'problems'}).map(row => row.bundle.name)), ['demo']);
+  assert.deepEqual(plain(filterManaged(rows, {filter: 'external', names: ['shipped']}).map(row => row.bundle.name)), ['shipped']);
+  const current = managementRows([bundles[0]], [], {demo: {...checks.demo, versions: [{version: '1.0.0', bundle: true}]}}, [], value => value);
+  assert.equal(current[0].target, null, 'Checking versions must not offer the installed version as an update');
+});
+
+test('native detail navigation waits for the Plugins page to mount and reports unsupported hosts', async () => {
+  const {internals: {openNativePackage}} = await client();
+  const opened = []; let navigation, selected = 0;
+  const result = await openNativePackage('outside-market', {get: () => navigation, select: () => {selected++;},
+    wait: async () => {navigation = {openBundle: name => opened.push(name)};}});
+  assert.equal(result.ok, true); assert.equal(selected, 1);
+  assert.deepEqual(opened, ['outside-market']);
+  selected = 0;
+  await openNativePackage('demo', {get: () => navigation, select: () => {selected++;}});
+  assert.equal(selected, 0);
+  assert.equal((await openNativePackage('demo', {get: () => undefined, select() {}, wait: async () => {}})).ok, false);
+});
+
+test('switching any installed version can queue an exact target without starting an immediate update', async () => {
+  const {internals: {installVersion}} = await client();
+  for (const name of ['demo', 'dsh-open-market']) {
+    const calls = [];
+    const answer = await installVersion({name, installation: {status: 'installed', installedVersion: '2.0.0'}},
+      {version: '1.0.0', source: {type: 'npm', registry: 'https://registry.example/'}}, {when: 'idle', t: key => key,
+        install: () => assert.fail('Unexpected install'), update: () => assert.fail('Unexpected immediate update'),
+        selfUpdate: () => assert.fail('Unexpected immediate self-update'), management: async request => {calls.push(request); return {ok: true, queued: true};}});
+    assert.equal(answer.queued, true);
+    assert.equal(calls[0].spec, name + '@1.0.0');
+    assert.equal(calls[0].registry, 'https://registry.example/');
+    assert.equal(calls[0].when, 'idle');
+  }
+});
+
+function managementView() {
+  const values = [], effects = [];
+  let cursor = 0, setups = [];
+  const react = {
+    createElement: (type, props, ...children) => ({type, props: props || {}, children}),
+    useState(initial) {const id = cursor++; if (!(id in values)) values[id] = typeof initial === 'function' ? initial() : initial;
+      return [values[id], value => {values[id] = typeof value === 'function' ? value(values[id]) : value;}];},
+    useRef(initial) {return react.useState(() => ({current: initial}))[0];},
+    useId() {return react.useState(() => 'id-' + cursor)[0];},
+    useMemo: compute => compute(), useCallback: value => value,
+    useSyncExternalStore: (_subscribe, read) => read(),
+    useEffect(setup, deps) {const id = cursor++, old = effects[id];
+      if (!old || deps.some((value, index) => value !== old.deps[index])) setups.push(() => {old?.dispose?.(); effects[id] = {deps, dispose: setup()};});},
+  };
+  return {react, render(component, props) {cursor = 0; setups = []; const tree = component(props); setups.forEach(run => run()); return tree;},
+    close() {effects.forEach(effect => effect?.dispose?.());}};
+}
+const nodes = tree => Array.isArray(tree) ? tree.flatMap(nodes) : tree && typeof tree === 'object' ? [tree, ...nodes(tree.children)] : [];
+const nodeText = tree => Array.isArray(tree) ? tree.map(nodeText).join(' ') : tree && typeof tree === 'object' ? nodeText(tree.children) : String(tree ?? '');
+
+test('management details separate settings, protected changes and typed uninstall confirmation', async t => {
+  const view = managementView(); t.after(() => view.close());
+  const requests = [], opened = []; let closed = 0, eventListener;
+  const inventory = [{name: 'outside', version: '1.0.0', installed: true, availability: 'profile', source: 'outside@^1.0.0', enabled: true, removable: true,
+    rows: [{rowId: 'off', entryId: 'off', moduleName: 'outside/disabled'}]}];
+  const plugin = await client({react: view.react, windowOverrides: {setInterval: () => 0, clearInterval() {}}, fetchImpl: async (_url, options) => {
+    if (options.method === 'POST') {requests.push(JSON.parse(options.body)); return Response.json({ok: true});}
+    return Response.json({ok: true, jobs: [], activity: {available: true, busy: false, running: 0, activities: 0}});
+  }});
+  const service = {listBundles: async () => ({ok: true, value: inventory}), listPlugins: async () => ({ok: true, value: [{entryId: 'off', enabled: false}]}),
+    readBundleDetail: async (name, _language, options) => {
+      assert.equal(name, 'outside'); assert.deepEqual(plain(options), {npmFileSources: []});
+      return {ok: true, value: {status: 'found', markdown: '<script>remote()</script>'}};
+    }};
+  const props = {entries: [], t: key => plugin.internals.en[key] || key, resolve: value => value, manager: () => service,
+    remote: {$on: (_name, listener) => {eventListener = listener; return () => {eventListener = undefined;};}},
+    openPackage: name => {opened.push(name); return {ok: true};}, onClose: () => {closed++;}, restoreFocus() {}};
+  const render = () => view.render(plugin.internals.InstalledPanel, props);
+  render(); await tick(); let tree = render();
+  const button = (text, current = tree) => nodes(current).find(node => node.type === 'button' && nodeText(node) === text);
+  const label = key => plugin.internals.en[key];
+  assert.equal(nodes(tree).filter(node => node.props.className === 'opm-manage-open').length, 1, nodeText(tree));
+  assert.equal(typeof eventListener, 'function');
+  assert.equal(requests.length, 0, 'Selecting a detail must not mutate the package');
+  const components = nodes(tree).find(node => node.props.className === 'opm-components');
+  assert(nodeText(components).includes(label('disabled')), 'A disabled component must not inherit its enabled bundle status');
+  await button(label('disable')).props.onClick();
+  assert.deepEqual(requests[0], {action: 'toggle', name: 'outside', enabled: false});
+  tree = render();
+  button(label('manageUninstall')).props.onClick(); tree = render();
+  const confirmation = nodes(tree).find(node => node.type === 'input' && node.props.autoComplete === 'off');
+  const remove = () => nodes(tree).filter(node => node.type === 'button' && nodeText(node) === label('manageUninstall')).at(-1);
+  assert.equal(remove().props.disabled, true);
+  confirmation.props.onChange({target: {value: 'outside'}}); tree = render();
+  assert.equal(remove().props.disabled, false);
+  await remove().props.onClick();
+  assert.deepEqual(requests[1], {action: 'remove', name: 'outside', confirmation: 'outside'});
+  tree = render(); await button(label('manageLoadDocument')).props.onClick(); tree = render();
+  assert.equal(nodes(tree).find(node => node.type === 'pre').children[0], '<script>remote()</script>');
+  assert.equal(nodes(tree).some(node => node.type === 'script'), false);
+  await button(label('manageSettings')).props.onClick();
+  assert.deepEqual(opened, ['outside']); assert.equal(closed, 1);
+  view.close(); assert.equal(eventListener, undefined);
+});
+
+test('management keeps local details accessible while tasks run and offers idle updates independently', async t => {
+  const view = managementView(); t.after(() => view.close()); const mutations = [];
+  const plugin = await client({react: view.react, windowOverrides: {setInterval: () => 0, clearInterval() {}}, fetchImpl: async (_url, options) => {
+    if (options.method === 'POST') {mutations.push(JSON.parse(options.body)); return Response.json({ok: true, queued: true});}
+    return Response.json({ok: true, jobs: [], activity: {available: true, busy: true, running: 1, activities: 1}});
+  }});
+  const props = {t: key => plugin.internals.en[key] || key, resolve: value => value, onClose() {},
+    entries: [entry('demo', 'update-available', {defaultVersion: '2.0.0', versions: [{version: '2.0.0', install: {spec: 'demo@2.0.0'}}]})],
+    manager: () => ({listBundles: async () => ({ok: true, value: [{name: 'demo', version: '1.0.0', source: 'demo@^1.0.0', installed: true, enabled: true, removable: true}]}), listPlugins: async () => ({ok: true, value: []})})};
+  const render = () => view.render(plugin.internals.InstalledPanel, props);
+  render(); await tick(); const tree = render();
+  const button = key => nodes(tree).find(node => node.type === 'button' && nodeText(node) === plugin.internals.en[key]);
+  assert(button('manageNow'), nodeText(tree));
+  assert.equal(button('manageNow').props.disabled, true);
+  assert.equal(button('disable').props.disabled, true);
+  assert.equal(button('manageSettings').props.disabled, false);
+  assert.equal(button('manageIdle').props.disabled, false);
+  await button('manageIdle').props.onClick();
+  assert.equal(mutations[0].when, 'idle'); assert.equal(mutations[0].spec, 'demo@2.0.0');
+});
+
+test('system plugins start collapsed while custom plugins stay visible and status has its own badge', async t => {
+  const view = managementView(); t.after(() => view.close());
+  const plugin = await client({react: view.react, windowOverrides: {setInterval: () => 0, clearInterval() {}}, fetchImpl: async () => Response.json({ok: true,
+    jobs: [], activity: {available: true, busy: false}, inventory: {plugins: [], bundles: [
+      {name: 'system', official: true, availability: 'installation', enabled: true, rows: []},
+      {name: 'custom', installed: true, enabled: false, rows: []},
+    ]}})});
+  const props = {entries: [], t: key => plugin.internals.en[key] || key, resolve: value => value, manager: () => ({}), onClose() {}};
+  const render = () => view.render(plugin.internals.InstalledPanel, props);
+  render(); await tick(); const tree = render();
+  const system = nodes(tree).find(node => node.props.className === 'opm-manage-group opm-system-group');
+  assert.equal(system.props.open, false);
+  assert(nodeText(nodes(tree).find(node => node.props.className === 'opm-manage-detail')).includes('custom'));
+  assert(nodes(tree).some(node => node.props.bundle?.name === 'custom' && node.props.bundle.enabled === false));
+});
+
+test('load-order editing requires an explicit save and carries the profile revision', async t => {
+  const view = managementView(); t.after(() => view.close()); const actions = [];
+  const {internals} = await client({react: view.react});
+  const props = {diagnostics: {available: true, revision: 'a'.repeat(64), customOrder: ['alpha', 'beta'], environment: {runtimeVersion: '0.2.2-rc.1'}},
+    t: key => internals.en[key] || key, action: request => actions.push(request), safe: true, busy: false, rows: []};
+  const render = () => view.render(internals.RuntimeOverview, props);
+  render(); let tree = render();
+  nodes(tree).find(node => node.props['aria-label'] === 'Move beta earlier').props.onClick(); tree = render();
+  assert.equal(actions.length, 0);
+  const save = nodes(tree).find(node => node.type === 'button' && nodeText(node) === internals.en.manageOrderSaved);
+  save.props.onClick();
+  assert.deepEqual(plain(actions[0]), {action: 'reorder', order: ['beta', 'alpha'], revision: 'a'.repeat(64)});
+  props.safe = false; tree = render();
+  assert.equal(nodes(tree).find(node => node.type === 'button' && nodeText(node) === internals.en.manageOrderSaved).props.disabled, true);
+});
+
+test('horizontal mouse dragging scrolls from a button without activating it and preserves clicks, typing and vertical gestures', async () => {
+  const {internals: {attachHorizontalDrag}} = await client();
+  const handlers = new Map(), documentHandlers = new Map();
+  const doc = {addEventListener: (name, fn) => documentHandlers.set(name, fn), removeEventListener: name => documentHandlers.delete(name)};
+  const root = {ownerDocument: doc, contains: () => true, addEventListener: (name, fn) => handlers.set(name, fn), removeEventListener: name => handlers.delete(name)};
+  const rail = {scrollWidth: 900, clientWidth: 300, scrollLeft: 250, dataset: {}, contains: () => true, setPointerCapture() {}, hasPointerCapture: () => false};
+  const target = {closest: selector => selector.includes('.opm-rail') ? rail : null};
+  const event = extra => ({target, pointerType: 'mouse', button: 0, pointerId: 1, clientX: 100, clientY: 100, timeStamp: 1000,
+    preventDefault() {this.prevented = true;}, stopImmediatePropagation() {this.stopped = true;}, ...extra});
+  const cleanup = attachHorizontalDrag(root);
+  handlers.get('pointerdown')(event());
+  documentHandlers.get('pointermove')(event({clientX: 60}));
+  assert.equal(rail.scrollLeft, 290); assert.equal(rail.dataset.dragging, 'true');
+  documentHandlers.get('pointerup')(event({timeStamp: 1050}));
+  const click = event({detail: 1, timeStamp: 1051}); handlers.get('click')(click);
+  assert.equal(click.stopped, true); assert.equal(rail.dataset.dragging, undefined);
+  handlers.get('pointerdown')(event({timeStamp: 2000}));
+  documentHandlers.get('pointermove')(event({clientX: 103, timeStamp: 2010}));
+  documentHandlers.get('pointerup')(event({timeStamp: 2020}));
+  const normal = event({detail: 1, timeStamp: 2021}); handlers.get('click')(normal);
+  assert.equal(normal.stopped, undefined);
+  handlers.get('pointerdown')(event()); documentHandlers.get('pointermove')(event({clientY: 120}));
+  documentHandlers.get('pointermove')(event({clientX: 50})); assert.equal(rail.scrollLeft, 290);
+  const input = {closest: selector => selector.includes('input') ? {} : rail};
+  handlers.get('pointerdown')(event({target: input})); documentHandlers.get('pointermove')(event({clientX: 40}));
+  assert.equal(rail.scrollLeft, 290);
+  cleanup(); assert.equal(handlers.size, 0); assert.equal(documentHandlers.size, 0);
+});
+
+test('native settings launchers and sparse catalog labels never pass undefined to the Host locale resolver', async () => {
+  const {internals: {Tags}} = await client({react: {createElement: (type, props, ...children) => ({type, props, children})}});
+  const resolve = value => typeof value === 'string' ? value : value.en;
+  const entry = {name: 'demo', metadata: {labels: ['verified', 'unknown-label']}};
+  const tree = Tags({entry, resolve, t: key => key});
+  assert(nodeText(tree).includes('verified')); assert(nodeText(tree).includes('unknown-label'));
+  const translated = Tags({entry, resolve, t: key => key, metadata: {labels: {verified: {title: {en: 'Reviewed'}}}}});
+  assert(nodeText(translated).includes('Reviewed'));
+});

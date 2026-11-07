@@ -322,6 +322,10 @@ body[data-opm-theme] .opm-search input { border-color: var(--opm-line); }
 body[data-opm-theme] .opm-search input:focus { box-shadow: 3px 3px 0 var(--opm-blue); }
 body[data-opm-theme] .opm-tag { border-color: var(--dsw-alias-border-l4); border-radius: 999px; }
 body[data-opm-theme] .opm-panel { box-shadow: 0 0 0 2px var(--opm-line), var(--opm-pop-lg); }
+body[data-opm-theme] .opm-status-on { color: var(--opm-ink); background: var(--opm-mint); border-color: var(--opm-line); }
+body[data-opm-theme] .opm-status-off { color: var(--opm-slate); background: var(--opm-paper); border-color: var(--opm-slate); }
+body[data-opm-theme] .opm-manage-open[aria-current="true"] { background: var(--opm-sky-soft); box-shadow: inset 3px 0 0 var(--opm-blue); }
+body[data-opm-theme] :is(.opm-system-group, .opm-manage-overview, .opm-components, .opm-plugin-diagnostics) { border-color: var(--dsw-alias-border-l3); }
 /* She peeks over the top edge of the market, right of the Plugins tabs, where the page has no controls. */
 body[data-opm-theme] .opm-market { position: relative; }
 body[data-opm-theme] .opm-market::before {

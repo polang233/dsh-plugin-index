@@ -4,6 +4,14 @@ import {createServer} from 'node:http';
 import {bundleUpdateTarget, originalTarget, runBundleUpdate, createBundleUpdateHandler} from './bundle-update.js';
 
 const input = {name: 'demo', spec: 'demo@2.0.0', registry: 'https://registry.npmjs.org/'};
+
+test('queued installation identity is checked again at the native update boundary', async () => {
+  const service = manager();
+  const expected = {version: '1.0.0', source: 'demo@^1.0.0', enabled: true};
+  const result = await runBundleUpdate(service, input, {expected});
+  assert.equal(result.code, 'installation-changed');
+  assert.deepEqual(service.calls, []);
+});
 function manager(extra = {}) {
   return {
     installed: true, version: '1.0.0', enabled: false, source: 'demo@^1.0.0', calls: [],

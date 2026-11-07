@@ -54,7 +54,7 @@ function newer(a, b) {
 }
 
 /** Keep the native manager alive through removal, installation and restoration, even if the Client disappears. */
-export async function runBundleUpdate(manager, input) {
+export async function runBundleUpdate(manager, input, {expected} = {}) {
   const target = bundleUpdateTarget(input);
   // Cordis binds injected service proxies to the caller's context. Self-removal disposes that context.
   // The original service retains its owning context and also gives all callers the same update lock.
@@ -69,6 +69,9 @@ export async function runBundleUpdate(manager, input) {
       existingNames = new Set(inventory.filter(bundle => bundle.installed).map(bundle => bundle.name));
       original = inventory.find(bundle => bundle.name === target.name);
       if (!original?.installed || original.availability === 'installation' || original.removable === false) return {ok: false, error: 'This bundle cannot be replaced in this profile'};
+      if (expected && Object.entries(expected).some(([key, value]) => (original[key] ?? null) !== value)) {
+        return {ok: false, code: 'installation-changed', error: 'The installation changed after this update was queued'};
+      }
       rollback = originalTarget(original);
       if (!rollback) return {ok: false, code: 'restore-unavailable', error: 'The original installation source is not available; the current version was kept'};
       if (target.version && original.updatable && newer(target.version, original.version) && typeof manager.updateBundle === 'function') {
@@ -144,7 +147,7 @@ export async function runBundleUpdate(manager, input) {
   try { return await operation; } finally { active.delete(manager); }
 }
 
-export function createBundleUpdateHandler(manager, connection) {
+export function createBundleUpdateHandler(manager, connection, {update = target => runBundleUpdate(manager, target)} = {}) {
   return async (req, res) => {
     const send = (status, value) => { if (res.destroyed || res.writableEnded) return; res.writeHead(status, {'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store'}); res.end(JSON.stringify(value)); };
     if (req.method !== 'POST') return send(405, {ok: false});
@@ -159,6 +162,7 @@ export function createBundleUpdateHandler(manager, connection) {
       for await (const chunk of req) { raw += chunk; if (Buffer.byteLength(raw) > 4096) return send(413, {ok: false}); }
       target = bundleUpdateTarget(JSON.parse(raw));
     } catch { return send(400, {ok: false}); }
-    send(200, await runBundleUpdate(manager, target));
+    try { send(200, await update(target)); }
+    catch { send(503, {ok: false, code: 'management-unavailable'}); }
   };
 }
