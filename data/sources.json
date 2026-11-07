@@ -11206,14 +11206,6 @@
     },
     {
       "name": "dsh-pinned-panel",
-      "version": "0.7.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/OuQiL/dsh-pinned-panel",
-        "commit": "8b3c55981801eecc3dc4f292fd03cceb6924b9de",
-        "integrity": "sha512-b1hugEE5rnBur28D4JfkfDydAgYhSkIhAJ4ZTZl+VTBHwYhFxugVPbkLcXsgt46CQHnI7llHmROiH0xyRp6EKQ==",
-        "publishedAt": "2026-11-04T01:29:08.000Z"
-      },
       "title": {
         "en": "Pinned Sessions",
         "zh": "跨工作区置顶会话"
@@ -11222,7 +11214,15 @@
         "en": "Collect pinned conversations from every workspace at the top of the sidebar, with rename, fork, archive and unarchive actions plus live activity dots. Uses DSH session state and browser localStorage; depends on sidebar DOM structure.",
         "zh": "在侧栏顶部汇总各工作区的置顶会话，支持重命名、分叉、归档、取消归档，并显示实时活动状态点。使用 DSH 会话状态和浏览器 localStorage，依赖侧栏 DOM 结构。"
       },
-      "category": "interface"
+      "category": "interface",
+      "version": "0.7.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/OuQiL/dsh-pinned-panel",
+        "commit": "005f5ea75a9b255c36933fe258c9d4257abe8ec3",
+        "integrity": "sha512-B5BeB2crkeGQH9NrtzV+2g+JUsTDYVJgFA60Pnsq7fUIWmveq4XekZxsqtGjq4lhA+Ebz8NKWrX9mXDKLPSKJw==",
+        "publishedAt": "2026-11-06T02:47:01.000Z"
+      }
     },
     {
       "name": "dsh-flymemory",
@@ -12182,17 +12182,17 @@
         "zh": "DSH 会话工作台"
       },
       "description": {
-        "en": "Compact session sidebar with project groups, search, unread markers, reversible Settle, metadata backup with merge preview and an original-layout switch. Chinese UI; requires exactly DSH 0.2.1-rc.5. Author reports macOS desktop validation.",
-        "zh": "紧凑会话侧栏，支持项目分组、搜索、未读提示、可恢复整理、列表元数据备份与预览合并恢复，以及原布局切换。界面为中文，仅兼容 DSH 0.2.1-rc.5；作者报告已验证 macOS 桌面版。"
+        "en": "Compact session sidebar with project groups, search, unread markers, reversible organization, metadata backup and an original-layout switch. Adapts the native workspace module with a fallback; author tested Windows and Linux Web on selected DSH 0.1.7–0.2.2 prereleases.",
+        "zh": "紧凑会话侧栏，支持项目分组、搜索、未读提示、可恢复整理、列表元数据备份及原布局切换。增强宿主原生工作区模块，不兼容时回退；作者在 Windows、Linux Web 验证了部分 DSH 0.1.7 至 0.2.2 预发布版。"
       },
       "category": "interface",
-      "version": "0.4.1",
+      "version": "0.5.0",
       "source": {
         "type": "git",
         "url": "https://github.com/Tracest/dsh-session-inbox",
-        "commit": "3aa8decbe4a0460d145425a60efd13bcd1f1418f",
-        "integrity": "sha512-OV2wWfzRo6SKrAPzhYJPdnJLP6EAvQnPyWwMnWy+VCgrni+66oxD8HL4HXH0/1o18NITmL7cqG9pla7xQXmffw==",
-        "publishedAt": "2026-10-31T11:53:50.000Z"
+        "commit": "a07c7108dcd25a4dfba00dda80c1dc2fac099561",
+        "integrity": "sha512-zaDY859OpX4z3n/VglTvlLLMBcVKJKcwBNFIfY2qxAehKPKrOBEz4D1FdFCdw4dsI/SI63B907g41gthMnRjmw==",
+        "publishedAt": "2026-11-06T05:47:52.000Z"
       }
     },
     {
@@ -12329,15 +12329,7 @@
         "en": "Guard DSH tool calls against foreground waits, blocking wait tools, polling and interactive commands, with configurable budgets and background-task guidance.",
         "zh": "限制 Agent 的前台等待、阻塞等待工具、轮询及交互式命令，支持配置等待预算和规则，并提示使用后台任务。"
       },
-      "category": "workflow",
-      "version": "0.4.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/JJJACKsong/sleep-not-permitted",
-        "commit": "62690ee8010fde25abfa1dbb4d04cbc118e264bb",
-        "integrity": "sha512-Mpf07u5wJR8kflmowANTQ0Dj/lmZza+d/nmhUt8FPKi8ztSjMMTdqkUVmE+5+4vHmeE8dfW5NuBIRZ/oLBmDqw==",
-        "publishedAt": "2026-10-29T13:25:33.000Z"
-      }
+      "category": "workflow"
     },
     {
       "name": "dsh-app-updater",
@@ -12629,8 +12621,8 @@
         "zh": "RTK 工具输出压缩"
       },
       "description": {
-        "en": "Rewrite supported shell commands and compress large tool results through rtk, falling back to the original when rtk is unavailable or rejects the rewrite. Platform binaries arrive through optional npm packages; requires Node >=22.19.",
-        "zh": "通过 rtk 改写受支持的 shell 命令并压缩较大的工具结果；rtk 不可用或拒绝改写时回退原命令。平台二进制由可选 npm 包安装，需要 Node >=22.19。"
+        "en": "Rewrite supported shell commands and compress large tool results through rtk. Recovery hints explain omitted output; savings appear below the composer and in /rtk stats. Falls back when rtk cannot rewrite. Platform binaries use optional npm packages; Node >=22.19 is required.",
+        "zh": "通过 rtk 改写受支持的 shell 命令、压缩较大的工具结果，并提示省略内容和原文恢复方式。省量显示在输入框下方及 /rtk stats；无法改写时回退。平台二进制通过可选 npm 包安装，需 Node >=22.19。"
       },
       "category": "development"
     },
@@ -12709,8 +12701,8 @@
         "zh": "桌面电脑操控"
       },
       "description": {
-        "en": "Observe Windows with screenshots and UI Automation, then click, type, scroll or send keys and verify the result. Standard mode requires approval for each action; Windows x64 and Node >=22, with native helpers bundled in the package.",
-        "zh": "通过截图和 UI Automation 观察 Windows，再执行点击、输入、滚动或按键并回读验证。默认 standard 模式每个动作都要审批；仅支持 Windows x64，需 Node >=22，包内附带原生组件。"
+        "en": "Control Windows with screenshots, UI Automation targets and verified numbered marks; stale targets are refused before input. Batch known steps in one tool call and use compact observations and receipts. Standard mode asks approval for each action. Windows x64 and Node >=22; native helpers are bundled.",
+        "zh": "通过截图、UI Automation 控件和可校验的编号标记操控 Windows，输入前拒绝过期目标；可在一次工具调用中批量执行已知步骤，并使用精简观察与回执。默认 standard 模式逐次审批；仅支持 Windows x64，需 Node >=22，随包提供原生组件。"
       },
       "category": "tools"
     },
@@ -13038,6 +13030,15 @@
       "description": {
         "en": "Create, tag, search and edit local Markdown card notes, with optional organization through the DSH model. Uses a portable library shared with other slipbox-capable agents; model-assisted work sends the relevant notes to that model. Requires Python >=3.10 and DSH >=0.2.1-rc.3 <0.3.0.",
         "zh": "创建、标记、搜索和编辑本地 Markdown 卡片，可交给 DSH 模型整理，并与其他支持 slipbox 的智能体复用资料库。模型整理会发送相关笔记上下文；需 Python >=3.10、DSH >=0.2.1-rc.3 <0.3.0。"
+      },
+      "version": "0.1.8",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/xinyou9999/slipbox-skill",
+        "commit": "e9764480d0f43feae49b1bd9d0536d1fff3807ea",
+        "path": "packages/dsh-slipbox",
+        "integrity": "sha512-9bsUdVChNqmVn6Exn+42ahcM6Ba/0irlCUCtlyft/g1AuZ84gjeyOP3pIcTduTsjVYAzKXmgzKx6gTh1w8FBew==",
+        "publishedAt": "2026-11-07T09:08:38.000Z"
       }
     },
     {
@@ -13517,8 +13518,8 @@
       },
       "category": "usage",
       "description": {
-        "en": "Pick a context budget per session with a tiered slider next to the composer; past 70% of the budget it prunes for free, then compacts the oldest history before the next request. No network requests and no server routes.",
-        "zh": "在输入框旁用分档滑杆为每个会话选上下文预算；用到预算的 70% 后，先做零成本剪枝，再压缩最早的历史。不发网络请求，也不开服务端接口。"
+        "en": "Choose a context budget per session with a tiered slider or /context-budget. Past 70% it prunes tool results, then asks the host compaction service to summarize older history before the next request. No additional server routes.",
+        "zh": "通过分档滑杆或 /context-budget 设置会话上下文预算，超过 70% 后先剪枝工具结果，再通过宿主压缩服务总结旧历史。不开额外服务端接口，压缩可能调用宿主配置的模型。"
       }
     },
     {
@@ -13624,6 +13625,363 @@
         "en": "Open the official chat.deepseek.com web chat in the built-in browser tab from a sidebar icon, with a system-browser fallback. Conversations stay on chat.deepseek.com; the plugin stores and proxies nothing.",
         "zh": "从侧栏图标把官方 chat.deepseek.com 网页版打开到内置浏览器标签，也可改用系统浏览器。对话仍留在 chat.deepseek.com，插件不存储也不代理任何内容。"
       }
+    },
+    {
+      "name": "dsh-jupyter-notebook",
+      "title": {
+        "en": "Jupyter Notebook Workspace",
+        "zh": "Jupyter Notebook 工作区"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Browse, edit and run notebook cells from a sidebar panel or MCP tools, with local kernels or an existing Jupyter server. Prepare Python and the notebook environment yourself; cells execute code.",
+        "zh": "通过侧栏面板或 MCP 工具浏览、编辑和运行 Notebook 单元格，可使用本地内核或已有 Jupyter 服务。需自行准备 Python 与 Notebook 环境，运行单元格会执行代码。"
+      }
+    },
+    {
+      "name": "dsh-ai-journal",
+      "title": {
+        "en": "AI Journal",
+        "zh": "AI 日报"
+      },
+      "category": "usage",
+      "description": {
+        "en": "Build daily and weekly reports from local session logs, inspect activity charts and manage follow-ups. Uses local rules without model requests; report and preference routes require host authentication.",
+        "zh": "从本机会话日志生成日报、周报，查看活动图表并管理待跟进事项。按本地规则整理，不请求模型；报告和偏好接口需宿主认证。"
+      }
+    },
+    {
+      "name": "dsh-zipfix",
+      "title": {
+        "en": "ZIP Filename Repair",
+        "zh": "ZIP 中文文件名修复"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Inspect and repair ZIP filename encoding through five tools or an upload panel, with CRC checks, corrected archives and directory renaming. Writes default to a dry run and preserve original files.",
+        "zh": "通过五个工具或上传面板检查、修复 ZIP 文件名编码，支持 CRC 校验、生成修复包及目录改名。写操作默认先预演，并保留原文件。"
+      }
+    },
+    {
+      "name": "dsh-rapidocr",
+      "title": {
+        "en": "RapidOCR",
+        "zh": "本地 RapidOCR"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Read text from PNG and JPEG images locally with the ocr_image tool. OCR models and native runtime are bundled; currently Windows x64 only. Requires DSH >=0.2.2-rc.1 <0.3.0 and can use substantial memory.",
+        "zh": "用 ocr_image 工具在本机识别 PNG、JPEG 中的文字，随包提供模型与原生运行库。目前仅支持 Windows x64，需 DSH >=0.2.2-rc.1 <0.3.0，处理大图可能占用较多内存。"
+      },
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Timqt/dsh-rapidocr",
+        "commit": "4a0bfd0ddc2b3e8b9e01185e02e837951d2d8484",
+        "path": "packages/dsh-rapidocr",
+        "integrity": "sha512-AZWBVi+nJdo34z/rSYmi2dTOm2TZOgorjeAdzPinpdQKuLwjU7Ztfkwm6DKCANy/L2UC9DOwm1NnLeEh+ahM6w==",
+        "publishedAt": "2026-11-06T09:16:19.000Z"
+      },
+      "archiveReview": {
+        "version": "0.1.0",
+        "integrity": "sha512-AZWBVi+nJdo34z/rSYmi2dTOm2TZOgorjeAdzPinpdQKuLwjU7Ztfkwm6DKCANy/L2UC9DOwm1NnLeEh+ahM6w==",
+        "maxUnpackedBytes": 104857600,
+        "timeoutMs": 120000
+      }
+    },
+    {
+      "name": "dsh-sidebar-control",
+      "title": {
+        "en": "Sidebar Browser Control",
+        "zh": "侧栏浏览器操控"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Let the Agent read, click, type, scroll, capture and batch actions in the built-in sidebar browser. Requires DSH Desktop with its Electron webview; includes page JavaScript evaluation and uses the browser’s signed-in sessions.",
+        "zh": "让 Agent 在内置侧栏浏览器读取页面、点击、输入、滚动、截图并批量操作。需带 Electron webview 的 DSH 桌面版，支持执行页面 JavaScript，会使用浏览器已有登录状态。"
+      }
+    },
+    {
+      "name": "dsh-follow-until-screen",
+      "title": {
+        "en": "Follow Until One Screen",
+        "zh": "一屏停止跟随"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Stop automatic following once a generated answer fills the visible conversation area, keeping its opening in view. Works with or without dsh-smooth-stream and depends on the host conversation DOM.",
+        "zh": "生成的回答铺满会话可视区域后停止自动跟随，保留开头供阅读。可独立使用或搭配 dsh-smooth-stream，依赖宿主会话 DOM 标记。"
+      },
+      "version": "0.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/BitStandByYou/dsh-follow-until-screen",
+        "commit": "f63203a7fec833f770cf2b0462e76fb24f9a3d9d",
+        "integrity": "sha512-okqay2/JE96WRd7sgWGaRUY5dMznr2oDWnUfoghoo4XRmJ2FEmsnbVu62HoBbHMsTZzQTTXGZ/AoJRpxF/BGCg==",
+        "publishedAt": "2026-11-07T03:38:11.000Z"
+      }
+    },
+    {
+      "name": "dsh-model-tabs",
+      "title": {
+        "en": "Model Tabs",
+        "zh": "模型分类标签"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Filter large composer model catalogs by provider and model family with two levels of tabs plus search. Small catalogs keep the flat selector; the /model command is unchanged.",
+        "zh": "在输入框的大型模型目录中按提供商、模型系列两级标签和搜索筛选，小目录保留平铺选择器，不改变 /model 命令。"
+      }
+    },
+    {
+      "name": "dsh-session-done-notifier",
+      "title": {
+        "en": "Session Done Notifier",
+        "zh": "会话完成提醒"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Show Windows desktop popups when a session finishes or needs an answer or approval, with optional sound and click-to-return. Uses a bundled PowerShell/WPF helper and includes local conversation previews.",
+        "zh": "会话完成或等待回答、审批时弹出 Windows 桌面提醒，可选声音并点击返回会话。通过随包 PowerShell/WPF 辅助程序显示，会包含本机会话摘要。"
+      },
+      "version": "0.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/little-bird-vodka/dsh-session-done-notifier",
+        "commit": "76852daa700cee547e0b4e6e34b9d3747751e107",
+        "integrity": "sha512-2XUg1N2sNuHNspWDP7gMMW6aj6N12DDQVY90CXEw1kGUP7jhy7Ldwy8GA8MInXQpnHBn79cbAFg/g8jWXn1IRQ==",
+        "publishedAt": "2026-11-06T15:20:38.000Z"
+      }
+    },
+    {
+      "name": "dsh-wenjian-team",
+      "title": {
+        "en": "Wenjian Team",
+        "zh": "文稿校验团队"
+      },
+      "category": "skills",
+      "description": {
+        "en": "Deploy ten skills for long-form manuscript checks, revision proposals and verification. Loading the plugin installs skill files locally; existing edits are kept unless overwrite is explicitly requested.",
+        "zh": "部署十个长篇文稿校验技能，按检查、修改建议、人工选择及复核组织工作。加载插件会在本机安装技能文件，只有明确要求覆盖时才替换已有修改。"
+      },
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/sarsgy-wenjian/dsh-wenjian-team",
+        "commit": "63966cf49b8cda8f6ee642342b2f23eef213d16c",
+        "integrity": "sha512-eTSNt33l8Qv+voKLf4z0QtShgjMr9c5QBFcSV+01jURm1Ah6+9Q1LsaL8ZpXtnglvzwhe/qApjciYKKHsT8zdQ==",
+        "publishedAt": "2026-11-05T15:56:40.000Z"
+      }
+    },
+    {
+      "name": "dsh-foxy",
+      "title": {
+        "en": "Foxy",
+        "zh": "Foxy"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Add a Foxy persona as a DSH agent preset while keeping the native conversation runtime. Choose a model in DSH; persistent memory requires the separate dsh-foxy-memory plugin.",
+        "zh": "为 DSH 增加 Foxy 人物预设，复用原生会话运行时。模型由用户在 DSH 中选择，持久记忆需另装 dsh-foxy-memory。"
+      }
+    },
+    {
+      "name": "dsh-spinner-words",
+      "title": {
+        "en": "Spinner Words",
+        "zh": "双语状态轮换词"
+      },
+      "category": "appearance",
+      "description": {
+        "en": "Replace the thinking-status text with rotating bilingual phrases and an editable local word pool. Depends on host DOM markers; use it instead of other plugins that replace the same status text.",
+        "zh": "把思考状态文案换成轮换的双语短句，词池可编辑并保存在浏览器。依赖宿主 DOM 标记，与修改同一状态文案的插件需二选一。"
+      }
+    },
+    {
+      "name": "dsh-token-balance",
+      "title": {
+        "en": "DeepSeek Balance",
+        "zh": "DeepSeek 账户余额"
+      },
+      "category": "usage",
+      "description": {
+        "en": "Show the signed-in DeepSeek account balance under the composer, with recharge and bonus breakdowns and periodic refresh. Reads through the host account client without storing an API key.",
+        "zh": "在输入框下方显示已登录 DeepSeek 账户的可用余额、充值与赠送余额分项，并定期刷新。通过宿主账户客户端读取，不保存 API Key。"
+      },
+      "version": "1.0.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/feiniao1933/dsh-token-balance",
+        "commit": "41933b791336074bc39db12c5ddc9b3f481e6225",
+        "integrity": "sha512-V0b0pBkPulo27oYMuWIRVyobtr4wuoEoMcp7JR8Hgin82Xq8tmSA6BI2iPcCeuh5pl/LDerVc3MJPxreo17F1A==",
+        "publishedAt": "2026-11-07T02:40:48.000Z"
+      }
+    },
+    {
+      "name": "@tmim/dsh-plugin-tmim",
+      "title": {
+        "en": "TM IM Bridge",
+        "zh": "TM IM 桥接"
+      },
+      "category": "integrations",
+      "description": {
+        "en": "Bridge TM IM messages to DSH Agent turns over WebSocket or signed webhooks and relay replies and messaging tools. Requires TM IM credentials; sends content to that service and writes local trace logs containing message excerpts.",
+        "zh": "通过 WebSocket 或签名 Webhook 将 TM IM 消息接入 DSH Agent，并回传回复、提供消息工具。需配置 TM IM 凭据，会向该服务发送内容，并在本机诊断日志中保存消息片段。"
+      },
+      "version": "0.1.18",
+      "repositoryReview": {
+        "version": "0.1.18",
+        "integrity": "sha512-8U2mhkEvyXVx//+T/GTFMQZUTmf53X3Tybn5rFsjuodUrJ52IEOEZLs5RrpFAl+7X+fhTozioK/VGYWR/1+ytw==",
+        "commit": "a05e8264cf3d2ec4992041224da47cbaee36bc1f",
+        "url": "https://github.com/beyondalbert/tmim_dshp"
+      }
+    },
+    {
+      "name": "dsh-cabinet-mode",
+      "title": {
+        "en": "Cabinet Mode",
+        "zh": "内阁模式"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "A cabinet-themed Agent preset with a lead, specialist teammates, task board, dependencies and per-member model selection. Research-first behavior is prompt guidance; models and their credentials come from DSH.",
+        "zh": "以首辅和分工阁臣组织 Agent 团队，提供任务板、依赖关系与成员模型选择。「先调研」属于预设提示词约定，模型及凭据由 DSH 提供。"
+      }
+    },
+    {
+      "name": "dsh-turn-quote",
+      "title": {
+        "en": "Turn Quote",
+        "zh": "按轮次引用"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Quote an earlier user or assistant turn from the current conversation through the @ menu or composer button. Adds a reference to the draft without deleting or rewinding conversation history.",
+        "zh": "通过 @ 菜单或输入框按钮引用当前会话中更早的用户、助手轮次，将原文作为引用加入草稿，不删除或回退会话历史。"
+      },
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/bzsang/dsh-turn-quote",
+        "commit": "9be35771e7b954bbb30d450cbf04a8d4bcf29e1f",
+        "integrity": "sha512-PZ4/sbJuMzLl+D/5Ik2+/3AxtIKP3+/DsSlB1oj+gWPojwa3J3rCa9vTp3NVFfm0w8nNi4gDv8F6X8JzTS/Ugw==",
+        "publishedAt": "2026-11-07T06:04:53.000Z"
+      }
+    },
+    {
+      "name": "dsh-plugin-miku-theme",
+      "title": {
+        "en": "Miku and Rose Queen Themes",
+        "zh": "初音未来与玫瑰女王主题"
+      },
+      "category": "appearance",
+      "description": {
+        "en": "Two themes with a shared skin manager, light and dark appearances, mobile layouts and separate desktop/mobile startup videos. Code and bundled artwork have separate license terms; see the package notices.",
+        "zh": "集成初音未来、玫瑰女王两款主题及统一皮肤管理，支持浅深色、手机布局和分别设置电脑、手机启动视频。代码与随包素材许可不同，使用时请查看包内声明。"
+      }
+    },
+    {
+      "name": "@kaifeise/dsh-task-list",
+      "title": {
+        "en": "Task List",
+        "zh": "任务列表"
+      },
+      "category": "interface",
+      "description": {
+        "en": "List ordinary conversations across workspaces, including completed sessions, with running, waiting, failed and new unread completion states. Opens the selected conversation and reads host projections without starting tasks.",
+        "zh": "跨工作区列出普通会话，保留已完成项目，并区分运行、等待、失败与新完成未读状态。点击跳转会话，通过宿主投影读取状态，不启动任务。"
+      },
+      "version": "1.3.1",
+      "repositoryReview": {
+        "version": "1.3.1",
+        "integrity": "sha512-cgxXVGro4ekpqGYnF3OV7mhMpJyjVXo+xz5zlPOXahHi+fvoJ7hHZj3ZJq7eb/l/WVUZ0jR67CON3zbtBPTiEQ==",
+        "commit": "27d546e9aa2a930db489d45bd66459966ab752ab",
+        "url": "https://github.com/1694439208/dsh-task-list"
+      }
+    },
+    {
+      "name": "dsh-plugin-clawd-run",
+      "title": {
+        "en": "Clawd Run",
+        "zh": "Clawd 快跑"
+      },
+      "category": "tools",
+      "description": {
+        "en": "A sidebar pixel runner with jumping, sliding, token pickups and local scores. Runs in the web page; joins dsh-plugin-arcade when installed, otherwise provides its own sidebar entry.",
+        "zh": "侧栏像素跑酷小游戏，支持跳跃、滑铲、收集 token 和本机记分。在网页中运行，装有 dsh-plugin-arcade 时归入游戏厅，否则提供独立侧栏入口。"
+      }
+    },
+    {
+      "name": "dsh-provider-doctor",
+      "title": {
+        "en": "Provider Doctor",
+        "zh": "提供商诊断"
+      },
+      "category": "development",
+      "description": {
+        "en": "Inspect WorkBuddy, WorkBuddy AI and ZCode CLI provider setup with observed, inferred and unavailable evidence. Basic checks are offline; optional connection checks can start provider diagnostic processes. Requires DSH 0.2.2-rc.1.",
+        "zh": "只读检查 WorkBuddy、WorkBuddy AI、ZCode CLI 的连接配置，区分观测、推断与未知。基础检查离线，可选连接检查会启动提供商诊断进程；需 DSH 0.2.2-rc.1。"
+      }
+    },
+    {
+      "name": "dsh-pr-release-workspace",
+      "title": {
+        "en": "PR and Release Workspace",
+        "zh": "PR 与发布工作台"
+      },
+      "category": "development",
+      "description": {
+        "en": "Read GitHub PRs, diffs, comments and CI, save local review drafts, and compare GitHub Release, npm and market publication states. Reuses an existing gh login; does not post reviews, comments or merges.",
+        "zh": "只读查看 GitHub PR、差异、评论与 CI，保存本地评审草稿，并对照 GitHub Release、npm 与市场发布状态。复用已有 gh 登录，不发送评论、评审或合并请求。"
+      }
+    },
+    {
+      "name": "dsh-fish-memory",
+      "title": {
+        "en": "Fish Memory",
+        "zh": "鱼的记忆"
+      },
+      "description": {
+        "en": "Long-term conversation memory with decay, retrieval and session or workspace libraries. Extraction and keyword expansion use the configured model. By Yuuyuko-uu, under the bundled custom license.",
+        "zh": "为会话提供带时间和遗忘机制的长期记忆，支持检索、长期事实及会话或工作区记忆库。提炼与扩词使用已配置模型；作者 Yuuyuko-uu，采用包内自定义许可。"
+      },
+      "category": "memory"
+    },
+    {
+      "name": "dsh-plugin-subscriptions",
+      "title": {
+        "en": "dsh-plugin-subscriptions",
+        "zh": "dsh-plugin-subscriptions"
+      },
+      "description": {
+        "en": "Use ChatGPT Codex, Claude, Grok, GitHub Copilot and Google Antigravity accounts as DSH model providers, with login, multiple accounts and usage controls. Tokens are stored locally; available models and quotas depend on the account.",
+        "zh": "将 ChatGPT Codex、Claude、Grok、GitHub Copilot 和 Google Antigravity 账号接入 DSH，支持登录、多账号及用量管理。令牌保存在本机，可用模型和额度取决于账号。"
+      },
+      "category": "providers"
+    },
+    {
+      "name": "dsh-prompt-rewriter",
+      "title": {
+        "en": "Prompt Rewriter",
+        "zh": "提示词改写"
+      },
+      "description": {
+        "en": "Rewrite a composer draft before sending with the current or a chosen model. Can include recent context and optional images; consumes model tokens and leaves the final edit and send to you.",
+        "zh": "使用当前或指定模型，在发送前原地改写输入框草稿，可参考近期上下文并按需带入图片。会消耗模型额度，改写后由你编辑和发送。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-video-storyboard",
+      "title": {
+        "en": "Video Storyboard",
+        "zh": "视频分镜"
+      },
+      "description": {
+        "en": "Turn local or online video into timestamped storyboard sheets, with scene cuts, subtitles, OCR and optional transcription. Requires FFmpeg/ffprobe; sites may need yt-dlp, and OCR or transcription need their own environment or service.",
+        "zh": "将本地或在线视频整理为带时间码的分镜图，支持镜头切分、字幕、OCR 及可选语音转写。需准备 FFmpeg/ffprobe；站点下载可能需要 yt-dlp，OCR 和转写需另配运行环境或服务。"
+      },
+      "category": "tools"
     }
   ]
 }
