@@ -13,6 +13,8 @@ Unreleased development snapshot. The published npm version remains 0.3.3.
 - Added custom bundle-layer order editing with fixed system positions, dependency checks, profile revision checks, native file locking and exclusive HMR reconciliation. Failed application restores the previous profile. Layer order describes patch composition, not asynchronous startup completion time.
 - Added horizontal mouse dragging from text, buttons and cards without selecting text or activating a button after a drag. Regular clicks, typing, touch scrolling and keyboard navigation remain available.
 - Added short localized native detail documents and management styling for DSH's default appearance and the Macaron theme. Fixed native RPC option arguments, disabled-component labels and missing label metadata in the native settings launcher.
+- Renamed the Macaron theme to the Whale Maid theme, with its own light or dark choice that follows DSH by default, and brought it much closer to dshopen.org: dotted cream paper, 2px ink outlines and hard shadows, a macaron tone per plugin on tilted icons, solid coloured label pills, sun-yellow install buttons, marker-pen section titles and cards that lift on hover. The management dialog now shares the market's look and is simpler: one summary row, search with Check updates, filter pills, card-style rows, the plugin's actions in one row, updates only when there is one, and load order, components and notes folded away.
+- Show Open Market in the sidebar is now on by default. Likes are always on and no longer have a switch. Auto review for new conversations moved to a Small tools group in the settings.
 
 Task protection covers activity reported by the Host across all sessions. Independent background producers and operations started directly in native management do not share this gate. Older Hosts without the required APIs refuse protected mutations.
 
@@ -24,6 +26,8 @@ Task protection covers activity reported by the Host across all sessions. Indepe
 - 支持调整自定义插件配置层顺序，保留系统层位置，校验依赖与配置版本，复用原生文件锁和 HMR 排他事务；应用失败时恢复原配置。顺序表示补丁合并位置，不代表异步启动完成时间。
 - 横向推荐行支持从文字、按钮或卡片按住拖动，拖动不会选中文字或误触按钮，保留普通单击、输入、触屏和键盘操作。
 - 官方详情改用简短中英文说明，管理页适配 DSH 默认外观和马卡龙主题；修复原生 RPC 可选参数、停用组件状态，以及官方设置入口缺少标签元数据时的异常。
+- 马卡龙主题更名为鲸鱼女仆主题，可单独选浅色或深色（默认跟随 DSH），并更贴近 dshopen.org：点阵奶油底、2px 墨线和硬阴影、每个插件一种马卡龙色的倾斜图标、实色标签胶囊、阳光黄安装按钮、马克笔标题和悬停抬起的卡片。插件管理页沿用市场的样式并精简：顶部一行概况、搜索旁「检查更新」、胶囊筛选、卡片式列表、插件操作排在同一行，有更新时才显示更新区，启动顺序、组件和说明默认收起。
+- 「在侧边栏显示开放市场」默认开启；点赞始终开启，不再提供开关；「新对话默认自动审查」移到设置里的「小工具」。
 
 任务保护基于宿主报告的所有会话活动；独立后台生产者和直接在官方管理页发起的操作不共用此维护入口。旧版宿主缺少必要 API 时会拒绝受保护的修改。
 

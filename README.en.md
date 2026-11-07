@@ -37,17 +37,15 @@ https://dshopen.org/index.json
 dsh plugin --profile desktop add dsh-open-market
 ```
 
-It also adds an **Open Market** tab to the Plugins page: today's picks, rows ranked by likes and growth, and the whole catalog. Open a card for details, likes and install; save plugins to grouped favorites, and see updates for what you installed.
+It also adds an **Open Market** tab to the Plugins page: today's picks, rows ranked by likes and growth, and the whole catalog. Open a card for details, likes and install; save plugins to grouped favorites, and enable, update or uninstall local plugins from **Manage plugins**.
 
 ![The Open Market tab on the DSH Plugins page](docs/images/open-market-en.webp)
 
-### Macaron theme
+### Whale Maid theme
 
-Open Market also ships an optional theme in the style of the [dshopen.org](https://dshopen.org/) website. It covers the sidebar, conversations, code blocks, menus, dialogs and settings, follows DSH's light or dark appearance and leaves the layout alone. Turn on **Macaron theme** in the Open Market settings; turning it off restores DSH right away.
+Open Market also ships an optional theme in the style of the [dshopen.org](https://dshopen.org/) website: ink outlines, hard shadows, macaron colours and the whale maid in empty spaces. It covers the sidebar, conversations, code blocks, menus, dialogs and settings and leaves the layout alone. Turn on **Whale Maid theme** in the Open Market settings; pick light or dark on its own or follow DSH (the default), and turning it off restores DSH right away.
 
-<p><img src="docs/images/theme-market-zh.webp" alt="Open Market with the macaron theme" width="49%"> <img src="docs/images/theme-chat-zh.webp" alt="A conversation with code and a diff in the macaron theme" width="49%"></p>
-
-<img src="docs/images/theme-settings-zh.webp" alt="The Macaron theme switch in Open Market settings" width="49%">
+<p><img src="docs/images/theme-market-en.webp" alt="Open Market in the Whale Maid theme, light" width="49%"> <img src="docs/images/theme-manage-en.webp" alt="Manage plugins in the Whale Maid theme, dark" width="49%"></p>
 
 [![The Open Plugin Market website home](docs/images/home-en.webp)](https://dshopen.org/)
 

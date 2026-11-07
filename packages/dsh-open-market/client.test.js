@@ -45,7 +45,7 @@ test('client starts without the optional market service and registers its tab wh
       slots: {
         inject: (name, setup) => { const dispose = setup(); if (typeof dispose === 'function') disposers.push(dispose); },
         register: registration => {
-          const key = registration.id ?? registration.key;
+          const key = registration.name === 'plugins.tab' ? 'tab:' + registration.id : registration.id ?? registration.key;
           tabs.add(key);
           return () => tabs.delete(key);
         }
@@ -56,16 +56,16 @@ test('client starts without the optional market service and registers its tab wh
   for (const service of plugin.inject) assert.ok(service in ctx, 'Startup must not wait for ' + service);
   plugin.apply(ctx);
   assert.ok(tabs.has('dsh-open-market'), 'Plugin settings remain available');
-  assert.ok(!tabs.has('open-market'), 'No browsing tab calls an absent service');
+  assert.ok(!tabs.has('tab:open-market'), 'No browsing tab calls an absent service');
   const activate = injections.get('remote.pluginMarket');
   assert.equal(typeof activate, 'function');
   const disposers = [];
   const scoped = context(disposers);
   scoped.remote.pluginMarket = {};
   activate(scoped);
-  assert.ok(tabs.has('open-market'));
+  assert.ok(tabs.has('tab:open-market'));
   disposers.reverse().forEach(dispose => dispose());
-  assert.ok(!tabs.has('open-market'), 'The browsing tab follows the service lifecycle');
+  assert.ok(!tabs.has('tab:open-market'), 'The browsing tab follows the service lifecycle');
   assert.ok(tabs.has('dsh-open-market'), 'Settings survive market service removal');
 });
 
@@ -95,7 +95,7 @@ test('first launch and footer support share a daily vote, with a persistent firs
   assert.equal(votes.length, 2, 'Footer supports once on the next UTC day');
 });
 
-test('disabled likes suppress both self-install and footer support; failed requests can retry', async () => {
+test('likes are always on, even for an old opt-out; a failed first-launch vote can retry', async () => {
   const stored = new Map([['dsh-open-market:settings', JSON.stringify({likes: false})]]);
   let requests = 0, succeeds = false;
   const {internals} = await client({stored, fetchImpl: async () => {
@@ -103,10 +103,9 @@ test('disabled likes suppress both self-install and footer support; failed reque
     if (!succeeds) throw new Error('offline');
     return {ok: true, json: async () => ({name: 'dsh-open-market', likes: 3, counted: false})};
   }});
+  assert.equal(internals.getSettings().likes, true);
   await internals.hydrateProfile();
-  internals.countSelfInstall(); internals.supportMarket(); await tick();
-  assert.equal(requests, 0);
-  internals.updateSettings('likes', true); internals.countSelfInstall(); await tick();
+  internals.countSelfInstall(); await tick();
   assert.notEqual(stored.get('dsh-open-market:install-counted'), '1');
   assert.equal(internals.getLikes().names.has('dsh-open-market'), false);
   succeeds = true;
@@ -229,7 +228,10 @@ test('settings keep the old switch and refuse values of the wrong kind', async (
   assert.equal(normalizeSettings({hideInstalled: true, showInstalled: true}).showInstalled, true);
   assert.equal(normalizeSettings({}).showInstalled, true);
   assert.equal(normalizeSettings({registry: 'nope'}).registry, 'index');
-  assert.equal(normalizeSettings({likes: 'yes'}).likes, true);
+  assert.equal(normalizeSettings({likes: false}).likes, true);
+  assert.equal(normalizeSettings({}).themeAppearance, 'auto');
+  assert.equal(normalizeSettings({themeAppearance: 'dark'}).themeAppearance, 'dark');
+  assert.equal(normalizeSettings({themeAppearance: 'sepia'}).themeAppearance, 'auto');
   assert.equal(normalizeSettings({customRegistry: 7}).customRegistry, '');
 });
 
@@ -423,14 +425,14 @@ test('the catalog sorts differ, and each falls back on the recommended order', a
   assert.equal(entries[0].name, 'a');
 });
 
-test('the sidebar page appears on its own only where the tab cannot', async () => {
+test('the sidebar page is on unless switched off, including the old automatic choice', async () => {
   const {internals: {sidebarWanted, normalizeSettings}} = await client();
-  assert.equal(sidebarWanted('auto', {tab: false}), true);
-  assert.equal(sidebarWanted('auto', {tab: true}), false);
-  assert.equal(sidebarWanted('on', {tab: true}), true);
-  assert.equal(sidebarWanted('off', {tab: false}), false);
-  assert.equal(normalizeSettings({sidebarMarket: 'sideways'}).sidebarMarket, 'auto');
-  assert.equal(normalizeSettings({sidebarMarket: 'on'}).sidebarMarket, 'on');
+  assert.equal(sidebarWanted('on'), true);
+  assert.equal(sidebarWanted('off'), false);
+  assert.equal(normalizeSettings({}).sidebarMarket, 'on');
+  assert.equal(normalizeSettings({sidebarMarket: 'auto'}).sidebarMarket, 'on');
+  assert.equal(normalizeSettings({sidebarMarket: 'sideways'}).sidebarMarket, 'on');
+  assert.equal(normalizeSettings({sidebarMarket: 'off'}).sidebarMarket, 'off');
 });
 
 test('an index plugin gets the install targets and default version DSH would give it', async () => {
@@ -586,11 +588,11 @@ test('changing an installed version is handed to the Host while new installs use
 });
 
 test('profile data replaces an empty browser cache and preserves explicit preferences across origins', async () => {
-  const profileState = {schema: 1, settings: {likes: false, autoRotate: false},
+  const profileState = {schema: 1, settings: {showCheckup: false, autoRotate: false},
     favorites: {schema: 1, groups: [{id: 'default', name: '', names: ['demo']}]}, installCounted: true, footerTurn: 1};
   const first = await client({profileState});
   await first.internals.hydrateProfile();
-  assert.equal(first.internals.getSettings().likes, false);
+  assert.equal(first.internals.getSettings().showCheckup, false);
   assert.equal(first.internals.getSettings().autoRotate, false);
   assert.deepEqual(plain(first.internals.getFavorites().groups[0].names), ['demo']);
   first.internals.updateSettings('showInstalled', false);
@@ -599,18 +601,18 @@ test('profile data replaces an empty browser cache and preserves explicit prefer
   const next = await client({profileState, stored: new Map()});
   await next.internals.hydrateProfile();
   assert.equal(next.internals.getSettings().showInstalled, false);
-  assert.equal(next.internals.getSettings().likes, false);
+  assert.equal(next.internals.getSettings().showCheckup, false);
   assert.deepEqual(plain(next.internals.getFavorites().groups[0].names), ['demo', 'another']);
 });
 
 test('offline profile loading keeps cached preferences and does not send a first-launch vote', async () => {
   let votes = 0;
-  const stored = new Map([['dsh-open-market:settings', JSON.stringify({likes: false})]]);
+  const stored = new Map([['dsh-open-market:settings', JSON.stringify({showCheckup: false})]]);
   const plugin = await client({stored, profileFetch: async () => {throw Error('offline');}, fetchImpl: async () => {votes++;}});
   assert.equal(await plugin.internals.hydrateProfile(), false);
-  plugin.internals.countSelfInstall(); plugin.internals.supportMarket(); await tick();
+  plugin.internals.countSelfInstall(); await tick();
   assert.equal(votes, 0);
-  assert.equal(plugin.internals.getSettings().likes, false);
+  assert.equal(plugin.internals.getSettings().showCheckup, false);
   assert.equal(plugin.internals.getProfileStatus(), 'error');
 });
 
@@ -621,13 +623,13 @@ test('local edits made while the profile loads are saved rather than overwritten
   const plugin = await client({profileFetch: async (_url, options) => {
     const request = JSON.parse(options.body); writes.push(request);
     if (request.initialize) await waiting;
-    return {ok: true, json: async () => ({ok: true, state: {schema: 1, settings: {likes: false, autoRotate: true}, installCounted: true}})};
+    return {ok: true, json: async () => ({ok: true, state: {schema: 1, settings: {showCheckup: false, autoRotate: true}, installCounted: true}})};
   }});
   const load = plugin.internals.hydrateProfile();
   plugin.internals.updateSettings('autoRotate', false);
   release(); await load; await tick();
   assert.equal(plugin.internals.getSettings().autoRotate, false);
-  assert.equal(plugin.internals.getSettings().likes, false, 'An unrelated local edit must not override the profile opt-out');
+  assert.equal(plugin.internals.getSettings().showCheckup, false, 'An unrelated local edit must not override the profile choice');
   assert(writes.some(x => !x.initialize && x.patch.settings?.autoRotate === false));
 });
 
@@ -833,6 +835,12 @@ test('self-update uses the authenticated local endpoint and reports unavailable,
   assert.equal((await requestSelfUpdate(target, t, {fetchImpl: async () => {throw Error('connection lost');}})).error, 'selfUpdateConnectionLost');
   assert.equal((await requestSelfUpdate(target, t, {fetchImpl: async () => ({ok: true, json: async () => ({})})})).error, 'selfUpdateConnectionLost');
   assert.equal((await requestSelfUpdate(target, t, {fetchImpl: async () => ({ok: true, json: async () => ({ok: false, code: 'stop-profile', error: 'Stop the profile'})})})).error, 'updateRestart');
+});
+
+test('a refused load order names both the plugin and the dependency that must move above it', async () => {
+  const {internals: {managementMessage}} = await client();
+  const t = key => ({manageDependencyOrder: '{name} requires {dependency}; move {dependency} above it.'})[key] ?? key;
+  assert.equal(managementMessage({ok: false, code: 'dependency-order', error: 'b', dependency: 'a'}, t), 'b requires a; move a above it.');
 });
 
 test('management uses the complete native inventory and keeps disabled, broken and outside-market details accessible', async () => {

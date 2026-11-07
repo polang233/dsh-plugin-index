@@ -159,9 +159,8 @@ export function createDiagnostics({profile, get, runtime: suppliedRuntime, opene
     if (order.length !== selected.length || new Set(order).size !== order.length || order.some(name => !selected.includes(name))) return {ok: false, code: 'invalid-load-order'};
     if (before.revision !== revision) return {ok: false, code: 'installation-changed'};
     for (const item of before.bundles.filter(item => order.includes(item.name))) {
-      if (item.dependencies.some(dep => dep.kind !== 'optional' && order.includes(dep.name) && order.indexOf(dep.name) > order.indexOf(item.name))) {
-        return {ok: false, code: 'dependency-order', error: item.name};
-      }
+      const late = item.dependencies.find(dep => dep.kind !== 'optional' && order.includes(dep.name) && order.indexOf(dep.name) > order.indexOf(item.name));
+      if (late) return {ok: false, code: 'dependency-order', error: item.name, dependency: late.name};
     }
     const api = await native(), file = join(profile.dir, 'package.json');
     return api.withFileLock(file, async () => {

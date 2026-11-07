@@ -27,7 +27,8 @@ function fakeDocument() {
     body: {
       setAttribute: (name, value) => attributes.set(name, String(value)),
       removeAttribute: name => attributes.delete(name),
-      hasAttribute: name => attributes.has(name)
+      hasAttribute: name => attributes.has(name),
+      getAttribute: name => attributes.get(name) ?? null
     },
     createElement: create,
     getElementById: id => nodes.get(id) ?? null
@@ -141,6 +142,25 @@ test('unloading the plugin removes the theme', async () => {
   assert.equal(themed(document), false, 'An unloaded plugin no longer follows the setting');
 });
 
+test('the theme follows DSH light or dark unless the user picks one', async () => {
+  const {plugin, document} = await client();
+  const appearance = () => document.body.getAttribute('data-opm-appearance');
+  start(plugin);
+  const {updateSettings} = plugin.internals;
+  document.body.setAttribute('data-ds-dark-theme', '');
+  updateSettings('theme', true);
+  assert.equal(appearance(), 'dark', 'Follows DSH by default');
+  updateSettings('themeAppearance', 'light');
+  assert.equal(appearance(), 'light', 'A chosen light palette wins over DSH dark');
+  document.body.removeAttribute('data-ds-dark-theme');
+  updateSettings('themeAppearance', 'dark');
+  assert.equal(appearance(), 'dark', 'A chosen dark palette wins over DSH light');
+  updateSettings('themeAppearance', 'auto');
+  assert.equal(appearance(), 'light');
+  updateSettings('theme', false);
+  assert.equal(appearance(), null, 'Switching the theme off removes the appearance too');
+});
+
 test('a malformed theme value falls back to off', async () => {
   const stored = new Map([[SETTINGS_KEY, JSON.stringify({theme: 'yes'})]]);
   const {plugin, document} = await client({stored});
@@ -152,6 +172,8 @@ test('a malformed theme value falls back to off', async () => {
 test('profile preferences accept only a boolean theme', () => {
   assert.deepEqual(profilePatch({settings: {theme: true}}), {settings: {theme: true}});
   assert.throws(() => profilePatch({settings: {theme: 'on'}}));
+  assert.deepEqual(profilePatch({settings: {themeAppearance: 'dark'}}), {settings: {themeAppearance: 'dark'}});
+  assert.throws(() => profilePatch({settings: {themeAppearance: 'sepia'}}));
 });
 
 test('the Host serves only the shipped theme files', async () => {

@@ -95,7 +95,8 @@ test('reorders only custom slots under the native file lock and preserves unrela
 
 test('system moves, omitted plugins and inverted dependency order are refused before writing', async t => {
   const f = await fixture(t), before = await f.diagnostics.snapshot(f.bundles, f.plugins);
-  assert.equal((await f.diagnostics.reorder({order: ['alpha', 'beta', 'gamma'], revision: before.revision}, f.bundles, f.plugins)).code, 'dependency-order');
+  assert.deepEqual(await f.diagnostics.reorder({order: ['alpha', 'beta', 'gamma'], revision: before.revision}, f.bundles, f.plugins),
+    {ok: false, code: 'dependency-order', error: 'alpha', dependency: 'beta'});
   assert.equal((await f.diagnostics.reorder({order: ['core', 'alpha', 'gamma'], revision: before.revision}, f.bundles, f.plugins)).code, 'invalid-load-order');
   assert.equal(f.locks, 0);
 });

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Auto review for new conversations",
-    "description": "Starts every new conversation in Auto review, switching on DSH's experimental Auto review if needed, so you no longer pick and confirm it each time."
+    "title": "Small tool · Auto review for new conversations",
+    "description": "New conversations start in DSH's experimental Auto review permission, so you don't switch it each time."
   }
 }

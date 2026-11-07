@@ -11,7 +11,7 @@ window.__ModuleLoader__.load({
     try { Switch = require('@deepseek-ai/dsh-client-ui-primitives').Switch; } catch { /* Older hosts use the checkbox fallback. */ }
 
     const SETTINGS_KEY = 'dsh-open-market:settings';
-    const DEFAULT_SETTINGS = { autoRotate: true, showInstalled: true, showCheckup: true, likes: true, registry: 'index', customRegistry: '', sidebarMarket: 'auto', theme: false };
+    const DEFAULT_SETTINGS = { autoRotate: true, showInstalled: true, showCheckup: true, likes: true, registry: 'index', customRegistry: '', sidebarMarket: 'on', theme: false, themeAppearance: 'auto' };
     const REGISTRY_CHOICES = ['index', 'dsh', 'npmmirror', 'custom'];
     function normalizeSettings(saved) {
       const result = Object.fromEntries(Object.entries(DEFAULT_SETTINGS).map(([key, fallback]) =>
@@ -19,7 +19,11 @@ window.__ModuleLoader__.load({
       // 0.2.5 stored the opposite switch, and it covered the rails only.
       if (typeof saved?.showInstalled !== 'boolean' && typeof saved?.hideInstalled === 'boolean') result.showInstalled = !saved.hideInstalled;
       if (!REGISTRY_CHOICES.includes(result.registry)) result.registry = DEFAULT_SETTINGS.registry;
-      if (!['auto', 'on', 'off'].includes(result.sidebarMarket)) result.sidebarMarket = DEFAULT_SETTINGS.sidebarMarket;
+      // Before 0.4 the page showed only where the Plugins tab could not; it is now on unless switched off.
+      if (result.sidebarMarket !== 'off') result.sidebarMarket = 'on';
+      if (!['auto', 'light', 'dark'].includes(result.themeAppearance)) result.themeAppearance = DEFAULT_SETTINGS.themeAppearance;
+      // Likes are no longer a switch: the market counts anonymous likes for everyone.
+      result.likes = true;
       return result;
     }
     function readSettings() {
@@ -1021,96 +1025,96 @@ window.__ModuleLoader__.load({
     const managementLocale = {
       zh: {
         manageSearch: '搜索名称、包名或来源', manageAll: '全部', manageEnabled: '已启用', manageDisabled: '已停用', manageUpdates: '有更新',
-        manageProblems: '有问题', manageExternal: '未在本市场收录', manageGroup: '收藏分组', manageAllGroups: '所有分组',
-        manageCount: '{shown} / {total} 个插件', manageDetails: '详情', manageSettings: '设置与完整管理', manageUninstall: '卸载',
-        manageSelect: '选择 {name}', manageSelectAll: '选择当前结果', manageClear: '清空选择', manageSelected: '已选择 {count} 个',
-        manageCheck: '检查更新', manageChecking: '正在检查…', manageChecked: '更新检查已完成', manageCurrent: '当前版本', manageOffered: '可用版本',
-        manageNow: '立即更新', manageIdle: '空闲后更新', manageQueueSelected: '所选插件空闲后更新', manageRefresh: '刷新列表',
-        manageQueue: '更新队列', manageQueueEmpty: '暂无更新任务', manageQueued: '已加入空闲更新队列', manageCancel: '取消排队',
+        manageProblems: '有问题', manageExternal: '市场外', manageGroup: '收藏分组', manageAllGroups: '所有分组',
+        manageTotal: '{total} 个插件', manageCount: '{shown} / {total} 个插件', manageDetails: '详情', manageSettings: '打开设置', manageUninstall: '卸载',
+        manageSelect: '选择 {name}', manageSelectAll: '全选', manageClear: '取消全选', manageSelected: '已选择 {count} 个',
+        manageCheck: '检查更新', manageChecking: '正在检查…', manageChecked: '更新检查已完成', manageOffered: '可用版本',
+        manageNow: '立即更新', manageIdle: '空闲后更新', manageQueueSelected: '所选插件空闲后更新',
+        manageQueue: '更新队列', manageQueueEmpty: '没有更新任务', manageQueued: '已加入空闲更新队列', manageCancel: '取消排队',
         manageRetry: '重新排队', manageDismiss: '移除记录', manageReport: '复制管理报告', manageReportCopied: '报告已复制',
         manageStateQueued: '已排队', manageStateWaiting: '等待空闲', manageStateRunning: '正在更新', manageStateSucceeded: '已完成',
         manageStateFailed: '失败', manageStateCancelled: '已取消', manageStateInterrupted: '等待重新确认',
-        manageIdleHelp: '任务运行、等待审批或后台作业未结束时暂缓更新。维护期间的新输入会等待更新完成。',
-        manageBusy: '当前有任务运行，操作未执行。更新可选择「空闲后更新」。',
-        manageMonitor: '当前 DSH 无法确认安全维护窗口，操作未执行。可打开官方管理页查看。',
+        manageIdleHelp: '等到没有任务运行时再更新；更新期间新的输入会排队。',
+        manageBusy: '有任务在运行，操作没有执行。更新可以选「空闲后更新」。',
+        manageMonitor: 'DSH 无法确认任务是否空闲，修改操作暂不可用。',
         manageUpdating: '另一个管理操作正在执行，请稍后重试。', manageRestarted: 'Host 已重启，请重新确认后排队。',
-        manageUnavailable: '管理服务暂不可用，请刷新，或打开官方管理页。', manageRunning: '有 {count} 个运行中的任务',
-        manageReady: '任务空闲', manageMonitoring: '无法确认任务状态', manageReadonly: '此插件由宿主管理，操作受限',
-        manageSelf: '请在官方管理页停用或卸载开放市场，以保留操作结果。', manageRestart: '已保存，重启 DSH 后生效',
-        manageDone: '操作已完成', manageSource: '安装来源', manageRows: '组件与诊断', manageNoRows: '未声明独立组件',
+        manageUnavailable: '管理服务暂不可用，请稍后再试。', manageRunning: '有 {count} 个运行中的任务',
+        manageReady: '任务空闲', manageMonitoring: '无法确认任务状态', manageReadonly: '由 DSH 管理，不能在这里修改',
+        manageSelf: '开放市场自己请在官方插件页停用或卸载。', manageRestart: '已保存，重启 DSH 后生效',
+        manageDone: '操作已完成', manageSource: '安装来源', manageRows: '组件', manageNoRows: '没有独立组件',
         manageNative: '打开官方详情', manageNativeUnavailable: '已打开插件页；此版本不支持定位详情。', manageTarget: '固定 Git 提交',
-        manageRemoveTitle: '确认卸载', manageRemoveHelp: '将通过 DSH 卸载此插件。插件另存的个人数据可能保留。',
-        manageConfirmName: '输入完整包名确认', manageCancelRemove: '保留插件', manageNotes: '市场资料', manageNoMarket: '此插件未在开放市场收录，仍可查看和管理本机安装。',
-        manageDocument: '本机插件说明', manageLoadDocument: '读取本机说明', manageNoDocument: '此插件没有提供说明文档。',
-        manageNoResults: '没有符合筛选条件的插件', manageNoSelection: '选择一个插件查看详情', manageQueuedCount: '队列 {count}',
-        manageCheckUnavailable: '当前宿主不支持此来源的版本检查', manageNoUpdate: '尚未发现更新，可点击「检查更新」',
-        manageChanged: '安装版本、来源或启用状态已改变，请刷新列表后重新选择更新。', manageStatus: '状态', manageFilter: '插件筛选',
+        manageRemoveTitle: '确认卸载', manageRemoveHelp: '插件自己保存的数据可能会保留。',
+        manageConfirmName: '输入完整包名确认', manageCancelRemove: '保留插件', manageNoMarket: '未在开放市场收录。',
+        manageDocument: '插件说明', manageLoadDocument: '读取本机说明', manageNoDocument: '此插件没有提供说明文档。',
+        manageNoResults: '没有符合筛选条件的插件', manageNoSelection: '选择左侧插件查看详情', manageQueuedCount: '队列 {count}',
+        manageCheckUnavailable: '当前宿主不支持此来源的版本检查',
+        manageChanged: '安装版本、来源或启用状态已改变，请刷新列表后重新选择更新。', manageFilter: '插件筛选',
         manageMissing: '插件已不在本机安装列表中。', manageQueueFull: '更新队列已满，请先处理现有任务。',
         manageQueuing: '正在排队…',
         manageRowUnknown: '未加载或状态未知',
-        manageCustom: '自定义插件', manageSystem: '系统插件', manageSystemHelp: 'DSH 自带的运行支持与可选组件',
-        manageOverview: '运行概览与启动顺序', manageDiagnostics: '诊断与目录', manageLoaded: '已加载自定义插件',
-        manageErrorCount: '加载异常', manageRiskCount: '风险提示', manageRiskHelp: '基于已声明的兼容性、依赖和安装脚本，不代表完整安全审计。',
+        manageCustom: '自定义插件', manageSystem: '系统插件',
+        manageOverview: '启动顺序与运行环境', manageDiagnostics: '诊断与目录', manageLoaded: '已加载',
+        manageErrorCount: '加载异常', manageRiskCount: '风险提示', manageRiskHelp: '只检查兼容范围、依赖和安装脚本，不是安全审计。',
         manageDirectories: '加载与配置位置', manageHome: 'DSH 数据目录', manageInstallation: 'DSH 加载目录', manageProfile: '当前配置目录',
-        managePackage: '插件加载目录', manageConfiguration: 'DSH 插件配置目录', manageSharedConfig: '与当前 DSH 配置共用；独立数据目录由插件自行决定。',
+        managePackage: '插件加载目录', manageConfiguration: 'DSH 插件配置目录',
         manageOpenDirectory: '打开目录', manageArchived: '归档内，打开所在目录', manageDirectoryUnavailable: '此目录暂不可用',
-        manageDiagnosticUnavailable: '当前宿主暂不能提供扩展诊断', manageCompatibility: 'DSH 版本兼容性',
+        manageDiagnosticUnavailable: '当前 DSH 不支持扩展诊断', manageCompatibility: 'DSH 版本兼容性',
         manageCompatible: '兼容', manageIncompatible: '不兼容', manageUndeclared: '未声明范围', manageExempted: '已豁免版本限制', manageUnknown: '未知',
         manageDependencies: '依赖关系', manageDependents: '被这些插件依赖', manageNoDependencies: '没有声明运行依赖',
         manageDependencySatisfied: '满足', manageDependencyMissing: '缺失', manageDependencyMismatch: '版本不符',
         manageDependencyOptional: '可选，未安装', manageDependencyUnverified: '特殊来源，未核对范围', manageDependencyUnknown: '无法核对',
-        manageOrder: '配置层顺序', manageRuntimeOrder: '运行实例顺序', manageOrderHelp: '顺序决定插件补丁的合并位置，不代表异步启动完成时间。系统层保持固定；依赖应排在使用它的插件前。',
+        manageOrder: '配置层顺序', manageRuntimeOrder: '运行实例顺序', manageOrderHelp: '依赖要排在使用它的插件前面。',
         manageOrderSaved: '保存启动顺序', manageOrderReset: '放弃调整', manageOrderUp: '前移 {name}', manageOrderDown: '后移 {name}',
         manageOrderEmpty: '没有已启用的自定义插件可调整', manageOrderFailed: '加载顺序未能应用，已尝试恢复原配置。',
-        manageDependencyOrder: '请将被依赖的插件排在前面：', manageInstallScripts: '声明了安装脚本', manageDependencyRisk: '依赖需要处理',
-        manageCompatibilityRisk: '版本兼容性需要确认', manageNoRisks: '未发现上述诊断项的风险提示', manageNotSelected: '未加入启动配置',
+        manageDependencyOrder: '{name} 依赖 {dependency}，请把 {dependency} 排在它前面。', manageInstallScripts: '声明了安装脚本', manageDependencyRisk: '依赖需要处理',
+        manageCompatibilityRisk: '版本兼容性需要确认', manageNoRisks: '没有风险提示', manageNotSelected: '未加入启动配置',
         manageActive: '运行中', manageLoading: '正在加载', managePending: '等待加载', manageUnloading: '正在卸载', manageFailed: '加载失败',
       },
       en: {
         manageSearch: 'Search names, packages or sources', manageAll: 'All', manageEnabled: 'Enabled', manageDisabled: 'Disabled', manageUpdates: 'Updates',
-        manageProblems: 'Problems', manageExternal: 'Outside this market', manageGroup: 'Favorite group', manageAllGroups: 'All groups',
-        manageCount: '{shown} / {total} plugins', manageDetails: 'Details', manageSettings: 'Settings and full management', manageUninstall: 'Uninstall',
-        manageSelect: 'Select {name}', manageSelectAll: 'Select these results', manageClear: 'Clear selection', manageSelected: '{count} selected',
-        manageCheck: 'Check updates', manageChecking: 'Checking…', manageChecked: 'Update check complete', manageCurrent: 'Installed version', manageOffered: 'Available version',
-        manageNow: 'Update now', manageIdle: 'Update when idle', manageQueueSelected: 'Update selected when idle', manageRefresh: 'Refresh',
+        manageProblems: 'Problems', manageExternal: 'Not in market', manageGroup: 'Favorite group', manageAllGroups: 'All groups',
+        manageTotal: '{total} plugins', manageCount: '{shown} / {total} plugins', manageDetails: 'Details', manageSettings: 'Open settings', manageUninstall: 'Uninstall',
+        manageSelect: 'Select {name}', manageSelectAll: 'Select all', manageClear: 'Clear', manageSelected: '{count} selected',
+        manageCheck: 'Check updates', manageChecking: 'Checking…', manageChecked: 'Update check complete', manageOffered: 'Available version',
+        manageNow: 'Update now', manageIdle: 'Update when idle', manageQueueSelected: 'Update selected when idle',
         manageQueue: 'Update queue', manageQueueEmpty: 'No update tasks', manageQueued: 'Added to the idle update queue', manageCancel: 'Cancel queued update',
         manageRetry: 'Queue again', manageDismiss: 'Remove record', manageReport: 'Copy management report', manageReportCopied: 'Report copied',
         manageStateQueued: 'Queued', manageStateWaiting: 'Waiting for idle', manageStateRunning: 'Updating', manageStateSucceeded: 'Completed',
         manageStateFailed: 'Failed', manageStateCancelled: 'Cancelled', manageStateInterrupted: 'Needs confirmation',
-        manageIdleHelp: 'Updates wait for running turns, approvals and background work. New input waits during maintenance.',
-        manageBusy: 'Tasks are running; nothing changed. Choose Update when idle to queue an update.',
-        manageMonitor: 'This DSH cannot establish a safe maintenance window; nothing changed. You can open native management.',
+        manageIdleHelp: 'Waits until no task is running; new input waits during the update.',
+        manageBusy: 'A task is running, so nothing changed. Updates can use Update when idle.',
+        manageMonitor: "DSH can't tell whether tasks are idle, so changes are unavailable.",
         manageUpdating: 'Another management operation is running. Try again shortly.', manageRestarted: 'The Host restarted. Confirm the update before queuing it again.',
-        manageUnavailable: 'Management is unavailable. Refresh or open native management.', manageRunning: '{count} tasks running',
-        manageReady: 'Tasks idle', manageMonitoring: 'Task state unavailable', manageReadonly: 'This plugin is managed by the Host; some controls are unavailable',
-        manageSelf: 'Disable or uninstall Open Market from native management to retain the result.', manageRestart: 'Saved; restart DSH to apply',
-        manageDone: 'Operation completed', manageSource: 'Installation source', manageRows: 'Components and diagnostics', manageNoRows: 'No separate components declared',
+        manageUnavailable: 'Plugin management is unavailable. Try again shortly.', manageRunning: '{count} tasks running',
+        manageReady: 'Tasks idle', manageMonitoring: 'Task state unavailable', manageReadonly: 'Managed by DSH; it cannot be changed here',
+        manageSelf: "Disable or uninstall Open Market itself from DSH's Plugins page.", manageRestart: 'Saved; restart DSH to apply',
+        manageDone: 'Operation completed', manageSource: 'Installation source', manageRows: 'Components', manageNoRows: 'No separate components',
         manageNative: 'Open native details', manageNativeUnavailable: 'Opened Plugins; this version cannot navigate to a detail page.', manageTarget: 'Pinned Git commit',
-        manageRemoveTitle: 'Confirm uninstall', manageRemoveHelp: 'DSH will uninstall this plugin. Personal data stored separately by the plugin may remain.',
-        manageConfirmName: 'Type the full package name to confirm', manageCancelRemove: 'Keep plugin', manageNotes: 'Market information', manageNoMarket: 'This plugin is outside Open Market. You can still inspect and manage its local installation.',
-        manageDocument: 'Local plugin documentation', manageLoadDocument: 'Read local documentation', manageNoDocument: 'This plugin provides no documentation.',
-        manageNoResults: 'No plugins match these filters', manageNoSelection: 'Select a plugin to view its details', manageQueuedCount: 'Queue {count}',
-        manageCheckUnavailable: 'This Host cannot check versions for this source', manageNoUpdate: 'No update found yet. Use Check updates to look for newer versions.',
-        manageChanged: 'The installed version, source or selection changed. Refresh the list and choose the update again.', manageStatus: 'Status', manageFilter: 'Plugin filters',
+        manageRemoveTitle: 'Confirm uninstall', manageRemoveHelp: 'Data the plugin saved on its own may stay behind.',
+        manageConfirmName: 'Type the full package name to confirm', manageCancelRemove: 'Keep plugin', manageNoMarket: 'Not listed in Open Market.',
+        manageDocument: 'Plugin notes', manageLoadDocument: 'Read local documentation', manageNoDocument: 'This plugin provides no documentation.',
+        manageNoResults: 'No plugins match these filters', manageNoSelection: 'Pick a plugin to see its details', manageQueuedCount: 'Queue {count}',
+        manageCheckUnavailable: 'This Host cannot check versions for this source',
+        manageChanged: 'The installed version, source or selection changed. Refresh the list and choose the update again.', manageFilter: 'Plugin filters',
         manageMissing: 'This plugin is no longer installed.', manageQueueFull: 'The update queue is full. Finish or cancel existing tasks first.',
         manageQueuing: 'Queuing…',
         manageRowUnknown: 'Not loaded or state unknown',
-        manageCustom: 'Custom plugins', manageSystem: 'System plugins', manageSystemHelp: 'DSH runtime support and optional components',
-        manageOverview: 'Runtime overview and load order', manageDiagnostics: 'Diagnostics and directories', manageLoaded: 'Custom plugins loaded',
-        manageErrorCount: 'Load problems', manageRiskCount: 'Risk indicators', manageRiskHelp: 'Based on declared compatibility, dependencies and install scripts. This is not a full security audit.',
+        manageCustom: 'Custom plugins', manageSystem: 'System plugins',
+        manageOverview: 'Load order and environment', manageDiagnostics: 'Diagnostics and directories', manageLoaded: 'Loaded',
+        manageErrorCount: 'Load problems', manageRiskCount: 'Risk indicators', manageRiskHelp: 'Checks the compatibility range, dependencies and install scripts only; not a security audit.',
         manageDirectories: 'Loading and configuration locations', manageHome: 'DSH data directory', manageInstallation: 'DSH installation directory', manageProfile: 'Current profile directory',
-        managePackage: 'Plugin directory', manageConfiguration: 'DSH plugin configuration directory', manageSharedConfig: 'Shared with this DSH profile. Plugins choose their own separate data directories.',
+        managePackage: 'Plugin directory', manageConfiguration: 'DSH plugin configuration directory',
         manageOpenDirectory: 'Open directory', manageArchived: 'Inside an archive; open its parent directory', manageDirectoryUnavailable: 'This directory is unavailable',
-        manageDiagnosticUnavailable: 'This Host cannot provide extended diagnostics', manageCompatibility: 'DSH version compatibility',
+        manageDiagnosticUnavailable: "This DSH doesn't provide extended diagnostics", manageCompatibility: 'DSH version compatibility',
         manageCompatible: 'Compatible', manageIncompatible: 'Incompatible', manageUndeclared: 'No range declared', manageExempted: 'Version exemption active', manageUnknown: 'Unknown',
         manageDependencies: 'Dependencies', manageDependents: 'Required by', manageNoDependencies: 'No runtime dependencies declared',
         manageDependencySatisfied: 'Satisfied', manageDependencyMissing: 'Missing', manageDependencyMismatch: 'Version mismatch',
         manageDependencyOptional: 'Optional, not installed', manageDependencyUnverified: 'Special source; range unverified', manageDependencyUnknown: 'Unable to verify',
-        manageOrder: 'Bundle layer order', manageRuntimeOrder: 'Runtime entry order', manageOrderHelp: 'Order controls how plugin patches merge, not when asynchronous startup finishes. System layers stay fixed. Put dependencies before their consumers.',
+        manageOrder: 'Bundle layer order', manageRuntimeOrder: 'Runtime entry order', manageOrderHelp: 'Put dependencies before the plugins that use them.',
         manageOrderSaved: 'Save load order', manageOrderReset: 'Discard changes', manageOrderUp: 'Move {name} earlier', manageOrderDown: 'Move {name} later',
         manageOrderEmpty: 'No enabled custom plugins to reorder', manageOrderFailed: 'Could not apply load order; restoration was attempted.',
-        manageDependencyOrder: 'Put required plugins first:', manageInstallScripts: 'Install scripts declared', manageDependencyRisk: 'Dependency needs attention',
-        manageCompatibilityRisk: 'Compatibility needs confirmation', manageNoRisks: 'No indicators found in these diagnostic checks', manageNotSelected: 'Not selected for startup',
+        manageDependencyOrder: '{name} requires {dependency}; move {dependency} above it.', manageInstallScripts: 'Install scripts declared', manageDependencyRisk: 'Dependency needs attention',
+        manageCompatibilityRisk: 'Compatibility needs confirmation', manageNoRisks: 'No risk indicators', manageNotSelected: 'Not selected for startup',
         manageActive: 'Running', manageLoading: 'Loading', managePending: 'Waiting to load', manageUnloading: 'Unloading', manageFailed: 'Load failed',
       },
     };
@@ -1161,16 +1165,16 @@ window.__ModuleLoader__.load({
       previous: '向左浏览 {section}', next: '向右浏览 {section}',
       source: '数据来自开放插件市场', sourceLink: 'dshopen.org', newWindow: '在新窗口打开',
       recommendationPosition: '查看第 {number} 组推荐', settings: '设置', about: '关于',
-      autoRotate: '今日推荐自动轮播', showInstalled: '在推荐和全部插件中显示已安装的插件', showCheckup: '显示插件管理的更新数量', installing: '正在安装…', sidebarMarket: '在侧边栏显示开放市场', theme: '马卡龙主题', themeHelp: '仿照 dshopen.org 的粗描边、硬阴影和马卡龙配色，并在空白处加入鲸鱼女仆。覆盖 DSH 的侧边栏、对话、菜单、对话框和设置；跟随 DSH 的浅色或深色外观，关闭后立即恢复原样。', sidebarMarketHelp: '单独的全宽页面，适合「插件」页没有开放市场标签的旧版 DSH。从这里安装时不弹安装窗口；需要确认安装脚本的插件请到「插件」页安装。', installNeedsDialog: '这个插件需要确认安装脚本，请到「插件」页安装', installedRestart: '已安装，重启 DSH 后生效',
-      settingsDisplay: '显示', settingsData: '数据与同步', settingsDownload: '下载', settingsConversation: '对话',
+      autoRotate: '今日推荐自动轮播', showInstalled: '在推荐和全部插件中显示已安装的插件', showCheckup: '显示插件管理的更新数量', installing: '正在安装…', sidebarMarket: '在侧边栏显示开放市场', theme: '鲸鱼女仆主题', themeHelp: '把 DSH 换成 dshopen.org 的样子：粗墨线、硬阴影、马卡龙配色，空白处还有鲸鱼女仆。整个界面都会换，关掉立即恢复。', themeAppearance: '主题外观', appearanceAuto: '跟随 DSH', appearanceLight: '浅色', appearanceDark: '深色', sidebarMarketHelp: '全宽页面，从这里安装不弹安装窗口；需要确认安装脚本的插件请到「插件」页安装。', installNeedsDialog: '这个插件需要确认安装脚本，请到「插件」页安装', installedRestart: '已安装，重启 DSH 后生效',
+      settingsDisplay: '显示', settingsTheme: '主题', settingsData: '数据与同步', settingsDownload: '下载', settingsTools: '小工具',
       syncData: '市场数据', syncNow: '同步最新数据', syncing: '正在同步…', syncedAt: '上次同步：{time}', neverSynced: '还没有同步过',
       syncFailed: '同步失败，继续显示已有数据', syncUnavailable: '打开「自定义插件市场」后才能同步', syncHelp: '打开市场时先显示本机保存的数据，每 6 小时在后台更新一次，不影响正常浏览。',
       registryLabel: '从哪个源下载', registryIndex: 'npm 官方源', registryDsh: '跟随 DSH 的安装源', registryNpmmirror: '中国大陆镜像源', registryCustom: '自定义地址',
       registryPlaceholder: 'https://npm.example.com/', registryInvalid: '请输入以 http:// 或 https:// 开头、不含账号密码的地址',
       registryHelp: '在开放市场里安装和更新 npm 插件时先问这个源，连不上或还没同步到这个包时，DSH 通常会改问另一个可信的源。Git 来源的插件直接从 GitHub 下载；DSH 自己的「发现」页不受这里影响。',
       registryCustomHelp: '自定义地址只问这一个源，不会回退到其他源。需要登录的源，请把凭据放在本机的 ~/.npmrc 里。',
-      autoReview: '新对话自动使用「自动审查」', autoReviewHelp: '打开后，每个新对话都直接使用 DSH 的实验性「自动审查」权限，不用每次手动选择、确认两次；DSH 没开「自动审查」时会一并打开，可能需要重启 DSH 生效。自动审查由当前模型判断每次工具调用，可能误放行或误拒绝，并消耗额外 token。', autoReviewRestart: '已保存，重启 DSH 后生效', autoReviewFailed: '切换失败：{reason}',
-      likes: '参与点赞', likesHelp: '点赞和安装会向 dshopen.org 发送匿名请求，用于推荐排序。首次运行和点击市场页底部链接也为市场插件计一次支持；每人每天每个插件计一次，点赞每 3 天减少 1。',
+      autoReview: '新对话默认「自动审查」', autoReviewHelp: '新对话直接用 DSH 的实验性「自动审查」权限，不用每次手动切换。由当前模型判断每次工具调用，可能误判，也会多用一些 token；首次打开可能需要重启 DSH。', autoReviewRestart: '已保存，重启 DSH 后生效', autoReviewFailed: '切换失败：{reason}',
+      likesHelp: '点赞、安装和首次打开会向 dshopen.org 发送匿名计数，用于推荐排序；每人每天每个插件最多计一次。',
       like: '点赞', likedToday: '今天已经点过赞了', likeLimit: '今天点赞次数已达上限', likeFailed: '点赞失败，请稍后再试',
       browseAll: '翻阅全部 {count} 个插件', allPlugins: '全部插件', allHint: '{count} 个插件', sortBy: '排序', sortStars: '星数最多', collapse: '收起',
       upToDateGroup: '状态正常', noneInstalled: '还没有安装开放市场里的插件',
@@ -1235,16 +1239,16 @@ window.__ModuleLoader__.load({
       sectionEmpty: 'No matching plugins yet', previous: 'Browse {section} left', next: 'Browse {section} right',
       source: 'Data from Open Plugin Market', sourceLink: 'dshopen.org', newWindow: 'Opens in a new window',
       recommendationPosition: 'Show recommendation group {number}', settings: 'Settings', about: 'About',
-      autoRotate: 'Auto-rotate today’s picks', showInstalled: 'Show installed plugins in recommendations and All plugins', showCheckup: 'Show the update count on Manage plugins', installing: 'Installing…', sidebarMarket: 'Show Open Market in the sidebar', theme: 'Macaron theme', themeHelp: 'Ink outlines, hard shadows and macaron colors from dshopen.org, with the whale maid in empty spaces. Covers the DSH sidebar, conversations, menus, dialogs and settings; follows the light or dark appearance and goes back to normal as soon as you switch it off.', sidebarMarketHelp: 'A separate full-width page, for older DSH versions without the Open Market tab on the Plugins page. Installs from it skip the install dialog; a plugin whose install scripts need approval has to be installed from Plugins.', installNeedsDialog: 'This plugin needs its install scripts approved. Install it from Plugins.', installedRestart: 'Installed. Restart DSH to use it.',
-      settingsDisplay: 'Display', settingsData: 'Data and sync', settingsDownload: 'Downloads', settingsConversation: 'Conversations',
+      autoRotate: 'Auto-rotate today’s picks', showInstalled: 'Show installed plugins in recommendations and All plugins', showCheckup: 'Show the update count on Manage plugins', installing: 'Installing…', sidebarMarket: 'Show Open Market in the sidebar', theme: 'Whale Maid theme', themeHelp: 'Dresses DSH like dshopen.org: ink outlines, hard shadows, macaron colours and the whale maid in empty spaces. Covers the whole interface and goes away as soon as you switch it off.', themeAppearance: 'Theme appearance', appearanceAuto: 'Same as DSH', appearanceLight: 'Light', appearanceDark: 'Dark', sidebarMarketHelp: 'A full-width page. Installs from it skip the install dialog; a plugin whose install scripts need approval has to be installed from Plugins.', installNeedsDialog: 'This plugin needs its install scripts approved. Install it from Plugins.', installedRestart: 'Installed. Restart DSH to use it.',
+      settingsDisplay: 'Display', settingsTheme: 'Theme', settingsData: 'Data and sync', settingsDownload: 'Downloads', settingsTools: 'Small tools',
       syncData: 'Market data', syncNow: 'Sync latest data', syncing: 'Syncing…', syncedAt: 'Last synced: {time}', neverSynced: 'Not synced yet',
       syncFailed: 'Sync failed; showing the data already here', syncUnavailable: 'Turn on Custom plugin markets to sync', syncHelp: 'The market opens with the data saved on this computer and updates in the background every six hours, so browsing is never held up.',
       registryLabel: 'Download from', registryIndex: 'Official npm registry', registryDsh: 'Same as DSH', registryNpmmirror: 'Mainland China mirror', registryCustom: 'Custom address',
       registryPlaceholder: 'https://npm.example.com/', registryInvalid: 'Enter an http:// or https:// address without a username or password',
       registryHelp: 'Installs and updates of npm plugins from Open Market ask this registry first. When it is unreachable or has no copy of the package yet, DSH usually asks another trusted one. Git plugins download straight from GitHub, and DSH’s own Discover tab is not affected.',
       registryCustomHelp: 'A custom address is asked alone, with no fallback. If it requires a login, keep the credentials in ~/.npmrc on this computer.',
-      autoReview: 'Start new conversations in Auto review', autoReviewHelp: "Every new conversation uses DSH's experimental Auto review permission, so you no longer pick and confirm it each time. If Auto review is off in DSH it is switched on too, which may need a restart. Auto review asks the current model about each tool call; it can wrongly allow or refuse actions and uses extra tokens.", autoReviewRestart: 'Saved; restart DSH for it to take effect', autoReviewFailed: 'Could not switch: {reason}',
-      likes: 'Join likes', likesHelp: 'Likes and installs send anonymous requests to dshopen.org for recommendation ranking. First launch and market footer links also count as support for Open Market; each person counts once per plugin per UTC day, and likes decrease by 1 every 3 days.',
+      autoReview: 'Auto review for new conversations', autoReviewHelp: "New conversations start in DSH's experimental Auto review permission, so you don't switch it each time. The current model judges each tool call, so it can misjudge and uses some extra tokens; the first time may need a DSH restart.", autoReviewRestart: 'Saved; restart DSH for it to take effect', autoReviewFailed: 'Could not switch: {reason}',
+      likesHelp: 'Likes, installs and the first launch send anonymous counts to dshopen.org for recommendation ranking, at most once per plugin per person per day.',
       like: 'Like', likedToday: 'Already liked today', likeLimit: 'Daily like limit reached', likeFailed: 'Could not like this plugin. Please try again later',
       browseAll: 'Browse all {count} plugins', allPlugins: 'All plugins', allHint: '{count} plugins', sortBy: 'Sort', sortStars: 'Most stars', collapse: 'Collapse',
       upToDateGroup: 'Up to date', noneInstalled: 'No plugins from Open Market are installed yet',
@@ -1516,6 +1520,8 @@ window.__ModuleLoader__.load({
       .opm-screenshots img { display: block; max-width: 100%; width: auto; height: 190px; object-fit: contain;
         border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-md); }
       .opm-detail-section { margin: 16px 0; }
+      .opm-detail-section > a, .opm-release > a { display: inline-block; margin-top: 6px; color: var(--dsw-alias-label-secondary); font-size: 13px; text-underline-offset: 3px; }
+      .opm-detail-section > a:hover, .opm-release > a:hover { color: var(--dsw-alias-label-primary); }
       .opm-detail-section h3, .opm-release summary { font-size: 13px; font-weight: 600; margin: 0 0 8px; }
       .opm-release { border-top: 1px solid var(--dsw-alias-border-l2); padding-top: 12px; margin: 12px 0; }
       .opm-release summary { cursor: pointer; }
@@ -1536,87 +1542,163 @@ window.__ModuleLoader__.load({
       .opm-menu-item span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .opm-menu-check { flex: 0 0 14px; color: #e59a00; }
       .opm-panel-wide { width: min(680px, calc(100% - 32px)); }
-      .opm-panel-management { width: min(1120px, calc(100vw - 32px)); height: min(850px, calc(100dvh - 48px));
-        max-height: calc(100dvh - 48px); display: flex; flex-direction: column; gap: 12px; overflow: hidden; padding: 20px; }
-      .opm-manage-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; padding-right: 36px; }
-      .opm-manage-head h2 { font-size: 18px; }
+      /* Plugin management: one rhythm throughout. Rows are small market cards, every section title is 13px/600,
+         filters are the same pills as favorites, and the plugin's actions share one row. */
+      .opm-panel-management { width: min(1120px, calc(100vw - 32px)); height: min(860px, calc(100dvh - 48px));
+        max-height: calc(100dvh - 48px); display: flex; flex-direction: column; gap: 12px; overflow: hidden; padding: 22px 24px 14px; }
+      .opm-manage-head { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; padding-right: 36px; }
+      .opm-manage-head h2 { font-size: 18px; font-weight: 600; margin-right: 6px; }
+      .opm-manage-pill { display: inline-flex; align-items: center; gap: 5px; min-height: 22px; padding: 0 9px;
+        border-radius: 999px; background: var(--dsw-alias-interactive-bg-hover); color: var(--dsw-alias-label-secondary);
+        font-size: 12px; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+      .opm-manage-pill-ok::before, .opm-manage-pill-busy::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #3aa66a; }
+      .opm-manage-pill-busy::before { background: #e0a020; }
+      .opm-manage-pill-warn { color: var(--dsw-alias-state-warn-primary, #a6620c); }
+      .opm-manage-pill-risk { cursor: help; }
       .opm-manage-controls, .opm-manage-actions, .opm-manage-bulk { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-      .opm-manage-search { flex: 1; min-width: 180px; height: 36px; padding: 0 10px; border: 1px solid var(--dsw-alias-border-l2);
-        border-radius: var(--dsw-radius-sm); background: var(--dsw-alias-bg-module-platform); color: inherit; font: inherit; }
-      .opm-manage-controls select { max-width: 220px; min-height: 34px; color: inherit; background: var(--dsw-alias-bg-layer-2);
-        border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-sm); padding: 4px 8px; font: inherit; }
+      .opm-manage-controls .opm-button { height: 32px; }
+      .opm-manage-search { flex: 1 1 240px; min-width: 180px; height: 32px; padding: 0 12px; border: 1px solid var(--dsw-alias-border-l2);
+        border-radius: var(--dsw-radius-md); background-color: var(--dsw-alias-bg-module-platform); color: inherit; font: inherit; font-size: 13px; outline: none;
+        transition: border-color 150ms ease-out, box-shadow 150ms ease-out; }
+      .opm-manage-controls .opm-manage-search { padding-left: 32px; background-repeat: no-repeat; background-position: 11px center; background-size: 15px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%237a8699' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='8.5' cy='8.5' r='5.5'/%3E%3Cpath d='m13 13 4 4'/%3E%3C/svg%3E"); }
+      .opm-manage-search::placeholder { color: var(--dsw-alias-label-tertiary); }
+      .opm-manage-search:focus { border-color: var(--dsw-alias-border-l3); box-shadow: 0 0 0 3px color-mix(in srgb, #4f7cff 22%, transparent); }
+      .opm-manage-controls select { appearance: none; -webkit-appearance: none; max-width: 200px; height: 32px; padding: 0 30px 0 11px;
+        border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-sm); color: var(--dsw-alias-label-primary);
+        background: var(--dsw-alias-button-elevated-fill) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%237a8699' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m2 4.5 4 4 4-4'/%3E%3C/svg%3E") no-repeat right 10px center;
+        font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; text-overflow: ellipsis; }
+      .opm-manage-controls select option { background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-primary); }
       .opm-manage-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
-      .opm-manage-tabs button[aria-pressed="true"] { background: var(--dsw-alias-interactive-bg-active); border-color: var(--dsw-alias-border-l3); }
-      .opm-manage-body { display: grid; grid-template-columns: minmax(280px, .95fr) minmax(320px, 1.2fr); gap: 18px; min-height: 0; flex: 1; }
-      .opm-manage-column { min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 8px; }
-      .opm-manage-list { overflow: auto; overscroll-behavior: contain; list-style: none; margin: 0; padding: 0 4px 4px 0; flex: 1; }
-      .opm-manage-group > ul { list-style: none; margin: 0; padding: 0; }
-      .opm-manage-group-title { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600;
-        margin: 0; padding: 10px 4px; color: var(--dsw-alias-label-secondary); }
-      .opm-manage-group-title > span { font-weight: 400; font-variant-numeric: tabular-nums; }
-      .opm-system-group { margin-top: 12px; border-top: 1px solid var(--dsw-alias-border-l2); }
-      .opm-system-group > summary { cursor: pointer; display: list-item; list-style-position: inside; }
-      .opm-system-group > summary span { margin-left: 8px; }
-      .opm-system-group > p { padding: 0 4px 8px; font-size: 12px; }
-      .opm-status { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--dsw-alias-border-l2);
-        border-radius: 5px; padding: 2px 7px; font-size: 11px; line-height: 1.5; white-space: nowrap; font-weight: 500; }
-      .opm-status-on { color: #22643f; background: #e8f5ee; border-color: #b7d8c4; }
-      .opm-status-off { color: var(--dsw-alias-label-secondary); background: var(--dsw-alias-bg-module-platform); border-style: dashed; }
-      body[data-ds-dark-theme] .opm-status-on { color: #8bd8ad; background: #223a2d; border-color: #3a614b; }
-      .opm-manage-metrics { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; font-size: 12px; color: var(--dsw-alias-label-secondary); }
-      .opm-manage-overview { flex-shrink: 0; max-height: min(34vh, 260px); overflow: auto; font-size: 12px;
-        border-bottom: 1px solid var(--dsw-alias-border-l2); padding-bottom: 8px; }
-      .opm-manage-overview summary, .opm-plugin-diagnostics summary, .opm-components summary { cursor: pointer; font-weight: 500; padding: 6px 0; }
-      .opm-manage-overview h4 { margin: 12px 0 4px; font-size: 12px; }
-      .opm-directory { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 8px; align-items: center; margin: 10px 0; font-size: 12px; }
-      .opm-directory > span { grid-column: 1 / -1; }
-      .opm-directory code { overflow-wrap: anywhere; user-select: text; font-family: inherit; font-size: 12px; }
+      .opm-manage-tabs .opm-button { min-height: 26px; padding: 0 12px; border-radius: 999px; font-size: 12px;
+        background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-secondary); }
+      .opm-manage-tabs .opm-button:hover:not(:disabled) { color: var(--dsw-alias-label-primary); }
+      .opm-manage-tabs .opm-button[aria-pressed="true"] { background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground); box-shadow: none; }
+      .opm-manage-status { margin-top: -4px !important; color: var(--dsw-alias-label-secondary); font-size: 12px; white-space: pre-wrap; }
+      /* Every disclosure in the dialog uses the same title and chevron. */
+      :is(.opm-manage-overview, .opm-plugin-diagnostics, .opm-components, .opm-manage-queue, .opm-system-group) > summary {
+        display: flex; align-items: center; gap: 8px; min-height: 34px; cursor: pointer; list-style: none;
+        color: var(--dsw-alias-label-primary); font-size: 13px; font-weight: 600; }
+      :is(.opm-manage-overview, .opm-plugin-diagnostics, .opm-components, .opm-manage-queue, .opm-system-group) > summary::-webkit-details-marker { display: none; }
+      :is(.opm-manage-overview, .opm-plugin-diagnostics, .opm-components, .opm-manage-queue, .opm-system-group) > summary::before {
+        content: ''; flex: none; width: 6px; height: 6px; margin: 0 2px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+        opacity: .55; transform: rotate(-45deg); transition: transform 150ms ease-out; }
+      :is(.opm-manage-overview, .opm-plugin-diagnostics, .opm-components, .opm-manage-queue, .opm-system-group)[open] > summary::before { transform: rotate(45deg); }
+      .opm-manage-overview { margin-top: 12px; font-size: 12px; }
+      .opm-manage-overview h4 { margin: 10px 2px 4px; font-size: 12px; font-weight: 600; color: var(--dsw-alias-label-secondary); }
+      .opm-manage-overview > p.opm-muted { padding: 0 2px; font-size: 12px; overflow-wrap: anywhere; }
+      .opm-directory { display: grid; grid-template-columns: 112px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 6px 0; font-size: 12px; }
+      .opm-directory + .opm-directory { border-top: 1px solid var(--dsw-alias-border-l1); }
+      .opm-directory > span { font-size: 12px; }
+      .opm-directory code { overflow-wrap: anywhere; user-select: text; font-family: inherit; font-size: 12px; color: var(--dsw-alias-label-primary); }
       .opm-directory .opm-button { white-space: nowrap; }
-      .opm-load-order { margin: 8px 0; padding-left: 24px; }
-      .opm-load-order li { padding: 5px 0; }
-      .opm-load-order li > * { margin-right: 6px; }
-      .opm-load-order code { color: var(--dsw-alias-label-secondary); overflow-wrap: anywhere; font-size: 11px; }
-      .opm-plugin-diagnostics, .opm-components { margin-top: 14px; padding-top: 8px; border-top: 1px solid var(--dsw-alias-border-l1); }
-      .opm-dependencies { list-style: none; padding: 0; max-height: 300px; overflow: auto; }
-      .opm-dependencies li { display: flex; flex-direction: column; gap: 3px; padding: 7px 0; border-bottom: 1px solid var(--dsw-alias-border-l1); font-size: 12px; overflow-wrap: anywhere; }
-      .opm-manage-row { display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--dsw-alias-border-l1); padding: 4px 0; }
-      .opm-manage-row > input { flex: none; width: 16px; height: 16px; accent-color: var(--dsw-alias-button-primary-fill); }
-      .opm-manage-open { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; padding: 10px 8px; border: 0;
-        border-radius: var(--dsw-radius-sm); background: transparent; color: inherit; cursor: pointer; text-align: left; font: inherit; }
-      .opm-manage-open:hover { background: var(--dsw-alias-interactive-bg-hover); }
-      .opm-manage-open[aria-current="true"] { background: var(--dsw-alias-interactive-bg-active); }
-      .opm-manage-open .opm-icon { flex: none; width: 32px; height: 32px; }
-      .opm-manage-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 2px; }
+      .opm-load-order { list-style: none; margin: 6px 0 8px; padding: 0; counter-reset: opm-order; display: flex; flex-direction: column; gap: 4px; }
+      .opm-load-order li { counter-increment: opm-order; display: flex; align-items: center; gap: 8px; min-height: 36px; padding: 4px 6px 4px 8px;
+        border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-sm); background: var(--dsw-alias-bg-layer-1); font-size: 13px; }
+      .opm-load-order li::before { content: counter(opm-order); min-width: 18px; color: var(--dsw-alias-label-tertiary); font-size: 11px; font-variant-numeric: tabular-nums; text-align: center; }
+      .opm-load-order code { flex: 1; min-width: 0; color: var(--dsw-alias-label-tertiary); overflow-wrap: anywhere; font-size: 11px; }
+      .opm-load-order .opm-button { width: 28px; padding: 0; }
+      .opm-manage-body { display: grid; grid-template-columns: minmax(300px, .9fr) minmax(340px, 1.25fr); gap: 20px; min-height: 0; flex: 1; }
+      .opm-manage-column { min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 8px; }
+      .opm-manage-bulk { padding: 6px 8px 6px 12px; border-radius: var(--dsw-radius-md); background: var(--dsw-alias-interactive-bg-hover); font-size: 12px; }
+      .opm-manage-bulk > span { margin-right: auto; font-weight: 600; }
+      .opm-manage-list { overflow: auto; overscroll-behavior: contain; list-style: none; margin: 0 -6px; padding: 2px 6px 8px; flex: 1; }
+      .opm-manage-group > ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+      .opm-manage-group-title { display: flex; align-items: center; gap: 6px; margin: 0; padding: 4px 2px 8px; font-size: 12px; font-weight: 600;
+        color: var(--dsw-alias-label-secondary); }
+      .opm-manage-group-title > span { min-width: 20px; padding: 0 6px; border-radius: 999px; background: var(--dsw-alias-interactive-bg-hover);
+        font-weight: 500; font-size: 11px; line-height: 18px; text-align: center; font-variant-numeric: tabular-nums; }
+      .opm-manage-select-all { margin-left: auto; padding: 2px 6px; border: 0; border-radius: var(--dsw-radius-sm); background: none;
+        color: var(--dsw-alias-label-tertiary); font: inherit; font-size: 12px; font-weight: 500; cursor: pointer; }
+      .opm-manage-select-all:hover { color: var(--dsw-alias-label-primary); background: var(--dsw-alias-interactive-bg-hover); }
+      .opm-system-group { margin-top: 12px; }
+      :is(.opm-system-group, .opm-manage-overview) > summary.opm-manage-group-title { min-height: 30px; padding: 0 2px; font-size: 12px; color: var(--dsw-alias-label-secondary); }
+      .opm-system-group[open] > summary { margin-bottom: 6px; }
+      .opm-status { display: inline-flex; align-items: center; gap: 4px; padding: 0 7px; border: 1px solid var(--dsw-alias-border-l2);
+        border-radius: 999px; font-size: 11px; line-height: 16px; white-space: nowrap; font-weight: 500; }
+      .opm-status-on { color: #22643f; background: #e8f5ee; border-color: #b7d8c4; }
+      .opm-status-off { color: var(--dsw-alias-label-secondary); background: transparent; border-style: dashed; }
+      body[data-ds-dark-theme] .opm-status-on { color: #8bd8ad; background: #223a2d; border-color: #3a614b; }
+      .opm-manage-row { display: flex; align-items: center; gap: 8px; }
+      .opm-manage-row > input { flex: none; width: 16px; height: 16px; margin: 0; accent-color: var(--dsw-alias-button-primary-fill); }
+      /* A row is a compact market card: tinted icon, title, package and state pills. */
+      .opm-manage-open { --opm-accent: hsl(var(--opm-hue, 220) 72% 58%); display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0;
+        padding: 10px 12px; border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-md);
+        background: var(--dsw-alias-bg-module-platform); color: inherit; cursor: pointer; text-align: left; font: inherit;
+        transition: border-color 150ms ease-out, box-shadow 150ms ease-out, background-color 150ms ease-out; }
+      .opm-manage-open:hover { border-color: color-mix(in srgb, var(--opm-accent) 45%, var(--dsw-alias-border-l2)); }
+      .opm-manage-open[aria-current="true"] { border-color: color-mix(in srgb, var(--opm-accent) 70%, var(--dsw-alias-border-l2)); box-shadow: var(--dsw-elevation-soft);
+        background: linear-gradient(160deg, color-mix(in srgb, var(--opm-accent) 12%, transparent), transparent 60%), var(--dsw-alias-bg-module-platform); }
+      :is(.opm-manage-open, .opm-manage-detail-head) .opm-icon { flex: none; background: color-mix(in srgb, var(--opm-accent) 14%, var(--dsw-alias-bg-layer-1));
+        color: color-mix(in srgb, var(--opm-accent) 70%, var(--dsw-alias-label-primary)); }
+      .opm-manage-open .opm-icon { width: 36px; height: 36px; font-size: 18px; }
+      .opm-manage-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 1px; }
+      .opm-manage-copy strong { font-size: 14px; font-weight: 600; }
       .opm-manage-copy strong, .opm-manage-copy small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .opm-manage-copy small { color: var(--dsw-alias-label-secondary); font-size: 12px; }
-      .opm-manage-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
-      .opm-manage-badges .opm-tag { font-size: 10px; }
-      .opm-manage-detail { min-width: 0; overflow: auto; padding: 0 8px 12px 0; overscroll-behavior: contain; }
-      .opm-manage-detail h3 { font-size: 17px; margin: 0 0 4px; overflow-wrap: anywhere; }
-      .opm-manage-detail > section { border-top: 1px solid var(--dsw-alias-border-l1); margin-top: 16px; padding-top: 12px; }
-      .opm-manage-detail h4 { font-size: 13px; margin: 0 0 8px; }
+      .opm-manage-copy small { color: var(--dsw-alias-label-tertiary); font-size: 12px; }
+      .opm-manage-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+      .opm-manage-badges .opm-tag { border-radius: 999px; padding: 0 7px; }
+      .opm-manage-detail { min-width: 0; overflow: auto; padding: 2px 6px 12px 2px; overscroll-behavior: contain; font-size: 13px; }
+      .opm-manage-detail-head { --opm-accent: hsl(var(--opm-hue, 220) 72% 58%); display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+      .opm-manage-detail-head > .opm-status { margin-left: auto; align-self: flex-start; margin-top: 4px; }
+      .opm-manage-detail-title { min-width: 0; flex: 1; }
+      .opm-manage-source { margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--dsw-alias-label-tertiary);
+        font-size: 11px; user-select: text; }
+      .opm-manage-detail h3 { font-size: 18px; font-weight: 600; line-height: 1.35; margin: 0 0 2px; overflow-wrap: anywhere; }
+      .opm-manage-detail-title .opm-muted { font-size: 12px; overflow-wrap: anywhere; }
+      .opm-manage-detail h4 { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; font-size: 13px; font-weight: 600; margin: 0 0 8px; }
+      .opm-manage-update { margin-top: 14px; padding: 12px 14px; border-radius: var(--dsw-radius-md);
+        background: color-mix(in srgb, #2f6bff 9%, var(--dsw-alias-bg-layer-1)); }
+      .opm-manage-update .opm-version { font-weight: 500; color: var(--dsw-alias-label-secondary); font-variant-numeric: tabular-nums; }
+      .opm-manage-more { margin-top: 16px; border-top: 1px solid var(--dsw-alias-border-l2); }
+      .opm-manage-more > details { border-bottom: 1px solid var(--dsw-alias-border-l1); }
+      .opm-manage-more > details > summary { min-height: 38px; }
+      .opm-manage-more > details[open] { padding-bottom: 12px; }
+      .opm-manage-readme > summary { display: flex; align-items: center; gap: 8px; min-height: 38px; cursor: pointer; list-style: none; font-size: 13px; font-weight: 600; }
+      .opm-manage-readme > summary::-webkit-details-marker { display: none; }
+      .opm-manage-readme > summary::before { content: ''; flex: none; width: 6px; height: 6px; margin: 0 2px; border-right: 1.5px solid currentColor;
+        border-bottom: 1.5px solid currentColor; opacity: .55; transform: rotate(-45deg); transition: transform 150ms ease-out; }
+      .opm-manage-readme[open] > summary::before { transform: rotate(45deg); }
+      .opm-manage-count { min-width: 20px; padding: 0 6px; border-radius: 999px; background: var(--dsw-alias-interactive-bg-hover);
+        font-weight: 500; font-size: 11px; line-height: 18px; text-align: center; color: var(--dsw-alias-label-secondary); }
       .opm-manage-detail p { overflow-wrap: anywhere; }
-      .opm-manage-detail dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 12px; font-size: 12px; margin: 12px 0; }
+      .opm-manage-detail dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 7px 14px; margin: 14px 0; padding: 10px 12px;
+        font-size: 12px; border-radius: var(--dsw-radius-md); background: var(--dsw-alias-bg-module-platform); }
       .opm-manage-detail dt { color: var(--dsw-alias-label-secondary); }
       .opm-manage-detail dd { margin: 0; overflow-wrap: anywhere; user-select: text; }
-      .opm-manage-native { width: 100%; justify-content: center; margin-top: 12px; }
+      .opm-manage-native { margin-left: auto; }
       .opm-manage-danger { color: var(--dsw-alias-state-danger-primary, #b54242); }
-      .opm-manage-remove { padding: 12px; border: 1px solid var(--dsw-alias-border-l3); border-radius: var(--dsw-radius-sm); margin-top: 12px; }
+      .opm-manage-detail > :is(.opm-note, .opm-error, .opm-muted) { margin-top: 10px !important; font-size: 12px; }
+      .opm-manage-detail > section:not(.opm-manage-update) { margin-top: 16px; }
+      .opm-manage-detail section .opm-manage-actions, .opm-manage-detail section .opm-tags { margin-top: 10px; }
+      .opm-plugin-diagnostics h4 { margin: 16px 0 6px; font-size: 12px; color: var(--dsw-alias-label-secondary); }
+      .opm-plugin-diagnostics ul:not(.opm-dependencies) { margin: 0; padding-left: 18px; font-size: 12px; }
+      .opm-manage-remove { padding: 12px 14px; border: 1px solid color-mix(in srgb, var(--dsw-alias-state-danger-primary, #b54242) 45%, var(--dsw-alias-border-l2));
+        border-radius: var(--dsw-radius-md); margin-top: 12px; }
       .opm-manage-remove label { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; font-size: 12px; }
       .opm-manage-document { margin: 10px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; font-size: 12px; color: var(--dsw-alias-label-secondary); }
-      .opm-manage-queue { border-top: 1px solid var(--dsw-alias-border-l2); padding-top: 8px; max-height: 180px; overflow: auto; }
-      .opm-manage-queue summary { font-weight: 600; cursor: pointer; }
-      .opm-manage-queue ul { list-style: none; padding: 0; margin: 8px 0; }
-      .opm-manage-job { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 7px 0; border-top: 1px solid var(--dsw-alias-border-l1); }
+      .opm-manage-detail .opm-favorite-list li { padding: 6px 0; border-bottom: 1px solid var(--dsw-alias-border-l1); }
+      .opm-dependencies { list-style: none; margin: 0; padding: 0; max-height: 300px; overflow: auto; }
+      .opm-dependencies li { display: flex; flex-direction: column; gap: 2px; padding: 7px 0; border-bottom: 1px solid var(--dsw-alias-border-l1); font-size: 12px; overflow-wrap: anywhere; }
+      .opm-manage-footer { flex-shrink: 0; display: flex; align-items: flex-start; gap: 12px; margin: 0 -24px -14px; padding: 2px 24px 6px;
+        border-top: 1px solid var(--dsw-alias-border-l2); background: var(--dsw-alias-bg-module-platform); }
+      .opm-manage-queue { flex: 1; min-width: 0; max-height: 180px; overflow: auto; }
+      .opm-manage-report { flex: none; margin-top: 7px; padding: 2px 6px; border: 0; border-radius: var(--dsw-radius-sm); background: none;
+        color: var(--dsw-alias-label-tertiary); font: inherit; font-size: 12px; cursor: pointer; }
+      .opm-manage-report:hover:not(:disabled) { color: var(--dsw-alias-label-primary); background: var(--dsw-alias-interactive-bg-hover); }
+      .opm-manage-queue ul { list-style: none; padding: 0; margin: 4px 0 8px; }
+      .opm-manage-job { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 7px 0; border-top: 1px solid var(--dsw-alias-border-l1); font-size: 13px; }
       .opm-manage-job > span:first-child { flex: 1; min-width: 160px; overflow-wrap: anywhere; }
       .opm-manage-job p { width: 100%; }
-      .opm-manage-status { min-height: 18px; font-size: 12px; white-space: pre-wrap; }
       @media (max-width: 760px) {
         .opm-panel-management { width: calc(100vw - 16px); padding: 16px; height: auto; max-height: calc(100dvh - 24px); display: block; overflow-y: auto; }
         .opm-panel-management > * + * { margin-top: 12px; }
         .opm-manage-body { grid-template-columns: 1fr; grid-template-rows: minmax(180px, 35dvh) auto; gap: 12px; }
         .opm-manage-detail { border-top: 1px solid var(--dsw-alias-border-l2); padding-top: 12px; overflow: visible; }
+        .opm-manage-footer { margin: 12px -16px -16px; padding-inline: 16px; }
         .opm-manage-queue { max-height: 130px; }
+        .opm-directory { grid-template-columns: minmax(0, 1fr) auto; }
+        .opm-directory > span { grid-column: 1 / -1; }
       }
       @media (max-height: 600px) and (min-width: 761px) {
         .opm-panel-management { overflow-y: auto; }
@@ -2225,7 +2307,7 @@ window.__ModuleLoader__.load({
       const links = [['homepage', externalUrl(entry.homepage)], ['sourceCode', externalUrl(repositoryOf(entry))],
         ['marketPage', marketPageOf(entry, t)]];
       return h(Dialog, { labelledBy: headingId, closeLabel: t('close'), onClose, restoreFocus },
-          h('div', { className: 'opm-panel-heading' }, h(PluginIcon, { entry, title, large: true }),
+          h('div', { className: 'opm-panel-heading', style: { '--opm-hue': hueOf(entry.name) } }, h(PluginIcon, { entry, title, large: true }),
             h('div', { className: 'opm-card-copy' }, h('h2', { id: headingId }, title),
               entry.author && h('p', { className: 'opm-author' }, entry.author),
               h('p', { className: 'opm-version' }, [version, published].filter(Boolean).join(' · ')))),
@@ -2520,7 +2602,7 @@ window.__ModuleLoader__.load({
         'directory-unavailable': 'manageDirectoryUnavailable', 'diagnostics-unavailable': 'manageDiagnosticUnavailable',
         'load-order-failed': 'manageOrderFailed', 'invalid-load-order': 'manageChanged',
       }[answer?.code];
-      if (answer?.code === 'dependency-order') return t('manageDependencyOrder') + ' ' + answer.error;
+      if (answer?.code === 'dependency-order') return t('manageDependencyOrder').replaceAll('{name}', answer.error).replaceAll('{dependency}', answer.dependency ?? '?');
       if (answer?.code === 'load-order-failed') return t('manageOrderFailed') + (answer.error ? ' ' + errorText(answer.error, '') : '');
       if (answer?.restored !== undefined) return updateOutcome(answer, t).error;
       return key ? t(key) : errorText(answer?.error || answer?.code, t('unknownError'));
@@ -2580,17 +2662,17 @@ window.__ModuleLoader__.load({
           h('button', {type: 'button', className: 'opm-button opm-button-small', disabled: busy || index === draft.length - 1,
             'aria-label': t('manageOrderDown').replace('{name}', title), onClick: () => move(index, 1)}, '↓'));
       }));
-      return h('details', {className: 'opm-manage-overview'}, h('summary', null, t('manageOverview')),
-        h('p', {className: 'opm-muted'}, 'DSH ' + environment.runtimeVersion),
-        [['manageInstallation', 'installation'], ['manageHome', 'home'], ['manageProfile', 'profile']].map(([label, key]) =>
-          h(DirectoryLine, {key, label: t(label), value: environment[key], t, action, busy})),
-        h('p', {className: 'opm-muted'}, environment.patch),
+      return h('details', {className: 'opm-manage-group opm-manage-overview'},
+        h('summary', {className: 'opm-manage-group-title'}, t('manageOverview')),
         h('h4', null, t('manageOrder')), h('p', {className: 'opm-muted'}, t('manageOrderHelp')),
         draft.length ? order : h('p', {className: 'opm-muted'}, t('manageOrderEmpty')),
         changed && h('div', {className: 'opm-manage-actions'},
           h('button', {type: 'button', className: 'opm-button opm-button-primary', disabled: busy || !safe,
             onClick: () => action({action: 'reorder', order: draft, revision: diagnostics.revision})}, t('manageOrderSaved')),
-          h('button', {type: 'button', className: 'opm-button', disabled: busy, onClick: () => setDraft(diagnostics.customOrder)}, t('manageOrderReset'))));
+          h('button', {type: 'button', className: 'opm-button', disabled: busy, onClick: () => setDraft(diagnostics.customOrder)}, t('manageOrderReset'))),
+        h('h4', null, 'DSH ' + environment.runtimeVersion),
+        [['manageInstallation', 'installation'], ['manageHome', 'home'], ['manageProfile', 'profile']].map(([label, key]) =>
+          h(DirectoryLine, {key, label: t(label), value: environment[key], t, action, busy})));
     }
 
     function PluginDiagnostics({item, t, action, busy}) {
@@ -2604,7 +2686,6 @@ window.__ModuleLoader__.load({
       return h('details', {className: 'opm-plugin-diagnostics'}, h('summary', null, t('manageDiagnostics')),
         h(DirectoryLine, {label: t('managePackage'), value: item.directory, t, action, busy}),
         h(DirectoryLine, {label: t('manageConfiguration'), value: item.configuration, t, action, busy}),
-        h('p', {className: 'opm-muted'}, t('manageSharedConfig')),
         h('dl', null, h('dt', null, t('manageOrder')), h('dd', null, item.order ?? t('manageNotSelected')),
           h('dt', null, t('manageRuntimeOrder')), h('dd', null, item.runtimeOrder.join(', ') || t('manageRowUnknown')),
           h('dt', null, t('manageCompatibility')), h('dd', null, t(compatibility[item.compatibility?.status] || 'manageUnknown'))),
@@ -2773,14 +2854,17 @@ window.__ModuleLoader__.load({
         const {bundle, entry, rows: components, target} = current;
         const locked = busy || !safe || !!bundle.readOnlyReason || pendingNames.has(bundle.name);
         return h('div', {className: 'opm-manage-detail', id: detailId, role: 'region', 'aria-label': t('manageDetails')},
-          h('h3', null, current.title), h('p', {className: 'opm-muted'}, bundle.name),
-          h('dl', null, h('dt', null, t('manageCurrent')), h('dd', null, bundle.version || t('unknownVersion')),
-            h('dt', null, t('manageSource')), h('dd', null, bundle.source || t(bundle.official ? 'providedVersion' : 'unknownVersion')),
-            h('dt', null, t('manageStatus')), h('dd', null, h(ManagedStatus, {bundle, t}))),
+          h('div', {className: 'opm-manage-detail-head', style: {'--opm-hue': hueOf(bundle.name)}},
+            h(PluginIcon, {entry: entry || {name: bundle.name, icon: bundle.meta?.icon}, title: current.title, large: true}),
+            h('div', {className: 'opm-manage-detail-title'}, h('h3', null, current.title),
+              h('p', {className: 'opm-muted'}, (current.title === bundle.name ? '' : bundle.name + ' · ') + (bundle.version || t('unknownVersion'))),
+              h('p', {className: 'opm-manage-source', title: t('manageSource')}, bundle.source || t(bundle.official ? 'providedVersion' : 'unknownVersion'))),
+            h(ManagedStatus, {bundle, t})),
           h('div', {className: 'opm-manage-actions'},
             button(t(bundle.enabled ? 'disable' : 'enable'), () => action({action: 'toggle', name: bundle.name, enabled: !bundle.enabled}), locked || bundle.name === 'dsh-open-market'),
-            button(t('manageUninstall'), () => { setRemoving(bundle.name); setConfirmation(''); }, locked || !bundle.removable || bundle.name === 'dsh-open-market', 'opm-manage-danger')),
-          button(t('manageSettings'), () => openNative(bundle.name), false, 'opm-manage-native'),
+            button(t('manageUninstall'), () => { setRemoving(bundle.name); setConfirmation(''); }, locked || !bundle.removable || bundle.name === 'dsh-open-market', 'opm-manage-danger'),
+            h(FavoriteButton, {name: bundle.name, title: current.title, t}),
+            button(t('manageSettings'), () => openNative(bundle.name), false, 'opm-manage-native')),
           bundle.readOnlyReason && h('p', {className: 'opm-note'}, t('manageReadonly')),
           bundle.name === 'dsh-open-market' && h('p', {className: 'opm-note'}, t('manageSelf')),
           bundle.error && h('p', {className: 'opm-error', role: 'status'}, errorText(bundle.error, t('unknownError'))),
@@ -2789,26 +2873,29 @@ window.__ModuleLoader__.load({
             h('label', null, t('manageConfirmName'), h('input', {className: 'opm-manage-search', value: confirmation, autoComplete: 'off', spellCheck: false, onChange: event => setConfirmation(event.target.value)})),
             h('div', {className: 'opm-manage-actions'}, button(t('manageCancelRemove'), () => { setRemoving(''); setConfirmation(''); }),
               button(t('manageUninstall'), async () => { const answer = await action({action: 'remove', name: bundle.name, confirmation}); if (answer?.ok) {setRemoving(''); setConfirmation('');} }, locked || confirmation !== bundle.name, 'opm-manage-danger'))),
-          h('section', null, h('h4', null, t('updates')),
-            target ? h(React.Fragment, null, h('p', {className: 'opm-version'}, bundle.version + ' → ' + (target.spec.startsWith(bundle.name + '@') ? target.spec.slice(bundle.name.length + 1) : entry?.defaultVersion || t('manageTarget'))),
-              h('div', {className: 'opm-manage-actions'}, button(t('manageNow'), () => update(current, 'now'), locked),
-                button(t('manageIdle'), () => update(current, 'idle'), busy || !available || !!bundle.readOnlyReason || pendingNames.has(bundle.name), 'opm-button-primary')))
-              : h('p', {className: 'opm-muted'}, checks[bundle.name]?.status === 'refused' ? checks[bundle.name].reason : t('manageNoUpdate'))),
-          h(PluginDiagnostics, {item: diagnostics?.bundles?.find(item => item.name === bundle.name), t, action, busy}),
-          h('details', {className: 'opm-components'}, h('summary', null, t('manageRows') + ' (' + components.length + ')'),
-            components.length ? h('ul', {className: 'opm-favorite-list'}, components.map(row => h('li', {key: row.rowId},
-              h('p', null, resolve(row.meta?.title ?? '') || row.moduleName),
-              h('p', {className: row.live?.diagnostic ? 'opm-error' : 'opm-muted'}, managementComponentState(row, bundle, t)))))
-              : h('p', {className: 'opm-muted'}, t('manageNoRows'))),
-          h('section', null, h('h4', null, t('manageNotes')),
+          target && h('section', {className: 'opm-manage-update'}, h('h4', null, t('updateAvailable'),
+              h('span', {className: 'opm-version'}, bundle.version + ' → ' + (target.spec.startsWith(bundle.name + '@') ? target.spec.slice(bundle.name.length + 1) : entry?.defaultVersion || t('manageTarget')))),
+            h('div', {className: 'opm-manage-actions'}, button(t('manageNow'), () => update(current, 'now'), locked),
+              h('button', {type: 'button', className: 'opm-button opm-button-small opm-button-primary', title: t('manageIdleHelp'), onClick: () => update(current, 'idle'),
+                disabled: busy || !available || !!bundle.readOnlyReason || pendingNames.has(bundle.name)}, t('manageIdle')))),
+          !target && checks[bundle.name]?.status === 'refused' && h('p', {className: 'opm-muted'}, checks[bundle.name].reason),
+          h('section', null,
             entry ? h(React.Fragment, null, h('p', null, descriptionOf(entry, resolve, t)), h(Tags, {entry, metadata: props.metadata, resolve, t}),
-              h('div', {className: 'opm-manage-actions'}, h(FavoriteButton, {name: bundle.name, title: current.title, t}),
+              h('div', {className: 'opm-manage-actions'},
                 h('a', {className: 'opm-button opm-button-small', href: marketPageOf(entry, t), target: '_blank', rel: 'noopener noreferrer'}, t('marketPage'))))
-              : h(React.Fragment, null, h('p', {className: 'opm-muted'}, t('manageNoMarket')), bundle.description && h('p', null, bundle.description), h(FavoriteButton, {name: bundle.name, title: current.title, t}))),
-          h('section', null, h('h4', null, t('manageDocument')),
-            !documentState ? button(t('manageLoadDocument'), () => loadDocument(bundle.name))
-              : documentState.status === 'ready' ? h('pre', {className: 'opm-manage-document'}, documentState.markdown)
-              : h('p', {className: 'opm-muted', role: 'status'}, documentState.status === 'loading' ? t('detailLoading') : documentState.error || t('manageNoDocument'))));
+              : h(React.Fragment, null, bundle.description && h('p', null, bundle.description), h('p', {className: 'opm-muted'}, t('manageNoMarket')))),
+          h('div', {className: 'opm-manage-more'},
+            h(PluginDiagnostics, {item: diagnostics?.bundles?.find(item => item.name === bundle.name), t, action, busy}),
+            h('details', {className: 'opm-components'}, h('summary', null, t('manageRows'), h('span', {className: 'opm-manage-count'}, components.length)),
+              components.length ? h('ul', {className: 'opm-favorite-list'}, components.map(row => h('li', {key: row.rowId},
+                h('p', null, resolve(row.meta?.title ?? '') || row.moduleName),
+                h('p', {className: row.live?.diagnostic ? 'opm-error' : 'opm-muted'}, managementComponentState(row, bundle, t)))))
+                : h('p', {className: 'opm-muted'}, t('manageNoRows'))),
+            h('details', {className: 'opm-manage-readme', onToggle: event => { if (event.currentTarget.open && !documentState) void loadDocument(bundle.name); }},
+              h('summary', null, t('manageDocument')),
+              !documentState ? button(t('manageLoadDocument'), () => loadDocument(bundle.name))
+                : documentState.status === 'ready' ? h('pre', {className: 'opm-manage-document'}, documentState.markdown)
+                : h('p', {className: 'opm-muted', role: 'status'}, documentState.status === 'loading' ? t('detailLoading') : documentState.error || t('manageNoDocument')))));
       })();
       const renderRow = row => {
         const name = row.bundle.name;
@@ -2822,18 +2909,21 @@ window.__ModuleLoader__.load({
         return h('li', {key: name, className: 'opm-manage-row'},
           h('input', {type: 'checkbox', checked: checked.includes(name), 'aria-label': t('manageSelect').replace('{name}', row.title),
             onChange: event => setChecked(names => event.target.checked ? [...new Set([...names, name])] : names.filter(item => item !== name))}),
-          h('button', {type: 'button', className: 'opm-manage-open', 'aria-current': current?.bundle.name === name, 'aria-controls': detailId, onClick: () => setSelected(name)},
+          h('button', {type: 'button', className: 'opm-manage-open', style: {'--opm-hue': hueOf(name)}, 'aria-current': current?.bundle.name === name, 'aria-controls': detailId, onClick: () => setSelected(name)},
             h(PluginIcon, {entry: row.entry || {name, icon: row.bundle.meta?.icon}, title: row.title}), copy));
       };
       const customRows = shown.filter(row => !row.system), systemRows = shown.filter(row => row.system);
       const list = h('div', {className: 'opm-manage-list'},
         h('section', {className: 'opm-manage-group', 'aria-label': t('manageCustom')},
-          h('h3', {className: 'opm-manage-group-title'}, t('manageCustom'), h('span', null, customRows.length)),
+          h('h3', {className: 'opm-manage-group-title'}, t('manageCustom'), h('span', null, customRows.length),
+            shown.length > 0 && h('button', {type: 'button', className: 'opm-manage-select-all',
+              onClick: () => setChecked(checked.length ? [] : shown.map(row => row.bundle.name))}, t(checked.length ? 'manageClear' : 'manageSelectAll'))),
           h('ul', null, customRows.map(renderRow))),
         systemRows.length > 0 && h('details', {className: 'opm-manage-group opm-system-group', open: systemOpen,
           onToggle: event => {if (event.target === event.currentTarget) setSystemOpen(event.currentTarget.open);}},
           h('summary', {className: 'opm-manage-group-title'}, t('manageSystem'), h('span', null, systemRows.length)),
-          h('p', {className: 'opm-muted'}, t('manageSystemHelp')), h('ul', null, systemRows.map(renderRow))));
+          h('ul', null, systemRows.map(renderRow))),
+        h(RuntimeOverview, {diagnostics, t, action, safe, busy, rows}));
       const queue = h('details', {className: 'opm-manage-queue', open: jobs.some(job => ['queued', 'waiting', 'running'].includes(job.state))},
         h('summary', null, t('manageQueuedCount').replace('{count}', jobs.filter(job => ['queued', 'waiting', 'running'].includes(job.state)).length)),
         !jobs.length ? h('p', {className: 'opm-muted'}, t('manageQueueEmpty')) : h('ul', null, [...jobs].reverse().map(job => {
@@ -2848,34 +2938,36 @@ window.__ModuleLoader__.load({
             h('span', {className: 'opm-muted'}, t('manageState' + job.state[0].toUpperCase() + job.state.slice(1))), control,
             job.result && (!job.result.ok || job.result.restart) && h('p', {className: 'opm-muted'}, job.result.ok ? t('manageRestart') : managementMessage(job.result, t)));
         })));
+      const summary = diagnostics?.available ? diagnostics.summary : null;
+      const filtered = shown.length !== rows.length;
+      const status = note || inventory.error || (inventory.status === 'ready' && !available ? t('manageMonitor') : '');
       return h(Dialog, {labelledBy: headingId, closeLabel: t('close'), onClose, restoreFocus, panelClass: 'opm-panel-management'},
         h('div', {className: 'opm-manage-head'}, h('h2', {id: headingId}, t('health')),
-          h('span', {className: 'opm-muted'}, t('manageCount').replace('{shown}', shown.length).replace('{total}', rows.length)),
-          h('span', {className: 'opm-muted', role: 'status'}, !available ? t('manageMonitoring') : activity.busy ? t('manageRunning').replace('{count}', Math.max(activity.running, activity.activities)) : t('manageReady'))),
-        diagnostics?.available && h('div', {className: 'opm-manage-metrics'},
-          h('span', null, t('manageLoaded') + ' ' + diagnostics.summary.loadedCustom + ' / ' + diagnostics.summary.custom),
-          h('span', {className: diagnostics.summary.errors ? 'opm-error' : undefined}, t('manageErrorCount') + ' ' + diagnostics.summary.errors),
-          h('span', null, t('manageRiskCount') + ' ' + diagnostics.summary.risks)),
+          h('span', {className: 'opm-manage-pill'}, filtered ? t('manageCount').replace('{shown}', shown.length).replace('{total}', rows.length) : t('manageTotal').replace('{total}', rows.length)),
+          h('span', {className: 'opm-manage-pill ' + (!available || activity.busy ? 'opm-manage-pill-busy' : 'opm-manage-pill-ok'), role: 'status'},
+            !available ? t('manageMonitoring') : activity.busy ? t('manageRunning').replace('{count}', Math.max(activity.running, activity.activities)) : t('manageReady')),
+          summary && summary.loadedCustom < summary.custom && h('span', {className: 'opm-manage-pill opm-manage-pill-warn'}, t('manageLoaded') + ' ' + summary.loadedCustom + ' / ' + summary.custom),
+          summary?.errors > 0 && h('span', {className: 'opm-manage-pill opm-manage-pill-warn'}, t('manageErrorCount') + ' ' + summary.errors),
+          summary?.risks > 0 && h('span', {className: 'opm-manage-pill opm-manage-pill-risk', title: t('manageRiskHelp')}, t('manageRiskCount') + ' ' + summary.risks)),
         h('div', {className: 'opm-manage-controls'}, h('input', {type: 'search', className: 'opm-manage-search', value: query, placeholder: t('manageSearch'), 'aria-label': t('manageSearch'), onChange: event => setQuery(event.target.value)}),
-          h('select', {value: group, 'aria-label': t('manageGroup'), onChange: event => setGroup(event.target.value)}, h('option', {value: ''}, t('manageAllGroups')),
+          groups.length > 1 && h('select', {value: group, 'aria-label': t('manageGroup'), onChange: event => setGroup(event.target.value)}, h('option', {value: ''}, t('manageAllGroups')),
             groups.map(item => h('option', {key: item.id, value: item.id}, groupLabel(item, t)))),
-          button(t(checking ? 'manageChecking' : 'manageCheck'), checkUpdates, checking || inventory.status !== 'ready'),
-          button(t('manageRefresh'), () => read.current?.(), busy), button(t('manageReport'), copyReport, inventory.status !== 'ready')),
+          h('button', {type: 'button', className: 'opm-button opm-button-primary', onClick: checkUpdates, disabled: checking || inventory.status !== 'ready'}, t(checking ? 'manageChecking' : 'manageCheck'))),
         h('div', {className: 'opm-manage-tabs', role: 'group', 'aria-label': t('manageFilter')},
           [['all', 'manageAll'], ['enabled', 'manageEnabled'], ['disabled', 'manageDisabled'], ['updates', 'manageUpdates'], ['problems', 'manageProblems'], ['external', 'manageExternal']]
             .map(([value, label]) => h('button', {key: value, type: 'button', className: 'opm-button opm-button-small', 'aria-pressed': filter === value, onClick: () => setFilter(value)}, t(label)))),
-        h('p', {className: 'opm-manage-status', role: 'status', 'aria-live': 'polite'}, note || inventory.error || (!available ? t('manageMonitor') : t('manageIdleHelp'))),
-        h(RuntimeOverview, {diagnostics, t, action, safe, busy, rows}),
+        status && h('p', {className: 'opm-manage-status', role: 'status', 'aria-live': 'polite'}, status),
         h('div', {className: 'opm-manage-body'},
           h('div', {className: 'opm-manage-column'},
-            h('div', {className: 'opm-manage-bulk'},
-              button(t(checked.length ? 'manageClear' : 'manageSelectAll'), () => setChecked(checked.length ? [] : shown.map(row => row.bundle.name))),
-              h('span', {className: 'opm-muted'}, t('manageSelected').replace('{count}', checked.length)),
-              checked.length > 0 && h(React.Fragment, null, button(t('enableAll'), () => batch('enable'), busy || !safe), button(t('disableAll'), () => batch('disable'), busy || !safe),
-                button(t('manageQueueSelected'), () => batch('update'), busy || !available))),
+            checked.length > 0 && h('div', {className: 'opm-manage-bulk'},
+              h('span', null, t('manageSelected').replace('{count}', checked.length)),
+              button(t('enableAll'), () => batch('enable'), busy || !safe), button(t('disableAll'), () => batch('disable'), busy || !safe),
+              button(t('manageQueueSelected'), () => batch('update'), busy || !available)),
             inventory.status === 'loading' ? h('p', {role: 'status'}, t('detailLoading')) : list,
             inventory.status !== 'loading' && !shown.length && h('p', {className: 'opm-muted'}, t('manageNoResults'))),
-          detail || h('p', {className: 'opm-muted'}, t('manageNoSelection'))), queue);
+          detail || h('p', {className: 'opm-muted'}, t('manageNoSelection'))),
+        h('div', {className: 'opm-manage-footer'}, queue,
+          h('button', {type: 'button', className: 'opm-manage-report', onClick: copyReport, disabled: inventory.status !== 'ready'}, t('manageReport'))));
     }
 
     const CATALOG_SORTS = { recommended: 'recommended', popular: 'popular', trending: 'trending', stars: 'sortStars', newest: 'newest' };
@@ -3274,6 +3366,17 @@ window.__ModuleLoader__.load({
         preferences.registry === 'custom' && h('p', { className: 'opm-setting-help' }, t('registryCustomHelp')));
     }
     const REGISTRY_LABELS = { index: 'registryIndex', dsh: 'registryDsh', npmmirror: 'registryNpmmirror', custom: 'registryCustom' };
+    const APPEARANCE_LABELS = { auto: 'appearanceAuto', light: 'appearanceLight', dark: 'appearanceDark' };
+
+    function ChoiceChips({ t, label, setting, choices }) {
+      const preferences = useSettings();
+      const labelId = React.useId();
+      return h('div', { className: 'opm-setting-block' },
+        h('span', { className: 'opm-setting-label', id: labelId }, t(label)),
+        h('div', { className: 'opm-chips', role: 'group', 'aria-labelledby': labelId },
+          Object.entries(choices).map(([choice, key]) => h('button', { type: 'button', key: choice, className: 'opm-chip',
+            'aria-pressed': preferences[setting] === choice, onClick: () => updateSettings(setting, choice) }, t(key)))));
+    }
 
     // The Auto review switch is this package's second row; the plugin manager reads and saves it like any row.
     const AUTO_REVIEW_ROW = 'open-market-auto-review';
@@ -3305,8 +3408,8 @@ window.__ModuleLoader__.load({
     }
 
     // One set of groups for the Open Market tab's settings panel and the plugin's own page under Installed.
-    // Whether the host has a sidebar, and whether our tab found a place on its Plugins page.
-    let sidebarHost = { supported: false, tab: false, settled: false };
+    // Whether the host has a sidebar to hold the page.
+    let sidebarHost = { supported: false };
     const sidebarListeners = new Set();
     const getSidebarHost = () => sidebarHost;
     function updateSidebarHost(patch) {
@@ -3317,15 +3420,14 @@ window.__ModuleLoader__.load({
       sidebarListeners.add(listener);
       return () => sidebarListeners.delete(listener);
     }
-    // Left alone, the page appears only where the tab cannot.
-    const sidebarWanted = (preference, host) => preference === 'auto' ? !host.tab : preference === 'on';
+    const sidebarWanted = preference => preference !== 'off';
 
     function SidebarSwitch({ t }) {
       const host = React.useSyncExternalStore(subscribeSidebarHost, getSidebarHost, getSidebarHost);
       const preferences = useSettings();
       if (!host.supported) return null;
       return h(React.Fragment, null,
-        h(SettingSwitch, { label: t('sidebarMarket'), checked: sidebarWanted(preferences.sidebarMarket, host),
+        h(SettingSwitch, { label: t('sidebarMarket'), checked: sidebarWanted(preferences.sidebarMarket),
           onChange: value => updateSettings('sidebarMarket', value ? 'on' : 'off') }),
         h('p', { className: 'opm-setting-help' }, t('sidebarMarketHelp')));
     }
@@ -3342,15 +3444,16 @@ window.__ModuleLoader__.load({
         return h('section', { className: 'opm-settings-group', 'aria-label': t(key) }, h('h2', null, t(key)), ...children);
       }
       return h('div', { className: 'opm-settings' },
-        group('settingsDisplay', toggle('autoRotate'), toggle('showInstalled'), toggle('showCheckup'), h(SidebarSwitch, { t }),
-          toggle('theme'), h('p', { className: 'opm-setting-help' }, t('themeHelp'))),
-        group('settingsData', h(ProfileStatus, {t}), h(SyncRow, { t }), h('p', { className: 'opm-setting-help' }, t('syncHelp')),
-          toggle('likes'), h('p', { className: 'opm-setting-help' }, t('likesHelp'))),
-        group('settingsDownload', h(RegistryChoice, { t })),
-        autoReview.status === 'ready' && group('settingsConversation',
+        group('settingsDisplay', toggle('autoRotate'), toggle('showInstalled'), toggle('showCheckup'), h(SidebarSwitch, { t })),
+        group('settingsTheme', toggle('theme'), h('p', { className: 'opm-setting-help' }, t('themeHelp')),
+          preferences.theme && h(ChoiceChips, { t, label: 'themeAppearance', setting: 'themeAppearance', choices: APPEARANCE_LABELS })),
+        autoReview.status === 'ready' && group('settingsTools',
           h(SettingSwitch, { label: t('autoReview'), checked: autoReview.enabled, disabled: !!autoReview.busy, onChange: setAutoReview }),
           h('p', { className: 'opm-setting-help' }, t('autoReviewHelp')),
           autoReview.note && h('p', { className: 'opm-setting-help', role: 'status' }, autoReview.note)),
+        group('settingsData', h(ProfileStatus, {t}), h(SyncRow, { t }), h('p', { className: 'opm-setting-help' }, t('syncHelp')),
+          h('p', { className: 'opm-setting-help' }, t('likesHelp'))),
+        group('settingsDownload', h(RegistryChoice, { t })),
         group('about',
           link('website', t('websiteUrl')),
           link('repository', REPOSITORY_URL),
@@ -3510,9 +3613,12 @@ window.__ModuleLoader__.load({
         panel?.kind === 'settings' && !selected && h(SettingsPanel, { t, manager, onClose: closePanel, restoreFocus: restorePanel }));
     }
 
-    // Optional macaron theme. theme/theme.css scopes every rule under this body attribute, so removing the attribute
+    // Optional Whale Maid theme. theme/theme.css scopes every rule under this body attribute, so removing the attribute
     // is enough to switch it off without a reload; the Host serves the stylesheet and artwork (theme-assets.js).
+    // Its light or dark palette follows DSH's own dark attribute unless the user picks one.
     const THEME_ATTRIBUTE = 'data-opm-theme';
+    const APPEARANCE_ATTRIBUTE = 'data-opm-appearance';
+    const DSH_DARK_ATTRIBUTE = 'data-ds-dark-theme';
     const THEME_LINK_ID = 'dsh-open-market-theme';
     const themeHref = () => new URL('dsh-open-market/theme/theme.css', document.baseURI).href;
     function syncTheme() {
@@ -3527,16 +3633,30 @@ window.__ModuleLoader__.load({
         link.href = themeHref();
         document.head.appendChild(link);
       } else if (!on && link) link.remove();
-      if (on) body.setAttribute(THEME_ATTRIBUTE, '');
-      else body.removeAttribute(THEME_ATTRIBUTE);
+      if (on) {
+        const choice = getSettings().themeAppearance;
+        const dark = choice === 'auto' ? body.hasAttribute(DSH_DARK_ATTRIBUTE) : choice === 'dark';
+        body.setAttribute(THEME_ATTRIBUTE, '');
+        body.setAttribute(APPEARANCE_ATTRIBUTE, dark ? 'dark' : 'light');
+      } else {
+        body.removeAttribute(THEME_ATTRIBUTE);
+        body.removeAttribute(APPEARANCE_ATTRIBUTE);
+      }
+    }
+    // Follows DSH switching between light and dark while the theme is set to follow it.
+    function watchDshAppearance() {
+      if (typeof MutationObserver !== 'function' || !document.body) return () => {};
+      const observer = new MutationObserver(syncTheme);
+      observer.observe(document.body, { attributes: true, attributeFilter: [DSH_DARK_ATTRIBUTE] });
+      return () => observer.disconnect();
     }
     function removeTheme() {
       document.getElementById?.(THEME_LINK_ID)?.remove();
       document.body?.removeAttribute(THEME_ATTRIBUTE);
+      document.body?.removeAttribute(APPEARANCE_ATTRIBUTE);
     }
 
     const SIDEBAR_PANEL = 'open-market';
-    const SIDEBAR_SETTLE = 3000;
     const inject = ['slots', 'locale', 'remote'];
 
     function apply(ctx) {
@@ -3555,7 +3675,8 @@ window.__ModuleLoader__.load({
       ctx.effect(() => {
         syncTheme();
         const off = subscribeSettings(syncTheme);
-        return () => { off(); removeTheme(); };
+        const unwatch = watchDshAppearance();
+        return () => { off(); unwatch(); removeTheme(); };
       }, 'open-market: theme');
       const t = ctx.locale.bind(NS);
       const getManager = () => pluginManager;
@@ -3581,8 +3702,7 @@ window.__ModuleLoader__.load({
       let removeSidebar;
       function syncSidebar() {
         const preference = getSettings().sidebarMarket;
-        const decided = preference !== 'auto' || sidebarHost.settled;
-        const wanted = sidebarHost.supported && decided && sidebarWanted(preference, sidebarHost);
+        const wanted = sidebarHost.supported && sidebarWanted(preference);
         if (wanted && !removeSidebar) {
           readsIndexFile = true;
           const offPanel = ctx.slots.register({ name: 'main', key: SIDEBAR_PANEL, locale: NS }, SidebarPage);
@@ -3592,7 +3712,7 @@ window.__ModuleLoader__.load({
             offRow?.();
             offPanel?.();
           };
-        } else if (!wanted && decided && removeSidebar) {
+        } else if (!wanted && removeSidebar) {
           readsIndexFile = false;
           removeSidebar();
           removeSidebar = undefined;
@@ -3601,15 +3721,12 @@ window.__ModuleLoader__.load({
       ctx.effect(() => subscribeSettings(syncSidebar), 'open-market: sidebar setting');
       ctx.effect(() => subscribeSidebarHost(syncSidebar), 'open-market: sidebar host');
       ctx.slots.inject('sidebar.panellist', () => { updateSidebarHost({ supported: true }); });
-      // The market service can arrive after the sidebar, so the automatic choice waits a moment to avoid a passing row.
       ctx.effect(() => {
-        const timer = window.setTimeout(() => updateSidebarHost({ settled: true }), SIDEBAR_SETTLE);
         return () => {
-          window.clearTimeout(timer);
           removeSidebar?.();
           removeSidebar = undefined;
           readsIndexFile = false;
-          sidebarHost = { supported: false, tab: false, settled: false };
+          sidebarHost = { supported: false };
         };
       }, 'open-market: sidebar page');
       function SettingsSection({ view }) {
@@ -3646,7 +3763,6 @@ window.__ModuleLoader__.load({
         marketRemote = ctx.remote;
         ctx.effect(() => () => { if (marketRemote === ctx.remote) marketRemote = undefined; }, 'open-market: market service');
         const face = { remote: ctx.remote, manager: () => pluginManager, resolve };
-        ctx.slots.inject('plugins.tab', () => { updateSidebarHost({ tab: true }); });
         ctx.slots.inject('plugins.tab', () => ctx.slots.register({
           name: 'plugins.tab',
           id: 'open-market',

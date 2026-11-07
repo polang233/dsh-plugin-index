@@ -37,17 +37,15 @@ https://dshopen.org/index.json
 dsh plugin --profile desktop add dsh-open-market
 ```
 
-它还会在「插件」页加一个 **开放市场** 标签：今日推荐、按点赞和增长排的推荐，以及全部插件。点开卡片能看详情、点赞和安装；还能把插件分组收藏，查看已安装插件的更新。
+它还会在「插件」页加一个 **开放市场** 标签：今日推荐、按点赞和增长排的推荐，以及全部插件。点开卡片能看详情、点赞和安装；还能把插件分组收藏，在「插件管理」里启停、更新和卸载本机插件。
 
 ![DSH「插件」页里的开放市场标签](docs/images/open-market-zh.webp)
 
-### 马卡龙主题
+### 鲸鱼女仆主题
 
-开放市场自带一套可选主题，沿用 [dshopen.org](https://dshopen.org/zh/) 网站的风格。侧边栏、对话、代码块、菜单、对话框和设置页都会跟着换，跟随 DSH 的浅色或深色外观，不改变布局。在开放市场的设置里打开「马卡龙主题」即可，关掉后立刻恢复原样。
+开放市场自带一套可选主题，沿用 [dshopen.org](https://dshopen.org/zh/) 网站的风格：粗墨线、硬阴影、马卡龙配色，空白处还有鲸鱼女仆。侧边栏、对话、代码块、菜单、对话框和设置页都会跟着换，不改变布局。在开放市场的设置里打开「鲸鱼女仆主题」即可；浅色、深色可以单独选，默认跟随 DSH，关掉后立刻恢复原样。
 
-<p><img src="docs/images/theme-market-zh.webp" alt="马卡龙主题下的开放市场" width="49%"> <img src="docs/images/theme-chat-zh.webp" alt="马卡龙主题下的对话页，含代码块和 diff" width="49%"></p>
-
-<img src="docs/images/theme-settings-zh.webp" alt="开放市场设置里的「马卡龙主题」开关" width="49%">
+<p><img src="docs/images/theme-market-zh.webp" alt="鲸鱼女仆主题下的开放市场（浅色）" width="49%"> <img src="docs/images/theme-manage-zh.webp" alt="鲸鱼女仆主题下的插件管理（深色）" width="49%"></p>
 
 [![开放插件市场网站首页](docs/images/home-zh.webp)](https://dshopen.org/zh/)
 

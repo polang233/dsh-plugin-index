@@ -1,16 +1,18 @@
 /*
- * Open Market macaron theme for DSH, after dshopen.org: ink outlines, hard offset shadows,
- * cream and macaron fills and the whale-maid mascot.
+ * Open Market Whale Maid theme for DSH, after dshopen.org: dotted cream paper, 2px ink outlines,
+ * hard offset shadows, macaron tones per plugin, solid pills, sun-yellow actions and the whale-maid mascot.
  *
  * Everything sits under body[data-opm-theme], so removing that attribute turns the theme off
- * without a reload. Colours go through DSH's own --dsw-* tokens first; the few structural rules
+ * without a reload. data-opm-appearance carries the light or dark choice, which follows DSH unless
+ * the user picks one. Colours go through DSH's own --dsw-* tokens first; the few structural rules
  * match stable data attributes or a CSS-module class name without its build hash,
- * e.g. :is([class$="_bubble"], [class*="_bubble "]). Outlines and shadows are box-shadows only, so
+ * e.g. :is([class$="_bubble"], [class*="_bubble "]). Outlines and shadows are box-shadows, so
  * no box changes size. Text contrast is WCAG AA or better than DSH's defaults.
  */
 
 /* ---------- Tokens: light ---------- */
-body[data-opm-theme]:not([data-ds-dark-theme]) {
+body[data-opm-theme]:not([data-opm-appearance="dark"]) {
+  color-scheme: light;
   --opm-cream: #fff9ee;
   --opm-paper: #fff;
   --opm-ink: #14284b;
@@ -28,6 +30,15 @@ body[data-opm-theme]:not([data-ds-dark-theme]) {
   --opm-shadow: var(--opm-ink);
   --opm-hover: #2f6bff14;
   --opm-active: #2f6bff26;
+  --opm-butter: #fff0b8;
+  --opm-dot: #14284b21;
+  --opm-tone-s: 92%;
+  --opm-tone-l: 89%;
+  --opm-mark-alpha: .8;
+  --opm-sky-mark: #9cc3ff;
+  --opm-peach-mark: #ffb59e;
+  --opm-mint-mark: #8fe3bd;
+  --opm-lilac-mark: #c7b5ff;
 
   --dsw-alias-bg-base: var(--opm-cream);
   --dsw-alias-bg-layer-1: var(--opm-paper);
@@ -115,7 +126,8 @@ body[data-opm-theme]:not([data-ds-dark-theme]) {
 }
 
 /* ---------- Tokens: dark, a night-sea version of the same palette ---------- */
-body[data-opm-theme][data-ds-dark-theme] {
+body[data-opm-theme][data-opm-appearance="dark"] {
+  color-scheme: dark;
   --opm-cream: #0f1a2e;
   --opm-paper: #17284a;
   --opm-ink: #f6f0e4;
@@ -133,6 +145,15 @@ body[data-opm-theme][data-ds-dark-theme] {
   --opm-shadow: #050a14;
   --opm-hover: #8fb0ff1f;
   --opm-active: #8fb0ff33;
+  --opm-butter: #4a3f1c;
+  --opm-dot: #9fb6e81c;
+  --opm-tone-s: 40%;
+  --opm-tone-l: 30%;
+  --opm-mark-alpha: .38;
+  --opm-sky-mark: #5b86e0;
+  --opm-peach-mark: #e0805f;
+  --opm-mint-mark: #3fae80;
+  --opm-lilac-mark: #8d73e6;
 
   --dsw-alias-bg-base: var(--opm-cream);
   --dsw-alias-bg-layer-1: var(--opm-paper);
@@ -199,52 +220,60 @@ body[data-opm-theme] {
   --dsh-font-family-text-default: "Avenir Next Rounded", "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --dsw-focus-ring-color: var(--opm-blue);
   --opm-ring: 0 0 0 1.5px var(--opm-line);
+  --opm-ring-2: 0 0 0 2px var(--opm-line);
   --opm-pop-sm: 2px 2px 0 var(--opm-shadow);
   --opm-pop: 3px 3px 0 var(--opm-shadow);
-  --opm-pop-lg: 5px 5px 0 var(--opm-shadow);
+  --opm-pop-md: 4px 4px 0 var(--opm-shadow);
+  --opm-pop-lg: 6px 6px 0 var(--opm-shadow);
+  --opm-press: 0 3px 0 var(--opm-shadow);
   --dsw-elevation-stroke-color: var(--opm-line);
   --dsw-elevation-stroke: var(--opm-ring);
   --dsw-elevation-soft: var(--opm-ring), var(--opm-pop);
-  --dsw-elevation-panel: var(--opm-ring), var(--opm-pop);
-  --dsw-elevation-prominent: var(--opm-ring), var(--opm-pop-lg);
+  --dsw-elevation-panel: var(--opm-ring-2), var(--opm-pop-md);
+  --dsw-elevation-prominent: var(--opm-ring-2), var(--opm-pop-lg);
   --dsw-menu-surface-fill: var(--opm-paper);
   --dsw-menu-backdrop-filter: none;
   --dsw-mask-blur: none;
 }
 body[data-opm-theme] ::selection { background: var(--opm-sky); color: var(--opm-ink); }
-body[data-opm-theme][data-ds-dark-theme] ::selection { background: #34548f; color: #fff; }
+body[data-opm-theme][data-opm-appearance="dark"] ::selection { background: #34548f; color: #fff; }
 
 /* ---------- App frame and sidebar ---------- */
 body[data-opm-theme] :is([class$="_sidebarCol"], [class*="_sidebarCol "]) {
   background: var(--dsw-specific-sidebar-fill);
   border-right-color: transparent;
 }
-/* The ink edge is the centre column's outer shadow, painted over the sidebar, so neither column changes width. */
+/* The site's dotted paper behind the main column; the ink edge is its outer shadow, so neither column changes width. */
 body[data-opm-theme] :is([class$="_centerCol"], [class*="_centerCol "]) {
   border-left-color: transparent;
-  box-shadow: -1.5px 0 0 var(--opm-line);
+  box-shadow: -2px 0 0 var(--opm-line);
+  background-color: var(--opm-cream);
+  background-image: radial-gradient(circle at 1px 1px, var(--opm-dot) 1.3px, transparent 1.6px);
+  background-size: 26px 26px;
 }
 body[data-opm-theme] :is([class$="_newSession"], [class*="_newSession "]) {
   background: var(--opm-paper);
   border-color: transparent;
-  box-shadow: var(--opm-ring), var(--opm-pop-sm);
-  font-weight: 700;
+  box-shadow: var(--opm-ring-2), var(--opm-pop);
+  font-weight: 800;
 }
 body[data-opm-theme] :is([class$="_newSession"], [class*="_newSession "]):hover { background: var(--opm-sun); color: #14284b; }
 body[data-opm-theme] :is([class*="_sessionRow"], [class*="_panelRow"]):is([class*="_selected"], [aria-current="page"], [data-active]) {
-  box-shadow: inset 0 0 0 1.5px var(--opm-line);
+  box-shadow: inset 0 0 0 2px var(--opm-line);
+  font-weight: 700;
 }
 
 /* ---------- Conversation ---------- */
 body[data-opm-theme] [data-composer-card] {
-  box-shadow: 0 0 0 2px var(--opm-line), 4px 4px 0 var(--opm-shadow);
+  border-radius: 22px;
+  box-shadow: var(--opm-ring-2), var(--opm-pop-md);
 }
 body[data-opm-theme] [data-composer-card]:focus-within {
-  box-shadow: 0 0 0 2px var(--opm-line), 4px 4px 0 var(--opm-blue);
+  box-shadow: var(--opm-ring-2), 4px 4px 0 var(--opm-blue);
 }
 body[data-opm-theme] [data-chat-flow-kind="user"] :is([class$="_bubble"], [class*="_bubble "]) {
-  box-shadow: var(--opm-ring), var(--opm-pop-sm);
-  border-radius: 18px 18px 6px 18px;
+  box-shadow: var(--opm-ring-2), var(--opm-pop-sm);
+  border-radius: 20px 20px 6px 20px;
 }
 body[data-opm-theme] .md-code-block {
   box-shadow: var(--opm-ring), var(--opm-pop-sm);
@@ -261,21 +290,22 @@ body[data-opm-theme] [data-conversation-content] blockquote { border-left-color:
 /* ---------- Controls ---------- */
 body[data-opm-theme] [role="tablist"]:has(> [class*="_indicator_"]) {
   background: var(--opm-paper);
-  box-shadow: var(--opm-ring), var(--opm-pop-sm);
+  box-shadow: var(--opm-ring-2), var(--opm-pop);
 }
 body[data-opm-theme] [role="tablist"] > [class*="_indicator_"] {
   background: var(--opm-sun);
   border-color: var(--opm-line);
 }
+body[data-opm-theme] [role="tablist"]:has(> [class*="_indicator_"]) > [role="tab"] { font-weight: 700; }
 /* The selected tab sits on sun yellow in both modes, so it keeps dark ink text. */
-body[data-opm-theme][data-ds-dark-theme] [role="tablist"]:has(> [class*="_indicator_"]) > [role="tab"][aria-selected="true"] { color: #14284b; }
+body[data-opm-theme][data-opm-appearance="dark"] [role="tablist"]:has(> [class*="_indicator_"]) > [role="tab"][aria-selected="true"] { color: #14284b; }
 body[data-opm-theme] [role="switch"] { box-shadow: var(--opm-ring); }
 body[data-opm-theme] [role="switch"][aria-checked="true"] { background: var(--opm-blue-text); }
-body[data-opm-theme][data-ds-dark-theme] [role="switch"][aria-checked="true"] { background: var(--opm-blue); }
+body[data-opm-theme][data-opm-appearance="dark"] [role="switch"][aria-checked="true"] { background: var(--opm-blue); }
 body[data-opm-theme] button:is([class*="_primary_"], [class$="_primary"]):not([role]) { box-shadow: var(--opm-pop-sm); }
-body[data-opm-theme] [data-menu-material] { box-shadow: var(--opm-ring), var(--opm-pop); }
+body[data-opm-theme] [data-menu-material] { box-shadow: var(--opm-ring-2), var(--opm-pop); }
 body[data-opm-theme] :is([role="dialog"], [role="alertdialog"]):not([data-menu-material]) {
-  box-shadow: 0 0 0 2px var(--opm-line), var(--opm-pop-lg);
+  box-shadow: var(--opm-ring-2), var(--opm-pop-lg);
 }
 
 /* ---------- Mascot: only in empty space, never over content ---------- */
@@ -308,24 +338,233 @@ body[data-opm-theme] :is([class$="_footArea"], [class*="_footArea "])::after {
 /* The collapsed icon rail has no free space for her. */
 body[data-opm-theme] :is([data-sidebar-collapsed="true"], [class$="_collapsed"], [class*="_collapsed "]) :is([class$="_footArea"], [class*="_footArea "])::after { display: none; }
 
-/* ---------- Open Market ---------- */
-body[data-opm-theme] .opm-card,
-body[data-opm-theme] .opm-featured-card,
-body[data-opm-theme] .opm-state {
-  border-color: transparent;
-  box-shadow: var(--opm-ring), var(--opm-pop-sm);
+/* ---------- Open Market: the dshopen.org directory inside DSH ---------- */
+body[data-opm-theme] .opm-root { color: var(--opm-ink); }
+body[data-opm-theme] .opm-root :focus-visible { outline: 3px solid var(--opm-coral); outline-offset: 3px; }
+
+/* Section titles: heavy ink with the site's marker-pen stroke under them, one colour per section. */
+body[data-opm-theme] .opm-heading-copy h2 {
+  position: relative;
+  isolation: isolate;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: -.01em;
+  --opm-mark: var(--opm-sun);
 }
-body[data-opm-theme] .opm-card:hover { box-shadow: var(--opm-ring), var(--opm-pop); }
-body[data-opm-theme] .opm-button:not(.opm-button-primary) { box-shadow: var(--opm-ring); }
-body[data-opm-theme] .opm-button-primary { box-shadow: var(--opm-pop-sm); }
-body[data-opm-theme] .opm-search input { border-color: var(--opm-line); }
-body[data-opm-theme] .opm-search input:focus { box-shadow: 3px 3px 0 var(--opm-blue); }
-body[data-opm-theme] .opm-tag { border-color: var(--dsw-alias-border-l4); border-radius: 999px; }
-body[data-opm-theme] .opm-panel { box-shadow: 0 0 0 2px var(--opm-line), var(--opm-pop-lg); }
-body[data-opm-theme] .opm-status-on { color: var(--opm-ink); background: var(--opm-mint); border-color: var(--opm-line); }
-body[data-opm-theme] .opm-status-off { color: var(--opm-slate); background: var(--opm-paper); border-color: var(--opm-slate); }
-body[data-opm-theme] .opm-manage-open[aria-current="true"] { background: var(--opm-sky-soft); box-shadow: inset 3px 0 0 var(--opm-blue); }
-body[data-opm-theme] :is(.opm-system-group, .opm-manage-overview, .opm-components, .opm-plugin-diagnostics) { border-color: var(--dsw-alias-border-l3); }
+body[data-opm-theme] .opm-heading-copy h2::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -4px;
+  right: -4px;
+  bottom: .05em;
+  height: .48em;
+  border-radius: 5px;
+  background: var(--opm-mark);
+  opacity: var(--opm-mark-alpha);
+  transform: rotate(-1.4deg);
+}
+body[data-opm-theme] .opm-heading-copy:has(.opm-glyph-recommended) h2 { --opm-mark: var(--opm-sky-mark); }
+body[data-opm-theme] .opm-heading-copy:has(.opm-glyph-popular) h2 { --opm-mark: var(--opm-coral); }
+body[data-opm-theme] .opm-heading-copy:has(.opm-glyph-trending) h2 { --opm-mark: var(--opm-peach-mark); }
+body[data-opm-theme] .opm-heading-copy:has(.opm-glyph-newest) h2 { --opm-mark: var(--opm-mint-mark); }
+body[data-opm-theme] .opm-heading-copy:has(.opm-glyph-all) h2 { --opm-mark: var(--opm-lilac-mark); }
+body[data-opm-theme] .opm-heading-hint { color: var(--opm-slate); font-weight: 600; }
+body[data-opm-theme] .opm-glyph {
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
+  color: var(--opm-ink);
+  background: color-mix(in srgb, var(--opm-glyph) 30%, var(--opm-paper));
+  box-shadow: var(--opm-ring);
+  transform: rotate(-6deg);
+}
+
+/* Each plugin's own hue as a macaron fill, like the site's card tones. Set where the hue is, not on body,
+   so every card resolves its own. */
+body[data-opm-theme] :is(.opm-card, .opm-panel-heading, .opm-manage-open, .opm-manage-detail-head) {
+  --opm-tone: hsl(var(--opm-hue, 220) var(--opm-tone-s) var(--opm-tone-l));
+}
+
+/* Cards: white paper, a 2px ink outline and a hard shadow; hovering lifts and tilts them and washes in their tone. */
+body[data-opm-theme] .opm-card {
+  border-color: transparent;
+  border-radius: 22px;
+  background: var(--opm-paper);
+  box-shadow: var(--opm-ring-2), var(--opm-pop-md);
+}
+body[data-opm-theme] .opm-featured-card {
+  background: radial-gradient(120% 95% at 0% 0%, color-mix(in srgb, var(--opm-tone) 85%, transparent), transparent 62%), var(--opm-paper);
+}
+body[data-opm-theme] .opm-card .opm-title { font-weight: 800; letter-spacing: -.01em; }
+body[data-opm-theme] .opm-featured-card .opm-title { font-size: 21px; font-weight: 900; letter-spacing: -.02em; }
+body[data-opm-theme] .opm-card .opm-author { color: var(--opm-slate); font-weight: 600; }
+body[data-opm-theme] .opm-card .opm-description { color: var(--opm-slate); font-weight: 500; }
+body[data-opm-theme] :is(.opm-card, .opm-panel-heading, .opm-manage-open, .opm-manage-detail-head) .opm-icon {
+  border-radius: 14px;
+  background: var(--opm-tone);
+  color: var(--opm-ink);
+  font-weight: 900;
+  box-shadow: var(--opm-ring-2);
+  transform: rotate(-4deg);
+}
+body[data-opm-theme] :is(.opm-card, .opm-panel-heading, .opm-manage-detail-head) .opm-icon-large { border-radius: 18px; }
+@media (hover: hover) {
+  body[data-opm-theme] .opm-card:hover {
+    border-color: transparent;
+    transform: translate(-3px, -5px) rotate(-.5deg);
+    background-color: color-mix(in srgb, var(--opm-tone) 30%, var(--opm-paper));
+    box-shadow: var(--opm-ring-2), 7px 9px 0 var(--opm-shadow);
+  }
+  body[data-opm-theme] .opm-card:hover .opm-icon { transform: rotate(6deg) scale(1.08); }
+}
+
+/* Labels and metrics: solid pills with ink outlines, coloured by kind like the site's badges. */
+body[data-opm-theme] .opm-tag {
+  padding: 0 8px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--opm-paper);
+  color: var(--opm-ink);
+  box-shadow: inset 0 0 0 1.5px var(--opm-line);
+  font-weight: 800;
+  line-height: 18px;
+}
+body[data-opm-theme] .opm-tag-verified { background: var(--opm-sky); }
+body[data-opm-theme] .opm-tag-trending { background: var(--opm-peach); }
+body[data-opm-theme] .opm-tag-active { background: var(--opm-lilac); }
+body[data-opm-theme] .opm-tag-stars { background: var(--opm-butter); }
+
+/* Buttons: outlined paper that lifts; the main action is the site's sun-yellow pressable. */
+body[data-opm-theme] .opm-button {
+  border-radius: 12px;
+  font-weight: 700;
+  transition: transform .12s ease-out, box-shadow .12s ease-out, background-color .15s;
+}
+body[data-opm-theme] .opm-button:not(.opm-button-primary) { background: var(--opm-paper); box-shadow: var(--opm-ring-2); }
+body[data-opm-theme] .opm-button:not(.opm-button-primary):hover:not(:disabled) {
+  background: var(--opm-sky);
+  transform: translate(-1px, -1px);
+  box-shadow: var(--opm-ring-2), var(--opm-pop-sm);
+}
+body[data-opm-theme] .opm-button-primary,
+body[data-opm-theme] .opm-button-primary:hover:not(:disabled) {
+  opacity: 1;
+  background: var(--opm-sun);
+  color: #14284b;
+  box-shadow: var(--opm-ring-2), var(--opm-press);
+}
+body[data-opm-theme] .opm-button-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: var(--opm-ring-2), 0 4px 0 var(--opm-shadow); }
+body[data-opm-theme] .opm-button:active:not(:disabled) { transform: translate(1px, 2px); box-shadow: var(--opm-ring-2); }
+body[data-opm-theme] .opm-button:disabled { background: var(--opm-cream); color: var(--opm-slate); box-shadow: inset 0 0 0 1.5px var(--dsw-alias-border-l3); transform: none; }
+body[data-opm-theme] .opm-like:disabled { color: var(--opm-coral); background: var(--opm-paper); }
+body[data-opm-theme] .opm-favorite-main[aria-pressed="true"] { background: var(--opm-butter); color: #b36b00; }
+body[data-opm-theme] .opm-arrow {
+  border: 0;
+  background: var(--opm-paper);
+  color: var(--opm-ink);
+  box-shadow: var(--opm-ring-2), var(--opm-pop-sm);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+body[data-opm-theme] .opm-arrow:hover:not(:disabled) { background: var(--opm-sun); color: #14284b; }
+
+/* Search, category and chips. */
+body[data-opm-theme] .opm-search input,
+body[data-opm-theme] .opm-manage-search {
+  border-color: transparent;
+  border-radius: 14px;
+  background-color: var(--opm-paper);
+  color: var(--opm-ink);
+  font-weight: 600;
+  box-shadow: var(--opm-ring-2);
+}
+body[data-opm-theme] .opm-search input:focus,
+body[data-opm-theme] .opm-manage-search:focus { border-color: transparent; box-shadow: var(--opm-ring-2), 3px 3px 0 var(--opm-blue); }
+body[data-opm-theme] .opm-search-icon { color: var(--opm-ink); }
+body[data-opm-theme] .opm-root select.opm-category,
+body[data-opm-theme] .opm-manage-controls select {
+  border-color: transparent;
+  border-radius: 12px;
+  background-color: var(--opm-paper);
+  color: var(--opm-ink);
+  font-weight: 700;
+  box-shadow: var(--opm-ring-2);
+}
+body[data-opm-theme] :is(.opm-chip, .opm-manage-tabs .opm-button) {
+  border: 0;
+  background: var(--opm-paper);
+  color: var(--opm-ink);
+  font-weight: 800;
+  box-shadow: var(--opm-ring-2);
+}
+body[data-opm-theme] :is(.opm-chip, .opm-manage-tabs .opm-button):hover:not(:disabled) {
+  background: var(--opm-sky);
+  transform: translateY(-1px) rotate(-1deg);
+  box-shadow: var(--opm-ring-2);
+}
+body[data-opm-theme] :is(.opm-chip, .opm-manage-tabs .opm-button)[aria-pressed="true"],
+body[data-opm-theme] :is(.opm-chip, .opm-manage-tabs .opm-button)[aria-pressed="true"]:hover:not(:disabled) {
+  background: var(--opm-ink);
+  color: var(--opm-paper);
+  transform: none;
+  box-shadow: var(--opm-ring-2), 2px 2px 0 var(--opm-coral);
+}
+body[data-opm-theme] .opm-chip[aria-pressed="true"] small { color: var(--opm-sun); opacity: 1; }
+
+/* Carousel dots become small pills; the current one is sun yellow. */
+body[data-opm-theme] .opm-dot::after { background: var(--opm-paper); box-shadow: var(--opm-ring); }
+body[data-opm-theme] .opm-dot[aria-current="true"]::after { width: 16px; background: var(--opm-sun); }
+
+/* Footer links: ink-outlined pills with a sun-yellow end. */
+body[data-opm-theme] .opm-footer-link {
+  border-color: transparent;
+  background: var(--opm-paper);
+  color: var(--opm-ink);
+  font-weight: 700;
+  box-shadow: var(--opm-ring-2), var(--opm-pop-sm);
+}
+body[data-opm-theme] .opm-footer-link:hover { background: var(--opm-sky); }
+body[data-opm-theme] .opm-footer-end { background: var(--opm-sun); color: #14284b; font-weight: 800; box-shadow: var(--opm-ring); }
+
+/* Dialogs and menus. */
+body[data-opm-theme] .opm-panel {
+  border-radius: 26px;
+  background: var(--opm-paper);
+  box-shadow: var(--opm-ring-2), var(--opm-pop-lg);
+}
+body[data-opm-theme] .opm-panel-heading h2,
+body[data-opm-theme] .opm-favorites-head h2 { font-weight: 900; letter-spacing: -.01em; }
+body[data-opm-theme] .opm-panel-close { border-radius: 999px; }
+body[data-opm-theme] .opm-command {
+  border: 2px dashed var(--opm-line);
+  border-radius: 14px;
+  background: var(--opm-cream);
+}
+body[data-opm-theme] .opm-screenshots img { border-color: transparent; border-radius: 14px; box-shadow: var(--opm-ring-2); }
+body[data-opm-theme] .opm-menu { border-color: transparent; border-radius: 14px; box-shadow: var(--opm-ring-2), var(--opm-pop); }
+body[data-opm-theme] .opm-menu-item:hover { background: var(--opm-sky); }
+body[data-opm-theme] .opm-settings-group {
+  border-color: transparent;
+  border-radius: 18px;
+  background: var(--opm-paper);
+  box-shadow: var(--opm-ring-2), var(--opm-pop-sm);
+}
+body[data-opm-theme] .opm-input { border-color: transparent; border-radius: 10px; background: var(--opm-paper); box-shadow: var(--opm-ring); }
+
+/* Empty and error states: the site's dashed card, with the mascot having tea. */
+body[data-opm-theme] .opm-state,
+body[data-opm-theme] .opm-search-empty {
+  min-height: 96px;
+  padding-left: 96px;
+  border: 2px dashed var(--opm-line);
+  border-radius: 22px;
+  box-shadow: none;
+  background: url("whale-maid-tea.webp") 16px center / auto 72px no-repeat, var(--opm-cream);
+}
+body[data-opm-theme] .opm-search-empty { display: flex; align-items: center; }
+body[data-opm-theme] .opm-skeleton { border-radius: 18px; }
+
 /* She peeks over the top edge of the market, right of the Plugins tabs, where the page has no controls. */
 body[data-opm-theme] .opm-market { position: relative; }
 body[data-opm-theme] .opm-market::before {
@@ -338,14 +577,95 @@ body[data-opm-theme] .opm-market::before {
   background: url("whale-maid-peek.webp") center bottom / contain no-repeat;
   pointer-events: none;
 }
-body[data-opm-theme] .opm-state,
-body[data-opm-theme] .opm-search-empty {
-  min-height: 96px;
-  padding-left: 96px;
-  background: url("whale-maid-tea.webp") 16px center / auto 72px no-repeat;
+
+/* ---------- Plugin management: the same cards, pills and ink as the market ---------- */
+body[data-opm-theme] .opm-manage-head h2 { font-weight: 900; }
+body[data-opm-theme] .opm-manage-pill {
+  background: var(--opm-sky);
+  color: var(--opm-ink);
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1.5px var(--opm-line);
 }
-body[data-opm-theme] .opm-search-empty { display: flex; align-items: center; }
+body[data-opm-theme] .opm-manage-pill-ok { background: var(--opm-mint); }
+body[data-opm-theme] .opm-manage-pill-busy { background: var(--opm-butter); }
+body[data-opm-theme] .opm-manage-pill-warn { background: var(--opm-peach); color: var(--opm-ink); }
+body[data-opm-theme] .opm-manage-pill-risk { background: var(--opm-lilac); }
+body[data-opm-theme] :is(.opm-manage-pill-ok, .opm-manage-pill-busy)::before { box-shadow: 0 0 0 1.5px var(--opm-line); }
+body[data-opm-theme] .opm-manage-status { color: var(--opm-slate); font-weight: 600; }
+body[data-opm-theme] :is(.opm-manage-overview, .opm-plugin-diagnostics, .opm-components, .opm-manage-queue, .opm-system-group, .opm-manage-readme) > summary { font-weight: 800; }
+body[data-opm-theme] .opm-manage-select-all { color: var(--opm-slate); font-weight: 700; }
+body[data-opm-theme] .opm-manage-bulk { border-radius: 14px; background: var(--opm-butter); box-shadow: inset 0 0 0 1.5px var(--opm-line); }
+body[data-opm-theme] .opm-manage-update {
+  border-radius: 16px;
+  background: var(--opm-sky-soft);
+  box-shadow: inset 0 0 0 2px var(--opm-line), 3px 3px 0 var(--opm-shadow);
+}
+body[data-opm-theme] .opm-manage-count { background: var(--opm-sun); color: #14284b; font-weight: 800; box-shadow: var(--opm-ring); }
+body[data-opm-theme] .opm-manage-source { color: var(--opm-slate); }
+body[data-opm-theme] .opm-manage-more { border-top: 2px dashed var(--dsw-alias-border-l3); }
+body[data-opm-theme] .opm-manage-more > details { border-bottom: 1.5px dashed var(--dsw-alias-border-l3); }
+body[data-opm-theme] .opm-manage-report { color: var(--opm-slate); font-weight: 700; }
+body[data-opm-theme] .opm-directory + .opm-directory { border-top: 1.5px dashed var(--dsw-alias-border-l3); }
+body[data-opm-theme] .opm-load-order li {
+  border-color: transparent;
+  border-radius: 12px;
+  background: var(--opm-cream);
+  box-shadow: inset 0 0 0 1.5px var(--opm-line);
+  font-weight: 700;
+}
+body[data-opm-theme] .opm-manage-group > ul { gap: 12px; }
+body[data-opm-theme] .opm-manage-list { padding: 4px 12px 12px 6px; }
+body[data-opm-theme] .opm-manage-group-title { color: var(--opm-ink); font-weight: 800; }
+body[data-opm-theme] .opm-manage-group-title > span { background: var(--opm-sun); color: #14284b; font-weight: 800; box-shadow: var(--opm-ring); }
+body[data-opm-theme] .opm-manage-open {
+  border-color: transparent;
+  border-radius: 18px;
+  background: var(--opm-paper);
+  box-shadow: var(--opm-ring-2), var(--opm-pop-sm);
+  transition: transform .2s cubic-bezier(.3, 1.6, .5, 1), box-shadow .2s, background-color .2s;
+}
+body[data-opm-theme] .opm-manage-open:hover { border-color: transparent; transform: translate(-1px, -2px); box-shadow: var(--opm-ring-2), var(--opm-pop); }
+body[data-opm-theme] .opm-manage-open[aria-current="true"] {
+  border-color: transparent;
+  transform: translate(-2px, -3px) rotate(-.4deg);
+  background: color-mix(in srgb, var(--opm-tone) 38%, var(--opm-paper));
+  box-shadow: var(--opm-ring-2), 5px 6px 0 var(--opm-shadow);
+}
+body[data-opm-theme] .opm-manage-copy strong { font-weight: 800; }
+body[data-opm-theme] .opm-manage-copy small { color: var(--opm-slate); font-weight: 600; }
+body[data-opm-theme] .opm-manage-badges .opm-tag { line-height: 16px; }
+body[data-opm-theme] .opm-status {
+  border: 0;
+  color: var(--opm-ink);
+  font-weight: 800;
+  box-shadow: inset 0 0 0 1.5px var(--opm-line);
+}
+body[data-opm-theme] .opm-status-on { background: var(--opm-mint); }
+body[data-opm-theme] .opm-status-off { background: var(--opm-paper); color: var(--opm-slate); box-shadow: inset 0 0 0 1.5px var(--opm-slate); }
+body[data-opm-theme] .opm-manage-detail h3 { font-weight: 900; letter-spacing: -.01em; }
+body[data-opm-theme] .opm-manage-detail dl {
+  border-radius: 16px;
+  background: var(--opm-cream);
+  box-shadow: inset 0 0 0 1.5px var(--opm-line);
+}
+body[data-opm-theme] .opm-manage-detail dt { color: var(--opm-slate); font-weight: 700; }
+body[data-opm-theme] .opm-manage-detail h4 { font-weight: 800; }
+body[data-opm-theme] .opm-manage-danger:not(:disabled) { color: #b4232f; }
+body[data-opm-theme][data-opm-appearance="dark"] .opm-manage-danger:not(:disabled) { color: var(--opm-coral); }
+body[data-opm-theme] .opm-manage-remove {
+  border: 2px dashed var(--opm-coral);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--opm-peach) 50%, var(--opm-paper));
+}
+body[data-opm-theme] .opm-manage-footer { border-top: 2px solid var(--opm-line); background: var(--opm-cream); }
 
 @media (prefers-reduced-motion: no-preference) {
-  body[data-opm-theme] .opm-card { transition: box-shadow .15s ease-out; }
+  body[data-opm-theme] .opm-card { transition: transform .3s cubic-bezier(.3, 1.6, .45, 1), box-shadow .3s cubic-bezier(.3, 1.6, .45, 1), background-color .25s; }
+  body[data-opm-theme] .opm-card .opm-icon,
+  body[data-opm-theme] .opm-chip { transition: transform .3s cubic-bezier(.3, 1.6, .45, 1), background-color .15s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-opm-theme] .opm-card:hover,
+  body[data-opm-theme] .opm-manage-open[aria-current="true"],
+  body[data-opm-theme] .opm-card:hover .opm-icon { transform: none; }
 }

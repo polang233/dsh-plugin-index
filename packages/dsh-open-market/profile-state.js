@@ -20,6 +20,7 @@ export function profilePatch(value) {
       if (!object(data) || Object.entries(data).some(([name, val]) => booleans.includes(name) ? typeof val !== 'boolean'
         : name === 'registry' ? !['index', 'dsh', 'npmmirror', 'custom'].includes(val)
         : name === 'sidebarMarket' ? !['auto', 'on', 'off'].includes(val)
+        : name === 'themeAppearance' ? !['auto', 'light', 'dark'].includes(val)
         : name === 'customRegistry' ? typeof val !== 'string' || val.length > 2048 : true)) throw Error('Invalid settings');
     } else {
       if (!object(data) || data.schema !== 1 || !Array.isArray(data.groups) || data.groups.length > 100) throw Error('Invalid favorites');
