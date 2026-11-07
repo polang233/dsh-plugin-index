@@ -3870,6 +3870,30 @@
       "reviewedAt": "2026-11-07T14:53:16.529Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-spinner-words",
+      "version": "0.9.0",
+      "integrity": "sha512-JumBmyQewAwWleDkxWgaImv7MALkBPG5tBWeRJi8XRsU6PgPsJGPOyFG+ABuhiMO1jNRHvXU3a2QoU2OCRpGJQ==",
+      "repository": "https://github.com/uuicdown/dsh-spinner-words",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-07T15:57:23.811Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-cabinet-mode",
+      "version": "0.5.4",
+      "integrity": "sha512-AgYgXugbwNGKN6w23s+stPOwpQLNstlpF4iqpuoeRCRaz9YZlhLrj1X3jSxDMh9aCNwzOQmEk0yx6/N6Gm/EnA==",
+      "repository": "https://github.com/luodaoyi/dsh-cabinet-mode",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-07T15:57:23.812Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
