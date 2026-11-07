@@ -1,6 +1,6 @@
 {
   "name": "dsh-open-market",
-  "version": "0.4.0-dev.1",
+  "version": "0.4.0",
   "description": "Discover and manage community plugins in DeepSeek Harness with search, grouped favorites, version switching and updates.",
   "type": "module",
   "main": "index.js",

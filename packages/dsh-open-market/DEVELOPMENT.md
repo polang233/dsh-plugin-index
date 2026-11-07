@@ -1,6 +1,6 @@
 # Open Market development checkpoint
 
-Version **0.4.0-dev.1** is an unreleased snapshot. npm latest is **0.3.3**. Continue development from this checkout; this checkpoint does not call for npm publication, a Git tag or a GitHub Release.
+Version **0.4.0** is released on npm, with the tag `dsh-open-market@0.4.0` and a matching GitHub Release.
 
 ## Implementation
 

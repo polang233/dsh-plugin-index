@@ -1,9 +1,6 @@
 # dsh-open-market 更新记录
 
-## 0.4.0-dev.1
-
-Unreleased development snapshot. The published npm version remains 0.3.3.
-开发快照，尚未发布；npm 正式版仍为 0.3.3。
+## 0.4.0
 
 ### English
 

@@ -4,9 +4,9 @@ Discover and manage community plugins in DeepSeek Harness with [Open Plugin Mark
 
 在 DeepSeek Harness 中发现和管理社区插件，支持分类搜索、收藏分组、版本切换与更新。
 
-## 0.4.0-dev.1 / Development snapshot / 开发快照
+## 0.4.0
 
-This is an unreleased development snapshot. npm latest remains **0.3.3**. See the [development notes](DEVELOPMENT.md) to continue from this checkpoint, and the [changelog](CHANGELOG.md) for the complete changes.
+See the [changelog](CHANGELOG.md) for the complete changes.
 
 - Manage every local bundle, with system plugins collapsed, explicit state badges, native settings, enable/disable and confirmed uninstall. Search, favorite-group filters and bulk controls work in the same panel.
 - Update immediately when idle or queue an exact version. The Host keeps cancellation, retry and outcome records, rechecks the installation before applying, and retains queued input during Agent maintenance. A restarted Host requires explicit retry.
@@ -16,7 +16,7 @@ This is an unreleased development snapshot. npm latest remains **0.3.3**. See th
 
 Protected operations wait for activity reported by the Host across all sessions. DSH does not expose a reliable per-plugin usage map or a global admission lock for independent background producers. Native management follows its own policy. Hosts without the required APIs keep details available and refuse protected mutations.
 
-当前为未发布的开发快照，npm 正式版仍是 **0.3.3**。本版补齐完整插件管理、系统折叠分组、启停标签、诊断与目录、配置层顺序、空闲更新队列、横向拖动和简短原生介绍。任务保护按宿主报告的所有会话统一等待空闲；插件独立数据目录不做猜测，风险提示不代表完整安全审计。跨设备继续开发请参考[开发说明](DEVELOPMENT.md)。
+本版补齐完整插件管理、系统折叠分组、启停标签、诊断与目录、配置层顺序、空闲更新队列、横向拖动和简短原生介绍。任务保护按宿主报告的所有会话统一等待空闲；插件独立数据目录不做猜测，风险提示不代表完整安全审计。完整改动见[更新记录](CHANGELOG.md)。
 
 ## Install / 安装
 
