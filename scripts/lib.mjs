@@ -279,7 +279,7 @@ async function packageRelease(input, {fetchImpl, now}) {
     if (!Number.isFinite(time) || time < 0 || time > now) throw new Error('Invalid Git release publication date');
     const tarball = `https://codeload.github.com/${match[1]}/${match[2]}/tar.gz/${source.commit}`;
     const budget = {...archiveBudget(input, input.version, source.integrity), archiveRoot: `${match[2]}-${source.commit}`, ...(source.path === undefined ? {} : {packageSubdir: source.path})};
-    const bytes = await downloadArchive(tarball, {fetchImpl, timeoutMs: budget.timeoutMs});
+    const bytes = await downloadArchive(tarball, {fetchImpl, timeoutMs: budget.timeoutMs, maxBytes: budget.maxDownloadBytes});
     verifyIntegrity(bytes, source.integrity);
     return {version: input.version, time, budget, bytes, published: {dist: {tarball, integrity: source.integrity}, gitHead: source.commit}, source: {type: 'git', url: source.url, commit: source.commit, ...(source.path === undefined ? {} : {path: source.path})}};
   }
@@ -292,7 +292,7 @@ async function packageRelease(input, {fetchImpl, now}) {
   const time = Date.parse(metadata.time?.[version]);
   if (!Number.isFinite(time) || time < 0 || time > now) throw new Error('Missing or invalid publication date');
   const budget = archiveBudget(input, version, published.dist?.integrity);
-  const bytes = await download(published.dist?.tarball, { fetchImpl, timeoutMs: budget.timeoutMs });
+  const bytes = await download(published.dist?.tarball, { fetchImpl, timeoutMs: budget.timeoutMs, maxBytes: budget.maxDownloadBytes });
   verifyIntegrity(bytes, published.dist?.integrity);
   return {version, time, budget, bytes, published, metadataUrl, releases: releaseActivity(metadata, now), source: {type: 'npm', registry: REGISTRY}};
 }
@@ -352,7 +352,7 @@ export async function collectPackage(input, { fetchImpl = fetch, now = Date.now(
       ...(typeof published.gitHead === 'string' && /^[0-9a-f]{40}$/.test(published.gitHead) ? {sourceCommit: published.gitHead} : {}),
       ...(metadataUrl ? {metadataUrl} : {source}), tarball: published.dist.tarball, integrity: published.dist.integrity,
       patch, ...(clientEntries.length ? {clientEntries} : {}), filesChecked: files.size, display: display.evidence,
-      archive: {compressedBytes: bytes.length, unpackedBytes, decodedBytes, entries: entryCount, maxUnpackedBytes: budget.maxUnpackedBytes, downloadTimeoutMs: budget.timeoutMs, reviewedBudget: input.archiveReview !== undefined},
+      archive: {compressedBytes: bytes.length, unpackedBytes, decodedBytes, entries: entryCount, maxUnpackedBytes: budget.maxUnpackedBytes, downloadTimeoutMs: budget.timeoutMs, maxDownloadBytes: budget.maxDownloadBytes, reviewedBudget: input.archiveReview !== undefined},
       lifecycleScripts,
       ...(releases ? {releases} : {}),
       checks: [source.type === 'git' ? 'git-commit-pinned' : 'registry-identity', 'sha512-integrity', 'archive-manifest-identity', 'bundle-patch-present', ...(manifest.main ? ['main-file-present'] : []), ...(clientEntries.length ? ['client-entry-present'] : [])],

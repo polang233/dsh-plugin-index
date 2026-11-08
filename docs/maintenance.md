@@ -229,3 +229,7 @@ When writing descriptions:
 - When a name is in doubt, check the author's README, the package's locale files or its manifest.
 
 `pnpm build:copy` refreshes the existing index, display snapshot and bilingual pages offline. It retains package versions, validation timestamps, metrics, ranks and exposure history. GitHub Actions builds new entries that are absent from the checked snapshot. Structured reviews can be replayed with `node scripts/apply-copy-review.mjs docs/reviews/localization-2026-10-20.json`; already-applied edits are skipped, and conflicting copy requires another review.
+
+## Reviewed download budgets
+
+The default compressed download limit remains 64 MiB. An immutable release may set `archiveReview.maxDownloadBytes` up to 256 MiB, in addition to `maxUnpackedBytes` and `timeoutMs`. The entry must pin `version`, and the review must match that version and the archive SHA-512. Existing reviews without this field retain the default download limit. The override applies only to that archive; registry metadata and unrelated packages retain their normal limits.

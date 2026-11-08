@@ -14152,6 +14152,50 @@
         "zh": "每轮回答结束后显示可点击的后续建议，由当前模型或另选模型生成，点击卡片才发送。单独生成会读取该轮对话并消耗模型额度，卡片保存在浏览器本地。"
       },
       "category": "interface"
+    },
+    {
+      "name": "dsh-task-guard-badge",
+      "title": {
+        "en": "Task Guard Badge",
+        "zh": "Task Guard Badge（工具状态面板）"
+      },
+      "description": {
+        "en": "Show tool narrowing and activity with manual group and mode controls. Needs Minimal Router; routes currently lack authentication, so use only in a trusted local environment. Does not replace host permissions.",
+        "zh": "显示工具收窄状态和活动，支持手动选组、切换模式，需搭配 Minimal Router。接口目前无认证，仅建议在可信本机环境使用，不替代宿主权限。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-session-telecom",
+      "title": {
+        "en": "Session Telecom",
+        "zh": "Session Telecom（会话通话）"
+      },
+      "description": {
+        "en": "Read and message independent DSH conversations across workspaces on the same host, with optional tool-level wake-up. Requires host Connection authentication; messages can start a new turn in the destination session.",
+        "zh": "在同一宿主的不同项目、目录会话之间查看内容和收发消息，可选工具级唤醒。需宿主提供 Connection 认证；投递消息可能启动目标会话的新一轮执行。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-pets-multiworkers",
+      "version": "1.5.0",
+      "title": {
+        "en": "DSH Pets Multiworkers",
+        "zh": "DSH Pets Multiworkers（一池多宠）"
+      },
+      "description": {
+        "en": "Display a companion for each active conversation, with work-state animations, model colors and shared care. Download is about 184 MB. Native desktop companions require Windows DSH Desktop. Host routes use local Host/Origin or paired-device checks rather than Connection authentication; use in a trusted environment.",
+        "zh": "为每个活跃会话显示一只宠物，用动作和配色区分工作状态与模型，共享喂食、好感度和命名。下载约 184 MB，原生桌宠需 Windows DSH 桌面版；宿主接口采用本机 Host/Origin 或设备配对检查，仅建议在可信环境使用。"
+      },
+      "category": "appearance",
+      "archiveReview": {
+        "version": "1.5.0",
+        "integrity": "sha512-jdqpwmk0Kn5LD80aovaghu96yFFQhbNEE+ny3AzNqdCHcMB7gQN5GWSMlQAM0ohC0cPnskA0G/errHfwIl6zwQ==",
+        "maxDownloadBytes": 209715200,
+        "maxUnpackedBytes": 234881024,
+        "timeoutMs": 120000
+      }
     }
   ]
 }

@@ -278,6 +278,11 @@ test('large archive budgets require a pinned version and matching integrity', ()
   assert.throws(() => archiveBudget(input, '1.2.3', 'sha512-changed'), /integrity/);
   assert.throws(() => archiveBudget({ ...input, archiveReview: { ...review, maxUnpackedBytes: MAX_ARCHIVE_BYTES + 1 } }, '1.2.3', 'sha512-fixture'), /256 MiB/);
   assert.throws(() => archiveBudget({ ...input, archiveReview: { ...review, timeoutMs: 120001 } }, '1.2.3', 'sha512-fixture'), /120000/);
+  assert.equal(archiveBudget(input, '1.2.3', 'sha512-fixture').maxDownloadBytes, 64 * 1024 * 1024);
+  assert.equal(archiveBudget({ ...input, archiveReview: { ...review, maxDownloadBytes: MAX_ARCHIVE_BYTES } }, '1.2.3', 'sha512-fixture').maxDownloadBytes, MAX_ARCHIVE_BYTES);
+  for (const maxDownloadBytes of [0, -1, 1.5, Infinity, MAX_ARCHIVE_BYTES + 1]) {
+    assert.throws(() => archiveBudget({ ...input, archiveReview: { ...review, maxDownloadBytes } }, '1.2.3', 'sha512-fixture'), /Download budget/);
+  }
 });
 test('archive scanning enforces the reviewed byte budget and retains only metadata', async () => {
   const bytes = archive([['package/package.json', '{}'], ['package/content.bin', 'x'.repeat(2000)]]);
@@ -308,6 +313,7 @@ test('collectPackage applies and reports a reviewed archive budget', async () =>
   assert.equal(result.evidence.archive.downloadTimeoutMs, 60000);
   assert.equal(result.evidence.archive.maxUnpackedBytes, 1024 * 1024);
   assert.ok(result.evidence.archive.unpackedBytes > 0);
+  await assert.rejects(collectPackage({ ...input, archiveReview: { ...input.archiveReview, maxDownloadBytes: 1 } }, source), /Response exceeds/);
   await assert.rejects(collectPackage({ ...input, archiveReview: { ...input.archiveReview, maxUnpackedBytes: 1 } }, source), /limits/);
   const bad = { ...input, archiveReview: { ...input.archiveReview, integrity: 'sha512-changed' } };
   await assert.rejects(collectPackage(bad, { fetchImpl: async (url, options) => {
