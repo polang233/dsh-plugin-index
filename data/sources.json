@@ -13414,19 +13414,19 @@
       }
     },
     {
-      "name": "@local/dsh-music-player",
+      "name": "@dakelinya0001/dsh-music-player",
       "title": {
         "en": "Music Player",
         "zh": "音乐播放器"
       },
       "category": "interface",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": {
         "type": "git",
         "url": "https://github.com/daKeLinya0001/dsh-music-player",
-        "commit": "7d1d7a72304aae6aa614a8457589a977a023afc0",
-        "integrity": "sha512-RuLrDVrAmNH2O6AZX/YDntoDn0BljmHVED+wwY7EA4HQTUNwJScufJs9MGFnkOjV44Zt2LoWENKsCHgtNgnFyQ==",
-        "publishedAt": "2026-11-04T04:08:34.000Z"
+        "commit": "b52803f247866673024994a1ce568823e34798f6",
+        "integrity": "sha512-MZgdrT/P8U/hzpW9ljhdckeidQOJ8h5JMoI2jzQwBymIRXgizgAUhaWWoYPPXNFrS73ttz8yNg5vUp7J/bsAxA==",
+        "publishedAt": "2026-11-08T14:18:14Z"
       },
       "description": {
         "en": "Import and play local audio with a spectrum display, persistent library and configurable shortcuts. Audio stays in browser IndexedDB; decoding depends on the browser’s supported formats. Requires the DSH web UI; no DSH compatibility range is declared.",
@@ -14073,8 +14073,8 @@
         "zh": "dsh-token-bill（会话费用估算）"
       },
       "description": {
-        "en": "Estimate conversation costs by model and DeepSeek peak/off-peak hours, with token, cache and per-turn details beneath the composer and costs in the session list. Uses local usage records and configurable rates; estimates may differ from provider bills.",
-        "zh": "按模型及 DeepSeek 高峰、空闲时段估算对话费用，在输入框和会话列表显示 token、缓存及每轮明细。基于本地记录和配置费率，估算不等于服务商账单。"
+        "en": "Estimate conversation costs with reference rates for 16 vendors, long-context tiers and DeepSeek peak/off-peak pricing. The breakdown supports eight display currencies using public exchange-rate services. Estimates may differ from provider bills.",
+        "zh": "内置 16 家厂商参考费率，按长上下文阶梯及 DeepSeek 峰谷时段估算会话费用。明细可切换八种币种，汇率来自公开服务；估算以服务商实际账单为准。"
       },
       "category": "usage"
     },
@@ -14196,6 +14196,458 @@
         "maxUnpackedBytes": 234881024,
         "timeoutMs": 120000
       }
+    },
+    {
+      "name": "dsh-offpeak-guard",
+      "title": {
+        "en": "Offpeak Guard",
+        "zh": "Offpeak Guard（峰谷守卫）"
+      },
+      "description": {
+        "en": "Pause DeepSeek work during peak-price windows and resume or schedule it for off-peak hours. The settings route currently lacks authentication and can change exemptions and pause rules; use only in a trusted local environment. Requires Node >=22.5; automatic resume can start model work and incur charges.",
+        "zh": "按 DeepSeek 峰谷时段暂停、恢复或安排任务。设置接口目前无认证，可修改豁免和暂停规则，仅建议在可信本机环境使用。需 Node >=22.5；自动恢复可能启动模型任务并产生费用。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-prompt-coach",
+      "title": {
+        "en": "Prelude",
+        "zh": "Prelude 提示词助手"
+      },
+      "description": {
+        "en": "Prompt method cards, local insertions and rewrite previews. AI assistance uses your configured model and may incur API charges. Requires Node.js 24+ and DSH 0.2.1-rc.2–rc.5.",
+        "zh": "提供提示词方法卡、局部补句与改写对照。AI 辅助使用已配置模型，可能产生 API 费用；需 Node.js 24+、DSH 0.2.1-rc.2 至 rc.5。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-strata",
+      "title": {
+        "en": "DSH Strata",
+        "zh": "DSH Strata 会话地图"
+      },
+      "description": {
+        "en": "Adds a conversation minimap, message anchors and a prompt overview to the DSH web interface. Uses the current session export to load history; no DSH version range is declared.",
+        "zh": "为 DSH 网页界面添加会话缩略地图、消息锚点与提问总览，通过当前会话导出加载历史；未声明 DSH 版本范围。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@crosery/dsh-viewer",
+      "title": {
+        "en": "DSH Viewer",
+        "zh": "DSH Viewer 文件预览"
+      },
+      "description": {
+        "en": "Displays local images, audio, video, PDF, Office files and HTML in chat. Office preview uses the Host converter or separately installed LibreOffice; HTML scripts run in a sandbox. Requires a supported DSH version and Node.js ^22.19 or 24+.",
+        "zh": "在对话内预览本地图片、音视频、PDF、Office 文件与 HTML。Office 预览使用宿主转换器或另装 LibreOffice；HTML 脚本在沙箱中运行。需匹配声明范围的 DSH 与 Node.js ^22.19 或 24+。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-auto-collapse",
+      "title": {
+        "en": "dsh-auto-collapse",
+        "zh": "dsh-auto-collapse"
+      },
+      "description": {
+        "en": "Group thinking, tools and context into collapsible work segments. Uses DSH Web DOM conventions verified by the author on 0.1.2; newer layouts may differ.",
+        "zh": "将思考、工具和上下文合为可折叠工作段。依赖作者在 DSH Web 0.1.2 验证的 DOM 结构，新版布局可能有差异。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-timeline",
+      "title": {
+        "en": "dsh-timeline",
+        "zh": "dsh-timeline"
+      },
+      "description": {
+        "en": "Timeline navigation, starred folders, prompts, quick notes and conversation export for DSH Web. Data stays in browser storage; open untrusted CSV exports as text to avoid spreadsheet formulas.",
+        "zh": "为 DSH Web 提供时间轴、收藏文件夹、提示词、闪记与对话导出。数据保存在浏览器中；不可信 CSV 导出请按文本打开，避免表格公式执行。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-auto-maximize",
+      "title": {
+        "en": "dsh-auto-maximize",
+        "zh": "dsh-auto-maximize"
+      },
+      "description": {
+        "en": "Maximize the DSH desktop window at startup. macOS needs Accessibility permission; Linux needs wmctrl or xdotool. Writes a local diagnostic log by default.",
+        "zh": "启动时自动最大化 DSH 桌面窗口。macOS 需辅助功能权限，Linux 需 wmctrl 或 xdotool；默认写本地诊断日志。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@benrong/dsh-prompt-polish",
+      "title": {
+        "en": "Prompt Polish",
+        "zh": "Prompt Polish 提示词润色"
+      },
+      "description": {
+        "en": "Rewrite prompts and extract template variables with a selected DSH model. Preview, copy or apply the result to the draft; model calls can incur API fees. Requires DSH >=0.1.7-0 and Node >=18; history is saved in browser storage when enabled.",
+        "zh": "使用所选 DSH 模型润色提示词、提取模板变量，支持预览、复制和写回草稿。模型调用可能产生费用；需 DSH ≥0.1.7-0、Node ≥18，启用历史后保存在浏览器中。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@breey05/dsh-balance-widget",
+      "title": {
+        "en": "API Balance",
+        "zh": "API 余额"
+      },
+      "description": {
+        "en": "Show the selected provider balance and estimated spend in the composer. Requires DSH >=0.2.1-rc.2 <0.3.0 and configured credentials. Balance discovery probes the configured provider; observed balance changes are estimates rather than a bill.",
+        "zh": "在输入框显示当前供应商余额与估算消耗。需 DSH ≥0.2.1-rc.2 <0.3.0 并配置凭据；自动发现会探测已配置供应商的余额接口，余额变化仅作估算，以实际账单为准。"
+      },
+      "category": "usage"
+    },
+    {
+      "name": "dsh-block-ptc",
+      "title": {
+        "en": "dsh-block-ptc",
+        "zh": "黑板模式（Block PTC）"
+      },
+      "description": {
+        "en": "Adds a Block PTC agent preset that groups tool work into blocks and replaces selected context with model-written summaries. Requires DSH >=0.2.1-rc.2 and Node >=22; select the new preset explicitly. Summaries may lose details; original events remain in the session log.",
+        "zh": "新增 Block PTC 预设，按区块组织工具工作，用模型摘要替换选定上下文。需 DSH ≥0.2.1-rc.2、Node ≥22，使用时需选择新预设；摘要可能遗漏细节，原始事件仍保留在会话日志。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "@ash-qw/dsh-theme-prts",
+      "title": {
+        "en": "PRTS Theme",
+        "zh": "PRTS 主题"
+      },
+      "description": {
+        "en": "An unofficial Arknights PRTS theme with custom backgrounds, avatars and theme transfer. Personal non-commercial fan work; declares DSH 0.2.2-rc.1.",
+        "zh": "非官方明日方舟 PRTS 主题，支持背景、头像和主题导入导出。限个人非商业同人使用，声明适配 DSH 0.2.2-rc.1。"
+      },
+      "category": "appearance"
+    },
+    {
+      "name": "dsh-video-skin",
+      "title": {
+        "en": "Video Skin",
+        "zh": "视频皮肤"
+      },
+      "description": {
+        "en": "Looping video background and a skippable startup clip, with local media upload and opacity controls. Startup audio is enabled by default; dark-theme switching asks by default. Media and appearance routes lack Host authentication; use only on a trusted local host.",
+        "zh": "循环视频背景与可跳过的开机短片，支持本地上传和透明度调节。开机声音默认开启，切换深色主题默认先询问。 媒体和外观接口尚无宿主认证，仅用于受信本机。"
+      },
+      "category": "appearance"
+    },
+    {
+      "name": "@meng_long/dsh-mine-sweeper",
+      "title": {
+        "en": "Minesweeper",
+        "zh": "扫雷"
+      },
+      "description": {
+        "en": "A draggable, collapsible Minesweeper overlay with configurable board size. Game state stays in memory and resets when the page reloads.",
+        "zh": "可拖动、可折叠的扫雷浮层，支持调整棋盘与雷数；状态仅保存在内存，刷新后重置。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-nested-followups",
+      "title": {
+        "en": "Nested Follow-ups",
+        "zh": "嵌套追问"
+      },
+      "description": {
+        "en": "Branch recursively from an answer into read-only follow-ups, with a conversation tree. Requires an Agent-scoped tool guard; model calls use the configured provider.",
+        "zh": "从回答递归分出只读追问并查看会话树；要求宿主支持 Agent 级工具守卫，模型请求仍使用已配置供应商。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-unlag",
+      "title": {
+        "en": "Unlag",
+        "zh": "解除卡顿"
+      },
+      "description": {
+        "en": "Reload installed plugins and refresh the interface using Host internals. Management routes lack Host authentication; use only on a trusted local host.",
+        "zh": "热重载已安装插件并刷新界面，依赖 Host 内部接口。管理路由缺少宿主身份认证，仅用于受信本机。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-claude-slides",
+      "title": {
+        "en": "Claude Slides",
+        "zh": "Claude 幻灯片"
+      },
+      "description": {
+        "en": "Create and edit local slide decks. Requires dsh-claude-artifacts; online fonts need network access.",
+        "zh": "制作、编辑本地幻灯片；需 dsh-claude-artifacts，在线字体需联网。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-claude-dashboard",
+      "title": {
+        "en": "Claude Dashboard",
+        "zh": "Claude 数据看板"
+      },
+      "description": {
+        "en": "Build local data dashboards with source inspection. Requires dsh-claude-artifacts; supply data and any external service access.",
+        "zh": "制作可查看数据来源的本地看板；需 dsh-claude-artifacts，数据及外部服务访问需自行提供。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-claude-design",
+      "title": {
+        "en": "Claude Design",
+        "zh": "Claude 设计稿"
+      },
+      "description": {
+        "en": "Create and edit local design canvases. Requires dsh-claude-artifacts; online fonts need network access.",
+        "zh": "制作、编辑本地设计画布；需 dsh-claude-artifacts，在线字体需联网。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-claude-design-system",
+      "title": {
+        "en": "Claude Design System",
+        "zh": "Claude 设计系统"
+      },
+      "description": {
+        "en": "Create design tokens, components and brand guides. Requires dsh-claude-artifacts; online fonts need network access.",
+        "zh": "制作设计令牌、组件与品牌手册；需 dsh-claude-artifacts，在线字体需联网。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-claude-motion",
+      "title": {
+        "en": "Claude Motion",
+        "zh": "Claude 动画"
+      },
+      "description": {
+        "en": "Create local animations. Requires dsh-claude-artifacts; voice synthesis needs a configured provider and may incur charges.",
+        "zh": "制作本地动画；需 dsh-claude-artifacts，配音需自行配置语音服务，可能收费。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@next-ai-drawio/dsh",
+      "title": {
+        "en": "Next AI Draw.io",
+        "zh": "Next AI Draw.io"
+      },
+      "description": {
+        "en": "Draw and edit draw.io diagrams in the sidebar. Requires Node.js 18+; downloads and starts the external MCP server through npx on first use.",
+        "zh": "在侧栏绘制和编辑 draw.io 图。需 Node.js 18+，首次使用会通过 npx 下载并启动外部 MCP 服务。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@fishdivinity/dsh-local-search",
+      "title": {
+        "en": "Local Search",
+        "zh": "本地搜索"
+      },
+      "description": {
+        "en": "Read-only filename and document-text search using Everything/es.exe and Anytxt. Requires these local engines; searches may include files outside the workspace. Diagnostic routes do not verify host identity; use only on a trusted local machine.",
+        "zh": "通过 Everything/es.exe 和 Anytxt 只读搜索本机文件名与文档正文；需另行安装并运行对应引擎，搜索范围可包含工作区外文件。 诊断路由未校验宿主身份，仅限可信本机使用。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@chengzhao-dev/dsh-quarto-book",
+      "title": {
+        "en": "Quarto Book Writing & Theme",
+        "zh": "Quarto 图书写作与主题"
+      },
+      "description": {
+        "en": "Write, check, and publish a Chinese Quarto Book: nine-step chapter writing, structure/link/figure checks, a consistent theme, and render acceptance. Requires Quarto CLI and Python 3; render only trusted book projects.",
+        "zh": "把一份 Quarto Book 写成可读、可查、可发布的中文技术书：九步章节写作、结构/链接/图表检查、统一主题与渲染验收。 需 Quarto CLI 与 Python 3，仅渲染可信图书项目。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-hacker-news",
+      "title": {
+        "en": "Hacker News",
+        "zh": "Hacker News"
+      },
+      "description": {
+        "en": "Read Hacker News feeds, discussions, search results and user profiles through public APIs. Declared peers target DSH 0.1 prereleases.",
+        "zh": "通过公开 API 读取 Hacker News 榜单、讨论、搜索结果和用户资料；依赖声明面向 DSH 0.1 预发布系列。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-tool-todo-plus",
+      "title": {
+        "en": "Todo Plus",
+        "zh": "增强任务清单"
+      },
+      "description": {
+        "en": "Task priorities, full checklists and a draggable floating task panel. Coexists as todo_write_plus; requires Node.js 24+ and the declared DSH 0.2 prerelease range.",
+        "zh": "提供优先级、完整清单与可拖动浮动任务面板，默认以 todo_write_plus 共存；需 Node.js 24+ 和声明的 DSH 0.2 预发布兼容范围。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@aichixiaojuzi/dsh-model-quick-switch",
+      "title": {
+        "en": "Quick Model Switch",
+        "zh": "模型快捷切换"
+      },
+      "description": {
+        "en": "Provider-first model picker with sorting, aliases and favorites; preferences stay in this browser.",
+        "zh": "供应商优先的模型选择面板，支持排序、别名和收藏，偏好保存在当前浏览器。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@dsh-ai-providers/dashscope",
+      "title": {
+        "en": "DashScope",
+        "zh": "阿里云 DashScope"
+      },
+      "description": {
+        "en": "Qwen chat, embeddings, reranking, speech and images through DashScope. Requires the AI Providers runtime and a regional API key; usage may incur fees.",
+        "zh": "通过 DashScope 提供千问对话、嵌入、重排、语音和图像能力。需启用 AI Providers runtime 并配置对应地域 API 密钥，调用可能收费。"
+      },
+      "category": "providers"
+    },
+    {
+      "name": "@99galaxy/dsh-turn-notify",
+      "title": {
+        "en": "Turn Notify",
+        "zh": "回合结束通知"
+      },
+      "description": {
+        "en": "Windows notifications when a session turn ends, with optional foreground suppression and subagent filtering. Requires notification permission.",
+        "zh": "会话回合结束时发送 Windows 通知，可设前台免打扰和子代理过滤，需允许系统通知。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@bushizhanghan/dsh-compaction-audit",
+      "title": {
+        "en": "Compaction Audit",
+        "zh": "上下文压缩审计"
+      },
+      "description": {
+        "en": "Inspect local session logs for lost constraints, hallucinated summaries and pruning issues. Requires zstd; results are deterministic heuristics.",
+        "zh": "读取本机会话日志，检查约束遗漏、摘要幻觉与裁剪问题。需安装 zstd，结果为确定性规则估算。"
+      },
+      "category": "usage"
+    },
+    {
+      "name": "@bushizhanghan/dsh-context-budget",
+      "title": {
+        "en": "Context Budget",
+        "zh": "上下文预算审计"
+      },
+      "description": {
+        "en": "Analyze local session context costs, repeated prompts, skill catalogs and tool schemas. Requires zstd; token counts are estimates.",
+        "zh": "分析本机会话的上下文开销、重复提示、技能目录及工具 schema。需安装 zstd，token 数为估算。"
+      },
+      "category": "usage"
+    },
+    {
+      "name": "@kira905/dsh-session-title-live",
+      "title": {
+        "en": "Session Title Live",
+        "zh": "实时会话标题"
+      },
+      "description": {
+        "en": "Refresh session titles from recent user messages through the selected model, with byte budgets and status prefixes. Extra model calls may incur fees.",
+        "zh": "通过所选模型按近期用户消息更新会话标题，支持字节预算与状态前缀，额外模型调用可能收费。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@bitqyh/dsh-codex-bridge",
+      "title": {
+        "en": "Codex Bridge",
+        "zh": "Codex 聊天接续桥"
+      },
+      "description": {
+        "en": "Preview recovery context from local Codex chats and insert it into the DSH draft for manual sending. Requires Python 3; compressed logs also need zstd.",
+        "zh": "预览本机 Codex 聊天的恢复上下文并插入 DSH 草稿，由用户自行发送。需 Python 3，压缩日志还需 zstd。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "@bushizhanghan/dsh-page-monitor",
+      "title": {
+        "en": "Page Monitor",
+        "zh": "网页监控哨兵"
+      },
+      "description": {
+        "en": "Monitor web-page changes and optionally notify a configured webhook. The optional Lexmount extractor receives watched URLs and requires its own account.",
+        "zh": "监控网页变化，可选推送至已配置 webhook。可选 Lexmount 抽取服务会接收被监控 URL，需另配账户。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-ntr",
+      "title": {
+        "en": "DSH NTR",
+        "zh": "DSH NTR"
+      },
+      "description": {
+        "en": "Connect local ACP agents to DSH. Requires an ACP-capable CLI; agents retain their own permissions and service costs. Optional automatic approvals and missing-CLI installation require explicit configuration.",
+        "zh": "在 DSH 中接入本机 ACP Agent。需支持 ACP 的命令行工具，权限与服务费用由所接入的 Agent 决定。 可选自动授权与缺命令时自动安装需自行配置。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "@aldveylor/dsh-intellisense",
+      "title": {
+        "en": "Intellisense",
+        "zh": "Intellisense"
+      },
+      "description": {
+        "en": "Tool namespaces, on-demand hints and isolated JavaScript/TypeScript execution. Requires a Node runtime that passes its permission sandbox probe. Installation selects intellisense-ptc as the default preset.",
+        "zh": "工具命名空间、按需提示与隔离的 JavaScript/TypeScript 执行。需 Node 运行时通过其权限沙盒探针。 安装后会将默认预设切换为 intellisense-ptc。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "moyuban",
+      "title": {
+        "en": "Moyuban",
+        "zh": "摸鱼办"
+      },
+      "description": {
+        "en": "Read Xiaohongshu recommendations, Baidu Tieba threads and NGA forums in the workspace, with quoted replies to NGA. Declares DSH >=0.2.2-rc.1; author tested Windows 0.2.2-rc.1. Xiaohongshu needs Chrome or Edge on the host; login and site restrictions apply. Clicking the NGA reply button publishes to the forum.",
+        "zh": "在工作区阅读小红书推荐、百度贴吧和 NGA，并引用楼层回帖。声明兼容 DSH >=0.2.2-rc.1，作者实测 Windows 0.2.2-rc.1。小红书需宿主安装 Chrome 或 Edge，登录及访问受站点限制；点击 NGA 回帖按钮会公开发布。"
+      },
+      "category": "integrations",
+      "version": "0.14.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/CELLOPOI/moyuban",
+        "commit": "1b4f7ac6721abe64154c5c71037a5e96fb9ae6c0",
+        "integrity": "sha512-cbMRQjb4dh8ADEw/cATUa6wHhBz10dgee0bNliHkchQk+le8uLP6C0yzdkigUmn2/BEoyvTmmVtqCMwjvezfeA==",
+        "publishedAt": "2026-11-08T12:59:14Z"
+      }
+    },
+    {
+      "name": "@polunzh/dsh-doc",
+      "title": {
+        "en": "Print Studio · dsh-doc",
+        "zh": "打印工坊 · dsh-doc"
+      },
+      "description": {
+        "en": "Edit Markdown or rich text as A4 handouts, render PDFs and print through existing CUPS queues. Requires macOS/Linux, local Chrome/Chromium and CUPS; Poppler enables thumbnails. Includes the print_handout Agent tool. Author-tested on DSH 0.2.1-rc.5. Draft HTML is restored without sanitization, and print paths are not confined to the generated-file directory. Use only trusted documents.",
+        "zh": "将 Markdown 或富文本排成 A4 讲义、生成 PDF，并通过已有 CUPS 队列打印。需 macOS/Linux、本机 Chrome/Chromium 和 CUPS，缩略图另需 Poppler；提供 print_handout 智能体工具。作者验证 DSH 0.2.1-rc.5。 草稿 HTML 恢复未清洗，打印文件范围未限定在生成目录；仅处理可信文稿。"
+      },
+      "category": "tools"
     }
   ]
 }
