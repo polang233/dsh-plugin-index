@@ -3932,6 +3932,176 @@
       "reviewedAt": "2026-11-07T18:22:08.158Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-workspace-migrate",
+      "version": "0.5.3",
+      "integrity": "sha512-H0jfHBzqgGs3g7v01w/eNGAVefVb+4vHMn9Sk7+7O8ekNn0fUkva0lRXlOzzoFo0xVQsLsegDCKyBsHspKZXUg==",
+      "repository": "https://github.com/lij0000-arch/dsh-workspace-migrate",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.218Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-daughter",
+      "version": "0.6.5",
+      "integrity": "sha512-m/n578xx2ef0M32z/BfdSSOmJYT9S6JZt+kC4ZRH28Xj9XdxJ77TpAyVv2ZiSgLfh6kufW46E1xD6rmk7p7vGA==",
+      "repository": "https://github.com/han0han0le0ni/dsh-daughter",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.220Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-craft-anything",
+      "version": "0.4.0",
+      "integrity": "sha512-GPW0JHcy3i372Nv+RyW1W60I2ANYdVKSlnbpwcqyNKTVoMzsgGZNf99Ry4Z+GvTy9i7YsQrEmGUVAxhWV8uyiQ==",
+      "repository": "https://github.com/Fanqi89/dsh-craft-anything",
+      "source": {
+        "type": "git",
+        "commit": "e5abcb292a60376f014b539a04f52bb5aae1873b"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.220Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-minimal-router",
+      "version": "2.0.0",
+      "integrity": "sha512-0iVq2ZKnPhFYoAQZ830EsMOtX2vT1Qpg28Fgl0+10JOhimFh4S+5KGob30C6Yu0fc2bqFSAJ+87F0GbQMfBJHg==",
+      "repository": "https://github.com/qwq1223211/dsh-minimal-router",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.220Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-token-war",
+      "version": "0.4.1",
+      "integrity": "sha512-7vlPPTqkzrXh2jcUTKA9uIUZWmSh7zv9zGSMqky2GH88O8mbElxPX5z7PJMVfYONSD3VHrrzW5MrjH4mV4c+UQ==",
+      "repository": "https://github.com/JJJACKsong/dsh-plugin-token-war",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.220Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-token-bill",
+      "version": "2.0.2",
+      "integrity": "sha512-MwAz5eZw5VZcv2faTM0eDCS0qbtn52uk9+T99xjzmwS9vyyaKqDIjiR19oI6W8zUvxNyobZC8UhV5l9IG7qaqA==",
+      "repository": "https://github.com/leecisen/dsh-token-bill",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.221Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-pomodoro",
+      "version": "1.0.1",
+      "integrity": "sha512-Yrsymi9YnXYc+P9TwblJTCXENqprkhZscvJUYyE+r0MkM0Ts4lYmyMPX6c44Eymmxv5cgISUe0ki5x4kllGe/w==",
+      "repository": "https://github.com/tomhan00/dsh-pomodoro",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.221Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@taxueseek/dsh-lexicon",
+      "version": "0.2.0",
+      "integrity": "sha512-eidOudT0YQscDGol1AOJQA+yS81FX2O5EHhCEW5tveczFhLpEtx6eddmjU8xwbsNa36CpE6JhkwXmAG+OUg98w==",
+      "repository": "https://github.com/taxueseek/dsh-lexicon",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.221Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-markdown-editor-typora",
+      "version": "1.4.0",
+      "integrity": "sha512-GIncH8MhT3P5nzfLvu5YVfQvbriIrrBZOEssSrxNKhh73tEGL41icSopjDb0eUhQKkG+p7Xn1x1W+JDRKCa1dA==",
+      "repository": "https://github.com/ltmroberthk915/markpilot",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.221Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-whale-icon",
+      "version": "1.2.0",
+      "integrity": "sha512-8/PeX7+QNOd/kM1ZMA7C6zhV/js4QHZtoabUCaCmhfTUZvTdE4oCBzOyQoIEhzUYRNUltjEeXP7CHvay370y4w==",
+      "repository": "https://github.com/feiniao1933/dsh-whale-icon",
+      "source": {
+        "type": "git",
+        "commit": "198230d57b0424dd8dfadcbee6adc1325d050e9f"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.222Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-lean-context",
+      "version": "0.1.2",
+      "integrity": "sha512-qQPkYjJOMO9+6eI+X0cv18nOzgrqTBUfJv5rZvvbhoc2uQzluNJmlS+KYvEU7U6nNu9FjDc3MQ5uXPu/zOEyEw==",
+      "repository": "https://github.com/LizzzMax/dsh-tool-index",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.222Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-prompt-craft",
+      "version": "1.0.0",
+      "integrity": "sha512-0QzP+AxR/HACmJ5n8+yduiG5PCgt8gZnsvvxYS3jzBF2CsUCMvcaPVb/Ze6+VVFWU7zjgRLRTK+6wpWjnid+pA==",
+      "repository": "https://github.com/scnu2024/dsh-prompt-craft",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.222Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-codex-style-computer-use",
+      "version": "2.2.8",
+      "integrity": "sha512-qg+LdMulSQPO+8tpZNy50/nJsH62vKTFINjkU6wHp24QTVOQrZajn25UNC2x4ird3kMxqLQlBpzf5ViBGWplTg==",
+      "repository": "https://github.com/ltmroberthk915/dsh-computer-use",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-08T12:44:53.222Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-nextsteps",
+      "version": "1.4.8",
+      "integrity": "sha512-Bl0fjEA384OWRUIWLYLTBSjmUcZM4NYObovxVzDXEGhkXBEB/0WHAASxpj2IW1orgAkP5Se1Z36U15KRRhrV9Q==",
+      "repository": "https://github.com/klaus-2/dsh-nextsteps",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-08T12:50:32.496Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

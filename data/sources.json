@@ -12707,25 +12707,16 @@
       "category": "tools"
     },
     {
-      "name": "dsh-markdown-typora",
+      "name": "dsh-markdown-editor-typora",
       "title": {
-        "en": "Markdown Editor",
-        "zh": "Markdown 编辑器"
+        "en": "MarkPilot · Markdown × AI workspace",
+        "zh": "MarkPilot · Markdown × AI 工作台"
       },
       "description": {
-        "en": "Edit Markdown in the DSH right sidebar with live formulas, table cells, offline Mermaid and KaTeX, and selection-to-chat insertion. Saves use version checks. Requires DSH >=0.2.0-rc.2 and Node >=20; installed from a subdirectory of the MarkPilot repository.",
-        "zh": "在 DSH 右侧栏编辑 Markdown，支持公式即时编辑、表格单元格、离线 Mermaid 和 KaTeX，并可将选区插入对话。保存带版本校验。需要 DSH >=0.2.0-rc.2 和 Node >=20，从 MarkPilot 仓库子目录安装。"
+        "en": "Edit Markdown beside your files and DSH conversation, send selections to chat and reference notes with @mp. Includes live formulas and tables, offline Mermaid, guarded saves and draft recovery. Renamed from dsh-markdown-typora; requires Node >=20 and host Connection authentication.",
+        "zh": "将 Markdown、文件树和 DSH 对话并排，支持选区入对话、@mp 引用、公式表格即时编辑、离线 Mermaid、版本守卫保存及草稿恢复。原包名为 dsh-markdown-typora；需 Node >=20 和提供 Connection 认证的宿主。"
       },
-      "category": "interface",
-      "version": "0.3.4",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/ltmroberthk915/markpilot",
-        "commit": "f149e8e9429a5fa6a5e809f2e5ac8e2521a79904",
-        "integrity": "sha512-q728u5ORwk/o27FeDSFDKvdl48C1m1IAcp2btrXscPXQlxGHk/6BPF+0oVsHQPvBIgrdYz7QzaKqblV+O4XfvA==",
-        "publishedAt": "2026-10-31T04:55:08.000Z",
-        "path": "dsh-markdown-typora"
-      }
+      "category": "interface"
     },
     {
       "name": "dsh-ntfy-notifier",
@@ -13993,15 +13984,7 @@
         "en": "Preview a rewritten draft with the current or a chosen model, optionally using recent conversation context. Uses model tokens; choose a result to apply it, then send it yourself.",
         "zh": "用当前或指定模型打磨草稿，可参考近期对话，预览后点「用这版」才写回输入框。会消耗模型额度，最终发送由你操作。"
       },
-      "category": "interface",
-      "version": "1.0.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/scnu2024/dsh-prompt-craft",
-        "commit": "43671d3aa6dc5f40f44e24985f6441e00640242c",
-        "integrity": "sha512-dRGUhHljTWKHp5vIURCzRpLxqEEAm2tmdo3Vcrf70TU/V1hp7/ehHmPR1MkbPS08MnEVV4l3wnPfe9ZDVi2M4w==",
-        "publishedAt": "2026-11-07T15:45:27Z"
-      }
+      "category": "interface"
     },
     {
       "name": "dsh-blender-plugin",
@@ -14014,6 +13997,161 @@
         "zh": "通过 Python 操控 Blender 场景、建模和渲染。已测试 Blender 4.2 LTS，图形模式需安装配套 addon；本机执行桥接目前无认证。"
       },
       "category": "tools"
+    },
+    {
+      "name": "dsh-workspace-migrate",
+      "title": {
+        "en": "Workspace Migrate",
+        "zh": "工作区迁移"
+      },
+      "description": {
+        "en": "Move DSH workspaces, conversations and selected project files between computers, with import previews and rollback of items created during this run. Migration bundles can contain private project data; keep a backup.",
+        "zh": "将 DSH 工作区、对话和选定项目文件迁到另一台电脑，支持导入预览及回滚本次新建的项目。迁移包可能含私密资料，操作前请备份。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-daughter",
+      "title": {
+        "en": "dsh-daughter",
+        "zh": "dsh-daughter"
+      },
+      "description": {
+        "en": "A companion with evolving personality, local memory and optional VPet integration. Memory is shared across windows, so use a separate profile for work; Windows desktop observation and input need a separately configured connector and are disabled by default.",
+        "zh": "带人格演变、本地记忆和可选 VPet 联动的陪伴插件。记忆跨窗口共享，建议与正式工作隔离使用；Windows 桌面观察和输入需另配连接器，默认关闭。"
+      },
+      "category": "memory"
+    },
+    {
+      "name": "dsh-craft-anything",
+      "title": {
+        "en": "Craft Anything",
+        "zh": "Craft Anything"
+      },
+      "description": {
+        "en": "Connect the local Craft Anything CLI to inspect websites, apps and games and assist reconstruction. Includes an authenticated management panel and dependency installers; prepare the CLI and engines you need. Native tools, downloaded dependencies and coding-agent API usage have separate requirements.",
+        "zh": "接入本机 Craft Anything CLI，检查网站、应用与游戏并辅助重建，提供管理面板和依赖安装工具。需准备 CLI 及所用引擎，部分工具涉及原生程序、依赖下载或编码智能体的 API 费用。"
+      },
+      "category": "tools",
+      "version": "0.4.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Fanqi89/dsh-craft-anything",
+        "commit": "e5abcb292a60376f014b539a04f52bb5aae1873b",
+        "integrity": "sha512-GPW0JHcy3i372Nv+RyW1W60I2ANYdVKSlnbpwcqyNKTVoMzsgGZNf99Ry4Z+GvTy9i7YsQrEmGUVAxhWV8uyiQ==",
+        "publishedAt": "2026-11-08T07:38:36Z"
+      }
+    },
+    {
+      "name": "dsh-minimal-router",
+      "title": {
+        "en": "Minimal Router",
+        "zh": "Minimal Router（极简路由器）"
+      },
+      "description": {
+        "en": "Route and narrow the visible tool set by task stage, track token overhead and restore tools when a task ends. Includes the former Task Guard tools. Changes tool visibility and routing prompts; it does not replace host permissions or guarantee token savings.",
+        "zh": "按任务阶段切换和收窄工具表，记录 token 开销，任务结束后恢复；已合入原 Task Guard 的任务工具。会改变工具可见性和路由提示词，不替代宿主权限，节省效果随会话而异。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-plugin-token-war",
+      "title": {
+        "en": "Token War",
+        "zh": "Token War"
+      },
+      "description": {
+        "en": "A local idle game in the DSH sidebar: earn game tokens, recruit models and progress through battles and vendor events. Saves in browser local storage; uses no model API.",
+        "zh": "DSH 侧栏里的挂机经营小游戏，通过任务获取游戏 Token、招募模型并推进军团关卡和厂商事件。存档保存在浏览器本地，不调用模型 API。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-token-bill",
+      "title": {
+        "en": "dsh-token-bill",
+        "zh": "dsh-token-bill（会话费用估算）"
+      },
+      "description": {
+        "en": "Estimate conversation costs by model and DeepSeek peak/off-peak hours, with token, cache and per-turn details beneath the composer and costs in the session list. Uses local usage records and configurable rates; estimates may differ from provider bills.",
+        "zh": "按模型及 DeepSeek 高峰、空闲时段估算对话费用，在输入框和会话列表显示 token、缓存及每轮明细。基于本地记录和配置费率，估算不等于服务商账单。"
+      },
+      "category": "usage"
+    },
+    {
+      "name": "dsh-plugin-pomodoro",
+      "title": {
+        "en": "Pomodoro",
+        "zh": "番茄钟"
+      },
+      "description": {
+        "en": "A 25/5/15-minute focus timer beneath the composer, with automatic breaks, a completion sound and browser-local saved state.",
+        "zh": "在输入框下方显示 25/5/15 分钟番茄钟，自动切换专注与休息阶段，带提示音并在浏览器本地保存状态。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@taxueseek/dsh-lexicon",
+      "title": {
+        "en": "dsh-lexicon",
+        "zh": "dsh-lexicon（输入法词库管家）"
+      },
+      "description": {
+        "en": "Manage Doubao and WeType word lists with detection, TSV exports, backups, terminology search and staged imports. Requires python3 on PATH; platform-specific input-method paths apply. Applying changes to the live input method remains a manual step, and optional terminology search uses the network.",
+        "zh": "管理豆包和微信输入法词库，支持检测、TSV 导出、备份、术语搜索及暂存导入。需 PATH 中有 python3，输入法路径随平台而异；正式应用到输入法仍需手动操作，可选术语搜索会联网。"
+      },
+      "category": "tools",
+      "version": "0.2.0",
+      "repositoryReview": {
+        "url": "https://github.com/taxueseek/dsh-lexicon",
+        "version": "0.2.0",
+        "commit": "a0450516556263bca5ea490421e02f08402f669c",
+        "integrity": "sha512-eidOudT0YQscDGol1AOJQA+yS81FX2O5EHhCEW5tveczFhLpEtx6eddmjU8xwbsNa36CpE6JhkwXmAG+OUg98w=="
+      }
+    },
+    {
+      "name": "dsh-whale-icon",
+      "title": {
+        "en": "dsh-whale-icon",
+        "zh": "dsh-whale-icon（鲸鱼发送按钮）"
+      },
+      "description": {
+        "en": "Replace the send/stop button with an animated DeepSeek whale that follows the running state. Supports dark themes and reduced motion; tested on macOS with DSH 0.2.2-rc.1.",
+        "zh": "将发送和停止按钮换成随运行状态游动的 DeepSeek 鲸鱼，支持深色主题及减少动态效果。作者实测 macOS、DSH 0.2.2-rc.1。"
+      },
+      "category": "appearance",
+      "version": "1.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/feiniao1933/dsh-whale-icon",
+        "commit": "198230d57b0424dd8dfadcbee6adc1325d050e9f",
+        "integrity": "sha512-8/PeX7+QNOd/kM1ZMA7C6zhV/js4QHZtoabUCaCmhfTUZvTdE4oCBzOyQoIEhzUYRNUltjEeXP7CHvay370y4w==",
+        "publishedAt": "2026-11-08T07:01:10Z"
+      }
+    },
+    {
+      "name": "dsh-lean-context",
+      "title": {
+        "en": "DSH Lean Context",
+        "zh": "DSH Lean Context"
+      },
+      "description": {
+        "en": "Build a local tool index, preselect one clear match and discover deferred tools on demand. Calls keep the active DSH step tool set and host execution path; declares DSH 0.2.2-rc.1 compatibility.",
+        "zh": "为工具建立本地索引，明确命中时预选工具，其余按需搜索调用。调用保留当前 DSH 步骤的工具集与宿主执行流程，声明兼容 DSH 0.2.2-rc.1。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-nextsteps",
+      "title": {
+        "en": "Nextsteps",
+        "zh": "Nextsteps（后续建议）"
+      },
+      "description": {
+        "en": "Show clickable follow-up prompts after each completed turn. Suggestions come from the current model or a separately selected model and are sent when you click a card. Optional separate generation reads that turn and consumes model quota; cards are saved in browser local storage.",
+        "zh": "每轮回答结束后显示可点击的后续建议，由当前模型或另选模型生成，点击卡片才发送。单独生成会读取该轮对话并消耗模型额度，卡片保存在浏览器本地。"
+      },
+      "category": "interface"
     }
   ]
 }
