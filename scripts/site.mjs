@@ -67,6 +67,7 @@ export const COPY = {
     ghLabel: 'GitHub: star the project',
     altSetup: 'Or install the plugin, one step:', altSetupNote: 'It switches on Custom plugin markets and adds this index for you, plus an Open Market tab on the Plugins page. Restart DSH afterwards.', copyCommand: 'Copy', copiedShort: 'Copied',
     faqTitle: 'Questions', faq: count => [
+      ['What is the DSH plugin market?', `Open Plugin Market (dshopen.org) is an open, community-run DSH plugin market: a free plugin index for DeepSeek Harness that anyone can submit to. It lists ${count} plugins with descriptions, versions, download counts and maintainer reviews, rebuilds every six hours and works inside DSH's Discover tab. It is an independent project, not affiliated with DeepSeek.`],
       ['Where can I find DSH plugins?', `DeepSeek Harness (DSH) can browse any plugin index from its Discover tab. Open Plugin Market lists ${count} community plugins: add https://dshopen.org/index.json as an index source to browse, search and install them inside DSH, or browse them here by category, growth and release date.`],
       ['How do I install a DSH plugin?', `Option 1: switch on Custom plugin markets under Plugins → Experimental plugins, go to Discover → Add index source, paste the index URL, then search for the plugin in Discover and install it. Option 2: run ${PLUGIN_COMMAND}, which does all of that for you and adds an Open Market tab to the Plugins page.`],
       ['How are the picks ranked?', 'The default order changes every six hours and leads with plugins that are growing fast and shipping often, with verification, downloads, stars and likes as supporting signals. No author can flood the list, so new projects get a turn on the first screen.'],
@@ -75,7 +76,7 @@ export const COPY = {
     ],
     badgeTitle: 'README badge', badgeText: 'Author of this plugin? Put this badge in your README. It shows likes and links here.', copyBadge: 'Copy Markdown',
     skip: 'Skip to content', plugins: 'Plugins', docs: 'Docs', statsNav: 'Stats', language: 'Language', nav: 'Main navigation', home: 'Home',
-    headline: 'Everything can be a plugin.<br><em>Find them here.</em>',
+    headline: 'Everything can be a plugin.<br><em>Find them here.</em>', headlineKicker: 'DSH plugin market · Open Plugin Market', logoAlt: 'Open Plugin Market whale maid logo',
     eyebrow: 'The open DSH plugin market · plugin index · daily picks', intro: 'A plugin index with daily picks for DeepSeek Harness. Since the October 15 update DSH reads plugin markets, so copying the address below into Discover is all it takes to browse and install hundreds of community plugins.',
     address: 'Index URL', copy: 'Copy URL', copyTitle: 'Click to copy',
     copied: 'Copied', usage: '{readers} people using it today', usageNote: 'People whose DSH loaded this index today (UTC date), counted once per IP and user agent; neither is stored.', copySuccess: 'URL copied. Open DSH and add it as an index source.', details: 'Details', copyOpen: 'Copy name & open DSH', nameCopied: 'Copied, opening…', dshOpened: 'Opened, paste it', dshMissed: 'Copied, open DSH', getFailure: 'Name selected, copy it', getHint: 'Paste the name into DSH Discover search to install.', pluginName: 'Name', copyFailure: 'The address is selected. Press Ctrl+C or ⌘C, or use the selection menu to copy it.',
@@ -129,6 +130,7 @@ export const COPY = {
     ghLabel: 'GitHub：给项目点个 Star',
     altSetup: '或者安装插件，一步完成：', altSetupNote: `自动打开「${ui('自定义插件市场')}」并加入本索引，还会在「${ui('插件')}」页多一个「开放市场」标签，重启 DSH 后生效。`, copyCommand: '复制', copiedShort: '已复制',
     faqTitle: '常见问题', faq: count => [
+      ['什么是 DSH 开放插件市场？', `开放插件市场（dshopen.org）是社区维护的 DSH 插件市场，也就是 DeepSeek Harness 的开放插件索引：免费使用，任何人都可以提交插件。目前收录 ${count} 个插件，附中英文简介、版本、下载量和维护者审查记录，每 6 小时更新一次，可以直接在 DSH 的「${ui('发现')}」页里使用。本站是独立的社区项目，与 DeepSeek 官方无关。`],
       ['DSH 插件在哪里找？', `DeepSeek Harness（DSH）的「${ui('发现')}」页可以添加插件索引源。开放插件市场收录了 ${count} 个社区插件，把 https://dshopen.org/index.json 添加为索引源后，就能在 DSH 里直接浏览、搜索和安装；也可以在本站按分类、增长和更新时间浏览。`],
       ['DSH 插件怎么安装？', `方法一：在「${ui('插件 → 实验性插件')}」中打开「${ui('自定义插件市场')}」，再到「${ui('发现 → 添加索引源')}」粘贴索引地址，然后在「${ui('发现')}」里搜索插件名并安装。方法二：运行 ${PLUGIN_COMMAND}，它会自动完成上面的设置，并在「${ui('插件')}」页加一个「开放市场」标签。`],
       ['插件推荐是怎么排的？', '默认推荐每 6 小时轮换，以最近增长快、更新勤的插件为主，同时参考验证、下载量、star 和点赞。同一作者不会霸榜，新项目和小开发者的作品也有机会上首屏。'],
@@ -137,7 +139,7 @@ export const COPY = {
     ],
     badgeTitle: 'README 徽章', badgeText: '你是这个插件的作者？把徽章放进 README，显示点赞数，点击直达本页。', copyBadge: '复制 Markdown',
     skip: '跳到正文', plugins: '插件目录', docs: '文档', statsNav: '统计', language: '语言', nav: '主导航', home: '首页',
-    headline: '万物皆可插件，<br><em>插件来这里找。</em>',
+    headline: '万物皆可插件，<br><em>插件来这里找。</em>', headlineKicker: 'DSH 插件市场 · 开放插件市场', logoAlt: '开放插件市场鲸鱼娘 Logo',
     eyebrow: 'DSH 开放插件市场 · 插件索引 · 每日插件推荐', intro: `DeepSeek Harness 的社区插件索引与每日推荐。10 月 15 日起 DSH 支持插件市场，复制下面的地址粘贴到「${ui('发现')}」，就能直接浏览、安装几百个社区插件。`,
     address: '索引地址', copy: '复制地址', copyTitle: '点击复制',
     copied: '已复制', usage: '今日已有 {readers} 位用户在使用', usageNote: '今天（UTC 日期）在 DSH 中加载过这份索引的用户数，按 IP 和 UA 每日去重，两者都不保存。', copySuccess: '地址已复制。打开 DSH，把它添加为索引源。', details: '详情', copyOpen: '复制插件名并打开 DSH', nameCopied: '已复制，正在打开…', dshOpened: '已打开，粘贴搜索', dshMissed: '已复制，请手动打开', getFailure: '已选中，请手动复制', getHint: `在 DSH「${ui('发现')}」里粘贴搜索即可安装。`, pluginName: '插件名', copyFailure: '地址已选中。按 Ctrl+C 或 ⌘C，或使用选中文字的菜单复制。',
@@ -200,7 +202,7 @@ export const COPY = {
     ],
     badgeTitle: 'README バッジ', badgeText: 'このプラグインの作者の方へ：README にこのバッジを貼ると、いいね数が表示され、このページにリンクします。', copyBadge: 'Markdown をコピー',
     skip: '本文へスキップ', plugins: 'プラグイン', docs: 'ドキュメント', statsNav: '統計', language: '言語', nav: 'メインナビゲーション', home: 'ホーム',
-    headline: 'なんでもプラグインになる。<br><em>見つけるならここ。</em>',
+    headline: 'なんでもプラグインになる。<br><em>見つけるならここ。</em>', headlineKicker: 'DSH プラグインマーケット · Open Plugin Market', logoAlt: 'Open Plugin Market のクジラメイドのロゴ',
     eyebrow: 'オープンな DSH プラグインマーケット · プラグインインデックス · 毎日のおすすめ', intro: 'DeepSeek Harness 向けのプラグインインデックスと毎日のおすすめ。10 月 15 日のアップデートで DSH はプラグインマーケットに対応しました。下のアドレスを Discover に貼り付けるだけで、数百のコミュニティプラグインを閲覧・インストールできます。',
     address: 'インデックス URL', copy: 'URL をコピー', copyTitle: 'クリックしてコピー',
     copied: 'コピーしました', usage: '今日 {readers} 人が利用中', usageNote: '今日（UTC 日付）DSH でこのインデックスを読み込んだ人数。IP とユーザーエージェントの組で 1 日 1 回数え、どちらも保存しません。', copySuccess: 'URL をコピーしました。DSH を開いてインデックスソースとして追加してください。', details: '詳細', copyOpen: '名前をコピーして DSH を開く', nameCopied: 'コピーしました。開いています…', dshOpened: '開きました。貼り付けてください', dshMissed: 'コピー済み。DSH を開いてください', getFailure: '名前を選択しました。コピーしてください', getHint: '名前を DSH の Discover の検索欄に貼り付けるとインストールできます。', pluginName: '名前', copyFailure: 'アドレスを選択しました。Ctrl+C か ⌘C を押すか、選択メニューからコピーしてください。',
@@ -261,7 +263,7 @@ export const COPY = {
     ],
     badgeTitle: 'README 배지', badgeText: '이 플러그인의 작성자인가요? README에 이 배지를 넣으면 좋아요 수가 표시되고 이 페이지로 연결됩니다.', copyBadge: 'Markdown 복사',
     skip: '본문으로 건너뛰기', plugins: '플러그인', docs: '문서', statsNav: '통계', language: '언어', nav: '주 메뉴', home: '홈',
-    headline: '무엇이든 플러그인이 됩니다.<br><em>여기서 찾아보세요.</em>',
+    headline: '무엇이든 플러그인이 됩니다.<br><em>여기서 찾아보세요.</em>', headlineKicker: 'DSH 플러그인 마켓 · Open Plugin Market', logoAlt: 'Open Plugin Market 고래 메이드 로고',
     eyebrow: '열린 DSH 플러그인 마켓 · 플러그인 인덱스 · 오늘의 추천', intro: 'DeepSeek Harness를 위한 플러그인 인덱스와 오늘의 추천입니다. 10월 15일 업데이트부터 DSH가 플러그인 마켓을 지원하므로, 아래 주소를 Discover에 붙여 넣기만 하면 수백 개의 커뮤니티 플러그인을 둘러보고 설치할 수 있습니다.',
     address: '인덱스 URL', copy: 'URL 복사', copyTitle: '클릭하여 복사',
     copied: '복사됨', usage: '오늘 {readers}명이 사용 중', usageNote: '오늘(UTC 날짜) DSH에서 이 인덱스를 불러온 사람 수입니다. IP와 사용자 에이전트 조합으로 하루 한 번만 세며, 둘 다 저장하지 않습니다.', copySuccess: 'URL을 복사했습니다. DSH를 열고 인덱스 소스로 추가하세요.', details: '자세히', copyOpen: '이름 복사 후 DSH 열기', nameCopied: '복사했습니다. 여는 중…', dshOpened: '열렸습니다. 붙여 넣으세요', dshMissed: '복사됨. DSH를 여세요', getFailure: '이름을 선택했습니다. 복사하세요', getHint: 'DSH Discover 검색창에 이름을 붙여 넣으면 설치할 수 있습니다.', pluginName: '이름', copyFailure: '주소를 선택했습니다. Ctrl+C 또는 ⌘C를 누르거나 선택 메뉴에서 복사하세요.',
@@ -410,7 +412,7 @@ function describe(plugin, language, context) {
 
 function avatar(info, root, position = 0) {
   // Plugins without their own logo get the market's whale girl, peeking side to side.
-  return info.icon ? `<img src="${esc(info.icon)}" alt="" width="44" height="44" loading="lazy" decoding="async">` : `<img class="avatar-placeholder" style="--peek-delay: -${(position % 7) * 0.45}" src="${root}assets/placeholder-whale.webp" alt="" width="54" height="54" loading="lazy" decoding="async">`;
+  return info.icon ? `<img src="${esc(info.icon)}" alt="${esc(info.name)}" width="44" height="44" loading="lazy" decoding="async">` : `<img class="avatar-placeholder" style="--peek-delay: -${(position % 7) * 0.45}" src="${root}assets/placeholder-whale.webp" alt="${esc(info.name)}" width="54" height="54" loading="lazy" decoding="async">`;
 }
 
 function pluginRow(plugin, language, context, position = 0, added = {}) {
@@ -522,9 +524,9 @@ function layout({ language, path, title, description, body, site, structured = [
 <body>
   <a class="skip" href="#main">${esc(text.skip)}</a>
   <header class="site-header" data-header><div class="site-header-inner shell">
-    <a class="brand" href="${esc(home)}"><img src="${root}assets/mark-256.png" alt="" width="64" height="64"><span>${esc(text.brand)}</span></a>
+    <a class="brand" href="${esc(home)}"><img src="${root}assets/mark-256.png" alt="${esc(text.logoAlt)}" width="64" height="64"><span>${esc(text.brand)}</span></a>
     <nav class="header-links" aria-label="${esc(text.nav)}">
-      <a class="header-home" href="${onHome ? '#top' : esc(home)}" aria-label="${esc(text.brand)}"><img src="${root}assets/mark-256.png" alt="" width="64" height="64"></a><a href="${onHome ? '' : esc(home)}#plugins">${ICONS.plugins}<span>${esc(text.plugins)}</span></a><a href="${esc(link(from, language, 'stats/'))}"${path === 'stats/' ? ' aria-current="page"' : ''}>${ICONS.stats}<span>${esc(text.statsNav)}</span></a><a class="github-link" href="${REPOSITORY}" aria-label="${esc(text.ghLabel)}">${ICONS.github}<span>GitHub</span><span class="gh-extra" aria-hidden="true"><span class="gh-star">★</span><b data-gh-stars></b></span></a>
+      <a class="header-home" href="${onHome ? '#top' : esc(home)}" aria-label="${esc(text.brand)}"><img src="${root}assets/mark-256.png" alt="${esc(text.logoAlt)}" width="64" height="64"></a><a href="${onHome ? '' : esc(home)}#plugins">${ICONS.plugins}<span>${esc(text.plugins)}</span></a><a href="${esc(link(from, language, 'stats/'))}"${path === 'stats/' ? ' aria-current="page"' : ''}>${ICONS.stats}<span>${esc(text.statsNav)}</span></a><a class="github-link" href="${REPOSITORY}" aria-label="${esc(text.ghLabel)}">${ICONS.github}<span>GitHub</span><span class="gh-extra" aria-hidden="true"><span class="gh-star">★</span><b data-gh-stars></b></span></a>
       <div class="languages" data-current="${language}" aria-label="${esc(text.language)}">${switcher}</div>
     </nav>
   </div></header>
@@ -533,7 +535,7 @@ ${body}
   </main>
   <footer class="site-footer">
     <div class="footer-grid shell">
-      <div class="footer-brand"><a class="footer-logo" href="${esc(home)}"><img src="${root}assets/mark-256.png" alt="" width="48" height="48"><span>${esc(text.brand)}</span></a><p>${esc(text.footerTagline)}</p><div class="star-wrap"><a class="star-cta" href="${REPOSITORY}" aria-describedby="star-note"><span aria-hidden="true">⭐</span>${esc(text.starCta)}<b class="star-count" data-gh-stars></b></a><p class="star-note" id="star-note" role="tooltip">${esc(text.starNote)}</p></div></div>
+      <div class="footer-brand"><a class="footer-logo" href="${esc(home)}"><img src="${root}assets/mark-256.png" alt="${esc(text.logoAlt)}" width="48" height="48"><span>${esc(text.brand)}</span></a><p>${esc(text.footerTagline)}</p><div class="star-wrap"><a class="star-cta" href="${REPOSITORY}" aria-describedby="star-note"><span aria-hidden="true">⭐</span>${esc(text.starCta)}<b class="star-count" data-gh-stars></b></a><p class="star-note" id="star-note" role="tooltip">${esc(text.starNote)}</p></div></div>
       <nav aria-labelledby="footer-browse"><h2 id="footer-browse">${esc(text.footerBrowse)}</h2><ul class="footer-links"><li><a href="${onHome ? '' : esc(home)}#plugins">${esc(text.plugins)}</a></li><li><a href="${esc(link(from, language, 'stats/'))}">${esc(text.stats)}</a></li><li><a href="${root}index.json">${esc(text.raw)}</a></li><li><a href="${root}status.json">${esc(text.status)}</a></li></ul></nav>
       <nav aria-labelledby="footer-join"><h2 id="footer-join">${esc(text.footerJoin)}</h2><ul class="footer-links"><li><a href="${esc(SUBMIT)}">${esc(text.submit)}</a></li><li><a href="${esc(REMOVE)}">${esc(text.removePlugin)}</a></li><li><a href="${docsUrl}">${esc(text.readDocs)}</a></li><li><a href="${REPOSITORY}">GitHub</a></li></ul></nav>
     </div>
@@ -567,12 +569,12 @@ function homePage(index, language, context, rows, rest) {
   const faq = text.faq(plugins.length);
   const body = `    <section class="hero shell" aria-labelledby="page-title">
       <div class="hero-copy">
-      <h1 id="page-title">${text.headline}</h1>
+      <h1 id="page-title"><span class="h1-kicker">${esc(text.headlineKicker)}</span>${text.headline}</h1>
       <p class="hero-lead">${esc(text.intro)}</p>
       ${addressBar(text)}
       <div class="hero-foot"><a class="usage" href="${esc(link(context.from, language, 'stats/'))}" data-usage="${STATS_URL}" title="${esc(text.usageNote)}"><span class="usage-dot" aria-hidden="true"></span><span data-usage-text></span><span class="usage-arrow" aria-hidden="true">→</span></a><p class="eyebrow">${esc(text.eyebrow)}</p></div>
       </div>
-      <div class="hero-art" aria-hidden="true"><div class="art-blob"></div><img src="${root}assets/logo.webp" alt="" width="560" height="560" decoding="async">${stickers}</div>
+      <div class="hero-art" aria-hidden="true"><div class="art-blob"></div><img src="${root}assets/logo.webp" alt="${esc(text.logoAlt)}" width="560" height="560" decoding="async">${stickers}</div>
       <div class="steps-head" data-reveal><h2 class="section-title steps-title" id="setup-title">${esc(text.setup)}</h2><div class="method-tabs" role="tablist" aria-label="${esc(text.methods)}" hidden><button type="button" role="tab" id="method-index-tab" aria-controls="method-index" aria-selected="true" data-method-tab="index">${esc(text.methodIndex)}</button><button type="button" role="tab" id="method-plugin-tab" aria-controls="method-plugin" aria-selected="false" tabindex="-1" data-method-tab="plugin">${esc(text.methodPlugin)}</button></div></div>
       <div class="method-panels">
       <ol class="steps" id="method-index" role="tabpanel" aria-labelledby="method-index-tab" data-method="index" data-guide="${GUIDE_THEME}">${text.steps.map(([title, detail], at) => `<li data-reveal data-zoom-card style="--reveal-delay: ${at * 90}ms"><h3><span class="step-num" aria-hidden="true">${at + 1}</span>${esc(title)}</h3><button type="button" class="step-shot" data-zoom aria-label="${esc(text.zoom)}: ${esc(title)}"><img src="${root}assets/guide-${at + 1}-${guide}-${GUIDE_THEME}.webp" alt="${esc(detail)}" title="${esc(detail)}" width="${GUIDE_SIZES[guide][at][0]}" height="${GUIDE_SIZES[guide][at][1]}" loading="lazy" decoding="async"></button></li>`).join('')}</ol>
@@ -587,7 +589,7 @@ function homePage(index, language, context, rows, rest) {
     <section class="directory-surface" aria-labelledby="directory-title">
     <section class="showcase shell" aria-labelledby="showcase-title">
       <div class="showcase-copy" data-reveal><h2 class="section-title" id="showcase-title">${esc(text.showcase.title)}</h2><p>${esc(text.showcase.text)}</p><ul>${text.showcase.points.map(point => `<li>${esc(point)}</li>`).join('')}</ul></div>
-      <figure class="app-frame" data-reveal data-shots><div class="app-bar"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><div class="app-tabs" role="tablist" hidden><button type="button" role="tab" aria-selected="true" data-shot-tab="discover">${esc(text.shotDiscover)}</button><button type="button" role="tab" aria-selected="false" data-shot-tab="market">${esc(text.shotMarket)}</button></div></div><picture><source media="(max-width: 620px)" srcset="${root}assets/${text.showcase.image.replace('.webp', '-narrow.webp')}" width="800" height="1028"><img src="${root}assets/${text.showcase.image}" alt="${esc(text.showcase.alt)}" width="1600" height="1000" loading="lazy" decoding="async"></picture><picture class="app-light"><source media="(max-width: 620px)" srcset="${root}assets/${text.showcase.image.replace('.webp', '-narrow-light.webp')}"><img src="${root}assets/${text.showcase.image.replace('.webp', '-light.webp')}" alt="" width="1600" height="1000" loading="lazy" decoding="async"></picture><img class="app-market" data-shot="market" src="${root}assets/open-market-${guide}.webp" alt="${esc(text.shotMarketAlt)}" width="1600" height="1000" loading="lazy" decoding="async"><img class="app-market app-market-light" src="${root}assets/open-market-${guide}-light.webp" alt="" width="1600" height="1000" loading="lazy" decoding="async"></figure>
+      <figure class="app-frame" data-reveal data-shots><div class="app-bar"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><div class="app-tabs" role="tablist" hidden><button type="button" role="tab" aria-selected="true" data-shot-tab="discover">${esc(text.shotDiscover)}</button><button type="button" role="tab" aria-selected="false" data-shot-tab="market">${esc(text.shotMarket)}</button></div></div><picture><source media="(max-width: 620px)" srcset="${root}assets/${text.showcase.image.replace('.webp', '-narrow.webp')}" width="800" height="1028"><img src="${root}assets/${text.showcase.image}" alt="${esc(text.showcase.alt)}" width="1600" height="1000" loading="lazy" decoding="async"></picture><picture class="app-light"><source media="(max-width: 620px)" srcset="${root}assets/${text.showcase.image.replace('.webp', '-narrow-light.webp')}"><img src="${root}assets/${text.showcase.image.replace('.webp', '-light.webp')}" alt="${esc(text.showcase.alt)}" width="1600" height="1000" loading="lazy" decoding="async"></picture><img class="app-market" data-shot="market" src="${root}assets/open-market-${guide}.webp" alt="${esc(text.shotMarketAlt)}" width="1600" height="1000" loading="lazy" decoding="async"><img class="app-market app-market-light" src="${root}assets/open-market-${guide}-light.webp" alt="${esc(text.shotMarketAlt)}" width="1600" height="1000" loading="lazy" decoding="async"></figure>
     </section><div class="directory-zone"><div class="directory shell" id="plugins">
       <div class="directory-heading" data-reveal><h2 class="section-title" id="directory-title">${esc(text.directory)}</h2></div>
       <div class="directory-meta"><ul class="stats"><li><strong>${plugins.length}</strong> ${esc(text.statPlugins)}</li><li><strong>${site.usedCategories.length}</strong> ${esc(text.statCategories)}</li>${updated ? `<li>${esc(text.updated)} <strong>${esc(updated)}</strong></li>` : ''}</ul></div>
@@ -729,7 +731,7 @@ function sitemap(paths, updated) {
 }
 
 function notFound(css) {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Page not found — Open Plugin Market</title><link rel="icon" href="${ORIGIN}favicon.ico" sizes="48x48"><link rel="icon" href="${ORIGIN}assets/favicon.png" type="image/png" sizes="96x96"><style>${css}</style></head><body><header class="site-header shell"><a class="brand" href="${ORIGIN}"><img src="${ORIGIN}assets/mark-256.png" alt="" width="64" height="64"><span>Open Plugin Market</span></a></header><main class="shell hero"><h1>Page not found.</h1><p lang="zh-CN">页面不存在。</p><p lang="zh-TW">頁面不存在。</p><p lang="ja">ページが見つかりません。</p><p lang="ko">페이지를 찾을 수 없습니다.</p><p>Open the plugin directory to continue.</p><p lang="zh-CN">返回插件目录，继续查找插件。</p><div class="contribute-links"><a class="submit-link" href="${ORIGIN}">English directory</a><a class="submit-link" href="${ORIGIN}zh/" lang="zh-CN">中文目录</a><a class="submit-link" href="${ORIGIN}zh-tw/" lang="zh-TW">繁體中文目錄</a><a class="submit-link" href="${ORIGIN}ja/" lang="ja">日本語のプラグイン一覧</a><a class="submit-link" href="${ORIGIN}ko/" lang="ko">한국어 플러그인 목록</a></div></main></body></html>\n`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Page not found — Open Plugin Market</title><link rel="icon" href="${ORIGIN}favicon.ico" sizes="48x48"><link rel="icon" href="${ORIGIN}assets/favicon.png" type="image/png" sizes="96x96"><style>${css}</style></head><body><header class="site-header shell"><a class="brand" href="${ORIGIN}"><img src="${ORIGIN}assets/mark-256.png" alt="Open Plugin Market logo" width="64" height="64"><span>Open Plugin Market</span></a></header><main class="shell hero"><h1>Page not found.</h1><p lang="zh-CN">页面不存在。</p><p lang="zh-TW">頁面不存在。</p><p lang="ja">ページが見つかりません。</p><p lang="ko">페이지를 찾을 수 없습니다.</p><p>Open the plugin directory to continue.</p><p lang="zh-CN">返回插件目录，继续查找插件。</p><div class="contribute-links"><a class="submit-link" href="${ORIGIN}">English directory</a><a class="submit-link" href="${ORIGIN}zh/" lang="zh-CN">中文目录</a><a class="submit-link" href="${ORIGIN}zh-tw/" lang="zh-TW">繁體中文目錄</a><a class="submit-link" href="${ORIGIN}ja/" lang="ja">日本語のプラグイン一覧</a><a class="submit-link" href="${ORIGIN}ko/" lang="ko">한국어 플러그인 목록</a></div></main></body></html>\n`;
 }
 
 async function write(path, html, output) {

@@ -81,6 +81,7 @@ button { cursor: pointer; }
 .hero > .method-panels { grid-column: 1 / -1; grid-row: 3; margin-top: 4px; }
 h1 { margin: 0; max-width: 700px; font-size: clamp(46px, 6vw, 84px); line-height: 1.02; letter-spacing: -.045em; font-weight: 900; text-wrap: balance; }
 h1 em { font-style: normal; color: var(--blue); }
+.h1-kicker { display: block; margin-bottom: 10px; color: var(--slate); font-size: 15px; line-height: 1.35; letter-spacing: .01em; font-weight: 800; }
 html:is([lang="zh-CN"], [lang="ja"], [lang="ko"]) h1 { font-size: clamp(42px, 5.2vw, 72px); line-height: 1.15; letter-spacing: -.03em; }
 /* The landing headline is a short hook, smaller than a poster title so the URL stays in the first view. */
 .hero h1 { font-size: clamp(34px, 3.8vw, 48px); line-height: 1.12; letter-spacing: -.035em; }
