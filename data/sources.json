@@ -15271,6 +15271,18 @@
         "zh": "通过辅助功能、窗口截图和宿主审批操作 macOS 桌面；需本机编译 Helper 并授予系统权限。"
       },
       "category": "tools"
+    },
+    {
+      "name": "@keenable/dsh-keenable",
+      "title": {
+        "en": "Keenable Web Search",
+        "zh": "Keenable 联网搜索"
+      },
+      "description": {
+        "en": "Route the built-in web_search and web_fetch tools to Keenable, with no API key or account. Queries and fetched URLs are sent to Keenable; without a key, use is limited to 1,000 requests per hour per IP, and an optional API key lifts the limit. Requires DSH >=0.2.0-rc.2 <0.4.0-0 and Node.js 22.12+.",
+        "zh": "将内置 web_search 与 web_fetch 工具接入 Keenable，无需 API Key 或账号。搜索词和抓取的网址会发送到 Keenable；未配置密钥时按 IP 每小时限 1000 次，可选 API Key 解除限制。需要 DSH >=0.2.0-rc.2 <0.4.0-0 与 Node.js 22.12+。"
+      },
+      "category": "tools"
     }
   ]
 }
