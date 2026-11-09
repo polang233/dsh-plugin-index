@@ -8,6 +8,7 @@ import { buildIndex, releasesOf } from './lib.mjs';
 import { collectEndorsements } from './endorsements.mjs';
 import { assertNotWithdrawn, readWithdrawn } from './withdrawn.mjs';
 import { trackAdded } from './added.mjs';
+import { applyPluginPreviews } from './screenshots.mjs';
 
 async function readJson(url) {
   try { return JSON.parse(await readFile(url, 'utf8')); } catch { return undefined; }
@@ -21,6 +22,7 @@ async function readSnapshot(url) {
 }
 
 const config = JSON.parse(await readFile(new URL('../data/sources.json', import.meta.url), 'utf8'));
+if (config.packages.some(plugin => plugin.screenshots !== undefined)) throw Error('Store website screenshots in data/plugin-previews.json');
 validateBrandNames(config, JSON.parse(await readFile(new URL('../data/brand-names.json', import.meta.url), 'utf8')));
 assertNotWithdrawn(config.packages.map(entry => entry.name), await readWithdrawn());
 const output = new URL('../public/', import.meta.url);
@@ -45,7 +47,8 @@ const publishers = JSON.parse(await readFile(new URL('../data/publishers.json', 
 const maintainerReviews = JSON.parse(await readFile(new URL('../data/maintainer-reviews.json', import.meta.url), 'utf8'));
 const previousRecommendations = await publishedSnapshot('recommendations.json') ?? await readJson(new URL('recommendations.json', output));
 const added = trackAdded(built.index.plugins.map(plugin => plugin.name), await publishedSnapshot('added.json') ?? await readJson(new URL('added.json', output)));
-const { index, display, recommendations } = applyMarketDisplay(built.index, { github, downloads, releases: releasesOf(built.evidence), endorsements, publishers, maintainerReviews, packageEvidence: built.evidence, previousRecommendations, added, now: Date.parse(downloads.generatedAt) });
+const { index, display: marketDisplay, recommendations } = applyMarketDisplay(built.index, { github, downloads, releases: releasesOf(built.evidence), endorsements, publishers, maintainerReviews, packageEvidence: built.evidence, previousRecommendations, added, now: Date.parse(downloads.generatedAt) });
+const display = applyPluginPreviews(marketDisplay, JSON.parse(await readFile(new URL('../data/plugin-previews.json', import.meta.url), 'utf8')));
 const states = Object.values(github.repositories);
 const evidence = {
   ...built.evidence,

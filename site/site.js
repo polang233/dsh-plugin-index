@@ -872,15 +872,16 @@ if (statsRoot) {
   ]).then(([likes, names]) => [Object.entries(likes?.likes ?? {}).filter(([name, value]) => names[name] && Number.isSafeInteger(value) && value > 0), names]);
   liked.then(([entries]) => tile('likes', entries.reduce((sum, [, value]) => sum + value, 0), catalogNote('likedPlugins', entries.length)), () => tile('likes', undefined));
 
-  // The ten most liked plugins, with their titles and icons from this language's name list.
+  // Reuse the sorted likes and names when the reader changes the ranking length.
   liked.then(([entries, names]) => {
-    const top = [...entries].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 10);
-    if (!top.length) {
+    const sorted = [...entries].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+    if (!sorted.length) {
       ranking.replaceWith(Object.assign(document.createElement('p'), { className: 'chart-empty', textContent: words.likesEmpty }));
       return;
     }
-    const most = top[0][1];
-    ranking.replaceChildren(...top.map(([name, value], at) => {
+    const limit = statsRoot.querySelector('[data-like-limit]');
+    const most = sorted[0][1];
+    const drawRanking = () => ranking.replaceChildren(...sorted.slice(0, Number(limit.value)).map(([name, value], at) => {
       const [title, icon, href] = names[name];
       const item = document.createElement('li');
       item.style.setProperty('--i', at);
@@ -895,5 +896,9 @@ if (statsRoot) {
       item.querySelector('.rank-value').textContent = `♥ ${number.format(value)}`;
       return item;
     }));
+    drawRanking();
+    limit.disabled = false;
+    statsRoot.querySelector('[data-like-limit-field]').hidden = false;
+    limit.addEventListener('change', drawRanking);
   }).catch(() => ranking.closest('section')?.setAttribute('hidden', ''));
 }

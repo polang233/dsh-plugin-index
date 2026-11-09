@@ -392,6 +392,133 @@ test('a duplicate returns the decayed total without modifying the stored total',
   assert.deepEqual((await (await readLikes(env)).json()).likes, {});
 });
 
+test('percentage decay agrees on reads, badges and writes at integer boundaries over multiple cycles', async t => {
+  const counts = [0, 1, 49, 50, 99, 100, 101, 199, 200, 201, 1000];
+  const names = counts.map(count => `plugin-${count}`);
+  const { env, sqlite } = likeEnvironment(t, names);
+  const anchor = Date.parse('2026-11-09T00:00:00Z');
+  const cases = [
+    [0, counts],
+    [1, [0, 1, 49, 49, 98, 99, 100, 198, 198, 199, 990]],
+    [2, [0, 1, 49, 49, 97, 98, 99, 197, 197, 198, 981]],
+    [3, [0, 1, 49, 49, 96, 97, 98, 196, 196, 197, 972]],
+    [10_000, [0, 1, 49, 49, 49, 49, 49, 49, 49, 49, 49]]
+  ];
+  for (const [cycles, expected] of cases) {
+    sqlite.exec('DELETE FROM likes; DELETE FROM like_votes');
+    t.mock.timers.setTime(anchor + cycles * 3 * 86_400_000);
+    const day = new Date().toISOString().slice(0, 10);
+    counts.forEach((count, index) => sqlite.prepare('INSERT INTO likes VALUES (?, ?, ?)').run(names[index], count, '2026-11-09'));
+    const listed = (await (await readLikes(env)).json()).likes;
+    for (let index = 0; index < counts.length; index++) {
+      const name = names[index];
+      const message = `${counts[index]} after ${cycles} cycles`;
+      assert.equal(listed[name] ?? 0, expected[index], message);
+      await assertBadge(await readBadge(env, `${name}.json`), `已收录 · ♥ ${expected[index]}`);
+      assert.deepEqual({ ...sqlite.prepare('SELECT * FROM likes WHERE name = ?').get(name) }, {
+        name, count: counts[index], decayed_at: '2026-11-09'
+      }, 'reads and badges leave the stored row untouched');
+      assert.deepEqual(await (await sendLike(env, name)).json(), { name, likes: expected[index] + 1, counted: true }, message);
+      assert.deepEqual({ ...sqlite.prepare('SELECT * FROM likes WHERE name = ?').get(name) }, {
+        name, count: expected[index] + 1, decayed_at: day
+      }, message);
+    }
+    assert.deepEqual((await (await readLikes(env)).json()).likes, Object.fromEntries(names.map((name, index) => [name, expected[index] + 1])));
+  }
+});
+
+test('percentage cycles use UTC boundaries and accepted writes preserve partial cycles', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  sqlite.exec("INSERT INTO likes VALUES ('dsh-pet', 1000, '2026-11-09')");
+  t.mock.timers.setTime(Date.parse('2026-11-11T23:59:59.999Z'));
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { 'dsh-pet': 1000 });
+  t.mock.timers.tick(1);
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { 'dsh-pet': 990 });
+  t.mock.timers.setTime(Date.parse('2026-11-13T12:00:00Z'));
+  assert.deepEqual(await (await sendLike(env)).json(), { name: 'dsh-pet', likes: 991, counted: true });
+  assert.equal(sqlite.prepare('SELECT decayed_at FROM likes').get().decayed_at, '2026-11-12');
+  t.mock.timers.setTime(Date.parse('2026-11-14T23:59:59.999Z'));
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { 'dsh-pet': 991 });
+  t.mock.timers.tick(1);
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { 'dsh-pet': 982 });
+  assert.deepEqual(await (await sendLike(env)).json(), { name: 'dsh-pet', likes: 983, counted: true });
+  assert.equal(sqlite.prepare('SELECT decayed_at FROM likes').get().decayed_at, '2026-11-15');
+});
+
+test('low totals pause decay and an accepted vote returning to 50 starts a full cycle', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  sqlite.exec("INSERT INTO likes VALUES ('dsh-pet', 50, '2026-11-09')");
+  t.mock.timers.setTime(Date.parse('2026-12-01T12:00:00Z'));
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { 'dsh-pet': 49 });
+  assert.deepEqual(await (await sendLike(env)).json(), { name: 'dsh-pet', likes: 50, counted: true });
+  assert.equal(sqlite.prepare('SELECT decayed_at FROM likes').get().decayed_at, '2026-12-01');
+  assert.deepEqual(await (await sendLike(env, 'dsh-pet', 'install')).json(), { name: 'dsh-pet', likes: 50, counted: false });
+  t.mock.timers.setTime(Date.parse('2026-12-03T23:59:59.999Z'));
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { 'dsh-pet': 50 });
+  t.mock.timers.tick(1);
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { 'dsh-pet': 49 });
+  t.mock.timers.setTime(Date.parse('2027-01-01T00:00:00Z'));
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { 'dsh-pet': 49 });
+});
+
+test('old rows settle only the legacy deduction before the release boundary', async t => {
+  const { env, sqlite } = likeEnvironment(t, ['large', 'small', 'zero']);
+  sqlite.exec("INSERT INTO likes VALUES ('large', 1000, '2026-10-09'), ('small', 50, '2026-11-05'), ('zero', 1, '2026-10-09')");
+  t.mock.timers.setTime(Date.parse('2026-11-08T23:59:59.999Z'));
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { large: 990, small: 49 });
+  t.mock.timers.tick(1);
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { large: 990, small: 49 });
+  t.mock.timers.setTime(Date.parse('2026-11-11T23:59:59.999Z'));
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { large: 990, small: 49 });
+  t.mock.timers.tick(1);
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { large: 981, small: 49 });
+  assert.equal(sqlite.prepare("SELECT count FROM likes WHERE name = 'large'").get().count, 1000);
+  assert.deepEqual(await (await sendLike(env, 'large')).json(), { name: 'large', likes: 982, counted: true });
+  assert.deepEqual(await (await sendLike(env, 'small')).json(), { name: 'small', likes: 50, counted: true });
+  assert.deepEqual(await (await sendLike(env, 'zero')).json(), { name: 'zero', likes: 1, counted: true });
+  for (const name of ['large', 'small', 'zero']) {
+    assert.equal(sqlite.prepare('SELECT decayed_at FROM likes WHERE name = ?').get(name).decayed_at, '2026-11-12');
+  }
+  t.mock.timers.setTime(Date.parse('2026-11-15T00:00:00Z'));
+  assert.deepEqual((await (await readLikes(env)).json()).likes, { large: 973, small: 49, zero: 1 });
+});
+
+test('duplicates and concurrent voters settle percentage decay only once without changing deduplication', async t => {
+  const { env, sqlite } = likeEnvironment(t);
+  t.mock.timers.setTime(Date.parse('2026-11-16T00:00:00Z'));
+  await sendLike(env);
+  sqlite.exec("UPDATE likes SET count = 1000, decayed_at = '2026-11-09'");
+  const before = sqlite.prepare('SELECT * FROM likes').get();
+  assert.deepEqual(await (await sendLike(env, 'dsh-pet', 'install')).json(), { name: 'dsh-pet', likes: 981, counted: false });
+  assert.deepEqual(sqlite.prepare('SELECT * FROM likes').get(), before);
+  const responses = await Promise.all(Array.from({ length: 8 }, (_, index) => sendLike(env, 'dsh-pet', 'like', { ip: `192.0.2.${index + 2}` })));
+  assert.ok((await Promise.all(responses.map(response => response.json()))).every(body => body.counted));
+  assert.deepEqual({ ...sqlite.prepare('SELECT * FROM likes').get() }, { name: 'dsh-pet', count: 989, decayed_at: '2026-11-15' });
+  const sameVoter = await Promise.all(Array.from({ length: 8 }, () => sendLike(env, 'dsh-pet', 'install', { ip: '192.0.2.99' })));
+  assert.equal((await Promise.all(sameVoter.map(response => response.json()))).filter(body => body.counted).length, 1);
+  assert.equal(sqlite.prepare('SELECT count FROM likes').get().count, 990);
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM like_votes').get().count, 10);
+});
+
+test('the daily limit does not settle pending percentage decay or alter existing votes', async t => {
+  const names = Array.from({ length: 101 }, (_, index) => `plugin-${index}`);
+  const { env, sqlite } = likeEnvironment(t, names);
+  t.mock.timers.setTime(Date.parse('2026-11-16T00:00:00Z'));
+  const hash = createHash('sha256').update('test-salt|like|2026-11-16|192.0.2.1').digest('hex').slice(0, 24);
+  for (const name of names.slice(0, 100)) {
+    sqlite.prepare('INSERT INTO like_votes VALUES (?, ?, ?)').run('2026-11-16', name, hash);
+  }
+  sqlite.prepare('INSERT INTO likes VALUES (?, ?, ?)').run(names[0], 1000, '2026-11-09');
+  sqlite.prepare('INSERT INTO likes VALUES (?, ?, ?)').run(names[100], 1000, '2026-11-09');
+  const before = sqlite.prepare('SELECT * FROM likes ORDER BY name').all();
+  const rejected = await sendLike(env, names[100]);
+  assert.equal(rejected.status, 429);
+  assert.deepEqual(await rejected.json(), { error: 'daily-limit' });
+  assert.deepEqual(await (await sendLike(env, names[0], 'install')).json(), { name: names[0], likes: 981, counted: false });
+  assert.deepEqual(sqlite.prepare('SELECT * FROM likes ORDER BY name').all(), before);
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM like_votes').get().count, 100);
+});
+
 test('concurrent votes keep deduplication and the daily limit atomic', async t => {
   const names = Array.from({ length: 102 }, (_, i) => `plugin-${i}`);
   const { env, sqlite } = likeEnvironment(t, names);

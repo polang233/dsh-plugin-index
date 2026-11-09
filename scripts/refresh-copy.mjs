@@ -4,6 +4,7 @@ import {applyCatalogCopy, validateBrandNames} from './catalog-copy.mjs';
 import {checkMarketDisplay} from './check-published.mjs';
 import {checkRecommendationSnapshot} from './recommendation-state.mjs';
 import {writeSite} from './site.mjs';
+import {applyPluginPreviews} from './screenshots.mjs';
 
 const read = async path => JSON.parse(await readFile(new URL('../' + path, import.meta.url), 'utf8'));
 const config = await read('data/sources.json');
@@ -13,7 +14,8 @@ const originalDisplay = await read('public/display.json');
 const github = await read('public/github.json');
 const downloads = await read('public/downloads.json');
 const evidence = await read('public/status.json');
-const {index, display} = applyCatalogCopy(current, originalDisplay, config, github);
+const {index, display: editedDisplay} = applyCatalogCopy(current, originalDisplay, config, github);
+const display = applyPluginPreviews(editedDisplay, await read('data/plugin-previews.json'));
 parseMarketIndex(index, 'https://polang233.github.io/dsh-plugin-index/index.json');
 checkMarketDisplay(index, github, downloads, display, await read('data/publishers.json'));
 if (evidence.market?.recommendations) checkRecommendationSnapshot(index, await read('public/recommendations.json'));

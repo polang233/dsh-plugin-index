@@ -4,6 +4,7 @@ import { githubRepository } from './github-repository.mjs';
 import { endorsementsFor } from './endorsements.mjs';
 import { LABELS, TIERS } from './labels.mjs';
 import { EMPTY_REVIEWS, REVIEW_SOURCE, maintainerReviewFor, validateMaintainerReviews } from './maintainer-reviews.mjs';
+import { cleanDescription } from './descriptions.mjs';
 
 export { LABELS };
 import { rotateRecommendations } from './recommendations.mjs';
@@ -128,11 +129,12 @@ export function applyMarketDisplay(index, { github = {}, downloads = {}, release
     const own = labelsFor(signals);
     for (const id of own) used.add(id);
     labels.push(...own);
-    const description = typeof plugin.description === 'string' ? { en: plugin.description, zh: plugin.description } : { ...plugin.description };
+    const original = cleanDescription(plugin.description);
+    const description = typeof original === 'string' ? { en: original, zh: original } : { ...original };
     const composed = Object.fromEntries(Object.entries(description).map(([language, value]) => {
       const star = starText(plugin, github, language.startsWith('zh') ? 'zh' : 'en');
-      return [language, star ? star + ' │ ' + value : value];
-    }));
+      return [language, star ? star + (value ? ' │ ' + value : '') : value];
+    }).filter(([, value]) => typeof value === 'string' && value.trim()));
     // Star-only descriptions still work when the author supplied no description.
     for (const language of ['en', 'zh']) if (!composed[language] && starText(plugin, github, language)) composed[language] = starText(plugin, github, language);
     const sortKeys = { ...plugin.metadata?.sortKeys };
@@ -140,10 +142,9 @@ export function applyMarketDisplay(index, { github = {}, downloads = {}, release
     delete sortKeys[TRENDING];
     delete sortKeys[STARS_WEEK];
     if (Number.isSafeInteger(signals.starsWeek)) { sortKeys[STARS_WEEK] = signals.starsWeek; withStarGrowth++; }
-    const screenshots = checked.get(plugin.name)?.display?.screenshots;
-    display.plugins[plugin.name] = { description, labels: own, signals,
-      ...(screenshots !== undefined ? {screenshots} : {}), ...(publisher ? { publisher: publisher.id } : {}) };
-    return { ...plugin, ...(Object.keys(composed).length ? { description: composed } : {}), metadata: { ...plugin.metadata, labels, sortKeys } };
+    display.plugins[plugin.name] = { description, labels: own, signals, ...(publisher ? { publisher: publisher.id } : {}) };
+    const {description: previousDescription, ...base} = plugin;
+    return { ...base, ...(Object.keys(composed).length ? { description: composed } : {}), metadata: { ...plugin.metadata, labels, sortKeys } };
   });
   for (const id of Object.keys(LABELS)) if (used.has(id)) metadata.labels[id] = { title: LABELS[id] };
   if (withStarGrowth) metadata.sortKeys[STARS_WEEK] = { title: { en: '▲ Recent growth', zh: '▲ 近期增长' }, order: 'desc' };

@@ -6,6 +6,7 @@ import { releaseAge } from './market-display.mjs';
 import { addedTimestamp } from './added.mjs';
 import { SOURCES } from './endorsements.mjs';
 import { INDEXNOW_KEY } from './indexnow.mjs';
+import { stripStarPrefix } from './descriptions.mjs';
 
 const ORIGIN = 'https://dshopen.org/';
 const INDEX_URL = `${ORIGIN}index.json`;
@@ -13,7 +14,7 @@ const STATS_URL = `${ORIGIN}stats.json`;
 const REPOSITORY = 'https://github.com/polang233/dsh-plugin-index';
 const DOCS = `${REPOSITORY}/blob/main/README.en.md`;
 const SUBMIT = `${REPOSITORY}/issues/new?template=plugin-add.yml`;
-const REMOVE = `${REPOSITORY}/issues/new?template=plugin-remove.yml`;
+const REPORT = `${REPOSITORY}/issues/new?template=bug.yml`;
 const PLUGIN_COMMAND = 'dsh plugin --profile desktop add dsh-open-market';
 // The home page carries this many cards; the rest wait in catalog.json until a visitor asks for more, searches or sorts.
 export const INITIAL_PLUGINS = 48;
@@ -58,8 +59,8 @@ export const COPY = {
     methodIndex: 'Add the index', methodPlugin: 'Install the plugin', methods: 'Ways to set it up',
     pluginCommand: 'Run one line in a terminal:', pluginInApp: 'Or in DSH, open Plugins → Add plugin and enter the package name', pluginNote: 'Either way it switches on Custom plugin markets, adds this index and an Open Market tab to the Plugins page; restart DSH afterwards.',
     shotDiscover: 'Discover', shotMarket: 'Open Market tab', shotMarketAlt: 'The Open Market tab that dsh-open-market adds to the DSH Plugins page: today\'s picks and rows of recommended plugins', pageLink: 'Page',
-    footerBrowse: 'Browse', footerJoin: 'Take part', removePlugin: 'Request removal', footerIndex: 'Index URL',
-    likesTitle: 'Most liked plugins', likesNote: 'Likes from the website and the Open Market tab; each plugin loses one every three days.', likesEmpty: 'No likes yet. Like a plugin in the directory and it shows up here.', liveNote: 'Live · refreshed every few minutes',
+    footerBrowse: 'Browse', footerJoin: 'Take part', reportIssue: 'Report an issue', footerIndex: 'Index URL', likesLimit: 'Show top',
+    likesTitle: 'Most liked plugins', likesNote: 'Likes from the website and the Open Market tab. Below 50, likes do not decay. At 50 or more, they decrease every three days by 1% of the current count, rounded down, with a minimum decrease of one like.', likesEmpty: 'No likes yet. Like a plugin in the directory and it shows up here.', liveNote: 'Live · refreshed every few minutes',
     tileNotes: { yesterday: 'Yesterday {value}', average: '{value} a day on average', added: '{value} new in the last 7 days', likedPlugins: 'Across {value} plugins' },
     statPlugins: 'plugins', statCategories: 'categories', more: 'Show more', moreLoading: 'Loading…', moreFailed: 'Could not load more. Try again', sort: 'Sort', sorts: { default: 'Default', recommended: '⊙ Smart picks', likes: '♥ Most liked', stars: '★ Most stars', starsWeek: '▲ Recent growth', published: 'Recently updated', random: '⚄ Random' }, shown: 'Showing {shown} of {count}',
     description: 'DSH plugin market and plugin index for DeepSeek Harness: {count} community plugins (tools, skills, memory, UI and more), with daily picks by growth, updates and likes. Add one URL to browse and install them in DSH.',
@@ -121,8 +122,8 @@ export const COPY = {
     methodIndex: '添加索引源', methodPlugin: '安装插件', methods: '两种使用方式',
     pluginCommand: '在终端输入一行命令：', pluginInApp: `或者在 DSH「${ui('插件 → 添加插件')}」里输入包名`, pluginNote: `两种方式都会自动打开「${ui('自定义插件市场')}」、加入本索引，并在「${ui('插件')}」页多出「开放市场」标签，重启 DSH 后生效。`,
     shotDiscover: `「${ui('发现')}」页`, shotMarket: '「开放市场」标签', shotMarketAlt: 'dsh-open-market 在 DSH「插件」页加入的「开放市场」标签：今日推荐和多行推荐列表', pageLink: '详情页',
-    footerBrowse: '浏览', footerJoin: '参与', removePlugin: '申请下架', footerIndex: '索引地址',
-    likesTitle: '点赞最多的插件', likesNote: '来自网站和「开放市场」标签的点赞，每个插件每 3 天减 1。', likesEmpty: '还没有点赞。去插件目录给喜欢的插件点个赞，它就会出现在这里。', liveNote: '实时 · 每隔几分钟更新',
+    footerBrowse: '浏览', footerJoin: '参与', reportIssue: '提交问题', footerIndex: '索引地址', likesLimit: '显示前几名',
+    likesTitle: '点赞最多的插件', likesNote: '来自网站和「开放市场」标签的点赞。低于 50 赞不衰减；达到 50 赞后，每 3 天减当前赞数的 1%，向下取整且至少减 1 赞。', likesEmpty: '还没有点赞。去插件目录给喜欢的插件点个赞，它就会出现在这里。', liveNote: '实时 · 每隔几分钟更新',
     tileNotes: { yesterday: '昨日 {value}', average: '日均 {value}', added: '近 7 天新增 {value}', likedPlugins: '来自 {value} 个插件' },
     statPlugins: '个插件', statCategories: '个分类', more: '查看更多', moreLoading: '正在加载…', moreFailed: '加载失败，点击重试', sort: '排序', sorts: { default: '默认排序', recommended: '⊙ 智能推荐', likes: '♥ 点赞最多', stars: '★ 星数最多', starsWeek: '▲ 近期增长', published: '最近更新', random: '⚄ 随机' }, shown: '已显示 {shown} / {count}',
     description: `DSH 插件市场与插件索引：收录 {count} 个 DeepSeek Harness 社区插件，工具、技能、记忆、界面应有尽有，每天按增长、更新和点赞推荐。复制索引地址，在 DSH「${ui('发现')}」里浏览和安装；或安装开放市场插件，在「${ui('插件')}」页直接搜索、安装和一键更新。`,
@@ -185,8 +186,8 @@ export const COPY = {
     methodIndex: 'インデックスを追加', methodPlugin: 'プラグインを入れる', methods: '設定方法',
     pluginCommand: 'ターミナルで 1 行実行します：', pluginInApp: 'または DSH の「Plugins → Add plugin」でパッケージ名を入力', pluginNote: 'どちらの方法でも「Custom plugin markets」がオンになり、このインデックスが追加され、Plugins ページに「Open Market」タブが加わります。設定後に DSH を再起動してください。',
     shotDiscover: 'Discover', shotMarket: 'Open Market タブ', shotMarketAlt: 'dsh-open-market が DSH の Plugins ページに追加する Open Market タブ：今日のおすすめと、おすすめプラグインの一覧', pageLink: '詳細',
-    footerBrowse: '見る', footerJoin: '参加する', removePlugin: '掲載取り下げを依頼', footerIndex: 'インデックス URL',
-    likesTitle: 'いいねの多いプラグイン', likesNote: 'サイトと Open Market タブからのいいね。各プラグインは 3 日ごとに 1 減ります。', likesEmpty: 'まだいいねはありません。プラグイン一覧で気に入ったものにいいねすると、ここに表示されます。', liveNote: 'リアルタイム · 数分ごとに更新',
+    footerBrowse: '見る', footerJoin: '参加する', reportIssue: '問題を報告', footerIndex: 'インデックス URL', likesLimit: '表示件数',
+    likesTitle: 'いいねの多いプラグイン', likesNote: 'サイトと Open Market タブからのいいね。50 未満では減少しません。50 以上の場合は 3 日ごとに現在のいいね数の 1% が減ります。小数点以下は切り捨て、減少数は最低 1 です。', likesEmpty: 'まだいいねはありません。プラグイン一覧で気に入ったものにいいねすると、ここに表示されます。', liveNote: 'リアルタイム · 数分ごとに更新',
     tileNotes: { yesterday: '昨日 {value}', average: '1 日平均 {value}', added: '直近 7 日で {value} 件追加', likedPlugins: '{value} 件のプラグインから' },
     statPlugins: '件のプラグイン', statCategories: 'カテゴリ', more: 'もっと見る', moreLoading: '読み込み中…', moreFailed: '読み込めませんでした。もう一度お試しください', sort: '並べ替え', sorts: { default: '標準', recommended: '⊙ スマートおすすめ', likes: '♥ いいね順', stars: '★ スター順', starsWeek: '▲ 最近の伸び', published: '最近の更新', random: '⚄ ランダム' }, shown: '{count} 件中 {shown} 件を表示',
     description: 'DeepSeek Harness（DSH）のプラグインマーケット兼プラグインインデックス。ツール、スキル、メモリ、UI など {count} 件のコミュニティプラグインを掲載し、伸び・更新・いいねをもとに毎日おすすめを紹介します。URL を 1 つ追加するだけで DSH から閲覧・インストールできます。',
@@ -246,8 +247,8 @@ export const COPY = {
     methodIndex: '인덱스 추가', methodPlugin: '플러그인 설치', methods: '설정 방법',
     pluginCommand: '터미널에서 한 줄을 실행하세요:', pluginInApp: '또는 DSH의 Plugins → Add plugin에서 패키지 이름을 입력하세요', pluginNote: '어느 방법이든 Custom plugin markets가 켜지고 이 인덱스가 추가되며, Plugins 페이지에 Open Market 탭이 생깁니다. 설정 후 DSH를 다시 시작하세요.',
     shotDiscover: 'Discover', shotMarket: 'Open Market 탭', shotMarketAlt: 'dsh-open-market이 DSH Plugins 페이지에 추가하는 Open Market 탭: 오늘의 추천과 추천 플러그인 목록', pageLink: '자세히',
-    footerBrowse: '둘러보기', footerJoin: '참여하기', removePlugin: '게재 중단 요청', footerIndex: '인덱스 URL',
-    likesTitle: '좋아요가 많은 플러그인', likesNote: '웹사이트와 Open Market 탭에서 받은 좋아요입니다. 플러그인마다 3일에 1개씩 줄어듭니다.', likesEmpty: '아직 좋아요가 없습니다. 플러그인 목록에서 마음에 드는 플러그인에 좋아요를 누르면 여기에 표시됩니다.', liveNote: '실시간 · 몇 분마다 갱신',
+    footerBrowse: '둘러보기', footerJoin: '참여하기', reportIssue: '문제 신고', footerIndex: '인덱스 URL', likesLimit: '표시 개수',
+    likesTitle: '좋아요가 많은 플러그인', likesNote: '웹사이트와 Open Market 탭에서 받은 좋아요입니다. 50개 미만이면 줄어들지 않습니다. 50개 이상이면 3일마다 현재 좋아요 수의 1%씩 줄어듭니다. 소수점 이하는 버리며 최소 1개가 줄어듭니다.', likesEmpty: '아직 좋아요가 없습니다. 플러그인 목록에서 마음에 드는 플러그인에 좋아요를 누르면 여기에 표시됩니다.', liveNote: '실시간 · 몇 분마다 갱신',
     tileNotes: { yesterday: '어제 {value}', average: '하루 평균 {value}', added: '최근 7일간 {value}개 추가', likedPlugins: '플러그인 {value}개에서' },
     statPlugins: '개 플러그인', statCategories: '개 카테고리', more: '더 보기', moreLoading: '불러오는 중…', moreFailed: '불러오지 못했습니다. 다시 시도하세요', sort: '정렬', sorts: { default: '기본', recommended: '⊙ 스마트 추천', likes: '♥ 좋아요순', stars: '★ 스타순', starsWeek: '▲ 최근 상승', published: '최근 업데이트', random: '⚄ 무작위' }, shown: '{count}개 중 {shown}개 표시',
     description: 'DeepSeek Harness(DSH) 플러그인 마켓이자 플러그인 인덱스입니다. 도구, 스킬, 메모리, UI 등 {count}개의 커뮤니티 플러그인을 모아 성장세, 업데이트, 좋아요를 바탕으로 매일 추천합니다. URL 하나만 추가하면 DSH에서 둘러보고 설치할 수 있습니다.',
@@ -324,7 +325,7 @@ function dateLabel(value, language) {
   const date = new Date(value);
   return Number.isFinite(date.getTime()) ? new Intl.DateTimeFormat(language === 'en' ? 'en-GB' : INTL[language] ?? 'en-GB', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(date) : undefined;
 }
-function plainDescription(value) { return value.replace(/\s+/g, ' ').trim(); }
+function plainDescription(value) { return stripStarPrefix(value).replace(/\s+/g, ' ').trim(); }
 function newestVersion(versions = []) {
   // Officially parsed indexes are sorted by SemVer. Preserve that declared order.
   return versions[0];
@@ -537,7 +538,7 @@ ${body}
     <div class="footer-grid shell">
       <div class="footer-brand"><a class="footer-logo" href="${esc(home)}"><img src="${root}assets/mark-256.png" alt="${esc(text.logoAlt)}" width="48" height="48"><span>${esc(text.brand)}</span></a><p>${esc(text.footerTagline)}</p><div class="star-wrap"><a class="star-cta" href="${REPOSITORY}" aria-describedby="star-note"><span aria-hidden="true">⭐</span>${esc(text.starCta)}<b class="star-count" data-gh-stars></b></a><p class="star-note" id="star-note" role="tooltip">${esc(text.starNote)}</p></div></div>
       <nav aria-labelledby="footer-browse"><h2 id="footer-browse">${esc(text.footerBrowse)}</h2><ul class="footer-links"><li><a href="${onHome ? '' : esc(home)}#plugins">${esc(text.plugins)}</a></li><li><a href="${esc(link(from, language, 'stats/'))}">${esc(text.stats)}</a></li><li><a href="${root}index.json">${esc(text.raw)}</a></li><li><a href="${root}status.json">${esc(text.status)}</a></li></ul></nav>
-      <nav aria-labelledby="footer-join"><h2 id="footer-join">${esc(text.footerJoin)}</h2><ul class="footer-links"><li><a href="${esc(SUBMIT)}">${esc(text.submit)}</a></li><li><a href="${esc(REMOVE)}">${esc(text.removePlugin)}</a></li><li><a href="${docsUrl}">${esc(text.readDocs)}</a></li><li><a href="${REPOSITORY}">GitHub</a></li></ul></nav>
+      <nav aria-labelledby="footer-join"><h2 id="footer-join">${esc(text.footerJoin)}</h2><ul class="footer-links"><li><a href="${esc(SUBMIT)}">${esc(text.submit)}</a></li><li><a href="${esc(REPORT)}">${esc(text.reportIssue)}</a></li><li><a href="${docsUrl}">${esc(text.readDocs)}</a></li><li><a href="${REPOSITORY}">GitHub</a></li></ul></nav>
     </div>
     <div class="footer-bottom shell"><p>${esc(text.independent)} ${esc(text.scope)}</p><p class="footer-meta"><span class="footer-languages">${Object.entries(LANGUAGES).map(([id, entry]) => id === language ? `<span lang="${entry.tag}">${entry.name}</span>` : `<a href="${esc(target(id))}" lang="${entry.tag}" hreflang="${entry.tag}">${entry.name}</a>`).join('')}</span></p></div>
   </footer>
@@ -705,8 +706,8 @@ function statsPage(language, context) {
       </section>
       </div>
       <section class="detail-panel chart-panel" aria-labelledby="likes-title">
-        <div class="chart-head"><h2 id="likes-title">${esc(text.likesTitle)}</h2><p class="chart-note">${esc(text.likesNote)}</p></div>
-        <ol class="like-ranking" data-like-ranking data-names="plugins.json" data-placeholder="${root}assets/placeholder-whale.webp"></ol>
+        <div class="chart-head"><h2 id="likes-title">${esc(text.likesTitle)}</h2><label class="field ranking-limit" hidden data-like-limit-field><span>${esc(text.likesLimit)}</span><select data-like-limit aria-controls="like-ranking" disabled>${[10, 20, 30, 40, 50].map(value => `<option value="${value}"${value === 10 ? ' selected' : ''}>Top ${value}</option>`).join('')}</select></label><p class="chart-note ranking-note">${esc(text.likesNote)}</p></div>
+        <ol id="like-ranking" class="like-ranking" data-like-ranking data-names="plugins.json" data-placeholder="${root}assets/placeholder-whale.webp" aria-live="polite" aria-relevant="additions"></ol>
       </section>
       <section class="detail-panel method" aria-labelledby="method-title"><h2 id="method-title">${esc(text.methodTitle)}</h2><p>${esc(text.methodText)}</p><p><a href="${STATS_URL}">${esc(text.rawStats)}</a></p></section>
       <script id="stats-messages" type="application/json">${json(messages)}</script>

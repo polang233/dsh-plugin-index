@@ -1,3 +1,5 @@
+import { cleanDescription } from './descriptions.mjs';
+
 /** Product identity stays in the title; translated descriptions explain functionality. */
 export function validateBrandNames(config, registry) {
   if (registry.schema !== 1 || !Array.isArray(registry.entries)) throw new Error('Invalid brand-name registry');
@@ -18,7 +20,7 @@ export function applyCatalogCopy(index, display, config, github) {
   const plugins = index.plugins.map(plugin => {
     const source = byName.get(plugin.name);
     if (!source) throw new Error('Published plugin is absent from sources: ' + plugin.name);
-    const original = source.description ?? display.plugins[plugin.name]?.description;
+    const original = cleanDescription(source.description ?? display.plugins[plugin.name]?.description);
     const description = typeof original === 'string' ? {en: original, zh: original} : {...original};
     const repoKey = plugin.repository?.url?.replace(/^https?:\/\/(?:www\.)?github\.com\//, '').replace(/\.git\/?$/, '').replace(/\/$/, '').toLowerCase();
     const repo = github.repositories?.[repoKey];

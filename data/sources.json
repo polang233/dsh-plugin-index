@@ -11498,42 +11498,33 @@
       "category": "interface"
     },
     {
-      "name": "@deepseek-ai/dsh-mcp-settings",
-      "version": "1.0.5",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/phoenixlucky/dsh-mcp-settings",
-        "commit": "a731d3de18162e91c0f28e27b098ed3d2dba46cf",
-        "integrity": "sha512-ynXEYBGf1DJAsaZyrWfg5/gOlnrIPAzFsMmxMTRs9KsOnrsFvaI7V4undn1/InTTTNruya15esG1aM4fOnkq8w==",
-        "publishedAt": "2026-10-27T14:45:24Z"
-      },
+      "name": "@tinyforge/dsh-mcp-settings",
       "title": {
         "en": "MCP Settings",
         "zh": "MCP 设置"
       },
       "description": {
-        "en": "Manage MCP servers and optionally configure a Chrome connector and VISION-LIAO memory from Settings. Enables a local new-gold endpoint by default; requires a profile with the Settings UI. No DSH compatibility range is declared.",
-        "zh": "在设置中管理 MCP 服务，可选配置 Chrome 连接器和 VISION-LIAO 记忆。默认启用本机 new-gold 端点；需包含设置界面的 profile，未声明 DSH 兼容范围。"
+        "en": "Manage HTTP and stdio MCP servers in DSH Web settings. Requires DSH >=0.2.2-alpha.2 <0.3.0; checking or enabling a configured stdio server runs its command. Default server list is empty.",
+        "zh": "在 DSH Web 设置中管理 HTTP 与 stdio MCP 服务。需 DSH >=0.2.2-alpha.2 <0.3.0；检查或启用已配置的 stdio 服务会执行对应命令，默认服务列表为空。"
       },
-      "category": "integrations"
+      "category": "integrations",
+      "version": "1.0.42",
+      "repositoryReview": {
+        "version": "1.0.42",
+        "integrity": "sha512-UxCszaY4Zknkexw4eqohjJRSROKIJN4bMVKbRiP9zcTvTFnuYNy3Rk2vmTnRFISSBOb3Bxh8mVYc3CCh1HTanw==",
+        "commit": "d5b180692a6fcd5abf331d9f4dfea968ffc8824a",
+        "url": "https://github.com/phoenixlucky/dsh-mcp-settings"
+      }
     },
     {
-      "name": "@deepseek-ai/dsh-theme",
-      "version": "1.0.9",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/phoenixlucky/dsh-theme",
-        "commit": "bdbf63405da2f7430cacb1ba6adb528769442287",
-        "integrity": "sha512-RP6G67Gj5moY2vvZ0hmYpFPKQWJZAkCtFCUMroVuQX5V9f7upJiYkOWOQ2KBuTl1exSBJnoqDIT4dLbyzVF1Mg==",
-        "publishedAt": "2026-10-28T07:59:01Z"
-      },
+      "name": "@tinyforge/dsh-theme",
       "title": {
         "en": "WJ Radiance Themes",
         "zh": "WJ 星耀主题"
       },
       "description": {
-        "en": "Choose from six bundled themes and wallpapers, including VIP Golden Radiance, in the theme settings. The archive is about 37 MB; requires DSH >=0.2.1-rc.3 <0.3.0.",
-        "zh": "在主题设置中切换六款随包壁纸和配色，包含 VIP 金耀主题。归档约 37 MB；需 DSH >=0.2.1-rc.3 <0.3.0。"
+        "en": "Festival wallpapers, theme effects, transparency controls and custom themes for DSH Web. Requires DSH >=0.2.1-rc.3 <0.3.0 or 0.2.2-alpha.2; custom remote wallpapers contact their image host.",
+        "zh": "为 DSH Web 提供节日壁纸、主题效果、透明度和自定义主题。需 DSH >=0.2.1-rc.3 <0.3.0 或 0.2.2-alpha.2；自定义远程壁纸会连接图片服务。"
       },
       "category": "appearance"
     },
@@ -12771,24 +12762,16 @@
       }
     },
     {
-      "name": "dsh-session-norms",
+      "name": "@tinyforge/dsh-session-norms",
       "title": {
         "en": "Session Transcript View",
         "zh": "会话规范视图"
       },
       "description": {
-        "en": "Show the current session as numbered turns with user messages, assistant replies and tool calls, plus counters and a Markdown copy action. Read-only and web-only; tested on DSH 0.2.2-alpha.2.",
-        "zh": "把当前会话按轮次展开，显示用户消息、助手回复和工具调用，并提供统计与复制 Markdown。只读且仅支持 Web；作者验证环境为 DSH 0.2.2-alpha.2。"
+        "en": "A read-only transcript view with turn/tool summaries and Markdown copy for DSH Web. Requires DSH >=0.2.2-alpha.2 <0.3.0-0 and the Host session projection service.",
+        "zh": "在 DSH Web 只读查看会话、轮次和工具摘要，并复制 Markdown。需 DSH >=0.2.2-alpha.2 <0.3.0-0 及宿主会话投影服务。"
       },
-      "category": "interface",
-      "version": "1.0.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/phoenixlucky/dsh-session-norms",
-        "commit": "fea59779818886474746fbb036afba1a42133926",
-        "integrity": "sha512-YuhG1PDE7o6psaeQll/0BSN6aX4hKwlUGNR9DgOydLRSgaSk+jfzlwTW7FZafyQ6DAIxgR+JgP/E1TLlzvCr+w==",
-        "publishedAt": "2026-11-03T14:55:10.000Z"
-      }
+      "category": "interface"
     },
     {
       "name": "@cjylzs/dsh-browser",
@@ -13359,11 +13342,11 @@
         "en": "Goal Budget",
         "zh": "Goal 资源预算"
       },
-      "category": "usage",
       "description": {
-        "en": "Set token, estimated cost and elapsed-time caps for DSH goals and block continuation when a cap is reached, with a per-model breakdown. Price accuracy depends on configured models and rates; automatic currency detection queries the official DeepSeek balance endpoint. Requires Node >=22; no DSH compatibility range is declared.",
-        "zh": "为 DSH Goal 设置 token、估算费用和运行时长上限，超限阻止续跑，并按模型展示明细。费用准确度取决于模型与价格配置；自动币种识别会查询 DeepSeek 官方余额接口。需 Node >=22，未声明 DSH 兼容范围。"
-      }
+        "en": "Set token, estimated cost and elapsed-time caps for DSH goals and block continuation when a cap is reached, with a per-model breakdown. Price accuracy depends on configured models and rates; automatic currency detection queries the official DeepSeek balance endpoint. Requires Node >=22 and declares DSH >=0.2.1-rc.5 <0.3.0.",
+        "zh": "为 DSH Goal 设置 token、估算费用和运行时长上限，超限阻止续跑，并按模型展示明细。费用准确度取决于模型与价格配置；自动币种识别会查询 DeepSeek 官方余额接口。需 Node >=22，声明兼容 DSH >=0.2.1-rc.5 <0.3.0。"
+      },
+      "category": "usage"
     },
     {
       "name": "dsh-game-market",
@@ -14646,6 +14629,646 @@
       "description": {
         "en": "Edit Markdown or rich text as A4 handouts, render PDFs and print through existing CUPS queues. Requires macOS/Linux, local Chrome/Chromium and CUPS; Poppler enables thumbnails. Includes the print_handout Agent tool. Author-tested on DSH 0.2.1-rc.5. Draft HTML is restored without sanitization, and print paths are not confined to the generated-file directory. Use only trusted documents.",
         "zh": "将 Markdown 或富文本排成 A4 讲义、生成 PDF，并通过已有 CUPS 队列打印。需 macOS/Linux、本机 Chrome/Chromium 和 CUPS，缩略图另需 Poppler；提供 print_handout 智能体工具。作者验证 DSH 0.2.1-rc.5。 草稿 HTML 恢复未清洗，打印文件范围未限定在生成目录；仅处理可信文稿。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-entry-drawer",
+      "title": {
+        "en": "Entry Drawer",
+        "zh": "入口收纳"
+      },
+      "description": {
+        "en": "Collapse global panel entries into one sidebar switch in DSH Web/desktop. Remembers the fold state locally; author tested desktop DSH 0.2.2-rc.1, with no declared compatibility range.",
+        "zh": "在 DSH Web/桌面端将全局面板入口折叠为侧栏开关，并在本地记住状态。作者验证桌面端 DSH 0.2.2-rc.1，未声明兼容范围。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-phone",
+      "title": {
+        "en": "DSH Phone",
+        "zh": "DSH Phone 手机连接"
+      },
+      "description": {
+        "en": "Send tasks from your phone through an OpenTandem account. First QR action downloads and installs an external CLI/background Runner; paired or pending state resumes on Host restart. Author tested macOS with DSH 0.2.1-rc.2/0.2.2-rc.1.",
+        "zh": "通过 OpenTandem 账户从手机向本机发送任务。首次点二维码按钮会下载并安装外部 CLI/后台 Runner，已配对或待配对状态会随宿主重启续接；作者验证 macOS、DSH 0.2.1-rc.2/0.2.2-rc.1。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-compress-bench",
+      "title": {
+        "en": "DSH Compress Bench",
+        "zh": "DSH Compress Bench"
+      },
+      "description": {
+        "en": "Compare context compression with local read-only fixtures and JSON/SVG reports. Uses the configured DSH model and its quota; requires DSH >=0.2.1-rc.2 <0.3.0.",
+        "zh": "用本地只读样本对比上下文压缩，输出 JSON/SVG 报告。调用已配置的 DSH 模型并消耗额度；需 DSH >=0.2.1-rc.2 <0.3.0。"
+      },
+      "category": "development",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-compress-bench",
+        "commit": "c97963a3707fdee058b5a3d686172aa135e07f6f",
+        "integrity": "sha512-ha1Usz+ris02TObD0rELxGweTNwLHVgATvYBCi5s9p5Jh3TObRHJ7ahzNQtNw/h9DfEFDRoMRliXx/Og0Dx2OA==",
+        "publishedAt": "2026-10-28T08:47:35Z"
+      }
+    },
+    {
+      "name": "dsh-liars-dice",
+      "title": {
+        "en": "DSH Liar's Dice",
+        "zh": "DSH Liar's Dice"
+      },
+      "description": {
+        "en": "Play local hot-seat liar's dice with optional model opponents and referee commentary. Model seats use DSH quota; requires DSH >=0.2.1-rc.2 <0.3.0.",
+        "zh": "本地热座吹牛骰子，可选模型对手与裁判复盘。模型座位消耗 DSH 额度；需 DSH >=0.2.1-rc.2 <0.3.0。"
+      },
+      "category": "tools",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-liars-dice",
+        "commit": "0623bdd1bf0f41517fd389785a352c4bf4b887db",
+        "integrity": "sha512-DLk7ZO2vIgf7nUIxWZiGEkNqV4I/Hd8zYX0bnHoGW4eOdT5WgtsbGq8ZQSPRtoXKh/TBJG4fhzI0lVY+qQxIqA==",
+        "publishedAt": "2026-10-30T06:31:15Z"
+      }
+    },
+    {
+      "name": "dsh-market-card",
+      "title": {
+        "en": "DSH Market Card",
+        "zh": "DSH Market Card"
+      },
+      "description": {
+        "en": "Generate plugin cards from local README text and screenshots. PNG export needs installed Chrome/Edge/Chromium; requires Node >=20 and DSH >=0.2.1-rc.2 <0.3.0.",
+        "zh": "从本地 README 与截图生成插件介绍卡片。PNG 导出需已安装 Chrome/Edge/Chromium；需 Node >=20 与 DSH >=0.2.1-rc.2 <0.3.0。"
+      },
+      "category": "development",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-market-card",
+        "commit": "e4f4ca0b370a45382f065b8731123d40d7f0dbbd",
+        "integrity": "sha512-ZKDM5Lnh/digNGYNZ9uCjf24wVZaE57VL1P/jeKCzDCWribu97R+HEHoqGtvZU99oYBFQpSx32E/LCeyG0n7bg==",
+        "publishedAt": "2026-10-30T06:17:17Z"
+      }
+    },
+    {
+      "name": "dsh-pet-ledger",
+      "title": {
+        "en": "DSH Pet Ledger",
+        "zh": "DSH Pet Ledger"
+      },
+      "description": {
+        "en": "Track pet achievements from DSH tool/session events with local evidence. The ledger retains commands and output excerpts; requires DSH >=0.2.1-rc.2 <0.3.0.",
+        "zh": "从 DSH 工具和会话事件记录宠物成就与本地证据。账本会保留命令及输出片段；需 DSH >=0.2.1-rc.2 <0.3.0。"
+      },
+      "category": "usage",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-pet-ledger",
+        "commit": "cb2a21a6c665960029aa19946eb16c1db5a0f40e",
+        "integrity": "sha512-l23UwB3p9fUeBo5r1maCl57NLxJD7cCrv3sMz9Szpot+fmj1k4bZDDC5M1ZIXwrN2lpkIQeHuMkVRUnvAHemvg==",
+        "publishedAt": "2026-10-28T09:05:19Z"
+      }
+    },
+    {
+      "name": "dsh-ps-preflight",
+      "title": {
+        "en": "DSH PS Preflight",
+        "zh": "DSH PS Preflight"
+      },
+      "description": {
+        "en": "Grade PowerShell tool calls before execution and request confirmation for high-risk matches. Heuristic checks supplement native approvals; requires DSH >=0.2.0-rc.2 <0.3.0.",
+        "zh": "执行前分级 PowerShell 工具调用，对高风险命中请求确认。启发式检查只补充宿主原生审批；需 DSH >=0.2.0-rc.2 <0.3.0。"
+      },
+      "category": "development",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-ps-preflight",
+        "commit": "66000178eb2dcf4b9038f9bb3f08e401640af447",
+        "integrity": "sha512-HCjUSJciBzd/lKdeUSh8ec3fOLmIawRySKFNGoWK7+B+PRXDyDY+8U5Pc48uNreIrDfY7psLDFN7tYLzps9h3g==",
+        "publishedAt": "2026-10-30T06:20:19Z"
+      }
+    },
+    {
+      "name": "dsh-pua-receipt",
+      "title": {
+        "en": "DSH PUA Receipt",
+        "zh": "DSH PUA Receipt"
+      },
+      "description": {
+        "en": "Measure tool activity before and after a /pua steering message with local receipts. Requires Node >=22 and DSH >=0.2.1-rc.2 <0.3.0; does not establish causality.",
+        "zh": "对比 /pua 施压消息前后的工具行为并保存本地回执。需 Node >=22 与 DSH >=0.2.1-rc.2 <0.3.0；统计不证明因果关系。"
+      },
+      "category": "usage",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-pua-receipt",
+        "commit": "3e018e2c9681121d8a2c95754f38d9871964224e",
+        "integrity": "sha512-XUc685+KnckH8T+vMV7TOxZC57jUmtSsIAbOV6RCEQ7Iy1FjOEuPHWA5+Ugmrb73WE1+3cfn80NfOXrUh1haBw==",
+        "publishedAt": "2026-10-27T09:24:26Z"
+      }
+    },
+    {
+      "name": "dsh-skill-radar",
+      "title": {
+        "en": "DSH Skill Radar",
+        "zh": "DSH Skill Radar"
+      },
+      "description": {
+        "en": "Inspect skill usage and manage local skill files with toggle, create, archive and restore actions. Requires DSH >=0.2.0-rc.2 <0.3.0; stores short user-prompt excerpts locally.",
+        "zh": "查看技能命中并管理本地技能文件，支持启停、新建、归档和恢复。需 DSH >=0.2.0-rc.2 <0.3.0；本地会保存简短用户提示片段。"
+      },
+      "category": "skills",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-skill-radar",
+        "commit": "312cbfb56e040360d384286738bf91e16b727433",
+        "integrity": "sha512-XnPSUBfLhKDGZcr0OLh83CCxgBUpjmFD5MopqU32LKIQZ3fu7HvpxuIsjZUZ6K9ShHqDrZiJ0b0XRMpsiQYeTQ==",
+        "publishedAt": "2026-10-27T09:45:32Z"
+      }
+    },
+    {
+      "name": "dsh-take-sheet",
+      "title": {
+        "en": "DSH Take Sheet",
+        "zh": "DSH Take Sheet"
+      },
+      "description": {
+        "en": "Split a local video into selectable reference frames and export a contact sheet, CSV and JSON. Requires separately installed ffmpeg/ffprobe 5.1+ and DSH >=0.2.1-rc.2 <0.3.0.",
+        "zh": "把本地视频切为可勾选的参考帧，导出联系表、CSV 和 JSON。需另装 ffmpeg/ffprobe 5.1+，以及 DSH >=0.2.1-rc.2 <0.3.0。"
+      },
+      "category": "tools",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-take-sheet",
+        "commit": "6cf383c918019baebe831ccd7307cc03c93ea64a",
+        "integrity": "sha512-Rhv9LthlWoJSLA8iBDlpfz1ye17Onflf1FgQOC00x574I+lNKvUaC0/Lh80FXs5kYcji+RYCqNZuE5QEHQc8QQ==",
+        "publishedAt": "2026-10-28T09:00:49Z"
+      }
+    },
+    {
+      "name": "dsh-pnl-attribution",
+      "title": {
+        "en": "DSH PnL Attribution",
+        "zh": "DSH PnL Attribution"
+      },
+      "description": {
+        "en": "Attribute A-share profit/loss from a manually maintained holdings CSV and public Tencent quotes. Sends securities codes to quote services; requires DSH >=0.2.1-rc.2 <0.3.0.",
+        "zh": "用手工持仓 CSV 和腾讯公开行情分析 A 股盈亏归因。会向行情服务发送证券代码；需 DSH >=0.2.1-rc.2 <0.3.0。"
+      },
+      "category": "tools",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-pnl-attribution",
+        "commit": "e5117cf46a80725a5cdf2c5743be690c7f0a865b",
+        "integrity": "sha512-TSj7J8wWnP6++iDH+J6M507cdMGROm56u0sbuyKbLSFvZUHB6iWQjrvQBGzj6+FaA6X/5qexunjhz/+hJkS9pw==",
+        "publishedAt": "2026-10-27T09:19:47Z"
+      }
+    },
+    {
+      "name": "dsh-codex-lens",
+      "title": {
+        "en": "Codex Lens",
+        "zh": "Codex Lens"
+      },
+      "description": {
+        "en": "Read local Codex threads in a DSH sidebar and bind transcripts to a DSH session. Needs a Node runtime with node:sqlite and local Codex history; Explorer reveal is Windows-only.",
+        "zh": "在 DSH 侧栏浏览本机 Codex 线程，将转录绑定到 DSH 会话。需支持 node:sqlite 的 Node 运行时与本地 Codex 历史；资源管理器定位仅 Windows。"
+      },
+      "category": "integrations",
+      "version": "0.4.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/moonrzz/dsh-codex-lens",
+        "commit": "6c22e46330ebb737b517eda806469793601a1b2b",
+        "integrity": "sha512-fOFEYzQozbRAtt5TQOdev8iIjHjIO0kNTqjjCrQB3TmjtKt/MeliH6gDnW6/sG3L55MbBptA6mwZhmZU6+KyUw==",
+        "publishedAt": "2026-11-09T03:43:34Z"
+      }
+    },
+    {
+      "name": "dsh-changelog-zh",
+      "title": {
+        "en": "DSH Changelog ZH",
+        "zh": "DSH Changelog ZH"
+      },
+      "description": {
+        "en": "Generate Chinese changelogs from local Git history and optional session evidence. Requires Git and Node >=22; CLI file export is optional and model translation is not used.",
+        "zh": "从本地 Git 历史与可选会话证据生成中文变更日志。需 Git 与 Node >=22；CLI 可选写出文件，不调用模型翻译。"
+      },
+      "category": "development",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-changelog-zh",
+        "commit": "f4ee495c2b3b71498cf568c309d2cabbe8607243",
+        "integrity": "sha512-HoypCFulm70Y9+NILi6/GMHmjW9CpbMItEU8u82m9/O6QHz5L72mA6lwyGZNeqI42UHEH4/am6eRe450qqu9Gg==",
+        "publishedAt": "2026-10-27T08:31:17Z"
+      }
+    },
+    {
+      "name": "dsh-cost-ledger",
+      "title": {
+        "en": "DSH Cost Ledger",
+        "zh": "DSH Cost Ledger"
+      },
+      "description": {
+        "en": "Record local model usage and compare estimated costs with manually entered bills. Built-in prices are dated snapshots; requires DSH >=0.2.1-rc.2 <0.3.0.",
+        "zh": "记录本地模型用量，将费用估算与手工账单对照。内置价格是带日期的快照；需 DSH >=0.2.1-rc.2 <0.3.0。"
+      },
+      "category": "usage",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-cost-ledger",
+        "commit": "230d0bd1f025fb56043e89b139ec2f8d70942084",
+        "integrity": "sha512-1kXt7GOiOGw38j/1hHdRmlYpsBQ9bNcqGyiLkJKsWcVcd0tZ1755csH015NUY3pGeT1kbkSLc5koNX5hT/ZmVQ==",
+        "publishedAt": "2026-10-27T08:35:59Z"
+      }
+    },
+    {
+      "name": "dsh-delivery-receipt",
+      "title": {
+        "en": "DSH Delivery Receipt",
+        "zh": "DSH Delivery Receipt"
+      },
+      "description": {
+        "en": "Collect Git, artifact and secret-scan evidence for a delivery report. Configured test/build shell commands run by default on generation; use trusted projects or set runCommands:false. Requires Node >=20 and Git.",
+        "zh": "收集 Git、产物与密钥扫描证据生成交付报告。生成时默认执行配置的测试/构建 shell 命令；仅用于可信项目，或设置 runCommands:false。需 Node >=20 与 Git。"
+      },
+      "category": "development",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-delivery-receipt",
+        "commit": "650319e9c935a9ae788efe75c8cfd39edf754f79",
+        "integrity": "sha512-O0JdkLiCqn5EowvnrB+qKJZaWw9x+6A/UM6YbTJqgyYL0ytldzNZoEiNORQdCnigc4KVtcx3sPNfahOoVANzrg==",
+        "publishedAt": "2026-10-27T08:33:15Z"
+      }
+    },
+    {
+      "name": "dsh-ship-receipt",
+      "title": {
+        "en": "DSH Ship Receipt",
+        "zh": "DSH Ship Receipt"
+      },
+      "description": {
+        "en": "Generate evidence-based delivery receipts through ship_receipt. Supplied check commands run as the current user by default; use run:false to record reported results. Requires Git and DSH >=0.2.1-rc.2 <0.3.0.",
+        "zh": "通过 ship_receipt 生成带证据的交付回执。传入的检查命令默认按当前用户权限运行，run:false 仅记录转述结果。需 Git 与 DSH >=0.2.1-rc.2 <0.3.0。"
+      },
+      "category": "development",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-ship-receipt",
+        "commit": "7e93a92f999dfe49d8bbaae2297d97bcc0e12179",
+        "integrity": "sha512-A6q5dwz/l6lPD8HpxmkZe6zXuTdQT6YXiMSSslb9irJ1jDkNj24zigRJp8YCc9MfWgvT3srFkmcCAO0IUaV7hQ==",
+        "publishedAt": "2026-10-27T08:33:55Z"
+      }
+    },
+    {
+      "name": "dsh-signal-pet",
+      "title": {
+        "en": "DSH Signal Pet",
+        "zh": "DSH Signal Pet"
+      },
+      "description": {
+        "en": "Show a pet indicator driven by real DSH agent/tool events. Activity stays in host memory; requires DSH >=0.2.1-rc.2 <0.3.0.",
+        "zh": "用真实 DSH 智能体与工具事件驱动宠物状态提示。活动状态仅保存在宿主内存；需 DSH >=0.2.1-rc.2 <0.3.0。"
+      },
+      "category": "appearance",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-signal-pet",
+        "commit": "72e6eef8c8340dda82c4ef5ab727905b38f24816",
+        "integrity": "sha512-FM3PU/qW5tiJXG7oa2sHDGlfwKKjMChgmmuWGcJyVZIDCFj6gDl2Hptn3/YW5VIMInZBWYQq3fNzjbjZm/1unA==",
+        "publishedAt": "2026-10-27T08:26:41Z"
+      }
+    },
+    {
+      "name": "dsh-vision-diff",
+      "title": {
+        "en": "DSH Vision Diff",
+        "zh": "DSH Vision Diff"
+      },
+      "description": {
+        "en": "Compare local PNG screenshots and keep pixel-diff reports. Retains input images by default, with no direct external upload; requires DSH >=0.2.1-rc.2 <0.3.0.",
+        "zh": "比较本地 PNG 截图并保留像素差异报告。默认保留输入图，不直接上传外部服务；需 DSH >=0.2.1-rc.2 <0.3.0。"
+      },
+      "category": "development",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-vision-diff",
+        "commit": "64e00147e5d580ca80273a2492d0c62c5b310daf",
+        "integrity": "sha512-yrmKZ4p8NiSAqdXnK6sjRN/OKSr8NaattFNSW+vpWB01sHMoxdh+BGM3MfZSDwAPVM0nyQOwb9A2/Yu8uEO4jA==",
+        "publishedAt": "2026-10-27T08:26:39Z"
+      }
+    },
+    {
+      "name": "dsh-den",
+      "title": {
+        "en": "DSH Den",
+        "zh": "DSH 常驻助手"
+      },
+      "description": {
+        "en": "Run a resident assistant with scheduled wakes, memory and notices. Standing autonomy requires a panel token quoted in a human message; model usage and profile-wide authority need explicit setup.",
+        "zh": "提供常驻助手、定时唤醒、记忆和通知；需人工令牌授权，会消耗模型额度，常驻授权可跨会话生效。"
+      },
+      "category": "workflow",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-den",
+        "commit": "fa14d426ccf9aaf08741c9c01fab19a3e53da7de",
+        "integrity": "sha512-s66N65u7sAgorZzx/3T/QuBTtq4VxtQSRFxQZTjjLgeuscsjdLz3Dug9cJ8Qxk3aNQ2n6A37mPg1H6Rg3BzNvg==",
+        "publishedAt": "2026-10-27T08:53:40Z"
+      }
+    },
+    {
+      "name": "dsh-doudizhu",
+      "title": {
+        "en": "DSH Doudizhu",
+        "zh": "DSH 斗地主"
+      },
+      "description": {
+        "en": "Play local or LAN Dou Dizhu in DSH. LAN play exposes a game port and should be used on a trusted network.",
+        "zh": "在 DSH 中进行单机或局域网斗地主；联机使用明文游戏端口，仅适合可信网络。"
+      },
+      "category": "interface",
+      "version": "0.2.5",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-doudizhu",
+        "commit": "ed23ffca3b9b50da3c3b4bfd256bb0194ca72545",
+        "integrity": "sha512-69S8X7QefruNx9RiMCtcnGfOKpT0VkYrKR9QKoj6TAdZ3CqnvJmh1dvaUu0s0eY879MQwmi/CgKtFDEFeStI9Q==",
+        "publishedAt": "2026-10-27T09:20:34Z"
+      }
+    },
+    {
+      "name": "dsh-imagegen-skill",
+      "title": {
+        "en": "DSH Imagegen Skill",
+        "zh": "DSH 图像生成技能"
+      },
+      "description": {
+        "en": "Register a packaged image-generation skill in DSH. CLI use needs Python, the OpenAI SDK, a configured image endpoint/key and any applicable service fees; prompts and edit images are sent to that endpoint.",
+        "zh": "在 DSH 中注册图像生成技能；需自行配置 Python、SDK、图像端点和密钥，提示词及编辑图片会上传并可能产生费用。"
+      },
+      "category": "skills",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-imagegen-skill",
+        "commit": "52a845f6c977493112e7c5df8398a3bf2fb690eb",
+        "integrity": "sha512-bAIgGNdrrSOZL/De7BU8SHY8aaJaWQ1OgTsM+qaCLFEStfh+6M1NQI7j1EgAMzC8wDhuySyPHLD3DGNBo5IMDw==",
+        "publishedAt": "2026-10-27T08:31:57Z"
+      }
+    },
+    {
+      "name": "dsh-in-hand",
+      "title": {
+        "en": "DSH In Hand",
+        "zh": "DSH 掌中控"
+      },
+      "description": {
+        "en": "View DSH sessions, chat and approve individual actions from a phone. Remote access requires a separately secured relay; notifications, Web Push and GitHub starring are optional configured network actions.",
+        "zh": "在手机查看会话、聊天和逐次审批；远程访问需另配受保护的中继，可选通知、Web Push 和 GitHub 授权。"
+      },
+      "category": "integrations",
+      "version": "1.8.26",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-in-hand",
+        "commit": "5c7b4ea8561ba0e5dfd651a38872b883a4836a1a",
+        "integrity": "sha512-LE1EZ9gIf0/zBmX1gkgxHomm5fwBB+UFqm171WxHaCPANxlwTT/uiCtKxTd2yzi+gC+9o1Mf4WUA+w2XRRcinQ==",
+        "publishedAt": "2026-11-09T03:13:50Z"
+      }
+    },
+    {
+      "name": "dsh-launch-card",
+      "title": {
+        "en": "DSH Launch Card",
+        "zh": "DSH 发布卡片"
+      },
+      "description": {
+        "en": "Generate launch SVG/HTML and bilingual copy from local repository facts. Choose a dedicated output directory; generation writes and can replace its named artifacts.",
+        "zh": "从本地 README 和包信息生成发布 SVG、HTML 与双语文案；请使用独立输出目录，生成会覆盖同名产物。"
+      },
+      "category": "tools",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-launch-card",
+        "commit": "9f667dc0a8ea70bcf2cc0ef5ad2f33e2acd59406",
+        "integrity": "sha512-i53edYIAtFyteYcd3Wo8ndSRWSdxt3yUmvfBCadP5RAwwxjoXQzOSycVLYwCjvyo0CYf7npLlOcg77JQXz9iAg==",
+        "publishedAt": "2026-10-27T08:31:21Z"
+      }
+    },
+    {
+      "name": "dsh-mask-pixel-lock",
+      "title": {
+        "en": "DSH Mask Pixel Lock",
+        "zh": "DSH 蒙版像素验证"
+      },
+      "description": {
+        "en": "Compare PNG edits against a mask and write heatmaps, HTML and SHA-256 reports locally. Uses RGBA8 comparison, including downconversion of 16-bit PNG samples.",
+        "zh": "在本地比对 PNG 蒙版外像素，生成热力图与证明报告；按 RGBA8 比较，16 位样本会降为 8 位。"
+      },
+      "category": "tools",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-mask-pixel-lock",
+        "commit": "e76cef07ee8fdb3c78f2893682db0f3800b386a8",
+        "integrity": "sha512-GjbQs91KlLsyBSaHVi5sU593fvkMrgbCz84OmRKsi7rHREhcpb09RnOyywefpK7B7laMALs2O7HZBMuJy4i10g==",
+        "publishedAt": "2026-10-27T08:26:37Z"
+      }
+    },
+    {
+      "name": "dsh-mp-catalog-guard",
+      "title": {
+        "en": "DSH MP Catalog Guard",
+        "zh": "DSH 小程序内容目录检查"
+      },
+      "description": {
+        "en": "Check WeChat mini-program content catalogs, integer fen amounts, render usage and images. Fixes are dry-run by default; applying replaces the selected catalog file.",
+        "zh": "检查微信小程序内容目录、整数分金额、价格渲染和图片路径；默认只预览，应用修复会重写所选目录文件。"
+      },
+      "category": "tools",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-mp-catalog-guard",
+        "commit": "142395439cb299ef7dd9decbc815e2ef5137ce0a",
+        "integrity": "sha512-pg2ddyWMCd2wghbmaBnawjEn54iFwRZsytyxuMGOjZkeXgwsbPp9JAzIOQVUhww/rL7lC9WF+waPjYRmSjG1Sg==",
+        "publishedAt": "2026-10-27T08:37:19Z"
+      }
+    },
+    {
+      "name": "dsh-poker-night",
+      "title": {
+        "en": "DSH Poker Night",
+        "zh": "DSH 扑克之夜"
+      },
+      "description": {
+        "en": "Play eight-seat Hold’em with LLM opponents and optional LAN guests. A separately maintained MIT fork of BubblePtr/dsh-holdem; requires a configured model and a trusted LAN for network play.",
+        "zh": "提供八人德州扑克、模型对手与可选局域网联机；这是保留 MIT 上游署名的 dsh-holdem 独立 fork，需模型额度和可信网络。"
+      },
+      "category": "interface",
+      "version": "0.7.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-poker-night",
+        "commit": "9a1cf8bef48221edeee891d35508467f75b9be71",
+        "integrity": "sha512-WsF6Fk999jXIhukZGC/oXJ94TlCr3dbpq/6d6KiERg6Z438hhpFLOkCDc2UpAgpBiranGAvZyQS8hjA2/GkQ/Q==",
+        "publishedAt": "2026-10-27T06:56:32Z"
+      }
+    },
+    {
+      "name": "dsh-readme-reel",
+      "title": {
+        "en": "DSH README Reel",
+        "zh": "DSH README 动画"
+      },
+      "description": {
+        "en": "Compose local PNG screenshots into README WebM/GIF and a cover image. Requires a separately installed ffmpeg; rebuilds replace generated artifacts and the output .frames directory.",
+        "zh": "把本地 PNG 截图合成为 README WebM、GIF 和封面；需自行安装 ffmpeg，重建会覆盖产物并清理输出 .frames 目录。"
+      },
+      "category": "tools",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-readme-reel",
+        "commit": "7e0d1fed4858450117f54f64ef1dc81256291ab7",
+        "integrity": "sha512-w1s1IQ8eyww4X3REJ0E9rk/ImJhkeDxrJHqgDCa8mnrlA0DM2/1tw1MJnhpj+CSxuEuS9kw8fonNM2W0Djq0uQ==",
+        "publishedAt": "2026-10-27T08:31:05Z"
+      }
+    },
+    {
+      "name": "dsh-tab-complete",
+      "title": {
+        "en": "DSH Tab Complete",
+        "zh": "DSH 输入补全"
+      },
+      "description": {
+        "en": "Suggest text while typing using the configured model, session context and accepted style examples. Drafts/context leave the host through that model provider and consume quota.",
+        "zh": "根据会话上下文和已接受的风格样例补全输入；草稿与上下文会发送给所配模型并消耗额度。"
+      },
+      "category": "interface",
+      "version": "0.4.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-tab-complete",
+        "commit": "04501ae1a1f03611e16f323852c4bf7a0626cad8",
+        "integrity": "sha512-C4kzrUzdlsWK6whQ36V6BbfIdGHLzcg7lFMG/nLNdLA2QoLumoZxiNWShCLO1myWu2XBOyZmYKPUpQqnYCiRDQ==",
+        "publishedAt": "2026-11-02T05:39:06Z"
+      }
+    },
+    {
+      "name": "dsh-voice-memo",
+      "title": {
+        "en": "DSH Voice Memo",
+        "zh": "DSH 口述笔记"
+      },
+      "description": {
+        "en": "Record WAV voice memos, waveform images and timestamped notes. Transcription needs a configured ASR provider or local command; verify the selected provider’s privacy and model-download behavior.",
+        "zh": "录制 WAV、生成波形和带时间戳的笔记；需所配 ASR 或本地命令，处理位置与模型下载行为取决于识别配置。"
+      },
+      "category": "tools",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-voice-memo",
+        "commit": "69e84d8a85f7021ba63220cab6c7448c13c38f24",
+        "integrity": "sha512-7Dse69irK9YZUgv45uAyKskEBv9F5N8HMWE5keIPC+yTDqKaL5TvjpDNBxHUyxKZR203gwvOd6EEAZeNSNQSpg==",
+        "publishedAt": "2026-10-27T08:36:46Z"
+      }
+    },
+    {
+      "name": "dsh-warden",
+      "title": {
+        "en": "DSH Warden",
+        "zh": "DSH 工具审查"
+      },
+      "description": {
+        "en": "Add a heuristic/model review before selected destructive or sensitive tool calls. Review failures allow the existing host chain to continue; it is not a fail-closed security sandbox and consumes model quota.",
+        "zh": "在部分高风险工具调用前增加模型辅助审查；审查失败时继续原有宿主流程，会消耗模型额度，不能代替审批或沙箱。"
+      },
+      "category": "tools",
+      "version": "0.1.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-warden",
+        "commit": "77d620ce72385d30baefe3432dd8bb54422c2fd1",
+        "integrity": "sha512-atWFfRW4M+qpym2+s1GomZNRnfeGGxtAgwsW9IpAXpeASIEcjpSy6bHvekCOKuZlzJGqhb8QSsuXlVJhJ6vFoA==",
+        "publishedAt": "2026-10-27T08:26:38Z"
+      }
+    },
+    {
+      "name": "dsh-split-proof",
+      "title": {
+        "en": "DSH Split Proof",
+        "zh": "DSH 分流验收"
+      },
+      "description": {
+        "en": "Verify local proxy routing configurations against test cases and cached rule providers, with reports and optional CLI exports. Does not apply router settings or fetch remote rule providers.",
+        "zh": "离线读取代理分流配置、规则缓存和用例，生成验收报告；不改路由器、不下载远程规则，支持范围有限。"
+      },
+      "category": "tools",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-split-proof",
+        "commit": "431173ae3d1d61ac7ae22770fcd03f9ff529fa54",
+        "integrity": "sha512-BPxD/3CChJxFl1ZAJndEwo4+EZS+Ei7U5PvVqeHwBqF4HFLvm5G9/8Vy2bjVRhrb6RCkwJyH/gt8lkXHUmp+8w==",
+        "publishedAt": "2026-11-09T03:34:23Z"
+      }
+    },
+    {
+      "name": "dsh-pstack",
+      "title": {
+        "en": "dsh-pstack",
+        "zh": "dsh-pstack"
+      },
+      "description": {
+        "en": "pstack coding workflows, skills, model-role settings and host subagent delegation for DeepSeek Harness. Requires DSH >=0.2.2-rc.1 and Node >=24.21.1; scripts use host shell tools and their declared interpreters. Browser, terminal and forge steps need optional bundles; model calls follow configured routes and pricing.",
+        "zh": "将 pstack 编程工作流、技能、模型角色设置和宿主子代理协作移植到 DeepSeek Harness。需 DSH >=0.2.2-rc.1、Node >=24.21.1；脚本通过宿主 shell 工具和各自解释器运行，浏览器、终端及 forge 步骤需可选组合包，模型调用按配置路由计费。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "@zseven-w/dsh-browser",
+      "title": {
+        "en": "DSH Browser",
+        "zh": "DSH Browser"
+      },
+      "description": {
+        "en": "Run browser automation in a separate temporary Chrome, Edge or Chromium session with semantic actions and bounded evidence. Requires an installed browser; configure allowedOrigins for restricted navigation.",
+        "zh": "在独立临时 Chrome、Edge 或 Chromium 会话中操作网页，提供语义操作与有界证据。需本机已安装浏览器；可配置 allowedOrigins 限制页面导航。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@zseven-w/dsh-computer",
+      "title": {
+        "en": "dsh-computer",
+        "zh": "dsh-computer"
+      },
+      "description": {
+        "en": "macOS desktop automation with Accessibility, window screenshots and host approvals. Requires a locally built Helper and macOS permissions.",
+        "zh": "通过辅助功能、窗口截图和宿主审批操作 macOS 桌面；需本机编译 Helper 并授予系统权限。"
       },
       "category": "tools"
     }

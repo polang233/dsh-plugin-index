@@ -6,6 +6,7 @@ import {withRetries} from './retry.mjs';
 import {LABELS} from './labels.mjs';
 import {checkRecommendationSnapshot} from './recommendation-state.mjs';
 import {REVIEW_SOURCE, maintainerReviewFor, validateMaintainerReviews} from './maintainer-reviews.mjs';
+import {stripStarPrefix} from './descriptions.mjs';
 
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 
@@ -43,6 +44,7 @@ export function checkMarketDisplay(index, github, downloads, display, publishers
     if (JSON.stringify(ownLabels) !== JSON.stringify(expectedLabels) || ownLabels.some(id => JSON.stringify(index.metadata?.labels?.[id]?.title) !== JSON.stringify(LABELS[id]))) throw new Error('Missing visible DSH labels: ' + plugin.name);
     for (const language of ['en', 'zh']) {
       const original = presentation.description?.[language];
+      if (stripStarPrefix(original) !== original) throw new Error('Metrics leaked into editorial copy: ' + plugin.name);
       const star = hasStars ? '★ ' + new Intl.NumberFormat(language === 'zh' ? 'zh-CN' : 'en-US').format(repo.stars) : undefined;
       const expected = star ? star + (original ? ' │ ' + original : '') : original;
       if (plugin.description?.[language] !== expected) throw new Error('Missing visible DSH metrics: ' + plugin.name);

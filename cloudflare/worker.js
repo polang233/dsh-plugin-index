@@ -12,6 +12,8 @@ import { verifySignedLike } from '../shared/signed-like.js';
 const COUNTED = new Set(['/index.json']);
 const PLUGIN_NAMES = new WeakMap();
 const BADGE_LOGO = new WeakMap();
+// Release-day boundary in UTC. Earlier cycles retain the old one-like deduction.
+const LIKE_DECAY_FROM_DAY = '2026-11-09';
 
 export default {
   async fetch(request, env, ctx) {
@@ -129,8 +131,15 @@ function likeJson(body, status = 200, headers = {}) {
 }
 
 function effectiveLikes(row, day) {
-  const cycles = Math.max(0, Math.floor((Date.parse(day) - Date.parse(row.decayed_at)) / (3 * DAY)));
-  return Math.max(0, row.count - cycles);
+  const legacyDay = day < LIKE_DECAY_FROM_DAY ? day : LIKE_DECAY_FROM_DAY;
+  const legacyCycles = Math.max(0, Math.floor((Date.parse(legacyDay) - Date.parse(row.decayed_at)) / (3 * DAY)));
+  let count = Math.max(0, row.count - legacyCycles);
+  const anchor = row.decayed_at < LIKE_DECAY_FROM_DAY ? LIKE_DECAY_FROM_DAY : row.decayed_at;
+  const cycles = Math.max(0, Math.floor((Date.parse(day) - Date.parse(anchor)) / (3 * DAY)));
+  for (let cycle = 0; cycle < cycles && count >= 50; cycle++) {
+    count -= Math.max(1, Math.floor(count / 100));
+  }
+  return count;
 }
 
 function validPluginName(name) {
@@ -251,7 +260,7 @@ async function likes(env) {
   return likeJson({
     schema: 1,
     generatedAt: now.toISOString(),
-    rule: 'Each person can like each plugin once per UTC day (including installs), up to 100 plugins daily; likes lose one every three days, stopping at zero.',
+    rule: 'Each person can like each plugin once per UTC day (including installs), up to 100 plugins daily; every three days, totals of at least 50 lose 1% rounded down, at least one like. Totals below 50 do not decay. A counted vote bringing a total back to 50 starts a new three-day cycle.',
     likes: Object.fromEntries(rows.results.map(row => [row.name, effectiveLikes(row, day)]).filter(([, value]) => value > 0))
   }, 200, { 'cache-control': 'public, max-age=60' });
 }
@@ -268,15 +277,29 @@ async function like(request, env) {
   const day = new Date(now).toISOString().slice(0, 10);
   const hash = await voterHash(request, env, day);
   // D1 batches are transactions: only an inserted vote can increment the total.
-  const cycles = 'MAX(0, CAST((julianday(excluded.decayed_at) - julianday(likes.decayed_at)) / 3 AS INTEGER))';
+  // Settle old cycles up to the release boundary, then apply each percentage cycle
+  // to its predecessor. Below 50, an accepted vote restarts the UTC-day anchor.
+  const legacyDay = `MIN(excluded.decayed_at, '${LIKE_DECAY_FROM_DAY}')`;
+  const cycles = `MAX(0, CAST((julianday(${legacyDay}) - julianday(likes.decayed_at)) / 3 AS INTEGER))`;
   const [vote, , total, seen] = await env.DB.batch([
     env.DB.prepare('INSERT OR IGNORE INTO like_votes (day, name, hash) SELECT ?, ?, ? WHERE (SELECT COUNT(*) FROM like_votes WHERE day = ? AND hash = ?) < 100')
       .bind(day, name, hash, day, hash),
     env.DB.prepare(`INSERT INTO likes (name, count, decayed_at) SELECT ?, 1, ? WHERE changes() > 0
       ON CONFLICT(name) DO UPDATE SET
-        count = MAX(0, likes.count - ${cycles}) + 1,
-        decayed_at = CASE WHEN likes.count - ${cycles} <= 0 THEN excluded.decayed_at
-          ELSE date(likes.decayed_at, '+' || (3 * ${cycles}) || ' days') END`)
+        (count, decayed_at) = (
+          WITH RECURSIVE decay(total, anchor) AS (
+            SELECT MAX(0, likes.count - ${cycles}),
+              CASE WHEN excluded.decayed_at >= '${LIKE_DECAY_FROM_DAY}' THEN MAX(likes.decayed_at, '${LIKE_DECAY_FROM_DAY}')
+                ELSE date(likes.decayed_at, '+' || (3 * ${cycles}) || ' days') END
+            UNION ALL
+            SELECT total - MAX(1, CAST(total / 100 AS INTEGER)), date(anchor, '+3 days')
+            FROM decay WHERE total >= 50 AND julianday(excluded.decayed_at) - julianday(anchor) >= 3
+          )
+          SELECT total + 1,
+            CASE WHEN total = 0 OR (excluded.decayed_at >= '${LIKE_DECAY_FROM_DAY}' AND total < 50)
+              THEN excluded.decayed_at ELSE anchor END
+          FROM decay ORDER BY anchor DESC LIMIT 1
+        )`)
       .bind(name, day),
     env.DB.prepare('SELECT count, decayed_at FROM likes WHERE name = ?').bind(name),
     env.DB.prepare('SELECT 1 FROM like_votes WHERE day = ? AND name = ? AND hash = ?').bind(day, name, hash)

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "plugins": {
+    "dsh-goal-budget": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/boom-10/dsh-goal-budget/c1c6334da60061b84f9ae03c011161e3205f7b97/docs/panel.png",
+          "alt": "Goal Budget spending and token breakdown"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/boom-10/dsh-goal-budget/c1c6334da60061b84f9ae03c011161e3205f7b97/docs/pill.png",
+          "alt": "Goal Budget status bar indicator"
+        }
+      ]
+    },
+    "dsh-phone": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/opentandem/dsh-phone/c717fa3b9307bcdbc5e7a2bff029ad5ab9790cb4/docs/1-sidebar-entry.png",
+          "alt": "DSH Phone setup page and sidebar entry"
+        }
+      ]
+    }
+  }
+}

@@ -1,16 +1,21 @@
 # 插件预览图
 
-收录表单的「插件实际效果」用于提交 1–6 张真实截图及说明。维护者确认图片对应当前插件、没有密钥或个人信息后，在 `data/sources.json` 的对应条目增加：
+收录表单的「插件实际效果」用于提交 1–6 张真实截图及说明。维护者确认图片对应当前插件、没有密钥或个人信息后，在独立的 `data/plugin-previews.json` 中按包名登记：
 
 ```json
 {
-  "screenshots": [
-    {"url": "https://raw.githubusercontent.com/owner/repo/COMMIT/docs/screenshot.png", "alt": "插件在侧栏中显示任务列表"}
-  ]
+  "schema": 1,
+  "plugins": {
+    "example-plugin": {
+      "screenshots": [
+        {"url": "https://raw.githubusercontent.com/owner/repo/COMMIT/docs/screenshot.png", "alt": "插件在侧栏中显示任务列表"}
+      ]
+    }
+  }
 }
 ```
 
-支持 GitHub 公共附件和公开仓库中的 PNG、JPEG、WebP、GIF。仓库图片优先使用固定提交地址。构建时校验并写入 `status.json` 的包展示证据和 `display.json` 的插件条目，不扩展 DSH 的官方索引格式。图片发生变化后需重新确认。
+支持 GitHub 公共附件和公开仓库中的 PNG、JPEG、WebP、GIF。仓库图片优先使用固定提交地址。构建时校验后只写入网站的 `display.json`，不放入收录配置、包审核证据或 DSH 官方 `index.json`。图片发生变化后需重新确认。
 
 未设置 `screenshots` 时，客户端从 README 的截图、演示或预览段落中识别图片，并排除 Logo、徽章、边框、横幅、小图和极宽装饰图。自动识别仍可能有误，可设置 `"screenshots": []` 明确关闭该插件的自动预览。
 

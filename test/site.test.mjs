@@ -77,3 +77,32 @@ test('Japanese and Korean have a home and stats page whose cards open the Englis
   assert.match(missing, /href="https:\/\/dshopen.org\/ja\/" lang="ja"/);
   assert.match(missing, /href="https:\/\/dshopen.org\/ko\/" lang="ko"/);
 });
+
+test('site reports issues, offers ranking limits and cleans historical description prefixes', async t => {
+  const dir = await mkdtemp(join(tmpdir(), 'site-'));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const output = pathToFileURL(dir + '/');
+  const index = { format: 1, plugins: [{ name: 'demo-plugin', description: { en: '★ 1,234 │ ★ 56 | Draws\n demo charts.', zh: '★ 12 │ 绘制\n 演示图表。' }, versions: [{ version: '1.0.0', source: { type: 'npm' } }] }] };
+  const display = { plugins: { 'demo-plugin': { description: { en: '★ 9 │ ★ 8 | Selected\n description.', zh: '★ 9 │ ★ 8 | 精选\n 介绍。' } } } };
+  // One plugin exercises the display override, the other the historical index fallback.
+  index.plugins.push({ ...index.plugins[0], name: 'fallback-plugin' });
+  await writeSite(index, {}, {}, {}, display, { output });
+  const reports = { en: 'Report an issue', zh: '提交问题', tw: '提交問題', ja: '問題を報告', ko: '문제 신고' };
+  const template = await readFile(new URL('../.github/ISSUE_TEMPLATE/bug.yml', import.meta.url), 'utf8');
+  assert.match(template, /^name: Bug report/m);
+  for (const [language, { dir: folder }] of Object.entries(LANGUAGES)) {
+    const home = await readFile(new URL(folder + 'index.html', output), 'utf8');
+    const stats = await readFile(new URL(folder + 'stats/index.html', output), 'utf8');
+    assert.ok(home.includes(`href="https://github.com/polang233/dsh-plugin-index/issues/new?template=bug.yml">${reports[language]}</a>`), language);
+    assert.doesNotMatch(home, /template=plugin-remove\.yml|★\s*[\d,]+\s*[│|]/);
+    assert.match(stats, /<label[^>]*data-like-limit-field[^>]*><span>[^<]+<\/span><select data-like-limit aria-controls="like-ranking" disabled>/);
+    assert.deepEqual([...stats.matchAll(/<option value="(\d+)"( selected)?>Top \d+<\/option>/g)].map(([, value, selected]) => [Number(value), !!selected]), [[10, true], [20, false], [30, false], [40, false], [50, false]]);
+  }
+  for (const path of ['index.html', 'plugins/demo-plugin/index.html', 'plugins/fallback-plugin/index.html']) {
+    const html = await readFile(new URL(path, output), 'utf8');
+    assert.doesNotMatch(html, /★\s*[\d,]+\s*[│|]/);
+    assert.match(html, path.includes('fallback') ? /Draws demo charts\./ : /Selected description\./);
+  }
+  assert.match(index.plugins[0].description.en, /^★/);
+  assert.match(display.plugins['demo-plugin'].description.en, /^★/);
+});

@@ -884,6 +884,9 @@ body.is-leaving { opacity: 0; }
 .daily-chart.is-drawn .bar { animation: none; }
 @keyframes bar-grow { from { transform: scaleY(0); } to { transform: none; } }
 .like-ranking { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.ranking-limit { flex-direction: row; align-items: center; gap: 10px; font-size: 13px; font-weight: 800; }
+.ranking-limit select { height: 40px; padding-top: 6px; padding-bottom: 6px; }
+.ranking-note { flex-basis: 100%; }
 .like-ranking li { display: grid; grid-template-columns: 30px minmax(140px, 1.2fr) minmax(0, 2fr) auto; align-items: center; gap: 12px; animation: rank-in .5s ease both; animation-delay: calc(var(--i, 0) * 50ms); }
 @keyframes rank-in { from { opacity: 0; translate: -10px 0; } to { opacity: 1; translate: none; } }
 .rank { display: grid; place-items: center; width: 28px; height: 28px; border: 2px solid var(--ink); border-radius: 50%; background: var(--paper); font-size: 13px; font-weight: 900; font-variant-numeric: tabular-nums; }

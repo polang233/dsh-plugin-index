@@ -11,6 +11,10 @@ const SITE = {
   ja: { route: './ja/', lang: 'ja', brand: 'Open Plugin Market', selected: '選択', updated: /更新/, plugins: 'en' },
   ko: { route: './ko/', lang: 'ko', brand: 'Open Plugin Market', selected: '선택', updated: /업데이트/, plugins: 'en' }
 };
+const rankingLabel = { en: 'Show top', zh: '显示前几名', tw: '顯示前幾名', ja: '表示件数', ko: '표시 개수' };
+const stubRankingStats = page => page.route('https://dshopen.org/stats.json', route => route.fulfill({ json: {
+  schema: 1, today: { reads: 0, readers: 0 }, last30Days: { reads: 0, readers: 0, daily: [] }
+} }));
 // Likes, the project's star count and README badges come from dshopen.org and shields.io; tests never reach them.
 test.beforeEach(async ({ page }) => {
   await page.route('https://dshopen.org/likes.json', route => route.fulfill({ json: { schema: 1, likes: {} } }));
@@ -277,4 +281,68 @@ test('usage stats page shows the Cloudflare split as shares of loads', async ({ 
   await expect(page.locator('[data-countries] li').nth(1).locator('.country-name')).toHaveText('中国澳门');
   await expect(page.locator('[data-countries-note]')).toContainText('Cloudflare');
   await expect(page.locator('.donut-label')).toHaveText('加载次数');
+});
+
+for (const language of Object.keys(SITE)) {
+  test(`${language}: likes ranking switches between top 10 and 50 without refetching`, async ({ page }) => {
+    await stubRankingStats(page);
+    const names = Object.fromEntries(Array.from({ length: 55 }, (_, at) => [`demo-${at}`, [`Demo ${at}`, null, '../../plugins/demo/']]));
+    const likes = Object.fromEntries(Object.keys(names).reverse().map(name => [name, 55 - Number(name.slice(5))]));
+    Object.assign(names, { zero: ['Zero'], negative: ['Negative'], fractional: ['Fractional'] });
+    Object.assign(likes, { zero: 0, negative: -1, fractional: 1.5, unlisted: 999 });
+    const requests = { likes: 0, names: 0 };
+    await page.route('https://dshopen.org/likes.json', route => {
+      requests.likes++;
+      return route.fulfill({ json: { schema: 1, likes } });
+    });
+    await page.route('**/stats/plugins.json', route => {
+      requests.names++;
+      return route.fulfill({ json: names });
+    });
+    await page.goto(SITE[language].route + 'stats/');
+    const limit = page.getByRole('combobox', { name: rankingLabel[language], exact: true });
+    const rows = page.locator('[data-like-ranking] li');
+    await expect(limit).toBeEnabled();
+    await expect(limit).toHaveValue('10');
+    await expect(limit.locator('option')).toHaveText(['Top 10', 'Top 20', 'Top 30', 'Top 40', 'Top 50']);
+    await expect(rows).toHaveCount(10);
+    await expect(page.locator('[data-tile="likes"] [data-value]')).toHaveText('1,540');
+    for (const count of [20, 30, 40, 50, 10]) {
+      await limit.selectOption(String(count));
+      await expect(rows).toHaveCount(count);
+      await expect(rows.first().locator('.rank-name')).toHaveText('Demo 0');
+      await expect(rows.last().locator('.rank-name')).toHaveText(`Demo ${count - 1}`);
+      await expect(rows.last().locator('.rank')).toHaveText(String(count));
+    }
+    expect(requests).toEqual({ likes: 1, names: 1 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  });
+}
+
+for (const count of [0, 3]) {
+  test(`likes ranking handles ${count} liked plugins`, async ({ page }) => {
+    await stubRankingStats(page);
+    const names = Object.fromEntries(Array.from({ length: count }, (_, at) => [`demo-${at}`, [`Demo ${at}`, null, '../../plugins/demo/']]));
+    await page.route('https://dshopen.org/likes.json', route => route.fulfill({ json: { likes: Object.fromEntries(Object.keys(names).map(name => [name, 1])) } }));
+    await page.route('**/stats/plugins.json', route => route.fulfill({ json: names }));
+    await page.goto('./stats/');
+    const section = page.locator('section[aria-labelledby="likes-title"]');
+    const limit = page.getByRole('combobox', { name: rankingLabel.en, exact: true });
+    if (count) {
+      await expect(section.locator('li')).toHaveCount(count);
+      await limit.selectOption('50');
+      await expect(section.locator('li')).toHaveCount(count);
+    } else {
+      await expect(section.locator('.chart-empty')).toContainText('No likes yet');
+      await expect(limit).toBeHidden();
+    }
+  });
+}
+
+test('likes ranking failure keeps the selector hidden', async ({ page }) => {
+  await stubRankingStats(page);
+  await page.route('https://dshopen.org/likes.json', route => route.fulfill({ status: 503, body: 'Unavailable' }));
+  await page.goto('./stats/');
+  await expect(page.locator('section[aria-labelledby="likes-title"]')).toBeHidden();
+  await expect(page.getByRole('combobox', { name: rankingLabel.en, exact: true })).toBeHidden();
 });

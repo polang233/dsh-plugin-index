@@ -11,3 +11,24 @@ export function validateScreenshots(images) {
     return {url: url.href, alt: image.alt.trim()};
   });
 }
+
+/** Website-only editorial data. It never changes the official plugin index. */
+export function applyPluginPreviews(display, previews) {
+  if (previews?.schema !== 1 || !previews.plugins || typeof previews.plugins !== 'object' || Array.isArray(previews.plugins)) {
+    throw Error('Invalid plugin preview registry');
+  }
+  const plugins = Object.fromEntries(Object.entries(display.plugins).map(([name, plugin]) => {
+    const {screenshots, ...entry} = plugin;
+    return [name, entry];
+  }));
+  for (const [name, entry] of Object.entries(previews.plugins)) {
+    if (!/^(?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*$/.test(name)
+      || !entry || typeof entry !== 'object' || Array.isArray(entry)
+      || Object.keys(entry).some(key => key !== 'screenshots') || !Array.isArray(entry.screenshots)) {
+      throw Error('Invalid plugin previews: ' + name);
+    }
+    const screenshots = validateScreenshots(entry.screenshots);
+    if (plugins[name]) plugins[name] = {...plugins[name], screenshots};
+  }
+  return {...display, plugins};
+}
