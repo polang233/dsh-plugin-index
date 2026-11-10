@@ -31,8 +31,19 @@ for (const line of (await readFile(join(artifact, '_headers'), 'utf8')).split(/\
 headers.push({ source: '/index.json', headers: [{ key: 'Cache-Control', value: 'no-store' }, { key: 'Access-Control-Allow-Origin', value: '*' }] });
 await writeFile(join(output, 'edgeone.json'), JSON.stringify({ headers }, null, 2));
 await mkdir(join(output, 'edge-functions'));
-await build({ entryPoints: ['edgeone/handler.js'], bundle: true, format: 'esm', platform: 'neutral', outfile: join(output, 'edge-functions/[[path]].js'), plugins: [{ name: 'release', setup(builder) {
+// A catch-all edge-functions/[[path]].js counted as a function run for nearly every request, static icons and
+// pages included. Functions now cover only the routes the handler serves. Makers drops dots from file-based
+// routes and never routes /index.json to a named matcher, so one-segment [file].js carries the root JSON files
+// (and the HTML 404 for unknown root paths); deeper unknown paths get the platform's own 404.html.
+const ROUTES = ['[file].js', 'api/[[default]].js', 'badge/[[default]].js'];
+const releasePlugin = { name: 'release', setup(builder) {
   builder.onResolve({ filter: /\/release\.json$/ }, () => ({ path: 'release', namespace: 'release' }));
   builder.onLoad({ filter: /.*/, namespace: 'release' }, () => ({ contents: JSON.stringify(release), loader: 'json' }));
-} }] });
+} };
+for (const route of ROUTES) {
+  await build({
+    stdin: { contents: "export { onRequest } from './edgeone/handler.js';", resolveDir: process.cwd(), loader: 'js' },
+    bundle: true, format: 'esm', platform: 'neutral', outfile: join(output, 'edge-functions', route), plugins: [releasePlugin],
+  });
+}
 console.log(JSON.stringify({ output, expectedHash, bytes: bytes.length }));
