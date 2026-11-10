@@ -5045,6 +5045,314 @@
       "reviewedAt": "2026-11-09T05:45:02.851Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@keenable/dsh-keenable",
+      "version": "0.1.2",
+      "integrity": "sha512-BRXSvQlgmS+84Nmbb0gjJUMLXvvsMaMDP7k5sd0pKd215KpgOdyrFLv9vNpMK04w2Vr/M/gCiFsrTfBsv0b3Xg==",
+      "repository": "https://github.com/keenableai/dsh-keenable",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-pi-mode",
+      "version": "0.3.5",
+      "integrity": "sha512-yMMfwN9rrQP6jNE6eDoUQEjY7NMp1U6NjE+ZjRYohiAgttO6wtkrXaw9ylGKGfmUIDkmal6xD28yxiWXt/6yog==",
+      "repository": "https://github.com/fujingzhai/youxia-dsh-plugins",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-session-fee",
+      "version": "0.4.5",
+      "integrity": "sha512-FZJT1KJ/lR1C1bCm462YFmLeoUpxqyYfOg2ffVMxzvston9QhJq0O/vKZYH64WKB8B5lgOcSJMscR3oxi4RFmw==",
+      "repository": "https://github.com/fujingzhai/youxia-dsh-plugins",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-speed-pair",
+      "version": "0.1.0",
+      "integrity": "sha512-swSMziuYLR0wPiE/QYIU0XdPSUVSwE/Rs+n3onnklbxjdUxsMI9JPU3Sp3bm0CnUKmMbDT0BCbaq52fAAaf/3A==",
+      "repository": "https://github.com/fujingzhai/youxia-dsh-plugins",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-session-labels",
+      "version": "0.1.4",
+      "integrity": "sha512-UR8duPxElamohytQT37/vOrs6Ck0oyHZUD6ZtLbUDs7BEIripprDJPQCNDkROmDduizrJjoYg1dOGHH8Q/Fauw==",
+      "repository": "https://github.com/fujingzhai/youxia-dsh-plugins",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-settings-customizer",
+      "version": "0.3.2",
+      "integrity": "sha512-gKiYH2sGqynZbaJGRr5wMN/7HAkiJxfBV+cu5ntsMMZwOj03ZT9dgcKQ6oxSJxCfbwZ/LE8MI+L6QEA5s/TqGw==",
+      "repository": "https://github.com/fujingzhai/youxia-dsh-plugins",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-zh-slash",
+      "version": "0.1.1",
+      "integrity": "sha512-GDC2tY5vB29lekidZLV3/+m3kZjGvoOZ9VE72d5t+xqn7Mw7TnIXJCRPfsco3fxZf+o3PS1hAv1DwIGwhcA+6w==",
+      "repository": "https://github.com/fujingzhai/youxia-dsh-plugins",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-message-rewind",
+      "version": "1.2.2",
+      "integrity": "sha512-u9AVuTmivYYAWr7Ls7Pv6vmn6vXlboRXSPtHKTVsrxFqPp8zhFg2DC1IrO2YdnTKi2rNjOPY1UU0QgwfZN0nAA==",
+      "repository": "https://github.com/xCube007/dsh-message-rewind",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@tier0/dsh-mcp",
+      "version": "0.1.0",
+      "integrity": "sha512-s+Lio35nnMp+CF+yrk2CUj0qWfV72B5Txa1LxD3BwoBexPpgrrYkGGICSKLcxjvWAZSfGtWycGksHUBTfJF2Dg==",
+      "repository": "https://github.com/FREEZONEX/Tier0-dsh-mcp",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ui-toolbox",
+      "version": "0.2.0",
+      "integrity": "sha512-LgQUJqGimmA1lt8vk6tQoOKjbD/+hEjfvtpaIio6dEPdLTY8z0z3dZpHmIdm4cSiNkkJB+oN30fOnOjs5S4tqA==",
+      "repository": "https://github.com/miniluckybull/dsh-ui-toolbox",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@cyrusxc5/better-ego-browser",
+      "version": "0.3.3",
+      "integrity": "sha512-mNk+4v9zo3ToVsjKCHFh+iGOehSF1VHO4iihFv8dozx9jUYnQakI2N7h+1sDKdcw4txnj2VITs8hXnyw4CYLQQ==",
+      "repository": "https://github.com/cyrus-xc/better-ego-browser",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-google-drive",
+      "version": "0.1.5",
+      "integrity": "sha512-7EPSI3iJj3ZwCbqibQOUym+1fxpJjN11AoCqKEMaQsUw+6uOKSWL5DXElhWDTvU+HA9lL8lUJcdrp8TzKso7wg==",
+      "repository": "https://github.com/boldandigital/dsh-google-drive",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@summerscar/dsh-mnemon-sync",
+      "version": "0.1.12",
+      "integrity": "sha512-zCurK+uR8Aie7vs0Gy+m1WDhMpVppiYWzVZ2CtDuzjG4JnA62+0APXErxPagQ79MWt/mT5p3zo6wfTiGkJW1+w==",
+      "repository": "https://github.com/summerscar/dsh-plugins",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-redline",
+      "version": "1.0.24",
+      "integrity": "sha512-7Iqr5F0dW+kGIWD77Py/aNlX4WW7I8Y8ZLLvGo0VhGdzoUqJgY7blYMo7/knzAgZ1c/Eo1GFqCUogPnMxXaYSg==",
+      "repository": "https://github.com/klaus-2/dsh-redline",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@tinyforge/dsh-character-presets",
+      "version": "1.3.3",
+      "integrity": "sha512-A6o5kyocTrSpHm6lSVB/BoZE7jbBWTmqCNgAmNAnTim236tzJxotC1ypa5VyYszy0DOgNs59CgUpufyso6bY7g==",
+      "repository": "https://github.com/phoenixlucky/dsh-character-presets",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-mobile-ux",
+      "version": "2.3.2",
+      "integrity": "sha512-lz1M9Z9/4CGpqezqtPUpE4WwdJgMQj+2U7IZZHoHwnwKB9WQuo6V6Q01MWWj7K3Fr5JPmL1NV6i0h7YqlsuoVw==",
+      "repository": "https://github.com/68110923/dsh-plugin-mobile-ux",
+      "source": {
+        "type": "git",
+        "commit": "fb9986d46900737aee204ce559c019bcd318c4d2"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-google-scholar",
+      "version": "1.0.0",
+      "integrity": "sha512-I11pYv9wRNKhpJd+QQaHkiMiLOfMkKDJ0aT3vnerKgUHdomXO2b8JQnKkV7nJhOfLPWttfWdvWtdDEJnA/2Lbw==",
+      "repository": "https://github.com/Zam233/dsh-google-scholar",
+      "source": {
+        "type": "git",
+        "commit": "be11e728abfa796a0e328939bd033edd732d07cb"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-smartlib",
+      "version": "2.0.0",
+      "integrity": "sha512-dvPGWIISpTuXngodDtwLcj2hC/mBM7aiYS5YHgbiT6Tv/1VVRq2QwTb7BuFyA8BTlbJ3NZUiaqq8ka4FfPhAuw==",
+      "repository": "https://github.com/Zam233/dsh-smartlib",
+      "source": {
+        "type": "git",
+        "commit": "c1a9fe24897d83a3b3b030a72e588fe5b217f9e1"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-memory-mcp",
+      "version": "0.3.5",
+      "integrity": "sha512-h+GK3SMErCqgjNB9agp/ePyi2PBto9t20nbr4aOFNdy4A+E014DrwJhwLUwwhQ/9+co/6/98cgVOX84RpaKRkw==",
+      "repository": "https://github.com/jxovl0/dsh-memory-mcp",
+      "source": {
+        "type": "git",
+        "commit": "93cfbe2a3d32566d0789e02b5346dcea65331452"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-contextgraph",
+      "version": "0.1.0",
+      "integrity": "sha512-wYgjSC83MerxDFLsqVBDjjdrhylXXvOjahwf23dtd1z3edBgd4DdGubu7EfGm9OGnc1LcO7HpYkiu8Iixn/QmA==",
+      "repository": "https://github.com/StarDreamG/dsh-contextgraph",
+      "source": {
+        "type": "git",
+        "commit": "3809ef770f4b48bc001b6b7aff60820d8e9791d7"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-cleanup",
+      "version": "0.6.1",
+      "integrity": "sha512-6FeCdVKR53z8kbLV57ouyEDo8SZmyrhvUg1hwDphe2y6thD8Zr8j5lUz/+CNDsWaHlUPB7vjcllhTrpQSJFBEA==",
+      "repository": "https://github.com/xiaoyangren6514/dsh-cleanup",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-push-privacy-guard",
+      "version": "0.4.1",
+      "integrity": "sha512-sXQAcC5TecEg2xPRc6AQcY3PgGFeSs/lPApMBftXSks3BXnz3mBmpOtHTXhv/ycXo5vFErv4M8sNHarAu9ugeQ==",
+      "repository": "https://github.com/lizhijie429/dsh-push-privacy-guard",
+      "source": {
+        "type": "git",
+        "commit": "9db7fc22c7f7951cb757765268f34d7a749f1413"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-rapidocr",
+      "version": "0.1.1",
+      "integrity": "sha512-dW/qCdEP9dvHyx9ODyixStc3GPUF860eWdlvOafcrDjCP1cw1W2cqrz5IYOPb3wMbjzE8VgS+I1+v4ogYDplNQ==",
+      "repository": "https://github.com/Timqt/dsh-rapidocr",
+      "source": {
+        "type": "git",
+        "commit": "e3b604831569b2c746ce97744620a6fe7a20efb5",
+        "path": "packages/dsh-rapidocr"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@tinyforge/dsh-plugin-manager-wj",
+      "version": "1.2.2",
+      "integrity": "sha512-Tf/DEhRCPKbitGva/khRkp3vhHkjqtrA/4+JSed7PVbeC5Fu8uCD/VeVTHvGottBjVenWoC29VFsEwRg5DRGyw==",
+      "repository": "https://github.com/phoenixlucky/dsh-plugin-manager-wj",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@hui-xu-ai/dsh-wensu",
+      "version": "0.12.36",
+      "integrity": "sha512-6bTlFNpIj/o/v1/OvYL1DJeuwkur+8m8yO61WvkXstmIaUVyQuPEfYs+gsyTATITa/CWzXwIig3pQW2vbYcv0w==",
+      "repository": "https://github.com/hui-xu-ai/wensu",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-10T09:40:00.000Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
