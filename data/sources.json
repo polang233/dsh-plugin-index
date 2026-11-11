@@ -7165,12 +7165,7 @@
         "en": "Recall experience strategies before tasks and record evaluations from checks and later feedback.",
         "zh": "在任务前召回经验策略，根据检查结果和后续反馈记录评价。"
       },
-      "category": "memory",
-      "iconReview": {
-        "commit": "bba59d18292e5386bd3a37b85631e77a4e47b2f5",
-        "path": "assets/logo.png",
-        "sha256": "2476e47c676c9c340ec9761689da21fa853bc3d71a20c2db013e9722f67c90b7"
-      }
+      "category": "memory"
     },
     {
       "name": "@firetruck666/dsh-task-board",
@@ -12065,8 +12060,8 @@
         "zh": "ZCode Plan Bridge"
       },
       "description": {
-        "en": "Use a logged-in ZCode CLI agent as a model provider, with streaming text/reasoning and image input. Requires Node >=22, ZCode CLI and account quota. Agent permissions default to deny; the CLI runs with the current user privileges.",
-        "zh": "将已登录的 ZCode CLI agent 接为模型提供商，支持文本、思考流式输出与图片输入；需要 Node >=22、ZCode CLI 和账号额度。默认拒绝工具权限请求，CLI 仍以当前用户权限运行。"
+        "en": "Use a signed-in ZCode CLI as a model provider, with streamed text, reasoning and image input. Requires Node >=22 and account quota. Tool permissions default to deny; community recovery can attach to the local ZCode desktop runtime.",
+        "zh": "将已登录的 ZCode CLI 接为模型提供商，支持文本、思考流与图片。需 Node >=22 和账号额度；默认拒绝工具权限，社区恢复功能可接入本机 ZCode 桌面运行时。"
       },
       "category": "providers"
     },
@@ -12678,8 +12673,8 @@
         "zh": "MarkPilot · Markdown × AI 工作台"
       },
       "description": {
-        "en": "Edit Markdown beside your files and DSH conversation, send selections to chat and reference notes with @mp. Includes live formulas and tables, offline Mermaid, guarded saves and draft recovery. Renamed from dsh-markdown-typora; requires Node >=20 and host Connection authentication.",
-        "zh": "将 Markdown、文件树和 DSH 对话并排，支持选区入对话、@mp 引用、公式表格即时编辑、离线 Mermaid、版本守卫保存及草稿恢复。原包名为 dsh-markdown-typora；需 Node >=20 和提供 Connection 认证的宿主。"
+        "en": "Edit Markdown beside your files and DSH conversation, send selections to chat and reference notes with @mp. AI review state survives reopening, with diff, undo, guarded saves and draft recovery. Requires host Connection authentication and built-in SQLite for local document sharing.",
+        "zh": "将 Markdown、文件树和 DSH 对话并排，支持选区入对话与 @mp 引用；AI 修改审阅态可跨关闭重开保留，提供差异、撤销、版本守卫保存及草稿恢复。需提供 Connection 认证和内置 SQLite 的宿主运行时。"
       },
       "category": "interface"
     },
@@ -12765,11 +12760,11 @@
         "en": "AgentCompare",
         "zh": "AgentCompare"
       },
-      "category": "development",
       "description": {
-        "en": "Run two implementations in one DSH conversation, compare previews and checks, then review, adopt or undo a candidate. Needs a Git project, Chrome/Edge, a host process sandbox, DSH >=0.2.1-rc.3 <0.3.0 and Node ^22.22.2 || ^24.15.0 || >=26.0.0. Model and dependency requests use configured services.",
-        "zh": "在同一 DSH 对话中运行两版实现，对比预览与统一检查，再审阅、采用或撤回候选。需 Git 项目、Chrome/Edge、宿主进程沙箱、DSH >=0.2.1-rc.3 <0.3.0，以及 Node ^22.22.2 || ^24.15.0 || >=26.0.0。模型和依赖请求使用已有服务配置。"
-      }
+        "en": "Compare 2–4 answers, files or web previews in DSH, then review and adopt a choice. Requires Git, a host process sandbox and configured models; web previews need Chrome/Edge. Static previews lack Host validation: use trusted pages and non-sensitive projects.",
+        "zh": "比较 2–4 版回答、文件或网页预览，再审阅并采用结果。需 Git、宿主进程沙箱和模型配置，网页预览需 Chrome/Edge。静态预览缺少 Host 校验，请仅用于可信页面和非敏感项目。"
+      },
+      "category": "development"
     },
     {
       "name": "dsh-plugin-2048",
@@ -13444,11 +13439,11 @@
         "en": "WorkBuddy Connect (Community)",
         "zh": "WorkBuddy 连接（社区版）"
       },
-      "category": "providers",
       "description": {
-        "en": "Community-maintained WorkBuddy provider for DeepSeek Harness, with an account status panel for the domestic and international editions. Status and control routes require the host-authenticated owner.",
-        "zh": "社区维护的 WorkBuddy 模型渠道，附带国内版与国际版的账号状态面板。状态和控制接口都要求宿主登录的所有者身份。"
-      }
+        "en": "Community WorkBuddy provider with account status, cost readings and manual effort probes for domestic and international clients. Needs a signed-in local WorkBuddy installation; probes may use quota. Account and control routes require the host owner.",
+        "zh": "社区维护的 WorkBuddy 模型渠道，提供国内/国际版账号状态、费用读数与手动探测。需本机已登录 WorkBuddy，探测可能消耗额度；账号和控制接口要求宿主所有者身份。"
+      },
+      "category": "providers"
     },
     {
       "name": "dsh-long-context-budget",
@@ -13857,11 +13852,11 @@
         "en": "Provider Doctor",
         "zh": "提供商诊断"
       },
-      "category": "development",
       "description": {
         "en": "Inspect WorkBuddy, WorkBuddy AI and ZCode CLI provider setup with observed, inferred and unavailable evidence. Basic checks are offline; optional connection checks can start provider diagnostic processes. Requires DSH 0.2.2-rc.1.",
         "zh": "只读检查 WorkBuddy、WorkBuddy AI、ZCode CLI 的连接配置，区分观测、推断与未知。基础检查离线，可选连接检查会启动提供商诊断进程；需 DSH 0.2.2-rc.1。"
-      }
+      },
+      "category": "development"
     },
     {
       "name": "dsh-pr-release-workspace",
@@ -13869,11 +13864,11 @@
         "en": "PR and Release Workspace",
         "zh": "PR 与发布工作台"
       },
-      "category": "development",
       "description": {
         "en": "Read GitHub PRs, diffs, comments and CI, save local review drafts, and compare GitHub Release, npm and market publication states. Reuses an existing gh login; does not post reviews, comments or merges.",
         "zh": "只读查看 GitHub PR、差异、评论与 CI，保存本地评审草稿，并对照 GitHub Release、npm 与市场发布状态。复用已有 gh 登录，不发送评论、评审或合并请求。"
-      }
+      },
+      "category": "development"
     },
     {
       "name": "dsh-fish-memory",
@@ -13966,8 +13961,8 @@
         "zh": "dsh-daughter"
       },
       "description": {
-        "en": "A companion with evolving personality, local memory and optional VPet integration. Memory is shared across windows, so use a separate profile for work; Windows desktop observation and input need a separately configured connector and are disabled by default.",
-        "zh": "带人格演变、本地记忆和可选 VPet 联动的陪伴插件。记忆跨窗口共享，建议与正式工作隔离使用；Windows 桌面观察和输入需另配连接器，默认关闭。"
+        "en": "A companion with evolving personality, shared local memory, emotion logs and optional VPet integration. Memory spans windows; keep it off work chats. Windows desktop observation and input need a separate connector and are disabled by default.",
+        "zh": "带人格演变、共享本地记忆、情绪日志和可选 VPet 联动的陪伴插件。记忆跨窗口贯通，请勿在正式工作对话中开启；Windows 桌面观察和输入需另配连接器，默认关闭。"
       },
       "category": "memory"
     },
@@ -15542,6 +15537,359 @@
         "commit": "3809ef770f4b48bc001b6b7aff60820d8e9791d7",
         "integrity": "sha512-wYgjSC83MerxDFLsqVBDjjdrhylXXvOjahwf23dtd1z3edBgd4DdGubu7EfGm9OGnc1LcO7HpYkiu8Iixn/QmA==",
         "publishedAt": "2026-11-09T07:55:44Z"
+      }
+    },
+    {
+      "name": "dsh-modern-web-guidance",
+      "title": {
+        "en": "Modern Web Guidance",
+        "zh": "Modern Web Guidance · 现代 Web 指南"
+      },
+      "description": {
+        "en": "Search and retrieve 208 offline web-platform guides, scan workspace files for legacy patterns, and use Modern Web Guidance and Chrome Extensions skills. Includes local usage and scan history; requires Node >=22.19.",
+        "zh": "离线搜索、读取 208 篇 Web 平台指南，扫描工作区中的旧式写法，并提供 Modern Web Guidance 与 Chrome Extensions 技能。附本地用量和扫描历史；需 Node >=22.19。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-naiwa-laugh",
+      "title": {
+        "en": "dsh-naiwa-laugh",
+        "zh": "dsh-naiwa-laugh · 奶蛙大笑"
+      },
+      "description": {
+        "en": "Play a random bundled sound after each Agent turn in the Web UI. Audio starts after a page gesture; bundled audio and meme images come from third parties. No DSH version range is declared.",
+        "zh": "每轮 Agent 回合结束后，在 Web 界面随机播放内置音效；需先与页面交互解锁音频。附带音频和表情图来自第三方，未声明 DSH 兼容范围。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-simple-ui",
+      "title": {
+        "en": "dsh-simple-ui",
+        "zh": "dsh-simple-ui · 简约界面"
+      },
+      "description": {
+        "en": "Customize DSH colors, fonts, corners, header, composer, message styles and local image or video backgrounds. Preferences and imported media stay in the browser; no DSH compatibility range is declared.",
+        "zh": "自由组合 DSH 配色、字体、圆角、顶栏、输入框、消息样式及本地图片或视频背景。偏好和导入媒体保存在浏览器中；未声明 DSH 兼容范围。"
+      },
+      "category": "appearance",
+      "version": "1.11.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Trouvaille-xx/dsh-Simple-UI",
+        "commit": "470d003e00f519b10507a5197c354b62f86876d1",
+        "publishedAt": "2026-11-10T17:23:36Z",
+        "integrity": "sha512-dYvp9kjGu4dlkWMbKbQkaFmBb4qMM06x12CQCPzkCUaUcFl206Um/CqjQMQajqZAsQe0jILxy8G6TZm2gPM+0g=="
+      }
+    },
+    {
+      "name": "dsh-note-save",
+      "title": {
+        "en": "dsh-note-save",
+        "zh": "dsh-note-save · 对话存笔记"
+      },
+      "description": {
+        "en": "Save a message, turn or conversation to Obsidian, SiYuan, Joplin, Notion, Yuque or ima after preview. Configure each destination and its credentials; requires host Connection authentication. Avoid concurrent Obsidian saves with the same title.",
+        "zh": "预览后将单条消息、一轮或整个会话存入 Obsidian、思源、Joplin、Notion、语雀或 ima；需配置目标和凭据，并使用提供 Connection 认证的宿主。避免并发保存同名 Obsidian 笔记。"
+      },
+      "category": "integrations",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Trouvaille-xx/dsh-note-save",
+        "commit": "52d6548f5707f6b4a83986402bb6efee4972da35",
+        "publishedAt": "2026-11-10T09:49:09Z",
+        "integrity": "sha512-n/cNSfoiJup33392lqQj3IjdZdw9RRI1a+OeeoNVieC4Q0GFHCKi1fE3zpzkZeB7eQKA7NDEkoUYJLi+NaErvQ=="
+      }
+    },
+    {
+      "name": "dsh-learning-quirky-stuff",
+      "title": {
+        "en": "Studyboard · Learning canvas",
+        "zh": "学习画板 · dsh-learning-quirky-stuff"
+      },
+      "description": {
+        "en": "Organize handwriting, images and learning materials with AI summaries, editable infographics, sourced knowledge graphs and spaced review. Chrome capture needs extension pairing; AI uses configured providers or a signed-in local Codex CLI and may incur charges. OCR/PDF extraction requires macOS 13+; requires Node >=24.",
+        "zh": "手写、贴图并整理学习材料，提供 AI 总结、可编辑信息图、带来源图谱与间隔复习。Chrome 采集需配对扩展；AI 使用已配置服务或已登录的本机 Codex CLI，可能收费。OCR/PDF 提取限 macOS 13+；需 Node >=24。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "remove-deepseek-logo",
+      "title": {
+        "en": "remove-deepseek-logo",
+        "zh": "remove-deepseek-logo · 隐藏品牌标识"
+      },
+      "description": {
+        "en": "Hide the DeepSeek Harness sidebar logo, brand name, version and conversation hero fish using empty brand slots and CSS. Author-tested on DSH 0.2.2-rc.1; no compatibility range is declared.",
+        "zh": "通过空品牌插槽与样式隐藏 DeepSeek Harness 侧栏标志、品牌名、版本和对话首页鲸鱼。作者验证 DSH 0.2.2-rc.1；未声明兼容范围。"
+      },
+      "category": "appearance"
+    },
+    {
+      "name": "code2kb-dsh",
+      "title": {
+        "en": "Code2KB Agent Toolkit",
+        "zh": "Code2KB Agent Toolkit · 源码知识库"
+      },
+      "description": {
+        "en": "Extract evidence-backed business and engineering knowledge from pinned source revisions, then check, review and publish a local knowledge base through the bundled code2kb skill and CLI. Requires Python 3.9+ and Git; commands that write files need macOS, Linux or WSL.",
+        "zh": "通过内置 code2kb 技能与 CLI，从固定源码版本提取带证据的业务与研发知识，检查、审核并发布本地知识库。需 Python 3.9+ 与 Git；修改文件的命令需在 macOS、Linux 或 WSL 中运行。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-version-manager",
+      "title": {
+        "en": "DSH Version Manager",
+        "zh": "DSH 版本管理器"
+      },
+      "description": {
+        "en": "Inspect profile plugins and Skills, preview updates, save snapshots and restore supported versions or Skill files after confirmation. Plugin recovery does not restore configuration, the dependency tree or presets. Requires DSH >=0.2.2-rc.1 and Node >=22.",
+        "zh": "查看当前 profile 的插件与技能、预览更新、保存快照，并在确认后恢复支持的版本或技能文件。插件恢复不还原配置、完整依赖树或预设。需 DSH >=0.2.2-rc.1、Node >=22。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "@yiqizhuang/zhuangzai-dsh-workbench",
+      "title": {
+        "en": "Zhuangzai Delivery Management Workbench",
+        "zh": "装仔交付管理工作台"
+      },
+      "description": {
+        "en": "A Yiqizhuang workbench, agent preset and scenario Skills for construction delivery, staffing, issues, schedules, acceptance, equipment and reports. Requires a configured DSH model, your own Yiqizhuang account and company data permissions, plus manual OAuth setup. Requires DSH >=0.2.2-rc.1 <0.3.0. Known issue: the temporary OAuth error page renders unescaped error text.",
+        "zh": "结合一起装 MCP、角色预设与场景技能，分析工地交付、人员派工、问题、工期、验收、设备和报告。需已配置模型的 DSH、自己的“一起装”账号与公司数据权限，并手动完成 OAuth 授权。需 DSH >=0.2.2-rc.1 <0.3.0。 已知问题：临时 OAuth 错误页未转义错误文本。"
+      },
+      "category": "workflow",
+      "version": "0.5.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/maverikhe-cpu/zhuangzai-dsh-workbench",
+        "commit": "0d8d4ce56fbf80352d174302f3ad2ee0df3e8680",
+        "integrity": "sha512-LBaR72UjFuJAET//wYW56/jQJp07U/Mvox3SqanPiTbx52Fv3tMVjPINX6bzSFPLHS5mWE5UqdVrqoX32xMydg==",
+        "publishedAt": "2026-11-10T14:21:42Z"
+      }
+    },
+    {
+      "name": "dsh-minigames",
+      "title": {
+        "en": "Mini Games Box",
+        "zh": "游戏盒子"
+      },
+      "description": {
+        "en": "Gomoku against local AI and an arcade sky shooter in the DSH Web sidebar, with sound controls, local scores and victory animations. Requires DSH >=0.2.2-rc.1.",
+        "zh": "在 DSH Web 侧栏玩人机五子棋与打飞机，支持音效开关、本机战绩及获胜庆祝动画。需 DSH >=0.2.2-rc.1。"
+      },
+      "category": "interface",
+      "version": "1.1.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/feiniao1933/dsh-minigames",
+        "commit": "026771b58b5fe135eeab8fd4f3082743202ad92d",
+        "integrity": "sha512-7xyMPshOnhoV9PvBKPXNDDZfekaKTxaBziM0wEhRW/XY/WitwiWuSYsKA+ozlHUKy7cN29wC34SRRL+7NhSr9g==",
+        "publishedAt": "2026-11-10T15:26:51Z"
+      }
+    },
+    {
+      "name": "dsh-file-mention",
+      "title": {
+        "en": "File Mention",
+        "zh": "文件引用"
+      },
+      "description": {
+        "en": "Add workspace file references and selected preview text to the composer. Requires DSH >=0.2.2-rc.1 <0.3.0-0.",
+        "zh": "将工作区文件和预览中选中的文字引用到输入框。要求 DSH >=0.2.2-rc.1 <0.3.0-0。"
+      },
+      "category": "interface",
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Tinxyoo/dsh-file-mention",
+        "commit": "3a48302637037fb1a71deec79568db5dc7c388bf",
+        "publishedAt": "2026-11-10T15:35:53Z",
+        "integrity": "sha512-jrSIw5MkIZCUxXTnXcEfEaFk01THHGu720fPo+/0o40aC1+DNrWSW1UIQMCSpnThmkWOrEnofrX4YRv7fs5fYg=="
+      }
+    },
+    {
+      "name": "deepseek-gruvbox-themes",
+      "title": {
+        "en": "Gruvbox Themes",
+        "zh": "Gruvbox 主题"
+      },
+      "description": {
+        "en": "Seven Gruvbox palettes with live previews, saved selection, system light/dark following and a theme agent tool. Requires DSH >=0.2.2-0 <0.3.0.",
+        "zh": "提供七套 Gruvbox 配色、实时预览、持久选择、跟随系统明暗模式和主题工具。要求 DSH >=0.2.2-0 <0.3.0。"
+      },
+      "category": "appearance",
+      "version": "1.0.5",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/kuzmin-lemmi/deepseek-gruvbox-themes",
+        "commit": "374072747c3b1ff4c0e80ad277f5c152890ccc61",
+        "publishedAt": "2026-11-10T19:40:57Z",
+        "integrity": "sha512-3KPm8ytItv/KZqRRLNnjYvAjfpgq+BNpT8RH7CVkz7x8P3t+hD3iwH4avTxPg0Rm22gx2aa44euDR0GZSI27aw=="
+      }
+    },
+    {
+      "name": "dsh-layout",
+      "title": {
+        "en": "Layout",
+        "zh": "布局"
+      },
+      "description": {
+        "en": "Rearrange columns, panels and settings with saved layouts and a visual layout board. Uses host UI structure; older loaders fall back to the editor panel.",
+        "zh": "调整三栏、面板与设置页，保存布局方案并通过白板编排。依赖宿主界面结构，旧版加载器会回退到编辑面板。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-ai-terminal-pet",
+      "title": {
+        "en": "AI Terminal Pet",
+        "zh": "AI Terminal Pet"
+      },
+      "description": {
+        "en": "Show DSH session activity in a Windows companion overlay. Automatically copies and launches the bundled native app; other terminals need their own reporters. DSH approvals remain in DSH.",
+        "zh": "在 Windows 桌面浮窗查看 DSH 会话状态。会自动复制并启动包内原生程序；其他终端需各自安装 reporter，DSH 审批仍在宿主完成。"
+      },
+      "category": "integrations",
+      "version": "1.2.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/jjjjjjjjnnjnn/ai-terminal-pet",
+        "commit": "ff7f6de7d87a7a4d99c06e3a9a68e9a4b417b0a9",
+        "path": "packages/dsh-ai-terminal-pet",
+        "publishedAt": "2026-11-11T07:38:16Z",
+        "integrity": "sha512-zcMIADsHuLPAuMEUaqkmfoRo2qTxVy0z6LhqZSs9svt20R4iDniMU5+wtnwQ0vsgkMg+pG1HKqr7NlZIT/9qlA=="
+      }
+    },
+    {
+      "name": "dsh-token-ledger",
+      "title": {
+        "en": "Token Ledger",
+        "zh": "累计 Token 账本"
+      },
+      "description": {
+        "en": "Show cumulative tokens across local DSH sessions in the header and keep a local ledger after session deletion. Requires Host connection authentication; long uninterrupted event bursts can affect live counting.",
+        "zh": "在顶栏显示本机 DSH 会话累计 Token，删会话后保留本地账本。需要宿主连接认证；长时间连续事件可能影响实时计数。"
+      },
+      "category": "usage",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/yinshipeng/dsh-token-ledger",
+        "commit": "81ad04c30aa5fb2847dd6d707a94e0412e13a425",
+        "integrity": "sha512-s19D0LVYG6FRIjl8DSzwgJ+dUJiQjjuzWaj/XfRkCQuthNTpN2tRDm1aPSiEhFmF7unO4qhrJ/WTtbw53L7ziw==",
+        "publishedAt": "2026-11-11T06:29:39Z"
+      }
+    },
+    {
+      "name": "dsh-rainbow-composer",
+      "title": {
+        "en": "Rainbow Composer",
+        "zh": "彩虹输入框"
+      },
+      "description": {
+        "en": "Add an animated rainbow border to the message composer. Respects reduced-motion preferences; requires the host composer selector and modern CSS support.",
+        "zh": "为消息输入框添加流动彩虹描边，遵循减弱动态效果设置；依赖宿主输入框选择器和现代 CSS 支持。"
+      },
+      "category": "appearance",
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/yinshipeng/dsh-rainbow-composer",
+        "commit": "5bf34e98cf72925f004b1171d7812552b0dc9f3f",
+        "integrity": "sha512-GZXLx4V5l6Sfy5UpVVbC/FJImFdoBOTnSI9RUShxK4+NedlCitoa4AxchuTHqnRoQ4Yjy3ocJ8qYCi3NAGx5PA==",
+        "publishedAt": "2026-11-11T07:20:30Z"
+      }
+    },
+    {
+      "name": "dsh-weread-gather",
+      "title": {
+        "en": "WeRead Gather",
+        "zh": "数字书房"
+      },
+      "description": {
+        "en": "Browse and search your WeRead bookshelf, highlights and thoughts, with reading statistics, Markdown export and local backups. Requires your WeRead Agent gateway key and DSH >=0.2.2-rc.1; optional chat uses configured DSH models and may incur fees.",
+        "zh": "在侧栏浏览和搜索微信读书书架、划线与想法，查看阅读统计，导出 Markdown 并备份到本机。需自备微信读书 Agent 网关 Key 与 DSH >=0.2.2-rc.1；可选聊天使用宿主模型，可能产生费用。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "@xhtzlc/dsh-everything-mcp",
+      "title": {
+        "en": "Everything MCP",
+        "zh": "Everything MCP"
+      },
+      "description": {
+        "en": "Search Everything file names, paths and metadata through five read-only MCP tools. Windows only; requires Everything running and its bundled .NET IPC bridge. Does not read file contents.",
+        "zh": "通过五个只读 MCP 工具查询 Everything 的文件名、路径和元数据，不读取文件内容。仅限 Windows，需已运行 Everything，并使用包内的 .NET IPC 桥。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-mole",
+      "title": {
+        "en": "Mole",
+        "zh": "Mole 磁盘清理"
+      },
+      "description": {
+        "en": "Use the separately installed Mole CLI on macOS or Windows to inspect disk use and system health, preview cleanup and remove approved items. Installation and destructive cleanup require user consent.",
+        "zh": "通过另行安装的 Mole CLI 查看 macOS 或 Windows 的磁盘占用和系统状态，预览清理并删除用户同意的项目。安装及破坏性清理均需用户授权。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@lightcoloror/dsh-codex-handoff",
+      "title": {
+        "en": "Codex Handoff",
+        "zh": "Codex Handoff"
+      },
+      "description": {
+        "en": "Hand tasks from Codex to explicitly registered DSH workspaces and return results through scoped pairing. Uses a pinned Git release; requires Windows, Node >=22, Python >=3.11 and manual workspace pairing. Default /codex-bridge conflicts with codex-dsh-collab.",
+        "zh": "将 Codex 任务交给明确登记的 DSH 工作区，通过限定范围的配对接收结果。使用固定 Git 版本，需 Windows、Node >=22、Python >=3.11 并手动登记配对；默认 /codex-bridge 路由与 codex-dsh-collab 冲突。"
+      },
+      "category": "tools",
+      "version": "0.1.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/lightcoloror/dsh-codex-handoff",
+        "commit": "d6c99446717c9b272c21aa88cb0050a92b117ee9",
+        "publishedAt": "2026-11-10T10:39:25Z",
+        "integrity": "sha512-n+XeWXK0WjJjRRHMxhzQcbh+jIzQ7jiOyRthGgM5lkaucDY/KpI//ihokuqfGE9SbTpIjnJwP7p5CeDctBybMA=="
+      }
+    },
+    {
+      "name": "dsh-surfcore-memory-engine",
+      "title": {
+        "en": "SurfCore Memory Engine",
+        "zh": "SurfCore 记忆引擎"
+      },
+      "description": {
+        "en": "Replace SurfCore 0.8.8 memory-card decay with configurable score lifetimes and daily, long-term and permanent tiers. A companion patcher for the installed desktop-profile SurfCore, with verification, backup and rollback; changes local SurfCore files and requires a restart.",
+        "zh": "为 SurfCore 0.8.8 的记忆卡替换可调节的分数寿命与日常、长期、永久档位。它是 desktop profile 已安装 SurfCore 的配套补丁，校验后备份、应用并可回滚，会修改本机 SurfCore 文件，需重启。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "rss-pal-dsh",
+      "title": {
+        "en": "RSS Pal",
+        "zh": "RSS Pal 阅读器"
+      },
+      "description": {
+        "en": "Read and search RSS/Atom locally, import OPML, capture pages and request summaries or a native reading companion through DSH models. Requires Node >=22.19.0 and DSH 0.2.1-rc.5 or 0.2.2-rc.1, with native better-sqlite3; only macOS/0.2.1-rc.5 is author-tested. Feeds and remote images contact source sites; model use may incur fees.",
+        "zh": "本地阅读和全文搜索 RSS/Atom，支持 OPML、网页摘录、手动总结和原生伴读。需 Node >=22.19.0、DSH 0.2.1-rc.5 或 0.2.2-rc.1 及原生 better-sqlite3；作者仅验证 macOS/0.2.1-rc.5。订阅和远程图片会访问来源站点，模型使用可能产生费用。"
+      },
+      "category": "knowledge",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/morefreeze/dsh-plugin-rss-pal",
+        "commit": "95f6d1b0f1d06b337b689a26b71e3de3280de419",
+        "publishedAt": "2026-11-10T09:25:54Z",
+        "integrity": "sha512-JlgZqYYZCb3n7hMA8oTeQ8W2bWuSC0Ysna9qfqWvVMhJzahynFmGE8FdH4awlbfvuFumbtAE61CpYIIeQCF2/A=="
       }
     }
   ]

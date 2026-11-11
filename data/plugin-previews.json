@@ -20,6 +20,18 @@
           "alt": "DSH Phone setup page and sidebar entry"
         }
       ]
+    },
+    "dsh-agent-compare": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/a763bd87c8b07085dd3c2507e79502c9a89eb6a8/docs/media/screenshots/11-live-comparison.png",
+          "alt": "AgentCompare 2.0.0 comparing four live timer pages in DSH"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/a763bd87c8b07085dd3c2507e79502c9a89eb6a8/docs/media/screenshots/12-reviewed-adoption.png",
+          "alt": "AgentCompare 2.0.0 showing a chosen version, pick reasons and reviewed adoption"
+        }
+      ]
     }
   }
 }
