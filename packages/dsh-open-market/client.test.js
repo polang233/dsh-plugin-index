@@ -1097,8 +1097,9 @@ test('leaderboards rank each board top to bottom, show five rows until expanded 
   assert.equal(nodes(short).some(node => node.type === 'button' && 'aria-expanded' in node.props), false);
 });
 
-test('section icons are drawn paths that stay inside the 24px grid, and both languages name every board', async () => {
-  const {internals: {zh, en, styles}} = await client();
+test('every section has a drawn icon, both languages name every board, and the row styles keep cards whole', async () => {
+  const {internals: {zh, en, styles, ICON_PATHS}} = await client();
+  for (const section of ['today', 'rankings', 'popular', 'starred', 'recommended', 'trending', 'newest', 'all']) assert.match(ICON_PATHS[section], /^[Mm][\d\s.,a-zA-Z-]+$/, section);
   for (const words of [zh, en]) {
     for (const key of ['rankings', 'rankingsHint', 'rankingsMore', 'rankingsLess', 'popular', 'popularHint', 'starred', 'starredHint', 'recommended', 'recommendedHint', 'trending', 'trendingHint', 'newest', 'newestHint', 'browseAll', 'collapse', 'allPlugins']) {
       assert.equal(typeof words[key], 'string', key);
@@ -1139,4 +1140,72 @@ test('rails stagger by a daily offset that never lines two rails up and stops at
   const value = dailyRandom('x', days[0]);
   assert.ok(value >= 0 && value < 1);
   assert.equal(dailyRandom('x', days[0]), value);
+});
+
+test('today’s picks draw their opening slide once the row is measured, evenly, and keep it through a resize', async () => {
+  // A minimal renderer: state and refs by call order, effects run after each render until nothing changes.
+  function mount(component, props, node) {
+    const states = [], effects = [];
+    let cursor = 0, dirty = false, pending = [];
+    const react = {
+      createElement: (type, elementProps, ...children) => ({type, props: elementProps, children}),
+      useState(initial) {
+        const id = cursor++;
+        if (!(id in states)) states[id] = typeof initial === 'function' ? initial() : initial;
+        return [states[id], value => { const next = typeof value === 'function' ? value(states[id]) : value; if (next !== states[id]) { states[id] = next; dirty = true; } }];
+      },
+      useRef(initial) { const id = cursor++; if (!(id in states)) states[id] = {current: id === 0 ? node : initial}; return states[id]; },
+      useEffect(setup, deps) {
+        const id = cursor++, old = effects[id];
+        if (!old || !deps || deps.some((value, at) => value !== old.deps[at])) pending.push(() => { old?.dispose?.(); effects[id] = {deps, dispose: setup()}; });
+      }
+    };
+    react.useLayoutEffect = react.useEffect;
+    function render() {
+      for (let round = 0; round < 20; round++) {
+        cursor = 0; dirty = false; pending = [];
+        component()(props);
+        pending.forEach(run => run());
+        if (!dirty) return;
+      }
+      throw new Error('The carousel did not settle');
+    }
+    return {react, render};
+  }
+  const rowWidth = columns => ({1: 400, 2: 700, 3: 1000}[columns]);
+  function viewport(columns, slides) {
+    const node = {scrollLeft: 0, clientWidth: rowWidth(columns) + 40, firstElementChild: {getBoundingClientRect: () => ({width: (rowWidth(columns) - (columns - 1) * 10) / columns})},
+      scrollTo({left}) { this.scrollLeft = left; }};
+    Object.defineProperty(node, 'scrollWidth', {get() { return slides * (node.firstElementChild.getBoundingClientRect().width + 10) + 30; }});
+    return node;
+  }
+  const shown = node => Math.round(node.scrollLeft / (node.firstElementChild.getBoundingClientRect().width + 10));
+  async function open(names, columns) {
+    const node = viewport(columns, names.length);
+    const holder = {};
+    const plugin = await client({react: new Proxy({}, {get: (_, key) => (...args) => holder.react[key](...args)}), windowOverrides: {
+      getComputedStyle: () => ({paddingLeft: '20px', paddingRight: '20px'}), addEventListener() {}, removeEventListener() {}, setInterval: () => 0, clearInterval() {}}});
+    const api = mount(() => plugin.internals.FeaturedCarousel, {entries: names.map(name => ({name})), autoRotate: false, t: key => key}, node);
+    holder.react = api.react;
+    api.render();
+    return {node, render: api.render};
+  }
+  // Nine picks, three to a view: seven places to open on. Over many line-ups none may dominate.
+  const counts = Array(7).fill(0);
+  for (let day = 0; day < 140; day++) {
+    const {node} = await open(Array.from({length: 9}, (_, at) => `pick-${day}-${at}`), 3);
+    counts[shown(node)]++;
+  }
+  assert.ok(counts.every(count => count >= 8 && count <= 36), 'opening slides are spread out: ' + counts.join(' '));
+
+  // A resize that fits fewer slides keeps the slide; a view of one still gets its draw.
+  const names = Array.from({length: 9}, (_, at) => 'steady-' + at);
+  const wide = await open(names, 3);
+  const before = shown(wide.node);
+  wide.node.clientWidth = rowWidth(3) + 40; wide.render();
+  assert.equal(shown(wide.node), before, 'rendering again does not draw again');
+  const single = [];
+  for (let day = 0; day < 12; day++) single.push(shown((await open(names.map(name => `${name}-${day}`), 1)).node));
+  assert.ok(new Set(single).size > 3, 'a one-slide view opens on different slides: ' + single.join(' '));
+  for (const few of [[], ['only'], ['one', 'two']]) assert.equal(shown((await open(few, 3)).node), 0);
 });
