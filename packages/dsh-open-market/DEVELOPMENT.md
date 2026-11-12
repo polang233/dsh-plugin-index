@@ -1,6 +1,6 @@
 # Open Market development checkpoint
 
-Version **0.4.0** is released on npm, with the tag `dsh-open-market@0.4.0` and a matching GitHub Release.
+Version **0.4.1** is released on npm, with the tag `dsh-open-market@0.4.1` and a matching GitHub Release.
 
 ## Implementation
 
