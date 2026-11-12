@@ -4,10 +4,11 @@ Discover and manage community plugins in DeepSeek Harness with [Open Plugin Mark
 
 在 DeepSeek Harness 中发现和管理社区插件，支持分类搜索、收藏分组、版本切换与更新。
 
-## 0.4.0
+## 0.4.1
 
 See the [changelog](CHANGELOG.md) for the complete changes.
 
+- New in 0.4.1: leaderboards for the most liked and most starred plugins under today's picks, rows that open staggered by a daily draw, drawn icons, and fixes for clipped outlines, cards and labels. Plugin markets, this one included, no longer take recommendation places in the tab.
 - Manage every local bundle, with system plugins collapsed, explicit state badges, native settings, enable/disable and confirmed uninstall. Search, favorite-group filters and bulk controls work in the same panel.
 - Update immediately when idle or queue an exact version. The Host keeps cancellation, retry and outcome records, rechecks the installation before applying, and retains queued input during Agent maintenance. A restarted Host requires explicit retry.
 - Inspect runtime paths, shared profile configuration, direct dependencies, DSH compatibility and load/error/risk counts. Directory shortcuts open locations resolved from the inventory; plugins' separate data directories are not guessed. Risk indicators describe metadata checks, not a full security review.
@@ -16,7 +17,7 @@ See the [changelog](CHANGELOG.md) for the complete changes.
 
 Protected operations wait for activity reported by the Host across all sessions. DSH does not expose a reliable per-plugin usage map or a global admission lock for independent background producers. Native management follows its own policy. Hosts without the required APIs keep details available and refuse protected mutations.
 
-本版补齐完整插件管理、系统折叠分组、启停标签、诊断与目录、配置层顺序、空闲更新队列、横向拖动和简短原生介绍。任务保护按宿主报告的所有会话统一等待空闲；插件独立数据目录不做猜测，风险提示不代表完整安全审计。完整改动见[更新记录](CHANGELOG.md)。
+0.4.1 新增点赞和星数排行榜、按天随机错开的推荐行和绘制的图标，修复描边、卡片和标签被裁切的问题；插件市场类（包括本插件）在标签页里不再占推荐位。0.4.0 补齐完整插件管理、系统折叠分组、启停标签、诊断与目录、配置层顺序、空闲更新队列、横向拖动和简短原生介绍。任务保护按宿主报告的所有会话统一等待空闲；插件独立数据目录不做猜测，风险提示不代表完整安全审计。完整改动见[更新记录](CHANGELOG.md)。
 
 ## Install / 安装
 
