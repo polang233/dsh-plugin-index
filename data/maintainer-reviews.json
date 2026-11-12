@@ -5959,6 +5959,201 @@
       "reviewedAt": "2026-11-12T16:45:59.000Z",
       "scope": "package",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@delthin/dsh-tool-wrap",
+      "version": "1.3.0",
+      "integrity": "sha512-1hAmVdjvxUG9cbgLOIyjb0ZB5dnQ01isSrv8/4A2FcsRINT8iNAHWpbzEWLmoK/v+BVI84AHQUBAWg6B7v3TBA==",
+      "repository": "https://github.com/Delthin/dsh-plugins",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@delthin/dsh-agent-roles",
+      "version": "0.5.1",
+      "integrity": "sha512-0ZeI/HP90UQvsdAP7U1nd6TB32jpL/GpXJyn1S6l4Nj9wPTp93jlrs7NbtbK5UlHgOMN+Y183Ywe5frKCmSrzg==",
+      "repository": "https://github.com/Delthin/dsh-plugins",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@delthin/dsh-fast",
+      "version": "0.1.5",
+      "integrity": "sha512-WYcyWYVzY7ZKndMwF1q5yYf0q80bKi7R9ljO1bVLnETlg3xv85HWnsEk7D2WHV0i9TKtbe/YWOwqL5ejw+ZLkw==",
+      "repository": "https://github.com/Delthin/dsh-plugins",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@delthin/dsh-feishu-notify",
+      "version": "1.1.2",
+      "integrity": "sha512-KEcUqgM3agRe9PKrm0+07oMOEwfwgsLzkVFqvmND6LtaPjzZq+2G1dd59oO/Ql6Hm8msLq+iELtLbPMxVa1jWw==",
+      "repository": "https://github.com/Delthin/dsh-plugins",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@delthin/dsh-global-pins",
+      "version": "0.2.1",
+      "integrity": "sha512-MfDCDx14vm3W0jl8+EHlz0PEwFdgyiYHWe1P4kiuepjDQQLUtveWL3p54rc5TZcXUYt17jE/1nWwKcVbqYVoug==",
+      "repository": "https://github.com/Delthin/dsh-plugins",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@delthin/dsh-cardex",
+      "version": "0.1.1",
+      "integrity": "sha512-E4UK8EEdRaOInfqvz4GBV8q84YTwyL9rP/hshKdW/YIv52MlkidSVvl5GJvSUBMVjXBk12frK2G9oFmXUMb14Q==",
+      "repository": "https://github.com/Delthin/dsh-plugins",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-interview-desk",
+      "version": "0.1.0-dev.7",
+      "integrity": "sha512-w0ElkmpIjnaeN/vE9RCniOOtQCAqqdYqFlJvC4IFyFXK84ME+nhbtzHnaVitlaJj7E7U5nL6QGAFGynQOD+Ysw==",
+      "repository": "https://github.com/minhaoliu927-lgtm/dsh-interview-desk",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "git",
+        "commit": "bd54d7b271d3124a6cc1a9178ad805cc684736d3"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-sidebar-suite",
+      "version": "0.5.0",
+      "integrity": "sha512-0pD9L/8A/q9C1hry5ulE2WQHCjSvZR8K8kgqsghuVU0RXYXiyLNRi/I3ufsAHOtGwzNQJK/vGblsClokG9eORA==",
+      "repository": "https://github.com/YONAN1269/dsh-sidebar-suite",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@kulebbb/dsh-git-tree",
+      "version": "0.7.2",
+      "integrity": "sha512-E/xchVvrOyWw2+hxehxhA19S9eQRK7IHP1NV6aTwVn7EdlfglMNFS7Fle05cud6dq7F19X8huowT1H0PC/ywQQ==",
+      "repository": "https://github.com/kulebbb/dsh-git-tree",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-wechat-file-cleaner",
+      "version": "1.2.1",
+      "integrity": "sha512-CCrxLvcO+jCOiFu6uWyn64SFYA4xZMVmcvTxYy1dmci0AT42rsdVoPTxHokUo7UF3BtUnO2ajYYZZukqQXg4Ow==",
+      "repository": "https://github.com/guanyufuhuo/dsh-wechatCleanup",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "git",
+        "commit": "c4e04e528ff736ddb68e2ccfc2c1556173e04856"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-conversations-archive",
+      "version": "0.1.7",
+      "integrity": "sha512-qki9fu7vASKWg5vvqDxNKSDZuCJetypqXcAP6c/LOIQcXnAq3loe7y1KQ8ofRe2Ztzk3Vv9PmiHzcxbjaVv+jQ==",
+      "repository": "https://github.com/axdfczbh/dsh-conversations-archive",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-codex-style-computer-use",
+      "version": "2.3.0",
+      "integrity": "sha512-r03drNu6w4ja7OOjjTACGTvGL63FaqRw/JBXENKLpGnTCv88uBtAmc9UhVrvehEKbrS5pSIDCBHpB9D3wCj5yw==",
+      "repository": "https://github.com/ltmroberthk915/dsh-computer-use",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "travel-agent",
+      "version": "0.2.0",
+      "integrity": "sha512-3IrrQdgjq2hjl2CJrQAVTe+akHWtt7yFwZKnXVQqexnbLiAKOq9ILkdJjxXI1Bz3r5KXeIKFBPtvhmW/Rze+jA==",
+      "repository": "https://github.com/wang-bool/travel-story-dsh",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "git",
+        "commit": "3854a6581eb4f78961aae17b06344e5e2b395acf"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@yunlai/dsh-ai-quick-links",
+      "version": "0.1.1",
+      "integrity": "sha512-yWtoLl4Tz4xHtJAV0cou6REq6NQPd36S/iVrTYizQA3b2HZOelsNzjK0QWo2SLXTgmF9dmfGqFUw/fy4ZII5Qw==",
+      "repository": "https://github.com/Chengyunlai/dsh-ai-quick-links",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-pi-subagent",
+      "version": "0.2.4",
+      "integrity": "sha512-86loyTWgF4oDj59LSlgP1GPJcHqOLxIgTPdxDXBfAi12aaNe1Ek6eLwDQnXuYfr1/C2oR/7fOwV93qsgH3DbUg==",
+      "repository": "https://github.com/A1311981684/dsh-pi-subagent",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-provider-peak",
+      "version": "1.2.2",
+      "integrity": "sha512-dVGhMZB/tDppNEsvUybCUzQ5Ss6/NUDIZYbUN2q7tpXkhBd7ZC2Xd+MbK2IF/V1Uhib+Wmux+0GutkNR2EzZpQ==",
+      "repository": "https://github.com/moonmoonCL/dsh-provider-peak",
+      "reviewedAt": "2026-11-13T02:00:00.000Z",
+      "scope": "static-security",
+      "source": {
+        "type": "npm"
+      },
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
