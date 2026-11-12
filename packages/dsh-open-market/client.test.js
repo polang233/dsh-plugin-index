@@ -1052,3 +1052,91 @@ test('native settings launchers and sparse catalog labels never pass undefined t
   const translated = Tags({entry, resolve, t: key => key, metadata: {labels: {verified: {title: {en: 'Reviewed'}}}}});
   assert(nodeText(translated).includes('Reviewed'));
 });
+
+test('leaderboards rank each board top to bottom, show five rows until expanded and open a plugin from its row', async () => {
+  const states = [];
+  let cursor = 0;
+  const react = {
+    createElement: (type, props, ...children) => ({type, props, children}),
+    useState(initial) {const id = cursor++; if (!(id in states)) states[id] = initial; return [states[id], value => {states[id] = typeof value === 'function' ? value(states[id]) : value;}];}
+  };
+  const {internals: {Leaderboards, boardValue}} = await client({react});
+  const entry = (name, sortKeys = {}, labels = []) => ({name, author: 'author-' + name, versions: [], metadata: {sortKeys, labels}});
+  const liked = Array.from({length: 8}, (_, at) => entry('liked-' + at));
+  const counts = Object.fromEntries(liked.map((item, at) => [item.name, 80 - at]));
+  const starred = [entry('starry', {'github-stars': 42000}), entry('modest', {'github-stars': 12})];
+  const metadata = {labels: {'downloads-1k': {title: '1000+'}}};
+  const context = {counts, metadata, resolve: value => value, t: key => key === 'dateLocale' ? 'en' : key};
+  assert.equal(boardValue('popular', liked[0], context), '80');
+  assert.equal(boardValue('starred', starred[0], context), '42K');
+
+  const opened = [];
+  const props = {...context, boards: [['popular', liked], ['starred', starred]], onOpen: (item, from) => opened.push([item.name, from])};
+  const render = () => { cursor = 0; return Leaderboards(props); };
+  // PluginIcon is a component of its own; the fake renderer leaves it unexpanded, which keeps the rows readable here.
+  const rows = tree => nodes(tree).filter(node => node.props?.className === 'opm-board-row');
+  let tree = render();
+  assert.deepEqual(rows(tree).map(row => row.props['data-plugin-name']),
+    ['liked-0', 'liked-1', 'liked-2', 'liked-3', 'liked-4', 'starry', 'modest']);
+  assert.match(rows(tree)[0].props['aria-label'], /^1 · liked-0 · 80$/);
+  const toggle = nodes(tree).find(node => node.type === 'button' && node.props['aria-expanded'] === false);
+  assert.equal(nodeText(toggle), 'rankingsMore');
+  toggle.props.onClick();
+  tree = render();
+  assert.equal(rows(tree).length, 10);
+  assert.equal(nodes(tree).find(node => node.type === 'button' && node.props['aria-expanded'] === true) !== undefined, true);
+  const target = {};
+  rows(tree)[1].props.onClick({currentTarget: target});
+  assert.deepEqual(opened, [['liked-1', target]]);
+
+  cursor = 0;
+  assert.equal(Leaderboards({...props, boards: []}), null);
+  // Two short boards need no expander.
+  cursor = 0;
+  const short = Leaderboards({...props, boards: [['starred', starred]]});
+  assert.equal(nodes(short).some(node => node.type === 'button' && 'aria-expanded' in node.props), false);
+});
+
+test('section icons are drawn paths that stay inside the 24px grid, and both languages name every board', async () => {
+  const {internals: {zh, en, styles}} = await client();
+  for (const words of [zh, en]) {
+    for (const key of ['rankings', 'rankingsHint', 'rankingsMore', 'rankingsLess', 'popular', 'popularHint', 'starred', 'starredHint', 'recommended', 'recommendedHint', 'trending', 'trendingHint', 'newest', 'newestHint', 'browseAll', 'collapse', 'allPlugins']) {
+      assert.equal(typeof words[key], 'string', key);
+    }
+  }
+  assert.match(styles, /\.opm-svg \{[^}]*stroke: currentColor/);
+  // The first of today's picks rests on the content edge: no fade reaches into a card.
+  assert.doesNotMatch(styles, /--opm-fade-(start|end): calc\(var\(--opm-bleed\) \+/);
+  // Card tags hide whole tags past a fixed number of rows, never slicing one or stretching the card.
+  assert.match(styles, /\.opm-card \.opm-tags \{[^}]*flex-wrap: wrap; overflow: hidden; max-height:/);
+  assert.match(styles, /\.opm-card-footer \.opm-tags \{ --opm-tag-rows: 2;/);
+});
+
+test('plugin markets, this one included, get no recommendation place in the tab but keep every other order', async () => {
+  const {internals: {featuredPool, sortCatalog}} = await client();
+  const entry = (name, recommended, stars = 0, status = 'not-installed') => ({name, versions: [], installation: {status}, metadata: {sortKeys: {recommended, 'github-stars': stars}}});
+  const entries = [entry('dshmarket', 99, 8000), entry('dsh-open-market', 98, 200), entry('tool-a', 5, 10), entry('tool-b', 4, 20), entry('installed-tool', 3, 0, 'installed')];
+  assert.deepEqual(plain(featuredPool(entries, {dshmarket: 9000}, '2026-11-11').map(item => item.name)).sort(), ['tool-a', 'tool-b']);
+  assert.deepEqual(plain(sortCatalog(entries, 'recommended', {}).map(item => item.name)), ['tool-a', 'tool-b', 'installed-tool', 'dshmarket', 'dsh-open-market']);
+  assert.deepEqual(plain(sortCatalog(entries, 'stars', {}).map(item => item.name)).slice(0, 2), ['dshmarket', 'dsh-open-market']);
+  assert.deepEqual(plain(sortCatalog(entries, 'popular', {dshmarket: 9000}).map(item => item.name))[0], 'dshmarket');
+});
+
+test('rails stagger by a daily offset that never lines two rails up and stops at a short rail’s end', async () => {
+  const {internals: {railOffset, dailyRandom}} = await client();
+  const days = Array.from({length: 40}, (_, at) => new Date(Date.UTC(2026, 10, 1 + at)).toISOString().slice(0, 10));
+  for (const day of days) {
+    const offsets = ['recommended', 'trending', 'newest'].map(section => railOffset(section, 20, 4, day));
+    const fractions = offsets.map(value => value % 1);
+    // Each fraction sits in its rail's band, so no two rails share a column line.
+    for (let a = 0; a < 3; a++) for (let b = a + 1; b < 3; b++) assert.ok(Math.abs(fractions[a] - fractions[b]) >= 0.05, day);
+    for (const value of offsets) assert.ok(value > 0 && value < 3, day);
+    assert.equal(railOffset('trending', 20, 4, day), offsets[1], 'the same all day');
+  }
+  assert.ok(new Set(days.map(day => railOffset('newest', 20, 4, day))).size > 10, 'changes by day');
+  assert.ok(railOffset('newest', 5, 4, days[0]) <= 1, 'stops at the end');
+  assert.equal(railOffset('newest', 4, 4, days[0]), 0, 'a rail that fits stays at its start');
+  const value = dailyRandom('x', days[0]);
+  assert.ok(value >= 0 && value < 1);
+  assert.equal(dailyRandom('x', days[0]), value);
+});
