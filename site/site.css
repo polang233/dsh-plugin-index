@@ -79,10 +79,12 @@ button { cursor: pointer; }
 .hero-art { grid-column: 2; grid-row: 1; }
 .hero > .steps-head { grid-column: 1 / -1; grid-row: 2; margin-top: 6px; }
 .hero > .method-panels { grid-column: 1 / -1; grid-row: 3; margin-top: 4px; }
-h1 { margin: 0; max-width: 700px; font-size: clamp(46px, 6vw, 84px); line-height: 1.02; letter-spacing: -.045em; font-weight: 900; text-wrap: balance; }
+h1 { margin: 0; max-width: 700px; font-size: clamp(34px, 3.8vw, 48px); line-height: 1.12; letter-spacing: -.035em; font-weight: 900; text-wrap: balance; }
 h1 em { font-style: normal; color: var(--blue); }
 .h1-kicker { display: block; margin-bottom: 10px; color: var(--slate); font-size: 15px; line-height: 1.35; letter-spacing: .01em; font-weight: 800; }
-html:is([lang="zh-CN"], [lang="ja"], [lang="ko"]) h1 { font-size: clamp(42px, 5.2vw, 72px); line-height: 1.15; letter-spacing: -.03em; }
+/* CJK headings need more leading and less tightening. Sizes are set per page (.hero, .detail-head, .stats-intro), never here:
+   a language selector outranks those and once blew plugin and stats titles up to poster size. */
+html:is([lang="zh-CN"], [lang="ja"], [lang="ko"]) h1 { line-height: 1.2; letter-spacing: -.02em; }
 /* The landing headline is a short hook, smaller than a poster title so the URL stays in the first view. */
 .hero h1 { font-size: clamp(34px, 3.8vw, 48px); line-height: 1.12; letter-spacing: -.035em; }
 html:is([lang="zh-CN"], [lang="ja"], [lang="ko"]) .hero h1 { font-size: clamp(32px, 3.5vw, 44px); line-height: 1.25; letter-spacing: -.02em; }
@@ -277,6 +279,9 @@ h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); letter-spacing: -.03em; lin
   .brand { font-size: 16px; gap: 8px; }
   .brand img { width: 44px; height: 44px; border-radius: 14px; }
   .header-links { gap: 0; padding: 4px; }
+  /* Five languages beside the brand: tighter cells keep the switcher inside a phone's width. */
+  .languages { margin-left: 0; }
+  .languages a, .languages span { min-width: 28px; padding: 4px 5px; }
   .header-links > a { display: none; }
   .hero { grid-template-columns: 1fr; gap: 20px; padding-top: 20px; }
   .hero-art { max-width: 170px; margin: 0; grid-column: 1; grid-row: 1; justify-self: center; }
@@ -287,8 +292,8 @@ h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); letter-spacing: -.03em; lin
   .showcase ul { grid-template-columns: 1fr; }
   .app-frame { border-radius: 14px; }
   .sticker { font-size: 12px; padding: 3px 11px; }
-  h1, .hero h1 { font-size: clamp(32px, 9vw, 42px); }
-  html:is([lang="zh-CN"], [lang="ja"], [lang="ko"]) h1, html:is([lang="zh-CN"], [lang="ja"], [lang="ko"]) .hero h1 { font-size: clamp(30px, 8.6vw, 40px); }
+  .hero h1 { font-size: clamp(32px, 9vw, 42px); }
+  html:is([lang="zh-CN"], [lang="ja"], [lang="ko"]) .hero h1 { font-size: clamp(30px, 8.6vw, 40px); }
   .hero-lead { font-size: 16px; margin: 14px 0 20px; }
   .address-bar { flex-direction: column; align-items: stretch; gap: 4px; padding: 6px; border-radius: 20px; }
   /* Stacked on phones: one centered line, not stretched by the column flex. */
@@ -522,8 +527,8 @@ body.is-leaving { opacity: 0; }
 .footer-brand .star-note { position: absolute; left: calc(100% + 16px); bottom: 50%; width: 300px; translate: 0 50%; margin: 0; padding: 10px 14px; border: 2px solid #fff; border-radius: 14px; background: #24365c; color: #dbe5f7; font-size: 13px; line-height: 1.6; box-shadow: 3px 3px 0 #fff; opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .25s, transform .25s; }
 .star-wrap:hover .star-note, .star-wrap:focus-within .star-note { opacity: 1; transform: none; }
 
-/* Author logos fill more of the avatar frame. */
-.plugin-avatar img { padding: 0; transform: scale(1.16); }
+/* Author logos fill the frame edge to edge, whole: scaling them past it cut the edges off every icon. */
+.plugin-avatar img { padding: 0; }
 @media (max-width: 800px) { .footer-brand .star-note { left: 0; bottom: calc(100% + 12px); translate: none; } }
 @media (max-width: 620px) { .header-links > a { display: none; } }
 
@@ -548,7 +553,7 @@ body.is-leaving { opacity: 0; }
 .detail-card[data-tone="5"] { --tone: #ffd9e8; }
 .detail-head { display: flex; align-items: center; gap: 20px; }
 .detail-head > div { min-width: 0; }
-.detail-head h1 { font-size: clamp(28px, 3.4vw, 40px); line-height: 1.15; letter-spacing: -.03em; overflow-wrap: anywhere; }
+.detail-head h1 { max-width: none; font-size: clamp(26px, 3vw, 36px); line-height: 1.2; letter-spacing: -.02em; text-wrap: pretty; overflow-wrap: anywhere; }
 .detail-head .package-name { margin-top: 6px; font-size: 14px; }
 .detail-avatar { width: 84px; height: 84px; border-radius: 26px; box-shadow: 3px 3px 0 var(--ink); }
 .detail-lead { max-width: 760px; margin: 16px 0 16px; color: var(--ink); font-size: 18px; font-weight: 600; line-height: 1.7; text-wrap: pretty; overflow-wrap: anywhere; }
@@ -666,6 +671,12 @@ body.is-leaving { opacity: 0; }
   .country-bars li { grid-template-columns: minmax(0, 1fr) 80px; }
   .country-track { grid-column: 1 / -1; grid-row: 2; }
 }
+
+/* Not found: one column of short lines, then a wrapping row of language links. It must not borrow the home hero's two-column grid. */
+.not-found { display: grid; justify-items: start; gap: 8px; padding: 40px 0 96px; }
+.not-found h1 { margin-bottom: 10px; }
+.not-found p { margin: 0; color: var(--slate); font-size: 17px; font-weight: 600; }
+.not-found .contribute-links { flex-wrap: wrap; gap: 12px; margin-top: 20px; }
 
 /* "Plugins" links land on the directory heading; the header tucks away when jumping down, so a small gap is enough. */
 #plugins { scroll-margin-top: 20px; }

@@ -1138,6 +1138,7 @@ window.__ModuleLoader__.load({
       today: '今日推荐', recommended: '智能推荐', popular: '最受欢迎', trending: '增长最快',
       newest: '最新发布', health: '插件管理',
       todayHint: '每天更新，按点赞和推荐加权', recommendedHint: '近期活跃，也留位置给新收录的插件', popularHint: '按近期点赞',
+      rankings: '排行榜', rankingsHint: '点赞和星数，各看前几名', rankingsMore: '展开前 {count} 名', rankingsLess: '收起', starred: '星数最多', starredHint: 'GitHub star 总数',
       trendingHint: '近 7 天下载增长', newestHint: '按发布时间', stars: 'GitHub star {count}',
       close: '关闭', homepage: '主页', sourceCode: '源码', marketPage: '在开放插件市场网站查看',
       copy: '复制', copied: '已复制', installCommand: '安装命令', likeCount: '点赞 {count}',
@@ -1212,6 +1213,7 @@ window.__ModuleLoader__.load({
       today: 'Today’s picks', recommended: 'Recommended', popular: 'Most popular', trending: 'Fastest growing',
       newest: 'Newly published', health: 'Manage plugins',
       todayHint: 'Daily, weighted by likes and recommendations', recommendedHint: 'Active plugins, with room for new listings', popularHint: 'By recent likes',
+      rankings: 'Leaderboards', rankingsHint: 'The leaders by likes and stars', rankingsMore: 'Show top {count}', rankingsLess: 'Show fewer', starred: 'Most stars', starredHint: 'Total GitHub stars',
       trendingHint: '7-day download growth', newestHint: 'By publication date', stars: '{count} GitHub stars',
       close: 'Close', homepage: 'Homepage', sourceCode: 'Source code', marketPage: 'View on Open Plugin Market',
       copy: 'Copy', copied: 'Copied', installCommand: 'Install command', likeCount: '{count} likes',
@@ -1286,7 +1288,7 @@ window.__ModuleLoader__.load({
       .opm-page-head h1 { margin: 0 0 16px; font-size: 20px; font-weight: 600; color: var(--dsw-alias-label-primary); }
       .opm-page .opm-market { margin-top: 0; }
       .opm-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 22px; margin-bottom: 6px; }
-      .opm-heading-copy { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+      .opm-heading-copy { display: flex; align-items: center; gap: 6px; min-width: 0; }
       .opm-heading-copy h2 { flex-shrink: 0; }
       .opm-heading-hint { font-size: 12px; color: var(--dsw-alias-label-tertiary); overflow: hidden;
         text-overflow: ellipsis; white-space: nowrap; }
@@ -1302,7 +1304,7 @@ window.__ModuleLoader__.load({
       .opm-button-primary:hover:not(:disabled), .opm-button-primary:active:not(:disabled) { opacity: .85; background: var(--dsw-alias-button-primary-fill); }
       .opm-button:disabled { cursor: default; color: var(--dsw-alias-label-tertiary); background: var(--dsw-alias-interactive-bg-hover); }
       .opm-button-small { min-height: 28px; padding: 4px 9px; font-size: 12px; }
-      .opm-like { gap: 3px; font-variant-numeric: tabular-nums; }
+      .opm-like { gap: 4px; font-variant-numeric: tabular-nums; }
       .opm-like:disabled { color: var(--dsw-alias-state-warn-primary); background: var(--dsw-alias-button-elevated-fill); }
       .opm-author { color: var(--dsw-alias-label-tertiary); font-size: 12px; line-height: 16px; overflow: hidden;
         text-overflow: ellipsis; white-space: nowrap; }
@@ -1328,16 +1330,17 @@ window.__ModuleLoader__.load({
         cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(-50%) scale(.92);
         transition: opacity 150ms ease-out, transform 150ms ease-out, border-color 150ms ease-out; }
       .opm-arrow svg { width: 16px; height: 16px; }
-      .opm-arrow-previous { left: calc(-1 * var(--opm-bleed) + 4px); }
-      .opm-arrow-next { right: calc(-1 * var(--opm-bleed) + 4px); }
+      /* Arrows sit in the gutter, so in a narrow window they stay clear of the card's text. */
+      .opm-arrow-previous { left: calc(-1 * var(--opm-bleed)); }
+      .opm-arrow-next { right: calc(-1 * var(--opm-bleed)); }
       .opm-section:hover .opm-arrow:not(:disabled), .opm-section:focus-within .opm-arrow:not(:disabled),
       .opm-carousel:hover .opm-arrow:not(:disabled), .opm-carousel:focus-within .opm-arrow:not(:disabled) { opacity: 1; pointer-events: auto; transform: translateY(-50%); }
       .opm-arrow:hover:not(:disabled) { border-color: var(--dsw-alias-border-l3); transform: translateY(-50%) scale(1.08) !important; }
       .opm-arrow:active:not(:disabled) { transform: translateY(-50%) scale(.96) !important; }
       .opm-rail, .opm-carousel-viewport { display: flex; align-items: stretch; gap: 10px; overflow-x: auto; overscroll-behavior-x: contain;
         scrollbar-width: none; padding: 24px var(--opm-bleed); margin: -24px calc(-1 * var(--opm-bleed)); scroll-padding-inline: var(--opm-bleed); }
-      /* Rails start at staggered offsets, so only today's picks snap, one gutter along (see restingOffset). */
-      .opm-carousel-viewport { scroll-snap-type: x proximity; scroll-padding-left: 0; }
+      /* Today's picks snap card by card; each rests on the content edge, clear of the gutter fade. */
+      .opm-carousel-viewport { scroll-snap-type: x proximity; }
       .opm-rail::-webkit-scrollbar, .opm-carousel-viewport::-webkit-scrollbar { display: none; }
       .opm-rail, .opm-carousel-viewport { user-select: none; -webkit-user-select: none; }
       .opm-rail img, .opm-carousel-viewport img { -webkit-user-drag: none; }
@@ -1356,15 +1359,17 @@ window.__ModuleLoader__.load({
       .opm-card .opm-description { display: -webkit-box; -webkit-line-clamp: 2;
         -webkit-box-orient: vertical; overflow: hidden; }
       .opm-card-action { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-top: auto; }
-      .opm-card .opm-tags { flex-wrap: nowrap; overflow: hidden; }
-      .opm-card .opm-tag { white-space: nowrap; flex-shrink: 0; }
+      /* Card tags keep a fixed number of 18px rows: a tag that does not fit wraps onto a hidden row whole, instead of
+         being cut mid-pill or stretching the card. Rail cards take one row, today's picks two. */
+      .opm-card .opm-tags { --opm-tag-rows: 1; flex-wrap: wrap; overflow: hidden; max-height: calc(var(--opm-tag-rows) * 18px + (var(--opm-tag-rows) - 1) * 4px); }
+      .opm-card .opm-tag { white-space: nowrap; flex-shrink: 0; line-height: 16px; }
       .opm-carousel { min-width: 0; margin-top: 12px; }
-      /* Rails fade and blur into whichever edge still has cards beyond it. */
+      /* The row fades and blurs into whichever gutter still has cards beyond it; the fade stays inside the gutter. */
       @property --opm-fade-start { syntax: '<length>'; inherits: true; initial-value: 0px; }
       @property --opm-fade-end { syntax: '<length>'; inherits: true; initial-value: 0px; }
       .opm-list-fade { --opm-fade-start: 0px; --opm-fade-end: 0px; transition: --opm-fade-start 200ms ease-out, --opm-fade-end 200ms ease-out; }
-      .opm-list-fade[data-fade-start] { --opm-fade-start: calc(var(--opm-bleed) + 12px); }
-      .opm-list-fade[data-fade-end] { --opm-fade-end: calc(var(--opm-bleed) + 12px); }
+      .opm-list-fade[data-fade-start] { --opm-fade-start: var(--opm-bleed); }
+      .opm-list-fade[data-fade-end] { --opm-fade-end: var(--opm-bleed); }
       .opm-list-fade > .opm-rail, .opm-list-fade > .opm-carousel-viewport {
         -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--opm-fade-start), #000 calc(100% - var(--opm-fade-end)), transparent);
         mask-image: linear-gradient(to right, transparent, #000 var(--opm-fade-start), #000 calc(100% - var(--opm-fade-end)), transparent); }
@@ -1423,13 +1428,42 @@ window.__ModuleLoader__.load({
       .opm-all-arrows { position: sticky; z-index: 2; top: 45%; height: 0; }
       .opm-all-arrows .opm-arrow-previous { left: 4px; }
       .opm-all-arrows .opm-arrow-next { right: 4px; }
+      /* Leaderboards: ranked lists side by side, stacked when the page is narrow. */
+      .opm-boards-section { margin-top: 20px; }
+      .opm-boards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; align-items: start; }
+      .opm-board { min-width: 0; padding: 12px 8px 8px; border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-md);
+        background: var(--dsw-alias-bg-module-platform); }
+      .opm-board-title { display: flex; align-items: center; gap: 6px; min-width: 0; margin: 0 6px 6px !important; }
+      .opm-board-title small { min-width: 0; margin-left: auto; color: var(--dsw-alias-label-tertiary); font-size: 11px; font-weight: 400;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .opm-board-list { list-style: none; margin: 0; padding: 0; }
+      .opm-board-row { font: inherit; display: flex; align-items: center; gap: 8px; width: 100%; min-width: 0; padding: 5px 6px; border: 0;
+        border-radius: var(--dsw-radius-sm); background: transparent; color: inherit; text-align: left; cursor: pointer;
+        transition: background-color 150ms ease-out; }
+      .opm-board-row:hover { background: var(--dsw-alias-interactive-bg-hover); }
+      .opm-board-row .opm-icon { width: 30px; height: 30px; font-size: 16px; border-radius: var(--dsw-radius-sm);
+        background: color-mix(in srgb, hsl(var(--opm-hue, 220) 72% 58%) 14%, var(--dsw-alias-bg-layer-1)); }
+      .opm-rank { flex: 0 0 20px; color: var(--dsw-alias-label-tertiary); font-size: 12px; font-weight: 600; text-align: center;
+        font-variant-numeric: tabular-nums; }
+      .opm-rank[data-rank="1"] { color: #e59a00; }
+      .opm-rank[data-rank="2"] { color: #7a8699; }
+      .opm-rank[data-rank="3"] { color: #c2703a; }
+      .opm-board-copy { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+      .opm-board-copy strong, .opm-board-copy small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .opm-board-copy strong { font-size: 13px; font-weight: 600; line-height: 18px; }
+      .opm-board-copy small { color: var(--dsw-alias-label-tertiary); font-size: 11px; line-height: 15px; }
+      .opm-board-value { flex-shrink: 0; color: var(--dsw-alias-label-secondary); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+      /* Icons are drawn, not typed, so they look the same whatever fonts the system has. */
+      .opm-svg { flex-shrink: 0; width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      :is(.opm-like:disabled, .opm-favorite-main[aria-pressed="true"]) > .opm-svg { fill: currentColor; }
       .opm-installed-button small { color: var(--dsw-alias-state-warn-primary); font-size: 11px; font-weight: 600; }
       .opm-footer a { color: var(--dsw-alias-label-secondary); text-underline-offset: 3px; }
       .opm-footer a:hover { color: var(--dsw-alias-label-primary); }
       .opm-skeleton { background: var(--dsw-alias-bg-skeleton); border-radius: var(--dsw-radius-sm); }
-      .opm-skeleton-title { height: 22px; width: 45%; margin-bottom: 8px; }
+      .opm-skeleton-title { height: 22px; width: 160px; margin-bottom: 8px; }
       .opm-skeleton-search { height: 32px; max-width: 360px; border-radius: var(--dsw-radius-md); }
-      .opm-skeleton-card { height: 148px; border: 0; background: var(--dsw-alias-bg-skeleton); }
+      .opm-skeleton-pick { height: 168px; }
+      .opm-skeleton-board { height: 232px; }
       .opm-settings { display: flex; flex-direction: column; gap: 12px; max-width: 620px; padding: 0; font-size: 13px; }
       .opm-settings-group { padding: 10px 12px; border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-md);
         background: var(--dsw-alias-bg-module-platform); }
@@ -1728,10 +1762,12 @@ window.__ModuleLoader__.load({
       .opm-more { display: flex; margin: 12px auto 0; }
       /* Section headings carry a small tinted glyph. */
       .opm-glyph { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 20px; height: 20px; align-self: center;
-        border-radius: 6px; font-size: 12px; line-height: 1; color: var(--opm-glyph); background: color-mix(in srgb, var(--opm-glyph) 16%, transparent); }
+        border-radius: 6px; color: var(--opm-glyph); background: color-mix(in srgb, var(--opm-glyph) 16%, transparent); }
+      .opm-glyph .opm-svg { width: 13px; height: 13px; }
       .opm-glyph-today { --opm-glyph: #e59a00; }
       .opm-glyph-recommended { --opm-glyph: #4f7cff; }
       .opm-glyph-popular { --opm-glyph: #f0507a; }
+      .opm-glyph-rankings, .opm-glyph-starred { --opm-glyph: #e59a00; }
       .opm-glyph-trending { --opm-glyph: #f06a2c; }
       .opm-glyph-newest { --opm-glyph: #19a974; }
       .opm-glyph-all { --opm-glyph: #7a8699; }
@@ -1748,7 +1784,7 @@ window.__ModuleLoader__.load({
       .opm-featured-card .opm-title { font-size: 20px; line-height: 26px; font-weight: 700; }
       /* Wide featured cards keep every label on the same line as the buttons. */
       .opm-card-footer { display: flex; align-items: flex-end; gap: 8px; margin-top: auto; min-width: 0; }
-      .opm-card-footer .opm-tags { flex: 1; flex-wrap: wrap; }
+      .opm-card-footer .opm-tags { --opm-tag-rows: 2; flex: 1; align-self: center; }
       .opm-card-footer .opm-card-action { margin-top: 0; }
       .opm-featured-card .opm-description { -webkit-line-clamp: 3; }
       .opm-featured-card .opm-icon { box-shadow: 0 10px 22px -10px var(--opm-accent); }
@@ -1855,7 +1891,20 @@ window.__ModuleLoader__.load({
       return accent;
     }
 
-    const SECTION_GLYPHS = { today: '☀', recommended: '⊙', popular: '♥', trending: '↗', newest: '✚', all: '▦' };
+    // Icon paths on a 24px grid, kept two units inside it so a 2px stroke is never cut at the edge.
+    const ICON_PATHS = {
+      today: 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2.5v2M12 19.5v2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M2.5 12h2M19.5 12h2M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4',
+      popular: 'M12 20s-7-4.3-8.6-8.8C2.3 7.9 4.3 4.8 7.6 4.8c1.9 0 3.4 1 4.4 2.5 1-1.5 2.5-2.5 4.4-2.5 3.3 0 5.3 3.1 4.2 6.4C19 15.7 12 20 12 20z',
+      starred: 'm12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8L3.5 9.7l5.9-.9z',
+      trending: 'M3 17l6-6 4 4 8-8M15 7h6v6',
+      recommended: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+      newest: 'M12 5v14M5 12h14',
+      rankings: 'M4 20v-6h5v6M9.5 20V7h5v13M15 20v-9h5v9M3 20h18',
+      all: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z'
+    };
+    function Glyph({ name }) {
+      return h('svg', { className: 'opm-svg', viewBox: '0 0 24 24', 'aria-hidden': true, focusable: 'false' }, h('path', { d: ICON_PATHS[name] || ICON_PATHS.all }));
+    }
 
     function descriptionOf(entry, resolve, t) {
       const text = resolve(entry.description ?? '') || '';
@@ -1882,6 +1931,14 @@ window.__ModuleLoader__.load({
       return entry.defaultVersion ? entry.versions.find(version => version.version === entry.defaultVersion) : undefined;
     }
 
+    // A number in [0, 1) fixed for one key on one local day: positions drawn with it change daily, not on every visit.
+    function dailyRandom(key, day = localDay()) {
+      let hash = 2166136261;
+      for (const char of day + ':' + key) hash = Math.imul(hash ^ char.codePointAt(0), 16777619) >>> 0;
+      hash = Math.imul(hash ^ (hash >>> 15), 2246822507) >>> 0;
+      return ((hash ^ (hash >>> 13)) >>> 0) / 4294967296;
+    }
+
     function localDay() {
       const date = new Date();
       return [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
@@ -1891,7 +1948,7 @@ window.__ModuleLoader__.load({
       const ranked = [...entries].sort(recommendedOrder);
       const scores = new Map(ranked.map((entry, rank) => [entry.name,
         (Number(likes[entry.name]) || 0) * 10 + (ranked.length <= 1 ? 100 : 100 * (1 - rank / (ranked.length - 1)))]));
-      const pool = ranked.filter(entry => entry.installation.status === 'not-installed')
+      const pool = ranked.filter(entry => entry.installation.status === 'not-installed' && !isPluginMarket(entry))
         .sort((a, b) => scores.get(b.name) - scores.get(a.name) || recommendedOrder(a, b)).slice(0, 30);
       // Stable input ordering plus a date-seeded Fisher–Yates shuffle is independent of locale and input order.
       let seed = 2166136261;
@@ -1908,6 +1965,15 @@ window.__ModuleLoader__.load({
       }
       return pool.slice(0, 9);
     }
+
+    // Plugins whose main purpose is to browse, install or manage other DSH plugins, this one included. Inside a market
+    // the recommendation places go to plugins that add a function: these are left out of today's picks and follow the
+    // rest in the recommended order. Search, the leaderboards and every other order treat them like any plugin.
+    const PLUGIN_MARKETS = new Set(['dsh-open-market', 'dshmarket', 'dsh-plugin', '@linxin666/dsh-client-ui-market',
+      '@noob-stupid/dsh-plugin-console', '@stolyarovmn/dsh-ui-registry-aggregator', '@vibedev-si/dsh-ecosystem']);
+    const isPluginMarket = entry => PLUGIN_MARKETS.has(entry.name);
+
+    const marketsLast = (a, b) => Number(isPluginMarket(a)) - Number(isPluginMarket(b)) || recommendedOrder(a, b);
 
     function recommendedOrder(a, b) {
       const difference = (b.metadata?.sortKeys?.recommended ?? 0) - (a.metadata?.sortKeys?.recommended ?? 0);
@@ -1997,7 +2063,7 @@ window.__ModuleLoader__.load({
       return h('button', { type: 'button', className: 'opm-button opm-button-small opm-like', disabled: liked, title,
         'aria-pressed': liked, 'aria-label': title + ' · ' + titleOf(entry, resolve) + (count ? ' · ' + count : ''),
         onClick: event => { event.stopPropagation(); void sendLike(entry.name, 'like'); }
-      }, h('span', { 'aria-hidden': true }, '♥'), count > 0 ? String(count) : null);
+      }, h(Glyph, { name: 'popular' }), count > 0 ? String(count) : null);
     }
 
     // The star saves to the default group, or removes the plugin from every group it is in; the arrow picks groups.
@@ -2051,7 +2117,7 @@ window.__ModuleLoader__.load({
             event.stopPropagation();
             if (saved.length) saved.forEach(group => setFavorite(group.id, name, false));
             else setFavorite(DEFAULT_GROUP, name, true);
-          } }, saved.length ? '★' : '☆'),
+          } }, h(Glyph, { name: 'starred' })),
         groups.length > 1 && h('button', { type: 'button', className: 'opm-button opm-button-small opm-favorite-more', 'aria-haspopup': 'menu',
           'aria-expanded': !!menu, title: t('chooseGroup'), 'aria-label': t('chooseGroup') + ' · ' + title, onClick: openMenu }, '▾'),
         list && (createPortal ? createPortal(list, document.body) : list));
@@ -2334,7 +2400,7 @@ window.__ModuleLoader__.load({
 
     function SectionHeading({ section, t, children }) {
       return h('div', { className: 'opm-heading' },
-        h('div', { className: 'opm-heading-copy' }, h('span', { className: 'opm-glyph opm-glyph-' + section, 'aria-hidden': true }, SECTION_GLYPHS[section] || '•'), h('h2', null, t(section)),
+        h('div', { className: 'opm-heading-copy' }, h('span', { className: 'opm-glyph opm-glyph-' + section, 'aria-hidden': true }, h(Glyph, { name: section })), h('h2', null, t(section)),
           h('span', { className: 'opm-heading-hint', title: t(section + 'Hint') }, '· ' + t(section + 'Hint'))), children);
     }
 
@@ -2357,7 +2423,7 @@ window.__ModuleLoader__.load({
 
     // Scrolling reports every frame; an unchanged edge must not re-render the row's cards each time.
     function sameEdges(next) {
-      return current => current.start === next.start && current.end === next.end && current.home === next.home ? current : next;
+      return current => current.start === next.start && current.end === next.end ? current : next;
     }
 
     // DSH narrows its page gutter with the window, and a row wider than the gutter would scroll the whole page sideways.
@@ -2456,27 +2522,24 @@ window.__ModuleLoader__.load({
       const viewport = React.useRef(null);
       const [visible, setVisible] = React.useState(1);
       const [index, setIndex] = React.useState(0);
-      const [edges, setEdges] = React.useState({ start: true, end: true, home: true });
+      const [edges, setEdges] = React.useState({ start: true, end: true });
       const [hovered, setHovered] = React.useState(false);
       const [focused, setFocused] = React.useState(false);
       const reduced = useReducedMotion();
       const count = Math.min(visible, entries.length || 1);
       const last = Math.max(0, entries.length - count);
       const position = Math.min(index, last);
-      // Slides rest one gutter along, so the leading card always sits under the fade instead of against the margin.
-      const restingOffset = node => parseFloat(window.getComputedStyle(node).paddingLeft);
       function measureScroll() {
         const node = viewport.current;
         if (!node) return;
-        const resting = restingOffset(node);
         const width = node.firstElementChild?.getBoundingClientRect().width;
-        if (width) setIndex(Math.max(0, Math.min(last, Math.round((node.scrollLeft - resting) / (width + 10)))));
-        setEdges(sameEdges({ ...edgesOf(node), home: node.scrollLeft <= resting + 1 }));
+        if (width) setIndex(Math.max(0, Math.min(last, Math.round(node.scrollLeft / (width + 10)))));
+        setEdges(sameEdges(edgesOf(node)));
       }
       function goTo(number, behavior = reduced ? 'auto' : 'smooth') {
         const node = viewport.current;
         const slide = node?.firstElementChild;
-        if (slide) node.scrollTo({ left: restingOffset(node) + number * (slide.getBoundingClientRect().width + 10), behavior });
+        if (slide) node.scrollTo({ left: number * (slide.getBoundingClientRect().width + 10), behavior });
       }
       React.useEffect(() => {
         const node = viewport.current;
@@ -2493,9 +2556,15 @@ window.__ModuleLoader__.load({
         window.addEventListener('resize', measure);
         return () => { observer?.disconnect(); window.removeEventListener('resize', measure); };
       }, []);
-      // A background refresh can replace the entries; only a different line-up goes back to the start.
+      // The picks open on a slide drawn per day, so each day leads with a different plugin. A new line-up draws again;
+      // a resize that changes how many fit keeps the current slide.
       const lineup = entries.map(entry => entry.name).join('\n');
-      React.useEffect(() => { goTo(0, 'auto'); setIndex(0); measureScroll(); }, [lineup, count]);
+      const shownLineup = React.useRef(null);
+      React.useEffect(() => {
+        const start = shownLineup.current === lineup ? position : Math.floor(dailyRandom('today:' + lineup) * (last + 1));
+        shownLineup.current = lineup;
+        goTo(start, 'auto'); setIndex(start); measureScroll();
+      }, [lineup, count]);
       React.useEffect(() => {
         if (!autoRotate || reduced || hovered || focused || !last) return;
         const timer = window.setInterval(() => goTo(position >= last ? 0 : position + 1), 5000);
@@ -2515,25 +2584,36 @@ window.__ModuleLoader__.load({
             h('div', { key: entry.name, className: 'opm-featured-slide', style: { flexBasis: `calc((100% - ${(count - 1) * 10}px) / ${count})` } },
               h(PluginCard, { ...props, entry, featured: true })))
             : h('p', { className: 'opm-muted' }, props.t('sectionEmpty'))),
-          h(FloatingArrows, { title, t: props.t, start: edges.home, end: edges.end,
+          h(FloatingArrows, { title, t: props.t, start: edges.start, end: edges.end,
             move: direction => goTo(Math.max(0, Math.min(last, position + direction))) })));
     }
 
-    // Rails open part-way along, each at its own card offset, so the rows below today's picks do not line up.
-    // Offsets follow the section, since Most popular appears above the others only once likes arrive.
-    const RAIL_OFFSETS = { popular: 0.55, recommended: 1.6, trending: 1.1, newest: 2.15 };
+    // Rails open part-way along so the rows under today's picks never line up: a whole number of cards, drawn per day,
+    // plus a fraction from a band of each rail's own, so two rails can never share the same stagger. The offsets hold for
+    // the whole local day and change the next. A rail too short to scroll that far stops at its end.
+    const RAIL_BANDS = { recommended: [0.2, 0.4], trending: [0.45, 0.6], newest: [0.65, 0.8] };
+    function railOffset(section, cards, visible, day = localDay()) {
+      const room = cards - visible;
+      if (room <= 0) return 0;
+      const [low, high] = RAIL_BANDS[section] ?? [0.3, 0.7];
+      const offset = Math.floor(dailyRandom(section + ':cards', day) * 3) + low + dailyRandom(section + ':fraction', day) * (high - low);
+      return Math.min(room, offset);
+    }
 
     function PluginRail({ section, entries, ...props }) {
       const rail = React.useRef(null);
-      const staggered = React.useRef(false);
+      const placed = React.useRef(false);
       const [edges, setEdges] = React.useState({ start: true, end: true });
       const reduced = useReducedMotion();
       React.useLayoutEffect(() => {
         const node = rail.current;
         const card = node?.firstElementChild;
-        if (staggered.current || !card) return;
-        staggered.current = true;
-        node.scrollLeft = (RAIL_OFFSETS[section] ?? 1) * (card.getBoundingClientRect().width + 10);
+        if (placed.current || !card) return;
+        placed.current = true;
+        const step = card.getBoundingClientRect().width + 10;
+        const padding = parseFloat(window.getComputedStyle(node).paddingLeft) * 2;
+        const visible = Math.max(1, Math.floor((node.clientWidth - padding + 10) / step));
+        node.scrollLeft = railOffset(section, entries.length, visible) * step;
       }, [entries, section]);
       function measure() {
         const node = rail.current;
@@ -2550,7 +2630,7 @@ window.__ModuleLoader__.load({
         const node = rail.current;
         const card = node?.firstElementChild;
         if (!card) return;
-        // Whole pages from the nearest card, so a press from a staggered offset leaves a clean edge.
+        // Whole pages from the nearest card, so a press after a free scroll still leaves a clean edge.
         const step = card.getBoundingClientRect().width + 10;
         const padding = parseFloat(window.getComputedStyle(node).paddingLeft) * 2;
         const page = Math.max(1, Math.floor((node.clientWidth - padding + 10) / step));
@@ -2566,6 +2646,43 @@ window.__ModuleLoader__.load({
             entries.map(entry => h(PluginCard, { ...props, key: entry.name, entry })))
             : h('p', { className: 'opm-muted' }, props.t('sectionEmpty')),
           h(FloatingArrows, { title, t: props.t, start: edges.start, end: edges.end, move: scroll })));
+    }
+
+    // Leaderboards: most liked and most starred, each a ranked list read top to bottom, five rows at first and twenty on request.
+    const BOARD_ROWS = 5;
+    const BOARD_LIMIT = 20;
+    const BOARD_HINTS = { popular: 'popularHint', starred: 'starredHint' };
+    const compactNumber = (value, locale) => new Intl.NumberFormat(locale, { notation: 'compact', maximumFractionDigits: 1 }).format(value);
+    // What each board shows beside a plugin: its likes or its stars.
+    function boardValue(id, entry, { counts, t }) {
+      return compactNumber(id === 'popular' ? likeCount(counts, entry.name) : entry.metadata?.sortKeys?.['github-stars'], t('dateLocale'));
+    }
+
+    function Leaderboards({ boards, t, resolve, metadata, counts, onOpen }) {
+      const [expanded, setExpanded] = React.useState(false);
+      if (!boards.length) return null;
+      const longest = Math.max(...boards.map(([, entries]) => entries.length));
+      const rows = expanded ? BOARD_LIMIT : BOARD_ROWS;
+      return h('section', { className: 'opm-section opm-boards-section', 'aria-label': t('rankings') },
+        h(SectionHeading, { section: 'rankings', t },
+          longest > BOARD_ROWS && h('button', { type: 'button', className: 'opm-button opm-button-small', 'aria-expanded': expanded,
+            onClick: () => setExpanded(value => !value) }, expanded ? t('rankingsLess') : t('rankingsMore').replace('{count}', Math.min(longest, BOARD_LIMIT)))),
+        h('div', { className: 'opm-boards' }, boards.map(([id, entries]) =>
+          h('div', { key: id, className: 'opm-board opm-board-' + id },
+            h('h3', { className: 'opm-board-title' }, h('span', { className: 'opm-glyph opm-glyph-' + id, 'aria-hidden': true }, h(Glyph, { name: id })),
+              t(id), h('small', { title: t(BOARD_HINTS[id]) }, t(BOARD_HINTS[id]))),
+            h('ol', { className: 'opm-board-list' }, entries.slice(0, rows).map((entry, at) => {
+              const title = titleOf(entry, resolve);
+              const value = boardValue(id, entry, { counts, metadata, resolve, t });
+              return h('li', { key: entry.name },
+                h('button', { type: 'button', className: 'opm-board-row', 'aria-haspopup': 'dialog', 'data-plugin-name': entry.name,
+                  style: { '--opm-hue': hueOf(entry.name) }, 'aria-label': (at + 1) + ' · ' + title + (value ? ' · ' + value : ''),
+                  onClick: event => onOpen(entry, event.currentTarget) },
+                  h('span', { className: 'opm-rank', 'data-rank': at + 1, 'aria-hidden': true }, at + 1),
+                  h(PluginIcon, { entry, title }),
+                  h('span', { className: 'opm-board-copy' }, h('strong', { title }, title), entry.author ? h('small', null, entry.author) : null),
+                  value ? h('span', { className: 'opm-board-value' }, value) : null));
+            }))))));
     }
 
     async function openNativePackage(name, {get, select, wait = () => new Promise(resolve => window.setTimeout(resolve, 50))}) {
@@ -2982,7 +3099,7 @@ window.__ModuleLoader__.load({
         stars: (a, b) => sortValue(b, 'github-stars') - sortValue(a, 'github-stars'),
         newest: (a, b) => latestPublication(b) - latestPublication(a)
       }[sort];
-      return [...entries].sort((a, b) => order?.(a, b) || recommendedOrder(a, b));
+      return [...entries].sort(order ? (a, b) => order(a, b) || recommendedOrder(a, b) : marketsLast);
     }
 
     // Under the rails: one button that opens the whole catalog as a grid. Its side arrows turn to the next order.
@@ -3021,7 +3138,7 @@ window.__ModuleLoader__.load({
         h('button', { type: 'button', className: 'opm-button', onClick: () => setOpen(true) }, t('browseAll').replace('{count}', entries.length)));
       return h('section', { className: 'opm-section', 'aria-label': t('allPlugins'), ref: section },
         h('div', { className: 'opm-heading opm-all-heading' },
-          h('div', { className: 'opm-heading-copy' }, h('span', { className: 'opm-glyph opm-glyph-all', 'aria-hidden': true }, SECTION_GLYPHS.all),
+          h('div', { className: 'opm-heading-copy' }, h('span', { className: 'opm-glyph opm-glyph-all', 'aria-hidden': true }, h(Glyph, { name: 'all' })),
             h('h2', { ref: heading, tabIndex: -1 }, t('allPlugins')),
             h('span', { className: 'opm-heading-hint' }, '· ' + t('allHint').replace('{count}', entries.length))),
           h('div', { className: 'opm-all-controls' },
@@ -3068,7 +3185,7 @@ window.__ModuleLoader__.load({
           Object.entries(categories).map(([id, info]) => h('option', {key: id, value: id}, resolve(info.title ?? '') || id))),
           h('svg', {viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, 'aria-hidden': true}, h('path', {d: 'm4 6 4 4 4-4'}))),
         h('button', { type: 'button', className: 'opm-button opm-favorites-button', 'aria-haspopup': 'dialog', onClick: event => onPanel('favorites', event) },
-          h('span', { 'aria-hidden': true }, '☆'), t('favorites'), count > 0 && h('small', null, count)),
+          h(Glyph, { name: 'starred' }), t('favorites'), count > 0 && h('small', null, count)),
         h('button', { type: 'button', className: 'opm-button opm-favorites-button opm-installed-button', 'aria-haspopup': 'dialog',
           title: updates ? t('updates') + ' · ' + updates : undefined, onClick: event => onPanel('installed', event) },
           t('health'), updates > 0 && h('small', null, '↑' + updates)),
@@ -3480,10 +3597,11 @@ window.__ModuleLoader__.load({
       return h('div', { role: 'status', 'aria-label': t('loading'), 'aria-busy': true },
         h('div', { 'aria-hidden': true },
           h('div', { className: 'opm-skeleton opm-skeleton-search' }),
-          [0, 1].map(row => h('div', { key: row, className: 'opm-section' },
+          // The same shape as the page that follows: a row of picks, then the boards.
+          [['opm-skeleton-pick', 2], ['opm-skeleton-board', 2]].map(([shape, count]) => h('div', { key: shape, className: 'opm-section' },
             h('div', { className: 'opm-skeleton opm-skeleton-title' }),
-            h('div', { className: 'opm-rail' }, [0, 1, 2, 3].map(card => h('div', {
-              key: card, className: 'opm-card opm-skeleton-card'
+            h('div', { className: 'opm-boards' }, Array.from({ length: count }, (_, card) => h('div', {
+              key: card, className: 'opm-skeleton ' + shape
             })))))));
     }
 
@@ -3531,7 +3649,9 @@ window.__ModuleLoader__.load({
         // Today's picks, the search and the panels keep their own rules; this only thins the browsing lists.
         const entries = preferences.showInstalled
           ? state.entries : state.entries.filter(entry => entry.installation.status === 'not-installed');
-        const ranked = [...entries].sort(recommendedOrder);
+        const top = list => list.slice(0, BOARD_LIMIT);
+        // Plugin markets get no recommendation weight here, this one included: they come after every other plugin.
+        const ranked = [...entries].sort(marketsLast);
         // Recommended, Fastest growing and Newly published never repeat a plugin; each takes the next unseen ones.
         const seen = new Set();
         const take = list => {
@@ -3539,16 +3659,20 @@ window.__ModuleLoader__.load({
           picked.forEach(entry => seen.add(entry.name));
           return picked;
         };
-        const popular = entries.filter(entry => likeCount(counts, entry.name) > 0)
-          .sort((a, b) => counts[b.name] - counts[a.name] || recommendedOrder(a, b)).slice(0, 20);
         return {
           daily: featuredPool(state.entries, counts, day),
+          // Ranked lists read top to bottom; the rails below stay for browsing.
+          boards: [
+            ['popular', top(entries.filter(entry => likeCount(counts, entry.name) > 0)
+              .sort((a, b) => counts[b.name] - counts[a.name] || recommendedOrder(a, b)))],
+            ['starred', top(sortCatalog(entries.filter(entry => sortValue(entry, 'github-stars') > 0), 'stars', counts))]
+          ].filter(([, list]) => list.length),
           rails: [
-            ['popular', popular], ['recommended', take(ranked)],
-            ['trending', take(ranked.filter(entry => entry.metadata?.labels?.includes('trending')))],
+            ['recommended', take(ranked)],
+            ['trending', take(ranked.filter(rising))],
             ['newest', take([...entries].sort((a, b) => latestPublication(b) - latestPublication(a) || recommendedOrder(a, b)))]
           ].filter(([, list]) => list.length),
-          all: [...entries].sort(recommendedOrder),
+          all: ranked,
           updates: state.entries.filter(entry => entry.defaultVersion && entry.installation.status === 'update-available').length,
           stars: state.entries.find(entry => entry.name === 'dsh-open-market')?.metadata?.sortKeys?.['github-stars']
         };
@@ -3586,6 +3710,7 @@ window.__ModuleLoader__.load({
             onPanel: (kind, event) => setPanel({ kind, from: event.currentTarget }) }),
           results ? h(SearchResults, { ...props, entries: results }) : h(React.Fragment, null,
             h(FeaturedCarousel, { ...props, entries: sections.daily, autoRotate: preferences.autoRotate && !selected && !panel }),
+            h(Leaderboards, { ...props, boards: sections.boards, counts }),
             sections.rails.map(([section, entries]) => h(PluginRail, { ...props, key: section, section, entries })),
             h(AllPlugins, { ...props, entries: sections.all, counts })),
           actionNotice && h('p', { className: 'opm-note opm-action-error', role: 'status' }, actionNotice),
@@ -3780,7 +3905,7 @@ window.__ModuleLoader__.load({
       npmVersionRegistry, declaredDshRanges, npmVersions, loadNpmVersions, versionChoices, versionInstall, versionCommand, installVersion, requestSelfUpdate, VERSION_CACHE_TTL,
       PluginDetails, OtherVersions, countSelfInstall, supportMarket, updateSettings, getLikes, FooterInvite,
       InstalledPanel, ManagementLauncher, Toolbar, managementRows, filterManaged, requestManagement, managementMessage, openNativePackage,
-      attachHorizontalDrag, RuntimeOverview, PluginDiagnostics, Tags,
+      attachHorizontalDrag, RuntimeOverview, PluginDiagnostics, Tags, featuredPool, railOffset, dailyRandom, Leaderboards, AllPlugins, boardValue,
       hydrateProfile, getProfileStatus, getSettings, getFavorites, writeFavorites, filterCatalog, requestBundleUpdate,
       extractScreenshots, extractVersionNotes, loadScreenshots, loadReleaseNotes, ReleaseNotes, Screenshots, zh, en, styles: STYLES,
       syncTheme, THEME_ATTRIBUTE, THEME_LINK_ID };

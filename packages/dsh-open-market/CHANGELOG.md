@@ -1,5 +1,29 @@
 # dsh-open-market 更新记录
 
+## 未发布 / Unreleased
+
+### English
+
+- Added leaderboards under today's picks: Most popular and Most stars sit side by side, five places each and twenty on request, and a row opens the plugin's details. The Recommended, Fastest growing and Newly published rows stay below them.
+- Rows open staggered by an offset drawn per day, each row in its own band so no two line up; the offsets hold all day and change the next.
+- Fixed clipping: the Plugins tab bar's bottom outline and shadow are no longer cut off; today's picks no longer start under the edge fade; the carousel arrows sit in the page gutter instead of over card text.
+- Today's picks open on a slide drawn per day instead of always on the first.
+- Card labels keep a fixed number of rows (one on row cards, two on today's picks). A label that does not fit is left out whole instead of being cut mid-pill or stretching the card.
+- Section, like and favorite icons are drawn instead of typed, so they no longer depend on system fonts.
+- Plugin markets and managers, this one included, no longer take recommendation places in the tab: they are left out of today's picks and come after every other plugin in Recommended. Search, the leaderboards and the other orders are unchanged.
+- Whale Maid theme: from the sidebar the mascot peeks over a rule under the page title instead of floating with her lower edge cut off; on the Plugins page, where DSH's tab bar covered all but a sliver of her, she is left out.
+
+### 中文
+
+- 今日推荐下方新增排行榜：「最受欢迎」「星数最多」并排展示，各显示前 5 名，可展开到前 20 名，点一行打开插件详情。「智能推荐」「增长最快」「最新发布」横排仍保留在排行榜下方。
+- 横排打开时按天随机错开，每条横排的错位幅度各不相同，几行不会对齐；同一天内保持不变，第二天重新随机。
+- 修复裁切：「插件」页标签栏底部的描边和阴影不再被切掉；今日推荐的第一张卡不再被边缘渐隐遮住；左右箭头移到页面留白里，不再压在卡片文字上。
+- 今日推荐按天随机停在其中一张，不再总是从第一张开始。
+- 卡片标签固定行数（横排卡片 1 行，今日推荐 2 行），放不下的标签整枚隐藏，不再被切半截，也不再把卡片撑高。
+- 分区标题、点赞和收藏的图标改为绘制的矢量图标，不再依赖系统字体里的符号。
+- 插件市场和管理类插件（包括本插件）在标签页里不再占推荐位：不进今日推荐，在「智能推荐」中排在其他插件之后。搜索、排行榜和其他排序不变。
+- 鲸鱼女仆主题：从侧边栏打开时，吉祥物趴在页面标题下的墨线上；在「插件」页里 DSH 的标签栏会把她盖得只剩一条，所以那里不再显示。
+
 ## 0.4.0
 
 ### English

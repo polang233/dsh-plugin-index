@@ -297,6 +297,9 @@ body[data-opm-theme] [role="tablist"] > [class*="_indicator_"] {
   border-color: var(--opm-line);
 }
 body[data-opm-theme] [role="tablist"]:has(> [class*="_indicator_"]) > [role="tab"] { font-weight: 700; }
+/* DSH clips its page header to its own box with clip-path: inset(0), and the tab pill ends on that edge, which cut off
+   the pill's bottom outline and offset shadow. Leave room for both. */
+body[data-opm-theme] :is([class$="_pageHead"], [class*="_pageHead "]):has([role="tablist"] > [class*="_indicator_"]) { clip-path: inset(0 -8px -8px -8px); }
 /* The selected tab sits on sun yellow in both modes, so it keeps dark ink text. */
 body[data-opm-theme][data-opm-appearance="dark"] [role="tablist"]:has(> [class*="_indicator_"]) > [role="tab"][aria-selected="true"] { color: #14284b; }
 body[data-opm-theme] [role="switch"] { box-shadow: var(--opm-ring); }
@@ -369,6 +372,7 @@ body[data-opm-theme] .opm-heading-copy:has(.opm-glyph-popular) h2 { --opm-mark: 
 body[data-opm-theme] .opm-heading-copy:has(.opm-glyph-trending) h2 { --opm-mark: var(--opm-peach-mark); }
 body[data-opm-theme] .opm-heading-copy:has(.opm-glyph-newest) h2 { --opm-mark: var(--opm-mint-mark); }
 body[data-opm-theme] .opm-heading-copy:has(.opm-glyph-all) h2 { --opm-mark: var(--opm-lilac-mark); }
+body[data-opm-theme] .opm-heading-copy:has(.opm-glyph-rankings) h2 { --opm-mark: var(--opm-coral); }
 body[data-opm-theme] .opm-heading-hint { color: var(--opm-slate); font-weight: 600; }
 body[data-opm-theme] .opm-glyph {
   width: 22px;
@@ -382,7 +386,7 @@ body[data-opm-theme] .opm-glyph {
 
 /* Each plugin's own hue as a macaron fill, like the site's card tones. Set where the hue is, not on body,
    so every card resolves its own. */
-body[data-opm-theme] :is(.opm-card, .opm-panel-heading, .opm-manage-open, .opm-manage-detail-head) {
+body[data-opm-theme] :is(.opm-card, .opm-board-row, .opm-panel-heading, .opm-manage-open, .opm-manage-detail-head) {
   --opm-tone: hsl(var(--opm-hue, 220) var(--opm-tone-s) var(--opm-tone-l));
 }
 
@@ -400,7 +404,7 @@ body[data-opm-theme] .opm-card .opm-title { font-weight: 800; letter-spacing: -.
 body[data-opm-theme] .opm-featured-card .opm-title { font-size: 21px; font-weight: 900; letter-spacing: -.02em; }
 body[data-opm-theme] .opm-card .opm-author { color: var(--opm-slate); font-weight: 600; }
 body[data-opm-theme] .opm-card .opm-description { color: var(--opm-slate); font-weight: 500; }
-body[data-opm-theme] :is(.opm-card, .opm-panel-heading, .opm-manage-open, .opm-manage-detail-head) .opm-icon {
+body[data-opm-theme] :is(.opm-card, .opm-board-row, .opm-panel-heading, .opm-manage-open, .opm-manage-detail-head) .opm-icon {
   border-radius: 14px;
   background: var(--opm-tone);
   color: var(--opm-ink);
@@ -419,6 +423,36 @@ body[data-opm-theme] :is(.opm-card, .opm-panel-heading, .opm-manage-detail-head)
   body[data-opm-theme] .opm-card:hover .opm-icon { transform: rotate(6deg) scale(1.08); }
 }
 
+/* Leaderboards: one paper card per board, a medal for the first three places and each row lifting its plugin's tone. */
+body[data-opm-theme] .opm-board {
+  padding: 14px 10px 10px;
+  border-color: transparent;
+  border-radius: 22px;
+  background: var(--opm-paper);
+  box-shadow: var(--opm-ring-2), var(--opm-pop-md);
+}
+body[data-opm-theme] .opm-board-title { font-size: 14px; font-weight: 900; letter-spacing: -.01em; }
+body[data-opm-theme] .opm-board-title small { color: var(--opm-slate); font-weight: 600; }
+body[data-opm-theme] .opm-board-row { gap: 10px; padding: 6px; border-radius: 14px; }
+body[data-opm-theme] .opm-board-row:hover { background: color-mix(in srgb, var(--opm-tone) 45%, var(--opm-paper)); }
+body[data-opm-theme] .opm-board-row .opm-icon { border-radius: 11px; }
+body[data-opm-theme] .opm-board-row:hover .opm-icon { transform: rotate(5deg) scale(1.08); }
+body[data-opm-theme] .opm-rank {
+  flex-basis: 22px;
+  height: 22px;
+  border-radius: 999px;
+  color: var(--opm-slate);
+  font-weight: 800;
+  line-height: 22px;
+}
+body[data-opm-theme] .opm-rank:is([data-rank="1"], [data-rank="2"], [data-rank="3"]) { color: #14284b; box-shadow: var(--opm-ring); }
+body[data-opm-theme] .opm-rank[data-rank="1"] { background: var(--opm-sun); }
+body[data-opm-theme] .opm-rank[data-rank="2"] { background: #dfe6f2; }
+body[data-opm-theme] .opm-rank[data-rank="3"] { background: #ffc8a6; }
+body[data-opm-theme] .opm-board-copy strong { font-weight: 800; }
+body[data-opm-theme] .opm-board-copy small { color: var(--opm-slate); font-weight: 600; }
+body[data-opm-theme] .opm-board-value { color: var(--opm-ink); font-weight: 800; }
+
 /* Labels and metrics: solid pills with ink outlines, coloured by kind like the site's badges. */
 body[data-opm-theme] .opm-tag {
   padding: 0 8px;
@@ -430,6 +464,8 @@ body[data-opm-theme] .opm-tag {
   font-weight: 800;
   line-height: 18px;
 }
+/* Card tags keep the fixed 18px row height the card's tag rows are measured in. */
+body[data-opm-theme] .opm-card .opm-tag { line-height: 18px; }
 body[data-opm-theme] .opm-tag-verified { background: var(--opm-sky); }
 body[data-opm-theme] .opm-tag-trending { background: var(--opm-peach); }
 body[data-opm-theme] .opm-tag-active { background: var(--opm-lilac); }
@@ -565,13 +601,21 @@ body[data-opm-theme] .opm-search-empty {
 body[data-opm-theme] .opm-search-empty { display: flex; align-items: center; }
 body[data-opm-theme] .opm-skeleton { border-radius: 18px; }
 
-/* She peeks over the top edge of the market, right of the Plugins tabs, where the page has no controls. */
-body[data-opm-theme] .opm-market { position: relative; }
-body[data-opm-theme] .opm-market::before {
+/* She peeks over an ink rule under the page title when the market is opened from the sidebar. Inside the Plugins page
+   there is nowhere to peek from: DSH's sticky tab bar paints over anything above the market, which left only a sliver
+   of her showing, so she stays out of that view. */
+body[data-opm-theme] .opm-page-head {
+  position: relative;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  box-shadow: 0 2px 0 var(--opm-line);
+}
+body[data-opm-theme] .opm-page-head h1 { margin-bottom: 0; font-size: 22px; font-weight: 900; letter-spacing: -.02em; }
+body[data-opm-theme] .opm-page-head::after {
   content: "";
   position: absolute;
-  right: 4px;
-  bottom: 100%;
+  right: 8px;
+  bottom: 0;
   width: 84px;
   height: 56px;
   background: url("whale-maid-peek.webp") center bottom / contain no-repeat;
@@ -661,11 +705,11 @@ body[data-opm-theme] .opm-manage-footer { border-top: 2px solid var(--opm-line);
 
 @media (prefers-reduced-motion: no-preference) {
   body[data-opm-theme] .opm-card { transition: transform .3s cubic-bezier(.3, 1.6, .45, 1), box-shadow .3s cubic-bezier(.3, 1.6, .45, 1), background-color .25s; }
-  body[data-opm-theme] .opm-card .opm-icon,
+  body[data-opm-theme] :is(.opm-card, .opm-board-row) .opm-icon,
   body[data-opm-theme] .opm-chip { transition: transform .3s cubic-bezier(.3, 1.6, .45, 1), background-color .15s; }
 }
 @media (prefers-reduced-motion: reduce) {
   body[data-opm-theme] .opm-card:hover,
   body[data-opm-theme] .opm-manage-open[aria-current="true"],
-  body[data-opm-theme] .opm-card:hover .opm-icon { transform: none; }
+  body[data-opm-theme] :is(.opm-card, .opm-board-row):hover .opm-icon { transform: none; }
 }

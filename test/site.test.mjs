@@ -106,3 +106,18 @@ test('site reports issues, offers ranking limits and cleans historical descripti
   assert.match(index.plugins[0].description.en, /^★/);
   assert.match(display.plugins['demo-plugin'].description.en, /^★/);
 });
+
+test('page titles are sized per page and the 404 page has its own layout', async t => {
+  const css = await readFile(new URL('../site/site.css', import.meta.url), 'utf8');
+  // A language selector outranks .detail-head h1 and .stats-intro h1, so it must never carry a size of its own.
+  for (const [rule] of css.matchAll(/^html:is\(\[lang[^{]*\) h1 \{[^}]*\}/gm)) assert.doesNotMatch(rule, /font-size/, rule);
+  // Plugin logos show whole inside their frame.
+  assert.doesNotMatch(css, /\.plugin-avatar img \{[^}]*scale\(/);
+  const dir = await mkdtemp(join(tmpdir(), 'site-'));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const output = pathToFileURL(dir + '/');
+  await writeSite({ format: 1, plugins: [] }, { generatedAt: '2026-11-01T00:00:00Z' }, {}, {}, {}, { output });
+  const missing = await readFile(new URL('404.html', output), 'utf8');
+  assert.match(missing, /<main class="shell not-found">/);
+  assert.doesNotMatch(missing, /<main class="[^"]*\bhero\b/);
+});
