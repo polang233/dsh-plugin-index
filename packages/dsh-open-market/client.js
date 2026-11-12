@@ -1330,7 +1330,7 @@ window.__ModuleLoader__.load({
         cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(-50%) scale(.92);
         transition: opacity 150ms ease-out, transform 150ms ease-out, border-color 150ms ease-out; }
       .opm-arrow svg { width: 16px; height: 16px; }
-      /* Arrows sit in the gutter, so in a narrow window they stay clear of the card's text. */
+      /* Arrows start at the gutter's outer edge, so they cover as little of the cards as the gutter allows. */
       .opm-arrow-previous { left: calc(-1 * var(--opm-bleed)); }
       .opm-arrow-next { right: calc(-1 * var(--opm-bleed)); }
       .opm-section:hover .opm-arrow:not(:disabled), .opm-section:focus-within .opm-arrow:not(:disabled),
@@ -2520,13 +2520,14 @@ window.__ModuleLoader__.load({
 
     function FeaturedCarousel({ entries, autoRotate, ...props }) {
       const viewport = React.useRef(null);
-      const [visible, setVisible] = React.useState(1);
+      // 0 until the row has been measured: one slide is laid out meanwhile, and the day's slide is not drawn yet.
+      const [visible, setVisible] = React.useState(0);
       const [index, setIndex] = React.useState(0);
       const [edges, setEdges] = React.useState({ start: true, end: true });
       const [hovered, setHovered] = React.useState(false);
       const [focused, setFocused] = React.useState(false);
       const reduced = useReducedMotion();
-      const count = Math.min(visible, entries.length || 1);
+      const count = Math.min(visible || 1, entries.length || 1);
       const last = Math.max(0, entries.length - count);
       const position = Math.min(index, last);
       function measureScroll() {
@@ -2557,14 +2558,16 @@ window.__ModuleLoader__.load({
         return () => { observer?.disconnect(); window.removeEventListener('resize', measure); };
       }, []);
       // The picks open on a slide drawn per day, so each day leads with a different plugin. A new line-up draws again;
-      // a resize that changes how many fit keeps the current slide.
+      // a resize that changes how many fit keeps the current slide. The draw waits for the first measurement: drawn
+      // against the one-slide layout it would be clamped once three fit, landing on the last slide far too often.
       const lineup = entries.map(entry => entry.name).join('\n');
       const shownLineup = React.useRef(null);
       React.useEffect(() => {
+        if (!visible) return;
         const start = shownLineup.current === lineup ? position : Math.floor(dailyRandom('today:' + lineup) * (last + 1));
         shownLineup.current = lineup;
         goTo(start, 'auto'); setIndex(start); measureScroll();
-      }, [lineup, count]);
+      }, [lineup, count, visible]);
       React.useEffect(() => {
         if (!autoRotate || reduced || hovered || focused || !last) return;
         const timer = window.setInterval(() => goTo(position >= last ? 0 : position + 1), 5000);
@@ -3905,7 +3908,7 @@ window.__ModuleLoader__.load({
       npmVersionRegistry, declaredDshRanges, npmVersions, loadNpmVersions, versionChoices, versionInstall, versionCommand, installVersion, requestSelfUpdate, VERSION_CACHE_TTL,
       PluginDetails, OtherVersions, countSelfInstall, supportMarket, updateSettings, getLikes, FooterInvite,
       InstalledPanel, ManagementLauncher, Toolbar, managementRows, filterManaged, requestManagement, managementMessage, openNativePackage,
-      attachHorizontalDrag, RuntimeOverview, PluginDiagnostics, Tags, featuredPool, railOffset, dailyRandom, Leaderboards, AllPlugins, boardValue,
+      attachHorizontalDrag, RuntimeOverview, PluginDiagnostics, Tags, FeaturedCarousel, ICON_PATHS, featuredPool, railOffset, dailyRandom, Leaderboards, AllPlugins, boardValue,
       hydrateProfile, getProfileStatus, getSettings, getFavorites, writeFavorites, filterCatalog, requestBundleUpdate,
       extractScreenshots, extractVersionNotes, loadScreenshots, loadReleaseNotes, ReleaseNotes, Screenshots, zh, en, styles: STYLES,
       syncTheme, THEME_ATTRIBUTE, THEME_LINK_ID };

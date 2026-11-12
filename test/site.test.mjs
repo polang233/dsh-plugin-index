@@ -110,7 +110,17 @@ test('site reports issues, offers ranking limits and cleans historical descripti
 test('page titles are sized per page and the 404 page has its own layout', async t => {
   const css = await readFile(new URL('../site/site.css', import.meta.url), 'utf8');
   // A language selector outranks .detail-head h1 and .stats-intro h1, so it must never carry a size of its own.
-  for (const [rule] of css.matchAll(/^html:is\(\[lang[^{]*\) h1 \{[^}]*\}/gm)) assert.doesNotMatch(rule, /font-size/, rule);
+  // Every rule, inside media queries too: any selector in its list that is a bare `html:is([lang…]) h1` forbids a size.
+  const split = selectors => { const parts = []; let depth = 0, current = ''; for (const char of selectors) { if (char === ',' && !depth) { parts.push(current.trim()); current = ''; continue; } depth += char === '(' ? 1 : char === ')' ? -1 : 0; current += char; } return [...parts, current.trim()]; };
+  let languageHeadings = 0;
+  for (const [, selectors, body] of css.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    if (!split(selectors).some(selector => /^html:is\(\[lang[^)]*\) h1$/.test(selector))) continue;
+    languageHeadings++;
+    assert.doesNotMatch(body, /font-size/, selectors.trim());
+  }
+  assert.ok(languageHeadings >= 1, 'the language heading rule is still there to guard');
+  // Traditional Chinese pages are CJK pages too.
+  for (const [list] of css.matchAll(/html:is\(\[lang[^)]*\)/g)) assert.match(list, /zh-TW/, list);
   // Plugin logos show whole inside their frame.
   assert.doesNotMatch(css, /\.plugin-avatar img \{[^}]*scale\(/);
   const dir = await mkdtemp(join(tmpdir(), 'site-'));
