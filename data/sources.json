@@ -12661,8 +12661,8 @@
         "zh": "桌面电脑操控"
       },
       "description": {
-        "en": "Control Windows with screenshots, UI Automation targets and verified numbered marks; stale targets are refused before input. Batch known steps in one tool call and use compact observations and receipts. Standard mode asks approval for each action. Windows x64 and Node >=22; native helpers are bundled.",
-        "zh": "通过截图、UI Automation 控件和可校验的编号标记操控 Windows，输入前拒绝过期目标；可在一次工具调用中批量执行已知步骤，并使用精简观察与回执。默认 standard 模式逐次审批；仅支持 Windows x64，需 Node >=22，随包提供原生组件。"
+        "en": "Control Windows with screenshots, UI Automation targets and verified numbered marks, then verify the result; known steps can be batched in one tool call. Standard mode asks approval for each action; in a danger-full-access session that cannot show an approval card, high-risk actions run under that grant and are logged to policy.jsonl, while other sandboxes and delegated subagent sessions refuse. Windows x64 and Node >=22; native helpers are bundled.",
+        "zh": "通过截图、UI Automation 控件和可校验的编号标记操控 Windows 并回读验证，可在一次工具调用中批量执行已知步骤。默认 standard 模式逐次审批；完全权限会话无法弹审批卡时，高危动作按该授权执行并记入 policy.jsonl，其它沙箱与被委派子会话一律拒绝。仅支持 Windows x64，需 Node >=22，随包提供原生组件。"
       },
       "category": "tools"
     },
@@ -15602,8 +15602,8 @@
         "zh": "学习画板 · dsh-learning-quirky-stuff"
       },
       "description": {
-        "en": "Organize handwriting, images and learning materials with AI summaries, editable infographics, sourced knowledge graphs and spaced review. Chrome capture needs extension pairing; AI uses configured providers or a signed-in local Codex CLI and may incur charges. OCR/PDF extraction requires macOS 13+; requires Node >=24.",
-        "zh": "手写、贴图并整理学习材料，提供 AI 总结、可编辑信息图、带来源图谱与间隔复习。Chrome 采集需配对扩展；AI 使用已配置服务或已登录的本机 Codex CLI，可能收费。OCR/PDF 提取限 macOS 13+；需 Node >=24。"
+        "en": "A free, MIT-licensed learning whiteboard for handwriting, image notes and study materials, with AI summaries, editable infographics, sourced knowledge graphs and spaced review. Chrome capture needs extension pairing; optional AI uses your own configured provider or a signed-in local Codex CLI, so any charges come from that provider, not the plugin. OCR/PDF extraction requires macOS 13+; requires Node >=24.",
+        "zh": "免费、MIT 开源的学习画板，支持手写、贴图与学习材料整理，提供 AI 总结、可编辑信息图、带来源图谱与间隔复习。Chrome 采集需配对扩展；可选 AI 使用你自己配置的服务或已登录的本机 Codex CLI，如有费用由该服务收取，插件本身不收费。OCR/PDF 提取限 macOS 13+；需 Node >=24。"
       },
       "category": "knowledge"
     },
@@ -16051,6 +16051,223 @@
         "integrity": "sha512-BwNBQbpXXBeDooEWh2ep0Nt1AKwjShj1s5ah4r0WyjKlZrBbwZHGsULmFPBCG8E6QPUijqCjTUBg9cN3z7LM5g==",
         "publishedAt": "2026-11-11T09:29:34Z"
       }
+    },
+    {
+      "name": "@delthin/dsh-tool-wrap",
+      "title": {
+        "en": "Tool Wrap",
+        "zh": "工具折叠"
+      },
+      "description": {
+        "en": "Collapses rarely used plugins' tool docs into a brief plus tool names, which the model can unwrap per plugin when needed (off by default; calls still follow host permissions). Also adds an editor for system, pinned-user and user-state prompts; full prompt composition needs the bundled host-support adapter applied by hand. For DSH PTC sessions. Requires DSH >=0.2.2-rc.1 and Node >=22.",
+        "zh": "把不常用插件的工具说明折叠为简介和工具名，需要时由模型按插件整体展开（默认关闭，调用仍遵循宿主权限）。另提供系统、用户固定、用户状态三类提示词编排界面；完整编排需手动接入随包的 host-support 适配层。适用于 DSH PTC 会话。需 DSH >=0.2.2-rc.1、Node >=22。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@delthin/dsh-agent-roles",
+      "title": {
+        "en": "Agent Roles",
+        "zh": "Agent 角色"
+      },
+      "description": {
+        "en": "Reusable roles for DSH's native Agent Team: per-role prompt, model and reasoning effort, model fallback chain, tool allowlist and Skills; the main agent starts members or continues the same member's conversation. Tool calls still follow host permissions and approvals; member traffic adds model cost. Requires DSH >=0.2.2-rc.1 and Node >=22.18.0.",
+        "zh": "为 DSH 原生 Agent Team 管理可复用角色：按角色设置职责提示词、模型与推理强度、模型回退链、工具白名单和 Skills，由主代理启动成员或继续同一成员的对话。工具调用仍遵循宿主权限与审批；成员通信会产生额外模型费用。需 DSH >=0.2.2-rc.1、Node >=22.18.0。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "@delthin/dsh-fast",
+      "title": {
+        "en": "Fast Mode",
+        "zh": "Fast 档位"
+      },
+      "description": {
+        "en": "Switch a session between Standard and Fast and adjust reasoning effort per model. Fast sets the priority service tier on matching Responses requests and forwards them, with their auth header, to the target endpoint the admin configures, so that target must be trusted; incomplete config rejects Fast requests. Requires DSH >=0.2.1-rc.5 and Node >=22.19.0.",
+        "zh": "在会话中切换 Standard / Fast 档位并按模型调整推理强度。Fast 为匹配的 Responses 请求设置 priority 服务档位，并连同授权头转发到管理员配置的目标端点，目标须可信；配置不完整时拒绝 Fast 请求。需 DSH >=0.2.1-rc.5、Node >=22.19.0。"
+      },
+      "category": "providers"
+    },
+    {
+      "name": "@delthin/dsh-feishu-notify",
+      "title": {
+        "en": "Feishu Notify",
+        "zh": "飞书通知"
+      },
+      "description": {
+        "en": "Sends DSH approval, question and plan-confirmation reminders to a Feishu DM or group through a self-built Feishu app, and lets the model send a work summary when a long task ends; supports recipients, quiet hours and time zone. One-way only; needs your own Feishu app ID and secret. Requires DSH >=0.2.1-rc.5 and Node >=22.",
+        "zh": "通过飞书自建应用把 DSH 的审批、提问和计划确认提醒发送到私聊或群聊，长任务收尾时可由模型发送工作摘要；支持接收方、免打扰时段和时区设置。仅单向通知，需自备飞书应用 ID 与 Secret。需 DSH >=0.2.1-rc.5、Node >=22。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "@delthin/dsh-global-pins",
+      "title": {
+        "en": "Global Pins",
+        "zh": "全局置顶"
+      },
+      "description": {
+        "en": "Collects pinned sessions from every workspace visible in DSH's native view into one sidebar section, reusing the native rows, status and actions; follows native collapse and search, with a separate or shared scroll area. Client-only. Requires DSH >=0.2.2-rc.1 and Node >=22.19.0.",
+        "zh": "把 DSH 原生视图中各工作区的置顶会话集中显示在侧栏，复用原有会话行、状态与操作；范围随原生折叠和搜索变化，可选独立滚动或随工作区列表滚动。纯前端插件。需 DSH >=0.2.2-rc.1、Node >=22.19.0。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@delthin/dsh-cardex",
+      "title": {
+        "en": "Cardex",
+        "zh": "Cardex 知识卡片"
+      },
+      "description": {
+        "en": "Record a discussion with /cardex; afterwards a curation model turns it into linked Markdown knowledge cards, a knowledge tree and an offline HTML graph, with backlinks to the original Q&A. Recorded text goes to the chosen model (default: the session model) and costs tokens; the knowledge base is written to a configurable folder (default ~/journal/cardex). Requires DSH >=0.2.2-rc.1 and Node >=22.19.0.",
+        "zh": "在会话中用 /cardex 记录讨论，结束后由整理模型生成可关联的 Markdown 知识卡片、知识树和离线 HTML 图谱，并保留原始问答回链。记录内容会发送给所选模型（默认当前会话模型）并产生费用；知识库写入可配置目录（默认 ~/journal/cardex）。需 DSH >=0.2.2-rc.1、Node >=22.19.0。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-interview-desk",
+      "title": {
+        "en": "Interview Desk",
+        "zh": "职镜AI"
+      },
+      "description": {
+        "en": "A job-hunting workbench for profiles, target roles, resume analysis and rewriting, text and realtime voice mock interviews, and DOCX/PDF report exports. Text uses the host model; realtime voice uses the host's settings and credential service. All /zhijing routes go through connection.requestRejection(). Development preview pinned by Git commit; requires DSH 0.2.2-rc.1 and Node >=24.9.0. MIT.",
+        "zh": "求职工作台：管理个人资料与目标岗位，简历分析与改写，文字和实时语音模拟面试，并导出 DOCX/PDF 报告。文字使用宿主模型，实时语音通过宿主设置与凭据服务配置。/zhijing 接口全部先走 connection.requestRejection()。开发预览版，按 Git 提交固定；需 DSH 0.2.2-rc.1、Node >=24.9.0。MIT 许可。"
+      },
+      "category": "workflow",
+      "version": "0.1.0-dev.7",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/minhaoliu927-lgtm/dsh-interview-desk",
+        "commit": "bd54d7b271d3124a6cc1a9178ad805cc684736d3",
+        "integrity": "sha512-w0ElkmpIjnaeN/vE9RCniOOtQCAqqdYqFlJvC4IFyFXK84ME+nhbtzHnaVitlaJj7E7U5nL6QGAFGynQOD+Ysw==",
+        "publishedAt": "2026-11-12T15:19:52Z"
+      },
+      "archiveReview": {
+        "version": "0.1.0-dev.7",
+        "integrity": "sha512-w0ElkmpIjnaeN/vE9RCniOOtQCAqqdYqFlJvC4IFyFXK84ME+nhbtzHnaVitlaJj7E7U5nL6QGAFGynQOD+Ysw==",
+        "maxUnpackedBytes": 104857600,
+        "timeoutMs": 120000
+      }
+    },
+    {
+      "name": "dsh-sidebar-suite",
+      "title": {
+        "en": "Sidebar Suite",
+        "zh": "侧栏套件"
+      },
+      "description": {
+        "en": "Arranges the left sidebar's workspaces and sessions as tabs or an overlay, or leaves the official layout untouched, and manages temporary sessions that are deleted on quit by default (daily cleanup off by default; right-click to keep or delete). Routes are registered through connection.fetch.register(). No engines.dsh range declared; tested on DSH 0.2.2-rc.2. MIT.",
+        "zh": "把左侧栏的「工作区」和「会话」排成标签页或浮层，也可选官方默认不干预；另管理临时会话，默认退出 DSH 时删除（每日定时清理默认关，右键可保留或立即删除）。接口通过 connection.fetch.register() 注册。未声明 engines.dsh，已在 DSH 0.2.2-rc.2 上验证。MIT 许可。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@kulebbb/dsh-git-tree",
+      "title": {
+        "en": "Git Tree",
+        "zh": "Git 提交树"
+      },
+      "description": {
+        "en": "Shows the current workspace's Git commit graph in the right sidebar of DSH Desktop. Desktop profile only; needs git on PATH.",
+        "zh": "在 DSH 桌面端右侧栏显示当前工作区的 Git 提交图。仅支持桌面端，需要本机已安装 git。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-wechat-file-cleaner",
+      "version": "1.2.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/guanyufuhuo/dsh-wechatCleanup",
+        "commit": "c4e04e528ff736ddb68e2ccfc2c1556173e04856",
+        "integrity": "sha512-CCrxLvcO+jCOiFu6uWyn64SFYA4xZMVmcvTxYy1dmci0AT42rsdVoPTxHokUo7UF3BtUnO2ajYYZZukqQXg4Ow==",
+        "publishedAt": "2026-11-12T03:31:29Z"
+      },
+      "title": {
+        "en": "WeChat File Cleaner",
+        "zh": "微信文件清理"
+      },
+      "description": {
+        "en": "Finds duplicate, similar and large files in local WeChat storage and moves the ones you confirm into a restorable trash folder instead of deleting them. Requires DSH 0.2.2-rc.1 or later within 0.2 and Node 20+.",
+        "zh": "扫描本机微信文件目录里的重复、相似和大文件，确认后移入可一键恢复的隔离区，不直接删除。需要 DSH 0.2.2-rc.1 及以上的 0.2 版本和 Node 20+。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-conversations-archive",
+      "title": {
+        "en": "Conversations Archive",
+        "zh": "对话档案室"
+      },
+      "description": {
+        "en": "Appends DSH, QQ and Bilibili conversations to a local plain-text JSONL archive and adds tools to search it by keyword and time, so a new session can look up earlier chats. Requires DSH 0.2.1-rc.5 or later within 0.2.",
+        "zh": "把 DSH、QQ 和 B 站对话只追加地存进本地 JSONL 纯文本档案，并提供按关键词和时间检索的工具，方便新会话查回旧话。需要 DSH 0.2.1-rc.5 及以上的 0.2 版本。"
+      },
+      "category": "memory"
+    },
+    {
+      "name": "travel-agent",
+      "title": {
+        "en": "Travel Story",
+        "zh": "旅行故事"
+      },
+      "description": {
+        "en": "A travel-planning mode that brings the Travel Story app (map, timeline, playback) into the DSH page, with the chat as a floating window and 18 agent tools for place search, weather, routes and itinerary editing. Place search needs your own Gaode (AMap) or LocationIQ key. Git pin at 3854a65; Node >=18. MIT.",
+        "zh": "旅行规划模式：把 Travel Story 应用（地图、时间线、播放）整页带进 DSH，对话变为浮窗，提供 18 个 agent 工具覆盖地点搜索、天气、路线与行程编辑。地点搜索需自备高德或 LocationIQ Key。Git 固定在 3854a65；需 Node >=18。MIT 许可。"
+      },
+      "category": "workflow",
+      "version": "0.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/wang-bool/travel-story-dsh",
+        "commit": "3854a6581eb4f78961aae17b06344e5e2b395acf",
+        "integrity": "sha512-3IrrQdgjq2hjl2CJrQAVTe+akHWtt7yFwZKnXVQqexnbLiAKOq9ILkdJjxXI1Bz3r5KXeIKFBPtvhmW/Rze+jA==",
+        "publishedAt": "2026-11-12T03:59:32Z"
+      },
+      "archiveReview": {
+        "version": "0.2.0",
+        "integrity": "sha512-3IrrQdgjq2hjl2CJrQAVTe+akHWtt7yFwZKnXVQqexnbLiAKOq9ILkdJjxXI1Bz3r5KXeIKFBPtvhmW/Rze+jA==",
+        "maxDownloadBytes": 134217728,
+        "maxUnpackedBytes": 268435456,
+        "timeoutMs": 120000
+      }
+    },
+    {
+      "name": "@yunlai/dsh-ai-quick-links",
+      "title": {
+        "en": "AI Quick Links",
+        "zh": "AI 快捷入口"
+      },
+      "description": {
+        "en": "Pins a launcher in the bottom-right corner for 20 Chinese and international AI chat sites such as DeepSeek, Kimi, Qwen, ChatGPT, Claude and Gemini; choose any four in a grouped picker, and links open in the default browser. Icons are inlined, so it makes no network requests; tested on DSH 0.2.2-rc.1.",
+        "zh": "在窗口右下角固定一条 AI 快捷入口栏，内置 DeepSeek、Kimi、通义千问、ChatGPT、Claude、Gemini 等 20 个国产/海外 AI 对话网站，可在分组面板中任选 4 个上栏，点击用默认浏览器打开。图标内联，运行时不发网络请求；已在 DSH 0.2.2-rc.1 验证。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-pi-subagent",
+      "title": {
+        "en": "Pi Subagent",
+        "zh": "Pi 子智能体"
+      },
+      "description": {
+        "en": "Delegates coding tasks to a local Pi coding agent and shows each run as an inspectable DSH child session with reasoning, tool calls, token usage and duration; a returned session id continues the same Pi conversation. Pi runs with its own auth and permission model, not DSH approvals or sandbox. Needs Pi installed, DSH >=0.2.2-rc.1 and Node ^22.19.0 || >=24.",
+        "zh": "把编码任务派给本机 Pi agent，每次运行都在 DSH 中生成可点开的子会话，包含思考、工具调用、token 用量与耗时；传回 session id 可在同一 Pi 上下文继续。Pi 使用自身的认证与权限模型，不受 DSH 审批和沙箱约束。需安装 Pi、DSH >=0.2.2-rc.1、Node ^22.19.0 || >=24。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-provider-peak",
+      "title": {
+        "en": "Peak Pricing Badge",
+        "zh": "峰谷计价徽章"
+      },
+      "description": {
+        "en": "Adds a badge to the composer toolbar showing whether the selected DeepSeek model (official API, including the 2026 holiday table, or OpenCode Go's DeepSeek models) is currently billed at peak or off-peak rates; hover for per-million-token prices, time to the next switch and the full schedule. Hidden for flat-rate providers; web only, DSH >=0.2.0-rc.2.",
+        "zh": "在输入框工具栏显示峰谷徽章，提示当前所选 DeepSeek 模型（官方 API，含 2026 年节假日表，或 OpenCode Go 的 DeepSeek 模型）是否按高峰价计费；悬停可看每百万 token 峰谷单价、距下次切换的时间与完整时段规则。单一价 provider 自动隐藏；仅 Web，需 DSH >=0.2.0-rc.2。"
+      },
+      "category": "usage"
     }
   ]
 }
