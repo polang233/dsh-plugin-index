@@ -735,8 +735,8 @@
       "name": "@modusensus/dsh-mneme",
       "category": "memory",
       "description": {
-        "en": "Cross-session memory: auto-distill each session into a local SQLite store, inject on demand, consolidate while idle (autoDream).",
-        "zh": "将会话内容提炼并保存到本机 SQLite，按需调取，空闲时自动整理记忆。"
+        "en": "Cross-session memory for AI agents: distilled into a local SQLite store with readable Markdown mirrors, recalled on demand, consolidated while idle. Trace any memory back to its source session; optional affective and image memory; extend via HTTP API or MCP.",
+        "zh": "跨会话记忆：提炼进本机 SQLite 正本 + 可读 Markdown 镜像，按需召回、空闲巩固。每条记忆可回溯到来源会话；可选情感记忆与图像记忆；可通过 HTTP API / MCP 让其他插件自行扩展。"
       }
     },
     {
