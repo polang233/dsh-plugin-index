@@ -32,6 +32,38 @@
           "alt": "AgentCompare 2.0.0 showing a chosen version, pick reasons and reviewed adoption"
         }
       ]
+    },
+    "dsh-plugin-miku-theme": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/cjjchina3088191870-sudo/dsh-plugin-miku-theme/ca35dfcc83a86032f3537de807c679b514106cf7/preview/skirk/dark.webp",
+          "alt": "Skirk dark theme"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/cjjchina3088191870-sudo/dsh-plugin-miku-theme/ca35dfcc83a86032f3537de807c679b514106cf7/preview/rose-light.webp",
+          "alt": "Rose Queen light theme"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/cjjchina3088191870-sudo/dsh-plugin-miku-theme/ca35dfcc83a86032f3537de807c679b514106cf7/preview/light.webp",
+          "alt": "Hatsune Miku light theme"
+        }
+      ]
+    },
+    "dsh-sidebar-suite": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/YONAN1269/dsh-sidebar-suite/784a3ff959aac1d3c9587d68af92a9ddc6d4d7d8/assets/real-screenshots/01-overlay.png",
+          "alt": "Sidebar overlay layout and temporary session"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/YONAN1269/dsh-sidebar-suite/784a3ff959aac1d3c9587d68af92a9ddc6d4d7d8/assets/real-screenshots/02-tabs.png",
+          "alt": "Sidebar tabs layout"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/YONAN1269/dsh-sidebar-suite/784a3ff959aac1d3c9587d68af92a9ddc6d4d7d8/assets/real-screenshots/03-control-bar.png",
+          "alt": "Sidebar layout controls"
+        }
+      ]
     }
   }
 }

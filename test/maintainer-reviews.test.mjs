@@ -54,6 +54,24 @@ test('Git reviews bind the installed and checked source commit and cannot transf
   assert(!display(plugin, reviews, evidence).index.plugins[0].metadata.labels.includes('verified'));
 });
 
+test('npm reviews bind Gitee evidence to the same host, repository and archive', () => {
+  const url = 'https://gitee.com/Owner/plugin';
+  const p = {...plugin, repository: {url}};
+  const reviews = structuredClone(registry); reviews.entries[0].repository = url;
+  const checked = {packages: [{...evidence.packages[0], repository: 'https://gitee.com/owner/plugin.git'}]};
+  validateMaintainerReviews(reviews);
+  assert(display(p, reviews, checked).index.plugins[0].metadata.labels.includes('verified'));
+  assert(!display({...p, repository: {url: 'https://github.com/owner/plugin'}}, reviews, checked).index.plugins[0].metadata.labels.includes('verified'));
+  assert(!display(p, reviews, {packages: [{...checked.packages[0], repository: 'https://gitee.com/other/plugin'}]}).index.plugins[0].metadata.labels.includes('verified'));
+  assert(!display(p, reviews, {packages: [{...checked.packages[0], integrity: 'sha512-' + Buffer.alloc(64, 2).toString('base64')}]}).index.plugins[0].metadata.labels.includes('verified'));
+  for (const badUrl of ['http://gitee.com/owner/plugin', 'https://gitee.com.evil/owner/plugin', 'https://gitee.com/owner/plugin?ref=main']) {
+    const bad = structuredClone(reviews); bad.entries[0].repository = badUrl;
+    assert.throws(() => validateMaintainerReviews(bad), /Invalid maintainer review/);
+  }
+  const git = structuredClone(reviews); git.entries[0].source = {type: 'git', commit: 'a'.repeat(40)};
+  assert.throws(() => validateMaintainerReviews(git), /Invalid maintainer review/);
+});
+
 test('Git reviews bind the package directory as well as the commit and archive', () => {
   const commit = 'a'.repeat(40), source = {type: 'git', url: plugin.repository.url, commit, path: 'packages/plugin'};
   const p = {...plugin, versions: [{...plugin.versions[0], source}]};
