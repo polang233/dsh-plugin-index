@@ -55,7 +55,7 @@ const finish = (html, language) => (language === 'tw' ? traditional(html) : html
 
 export const COPY = {
   en: {
-    brand: 'Open Plugin Market', title: 'Open Plugin Market · DSH plugin market | DeepSeek Harness plugin index & daily picks', metaKeywords: 'DSH plugin market, DSH plugins, DSH plugin index, DeepSeek Harness plugins, DeepSeek Harness plugin market, DSH extensions, dsh plugin, best DSH plugins, Open Plugin Market', socialImage: 'social.png', alternateNames: ['DSH Plugin Market', 'DeepSeek Harness plugin index'], reviewScopes: { security: 'Static security review', package: 'Package checks' },
+    brand: 'Open Plugin Market', title: 'Open Plugin Market · DSH plugin market for DeepSeek Harness', metaKeywords: 'DSH plugin market, DSH plugins, DSH plugin index, DeepSeek Harness plugins, DeepSeek Harness plugin market, DSH extensions, dsh plugin, best DSH plugins, Open Plugin Market', socialImage: 'social.png', alternateNames: ['DSH Plugin Market', 'DeepSeek Harness plugin index'], reviewScopes: { security: 'Static security review', package: 'Package checks' },
     methodIndex: 'Add the index', methodPlugin: 'Install the plugin', methods: 'Ways to set it up',
     pluginCommand: 'Run one line in a terminal:', pluginInApp: 'Or in DSH, open Plugins → Add plugin and enter the package name', pluginNote: 'Either way it switches on Custom plugin markets, adds this index and an Open Market tab to the Plugins page; restart DSH afterwards.',
     shotDiscover: 'Discover', shotMarket: 'Open Market tab', shotMarketAlt: 'The Open Market tab that dsh-open-market adds to the DSH Plugins page: today\'s picks and rows of recommended plugins', pageLink: 'Page',
@@ -180,7 +180,7 @@ export const COPY = {
   },
   // Japanese and Korean: DSH has no Japanese or Korean interface, so menu names stay as DSH's English interface shows them.
   ja: {
-    brand: 'Open Plugin Market', title: 'Open Plugin Market · DSH プラグインマーケット | DeepSeek Harness プラグインインデックスと毎日のおすすめ', metaKeywords: 'DSH プラグイン, DSH プラグインマーケット, DSH プラグイン 一覧, DSH プラグイン おすすめ, DeepSeek Harness プラグイン, DeepSeek Harness 拡張機能, DeepSeek プラグイン, dsh plugin, Open Plugin Market', socialImage: 'social.png', alternateNames: ['DSH プラグインマーケット', 'DeepSeek Harness プラグインインデックス', 'DSH Plugin Market'], reviewScopes: { security: '静的セキュリティレビュー', package: 'パッケージ検査' },
+    brand: 'Open Plugin Market', title: 'Open Plugin Market · DeepSeek Harness 向け DSH プラグインマーケット', metaKeywords: 'DSH プラグイン, DSH プラグインマーケット, DSH プラグイン 一覧, DSH プラグイン おすすめ, DeepSeek Harness プラグイン, DeepSeek Harness 拡張機能, DeepSeek プラグイン, dsh plugin, Open Plugin Market', socialImage: 'social.png', alternateNames: ['DSH プラグインマーケット', 'DeepSeek Harness プラグインインデックス', 'DSH Plugin Market'], reviewScopes: { security: '静的セキュリティレビュー', package: 'パッケージ検査' },
     categories: { interface: 'インターフェース', tools: 'ツール', skills: 'スキル', memory: 'メモリ', providers: 'モデルプロバイダー', usage: '使用量とコスト', integrations: '連携', appearance: '外観', workflow: 'ワークフローとエージェント', development: '開発と運用', knowledge: 'ナレッジとリサーチ' },
     labels: { verified: '✅ 検証済み', trending: '🔥 急上昇', active: '⚡ 更新が活発' },
     methodIndex: 'インデックスを追加', methodPlugin: 'プラグインを入れる', methods: '設定方法',

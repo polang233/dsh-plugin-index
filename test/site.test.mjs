@@ -131,3 +131,9 @@ test('page titles are sized per page and the 404 page has its own layout', async
   assert.match(missing, /<main class="shell not-found">/);
   assert.doesNotMatch(missing, /<main class="[^"]*\bhero\b/);
 });
+
+test('home page titles stay within the 70 characters search engines show', () => {
+  for (const [language, copy] of Object.entries(COPY)) {
+    assert.ok([...copy.title].length <= 70, `${language} title is ${[...copy.title].length} characters: ${copy.title}`);
+  }
+});
