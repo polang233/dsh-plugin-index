@@ -12661,8 +12661,8 @@
         "zh": "桌面电脑操控"
       },
       "description": {
-        "en": "Control Windows with screenshots, UI Automation targets and verified numbered marks, then verify the result; known steps can be batched in one tool call. Standard mode asks approval for each action; in a danger-full-access session that cannot show an approval card, high-risk actions run under that grant and are logged to policy.jsonl, while other sandboxes and delegated subagent sessions refuse. Windows x64 and Node >=22; native helpers are bundled.",
-        "zh": "通过截图、UI Automation 控件和可校验的编号标记操控 Windows 并回读验证，可在一次工具调用中批量执行已知步骤。默认 standard 模式逐次审批；完全权限会话无法弹审批卡时，高危动作按该授权执行并记入 policy.jsonl，其它沙箱与被委派子会话一律拒绝。仅支持 Windows x64，需 Node >=22，随包提供原生组件。"
+        "en": "Control Windows with screenshots, UI Automation targets and verified numbered marks, then verify the result; known steps can be batched in one tool call. Each screenshot keeps a local file, and a batch creates at most one image attachment. Standard mode asks approval for each action; in a danger-full-access session that cannot show an approval card, high-risk actions run under that grant and are logged to policy.jsonl, while other sandboxes and delegated subagent sessions refuse. Windows x64 and Node >=22; native helpers are bundled.",
+        "zh": "通过截图、UI Automation 控件和可校验的编号标记操控 Windows 并回读验证，可在一次工具调用中批量执行已知步骤。每张截图保留本地文件，每批最多生成一个图片附件。默认 standard 模式逐次审批；完全权限会话无法弹审批卡时，高危动作按该授权执行并记入 policy.jsonl，其它沙箱与被委派子会话一律拒绝。仅支持 Windows x64，需 Node >=22，随包提供原生组件。"
       },
       "category": "tools"
     },
