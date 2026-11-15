@@ -13432,8 +13432,8 @@
         "zh": "WorkBuddy 连接（社区版）"
       },
       "description": {
-        "en": "Community WorkBuddy provider with account status, cost readings and manual effort probes for domestic and international clients. Needs a signed-in local WorkBuddy installation; probes may use quota. Account and control routes require the host owner.",
-        "zh": "社区维护的 WorkBuddy 模型渠道，提供国内/国际版账号状态、费用读数与手动探测。需本机已登录 WorkBuddy，探测可能消耗额度；账号和控制接口要求宿主所有者身份。"
+        "en": "Use WorkBuddy CN or global accounts as DSH model providers with account pools, usage and manual probes. Optional image/video and read-only CodeBuddy review tools require separate activation and host approval per call; they may consume account credit. Keep account credentials local and protect owner access.",
+        "zh": "将 WorkBuddy 国内或国际账号接为 DSH 模型供应商，支持账号池、用量和手动探测。可选图像、视频与 CodeBuddy 只读复核工具需另行启用并逐次通过宿主审批，可能消耗账号额度；请保护本机凭据和所有者访问。"
       },
       "category": "providers"
     },
@@ -14140,8 +14140,8 @@
         "zh": "Offpeak Guard（峰谷守卫）"
       },
       "description": {
-        "en": "Pause DeepSeek work during peak-price windows and resume or schedule it for off-peak hours. The settings route currently lacks authentication and can change exemptions and pause rules; use only in a trusted local environment. Requires Node >=22.5; automatic resume can start model work and incur charges.",
-        "zh": "按 DeepSeek 峰谷时段暂停、恢复或安排任务。设置接口目前无认证，可修改豁免和暂停规则，仅建议在可信本机环境使用。需 Node >=22.5；自动恢复可能启动模型任务并产生费用。"
+        "en": "Pause DeepSeek work during peak-price windows and resume or schedule it for off-peak hours. Model tools are limited to their current session; settings require host authentication. Requires Node >=22.5; automatic resume can start model work and incur charges.",
+        "zh": "在 DeepSeek 峰价时段暂停任务，谷价时恢复或执行规划。模型工具限当前会话，设置接口要求宿主认证。需 Node >=22.5；自动恢复可能启动模型任务并产生费用。"
       },
       "category": "workflow"
     },
@@ -15713,15 +15713,7 @@
         "en": "Seven Gruvbox palettes with live previews, saved selection, system light/dark following and a theme agent tool. Requires DSH >=0.2.2-0 <0.3.0.",
         "zh": "提供七套 Gruvbox 配色、实时预览、持久选择、跟随系统明暗模式和主题工具。要求 DSH >=0.2.2-0 <0.3.0。"
       },
-      "category": "appearance",
-      "version": "1.0.5",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/kuzmin-lemmi/deepseek-gruvbox-themes",
-        "commit": "374072747c3b1ff4c0e80ad277f5c152890ccc61",
-        "publishedAt": "2026-11-10T19:40:57Z",
-        "integrity": "sha512-3KPm8ytItv/KZqRRLNnjYvAjfpgq+BNpT8RH7CVkz7x8P3t+hD3iwH4avTxPg0Rm22gx2aa44euDR0GZSI27aw=="
-      }
+      "category": "appearance"
     },
     {
       "name": "dsh-layout",
@@ -16263,13 +16255,13 @@
         "zh": "将工作区显示为书本、会话显示为章节，支持搜索、编辑封面并切回原版工作区。封面偏好保存在浏览器中。"
       },
       "category": "workflow",
-      "version": "1.1.0",
+      "version": "1.1.4",
       "source": {
         "type": "git",
         "url": "https://github.com/zhishengplus/dsh-project-bookshelf",
-        "commit": "9ee40474c5d391fc78655d3fe22bf2e985e30729",
-        "integrity": "sha512-7Nzg4DCUd00aD8nYcxTMvq+1o57IYDEJCCt84Xxx1ofnuScI1D5jMvU9k2KUtyT8Ca18uGJov+M7SSig0arM7Q==",
-        "publishedAt": "2026-11-14T10:35:07Z"
+        "commit": "c0761571a8aa3e3fd8c628598ffb36697bda4748",
+        "integrity": "sha512-RfnC2mvhYBNkQnLu2BUA/B7dzSnyI1xdKAoBtfIM1W6KCqrmD9k4ABpLI9CXuO90h+joCItNlKqjmplN4jLSKQ==",
+        "publishedAt": "2026-11-14T20:38:01Z"
       }
     },
     {
@@ -16451,13 +16443,138 @@
         "zh": "框选侧栏网页或文档预览，将区域截图、位置和批注加入当前对话草稿。网页截图需要桌面 webview；作者在 Windows 的 DSH 0.2.2-rc.3 上验证。"
       },
       "category": "workflow",
-      "version": "0.12.0",
+      "version": "0.12.3",
       "source": {
         "type": "git",
         "url": "https://github.com/wuwen1994/dsh-annotate",
-        "commit": "096d833a41bf4e7eec1740e66e647f95e4abaf9d",
-        "integrity": "sha512-m+PwKF/fmOHxNxbc7gh4xOSVzP52xzYzkn9fbnVyKKibm1UxE+zBi4OmhUDTK86ierq8o+oi8ypEoOjMlTrQ9Q==",
-        "publishedAt": "2026-11-14T12:14:28Z"
+        "commit": "dfac2c994736e50b671e912cfc0169ff1900a1bf",
+        "integrity": "sha512-L7fynY+wweQYlfSzGTtsjroSFrj90Lpohikll1AXk75u+pPCJahCdFsYZveqk3IiosPwMvun1qZ6oK5VU6vlGg==",
+        "publishedAt": "2026-11-14T12:58:16Z"
+      }
+    },
+    {
+      "name": "@dungsil/dsh-plugin-korean-ime",
+      "title": {
+        "en": "Korean IME",
+        "zh": "Korean IME 韩文输入法"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Send the chat message when Enter finishes Korean IME composition, while preserving Shift/Alt+Enter. Requires the Web UI and Node >=24.9; the author targets DSH 0.2.2-rc.2 and later with plugin 0.5.x.",
+        "zh": "按 Enter 完成韩文输入法组字后发送消息，保留 Shift/Alt+Enter 行为。需 Web 界面与 Node >=24.9；作者将插件 0.5.x 用于 DSH 0.2.2-rc.2 及以后版本。"
+      }
+    },
+    {
+      "name": "@dungsil/dsh-plugin-ui-sidebar-inbox",
+      "title": {
+        "en": "Inbox Sidebar",
+        "zh": "Inbox Sidebar"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Organize the native sidebar into Pinned, Inbox, Working and Archived sections without replacing session rows. Requires the Web UI and Node >=24.9.",
+        "zh": "将原生侧栏按置顶、收件箱、进行中和归档分区，保留原生会话行与操作。需 Web 界面和 Node >=24.9。"
+      }
+    },
+    {
+      "name": "@stars_observer_eric/dsh-multi-key-orchestrator",
+      "title": {
+        "en": "Multi-Key Orchestrator",
+        "zh": "多密钥分流指挥家"
+      },
+      "category": "usage",
+      "description": {
+        "en": "Distribute requests across API keys of the same provider, with concurrency limits, 429 failover and balance cards. Keys are sent to their configured provider; local fallback storage is used when the host credential service is unavailable.",
+        "zh": "在同一服务商的多把 API Key 间分配请求，提供并发上限、429 换 Key 和余额卡片。Key 会发往所配置的服务商；宿主凭据服务不可用时使用本地备用存储。"
+      }
+    },
+    {
+      "name": "@summerscar/dsh-connect-agentscope-platform",
+      "title": {
+        "en": "AgentScope Platform",
+        "zh": "AgentScope Platform"
+      },
+      "category": "providers",
+      "description": {
+        "en": "Connect AgentScope Platform models, account pools, credits and check-in controls to DSH. Requires an AgentScope account, Node >=22.16 and DSH >=0.2.2-rc.1; model calls consume platform credits. Optional alerts use the local dsh-im service.",
+        "zh": "接入 AgentScope Platform 模型、账号池、额度与签到管理。需平台账号、Node >=22.16 和 DSH >=0.2.2-rc.1；模型调用消耗平台额度，可选通知使用本机 dsh-im 服务。"
+      }
+    },
+    {
+      "name": "@miloji/dsh-recent-sessions",
+      "title": {
+        "en": "Recent Sessions",
+        "zh": "最近访问"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Open recently visited sessions across workspaces from a sidebar panel, with running indicators. Session titles, workspace paths and visit times are stored locally; requires the Web UI and host Connection authentication.",
+        "zh": "在侧栏跨工作区查看并打开最近访问的会话，显示运行状态。会话标题、工作区路径和访问时间保存在本机；需 Web 界面与宿主 Connection 认证。"
+      }
+    },
+    {
+      "name": "dsh-selena",
+      "title": {
+        "en": "Punishing: Gray Raven · Selena Companion",
+        "zh": "战双帕弥什 · 赛琳娜桌宠"
+      },
+      "category": "appearance",
+      "description": {
+        "en": "A Selena desktop companion with task reactions, voice, expressions and balance status. Requires local Windows 10/11 x64; the plugin downloads a separate roughly 345 MiB runtime after user action and verifies its hash. Code is MIT; character, voice and artwork have separate rights notices.",
+        "zh": "赛琳娜桌宠提供任务反馈、语音表情与余额显示。需本机 Windows 10/11 x64，用户操作后另行下载约 345 MiB 程序并校验哈希。代码为 MIT，角色、语音和素材另有权利声明。"
+      }
+    },
+    {
+      "name": "dsh-super-kanban",
+      "title": {
+        "en": "Super Kanban",
+        "zh": "Super Kanban"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Turn DSH sessions into a project board with task tracking, acceptance review and quick chat. Automatic scanning and AI analysis are enabled by default: session excerpts go to the selected model and can incur charges. Requires Node >=22.19 and an authenticated owner session; macOS desktop was tested by the author.",
+        "zh": "将 DSH 会话整理为项目看板，支持任务跟踪、验收与快聊。默认开启自动扫描和 AI 分析，会将会话摘录发给所选模型并可能产生费用。需 Node >=22.19 和已认证的宿主所有者会话；作者验证了 macOS 桌面版。"
+      }
+    },
+    {
+      "name": "dsh-session-tree",
+      "title": {
+        "en": "DSH Session Tree",
+        "zh": "DSH 会话树"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Attach existing conversations as visible children, delegate tasks and return results within the tree. Child creation inherits the parent sandbox mode and approval policy. Requires Node >=24 and DSH 0.2.2-rc.3; summaries and delegated work use the selected model and can incur charges. Session recycling uses the Windows Recycle Bin.",
+        "zh": "将已有会话挂载为可见子会话，在树内派发任务并返回结果；新子会话继承父会话的沙箱模式和审批策略。需 Node >=24 与 DSH 0.2.2-rc.3，摘要和派发任务使用所选模型并可能产生费用；会话回收使用 Windows 回收站。"
+      },
+      "version": "0.8.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/plasticmemories-0823/dsh-session-tree",
+        "commit": "acfb6534b47a7fdded4cd442dd755b013d918d82",
+        "integrity": "sha512-zZbNbknQKuEPtbpG53J2ScKFDoXsI4TPtgW56K/bw+d9YWhXkjy/evzoDknmn5fUOEn7wJqOiAdV9wmpuVhgyQ==",
+        "publishedAt": "2026-11-14T16:52:53Z"
+      }
+    },
+    {
+      "name": "dsh-plugin-recipe",
+      "title": {
+        "en": "DSH Plugin Recipe",
+        "zh": "DSH 工作流蓝图"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Translate a business goal into a validated workflow blueprint and export Markdown or JSON runbooks. It plans required tools, permissions, acceptance and rollback without running the workflow. Requires Node >=20 and DSH >=0.2.2-rc.1 <0.3.0.",
+        "zh": "将业务目标整理为可校验的工作流蓝图，列出工具、权限、验收与回滚，并导出 Markdown 或 JSON 运行手册；只生成计划。需 Node >=20 和 DSH >=0.2.2-rc.1 <0.3.0。"
+      },
+      "version": "0.2.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Starlit-Sky-code/dsh-experience-optimizer",
+        "commit": "f7f903821862b437ceb5b2def2ffecd9b869d322",
+        "integrity": "sha512-UDdfCK9fIdnAuIScIUQqMDkzYDI7lXSctROG8PIJgAVyUQsbqqjxh92BwnwfdwJYZCcrYVSQ1yhykW7bOZfHtg==",
+        "publishedAt": "2026-11-14T13:03:27Z",
+        "path": "packages/plugin-recipe"
       }
     }
   ]
