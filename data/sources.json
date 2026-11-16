@@ -10781,14 +10781,14 @@
     },
     {
       "name": "dsh-reforge",
-      "version": "0.1.0-alpha.1",
+      "version": "0.1.0-alpha.2",
       "title": {
         "en": "DSH-Reforge (experimental alpha)",
         "zh": "DSH-Reforge（实验性 alpha）"
       },
       "description": {
-        "en": "Learn traceable experience from test-verified Python repairs in one repository. DSH 0.2.0-rc.2 Web only; learning is off by default. Verification runs repository code, and enabled model sharing sends bounded repair material to the configured provider.",
-        "zh": "从单仓库中通过测试验证的 Python 修复积累可追溯经验。仅支持 DSH 0.2.0-rc.2 Web，学习默认关闭；验证会执行仓库代码，启用模型共享后会向所选服务发送有限修复材料。"
+        "en": "Learn traceable experience from test-verified Python repairs in one repository. Experimental alpha for DSH 0.2.0-rc.2 or 0.2.1-rc.5 Web and Node >=24.10; learning is off by default. Verification executes trusted repository code; optional model sharing sends bounded repair material to the configured provider and may incur charges.",
+        "zh": "从单仓库中通过测试验证的 Python 修复积累可追溯经验。实验性 alpha，支持 DSH 0.2.0-rc.2 或 0.2.1-rc.5 Web，需 Node >=24.10；学习默认关闭。验证会执行已授权的仓库代码，可选模型共享会发送有限修复材料并可能产生费用。"
       },
       "category": "memory"
     },
@@ -16439,17 +16439,17 @@
         "zh": "区域批注"
       },
       "description": {
-        "en": "Mark regions of sidebar pages or document previews and add the crop, location and note to the current conversation draft. Browser page capture requires the desktop webview; the author tested DSH 0.2.2-rc.3 on Windows.",
-        "zh": "框选侧栏网页或文档预览，将区域截图、位置和批注加入当前对话草稿。网页截图需要桌面 webview；作者在 Windows 的 DSH 0.2.2-rc.3 上验证。"
+        "en": "Annotate sidebar pages or document previews with region captures or selected text, then add the location and note to the current conversation draft. Browser page capture needs the desktop webview; the author tested DSH 0.2.2-rc.3 on Windows.",
+        "zh": "对侧栏网页或文档预览进行区域截图或选中文字批注，将位置与说明加入当前对话草稿。网页截图需要桌面 webview；作者在 Windows 的 DSH 0.2.2-rc.3 上验证。"
       },
       "category": "workflow",
-      "version": "0.12.3",
+      "version": "0.13.0",
       "source": {
         "type": "git",
         "url": "https://github.com/wuwen1994/dsh-annotate",
-        "commit": "dfac2c994736e50b671e912cfc0169ff1900a1bf",
-        "integrity": "sha512-L7fynY+wweQYlfSzGTtsjroSFrj90Lpohikll1AXk75u+pPCJahCdFsYZveqk3IiosPwMvun1qZ6oK5VU6vlGg==",
-        "publishedAt": "2026-11-14T12:58:16Z"
+        "commit": "fa4dd1a44ad9b76a99dff134ac4f2e0a985ed21a",
+        "integrity": "sha512-9Srpw/0LNQHg79ccdPzOgpdy1bJu24MtGYV+m9s/PKUVENMazfDMnbrEb0qrYz1rx6Pp5T1GhU3H7fuE6ICzWA==",
+        "publishedAt": "2026-11-16T02:25:54Z"
       }
     },
     {
@@ -16575,6 +16575,208 @@
         "integrity": "sha512-UDdfCK9fIdnAuIScIUQqMDkzYDI7lXSctROG8PIJgAVyUQsbqqjxh92BwnwfdwJYZCcrYVSQ1yhykW7bOZfHtg==",
         "publishedAt": "2026-11-14T13:03:27Z",
         "path": "packages/plugin-recipe"
+      }
+    },
+    {
+      "name": "dsh-rofm",
+      "title": {
+        "en": "dsh-rofm",
+        "zh": "记忆回响"
+      },
+      "category": "memory",
+      "description": {
+        "en": "Archive older conversation context locally and recall it by keywords, priority and time or event tags. Requires Node >=20. Derpyu QQ-bridge compatibility asks before changing its tool whitelist; re-enabling after refusal also grants consent. Recalled material enters model context.",
+        "zh": "在本机归档较早的对话上下文，按关键词、优先级及时间或事件标签召回。需 Node >=20；兼容 Derpyu QQ 桥接时会先征求同意，再修改其工具白名单；拒绝后重新启用也视作同意。召回材料会进入模型上下文。"
+      }
+    },
+    {
+      "name": "dsh-asuta-cdx-plus",
+      "title": {
+        "en": "DSH CDX Plus",
+        "zh": "DSH CDX Plus"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "A suite of 18 independently switchable tools for side chats, annotations, code review and Git worktrees. Requires Git, Node ^22.19 or >=24 and DSH >=0.2.2-rc.2; optional pull requests use gh. Worktree setup scripts run when selected; reviews and delegated work may consume model credit.",
+        "zh": "包含侧聊、批注、代码审查与 Git 工作树等 18 项可独立启停的增强功能。需 Git、Node ^22.19 或 >=24 和 DSH >=0.2.2-rc.2，可选 PR 功能使用 gh；选用工作树初始化时会运行相应脚本，审查与委派可能消耗模型额度。"
+      }
+    },
+    {
+      "name": "dsh-model-flatmap",
+      "title": {
+        "en": "dsh-model-flatmap",
+        "zh": "模型平铺选择器"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Replace the composer model picker with a searchable flat grid of models, reasoning levels and teamwork controls. Works in Web and Desktop. Sends a daily installation heartbeat to dsh.zuos.us containing a random install ID and version/platform metadata.",
+        "zh": "将输入框模型选择器改为可搜索的平铺面板，集中显示模型、思考等级与协作开关，支持 Web 和桌面版。默认每日向 dsh.zuos.us 发送随机安装 ID、版本和平台等安装统计。"
+      }
+    },
+    {
+      "name": "dsh-workspace-plus",
+      "title": {
+        "en": "workspace+",
+        "zh": "workspace+"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Label multiple directories per workspace, reference them with @ and include their paths and notes in model context. Requires Node ^22.19 or >=24 and DSH >=0.1.7-rc.2. Optional Windows notifications register a per-user URL protocol; remove the separate dsh-notice plugin first.",
+        "zh": "为工作区的多个目录设置标签，通过 @ 引用，并将路径和备注加入模型上下文。需 Node ^22.19 或 >=24 与 DSH >=0.1.7-rc.2；可选 Windows 原生通知会注册当前用户的 URL 协议，使用前需移除独立的 dsh-notice 插件。"
+      }
+    },
+    {
+      "name": "@khglobal/dsh-nocco",
+      "title": {
+        "en": "Nocco",
+        "zh": "Nocco"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Build local web apps from templates with file imports, live previews and Git checkpoints. Creates project files, installs dependencies and starts development servers under host permissions or approval. Requires Node >=20, Git and DSH >=0.2.2-rc.1 <0.3.0; model and optional speech calls may incur charges.",
+        "zh": "通过模板创建本地 Web 应用，支持文件导入、实时预览和 Git 检查点；会按宿主权限或审批写入文件、安装依赖并启动开发服务。需 Node >=20、Git 与 DSH >=0.2.2-rc.1 <0.3.0，模型及可选语音调用可能产生费用。"
+      }
+    },
+    {
+      "name": "dsh-auto-memory-wh",
+      "title": {
+        "en": "Auto Memory WH",
+        "zh": "自动记忆 WH"
+      },
+      "category": "memory",
+      "description": {
+        "en": "Store project and user memories as local Markdown with management, imports, backups and merge history. Automatic model summaries and topic merging are enabled by default; session material goes to the configured model and may incur charges. Requires Node ^22.19 or >=24 and DSH >=0.2.1-rc.5 <1.0.0.",
+        "zh": "以本地 Markdown 保存项目与用户记忆，提供管理、导入、备份和合并历史。默认开启模型自动总结与主题合并，会将会话材料发给所选模型并可能产生费用。需 Node ^22.19 或 >=24 和 DSH >=0.2.1-rc.5 <1.0.0。"
+      }
+    },
+    {
+      "name": "@local/dsh-login-gateway",
+      "title": {
+        "en": "DSH Login Gateway",
+        "zh": "DSH Login Gateway"
+      },
+      "category": "integrations",
+      "description": {
+        "en": "Manage a password and Cloudflare Turnstile login page for a protected DSH instance. Full protection requires the separate Node gateway, HTTPS reverse proxy and blocked direct access to DSH; installing this settings plugin alone does not enable the gateway. Requires DSH >=0.2.2-rc.1 <0.3.0.",
+        "zh": "为受保护的 DSH 实例管理密码与 Cloudflare Turnstile 登录页面。完整门禁需另行部署 Node 网关、HTTPS 反向代理并禁止直接访问 DSH，仅安装设置插件不会启用网关。需 DSH >=0.2.2-rc.1 <0.3.0。"
+      },
+      "version": "1.0.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/BigYty/dsh-login-gateway-plugin",
+        "commit": "3d933d97300399bb3aff9eca3ad4f4c350a5d254",
+        "integrity": "sha512-Wba5alzFpbH6WPuiyapM15tkTryNqYb1PFZmzPGY/G235tHNXE5wysWYaVSFs9q3N9gbPrORi7Kgkw6YCl+fFQ==",
+        "publishedAt": "2026-11-16T00:47:36Z",
+        "path": "plugin"
+      }
+    },
+    {
+      "name": "dsh-task-signal",
+      "title": {
+        "en": "Task Signal",
+        "zh": "任务提示音"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Play configurable sounds for task completion, questions, approval and errors, with host-persisted settings and subagent filtering. Requires DSH 0.2.2-rc.3 and Node ^22.19 or >=24. Native playback uses Windows SoundPlayer, macOS afplay or Linux aplay; Codex/ZCode audio must be imported locally, with original synthesized tones included.",
+        "zh": "为任务完成、提问、授权和错误配置提示音，设置在宿主持久保存，可过滤子代理。需 DSH 0.2.2-rc.3 与 Node ^22.19 或 >=24；原生播放使用 Windows SoundPlayer、macOS afplay 或 Linux aplay，Codex/ZCode 音频需本机另行导入，包内包含原创合成音。"
+      }
+    },
+    {
+      "name": "daily-report-skill",
+      "title": {
+        "en": "daily-report-skill",
+        "zh": "日报周报技能"
+      },
+      "category": "skills",
+      "description": {
+        "en": "Prepare Chinese daily or weekly reports from your PRs, Git commits and local Claude Code, Codex or DSH sessions. Requires Python 3.11+, Git, zstd for DSH sessions and an authenticated gh CLI for GitHub evidence. Collected session excerpts are stored locally and may be supplied to the writing model; inspect the report before sharing.",
+        "zh": "根据本人 PR、Git 提交及本地 Claude Code、Codex 或 DSH 会话整理中文日报周报。需 Python 3.11+、Git，读取 DSH 会话还需 zstd，查询 GitHub 证据需已登录 gh；会话摘录保存在本机并可能交给写作模型，分享前需检查报告内容。"
+      },
+      "version": "0.1.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/WonderLawrence/daily-report-skill",
+        "commit": "f69a139f565d2e1050197f7af38d6e370d81751e",
+        "integrity": "sha512-CNI9tZkeg8y8SKcpnOX1sb55xrd0l1BneK8Pn7ZelNrYiTBZzXhn36HblY1IAoTtMdsRiAVk9VjzhGzM95HrWQ==",
+        "publishedAt": "2026-11-15T15:37:58Z"
+      }
+    },
+    {
+      "name": "deepseek-usage",
+      "title": {
+        "en": "DeepSeek Usage",
+        "zh": "DeepSeek 用量与预算"
+      },
+      "category": "usage",
+      "description": {
+        "en": "View official DeepSeek account bills or estimate usage across providers from local session logs. Reuses the signed-in DSH account for official queries; local estimates use editable rates. Optional daily budgets can stop subsequent model requests. Keep the panel on a trusted local host.",
+        "zh": "查看 DeepSeek 官方账户账单，或按本地会话日志估算多服务商用量。官方查询复用 DSH 已登录账号，本地估算使用可编辑费率；可选日预算会熔断后续模型请求。面板应运行在可信本机环境。"
+      }
+    },
+    {
+      "name": "dsh-mobile-plugin",
+      "title": {
+        "en": "AI-HUB Mobile Plugin",
+        "zh": "AI-HUB 移动端插件"
+      },
+      "category": "integrations",
+      "description": {
+        "en": "Access DSH sessions, files and approvals from the AI-HUB mobile app through paired LAN access or a configured relay. Includes permanent cleanup of archived sessions. Keep DSH Web on loopback: binding it directly to a private network trusts clients on that network. Mobile apps and native helpers are separate components.",
+        "zh": "通过 AI-HUB 手机 App，以局域网配对或配置的中转连接 DSH 会话、文件与审批，包含永久清理已归档会话的工具。DSH Web 应保持回环监听；直接绑定私网时会信任同网直连客户端。手机 App 和原生辅助程序为独立组件。"
+      }
+    },
+    {
+      "name": "dsh-cyber-im-avatar",
+      "title": {
+        "en": "Cyber IM Avatar",
+        "zh": "IM 分身壳"
+      },
+      "category": "integrations",
+      "description": {
+        "en": "Connect supported IM platform CLIs to a DSH sidebar and watched conversations. Requires separately installed and authenticated platform CLIs; configured duty rules may wake an Agent and send messages as your account, consuming model credit. Includes a bundled skill and local message/profile state.",
+        "zh": "将受支持 IM 平台的 CLI 接入 DSH 侧栏与值守会话。需另行安装并登录对应平台 CLI；配置值守后可唤醒 Agent 并以本人账号发送消息，可能消耗模型额度。包含配套技能及本地消息、人物档案状态。"
+      }
+    },
+    {
+      "name": "dsh-plugin-trim",
+      "title": {
+        "en": "DSH Plugin Trim",
+        "zh": "DSH 插件减负与兼容性体检"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Inspect plugin inventory and compatibility, prepare a trim draft and apply bounded enable/disable changes with snapshots and rollback. Changes affect the current profile; review the draft before applying. Requires Node >=20 and DSH >=0.2.2-rc.1 <0.3.0.",
+        "zh": "检查插件清单与兼容性，生成减负草稿，并对受限的启停项保存快照、执行和回滚。变更影响当前 profile，应用前需核对草稿。需 Node >=20 和 DSH >=0.2.2-rc.1 <0.3.0。"
+      },
+      "version": "0.2.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Starlit-Sky-code/dsh-experience-optimizer",
+        "commit": "f7f903821862b437ceb5b2def2ffecd9b869d322",
+        "path": "packages/plugin-trim",
+        "integrity": "sha512-UDdfCK9fIdnAuIScIUQqMDkzYDI7lXSctROG8PIJgAVyUQsbqqjxh92BwnwfdwJYZCcrYVSQ1yhykW7bOZfHtg==",
+        "publishedAt": "2026-11-14T13:03:27Z"
+      }
+    },
+    {
+      "name": "dsh-qwen-paint",
+      "version": "0.19.0",
+      "source": {
+        "type": "git",
+        "commit": "98874b2c1349da6395a1e78ae2170ce11fbb1c30",
+        "url": "https://github.com/yanfei0725/dsh-qwen-paint",
+        "integrity": "sha512-g0lbNHfQRns7xb6cpyQ4rxNRDr/05AhCloA16+gtzdDSwhDcuEV0Cc2B5jcWiP1Ov0q2voRFfLh+dJ/MwjL19g==",
+        "publishedAt": "2026-11-10T14:22:44Z"
+      },
+      "title": {
+        "en": "Qwen Paint",
+        "zh": "（绘图）千问 · 优化版"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Generate and edit images locally with ComfyUI and Qwen-Image. Requires a configured Python/ComfyUI environment, models and a compatible GPU; acceleration dependency installation is enabled by default. Keep DSH Web and ComfyUI on trusted loopback interfaces; remote exposure needs additional authentication.",
+        "zh": "通过 ComfyUI 和 Qwen-Image 在本机生成、重绘图像。需配置 Python/ComfyUI、模型及兼容显卡；加速依赖自动安装默认开启。DSH Web 与 ComfyUI 应保持可信本机回环访问，远程开放前需补充身份校验。"
       }
     }
   ]
