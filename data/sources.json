@@ -11206,17 +11206,17 @@
         "zh": "跨工作区置顶会话"
       },
       "description": {
-        "en": "Collect pinned conversations from every workspace at the top of the sidebar, with rename, fork, archive and unarchive actions plus live activity dots. Uses DSH session state and browser localStorage; depends on sidebar DOM structure.",
-        "zh": "在侧栏顶部汇总各工作区的置顶会话，支持重命名、分叉、归档、取消归档，并显示实时活动状态点。使用 DSH 会话状态和浏览器 localStorage，依赖侧栏 DOM 结构。"
+        "en": "Collect pinned conversations across workspaces at the top of the sidebar, with keyboard and context menus, archive actions and live activity dots. Uses DSH session state and browser localStorage; depends on sidebar DOM structure.",
+        "zh": "在侧栏顶部汇总各工作区置顶会话，支持键盘与右键菜单、归档操作和实时活动状态点。使用 DSH 会话状态及浏览器 localStorage，依赖侧栏 DOM 结构。"
       },
       "category": "interface",
-      "version": "0.7.1",
+      "version": "0.7.3",
       "source": {
         "type": "git",
         "url": "https://github.com/OuQiL/dsh-pinned-panel",
-        "commit": "005f5ea75a9b255c36933fe258c9d4257abe8ec3",
-        "integrity": "sha512-B5BeB2crkeGQH9NrtzV+2g+JUsTDYVJgFA60Pnsq7fUIWmveq4XekZxsqtGjq4lhA+Ebz8NKWrX9mXDKLPSKJw==",
-        "publishedAt": "2026-11-06T02:47:01.000Z"
+        "commit": "90244221aecef3b2598bb8878a724f570f48e187",
+        "integrity": "sha512-s+pUPpp6vSFfkouuMRUdPmlzdj4O9QOjy0bTbBdZtVtsI5O2ubO5FyNDbiGEHkqlUjC45NkOP/nOuApvl108nw==",
+        "publishedAt": "2026-11-16T08:22:10Z"
       }
     },
     {
@@ -12673,8 +12673,8 @@
         "zh": "MarkPilot · Markdown × AI 工作台"
       },
       "description": {
-        "en": "Edit Markdown beside your files and DSH conversation, send selections to chat and reference notes with @mp. Includes rendered math, tables and footnotes, AI review, guarded saves and draft recovery. Requires host Connection authentication and built-in SQLite for local document sharing.",
-        "zh": "将 Markdown、文件树和 DSH 对话并排，支持选区入对话、@mp 引用、公式、表格与脚注；提供 AI 修改审阅、版本守卫保存及草稿恢复。需提供 Connection 认证和内置 SQLite 的宿主运行时。"
+        "en": "Edit Markdown beside your files and DSH conversation, with @mp references, math, tables, footnotes, guarded saves and draft recovery. PDF export uses an installed Edge/Chrome and the native save dialog. Requires Host Connection and built-in SQLite; printing runs a separate browser process.",
+        "zh": "将 Markdown、文件树和 DSH 对话并排，支持 @mp 引用、公式、表格、脚注、版本守卫保存与草稿恢复。PDF 导出调用已安装的 Edge/Chrome 和原生保存对话框；需宿主 Connection 与内置 SQLite，打印会启动独立浏览器进程。"
       },
       "category": "interface"
     },
@@ -12761,8 +12761,8 @@
         "zh": "AgentCompare"
       },
       "description": {
-        "en": "Compare 2–4 answers, files or web previews in DSH, then review and adopt a choice. Requires Git, a host process sandbox and configured models; web previews need Chrome/Edge. Static previews lack Host validation: use trusted pages and non-sensitive projects.",
-        "zh": "比较 2–4 版回答、文件或网页预览，再审阅并采用结果。需 Git、宿主进程沙箱和模型配置，网页预览需 Chrome/Edge。静态预览缺少 Host 校验，请仅用于可信页面和非敏感项目。"
+        "en": "Compare 2–4 answers, files or web previews in DSH, then review and adopt a choice. Requires Git, a host process sandbox and configured models; web previews need Chrome/Edge. Model requests may incur charges. Node support follows the package declaration.",
+        "zh": "在 DSH 中比较 2–4 版回答、文件或网页预览，再审阅并采用结果。需 Git、宿主进程沙箱和模型配置，网页预览需 Chrome/Edge；模型请求可能收费，Node 版本以包内声明为准。"
       },
       "category": "development"
     },
@@ -16778,6 +16778,298 @@
         "en": "Generate and edit images locally with ComfyUI and Qwen-Image. Requires a configured Python/ComfyUI environment, models and a compatible GPU; acceleration dependency installation is enabled by default. Keep DSH Web and ComfyUI on trusted loopback interfaces; remote exposure needs additional authentication.",
         "zh": "通过 ComfyUI 和 Qwen-Image 在本机生成、重绘图像。需配置 Python/ComfyUI、模型及兼容显卡；加速依赖自动安装默认开启。DSH Web 与 ComfyUI 应保持可信本机回环访问，远程开放前需补充身份校验。"
       }
+    },
+    {
+      "name": "dsh-mistral-pro",
+      "title": {
+        "en": "Mistral Pro",
+        "zh": "Mistral Pro"
+      },
+      "description": {
+        "en": "Use Mistral Vibe or Studio subscription keys as model providers, with account priorities, fallback and usage/cache statistics. Requires your own eligible keys and quota; private browser routes require Host Connection admission. Wire logging is optional and can contain request content.",
+        "zh": "将 Mistral Vibe 或 Studio 订阅密钥接为模型供应商，支持账号优先级、回退及用量和缓存统计。需自行提供有效密钥与额度，私有页面接口要求宿主 Connection 准入；可选通信日志可能包含请求内容。"
+      },
+      "category": "providers",
+      "version": "0.8.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/lordraiden/dsh-mistral-pro",
+        "commit": "fbaf386374f7183c5c3d490b8db8e8443396d9ad",
+        "integrity": "sha512-CsH4iXVSA/TStgxdAMc0AJveJDiDSWvA1XwB6bUdvKd3wImkKS3ErYAUVLqeXHWlSUwQo5VaXsj/QkDeQVUm7w==",
+        "publishedAt": "2026-11-16T16:28:59Z"
+      }
+    },
+    {
+      "name": "flow-tower-context",
+      "title": {
+        "en": "Flow Tower Context",
+        "zh": "Flow Tower Context"
+      },
+      "description": {
+        "en": "Compile project memory from compaction and retrieve it through tools and a panel, with adaptive context injection. Select its separate Flow Tower preset for memory-aware compaction. Requires Host Connection and configured models; model-backed searches and summaries may incur charges. Preset snapshot targets DSH 0.2.2-rc.3.",
+        "zh": "从压缩过程整理项目记忆，通过工具和面板检索并按需注入上下文。带记忆的压缩需另选 Flow Tower 预设；需宿主 Connection 和模型配置，模型检索与摘要可能收费。预设快照基于 DSH 0.2.2-rc.3。"
+      },
+      "category": "memory"
+    },
+    {
+      "name": "deepseek-harness-git",
+      "title": {
+        "en": "deepseek-harness-git",
+        "zh": "deepseek-harness-git"
+      },
+      "description": {
+        "en": "Manage workspace Git repositories, diffs, staging, branches and sync from DSH Web, and generate commit messages with configured models. Requires Git and Host Connection; AI messages send selected diffs or untracked-file excerpts to your model and may incur charges. Discard removes local changes.",
+        "zh": "在 DSH Web 管理工作区 Git 仓库、差异、暂存、分支和同步，并用配置的模型生成提交信息。需 Git 和宿主 Connection；AI 功能会把选定差异或未跟踪文件摘录交给模型，可能收费。丢弃操作会移除本地改动。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-web-update",
+      "title": {
+        "en": "dsh-web-update",
+        "zh": "dsh-web-update"
+      },
+      "description": {
+        "en": "Check for DSH updates at startup and every 24 hours, then install and restart after confirmation. Linux and npm global installs only. Updates change the shared DSH installation; use a trusted local Host with Connection enabled. Desktop, source and other package-manager installs are unsupported.",
+        "zh": "启动时及每 24 小时检查 DSH 更新，确认后安装并重启。仅支持 Linux 的 npm 全局安装，更新会替换共用 DSH 程序；请用于已启用 Connection 的可信本机宿主。不支持 Desktop、源码或其它包管理器安装。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-personal-agent",
+      "title": {
+        "en": "DSH Personal Agent",
+        "zh": "DSH Personal Agent"
+      },
+      "description": {
+        "en": "A macOS assistant for Calendar, Reminders, Notes, Mail drafts, tasks and a daily note. Requires macOS 14+, OS permissions and configured models. Includes a native helper; browser sign-in state can be reused by the assistant browser. Model use may incur charges.",
+        "zh": "macOS 个人助理，接入日历、提醒事项、备忘录、邮件草稿、任务与今日便签。需 macOS 14+、系统授权及模型配置，附原生辅助 App；浏览器登录状态可供助手浏览器复用，模型使用可能收费。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-super-mind",
+      "title": {
+        "en": "Super Mind",
+        "zh": "Super Mind"
+      },
+      "description": {
+        "en": "Manage local inspiration and drafts in a content studio with multiple views, status tracking, model-backed rewriting and a companion CLI. Requires Host owner access and configured models for AI features; selected drafts are sent to those models and may incur charges.",
+        "zh": "在本地内容工作室管理灵感与文稿，提供多视图、状态流转、模型改写和配套 CLI。AI 功能需宿主所有者访问及模型配置，选定文稿会交给相应模型处理并可能收费。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "@caiyy0823/dsh-tool-retry",
+      "title": {
+        "en": "dsh-tool-retry",
+        "zh": "dsh-tool-retry"
+      },
+      "description": {
+        "en": "Retry selected transient tool failures with bounded backoff, cancellation and a local audit ledger. Re-dispatches through the Host tool pipeline with the original agent and tool set. Enable it only for idempotent tools; MCP name-based matching cannot guarantee absence of side effects.",
+        "zh": "为选定工具的瞬时失败提供有界退避、取消和本地审计账本，重派发仍经过宿主工具管线并保留原 Agent 与工具集。请仅对幂等工具启用，按 MCP 名称判断不能保证调用无副作用。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@local/relay-dashboard",
+      "title": {
+        "en": "Relay Dashboard",
+        "zh": "中转站仪表盘"
+      },
+      "description": {
+        "en": "View balances, usage and request statistics for compatible /api/v1 relay sites. Requires your own site token and Host owner access; tokens are stored by the Host credential service. Browser requests go directly to the chosen site, which must allow the DSH origin through CORS.",
+        "zh": "查看兼容 /api/v1 中转站的余额、用量与请求统计。需自行提供站点 Token 及宿主所有者访问，Token 由宿主凭据服务保存；浏览器直接访问选定站点，对方需通过 CORS 允许 DSH 来源。"
+      },
+      "category": "usage",
+      "version": "1.0.8",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/BigYty/dsh-relay-dashboard",
+        "commit": "6257aad7778be7acb8a94ea0d92f7bc677566079",
+        "integrity": "sha512-DVB0/0al3g9RC8VFx49KoRL9qVcPjbWzNapmvSapJZs3iO+4403aagzgiYmla+AzlwBumWEHvj9k8yzU1dyMBg==",
+        "publishedAt": "2026-11-16T12:29:20Z"
+      }
+    },
+    {
+      "name": "bloomtutor-dsh",
+      "title": {
+        "en": "BloomTutor",
+        "zh": "BloomTutor"
+      },
+      "description": {
+        "en": "Seven tutoring and learning Skills that create a syllabus and Markdown lessons in your workspace, adapting to your questions and feedback. Uses the Host filesystem Skill provider and your session model; model usage may incur charges.",
+        "zh": "提供七个辅导与学习 Skill，在工作区编写大纲和 Markdown 课文，按疑问与反馈调整后续内容。使用宿主文件系统 Skill 提供器和会话模型，模型使用可能收费。"
+      },
+      "category": "skills"
+    },
+    {
+      "name": "dsh-tool-drawer",
+      "title": {
+        "en": "dsh-tool-drawer",
+        "zh": "dsh-tool-drawer"
+      },
+      "description": {
+        "en": "Keep everyday tools visible and discover other tools through find_tool, describe_tool and use_tool, with an optional expanding desk mode. Calls retain the Host agent, admitted tool set and execution pipeline. Requires compatible DSH tools/system-prompt services.",
+        "zh": "常驻显示日常工具，通过 find_tool、describe_tool 和 use_tool 按需取用其它工具，可切换为逐步展开的桌面模式。调用保留宿主 Agent、已准入工具集和执行管线，需兼容的 DSH 工具及系统提示服务。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-compaction-policy",
+      "title": {
+        "en": "dsh-compaction-policy",
+        "zh": "dsh-compaction-policy"
+      },
+      "description": {
+        "en": "Adjust automatic context-compaction thresholds per provider or model while retaining the Host summarizer and overflow recovery. Requires compatible preset, token-meter and model-info services. Restart DSH after removal to restore already-wrapped live engines.",
+        "zh": "按供应商或模型调整自动上下文压缩触发点，保留宿主摘要器与溢出恢复。需兼容的预设、Token 计量及模型信息服务；移除插件后应重启 DSH，恢复已包装的运行中引擎。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-better-tips",
+      "title": {
+        "en": "dsh-better-tips",
+        "zh": "dsh-better-tips"
+      },
+      "description": {
+        "en": "Show richer model-request errors, bounded extra retries and exportable diagnostics. Uses Host Connection for diagnostic routes and filters common secret formats. Extra retries consume real model requests; inspect diagnostic exports for private content before sharing.",
+        "zh": "补充模型请求报错详情、次数受限的额外重试与可导出的诊断。诊断接口使用宿主 Connection，并过滤常见凭据格式；额外重试会产生真实模型请求，分享诊断前请检查隐私内容。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-qqbot-buddy",
+      "title": {
+        "en": "dsh-qqbot-buddy",
+        "zh": "dsh-qqbot-buddy"
+      },
+      "description": {
+        "en": "Connect official QQ bots to DSH with an independent local admin console, profiles, memory, knowledge, daily reports and voice. Requires QQ bot credentials, models and optional TTS/ASR services. An empty tool allowlist permits all Host tools: configure trusted users/groups and tool limits before public use. Use instead of the official QQ channel.",
+        "zh": "将 QQ 官方机器人接入 DSH，提供独立本机控制台、配置档、记忆、知识库、群日报与语音。需机器人凭据、模型及可选 TTS/ASR 服务；空工具白名单会放行全部宿主工具，对外使用前须配置可信用户或群及工具限制，与官方 QQ 频道二选一。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-comfy-suite",
+      "title": {
+        "en": "dsh-comfy-suite",
+        "zh": "dsh-comfy-suite"
+      },
+      "description": {
+        "en": "A ComfyUI suite for workflows, local generation/editing, service control, galleries, styles and prompts. Requires Python, ComfyUI, models and suitable hardware prepared separately. Acceleration dependencies can be installed automatically. Use a trusted local Host with Connection enabled; heavy generation consumes local GPU resources.",
+        "zh": "整合 ComfyUI 工作流、本地出图修图、服务控制、作品库、风格与提示词。需另行准备 Python、ComfyUI、模型及合适硬件，加速依赖可自动安装；请用于启用 Connection 的可信本机宿主，生成会占用本地 GPU 资源。"
+      },
+      "category": "tools",
+      "version": "1.6.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Elgwia-dsh/dsh-comfy-suite",
+        "commit": "dc736fbe64bbde0c4171e10b6f2c487bd7a413e5",
+        "integrity": "sha512-lp62iUTyYfTeNjvQZ1eImB8H12gFWZNbis9e2vckFowAJkZz1IxGZxIXLtiE31QK5RW3gAVQ5ssA7YWScQmtPg==",
+        "publishedAt": "2026-11-16T18:41:39Z"
+      }
+    },
+    {
+      "name": "@bigbrain-work/dsh-plugin-shiliu-ai",
+      "title": {
+        "en": "Shiliu AI",
+        "zh": "石榴 AI"
+      },
+      "description": {
+        "en": "Connect Shiliu AI remote MCP tools for balance queries, public short-video parsing and copy extraction. Set your own SHILIU_DSH_MCP_KEY in the Host environment. Balance queries are free; other tools consume service points. Declares DSH 0.2.2-rc.1 compatibility.",
+        "zh": "接入石榴 AI 远程 MCP 工具，查询余额、解析公开视频链接并提取文案。需在宿主环境中设置自己的 SHILIU_DSH_MCP_KEY；余额查询免费，其它工具消耗服务积分，声明兼容 DSH 0.2.2-rc.1。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-document-reader",
+      "title": {
+        "en": "dsh-document-reader",
+        "zh": "dsh-document-reader"
+      },
+      "description": {
+        "en": "Read local PDF, DOCX, EPUB, HTML, Markdown, images and Office files in a DSH panel, with search, text edits and document context/tools. Requires Host Connection; Bing/Google translation sends selected text externally, while model translation uses configured models and may incur charges. Office conversion may require external tools.",
+        "zh": "在 DSH 面板阅读本地 PDF、DOCX、EPUB、HTML、Markdown、图片和 Office 文件，提供搜索、文本编辑与文档上下文及工具。需宿主 Connection；必应或 Google 翻译会外发选中文字，模型翻译使用配置的模型并可能收费，Office 转换可能需要外部程序。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-plugin-dingtalk-bridge",
+      "title": {
+        "en": "DingTalk Bridge",
+        "zh": "钉钉消息自动化"
+      },
+      "description": {
+        "en": "Receive DingTalk private/group mentions, generate reply suggestions and optionally reply automatically. Requires a signed-in DingTalk dws CLI, configured models and Host Connection. Selected messages are processed by those models; automatic reply sends as your configured account and may consume quota.",
+        "zh": "接收钉钉私信及群 @ 消息，生成建议回复，并可开启自动回复。需已登录的钉钉 dws CLI、模型配置及宿主 Connection；选定消息交给模型处理，自动回复会以配置账号发送并可能消耗额度。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-chatroom",
+      "title": {
+        "en": "dsh-chatroom",
+        "zh": "dsh-chatroom"
+      },
+      "description": {
+        "en": "Chat with named agents and people across local/LAN rooms, with independent sessions and shared reply budgets. Requires configured models and may incur charges. LAN service listens on 0.0.0.0:4399 using a room invitation code over plain HTTP: use only on a trusted private network or disable LAN access.",
+        "zh": "让具名 Agent 与真人在本机或局域网房间聊天，保留独立会话并共享发言预算。需模型配置，可能产生费用；局域网服务在 0.0.0.0:4399 监听，以房间邀请码通过明文 HTTP 加入，仅用于可信私网，或关闭局域网访问。"
+      },
+      "category": "workflow",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dingchenhui0618-arch/dsh-chatroom",
+        "commit": "3b688a3ce3ba2bf66dda545abd08e772a98498ad",
+        "integrity": "sha512-O98RVWx9BV7tTQVCzPwAe0wdjmd6+XywaSQZv7JAs7wO67MFN+dkmK20LrjimCbcAHoi9Rc96L1cS/z7mrQTEQ==",
+        "publishedAt": "2026-11-17T07:08:41Z"
+      }
+    },
+    {
+      "name": "@dungsil/dsh-plugin-ui-forge-worktree",
+      "title": {
+        "en": "Worktree Picker",
+        "zh": "Worktree Picker"
+      },
+      "description": {
+        "en": "Choose the current branch or a new worktree from the session composer, and manage checkout preferences. Requires the official Forge/worktree services and Git; worktree creation happens on the first message, and optional cleanup runs when archiving. Declares support tested on DSH 0.2.2-rc.3.",
+        "zh": "在会话输入框选择当前分支或新 worktree，并管理检出偏好。需官方 Forge/worktree 服务和 Git，首次发送消息时才创建 worktree，可配置归档时清理；作者声明已在 DSH 0.2.2-rc.3 验证。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "agentranch-dsh",
+      "title": {
+        "en": "agentranch-dsh",
+        "zh": "agentranch-dsh"
+      },
+      "description": {
+        "en": "Expose four AgentRanch identity/check/local-check/run-once tools through DSH. Requires a separately installed aw-cli binary and explicitly configured allowed roots. Run-once requires fresh Host approval; local-check is a simulated diagnostic, not proof of remote readiness.",
+        "zh": "通过 DSH 提供 AgentRanch 的身份、检查、本机诊断及单次执行四类工具。需另装 aw-cli 并明确配置允许目录；单次执行逐次请求宿主审批，本机诊断为模拟检查，不代表远端已就绪。"
+      },
+      "category": "development",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/gongxianjin/agentranch-dsh",
+        "commit": "94ba5a3e8ab9dcdc076f4b01ac3ae5d7cb7eb344",
+        "integrity": "sha512-Xv7a+6Kk/pX42n9TR+S43/WdEQAciv4yy+BPG1LMSRRZw89uQCNOiKQ5Uk+HtbjNo6gdupdUzhGL/0YYsHakNQ==",
+        "publishedAt": "2026-11-17T07:09:38Z"
+      }
+    },
+    {
+      "name": "dsh-pdf-zh",
+      "title": {
+        "en": "dsh-pdf-zh",
+        "zh": "dsh-pdf-zh"
+      },
+      "description": {
+        "en": "Translate English research PDFs into Chinese or bilingual PDFs and Markdown. Requires a manually prepared managed Python/pdf2zh environment; local translation also needs llama.cpp and a compatible model. Cloud/free backends send document text externally and may charge. Scanned PDFs need OCR; some layout/language/page options are limited.",
+        "zh": "将英文科研 PDF 翻成中文或双语 PDF 与 Markdown。需手工准备受管 Python/pdf2zh 环境，本地翻译还需 llama.cpp 和兼容模型；云端或免费后端会外发文档文字，部分服务收费。扫描件需 OCR，部分排版、语言或页选项有限制。"
+      },
+      "category": "tools"
     }
   ]
 }
