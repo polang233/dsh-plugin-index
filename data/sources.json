@@ -12060,8 +12060,8 @@
         "zh": "ZCode Plan Bridge"
       },
       "description": {
-        "en": "Use a signed-in ZCode CLI as a model provider, with streamed text, reasoning and image input. Requires Node >=22 and account quota. Tool permissions default to deny; community recovery can attach to the local ZCode desktop runtime.",
-        "zh": "将已登录的 ZCode CLI 接为模型提供商，支持文本、思考流与图片。需 Node >=22 和账号额度；默认拒绝工具权限，社区恢复功能可接入本机 ZCode 桌面运行时。"
+        "en": "Use a signed-in ZCode CLI as a model provider, with text, reasoning, images and a bilingual toolkit. Requires Node >=22 and account quota. Optional Z·SWITCH accounts support separate execution or shared login. Quota rotation does not replay failed turns. Session titles use the configured model. Tool permissions default to deny.",
+        "zh": "将已登录的 ZCode CLI 接为模型供应商，支持文本、思考、图片和双语工具箱。需 Node >=22 及账号额度，可选 Z·SWITCH 已保存账号和独立执行或共享登录。额度轮换不重放失败任务，会话标题使用配置的模型生成。工具权限默认拒绝。"
       },
       "category": "providers"
     },
@@ -12508,13 +12508,13 @@
         "zh": "将归档会话与专属子代理移入回收站，按需恢复或永久清除，并查看存储占用。适用于 macOS/Windows 的 DSH Desktop 0.2.1-rc.3、0.2.1-rc.5，需 JSONL 存储和 Node >=24。永久清除不可撤销，保留共享附件和项目文件。"
       },
       "category": "tools",
-      "version": "0.0.3",
+      "version": "0.0.5",
       "source": {
         "type": "git",
         "url": "https://github.com/QwQBiG/dsh-archive-delete",
-        "commit": "ff2f106243690790f798eade1d8f567dc83273fe",
-        "integrity": "sha512-t+R7lP3IpR9LtNyEgDWtsXKPiHG5W6+NWNB+iQIDdyamZMsGroKSXbiCykIHHtw2Vszq3zAzpDHkHY4WEQLhWw==",
-        "publishedAt": "2026-11-02T04:06:59.000Z"
+        "commit": "7e72a95d11fb126c83528d864f17eaa16f28697f",
+        "integrity": "sha512-/wtfLxPH5gVmsGVQJ3UCqtmCigWXcLlHc3zFt6N3ZVFK183x1c/EQX/piTH0yZeq7nnhyujaOtrO/lcedpY1Fw==",
+        "publishedAt": "2026-11-18T13:21:08Z"
       }
     },
     {
@@ -15196,8 +15196,8 @@
         "zh": "dsh-pstack"
       },
       "description": {
-        "en": "pstack coding workflows, skills, model-role settings and host subagent delegation for DeepSeek Harness. Requires DSH >=0.2.2-rc.1 and Node >=24.21.1; scripts use host shell tools and their declared interpreters. Browser, terminal and forge steps need optional bundles; model calls follow configured routes and pricing.",
-        "zh": "将 pstack 编程工作流、技能、模型角色设置和宿主子代理协作移植到 DeepSeek Harness。需 DSH >=0.2.2-rc.1、Node >=24.21.1；脚本通过宿主 shell 工具和各自解释器运行，浏览器、终端及 forge 步骤需可选组合包，模型调用按配置路由计费。"
+        "en": "Brings pstack coding workflows to DeepSeek Harness. Ships the upstream skills, playbooks and references, then adds the DSH adapter: skill routing, per-role model routes, subagents that accept an explicit route, and tools to start or interrupt subagents and to inspect roles and models. Some steps need optional plugins installed.",
+        "zh": "将 pstack 的编程工作流移植到 DeepSeek Harness。随包提供上游的技能、playbook 与参考文档，并加上 DSH 适配：技能路由、按角色配置模型、可指定路由的子代理，以及启动或中断子代理、查看角色与模型的工具。部分步骤需要额外安装可选插件。"
       },
       "category": "workflow"
     },
@@ -17002,8 +17002,8 @@
         "zh": "钉钉消息自动化"
       },
       "description": {
-        "en": "Receive DingTalk private/group mentions, generate reply suggestions and optionally reply automatically. Requires a signed-in DingTalk dws CLI, configured models and Host Connection. Selected messages are processed by those models; automatic reply sends as your configured account and may consume quota.",
-        "zh": "接收钉钉私信及群 @ 消息，生成建议回复，并可开启自动回复。需已登录的钉钉 dws CLI、模型配置及宿主 Connection；选定消息交给模型处理，自动回复会以配置账号发送并可能消耗额度。"
+        "en": "Read DingTalk private messages and group mentions with a signed-in dws CLI and Host Connection. Suggestions and optional automatic replies send recent conversation messages to the configured model and may incur charges. Empty suggestions stay for manual handling.",
+        "zh": "借助已登录的钉钉 dws CLI 和宿主 Connection 接收私信和群 @。生成建议或开启自动回复时，会把近期会话消息交给配置的模型，可能收费。空建议留待人工处理。"
       },
       "category": "integrations"
     },
@@ -17014,17 +17014,17 @@
         "zh": "dsh-chatroom"
       },
       "description": {
-        "en": "Chat with named agents and people across local/LAN rooms, with independent sessions and shared reply budgets. Requires configured models and may incur charges. LAN service listens on 0.0.0.0:4399 using a room invitation code over plain HTTP: use only on a trusted private network or disable LAN access.",
-        "zh": "让具名 Agent 与真人在本机或局域网房间聊天，保留独立会话并共享发言预算。需模型配置，可能产生费用；局域网服务在 0.0.0.0:4399 监听，以房间邀请码通过明文 HTTP 加入，仅用于可信私网，或关闭局域网访问。"
+        "en": "Chat with people and configured DSH agents in rooms on one host or a trusted LAN. LAN rooms use an access code and local HTTP. Enabling automatic replies may send room context to the configured model and incur charges.",
+        "zh": "在单台宿主或可信局域网的房间里与其他用户和已配置的 DSH Agent 对话。局域网房间使用邀请码和本地 HTTP。开启自动回复后，房间上下文可能交给配置的模型并产生费用。"
       },
       "category": "workflow",
       "version": "0.1.0",
       "source": {
         "type": "git",
         "url": "https://github.com/dingchenhui0618-arch/dsh-chatroom",
-        "commit": "3b688a3ce3ba2bf66dda545abd08e772a98498ad",
-        "integrity": "sha512-O98RVWx9BV7tTQVCzPwAe0wdjmd6+XywaSQZv7JAs7wO67MFN+dkmK20LrjimCbcAHoi9Rc96L1cS/z7mrQTEQ==",
-        "publishedAt": "2026-11-17T07:08:41Z"
+        "commit": "fce386edcc5c507d16aa987a016490e5e4a78057",
+        "integrity": "sha512-QR/hrp/eECHEJVNgg5eVlkymEfMR2l8TmRPB4iRTfVnPaWxy6e1AKkGx+ai4uG+AzMrCYYA2F4lKDoBJb9OaOw==",
+        "publishedAt": "2026-11-18T02:00:44Z"
       }
     },
     {
@@ -17070,6 +17070,123 @@
         "zh": "将英文科研 PDF 翻成中文或双语 PDF 与 Markdown。需手工准备受管 Python/pdf2zh 环境，本地翻译还需 llama.cpp 和兼容模型；云端或免费后端会外发文档文字，部分服务收费。扫描件需 OCR，部分排版、语言或页选项有限制。"
       },
       "category": "tools"
+    },
+    {
+      "name": "@skyrocks/dsh-session-trash",
+      "title": {
+        "en": "Session Trash",
+        "zh": "会话回收站"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Move DSH sessions into a local trash folder, restore them, or permanently delete selected records. A failed move retains any data that could not be rolled back. Requires the DSH Typert host services.",
+        "zh": "把 DSH 会话移入本机回收站，支持恢复或永久删除。搬运回滚失败时保留未恢复的数据和记录。需宿主 Typert 服务。"
+      },
+      "version": "0.1.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/skyrocks/dsh-session-trash",
+        "commit": "aad5fc2182caeb2ce4f9da50e72345fa93994e1c",
+        "integrity": "sha512-mYn6EDZaOfqXDcpLfCwB6jcsLYbAR5f7RjBTZLmgsqDMMGQIMNlyw0MK6xsFXFt+cUD0iipCNO9gBQclz8tdtg==",
+        "publishedAt": "2026-11-16T03:43:39Z"
+      }
+    },
+    {
+      "name": "@skyrocks/dsh-db",
+      "title": {
+        "en": "Database",
+        "zh": "数据库"
+      },
+      "category": "development",
+      "description": {
+        "en": "Manage database connections and let DSH query SQLite, MySQL, PostgreSQL-compatible or DM databases. Queries use read-only connections. Writes require a configured writable source and follow the plugin's approval flow. Requires the corresponding database access and Node's SQLite support for SQLite.",
+        "zh": "配置数据库连接，在 DSH 查询 SQLite、MySQL、兼容 PostgreSQL 的数据库或达梦数据库。查询使用只读连接，写入需配置可写数据源并走插件审批。需相应数据库访问权限，SQLite 依赖 Node 内置支持。"
+      },
+      "version": "0.2.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/skyrocks/dsh-db",
+        "commit": "1e40be8303caaa6bd3f6175cb999cb1ab4769cad",
+        "integrity": "sha512-6qOc8ig+nqQ0O7ygTB0+RL/vmEccUK2heSjGvo0qd/qPy3TzZlbOXeD7FDPTYIuPIM1DROFK60P4YueKURYyCg==",
+        "publishedAt": "2026-11-18T02:17:22Z"
+      }
+    },
+    {
+      "name": "pc-doctor",
+      "title": {
+        "en": "PC Doctor",
+        "zh": "PC Doctor"
+      },
+      "category": "skills",
+      "description": {
+        "en": "A troubleshooting agent preset for diagnosing computer issues. It can inspect logs or system status through DSH shell tools, subject to the session's permissions. Select PC Doctor as the agent preset after installation.",
+        "zh": "用于电脑故障诊断的 Agent 预设。可通过 DSH 终端工具查看日志和系统状态，受会话权限约束。安装后需要在会话中选择 PC Doctor 预设。"
+      },
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/nakemer/pc-doctor",
+        "commit": "1c55c7a21be08db0dc11033f1e9cddd4b795858e",
+        "integrity": "sha512-qM5mulkLMFVu2BBWftUhVlIXBy89czyZt9ZgDHYVDpVgqkUxCnQXbMBSf5/FICpL4bBV5x01oPu/joKWN5a+rw==",
+        "publishedAt": "2026-11-17T15:17:11Z"
+      }
+    },
+    {
+      "name": "dsh-peak-window",
+      "title": {
+        "en": "Peak Window",
+        "zh": "峰时守卫"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Confirm before sending during peak hours and show an optional off-peak reminder. An explicit choice can defer a draft until off-peak hours. Optional holiday updates fetch public calendar JSON. Tested by the author on DSH Desktop 0.2.2-rc.3 on Windows.",
+        "zh": "峰时发送前弹出确认，谷时可提示即将进入峰时。用户可选择延后草稿到谷时发送，放假安排可选从公开日历更新。作者在 Windows DSH Desktop 0.2.2-rc.3 验证。"
+      }
+    },
+    {
+      "name": "my-dsh-connector-hub",
+      "title": {
+        "en": "Connector Hub",
+        "zh": "连接器面板"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Configure and test MCP and REST connectors for this DSH deployment. Requires Host Connection. Stdio MCP can start the local executable you configure. HTTP probes contact the selected service with its configured headers.",
+        "zh": "在当前 DSH 部署中管理和测试 MCP 与 REST 连接器。需宿主 Connection。stdio MCP 会启动你配置的本地程序，HTTP 探测会向所选服务发送配置的请求头。"
+      }
+    },
+    {
+      "name": "dsh-session-matrix",
+      "title": {
+        "en": "Session Matrix",
+        "zh": "会话矩阵"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Place up to four native DSH conversation panes side by side and view workspace, session and subagent relationships, context usage and estimated costs. Subagent panes are read-only. Requires DSH >=0.2.2-rc.1 and Host Connection. Price metadata is fetched from models.dev.",
+        "zh": "并排显示最多四个 DSH 原生会话窗格，查看工作区、会话和子代理关系及上下文和费用估算。子代理窗格只读。需 DSH >=0.2.2-rc.1 和宿主 Connection，价格资料来自 models.dev。"
+      }
+    },
+    {
+      "name": "dsh-skin",
+      "title": {
+        "en": "DSH Skin",
+        "zh": "DSH Skin"
+      },
+      "description": {
+        "en": "Switch among ten bundled themes or restore the native appearance in DeepSeek Harness Desktop. The selected theme is stored locally. Tested by the author on macOS DSH Desktop 0.2.2-rc.5.",
+        "zh": "在 DeepSeek Harness 桌面端切换 10 套内置主题，或恢复原生外观。主题选择保存在本机。作者在 macOS DSH Desktop 0.2.2-rc.5 验证。"
+      },
+      "category": "appearance",
+      "version": "0.4.5",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/ai-graveyard/dsh-skin",
+        "commit": "4b9145fbb69564d6369e7ad843b33dfd4c9c3d06",
+        "path": "plugin",
+        "integrity": "sha512-4W9eA34lfQMZA8+t9iPzsas7z3IdKJZtS8mIllTK2oIZDga8i8shp9KDB8VwCDxYUiNKBPKdbhrwUqv+VqxFiw==",
+        "publishedAt": "2026-11-18T15:18:02Z"
+      }
     }
   ]
 }

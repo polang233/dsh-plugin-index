@@ -7275,6 +7275,181 @@
       "reviewedAt": "2026-11-17T14:33:45.497Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-zcode-plan-bridge",
+      "version": "0.6.6",
+      "integrity": "sha512-1LjoCBApN/ibF+PrnCONX84s23XMFd0nvR1Z2SN0KC3q8j3wILWQGlc9GiechbLHRlzz8633envIMplcZiWXIg==",
+      "repository": "https://github.com/tangyixiao/dsh-zcode-plan-bridge",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@qwqbig/dsh-archive-delete",
+      "version": "0.0.5",
+      "integrity": "sha512-/wtfLxPH5gVmsGVQJ3UCqtmCigWXcLlHc3zFt6N3ZVFK183x1c/EQX/piTH0yZeq7nnhyujaOtrO/lcedpY1Fw==",
+      "repository": "https://github.com/QwQBiG/dsh-archive-delete",
+      "source": {
+        "type": "git",
+        "commit": "7e72a95d11fb126c83528d864f17eaa16f28697f"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-workbuddy-connect-community",
+      "version": "0.1.24",
+      "integrity": "sha512-gq6RakFBKrP60aaMa85RwN+n48YN1fhqQG5M0zE3R2bw8qfvz7V08onVo3a9aHRfiwWixlWA80zN/uDYjnNhzw==",
+      "repository": "https://github.com/tangyixiao/dsh-workbuddy-connect-community",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-pr-release-workspace",
+      "version": "0.1.8",
+      "integrity": "sha512-lHiyfWfjMqwlD3WhFLPj7ej5DYTVe/LpnwfyP/R++uJTNNbsOxdYEXsrq5gmSsbvrfqWtKyQkgrDM7aRL0DrAQ==",
+      "repository": "https://github.com/tangyixiao/dsh-pr-release-workspace",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@skyrocks/dsh-session-trash",
+      "version": "0.1.3",
+      "integrity": "sha512-mYn6EDZaOfqXDcpLfCwB6jcsLYbAR5f7RjBTZLmgsqDMMGQIMNlyw0MK6xsFXFt+cUD0iipCNO9gBQclz8tdtg==",
+      "repository": "https://github.com/skyrocks/dsh-session-trash",
+      "source": {
+        "type": "git",
+        "commit": "aad5fc2182caeb2ce4f9da50e72345fa93994e1c"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@skyrocks/dsh-db",
+      "version": "0.2.2",
+      "integrity": "sha512-6qOc8ig+nqQ0O7ygTB0+RL/vmEccUK2heSjGvo0qd/qPy3TzZlbOXeD7FDPTYIuPIM1DROFK60P4YueKURYyCg==",
+      "repository": "https://github.com/skyrocks/dsh-db",
+      "source": {
+        "type": "git",
+        "commit": "1e40be8303caaa6bd3f6175cb999cb1ab4769cad"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-dingtalk-bridge",
+      "version": "0.4.5",
+      "integrity": "sha512-/UP3zcflKgIr2RV1n7TnbSv03I1SnCDtjVD312bK8hQ0QOCCgd5y7lhngp3NIfChXmeaws+FHpH66BAQNCAVgA==",
+      "repository": "https://github.com/gcggcg/dsh-plugin-dingtalk-bridge",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-chatroom",
+      "version": "0.1.0",
+      "integrity": "sha512-QR/hrp/eECHEJVNgg5eVlkymEfMR2l8TmRPB4iRTfVnPaWxy6e1AKkGx+ai4uG+AzMrCYYA2F4lKDoBJb9OaOw==",
+      "repository": "https://github.com/dingchenhui0618-arch/dsh-chatroom",
+      "source": {
+        "type": "git",
+        "commit": "fce386edcc5c507d16aa987a016490e5e4a78057"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "pc-doctor",
+      "version": "1.0.0",
+      "integrity": "sha512-qM5mulkLMFVu2BBWftUhVlIXBy89czyZt9ZgDHYVDpVgqkUxCnQXbMBSf5/FICpL4bBV5x01oPu/joKWN5a+rw==",
+      "repository": "https://github.com/nakemer/pc-doctor",
+      "source": {
+        "type": "git",
+        "commit": "1c55c7a21be08db0dc11033f1e9cddd4b795858e"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-peak-window",
+      "version": "1.2.6",
+      "integrity": "sha512-tqwnWUU142VJURwogRKD3Gi2v/KdAzPSA0sWE34fHT/HKjYoLmLrSaJ5oHAQNXRlXpRILKu9KU8ZFGkRxAkFZQ==",
+      "repository": "https://github.com/ltw2522/dsh-peak-window",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-markdown-editor-typora",
+      "version": "2.1.0",
+      "integrity": "sha512-uUBMNp0HW9lZnpXQ+gICXB9NteIN/FImV6n4a0skopq4m1rg1WGOYZEwM55G+iBD0jSusI+ta/f6RHUpL32rtw==",
+      "repository": "https://github.com/ltmroberthk915/markpilot",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "my-dsh-connector-hub",
+      "version": "0.2.0",
+      "integrity": "sha512-9yw11JlGYk36r1sCeRP0sTy8QggPCGtM5jdMD5Xne79gQj8IT30IN3IY4BywIlRXf1wZEpCJKulGtumJwcFdDw==",
+      "repository": "https://github.com/myhylijp/my-dsh-connector-hub",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-session-matrix",
+      "version": "0.16.6",
+      "integrity": "sha512-YEx8Ny6AcKL0qPqYSQsjLONtzwIp/cRtq859scSpMFEsk/ljs+BVku6PQVdLh9iKUKo/X9boYvVny541BFQ2fg==",
+      "repository": "https://github.com/Wanqiu12345/dsh-session-matrix",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-18T16:23:52.207Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-skin",
+      "version": "0.4.5",
+      "integrity": "sha512-4W9eA34lfQMZA8+t9iPzsas7z3IdKJZtS8mIllTK2oIZDga8i8shp9KDB8VwCDxYUiNKBPKdbhrwUqv+VqxFiw==",
+      "repository": "https://github.com/ai-graveyard/dsh-skin",
+      "source": {
+        "type": "git",
+        "commit": "4b9145fbb69564d6369e7ad843b33dfd4c9c3d06",
+        "path": "plugin"
+      },
+      "reviewedAt": "2026-11-18T16:29:57.556Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
