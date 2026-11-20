@@ -64,6 +64,18 @@
           "alt": "Sidebar layout controls"
         }
       ]
+    },
+    "dsh-fish-pay-counter": {
+      "screenshots": [
+        {
+          "url": "https://github.com/egg2023001-cmd/dsh-fish-pay-counter/releases/download/v1.2.0/fish-pay-cover.png",
+          "alt": "小鱼挂件的工资计数演示"
+        },
+        {
+          "url": "https://github.com/egg2023001-cmd/dsh-fish-pay-counter/releases/download/v1.2.0/fish-pay-settings.png",
+          "alt": "小鱼挂件的午休暂停和班表设置演示"
+        }
+      ]
     }
   }
 }

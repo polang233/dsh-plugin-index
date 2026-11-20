@@ -12060,8 +12060,8 @@
         "zh": "ZCode Plan Bridge"
       },
       "description": {
-        "en": "Use a signed-in ZCode CLI as a model provider, with text, reasoning, images and a bilingual toolkit. Requires Node >=22 and account quota. Optional Z·SWITCH accounts support separate execution or shared login. Quota rotation does not replay failed turns. Session titles use the configured model. Tool permissions default to deny.",
-        "zh": "将已登录的 ZCode CLI 接为模型供应商，支持文本、思考、图片和双语工具箱。需 Node >=22 及账号额度，可选 Z·SWITCH 已保存账号和独立执行或共享登录。额度轮换不重放失败任务，会话标题使用配置的模型生成。工具权限默认拒绝。"
+        "en": "Use a signed-in ZCode CLI as a model provider, with text, reasoning, images and a bilingual toolkit. Requires Node >=22 and account quota. Optional Z·SWITCH accounts support separate execution or shared login. Quota rotation does not replay failed turns. Session titles use the configured model. Tool permissions default to deny. When independent account rotation is enabled, the bridge can continue a task after confirmed quota exhaustion and after native tools finish.",
+        "zh": "将已登录的 ZCode CLI 接为模型供应商，支持文本、思考、图片和双语工具箱。需 Node >=22 及账号额度，可选 Z·SWITCH 已保存账号和独立执行或共享登录。额度轮换不重放失败任务，会话标题使用配置的模型生成。工具权限默认拒绝。 启用独立账号轮换后，在确认额度耗尽且原生工具结束时可自动续跑当前任务。"
       },
       "category": "providers"
     },
@@ -17474,8 +17474,8 @@
       },
       "category": "interface",
       "description": {
-        "en": "A draggable fish widget that estimates today’s pay from your work hours and breaks. Pay settings stay in the browser.",
-        "zh": "可拖动的悬浮小鱼按工作时段和休息时间估算今日工资。薪资设置保存在本机浏览器。"
+        "en": "A draggable fish pet for the DSH workbench. It swims, blows bubbles, and estimates today’s pay from your schedule. It drops a coin for each whole yuan and pauses for lunch. Pay settings stay in the browser.",
+        "zh": "在 DSH 工作台养一只可拖动、会游动吐泡的小鱼。它按班表估算今日工资，满一元掉一枚金币，午休时暂停。薪资设置只保存在浏览器。"
       },
       "version": "1.2.0",
       "source": {
@@ -17508,6 +17508,106 @@
       "description": {
         "en": "Save and restore chats from the DeepSeek web panel. Uses your signed-in browser session and stores saved chats locally.",
         "zh": "保存和恢复 DeepSeek 网页面板中的对话。使用已登录的浏览器会话，保存记录留在本机。"
+      }
+    },
+    {
+      "name": "dsh-interpreter",
+      "title": {
+        "en": "DSH Interpreter",
+        "zh": "DSH 速览"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Add an optional reading view to completed replies. Choose when to generate it and which model to use. Rewrites can incur model charges.",
+        "zh": "为已完成的回答生成可选速览，可设置生成时机和使用的模型。改写可能产生模型费用。"
+      }
+    },
+    {
+      "name": "dsh-academic-research-skills",
+      "title": {
+        "en": "Academic Research Skills",
+        "zh": "Academic Research Skills"
+      },
+      "category": "skills",
+      "description": {
+        "en": "Research and writing skills with a five-role review team, citation tools and paper workflow checks. Uses a noncommercial license. The integrity checker requires Python.",
+        "zh": "提供文献检索、论文写作、五席同行评审、引用工具和论文流程检查。许可证限非商业使用，完整性检查需要 Python。"
+      },
+      "version": "0.4.6",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/TY-Cheng/dsh-academic-research-skills",
+        "commit": "994885e7c7c9ca40d55f034e60c37802e12cb4e3",
+        "integrity": "sha512-bUSyCmdXk/q4b+VAm/k6GAkZBgZrEADygKs4JvGVQ0LVVTEbU9r0z02ca3eed4KebY7aRi2N4PhYzK8pYomHxA==",
+        "publishedAt": "2026-11-20T09:01:53Z"
+      }
+    },
+    {
+      "name": "dsh-task-complete-notice",
+      "title": {
+        "en": "DSH Task Complete Notice",
+        "zh": "任务完成提示"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Show a Windows notification and optionally play a sound when a turn ends. Notifications can show the last part of the reply. Requires Windows 10/11.",
+        "zh": "在轮次结束时弹出 Windows 通知，可选播放提示音。通知可显示本轮回答末段。仅支持 Windows 10/11。"
+      }
+    },
+    {
+      "name": "dsh-workspace-grid",
+      "title": {
+        "en": "DSH Workspace Grid",
+        "zh": "工作区九宫格"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Switch the DSH workspace sidebar to a three-column grid for empty workspaces. Workspaces with conversations or children stay full-width. The setting stays in the browser.",
+        "zh": "将 DSH 侧栏中的空工作区排成三列九宫格，有会话或子工作区的条目仍占整行。开关保存在浏览器。"
+      }
+    },
+    {
+      "name": "dsh-sylvan-appearance",
+      "title": {
+        "en": "Sylvan Appearance",
+        "zh": "Sylvan 外观"
+      },
+      "category": "appearance",
+      "description": {
+        "en": "Switch and edit DSH themes, preview changes, and import or export theme JSON. Includes Sylvan · 松雨.",
+        "zh": "切换和编辑 DSH 主题，实时预览并导入或导出主题 JSON。内置 Sylvan · 松雨。"
+      }
+    },
+    {
+      "name": "dsh-github-repo-search",
+      "title": {
+        "en": "GitHub Repo Search",
+        "zh": "GitHub 仓库检索"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Give agents read-only GitHub repository search, README and release lookup, and API quota checks. Works anonymously. When configured, a token is sent to GitHub or a host you explicitly trust.",
+        "zh": "让 Agent 只读检索 GitHub 仓库、查阅 README 和 Release，并查看 API 配额。可匿名使用，配置的令牌只发送给 GitHub 或你明确设为可信的主机。"
+      }
+    },
+    {
+      "name": "dsh-minimax-token-plan",
+      "title": {
+        "en": "MiniMax Token Plan",
+        "zh": "MiniMax Token Plan 配额指示器"
+      },
+      "category": "usage",
+      "description": {
+        "en": "Show MiniMax Token Plan’s five-hour and weekly quotas, reset times and per-model usage in the composer. Requires a MiniMax API key, stored encrypted in the browser and sent to the official MiniMax API.",
+        "zh": "在输入区显示 MiniMax Token Plan 的 5 小时和每周配额、重置时间及分模型明细。需提供 MiniMax API Key，浏览器加密保存，并发送给 MiniMax 官方接口。"
+      },
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Aujin/dsh-minimax-token-plan",
+        "commit": "1cd8127815ca426c86e85006269d780a8c40d6a8",
+        "integrity": "sha512-xW035m8/plqvwLHlMNDIAFL5TvQ4+e8w2kwTrY6RP8DJVQT3NPdeLpI7CXm9ZAm4nT6xqmySOoiPsqnZVMFaBQ==",
+        "publishedAt": "2026-11-20T17:33:52Z"
       }
     }
   ]

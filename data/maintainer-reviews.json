@@ -7993,6 +7993,152 @@
       "reviewedAt": "2026-11-20T08:42:16.537Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-zcode-plan-bridge",
+      "version": "0.6.8",
+      "integrity": "sha512-6+elyALZDIiYYBxMthOMDTil+kUysrEdm6v25nnidxHtfN+6cgxesCJermCHSz91MHidV4BLcjtUNEkX28D3hg==",
+      "repository": "https://github.com/tangyixiao/dsh-zcode-plan-bridge",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-20T19:26:16.506Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-workbuddy-connect-community",
+      "version": "0.1.26",
+      "integrity": "sha512-9+hfmnjjVOMWwdgQdWl7gdhsomkljfwb2lZde+SXX2jI2CB9firdvBhESzzxw3mTEZAQ7yg/N5y3nAEjhP3vpQ==",
+      "repository": "https://github.com/tangyixiao/dsh-workbuddy-connect-community",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-20T19:26:16.506Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-version-manager",
+      "version": "0.1.10",
+      "integrity": "sha512-6OLdAg/rsyR+oaEw7rzLSuZtHseCNoDhZhAt5AaiDRtmkYJRXuLNdl1Jl/Yg3Cd1X7ONa9WqsKGTNtxOem/eVQ==",
+      "repository": "https://github.com/tangyixiao/dsh-version-manager",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-20T19:26:16.506Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-trim",
+      "version": "0.3.1",
+      "integrity": "sha512-lnF1+B4VgANcAurcVB7LPR34UokqGSNyH/A4IzvP348iUaMjynZSFj3CS0eOb9SR77hga035pjaxJxd0bSv8Dw==",
+      "repository": "https://github.com/Starlit-Sky-code/dsh-experience-optimizer",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-20T19:26:16.506Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-recipe",
+      "version": "0.3.1",
+      "integrity": "sha512-zCaTdsAWPc3QiBoTJ5doxe2g7iqvgvY+SU4PPKvZLylZO35+PhCvVaZMerraHHEkSDDZl9ZhqX8wTwFip83oBQ==",
+      "repository": "https://github.com/Starlit-Sky-code/dsh-experience-optimizer",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-20T19:26:16.506Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-interpreter",
+      "version": "0.1.2",
+      "integrity": "sha512-lw5VsrUNCiB9BrJzw/HiKbzQdvBfUHdF3qxA50xOEESQNxSSX3ApZCrJAUZ+Qiv2rIVjnr9rBFUSmDigJdQq1A==",
+      "repository": "https://github.com/Gaaaamu/dsh-interpreter",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-20T19:26:16.506Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-academic-research-skills",
+      "version": "0.4.6",
+      "integrity": "sha512-bUSyCmdXk/q4b+VAm/k6GAkZBgZrEADygKs4JvGVQ0LVVTEbU9r0z02ca3eed4KebY7aRi2N4PhYzK8pYomHxA==",
+      "repository": "https://github.com/TY-Cheng/dsh-academic-research-skills",
+      "source": {
+        "type": "git",
+        "commit": "994885e7c7c9ca40d55f034e60c37802e12cb4e3"
+      },
+      "reviewedAt": "2026-11-20T19:26:16.506Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-task-complete-notice",
+      "version": "1.0.1",
+      "integrity": "sha512-wOe5YH4Yif7mbhkcohb3WFAiCNlD79krCN3c7sxrE3CKMJ0B/N4g29tSQD5IBoT7S5EZR7GkxorqlgNgXVvTww==",
+      "repository": "https://github.com/northsoulxiao/dsh-task-complete-notice",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-20T19:26:16.506Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-workspace-grid",
+      "version": "1.0.1",
+      "integrity": "sha512-nm3Z1DuBvpDChxf3SBGfolmG+ai4UKNngF+UhtECodRQr1hchAYhwIZTd0DJ4mdQhAxdyupJT5RY4QSXBiRC3w==",
+      "repository": "https://github.com/northsoulxiao/dsh-workspace-grid",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-20T19:26:16.506Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-sylvan-appearance",
+      "version": "0.1.0",
+      "integrity": "sha512-TMBA31cpH5F5WuDL0Xe0mFfMu0mQR/XszQ76nEDRJDEVxz8ZrRUXeW65ea5UTt193N6EVDrQOK5foH/oOJFjUg==",
+      "repository": "https://github.com/tangyixiao/dsh-sylvan-appearance",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-20T19:26:16.506Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-github-repo-search",
+      "version": "1.0.0",
+      "integrity": "sha512-nVQa/KiFASXSDsGV4Pxkkq6Xjf/InJSsv8i4lRIl0TJ3JPcLSPfZBEsiGFNyNum2T5PVaGA9a3clGr9MJZez7w==",
+      "repository": "https://github.com/ZhaoDezhang9998/dsh-github-repo-search",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-20T19:26:16.506Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-minimax-token-plan",
+      "version": "1.0.0",
+      "integrity": "sha512-xW035m8/plqvwLHlMNDIAFL5TvQ4+e8w2kwTrY6RP8DJVQT3NPdeLpI7CXm9ZAm4nT6xqmySOoiPsqnZVMFaBQ==",
+      "repository": "https://github.com/Aujin/dsh-minimax-token-plan",
+      "source": {
+        "type": "git",
+        "commit": "1cd8127815ca426c86e85006269d780a8c40d6a8"
+      },
+      "reviewedAt": "2026-11-20T19:26:16.506Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
