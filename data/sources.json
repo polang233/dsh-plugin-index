@@ -6076,8 +6076,8 @@
         "zh": "输入框增强"
       },
       "description": {
-        "en": "DeepSeek Harness helpers that add 11 UI languages, a Changes panel, input history, Shift+Tab /plan, one-click Continue, and chat resumption after restart. They also add queue drag-and-drop and deeplinks.",
-        "zh": "提供多语言界面、变更面板、输入历史、计划模式和一键继续，支持重启后恢复会话及队列排序。"
+        "en": "Composer Plus adds a Git changes panel, turn rollback with optional file restore, one-click Continue and per-project memory. It also adds message search, queue reordering, optional iPhone access through Tether and 11 extra interface languages.",
+        "zh": "Composer Plus 提供 Git 变更面板、可选恢复文件的回合回退、一键继续和项目记忆，也支持消息搜索、拖动调整队列、通过 Tether 在 iPhone 上访问，以及 11 种额外界面语言。"
       },
       "category": "development"
     },
@@ -12504,17 +12504,17 @@
         "zh": "归档回收站与存储概览"
       },
       "description": {
-        "en": "Move archived conversations and dedicated subagents to recoverable trash, restore or permanently delete selected logs, and inspect storage usage. For macOS/Windows DSH Desktop 0.2.1-rc.3 or 0.2.1-rc.5 with JSONL storage and Node >=24. Permanent deletion cannot be undone; shared attachments and project files remain.",
-        "zh": "将归档会话与专属子代理移入回收站，按需恢复或永久清除，并查看存储占用。适用于 macOS/Windows 的 DSH Desktop 0.2.1-rc.3、0.2.1-rc.5，需 JSONL 存储和 Node >=24。永久清除不可撤销，保留共享附件和项目文件。"
+        "en": "Move archived conversations and dedicated subagents to recoverable trash, restore or permanently delete selected logs, and inspect storage usage. Requires macOS or Windows, JSONL storage, Node >=24 and DSH Desktop 0.2.1-rc.3, 0.2.1-rc.5 or 0.2.2-rc.3. Shared attachments and project files remain.",
+        "zh": "将归档会话与专属子代理移入回收站，按需恢复或永久清除所选日志，并查看存储占用。支持 macOS 和 Windows 上的 DSH Desktop 0.2.1-rc.3、0.2.1-rc.5 或 0.2.2-rc.3，需 JSONL 存储和 Node >=24。保留共享附件和项目文件。"
       },
       "category": "tools",
-      "version": "0.0.5",
+      "version": "0.0.6",
       "source": {
         "type": "git",
         "url": "https://github.com/QwQBiG/dsh-archive-delete",
-        "commit": "7e72a95d11fb126c83528d864f17eaa16f28697f",
-        "integrity": "sha512-/wtfLxPH5gVmsGVQJ3UCqtmCigWXcLlHc3zFt6N3ZVFK183x1c/EQX/piTH0yZeq7nnhyujaOtrO/lcedpY1Fw==",
-        "publishedAt": "2026-11-18T13:21:08Z"
+        "commit": "b64123585c4be6120372e474d96f1081af25b8f1",
+        "integrity": "sha512-/2h6EAQ7bduXnSF0kyba0XJvuJEPIw+Lg9CfTmrlEz0flwTJWgv4ZH0Jsy3x8zaw7T1KJ5AMwlOWhm7bO+/kGA==",
+        "publishedAt": "2026-11-20T07:20:28Z"
       }
     },
     {
@@ -13475,13 +13475,13 @@
     },
     {
       "name": "@skyrocks/dsh-deepseek-cost",
-      "version": "0.2.3",
+      "version": "0.2.5",
       "source": {
         "type": "git",
         "url": "https://github.com/skyrocks/dsh-deepseek-cost",
-        "commit": "83d54eacdfde9072f5b3137a602ed233bda17baf",
-        "integrity": "sha512-rmPPvAgfKUxBqweh700CpmB1Y8A2HWidnAcLd+jnNfQgJDigHF/8mg1FvQG9aTCgAHrNa3AnHyak9ioIEx8ItA==",
-        "publishedAt": "2026-11-06T10:39:06Z"
+        "commit": "2835b855d00685f29d5e2514ff471c4cbd89d01d",
+        "integrity": "sha512-H1imFFhsSlPFirvRqAZAPCfDP8b+OZ16CcGS+5XHjO9OVaxlfW8bcZ3gKcxIqRbHAajyvE8P6Vr+F6ngR0RoaA==",
+        "publishedAt": "2026-11-18T03:52:43Z"
       },
       "title": {
         "en": "DeepSeek Cost",
@@ -13495,13 +13495,13 @@
     },
     {
       "name": "@skyrocks/dsh-go-quota",
-      "version": "0.1.9",
+      "version": "0.1.10",
       "source": {
         "type": "git",
         "url": "https://github.com/skyrocks/dsh-go-quota",
-        "commit": "13da18aa5ec462c3fe2718bb130e311d8266bc62",
-        "integrity": "sha512-8rAcLNwpFsHtjbJlGoHwOsQbhoh17oe9UNQ1SNOA/9eyQ+TtP+AzpHiCo3SAMV9wxpwBUTfDCXHAcAGMLl4EFw==",
-        "publishedAt": "2026-11-06T10:25:09Z"
+        "commit": "dc4682c282c6b74603dc769ef4e43e8854744ec0",
+        "integrity": "sha512-KEqSBHP6lAB2kX/htjeduryLc7dgj4SBfPNRNT/342gmqnkh1C6MNa45EPDS5RYpr41fsl6lp2nI3ZAMIv2QfA==",
+        "publishedAt": "2026-11-18T03:52:44Z"
       },
       "title": {
         "en": "OpenCode Go Quota",
@@ -16002,10 +16002,10 @@
         "zh": "PULSE 运行面板"
       },
       "description": {
-        "en": "A skills, tools and prompt-budget HUD: see what this session loaded, what it costs, and what can be parked. All plugin routes go through host connection.admit() / requestRejection(); if the connection service is missing the plugin fails closed with 503 and does not fall back to loopback. Requires DSH >=0.2.1-rc.5 and Node >=22.23.4.",
-        "zh": "技能、工具与提示词预算面板：查看本会话实际加载了什么、开销以及哪些可以暂搁。全部接口走宿主 connection.admit() / requestRejection()；认证服务缺失时以 503 拒绝，不再按回环地址放行。需 DSH >=0.2.1-rc.5、Node >=22.23.4。"
+        "en": "Manage skills and see live skill and tool calls. Preview and undo bulk changes, monitor token budgets, and get local skill suggestions while typing. Requires DSH 0.2.1-rc.5 or later.",
+        "zh": "管理技能并实时查看技能与工具调用。支持查看 Token 预算、批量变更预演与撤销，以及在输入时获取本机技能推荐。需要 DSH 0.2.1-rc.5 或更新版本。"
       },
-      "category": "usage"
+      "category": "skills"
     },
     {
       "name": "dsh-writer-studio",
@@ -16315,12 +16315,12 @@
     {
       "name": "dsh-quota-cordis",
       "title": {
-        "en": "Provider Quota",
-        "zh": "供应商额度"
+        "en": "DSH Quota+",
+        "zh": "DSH Quota+"
       },
       "description": {
-        "en": "Show supported providers’ balances, subscription limits and usage. Credentials are sent to the corresponding provider; OpenAI organization cost reporting requires a separate Admin Key.",
-        "zh": "汇总支持的供应商余额、订阅额度与用量；查询时会向对应服务商发送凭据，OpenAI 组织费用统计需另配 Admin Key。"
+        "en": "View balances, subscription quotas and OpenAI organization spending. Manage models across providers and configure authorization, available models and reasoning effort.",
+        "zh": "查看多提供商的余额、订阅额度及 OpenAI 组织支出，并管理模型授权、可选模型与推理强度。"
       },
       "category": "usage"
     },
@@ -16335,13 +16335,13 @@
         "zh": "在每轮对话中展示模型、编码、构建、测试和清理的耗时分类；本地统计，不额外调用模型。"
       },
       "category": "usage",
-      "version": "0.1.11",
+      "version": "0.1.12",
       "source": {
         "type": "git",
         "url": "https://github.com/skyrocks/dsh-turn-timing",
-        "commit": "c609a8584f719591fbef55dbbd071439dc10519d",
-        "integrity": "sha512-M3aASWcz8X83fszq9IjQ/iccoeRMeSWApu60WtWrInpNV3Qbg4NUg2HgCvcn9UA5zeW/LfMvCgDPxsAs8IMvTA==",
-        "publishedAt": "2026-11-10T09:27:38Z"
+        "commit": "296c9e6a1d0a969e1710f5cd86b94f03ee20123c",
+        "integrity": "sha512-GAVQF0cj5DzGr2ItuQfC9Yuf89Eg/r5zbRFY6xpmYer5DqHIdS4u8Zn39Zu9XzailFQR1zQI3/peM6UBIF+ptA==",
+        "publishedAt": "2026-11-18T03:52:44Z"
       }
     },
     {
@@ -16355,13 +16355,13 @@
         "zh": "让 Agent 查询宿主模型目录并切换当前会话的模型；切换也会更新默认模型。"
       },
       "category": "tools",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "source": {
         "type": "git",
         "url": "https://github.com/skyrocks/dsh-model-switcher",
-        "commit": "231507dd87452f354d8526c5448e82ca9d04a0d3",
-        "integrity": "sha512-9xEjRr32bk9HM6PiYrJHXYgQdBqb3ATSil8mdobQy30zPSZsObvyfif/1f6ioXVbZhhaHPHBM5ELhVayY5jw8w==",
-        "publishedAt": "2026-11-06T10:48:49Z"
+        "commit": "2b747d375b27f78b82f66a34c94c27e148f0a0a3",
+        "integrity": "sha512-4ymEkK5yabtdKxDW5U7aZ9H0Y0cfzFkukuZqdDAwL3klNG4zbtfUdc5TjcHRzF7k2IiDfk87WaS2RGBEfD95og==",
+        "publishedAt": "2026-11-18T03:52:44Z"
       }
     },
     {
@@ -16375,13 +16375,13 @@
         "zh": "在模型选择器显示 OpenCode GO 各模型的月度额度，读取公开文档并在失败时使用缓存。"
       },
       "category": "usage",
-      "version": "0.1.2",
+      "version": "0.1.4",
       "source": {
         "type": "git",
         "url": "https://github.com/skyrocks/dsh-go-model-limits",
-        "commit": "fe40180b2dd04f9f0375ae1c3c007aa8f05d1f0a",
-        "integrity": "sha512-vC0mSY3At+NjGeSqg7Ah4YmJDHqPcrn/jBDNtqV3tGzh5d35QWSKiV4ywF8gI+SZ5FQepw7qla9l4SV8Xgb5Fg==",
-        "publishedAt": "2026-11-09T03:34:07Z"
+        "commit": "bd52024b98db897f11adce325877ee807c3ba0c2",
+        "integrity": "sha512-Ch3hxk6GUJju0AoDSa1fWcYheoHxB7hhHgApS4fpssA7GvUZFaOgNMnN/aMIm4kGHMAgLdB5DaUtNcMqEosx7A==",
+        "publishedAt": "2026-11-18T03:58:20Z"
       }
     },
     {
@@ -16566,15 +16566,6 @@
       "description": {
         "en": "Translate a business goal into a validated workflow blueprint and export Markdown or JSON runbooks. It plans required tools, permissions, acceptance and rollback without running the workflow. Requires Node >=20 and DSH >=0.2.2-rc.1 <0.3.0.",
         "zh": "将业务目标整理为可校验的工作流蓝图，列出工具、权限、验收与回滚，并导出 Markdown 或 JSON 运行手册；只生成计划。需 Node >=20 和 DSH >=0.2.2-rc.1 <0.3.0。"
-      },
-      "version": "0.2.4",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/Starlit-Sky-code/dsh-experience-optimizer",
-        "commit": "f7f903821862b437ceb5b2def2ffecd9b869d322",
-        "integrity": "sha512-UDdfCK9fIdnAuIScIUQqMDkzYDI7lXSctROG8PIJgAVyUQsbqqjxh92BwnwfdwJYZCcrYVSQ1yhykW7bOZfHtg==",
-        "publishedAt": "2026-11-14T13:03:27Z",
-        "path": "packages/plugin-recipe"
       }
     },
     {
@@ -16746,17 +16737,8 @@
       },
       "category": "tools",
       "description": {
-        "en": "Inspect plugin inventory and compatibility, prepare a trim draft and apply bounded enable/disable changes with snapshots and rollback. Changes affect the current profile; review the draft before applying. Requires Node >=20 and DSH >=0.2.2-rc.1 <0.3.0.",
-        "zh": "检查插件清单与兼容性，生成减负草稿，并对受限的启停项保存快照、执行和回滚。变更影响当前 profile，应用前需核对草稿。需 Node >=20 和 DSH >=0.2.2-rc.1 <0.3.0。"
-      },
-      "version": "0.2.4",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/Starlit-Sky-code/dsh-experience-optimizer",
-        "commit": "f7f903821862b437ceb5b2def2ffecd9b869d322",
-        "path": "packages/plugin-trim",
-        "integrity": "sha512-UDdfCK9fIdnAuIScIUQqMDkzYDI7lXSctROG8PIJgAVyUQsbqqjxh92BwnwfdwJYZCcrYVSQ1yhykW7bOZfHtg==",
-        "publishedAt": "2026-11-14T13:03:27Z"
+        "en": "Inspect plugin inventory and compatibility, then apply a trim draft with snapshots and rollback. Applying changes in the current profile requires host approval by default. Requires Node >=20 and DSH >=0.2.2-rc.1 <0.3.0.",
+        "zh": "检查插件清单与兼容性，生成减负草稿，并支持快照与回滚。变更影响当前 profile，默认需要宿主审批。需 Node >=20 和 DSH >=0.2.2-rc.1 <0.3.0。"
       }
     },
     {
@@ -17082,13 +17064,13 @@
         "en": "Move DSH sessions into a local trash folder, restore them, or permanently delete selected records. A failed move retains any data that could not be rolled back. Requires the DSH Typert host services.",
         "zh": "把 DSH 会话移入本机回收站，支持恢复或永久删除。搬运回滚失败时保留未恢复的数据和记录。需宿主 Typert 服务。"
       },
-      "version": "0.1.3",
+      "version": "0.1.6",
       "source": {
         "type": "git",
         "url": "https://github.com/skyrocks/dsh-session-trash",
-        "commit": "aad5fc2182caeb2ce4f9da50e72345fa93994e1c",
-        "integrity": "sha512-mYn6EDZaOfqXDcpLfCwB6jcsLYbAR5f7RjBTZLmgsqDMMGQIMNlyw0MK6xsFXFt+cUD0iipCNO9gBQclz8tdtg==",
-        "publishedAt": "2026-11-16T03:43:39Z"
+        "commit": "38a5677e9d26eddc4156285262557ae75254bd3e",
+        "integrity": "sha512-aP1m/gofJRC8YsLZaiM7/S/KBT3gZr4xbWKyiYhOwilnOy2x4WxLT4/mRqwVEI8Rd/nuYhXSz/k4BeNeFxV5ng==",
+        "publishedAt": "2026-11-19T08:08:15Z"
       }
     },
     {
@@ -17102,13 +17084,13 @@
         "en": "Manage database connections and let DSH query SQLite, MySQL, PostgreSQL-compatible or DM databases. Queries use read-only connections. Writes require a configured writable source and follow the plugin's approval flow. Requires the corresponding database access and Node's SQLite support for SQLite.",
         "zh": "配置数据库连接，在 DSH 查询 SQLite、MySQL、兼容 PostgreSQL 的数据库或达梦数据库。查询使用只读连接，写入需配置可写数据源并走插件审批。需相应数据库访问权限，SQLite 依赖 Node 内置支持。"
       },
-      "version": "0.2.2",
+      "version": "0.2.3",
       "source": {
         "type": "git",
         "url": "https://github.com/skyrocks/dsh-db",
-        "commit": "1e40be8303caaa6bd3f6175cb999cb1ab4769cad",
-        "integrity": "sha512-6qOc8ig+nqQ0O7ygTB0+RL/vmEccUK2heSjGvo0qd/qPy3TzZlbOXeD7FDPTYIuPIM1DROFK60P4YueKURYyCg==",
-        "publishedAt": "2026-11-18T02:17:22Z"
+        "commit": "abb7f7260c4a0846228d5dc2c0cce6ca1d51a520",
+        "integrity": "sha512-ctfBApH3sKBDuDPFRGE4g81mncz5/TicGuT27SY3ixi3/iEz3aaQyi/OtsicPIZDXKTmXdG7qzmiYWhC8kzQng==",
+        "publishedAt": "2026-11-19T08:07:57Z"
       }
     },
     {
@@ -17170,22 +17152,362 @@
     {
       "name": "dsh-skin",
       "title": {
-        "en": "DSH Skin",
-        "zh": "DSH Skin"
+        "en": "Skin Collection",
+        "zh": "皮肤大全"
       },
       "description": {
-        "en": "Switch among ten bundled themes or restore the native appearance in DeepSeek Harness Desktop. The selected theme is stored locally. Tested by the author on macOS DSH Desktop 0.2.2-rc.5.",
-        "zh": "在 DeepSeek Harness 桌面端切换 10 套内置主题，或恢复原生外观。主题选择保存在本机。作者在 macOS DSH Desktop 0.2.2-rc.5 验证。"
+        "en": "Eleven themes for DeepSeek Harness Desktop that follow its Light, Dark or System setting. Theme selection is saved locally.",
+        "zh": "DeepSeek Harness 桌面端的 11 套主题，随浅色、深色或跟随系统设置切换。主题选择保存在本机。"
       },
       "category": "appearance",
-      "version": "0.4.5",
+      "version": "0.4.6",
       "source": {
         "type": "git",
         "url": "https://github.com/ai-graveyard/dsh-skin",
-        "commit": "4b9145fbb69564d6369e7ad843b33dfd4c9c3d06",
+        "commit": "891859b83c673cd7c7689466a4483ca5ba4ae8af",
         "path": "plugin",
-        "integrity": "sha512-4W9eA34lfQMZA8+t9iPzsas7z3IdKJZtS8mIllTK2oIZDga8i8shp9KDB8VwCDxYUiNKBPKdbhrwUqv+VqxFiw==",
-        "publishedAt": "2026-11-18T15:18:02Z"
+        "integrity": "sha512-2ntew2QYcPqlU/JRqhpT7m5HzkGFALLWHsI9eLMcPlKyooV8u+KiKJzpo1uknQ60KBxzBtcyGpoMV4rNz5lUGQ==",
+        "publishedAt": "2026-11-19T14:22:57Z"
+      }
+    },
+    {
+      "name": "@dr-co/dsh-nodes",
+      "title": {
+        "en": "DSH Nodes",
+        "zh": "DSH Nodes"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Pair trusted remote devices to run approved tasks and transfer files within the session’s authorized paths. Requires a compatible node client.",
+        "zh": "配对受信任的远端设备，执行获准的任务，并在会话授权路径内传输文件。需另装兼容的节点客户端。"
+      }
+    },
+    {
+      "name": "dsh-agents-cli",
+      "title": {
+        "en": "Agents CLI",
+        "zh": "Agents CLI"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Open and manage local agent CLI sessions in a DSH panel. Requires the relevant CLI and its local account setup.",
+        "zh": "在 DSH 面板中打开和管理本地 Agent CLI 会话。需安装相应 CLI 并完成本机账号配置。"
+      }
+    },
+    {
+      "name": "davinci-console-demo",
+      "title": {
+        "en": "DaVinci Resolve Console Demo",
+        "zh": "DaVinci Resolve 调色控制台"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Control DaVinci Resolve from DSH and preview generated frames and edits. This macOS demo requires Resolve and its scripting environment. Optional analysis and media features need extra tools.",
+        "zh": "通过 DSH 控制 DaVinci Resolve，并预览生成的画面和剪辑结果。该 macOS 演示版需要 Resolve 及其脚本环境，部分媒体分析功能需额外工具。"
+      }
+    },
+    {
+      "name": "weread-dsh",
+      "title": {
+        "en": "WeRead for DSH",
+        "zh": "微信读书笔记 · WeRead for DSH"
+      },
+      "category": "knowledge",
+      "description": {
+        "en": "Search WeRead and bring reading notes into DSH workflows. Requires a signed-in WeRead account. The desktop reading window and credential storage depend on the platform.",
+        "zh": "在 DSH 里搜索微信读书并整理阅读笔记。需要已登录的微信读书账号，阅读窗口和凭据保存方式随平台而异。"
+      }
+    },
+    {
+      "name": "dsh-inbox-bridge",
+      "title": {
+        "en": "DSH Inbox Bridge",
+        "zh": "DSH Inbox Bridge"
+      },
+      "category": "integrations",
+      "description": {
+        "en": "Bring GitHub issues and pull requests that need your attention into DSH. Requires a signed-in GitHub CLI or configured GitHub credentials. Quiet delivery is the default, with optional agent wake-up.",
+        "zh": "把需要处理的 GitHub Issue 和 PR 带进 DSH。需要已登录的 GitHub CLI 或已配置的 GitHub 凭据。默认静默投递，可选唤醒 Agent。"
+      }
+    },
+    {
+      "name": "dsh-del-chat",
+      "title": {
+        "en": "DSH Delete Chat",
+        "zh": "DSH 删除会话"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Permanently delete an archived DSH conversation after confirmation. The action also clears that conversation’s local cache.",
+        "zh": "经确认后永久删除已归档的 DSH 会话，并清理该会话的本机缓存。"
+      }
+    },
+    {
+      "name": "dsh-cot-auto-translate",
+      "title": {
+        "en": "CoT Auto Translate",
+        "zh": "思考过程自动翻译"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Translate expanded reasoning text after you opt in. The original text is sent to Microsoft Bing Translator.",
+        "zh": "选择启用后，自动翻译展开的思考过程。思考原文会发送给 Microsoft Bing 翻译服务。"
+      },
+      "version": "1.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/CNLing0728/dsh-cot-auto-translate",
+        "commit": "9071f13fb2a9c65c336028439f02669d4ae32f6f",
+        "integrity": "sha512-UQ6DHc0JAm4s9ivE9O3QQJiUlO9giZaeILPz/ekUjwtnlUUggibVjUNNkdRQ03d73/I+fhvKCveUXrx2JnJG9w==",
+        "publishedAt": "2026-11-19T11:28:44Z"
+      }
+    },
+    {
+      "name": "dsh-open-code-workspace",
+      "title": {
+        "en": "Open Code Workspace",
+        "zh": "Open Code Workspace"
+      },
+      "category": "development",
+      "description": {
+        "en": "Open VS Code workspace files from DSH and create links to their folders. Requires a supported system file picker and permission to create links.",
+        "zh": "在 DSH 里打开 VS Code 工作区文件，并为其目录创建链接。需要系统文件选择器和创建链接的权限。"
+      }
+    },
+    {
+      "name": "my-dsh-skill-hub",
+      "title": {
+        "en": "My DSH Skill Hub",
+        "zh": "My DSH Skill Hub"
+      },
+      "category": "skills",
+      "description": {
+        "en": "Import, inspect and organize DSH skills and role authorizations. Preview imported Markdown in the sidebar before enabling skills.",
+        "zh": "导入、预览并整理 DSH 技能和角色授权。可在侧栏查看导入的 Markdown，再决定是否启用技能。"
+      }
+    },
+    {
+      "name": "my-dsh-message-search",
+      "title": {
+        "en": "My DSH Message Search",
+        "zh": "My DSH Message Search"
+      },
+      "category": "knowledge",
+      "description": {
+        "en": "Search messages in the current conversation, workspace or across DSH, then jump to a match. Showing an attachment in its folder is supported on Windows.",
+        "zh": "搜索当前会话、工作区或全部 DSH 会话的消息，并跳到命中位置。在文件夹中定位附件仅支持 Windows。"
+      }
+    },
+    {
+      "name": "dsh-simple-search",
+      "title": {
+        "en": "Simple Search",
+        "zh": "简单搜索"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Search files and text within registered DSH workspaces and jump to matching lines. Uses a local search tool when available.",
+        "zh": "搜索 DSH 已登记工作区的文件与文本，并跳转到命中行。可使用本机可用的搜索程序。"
+      },
+      "version": "1.2.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/LoseAustyn/dsh-simple-search",
+        "commit": "2b5066a50b8ce795d3470aa9b20d89c9dda11a9e",
+        "integrity": "sha512-Kbkk5uk0ZjYYo0poYDD2tZEvojPu0vs6gSjtf10eFrkNdrUimPIZbt6jK7KBbP7yBRkWEPRE8za/93kM+LfxQg==",
+        "publishedAt": "2026-11-19T03:05:40Z"
+      }
+    },
+    {
+      "name": "dsh-design-leapavid",
+      "title": {
+        "en": "Design Leapavid",
+        "zh": "Design Leapavid"
+      },
+      "category": "knowledge",
+      "description": {
+        "en": "Browse design styles and DESIGN.md tokens in the sidebar or through an agent tool. Favorites and recent style IDs are shared locally through an endpoint without DSH login checks.",
+        "zh": "在侧栏或通过 Agent 工具查阅设计风格及 DESIGN.md token。收藏和最近使用的风格 ID 由本机接口共享，该接口尚无 DSH 登录校验。"
+      }
+    },
+    {
+      "name": "dsh-paper-workbench",
+      "title": {
+        "en": "Paper Workbench",
+        "zh": "论文工作台"
+      },
+      "category": "knowledge",
+      "description": {
+        "en": "Read and translate PDFs side by side, connect papers to DSH chats, and export notes to Obsidian. Translation uses a configured model and may incur charges.",
+        "zh": "双语对照阅读和翻译 PDF，将论文关联到 DSH 会话，并导出笔记至 Obsidian。翻译使用已配置的模型，可能产生费用。"
+      }
+    },
+    {
+      "name": "dsh-session-history",
+      "title": {
+        "en": "DSH Session History",
+        "zh": "DSH Session History"
+      },
+      "category": "memory",
+      "description": {
+        "en": "Index supported coding agents’ local chat histories for search and recall. Optional memory links and Git snapshots operate on local history data.",
+        "zh": "索引受支持编程 Agent 的本机会话记录，供搜索和回看。可选的记忆链接和 Git 快照会处理本机历史数据。"
+      }
+    },
+    {
+      "name": "@skyrocks/dsh-token-stats",
+      "title": {
+        "en": "DSH Token Stats",
+        "zh": "DSH Token Stats"
+      },
+      "category": "usage",
+      "description": {
+        "en": "See DSH token totals and cache usage in the settings panel, based on locally recorded session usage.",
+        "zh": "在设置页查看 DSH 的 Token 总量和缓存用量，数据来自本机记录的会话用量。"
+      },
+      "version": "0.1.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/skyrocks/dsh-token-stats",
+        "commit": "2e01cb6276dc3c940cb755bae6971ec24ac1a5d4",
+        "integrity": "sha512-pXPdyKPAFLjKaocsweH8YGqRN9wjMvjQEPwCJcmCuj2/m0scpKSD0w9vA1hBUMQZSql3iBV+C/0/ioSqYMDyjA==",
+        "publishedAt": "2026-11-19T02:39:39Z"
+      }
+    },
+    {
+      "name": "@skyrocks/dsh-mail-digest",
+      "title": {
+        "en": "DSH Mail Digest",
+        "zh": "DSH 邮件整理"
+      },
+      "category": "integrations",
+      "description": {
+        "en": "Fetch and summarize mail from a configured IMAP account. Passwords use the DSH credential store. Optional scheduled digests require scheduling support and may send selected email content to the configured model.",
+        "zh": "从配置的 IMAP 邮箱获取邮件并生成摘要，密码存放在 DSH 凭据库。定时整理需要计划任务支持，所选邮件内容可能交给已配置的模型。"
+      },
+      "version": "0.4.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/skyrocks/dsh-mail-digest",
+        "commit": "c3098f56dcb7006c0722ed39fda77feb121a508b",
+        "integrity": "sha512-XQsD/N/reCIvAlF/OWRyWaLyY0qqXWrqLiciuRUu7+/aV6GlihKG15CxveQvd9zJQcNsBkl1FHL4KNHcRBJc5g==",
+        "publishedAt": "2026-11-19T02:39:56Z"
+      }
+    },
+    {
+      "name": "dsh-live-pixel",
+      "title": {
+        "en": "Live Pixel",
+        "zh": "Live Pixel"
+      },
+      "category": "appearance",
+      "description": {
+        "en": "Add four animated WebGL pixel themes to DSH and tune readability in appearance settings. Requires a WebGL-capable client.",
+        "zh": "给 DSH 加入四套动态 WebGL 像素主题，可在外观设置里调整可读性。客户端需支持 WebGL。"
+      }
+    },
+    {
+      "name": "@zephinel/dsh-power-suite",
+      "title": {
+        "en": "DSH Power Suite",
+        "zh": "DSH Power Suite"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Add session artifact previews, dynamic workspaces, prompt and attachment history, and interrupted-session recovery to DSH Web. Previews use the signed-in host’s file access.",
+        "zh": "为 DSH Web 提供会话产物预览、动态工作区、提示和附件记忆及中断恢复。预览通过已登录宿主读取文件。"
+      }
+    },
+    {
+      "name": "dsh-chatmode-plugin",
+      "title": {
+        "en": "DSHChatMode",
+        "zh": "DSHChatMode"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Let the configured model start chats on a schedule after you enable it. Set quiet hours, a daily limit and the target conversation. Model calls may incur charges.",
+        "zh": "启用后让已配置的模型按计划主动聊天，可设免打扰时段、每日上限和目标会话。模型调用可能收费。"
+      }
+    },
+    {
+      "name": "dsh-workspace-style",
+      "title": {
+        "en": "Workspace Style",
+        "zh": "工作区样式 · Workspace Style"
+      },
+      "category": "appearance",
+      "description": {
+        "en": "Customize workspace names, colors and icons, with different icon states for collapsed and active workspaces. Style choices are saved in the browser.",
+        "zh": "自定义工作区名称、颜色和图标，并区分折叠与当前工作区状态。样式偏好保存在浏览器。"
+      }
+    },
+    {
+      "name": "dsh-balance-center",
+      "title": {
+        "en": "DSH Balance & Quota Center",
+        "zh": "DSH 模型余额与额度中心"
+      },
+      "category": "usage",
+      "description": {
+        "en": "View model-provider balances and subscription quotas in DSH. Custom JSON sources can send the credential you select to your configured endpoint.",
+        "zh": "在 DSH 汇总模型提供商的余额和订阅额度。自定义 JSON 来源可将你选定的凭据发送给配置的地址。"
+      }
+    },
+    {
+      "name": "dsh-reading-focus",
+      "title": {
+        "en": "Reading Focus",
+        "zh": "Reading Focus 阅读聚焦"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Add visual reading aids to DSH chat text, including a reading ruler, line and paragraph focus, and color blocks. Preferences stay in the browser.",
+        "zh": "为 DSH 聊天正文加阅读尺、逐行或逐段聚焦和色块分段。阅读偏好保存在浏览器。"
+      }
+    },
+    {
+      "name": "dsh-fish-pay-counter",
+      "title": {
+        "en": "Fish Pay Counter",
+        "zh": "小鱼工资计数器"
+      },
+      "category": "interface",
+      "description": {
+        "en": "A draggable fish widget that estimates today’s pay from your work hours and breaks. Pay settings stay in the browser.",
+        "zh": "可拖动的悬浮小鱼按工作时段和休息时间估算今日工资。薪资设置保存在本机浏览器。"
+      },
+      "version": "1.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/egg2023001-cmd/dsh-fish-pay-counter",
+        "commit": "faf7d109a03e8fc665f6b4861f62e56c2d4b6bbf",
+        "integrity": "sha512-C83KQPZgJ5+cx/axVxmeqn2JamagcEafM1Zi4zXmNRbh6uzAy5ZCxxitmbE1zaKelKkeazIdhmPd9BVBB+lYxA==",
+        "publishedAt": "2026-11-19T15:13:41Z"
+      }
+    },
+    {
+      "name": "dsh-session-overview",
+      "title": {
+        "en": "Session Overview",
+        "zh": "会话概览 · Session Overview"
+      },
+      "category": "usage",
+      "description": {
+        "en": "Add an Overview tab with turn timings, token use, cache hits and generation speed for the current DSH conversation.",
+        "zh": "在 DSH 会话切换器添加「概览」页，显示当前会话回合数、耗时、Token 用量、缓存命中及生成速度。"
+      }
+    },
+    {
+      "name": "dsh-quick-chat",
+      "title": {
+        "en": "Quick Chat",
+        "zh": "Quick Chat"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Save and restore chats from the DeepSeek web panel. Uses your signed-in browser session and stores saved chats locally.",
+        "zh": "保存和恢复 DeepSeek 网页面板中的对话。使用已登录的浏览器会话，保存记录留在本机。"
       }
     }
   ]
