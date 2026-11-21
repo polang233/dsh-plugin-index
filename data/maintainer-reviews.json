@@ -8139,6 +8139,302 @@
       "reviewedAt": "2026-11-20T19:26:16.506Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-slipbox",
+      "version": "0.2.3",
+      "integrity": "sha512-DBMj5tIKBuOR1XTQpkaTddOQ9A4lbnmzBJ+i3Cx1Lir1G0W4XDk+FYqOUuijFmwbL5ZrI2XyHVp9n4gaz1u/Lw==",
+      "repository": "https://github.com/xinyou9999/slipbox-skill",
+      "source": {
+        "type": "git",
+        "commit": "68b3f223bdb54a83edd0906e84d9fc786d7e4aef",
+        "path": "packages/dsh-slipbox"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@tinyforge/dsh-character-presets",
+      "version": "1.11.0",
+      "integrity": "sha512-ejzRAWQ13JyPJ3ekpky1TSJSROx6ZZ+trfLTTYHjkXflS3Yn+2uXsu16moTwSeNGKPUv5EHEYuj8V6DvezQ/JA==",
+      "repository": "https://github.com/phoenixlucky/dsh-character-presets",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@tinyforge/dsh-mcp-settings",
+      "version": "1.1.1",
+      "integrity": "sha512-mf8yn2upW+1UepF/9E+W7YuC+1mzl4lMBQfS/WXoZnDdZ1Rz2Q65yeDxwYeNNfb6CQeutT58t7LIxNvTfyZHtQ==",
+      "repository": "https://github.com/phoenixlucky/dsh-mcp-settings",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@tinyforge/dsh-plugin-manager-wj",
+      "version": "1.7.3",
+      "integrity": "sha512-y6IikwZV8GW9BJc9c2ZAEImAIIstOyrzHG8YSsshA7lspuRp65NPPSgiLnEIaFL9+inlOzsj8aoQZCodnbq4pg==",
+      "repository": "https://github.com/phoenixlucky/dsh-plugin-manager-wj",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-friends-wine",
+      "version": "1.0.5",
+      "integrity": "sha512-Xyfstoo38UybwKpEqM6LuMenxFTv3/z7EIYa5x/OZEYII9aVfPjBoNThbdYWhpt86FbfckV1r+IbWanzsLcJhA==",
+      "repository": "https://github.com/shiqianjufu/dsh-friends-wine",
+      "source": {
+        "type": "git",
+        "commit": "3fe32d9a376ec9e78cd2b4749c3e95f8b12da5c5"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@wuwen1994/dsh-annotate",
+      "version": "0.14.4",
+      "integrity": "sha512-u6fIOQDlPE+1O3ruhsquM/Vxb+lE7llBRQVGw2RQbvczoHKbMfed4qf6MPv8AX0lTiEXDrwo1ndqinDpQGVz8g==",
+      "repository": "https://github.com/wuwen1994/dsh-annotate",
+      "source": {
+        "type": "git",
+        "commit": "44c8272aecf414b32d97b67694cf1958a63f5663"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-capability-switch",
+      "version": "1.5.7",
+      "integrity": "sha512-VMn8sfQOqyfvLdpFQEZJ1j8EwWx/IcJ3rKXX6c8QK+zHWx7SYLIO9UXHoOjtjLA4vl25eg6yHMEi1KeP502SkQ==",
+      "repository": "https://github.com/lock-down/dsh-capability-switch",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@khglobal/dsh-universe",
+      "version": "0.3.1",
+      "integrity": "sha512-u6O8jgm844ebORBxU4usGaV2fSS3BYPZl3LHE4bnzBgu0vf98fi3xANw6fcux88/ZgaCqBtpCTlKMM1yeDmERw==",
+      "repository": "https://github.com/khglobal/dsh-universe",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-interpreter",
+      "version": "0.1.4",
+      "integrity": "sha512-9I0/ZlHrOMfrLEqZ0f9zLSWMqIoO8wx0Y/7OWSMATjnoyxRvshibzXGerA2lPhwM9q3dw7krq2CB2wBKN0E0tw==",
+      "repository": "https://github.com/Gaaaamu/dsh-interpreter",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-dev-modes",
+      "version": "1.1.18",
+      "integrity": "sha512-RHuZ/syPkN+XipRSR0Yic/7zPTVu7lEmgJKRRhC8/P43mJNAHzjiS+KINylEIJMI2J7BZxHd38v4N9NlJFPIjg==",
+      "repository": "https://github.com/Qing8-Max/dsh-dev-modes",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-native-shot",
+      "version": "1.1.2",
+      "integrity": "sha512-hLdPbrr2sVNjCq4szSdyuABH8hU7YpyorlqXxxipKcrWgEqWTYFyTQqYx9UEr2m59O/MjpL4vFZHlDhmbJq8CQ==",
+      "repository": "https://github.com/Qing8-Max/dsh-native-shot",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-audio-reactive",
+      "version": "0.1.4",
+      "integrity": "sha512-NwAvxftfU75iHWefIjVP7qI+P1r5E2OOU0NyrtKAzqPOT8X7qhF0nULkq6BlOSOyxc/1jvesVR/Yf/+SVGoHHg==",
+      "repository": "https://github.com/ppy-web/dsh-audio-reactive",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-github-repo-search",
+      "version": "1.4.1",
+      "integrity": "sha512-ZPEESF+7zYSXmCPs7AeKFwEEy0rJ9aKL3kX/h8Slpj6evgOuBe1LnKfYDMtQeRtndegYL7debMYFgT4Gb+WuRA==",
+      "repository": "https://github.com/ZhaoDezhang9998/dsh-github-repo-search",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-triage-desk",
+      "version": "0.1.4",
+      "integrity": "sha512-01VSaXoNlpr1lx8puXKom3Fe4vaArqINU0xEFE5yDnrIokJIs/wAuDjh+DYTwpeBM85lY5BhsASLpm3Ni1A/yQ==",
+      "repository": "https://github.com/LHCWN/dsh-triage-desk",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@tinyforge/dsh-skills-wj",
+      "version": "1.2.4",
+      "integrity": "sha512-1v6yin8c1XNqaDVVXE+sqTMZy6cGn3+nT0t+q1tLbKUbdJMyrlWvOFrioEftOSKkc1HnF66MDtj5wSGLQdM1pQ==",
+      "repository": "https://github.com/phoenixlucky/dsh-skills-wj",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-trackpad-zoom",
+      "version": "0.1.1",
+      "integrity": "sha512-Xlsxh5ptQft3EnopDDpFZQZ6IRZBbK8D48PmhPQgy7+SA+lY1dedQ6OOI6Uep36L+v7Za9Phtxlygal279Iq3g==",
+      "repository": "https://github.com/Sunshine334419520/dsh-trackpad-zoom",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-mini-superagent",
+      "version": "0.10.2",
+      "integrity": "sha512-nfwWySFYDAmBvbmvFs9R5lepZ6mEW2pOUhgBx5MrFBALWXslXdsdVJ6WupI7VfDNFNhnPs52kgs3hkbbYvMNig==",
+      "repository": "https://github.com/wychmod/dsh-mini-superagent",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "solopup-memory",
+      "version": "0.26.0-beta.2",
+      "integrity": "sha512-srZwp1/jm5hwOrcLoaWyTnsXlhce+v1kLvVDTKQcBilhbpMUh9NkFkn/gC5PJ9KfwH45X76paJeA970JS45Qsg==",
+      "repository": "https://github.com/OakcoderX/solopup-memory",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@dhr2333/dsh-ledger",
+      "version": "0.3.2",
+      "integrity": "sha512-vnCByEMMhHP9FWAbZ/j2HnA35U5m7rlsbg4iWz8n86MQg4N79iQrwMYTnDyGghvM3mJXsKP5UYcFMaylBmEtzg==",
+      "repository": "https://github.com/dhr2333/dsh-ledger",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-peripheral-battery",
+      "version": "0.1.0",
+      "integrity": "sha512-MItjkECrkcfbpcu1L2U0O8UyujNLjeH7iJh8aDjlKeJkexr9g5eqn4lBhw17Yx/eVXnvU6nnzlyVjifWuw/JUQ==",
+      "repository": "https://github.com/wbx1217/dsh-peripheral-battery",
+      "source": {
+        "type": "git",
+        "commit": "9c16e2d3cd94bb1c9da63af50910fa85978f1a84"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-open-agent-api",
+      "version": "0.1.0",
+      "integrity": "sha512-5TniSq9SCuHNFgJb0w7gsjLOZm7dIWC76DeM/1l0f8bZBWgyYCn3b3yheCtnSQPlGEvDBbHeMJ6OmHmHEzYBCA==",
+      "repository": "https://github.com/jiangxingfan1-coder/Open-Agent-API",
+      "source": {
+        "type": "git",
+        "commit": "7208881d8ce75fce8b88e9f7c076840f8c3cf3ed",
+        "path": "integrations/deepseek-harness"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-attune",
+      "version": "0.4.0",
+      "integrity": "sha512-Zc8lXPSvESHuX6xT0bUvK/Ez6KrCapN56t/JtJXors15rU6dJCkSfEIjx51zVc9LreJTBKxZNOisecucPbSMBQ==",
+      "repository": "https://github.com/shiyan688/dsh-attune",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-windows-computer-pro",
+      "version": "0.3.0",
+      "integrity": "sha512-d4xRxlbC48o6W6l+p/BOxlFVCt0xr5XhKn0wD8qSiu3UADJZvCMCMwMydU/bFEl7XLdJa3P1DC/WYXgzDc1tbw==",
+      "repository": "https://github.com/AeolusJack/dsh-computer-pro",
+      "source": {
+        "type": "git",
+        "commit": "6807851db0aafccb54184a90da8bfafb5e6fdcbb"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-note-to-learn",
+      "version": "0.1.3",
+      "integrity": "sha512-8C3j3iQ/Kwt44byJWTNygo3MSePS3sgSFQMZm9H1jeNpTDLyPcQeoLSMdPbZwjxwWBMvk2wYToG56j/rpO1gFg==",
+      "repository": "https://github.com/shiyan688/dsh-note-to-learn",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-21T15:08:26.600Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

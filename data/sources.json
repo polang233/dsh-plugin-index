@@ -11502,14 +11502,7 @@
         "en": "Manage HTTP and stdio MCP servers in DSH Web settings. Requires DSH >=0.2.2-alpha.2 <0.3.0; checking or enabling a configured stdio server runs its command. Default server list is empty.",
         "zh": "在 DSH Web 设置中管理 HTTP 与 stdio MCP 服务。需 DSH >=0.2.2-alpha.2 <0.3.0；检查或启用已配置的 stdio 服务会执行对应命令，默认服务列表为空。"
       },
-      "category": "integrations",
-      "version": "1.0.42",
-      "repositoryReview": {
-        "version": "1.0.42",
-        "integrity": "sha512-UxCszaY4Zknkexw4eqohjJRSROKIJN4bMVKbRiP9zcTvTFnuYNy3Rk2vmTnRFISSBOb3Bxh8mVYc3CCh1HTanw==",
-        "commit": "d5b180692a6fcd5abf331d9f4dfea968ffc8824a",
-        "url": "https://github.com/phoenixlucky/dsh-mcp-settings"
-      }
+      "category": "integrations"
     },
     {
       "name": "@tinyforge/dsh-theme",
@@ -12963,17 +12956,17 @@
       },
       "category": "memory",
       "description": {
-        "en": "Create, tag, search and edit local Markdown card notes, with optional organization through the DSH model. Uses a portable library shared with other slipbox-capable agents; model-assisted work sends the relevant notes to that model. Requires Python >=3.10 and DSH >=0.2.1-rc.3 <0.3.0.",
-        "zh": "创建、标记、搜索和编辑本地 Markdown 卡片，可交给 DSH 模型整理，并与其他支持 slipbox 的智能体复用资料库。模型整理会发送相关笔记上下文；需 Python >=3.10、DSH >=0.2.1-rc.3 <0.3.0。"
+        "en": "Create and search local Markdown card notes, organize tags and review dates in the yearly activity view. Supports backups and flomo import. Optional tagging and search send relevant note material to the configured model. Requires Python 3.10 or later.",
+        "zh": "创建和检索本地 Markdown 卡片，整理标签并从年度足迹回看笔记。支持备份与 flomo 导入。可选的 AI 标签、检索和整理会把相关笔记内容交给配置的模型。需 Python 3.10 或更新版本。"
       },
-      "version": "0.1.8",
+      "version": "0.2.3",
       "source": {
         "type": "git",
         "url": "https://github.com/xinyou9999/slipbox-skill",
-        "commit": "e9764480d0f43feae49b1bd9d0536d1fff3807ea",
+        "commit": "68b3f223bdb54a83edd0906e84d9fc786d7e4aef",
         "path": "packages/dsh-slipbox",
-        "integrity": "sha512-9bsUdVChNqmVn6Exn+42ahcM6Ba/0irlCUCtlyft/g1AuZ84gjeyOP3pIcTduTsjVYAzKXmgzKx6gTh1w8FBew==",
-        "publishedAt": "2026-11-07T09:08:38.000Z"
+        "integrity": "sha512-DBMj5tIKBuOR1XTQpkaTddOQ9A4lbnmzBJ+i3Cx1Lir1G0W4XDk+FYqOUuijFmwbL5ZrI2XyHVp9n4gaz1u/Lw==",
+        "publishedAt": "2026-11-20T23:23:24Z"
       }
     },
     {
@@ -15235,14 +15228,7 @@
         "en": "View plugin health, configuration provenance and tool/MCP registrations; compatible hosts also support profile plugin controls. No DSH compatibility range is declared.",
         "zh": "查看插件健康、配置来源和工具/MCP 注册信息；兼容的宿主还支持 profile 插件控制。未声明 DSH 兼容范围。"
       },
-      "category": "interface",
-      "version": "1.2.2",
-      "repositoryReview": {
-        "url": "https://github.com/phoenixlucky/dsh-plugin-manager-wj",
-        "version": "1.2.2",
-        "commit": "60aa5d70bb518676587df98e754357afd3f10539",
-        "integrity": "sha512-Tf/DEhRCPKbitGva/khRkp3vhHkjqtrA/4+JSed7PVbeC5Fu8uCD/VeVTHvGottBjVenWoC29VFsEwRg5DRGyw=="
-      }
+      "category": "interface"
     },
     {
       "name": "@keenable/dsh-keenable",
@@ -15419,17 +15405,10 @@
         "zh": "角色预设"
       },
       "description": {
-        "en": "Twelve character presets with WebP icons for DSH Web profiles, including finance, market research, strategy planning and cross-border e-commerce roles. Declares DSH 0.2.2-rc.1 only.",
-        "zh": "为 DSH Web profile 提供 12 个带 WebP 图标的角色预设，包括金融、市场研究、策略规划和跨境电商等角色。仅声明 DSH 0.2.2-rc.1。"
+        "en": "Add character presets for DSH Web profiles, with roles for research, strategy and cross-border commerce. Declares DSH 0.2.2-rc.1 or later before 0.3.0.",
+        "zh": "为 DSH Web profile 提供角色预设，包括市场研究、战略规划和跨境电商等角色。清单声明支持 DSH 0.2.2-rc.1 起、低于 0.3.0 的版本。"
       },
-      "category": "skills",
-      "version": "1.3.3",
-      "repositoryReview": {
-        "url": "https://github.com/phoenixlucky/dsh-character-presets",
-        "version": "1.3.3",
-        "commit": "ef08bd53633506b8ce3dbfe51ff2fa6da9c28b1e",
-        "integrity": "sha512-A6o5kyocTrSpHm6lSVB/BoZE7jbBWTmqCNgAmNAnTim236tzJxotC1ypa5VyYszy0DOgNs59CgUpufyso6bY7g=="
-      }
+      "category": "skills"
     },
     {
       "name": "dsh-plugin-mobile-ux",
@@ -16443,13 +16422,13 @@
         "zh": "对侧栏网页或文档预览进行区域截图或选中文字批注，将位置与说明加入当前对话草稿。网页截图需要桌面 webview；作者在 Windows 的 DSH 0.2.2-rc.3 上验证。"
       },
       "category": "workflow",
-      "version": "0.13.0",
+      "version": "0.14.4",
       "source": {
         "type": "git",
         "url": "https://github.com/wuwen1994/dsh-annotate",
-        "commit": "fa4dd1a44ad9b76a99dff134ac4f2e0a985ed21a",
-        "integrity": "sha512-9Srpw/0LNQHg79ccdPzOgpdy1bJu24MtGYV+m9s/PKUVENMazfDMnbrEb0qrYz1rx6Pp5T1GhU3H7fuE6ICzWA==",
-        "publishedAt": "2026-11-16T02:25:54Z"
+        "commit": "44c8272aecf414b32d97b67694cf1958a63f5663",
+        "integrity": "sha512-u6fIOQDlPE+1O3ruhsquM/Vxb+lE7llBRQVGw2RQbvczoHKbMfed4qf6MPv8AX0lTiEXDrwo1ndqinDpQGVz8g==",
+        "publishedAt": "2026-11-21T13:00:13Z"
       }
     },
     {
@@ -17470,12 +17449,12 @@
       "name": "dsh-fish-pay-counter",
       "title": {
         "en": "Fish Pay Counter",
-        "zh": "小鱼工资计数器"
+        "zh": "摸鱼时薪 · 小鱼工资计数器"
       },
       "category": "interface",
       "description": {
-        "en": "A draggable fish pet for the DSH workbench. It swims, blows bubbles, and estimates today’s pay from your schedule. It drops a coin for each whole yuan and pauses for lunch. Pay settings stay in the browser.",
-        "zh": "在 DSH 工作台养一只可拖动、会游动吐泡的小鱼。它按班表估算今日工资，满一元掉一枚金币，午休时暂停。薪资设置只保存在浏览器。"
+        "en": "Keep a draggable fish on the DSH workbench while the AI runs. It swims, blows bubbles, and estimates today’s pay each second from your schedule. It drops a coin at each whole yuan and pauses for lunch. Salary settings stay in the browser.",
+        "zh": "等 AI 干活时养条会吐泡的小鱼。拖到工作台顺手的位置，按班表每秒估算今日工资，满一元弹金币，午休自动暂停。薪资设置只保存在本机浏览器。"
       },
       "version": "1.2.0",
       "source": {
@@ -17484,6 +17463,13 @@
         "commit": "faf7d109a03e8fc665f6b4861f62e56c2d4b6bbf",
         "integrity": "sha512-C83KQPZgJ5+cx/axVxmeqn2JamagcEafM1Zi4zXmNRbh6uzAy5ZCxxitmbE1zaKelKkeazIdhmPd9BVBB+lYxA==",
         "publishedAt": "2026-11-19T15:13:41Z"
+      },
+      "iconReview": {
+        "version": "1.2.0",
+        "integrity": "sha512-C83KQPZgJ5+cx/axVxmeqn2JamagcEafM1Zi4zXmNRbh6uzAy5ZCxxitmbE1zaKelKkeazIdhmPd9BVBB+lYxA==",
+        "commit": "e6e2329ddba5ee0abe160a43395bab863f471cde",
+        "path": "market-assets/fish-pay-icon.png",
+        "sha256": "775af11b9f23af4c5b33b845b0dac3216fd01afd5dc84509b82d7bbb82cc5425"
       }
     },
     {
@@ -17518,8 +17504,8 @@
       },
       "category": "interface",
       "description": {
-        "en": "Add an optional reading view to completed replies. Choose when to generate it and which model to use. Rewrites can incur model charges.",
-        "zh": "为已完成的回答生成可选速览，可设置生成时机和使用的模型。改写可能产生模型费用。"
+        "en": "Add a separate, optional Condensed View below completed replies. It sends the current reply to a DSH-configured model. Generation is manual by default, with per-session or all-session automatic options, and may incur model charges.",
+        "zh": "在已完成的回答下方提供独立速览，生成时仅将当前回答交给所选 DSH 模型。默认点按生成，也可设为本会话或全部自动生成，可能产生模型费用。"
       }
     },
     {
@@ -17586,8 +17572,8 @@
       },
       "category": "tools",
       "description": {
-        "en": "Give agents read-only GitHub repository search, README and release lookup, and API quota checks. Works anonymously. When configured, a token is sent to GitHub or a host you explicitly trust.",
-        "zh": "让 Agent 只读检索 GitHub 仓库、查阅 README 和 Release，并查看 API 配额。可匿名使用，配置的令牌只发送给 GitHub 或你明确设为可信的主机。"
+        "en": "Give agents read-only GitHub search for repositories, code, issues, PRs and recent trends. Review, bookmark and compare results in the right sidebar, with local search history. Anonymous access is available, and configured tokens go to GitHub or an explicitly trusted host.",
+        "zh": "让 Agent 只读检索 GitHub 仓库、代码、Issue、PR 与近期趋势，在右侧栏回看、收藏和对比结果，并保留本机检索历史。支持匿名访问，令牌仅发往 GitHub 或用户明确设为可信的主机。"
       }
     },
     {
@@ -17608,6 +17594,251 @@
         "commit": "1cd8127815ca426c86e85006269d780a8c40d6a8",
         "integrity": "sha512-xW035m8/plqvwLHlMNDIAFL5TvQ4+e8w2kwTrY6RP8DJVQT3NPdeLpI7CXm9ZAm4nT6xqmySOoiPsqnZVMFaBQ==",
         "publishedAt": "2026-11-20T17:33:52Z"
+      }
+    },
+    {
+      "name": "dsh-friends-wine",
+      "title": {
+        "en": "Friends' Wine Stretch",
+        "zh": "朋友的酒 · 伸缩律动"
+      },
+      "category": "appearance",
+      "description": {
+        "en": "Animate DSH Desktop’s interface while a reply is running and optionally play a local audio file you provide. Window bouncing requires Windows and PowerShell.",
+        "zh": "回答生成时让 DSH Desktop 界面随节奏伸缩，并可播放自备本地音频。窗口弹跳需要 Windows 和 PowerShell。"
+      },
+      "version": "1.0.5",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/shiqianjufu/dsh-friends-wine",
+        "commit": "3fe32d9a376ec9e78cd2b4749c3e95f8b12da5c5",
+        "integrity": "sha512-Xyfstoo38UybwKpEqM6LuMenxFTv3/z7EIYa5x/OZEYII9aVfPjBoNThbdYWhpt86FbfckV1r+IbWanzsLcJhA==",
+        "publishedAt": "2026-11-21T02:20:14Z"
+      }
+    },
+    {
+      "name": "dsh-capability-switch",
+      "title": {
+        "en": "DSH Capability Switch",
+        "zh": "DSH 能力切换"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Manage DSH skills, workspaces and MCP servers. Starting a local stdio MCP from the agent requires host approval. Creating workspaces outside its writable roots requires approval.",
+        "zh": "管理 DSH 技能、工作区与 MCP 服务。Agent 启动本机 stdio MCP 需要宿主审批，越出会话可写范围创建工作区也需要批准。"
+      }
+    },
+    {
+      "name": "@khglobal/dsh-universe",
+      "title": {
+        "en": "DSH Universe",
+        "zh": "DSH Universe"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Visualize DSH sessions, tools and tasks as a pixel city. It can also read local activity metadata from Claude, Codex and WorkBuddy. Source available under a custom license.",
+        "zh": "把 DSH 会话、工具使用和任务画成像素城市，也可读取本机 Claude、Codex 和 WorkBuddy 的活动元数据。源码公开可读，采用自定义许可。"
+      }
+    },
+    {
+      "name": "dsh-dev-modes",
+      "title": {
+        "en": "DSH Dev Modes",
+        "zh": "DSH 开发模式"
+      },
+      "category": "skills",
+      "description": {
+        "en": "Add software development, game development and read-only discussion presets, plus session lock, quiet mode and recoverable session quarantine. Quiet-window handling depends on the host and platform.",
+        "zh": "提供软件开发、游戏开发与只读讨论预设，以及会话隔离、静默模式和可恢复的会话隔离区。静默窗口功能取决于宿主和平台。"
+      }
+    },
+    {
+      "name": "dsh-native-shot",
+      "title": {
+        "en": "DSH Native Shot",
+        "zh": "DSH 原生截图"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Capture a selected region from the DSH composer, snap to window edges, and annotate or crop it before attaching. Requires Windows x64.",
+        "zh": "在 DSH 输入区发起区域截图，可吸附窗口边缘并涂画或裁剪后附到对话。仅支持 Windows x64。"
+      }
+    },
+    {
+      "name": "dsh-audio-reactive",
+      "title": {
+        "en": "Audio Reactive",
+        "zh": "音频响应"
+      },
+      "category": "appearance",
+      "description": {
+        "en": "Show a live audio spectrum behind DSH chats. Pick browser, microphone or supported plugin sources. Windows Desktop can capture device audio after you enable it. Audio is analyzed locally.",
+        "zh": "在 DSH 对话背景显示实时音频频谱，可选浏览器、麦克风或兼容插件音源。Windows Desktop 可手动启用本机声音采集，音频在本机分析。"
+      }
+    },
+    {
+      "name": "dsh-triage-desk",
+      "title": {
+        "en": "Triage Desk",
+        "zh": "Triage Desk"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Collect GitHub reviews, mentions, failing CI and assigned issues in a DSH panel. You can open a DSH chat or a supported local coding agent with a prepared prompt. Requires a signed-in GitHub CLI.",
+        "zh": "在 DSH 面板汇总 GitHub 待审核、提及、CI 失败和已分配议题。可手动打开 DSH 对话或本机受支持的编码 Agent，并带入预填提示。需要已登录的 GitHub CLI。"
+      }
+    },
+    {
+      "name": "@tinyforge/dsh-skills-wj",
+      "title": {
+        "en": "WJ Skills",
+        "zh": "WJ 技能合集"
+      },
+      "category": "skills",
+      "description": {
+        "en": "Load a versioned set of bundled DSH skills for browser extensions and web development through the host skill loader. Requires the compatible DSH skill services.",
+        "zh": "通过宿主技能加载器安装随包版本化技能，涵盖浏览器扩展与 Web 开发。需要兼容的 DSH 技能服务。"
+      }
+    },
+    {
+      "name": "dsh-trackpad-zoom",
+      "title": {
+        "en": "Trackpad Zoom",
+        "zh": "触摸板缩放"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Pinch to zoom the DSH conversation or Markdown preview around the pointer, with independent zoom levels and horizontal panning when enlarged.",
+        "zh": "在 DSH 对话区和 Markdown 预览里用触摸板捏合缩放，以光标为中心。两个区域各记比例，放大后可横向平移。"
+      }
+    },
+    {
+      "name": "dsh-mini-superagent",
+      "title": {
+        "en": "Mini Superagent",
+        "zh": "Mini Superagent 派发工作台"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Dispatch tasks from a DSH conversation to independent background child sessions and track progress in the workbench. Reports return to the parent conversation, and dispatched tasks may use configured models.",
+        "zh": "从 DSH 对话把任务派给独立后台子会话，在工作台查看队列和进度。报告会回到父会话，派发任务可能调用已配置的模型。"
+      }
+    },
+    {
+      "name": "solopup-memory",
+      "title": {
+        "en": "SoloPup Memory",
+        "zh": "SoloPup Memory"
+      },
+      "category": "memory",
+      "description": {
+        "en": "Bring project-specific notes and evidence into resumed DSH sessions, with optional delivery review and background consolidation. Default auto-capture sends recent conversation excerpts to the configured model and can be disabled. Beta, requires Node 24.9 or later.",
+        "zh": "续接工作区时带回可追查来源的项目约定，可选交付物复核和后台整理。默认自动提取会把近期对话片段发给配置的模型，可关闭。测试版，需 Node 24.9 或更新。"
+      },
+      "version": "0.26.0-beta.2"
+    },
+    {
+      "name": "@dhr2333/dsh-ledger",
+      "title": {
+        "en": "DSH Ledger",
+        "zh": "DSH 账本"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Review drafts and reconcile accounts in a local Beancount ledger. Approvals come from the authenticated panel. The engine needs setup from the panel and uses a supported platform runtime or Python.",
+        "zh": "在本地 Beancount 账本里审核草稿、对账并查看记账结果。写入由已认证的面板审批，首次需在面板设置引擎，使用受支持的平台运行时或 Python。"
+      }
+    },
+    {
+      "name": "dsh-peripheral-battery",
+      "title": {
+        "en": "Peripheral Battery",
+        "zh": "外设电量"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Show supported Windows peripheral battery levels and low-battery alerts. Adapter lookup uses a configured catalog, and submitting device reports is optional. Device support varies by adapter.",
+        "zh": "显示受支持的 Windows 外设电量并发送低电量提醒。适配器查询使用配置的目录，设备报告可选提交，不同适配器支持的设备不同。"
+      },
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/wbx1217/dsh-peripheral-battery",
+        "commit": "9c16e2d3cd94bb1c9da63af50910fa85978f1a84",
+        "integrity": "sha512-MItjkECrkcfbpcu1L2U0O8UyujNLjeH7iJh8aDjlKeJkexr9g5eqn4lBhw17Yx/eVXnvU6nnzlyVjifWuw/JUQ==",
+        "publishedAt": "2026-11-21T07:18:31Z"
+      }
+    },
+    {
+      "name": "dsh-open-agent-api",
+      "title": {
+        "en": "Open Agent API",
+        "zh": "Open Agent API"
+      },
+      "category": "integrations",
+      "description": {
+        "en": "Discover and delegate jobs to a configured Open Agent API gateway, then check progress and results from DSH. Requires a trusted gateway, a local key file and DSH 0.2.2-rc.5.",
+        "zh": "从 DSH 查看配置网关提供的智能体、委派任务并读取进度和结果。需可信的 Open Agent API 网关、本地密钥文件和 DSH 0.2.2-rc.5。"
+      },
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/jiangxingfan1-coder/Open-Agent-API",
+        "commit": "7208881d8ce75fce8b88e9f7c076840f8c3cf3ed",
+        "path": "integrations/deepseek-harness",
+        "integrity": "sha512-5TniSq9SCuHNFgJb0w7gsjLOZm7dIWC76DeM/1l0f8bZBWgyYCn3b3yheCtnSQPlGEvDBbHeMJ6OmHmHEzYBCA==",
+        "publishedAt": "2026-11-21T07:32:20Z"
+      }
+    },
+    {
+      "name": "dsh-attune",
+      "title": {
+        "en": "Attune",
+        "zh": "Attune 沟通小测试"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Turn a selected reply into a short communication-style quiz and preview a preference before applying it. Uses a configured model. The optional desktop companion runs on Windows, and its default art uses a noncommercial license.",
+        "zh": "选中一段回答，生成沟通方式小测试，先预览偏好再确认应用。使用已配置的模型。可选桌宠需 Windows，默认形象使用非商业许可。"
+      }
+    },
+    {
+      "name": "dsh-windows-computer-pro",
+      "title": {
+        "en": "Computer Pro",
+        "zh": "Computer Pro"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Control desktop apps, use local OCR, edit copies of office documents, and operate a separate Chromium profile. Uses the active DSH session’s full-access grant for Windows desktop control when enabled. Requires DSH 0.2.2-rc.5 and Node 24.9 or later. About 79 MiB to download. Experimental macOS adapter requires Swift 6 and Xcode 16 or later.",
+        "zh": "操控桌面应用，执行本地 OCR、编辑办公文件副本，并操作独立 Chromium 配置。启用相关选项时，Windows 桌面控制可使用当前会话的完全权限。需 DSH 0.2.2-rc.5 和 Node 24.9 或更新。下载约 79 MiB，实验性 macOS 适配需 Swift 6 和 Xcode 16 或更新。"
+      },
+      "version": "0.3.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/AeolusJack/dsh-computer-pro",
+        "commit": "6807851db0aafccb54184a90da8bfafb5e6fdcbb",
+        "integrity": "sha512-d4xRxlbC48o6W6l+p/BOxlFVCt0xr5XhKn0wD8qSiu3UADJZvCMCMwMydU/bFEl7XLdJa3P1DC/WYXgzDc1tbw==",
+        "publishedAt": "2026-11-21T14:25:30Z"
+      },
+      "archiveReview": {
+        "version": "0.3.0",
+        "integrity": "sha512-d4xRxlbC48o6W6l+p/BOxlFVCt0xr5XhKn0wD8qSiu3UADJZvCMCMwMydU/bFEl7XLdJa3P1DC/WYXgzDc1tbw==",
+        "maxDownloadBytes": 82837504,
+        "maxUnpackedBytes": 217055232,
+        "timeoutMs": 120000
+      }
+    },
+    {
+      "name": "dsh-note-to-learn",
+      "title": {
+        "en": "DSH Note to Learn",
+        "zh": "DSH 学习笔记"
+      },
+      "category": "knowledge",
+      "description": {
+        "en": "Clip text or screenshots from web pages and PDFs into DSH drafts, accept suggested questions, and save replies as editable notes. Requires DSH Desktop on Windows.",
+        "zh": "从网页和 PDF 摘录文字或截图到 DSH 草稿，接受建议追问，再把回答保存为可编辑笔记。需 Windows 上的 DSH Desktop。"
       }
     }
   ]
