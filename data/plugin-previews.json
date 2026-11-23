@@ -24,12 +24,28 @@
     "dsh-agent-compare": {
       "screenshots": [
         {
-          "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/a763bd87c8b07085dd3c2507e79502c9a89eb6a8/docs/media/screenshots/11-live-comparison.png",
-          "alt": "AgentCompare 2.0.0 comparing four live timer pages in DSH"
+          "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/c3dc500ac8d45afca5263160b28b545220a0e384/assets/readme/gallery-2.0/02-live-comparison.png",
+          "alt": "Comparing four live pages in an example conversation"
         },
         {
-          "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/a763bd87c8b07085dd3c2507e79502c9a89eb6a8/docs/media/screenshots/12-reviewed-adoption.png",
-          "alt": "AgentCompare 2.0.0 showing a chosen version, pick reasons and reviewed adoption"
+          "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/c3dc500ac8d45afca5263160b28b545220a0e384/assets/readme/gallery-2.0/03-main-conversation.png",
+          "alt": "Trying two webpage variants inside the main conversation"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/c3dc500ac8d45afca5263160b28b545220a0e384/assets/readme/gallery-2.0/04-comparison-settings.png",
+          "alt": "Configuring a comparison in DSH"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/c3dc500ac8d45afca5263160b28b545220a0e384/assets/readme/gallery-2.0/05-saved-result.png",
+          "alt": "Reviewing file changes before adoption"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/c3dc500ac8d45afca5263160b28b545220a0e384/assets/readme/gallery-2.0/06-english-answers.png",
+          "alt": "Comparing answers in the English interface"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/c3dc500ac8d45afca5263160b28b545220a0e384/assets/readme/gallery-2.0/07-history.png",
+          "alt": "Finding earlier comparisons and decisions"
         }
       ]
     },
@@ -68,12 +84,24 @@
     "dsh-fish-pay-counter": {
       "screenshots": [
         {
-          "url": "https://github.com/egg2023001-cmd/dsh-fish-pay-counter/releases/download/v1.2.0/fish-pay-cover.png",
-          "alt": "小鱼挂件的工资计数演示"
+          "url": "https://raw.githubusercontent.com/egg2023001-cmd/dsh-fish-pay-counter/e2998aecaf94e81d98292d33fa01051c9c9e6252/market-assets/fish-pay-fireworks-1.5.1.png",
+          "alt": "点鱼后的烟花和台词"
         },
         {
-          "url": "https://github.com/egg2023001-cmd/dsh-fish-pay-counter/releases/download/v1.2.0/fish-pay-settings.png",
-          "alt": "小鱼挂件的午休暂停和班表设置演示"
+          "url": "https://raw.githubusercontent.com/egg2023001-cmd/dsh-fish-pay-counter/e2998aecaf94e81d98292d33fa01051c9c9e6252/market-assets/fish-pay-bubbles-1.5.1.png",
+          "alt": "工作台上的戳泡泡游戏"
+        }
+      ]
+    },
+    "@leonchan2840/dsh-quick-model-panel": {
+      "screenshots": [
+        {
+          "url": "https://github.com/user-attachments/assets/68c5d6fe-2f80-4a90-8976-f915dc2e5c8e",
+          "alt": "快捷面板中的常用模型、思考深度和团队开关"
+        },
+        {
+          "url": "https://github.com/user-attachments/assets/c7b74840-36f0-4ba7-813d-78245302603c",
+          "alt": "模型分组与模型搜索"
         }
       ]
     }

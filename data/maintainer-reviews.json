@@ -8435,6 +8435,1649 @@
       "reviewedAt": "2026-11-21T15:08:26.600Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-agent-compare",
+      "version": "3.3.0",
+      "integrity": "sha512-JoezcujGWyle/5VyR7OuJ/sMKipUvAbYzg+YXs0/jmP354Xbxlbud2GLOoRHmsq2ofnpE+8NctrpeePJ8HGn0w==",
+      "repository": "https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-sidebar-control",
+      "version": "0.2.2",
+      "integrity": "sha512-EOTZvOj73MddozELIYfk3ZR4R+9RmTHhY6OTKWn6OEXrnjxdRJvOwrPd3LC6TE0j+E6/G+GpTomshsg7rwFlDQ==",
+      "repository": "https://github.com/clusterstar1229/dsh-sidebar-control",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@skyrocks/dsh-db",
+      "version": "0.2.4",
+      "integrity": "sha512-roJkI2h/ucyauFRjSBV6j53VUpdAuu58TjIkdYz3oBOztEkHj3ZeK+SzmUtt8ntMrrV1FUvr4S5P6qftN0lkmA==",
+      "repository": "https://github.com/skyrocks/dsh-db",
+      "source": {
+        "type": "git",
+        "commit": "a1d04e5ad29f6e39d421fb90046112d61a4a560f"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@wuwen1994/dsh-annotate",
+      "version": "0.15.1",
+      "integrity": "sha512-91Zz3QrERcYAsctxUAEdGhrZ7Ji35jtf3CtTXU9r4e8QcsE7KhS2WgnwcHyBH+51GA0ZuJHZEuyKkVV24CUdTQ==",
+      "repository": "https://github.com/wuwen1994/dsh-annotate",
+      "source": {
+        "type": "git",
+        "commit": "8ce3ce79b3a74bee160ab2cd1d285b830da0e82c"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-composer-lists",
+      "version": "1.3.4",
+      "integrity": "sha512-PJv/A6J70yEkzD2JXW9eSZ/YE2Yw2TicP/cwb6KnE1onaCmuTf5KZCCJW6nMco0Tx4SdPrqH6vxvqnVmWY9Rjg==",
+      "repository": "https://github.com/wangjianghu/dsh-composer-lists",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@skyrocks/dsh-mail-digest",
+      "version": "0.4.4",
+      "integrity": "sha512-5IW1t8FHRdDHKiEqLbYgOLLQPVQFvZwEew8mFA94neIlsHgmcUAwKSlMUxDv3UXACikpxUdglqLo64vjM4y/9w==",
+      "repository": "https://github.com/skyrocks/dsh-mail-digest",
+      "source": {
+        "type": "git",
+        "commit": "b261a270455c670ca9de8b4010424011af1a184f"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-zhihu-mini",
+      "version": "0.2.3",
+      "integrity": "sha512-Kpi7IT337rKfYBo3CMmyVaoRabhUcfKeHA5i/f91CZ3PrmjhoQMqPMRb1tUGWig93wBL7qIMn2l9/ie+nnrosg==",
+      "repository": "https://github.com/LiZH147/dsh-zhihu-mini",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-notch-balance",
+      "version": "1.8.0",
+      "integrity": "sha512-ZjNtn2HMp4/6KfoSt9rBGzdQNX/ovmd9UGqgsZ7U+58B1RoKqO8vwLm18toUa5wWocLZTkcZH+uVIvSufRReEQ==",
+      "repository": "https://github.com/hennysky/dsh-notch",
+      "source": {
+        "type": "git",
+        "commit": "f1f2fa27b7f1d8bbeffc20038420ee0b1bf44a88",
+        "path": "plugin"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-pets-multiworkers",
+      "version": "1.5.1",
+      "integrity": "sha512-pIEMxj4TRSXgir7UMVK+o/zLZzab6Z/F4PYK5kYQFqP4m/2h4BONL1IBYuYlui0wA4RtfET/kWE3RcF7aGa9kQ==",
+      "repository": "https://github.com/ltmroberthk915/dsh-pet",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-plugin-mcp-mvp-mes",
+      "version": "0.2.6",
+      "integrity": "sha512-xAJgn6hVn61ypY+5zFCw1fLpdpiaIm8uqPl6Q1TwYIGl2W9k47OKfQ/EOn2GdyY0us1NAmkugk77fRVBL3O5PA==",
+      "repository": "https://github.com/OsunO/dsh-plugin-mcp-mvp-mes",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-open-agent-api",
+      "version": "0.1.1",
+      "integrity": "sha512-IsIrcTuNmRODRlKRvP1/R+1k8QMWPnCNq/TerdF25JIvtmqYcoPneUhp0lRmB8RFjIv1/nz+/IYjcJrJ69uztw==",
+      "repository": "https://github.com/jiangxingfan1-coder/Open-Agent-API",
+      "source": {
+        "type": "git",
+        "commit": "987e942fe8bfc2ec1c6fea806dff5faaae58d2b3",
+        "path": "integrations/deepseek-harness"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-password-login",
+      "version": "1.1.0",
+      "integrity": "sha512-8KJU7LhldQ5QuDAB5igeNuE5U43tu+Flua28DIcFlgmzybUDc8yH5kPb2G1ZhsyK4afxU5HmcPj6xu+NuSN6cw==",
+      "repository": "https://github.com/shorekeeper-blackshore/dsh-password-login",
+      "source": {
+        "type": "git",
+        "commit": "86b3c2c13bfe54cf28793075491e4bed23474573"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@ltw2522/dsh-peak-window",
+      "version": "1.3.0",
+      "integrity": "sha512-rAamiKr+Ke5hZ2brDJkoC9V+HqbG5KCF1fVRhKoq4PGNtnhXDi9PVIUA4xlaWHf+wZU/CE6k9hsoeD/n4bdo1A==",
+      "repository": "https://github.com/ltw2522/dsh-peak-window",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-fish-pay-counter",
+      "version": "1.5.1",
+      "integrity": "sha512-Y45I3db1OlNsI4E9RngO+Wi5e4bzplS2jtrxIRhwDESrSJAsXpDbyX4J3YLMlV3VXkplSoqZW6hBS3P80tzMqg==",
+      "repository": "https://github.com/egg2023001-cmd/dsh-fish-pay-counter",
+      "source": {
+        "type": "git",
+        "commit": "e2998aecaf94e81d98292d33fa01051c9c9e6252"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-rust-anything",
+      "version": "3.3.0",
+      "integrity": "sha512-P214aq65ket2aFfMHERurlT1fvvrleTDxQ7JYhrpqSsiQCTPpanWCsEs6bXxWgQgV5sP6zT75MvwkfFDrQexgw==",
+      "repository": "https://github.com/lonyness/dsh-rust-anything",
+      "source": {
+        "type": "git",
+        "commit": "f0534dab23e36e39db81bd41952a0ffadacbc454"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-fast",
+      "version": "0.2.30",
+      "integrity": "sha512-ZuFOtfmDuaveq76b9QrWt/nvDKZqcYv/XkvwXCjAebQdGGfwh3sjO0qHGn0a2p8Zdkp1LgAI2nCyIpMqoV7DGw==",
+      "repository": "https://github.com/PerryLink/dsh-fast",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-autotier",
+      "version": "0.2.24",
+      "integrity": "sha512-D1MF2L7wuIqpa/csU3nZ6/jb9xF7MK2U7k2oLRaOkvxq8/U6tf6nthLVvGDIRB1yig/CmjYZMZdE5VPR/tRrEQ==",
+      "repository": "https://github.com/PerryLink/dsh-autotier",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-draw",
+      "version": "0.2.28",
+      "integrity": "sha512-svYj35A1TXsEimjdryUJMj2fNtDu2Ehf0ENzVVBqVjHdL8g+oe2mfXhDuSxwUtjthPqwzoDHgyK03dpoBLM2rg==",
+      "repository": "https://github.com/PerryLink/dsh-draw",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-budget",
+      "version": "0.4.28",
+      "integrity": "sha512-qekJhgUiKubwNZPGjEW9pOtdW4kkID+7eZN+pKgVrOEWKijC4TZiAy47W4Od0AgwHxFyvGIq/m/AfGxiNAOBlg==",
+      "repository": "https://github.com/PerryLink/dsh-budget",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-observe",
+      "version": "0.2.30",
+      "integrity": "sha512-O3/Rj7k8As5QQDKLBMYnFYNZjAoqtGtj9375mCxcWc5ZzKvKjSsVOaRf5wR3IcQQ/OuBf94dVbp7YJ4PTLkeVQ==",
+      "repository": "https://github.com/PerryLink/dsh-observe",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@leonchan2840/dsh-quick-model-panel",
+      "version": "1.2.1",
+      "integrity": "sha512-o4zN2uj+RNifMNgHw60Mo1IUGf3bTE3kUtVrhmg2nru7C05O9ZpbtQ9u+Epqi7ktY8dun4b4wovXb0v/A9l86w==",
+      "repository": "https://github.com/leonchan2840/dsh-quick-model-panel",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-talk",
+      "version": "0.3.32",
+      "integrity": "sha512-GTsj17WhffZiDiibHtNPvYftHHz1d/5OwG4fnv28xqaIv+60qYddpM2aNjmMyB7Wk/qx3TbTuhJzd3msfaOJHw==",
+      "repository": "https://github.com/PerryLink/dsh-talk",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-composer-history",
+      "version": "0.8.19",
+      "integrity": "sha512-S6FCd2jwuz+Z25uH/kxVdr1Nzvwx7OxN3gBZwzHqH6SrNhyxxUDjpyWnPNgmYseMtvrQmxvT4NnoK4wpboN1Vw==",
+      "repository": "https://github.com/PerryLink/dsh-composer-history",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-mask",
+      "version": "0.2.27",
+      "integrity": "sha512-NNX5uaHJxz3Y/yMVSX4DMWvfKjg2aT2tNcHEUXHxFDOGjkK89b5TIXUKhrk7tg8Y+k3QWCO948KSXXTUjNGe0w==",
+      "repository": "https://github.com/PerryLink/dsh-mask",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-output-styles",
+      "version": "0.8.5",
+      "integrity": "sha512-LO9L3I47oIeOGAehbjAPY4GAig1BWC8QuQ4PwsovZWmNbwGsGIwLG2PKjozLVOwus6qpA02h5BAmqNeHQmuo8Q==",
+      "repository": "https://github.com/PerryLink/dsh-output-styles",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-laya",
+      "version": "0.1.9",
+      "integrity": "sha512-YXqB1A7vKyeWVOA3xaGC08CGSympcm1Xjsoce3jgUZy8mw8cUQESQBJuwLc5wEKV1GHvfzNUn9zLSYVS7drpfQ==",
+      "repository": "https://github.com/PerryLink/dsh-laya",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-github-bot",
+      "version": "0.9.2",
+      "integrity": "sha512-quXJcKM2Lh2tLvvWMsNxec+wihKOlVXfSZlc0r8P+6eMOLR0FeuyBdBqEyKzBkUCr9nr/PSg0dziQLwBGntnNA==",
+      "repository": "https://github.com/PerryLink/dsh-github-bot",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-contract-stance",
+      "version": "0.2.14",
+      "integrity": "sha512-z2egLtvxV8vl8L9IpqA6+olp6CItT8vkCmwdRXEBgL2wXtU9SW6Mt8Zpb52clvsjBnLDC47bBn6ci/4i5TBWCA==",
+      "repository": "https://github.com/PerryLink/dsh-contract-stance",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-eia-guide-check",
+      "version": "0.2.14",
+      "integrity": "sha512-7FIeAXZAHIePV7FFikCv6K1EEfrbjgUNEe3WLGS2bCBhSLLMnokHm1cTYXA/X474mH8Gzt0n73yvFctsn5oafQ==",
+      "repository": "https://github.com/PerryLink/dsh-eia-guide-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-grant-cn",
+      "version": "0.1.5",
+      "integrity": "sha512-2q3NkEiMs7fAia+yN3CNsitH0DtS/INhkRexcVnX5CLzlxDkaj4Lwakvwy7FXzgXiiSqe5FF58BfhXJX/eq2Wg==",
+      "repository": "https://github.com/PerryLink/dsh-grant-cn",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-lit-watch",
+      "version": "0.1.4",
+      "integrity": "sha512-Voh9Gg9O9W42Q0PJYdFyvAuqsA/jIE4ZZlj6O+g/76R3NGaVlV3WMbCdjytXYMlzyfD8H3znHf3nA6XSM7yFmg==",
+      "repository": "https://github.com/PerryLink/dsh-lit-watch",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-phocinae",
+      "version": "0.2.5",
+      "integrity": "sha512-vo3CnlM0djcITMBV5RMgGDilCcEAo8A8mHRChL/loGNsNxgUwcq86md3uLytiCBCjdX9gxWXLKiAkjyf6JilpA==",
+      "repository": "https://github.com/Phocinae/dsh-phocinae",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-spc-gbt-adapter",
+      "version": "0.2.12",
+      "integrity": "sha512-+hGP4x7N/2f1X7yGrX+k8jABg8c1515dkW3axrhjF3JTFknlzrHaQE+hHeoBWBGk9xP/eAvMPkLoe8gNneZntQ==",
+      "repository": "https://github.com/PerryLink/dsh-spc-gbt-adapter",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-translate",
+      "version": "0.3.8",
+      "integrity": "sha512-XET/L1etmCPE5qHRjbEnRQO3HfLx9iqjdMLRUm9VxBSFE2kXdqv2h5YDeSzU1XzCj1f6N/dQxgmSCxO9tWOLXQ==",
+      "repository": "https://github.com/PerryLink/dsh-translate",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-bid-ca-precheck",
+      "version": "0.2.16",
+      "integrity": "sha512-sAUZiL0+SdsZdBHsHdQ4NdAM1oG9BA8AMYpiYlcrTc/ngsuab98BWC6dNM7KL+detVAnGc6d6x+PPKdehdc2VQ==",
+      "repository": "https://github.com/PerryLink/dsh-bid-ca-precheck",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-bid-qual-check",
+      "version": "0.2.15",
+      "integrity": "sha512-vHUri8kYNLod+uEVpH6zhtH1z5kdqpqD+sqJKI/EbJrWZ599Qjrumxj+qbAbayuhOAAcXK4QPF+s8rKsJH44vA==",
+      "repository": "https://github.com/PerryLink/dsh-bid-qual-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@perrylink/dsh-claim-check",
+      "version": "0.1.10",
+      "integrity": "sha512-4uIIpLaKa31RzPaP9+l2vOMHK8g6k29qxqiDfo6HLlRlXc/jBDF8ieT5iZZsf1Uo2UvBYmj4ZNpuxObyRMXWwg==",
+      "repository": "https://github.com/PerryLink/dsh-claim-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-customs-doc-check",
+      "version": "0.2.13",
+      "integrity": "sha512-OJT6GNgb55yyzMdJu1S9RKGmdVGYf9Wxp8yAz5QmrneD25ERd/KuKgGpID9FB3IeKgK3JXCPLn9a3Ecb4LLqbw==",
+      "repository": "https://github.com/PerryLink/dsh-customs-doc-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-dida",
+      "version": "0.2.1",
+      "integrity": "sha512-DxwGAesyb83ZfEupV1N/Id5ctj8y803TUzWMNIf4kRFYhoXmoObr3+WtP+gDn1NnExs8OOqA7pa/fxFeZlIP2A==",
+      "repository": "https://github.com/PerryLink/dsh-dida",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-docx-redline",
+      "version": "0.2.2",
+      "integrity": "sha512-EL9G7uB9ZljE6O8ZE28/Fyblefao2Ghx6TMgoZ5qsVbSPUhim5le2SPBXN6Wv0Wf9IUZg3753AaOlKMN0p5R7g==",
+      "repository": "https://github.com/PerryLink/dsh-docx-redline",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-evidence-check",
+      "version": "0.2.16",
+      "integrity": "sha512-RhCBN/XDpA5oCsawaDcdxXe5yzKLYKHOlyX4FKRGfmMBAzHa63JtWGdgLF+ofOWGluK9Tetu7yiesBMcbXiRIg==",
+      "repository": "https://github.com/PerryLink/dsh-evidence-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-forecast-penalty",
+      "version": "0.2.13",
+      "integrity": "sha512-Ojf5+eJa7PK3FU0UnoEMPe4NeFsBvX/Qk71wx0s1RYosaMOZQc6kCtDf6lRlovZN4ACKtYbFUCGumamvZXoqXg==",
+      "repository": "https://github.com/PerryLink/dsh-forecast-penalty",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-freight-audit",
+      "version": "0.2.2",
+      "integrity": "sha512-N0Kto0uPn5PrkAvxS2TmTUdFfuPKKaLGmZJTAbSWxPNWOS2Bu+OGClodnmbB6I4viOmYC/nXJjP+IUj16eJnQQ==",
+      "repository": "https://github.com/PerryLink/dsh-freight-audit",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ghg",
+      "version": "0.2.2",
+      "integrity": "sha512-gU0km3uYKk2gvrS7N2UZJ9r6pLlGqtbqPVeIyjiaviZ5Xby+C/ieR83C4gukBXi7vGdU5VHnE7Qva7lQ0aDruQ==",
+      "repository": "https://github.com/PerryLink/dsh-ghg",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-hs-candidate",
+      "version": "0.2.2",
+      "integrity": "sha512-yyXJFFeloZOx6LbYRbtSDldLMScz0JJbDjn4s7BrHkg8qfyOko08eigtPkRUAQ200erPSXZsDf3wEvr9J+MBnA==",
+      "repository": "https://github.com/PerryLink/dsh-hs-candidate",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-irb",
+      "version": "0.1.4",
+      "integrity": "sha512-5SLv4lytBgz3LPrme5Ae0OxA+fAijzpr6MPebRoLfw54IGs8fF2Af59+YNZkfCbNq+DYN531WNYGWhiDnTS4Ng==",
+      "repository": "https://github.com/PerryLink/dsh-irb",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-learning-gap-check",
+      "version": "0.2.13",
+      "integrity": "sha512-LEWDAMMwn9L/LO6Qy/xbSUDQmq5IMz9UchrGkYw+wKHyyYm6eL8RNeDmXpnS4mB6WpjKC8IrsEb8UKNw3GioUw==",
+      "repository": "https://github.com/PerryLink/dsh-learning-gap-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-manuscript-check",
+      "version": "0.1.5",
+      "integrity": "sha512-ZbWcHJPaNZxid7T4Pq1qSoPxrCzdqLshhO08SEzqQOvk+/OXiKQkc8F05/AxAK1IDJRJP7c+9kMZjpz2c6z5lw==",
+      "repository": "https://github.com/PerryLink/dsh-manuscript-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-meta-analysis",
+      "version": "0.1.5",
+      "integrity": "sha512-h33QD4oKZPtOPtfYXZHf5A1yyRObmgAOZUjZXtREorB8pq//3IMMwCATmNfahHmpLCh6ClwhLeZpBzLzfUH8eQ==",
+      "repository": "https://github.com/PerryLink/dsh-meta-analysis",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-notebook-capture",
+      "version": "0.1.4",
+      "integrity": "sha512-TmZUfj5bZpA41MSnFatUuxI82KkfXdGd9rK/W38cIeiYIG3ZTj15NPvSrXl43fHZgSh0MQ6QtwXyIGiXppRZYQ==",
+      "repository": "https://github.com/PerryLink/dsh-notebook-capture",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-origin-rvc-check",
+      "version": "0.2.14",
+      "integrity": "sha512-f8G3p2xQASYxvC32QKuhbSK4nOf1QuXsJZbodTfJYRL6yUIsaYpmmAKJWMX3av9tb5hlmJCbQp3JndQ2fg++CA==",
+      "repository": "https://github.com/PerryLink/dsh-origin-rvc-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-paper-doc-adapter",
+      "version": "0.2.13",
+      "integrity": "sha512-CizkH3BzeoL0zV+2tkIc63N91XAnI3FOA3VFnMScjU7a9YD97f0Yw+akUsHm7Y2ULyxui47g/+P/PYUkemwWgQ==",
+      "repository": "https://github.com/PerryLink/dsh-paper-doc-adapter",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-permit-report-check",
+      "version": "0.2.15",
+      "integrity": "sha512-gJwXDXR+v5S2m9h2ZM02X0hTJZCdGlGcggefET9I80139f1YdDsxjNNGriTNh4GZsT+qlc/kXCYVro9+I3COLg==",
+      "repository": "https://github.com/PerryLink/dsh-permit-report-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-phone-inbox",
+      "version": "0.1.8",
+      "integrity": "sha512-aKYlq5tHEfbIbdbgmV+PtmzWD+VGa8bjHsZ6akCXMZekr8gL0287zeZpyVyr4pe9TbnbCN88klCKVdNLXPohig==",
+      "repository": "https://github.com/PerryLink/dsh-phone-inbox",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-pim-lint",
+      "version": "0.2.2",
+      "integrity": "sha512-SGU0huCi+uqi06j2dodiJ8bZVORiSrouMrq0skLCcicpW9qLfpYLI9NTLJ4IgMK+PTuBRFuu4vZYLZoFUmzXow==",
+      "repository": "https://github.com/PerryLink/dsh-pim-lint",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-pleading-draft",
+      "version": "0.2.14",
+      "integrity": "sha512-vXrV1NE+hv8/hRon4XAqTPnkl5SHAmyEF2pF7QD1TqlSrXvCdZYj2B+RW/kSNdCTaXBSc9XMrLVRcRbzEoMt+g==",
+      "repository": "https://github.com/PerryLink/dsh-pleading-draft",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-policy-brief-draft",
+      "version": "0.2.14",
+      "integrity": "sha512-Q7j6Osc7vgvlWYM/exJYi5xP6jDSuu8To9taQb4tv5/oZmxtUB4zyjDSWMieMbU/PJQoIzJEWp7+D/KfNJXc0w==",
+      "repository": "https://github.com/PerryLink/dsh-policy-brief-draft",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-policy-ledger",
+      "version": "0.3.2",
+      "integrity": "sha512-aCqKLbeD05Pd41j1Z4a7qco7P40J7NGEFqFO6z6Rp441Z+WmvRlZngUpP70SoatzqweBbclvGqAFZTROq+QtWA==",
+      "repository": "https://github.com/PerryLink/dsh-policy-ledger",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ap-three-way",
+      "version": "0.2.3",
+      "integrity": "sha512-3mG/n4dIej3/ZD+SQuNNawiUdM4cLFyQd6MqtaIIo8QBrjrpzaCSQTuQn6YvazGHqC/7EmcMDPG3F0KtoScAyg==",
+      "repository": "https://github.com/PerryLink/dsh-ap-three-way",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-bankrec",
+      "version": "0.2.2",
+      "integrity": "sha512-GIlRsvRfrTIVP5vOsCxFrr533f+B41snYGWKkS5hhUg/gqRqB3WEI9HgTG6i8yhgxdLcYHttmb26gwAzxNALGg==",
+      "repository": "https://github.com/PerryLink/dsh-bankrec",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-einvoice",
+      "version": "0.3.2",
+      "integrity": "sha512-N+OgqiC5ZXtxpzEyQGTJNQ9U1iI/eCRxyfXOOzy/X7KZcOm9kWYXoVHzTdG5j20CUojM0o4c0TEsy0h0yNg5Mw==",
+      "repository": "https://github.com/PerryLink/dsh-einvoice",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-legal-intake",
+      "version": "0.2.2",
+      "integrity": "sha512-4IWIa6ngQC+/4jzBITLu1eH+XfLrT2ruiKoW0IBwaZJKg6wswQ2ZzlsCEh2V3RWQBvOXIocuGvZWU1XoGmiqnw==",
+      "repository": "https://github.com/PerryLink/dsh-legal-intake",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-legal-clause",
+      "version": "0.2.3",
+      "integrity": "sha512-DweEyymsgBeZjJ1t5xc+0WFZbeet6SxVEYkcxKdTnlzskRo5SZ0sC+giScJvvO4tXH/avg19bbXtB14Wrh57EQ==",
+      "repository": "https://github.com/PerryLink/dsh-legal-clause",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-locator",
+      "version": "0.22.3",
+      "integrity": "sha512-EPSEvCSGby5PsYSZP8xTFQMhdMQHdPBvbSm+1Wrq7sjFjhe6jANyAHM4RRASbW3DoxDHrUavLdS60HK1mAno6g==",
+      "repository": "https://github.com/PerryLink/dsh-locator",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-sherlock",
+      "version": "0.5.1",
+      "integrity": "sha512-q2IVinDcn8S784rMurRO3BeWDOri8gTAP7tBCUiI58zraS49MGfyEqpVEiKQ+WtbXAYnW/2VjapKypajhEBt+g==",
+      "repository": "https://github.com/PerryLink/dsh-sherlock",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-travel-recon",
+      "version": "0.2.2",
+      "integrity": "sha512-bMnF2ybIpVLDjSWIPnMuGc4QUF/wh1vmSpdGR5faLH+8/45A2T6SkQvkgRkq3dsvAKCkHZtQPBznxhksolv7jA==",
+      "repository": "https://github.com/PerryLink/dsh-travel-recon",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ota-review-check",
+      "version": "0.2.15",
+      "integrity": "sha512-aqHK/RXaGoHcLGkx/b73E5vLaaqkT2Vcg02fxKbi1ljzIkqSBorCr1j3O1m0OxLG3Ce52U/N47zk01EeXGK2sA==",
+      "repository": "https://github.com/PerryLink/dsh-ota-review-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-pipeline-check",
+      "version": "0.2.12",
+      "integrity": "sha512-gz/9cWc0SAl6MyN8ZYOX02pa81dlqeY61GJ2LvGnOtK25LngrPS3JQUD+0icMYlWyQv81+il+ZeyNjp+TtWRig==",
+      "repository": "https://github.com/PerryLink/dsh-pipeline-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-power-ticket-check",
+      "version": "0.2.13",
+      "integrity": "sha512-X3jWVahSnfEoJ7S3u1Grwn+b6HpQYeKTO0uT5+MShgcU6x55H83bZHeMB1uE8k6z/gcx4lGeiEvDZFnm/q4FoA==",
+      "repository": "https://github.com/PerryLink/dsh-power-ticket-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ppap-check",
+      "version": "0.2.13",
+      "integrity": "sha512-GT11tTP1DNG01aMuPaa9d6CBvF5+PvM3fUhQ9CUC/TSlsVniouc4U1j/Qnmb5QOC/aoOyOjb1ZBlwgfw5vEB2g==",
+      "repository": "https://github.com/PerryLink/dsh-ppap-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-qms-capa",
+      "version": "0.2.2",
+      "integrity": "sha512-bx74CUqPeCrfPRBDiCw2bCEAkN6RQB4g/dY7hVY+IiYHrLp8znLY5sOb66aeFkNwOQuSJpannkGYyLZ0V0Bh9g==",
+      "repository": "https://github.com/PerryLink/dsh-qms-capa",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-medrec-qc",
+      "version": "0.2.16",
+      "integrity": "sha512-21Qq9MoK8flqy+I8UC/dMAipP6c0J0ax2WIwkMqwcChPKjv5YqoPsAvEJie/Zn/YP5W6tDa0O71YtVg8VL7y7g==",
+      "repository": "https://github.com/PerryLink/dsh-medrec-qc",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-icd-rule-check",
+      "version": "0.2.15",
+      "integrity": "sha512-6MmEeXQmloSFoacuvMBsHrwavPht5u19Nki7hd0HFBuy6PvguKQvrht3aIvh9aQqxmDJXAmUDZId9JDFbpd6yg==",
+      "repository": "https://github.com/PerryLink/dsh-icd-rule-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ifc-qto",
+      "version": "0.2.2",
+      "integrity": "sha512-R2kao2lmLYs3f1mPliO0Eq4WZa9N5RhTCMNg1nVDWpv+j9JMXmz8iC1L12dW5uwYXyHsl0NpFFoZK2xmSSkARg==",
+      "repository": "https://github.com/PerryLink/dsh-ifc-qto",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-lawcite-adapter",
+      "version": "0.2.15",
+      "integrity": "sha512-lwBHr5UmW3wFIpeevJj8Q7sP4WYkS2zMGWs8tRqIiYA17+t/INzRzBftT4oQuwk60l3YTdovuf7+nJ5cRHql2A==",
+      "repository": "https://github.com/PerryLink/dsh-lawcite-adapter",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-lc-doc-check",
+      "version": "0.2.14",
+      "integrity": "sha512-RTFwirXX8/Fm0cbe39RF2FUtPcstZMXy+yvn8rmKJvW36WT2ZqiCXzuuJY94YSr2HxKcS9doXUz6zjV1SJ0ibQ==",
+      "repository": "https://github.com/PerryLink/dsh-lc-doc-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-nurse-record-check",
+      "version": "0.2.16",
+      "integrity": "sha512-IDvPJCN42pr9O4Jdq65o05o9gPfyM2i4I4U+zQN8oO769igJDyezx18/p+cpf1hw++E9btWTyj9blhOuDED9qQ==",
+      "repository": "https://github.com/PerryLink/dsh-nurse-record-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-site-log-check",
+      "version": "0.3.4",
+      "integrity": "sha512-GivQvUaeAH5bu6/1vU6E8PV0gtuxJ1/pqYo0nqL62Yn9Q330UxGmeujk8xOmok3WXzu+Ggk+h+FDE12Oi90yxA==",
+      "repository": "https://github.com/PerryLink/dsh-site-log-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-gongwen-word-check",
+      "version": "0.2.15",
+      "integrity": "sha512-EgPbuGaMs1ooeE5kH7IlNFq8F9KPNpu7G+OVZPeQfH0hio59pODluaMHLBl1F470dSm2H4Pbdm6gEe0gj48eCw==",
+      "repository": "https://github.com/PerryLink/dsh-gongwen-word-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-hazchem-check",
+      "version": "0.2.16",
+      "integrity": "sha512-UnumsW2yB3mqFdmKioOKo9x7++7D7NbhQwU5X/WAjTmFhKYVcMlvW6psp2uPJttA5fXnCl/n2pgcjJZ3zmM/FQ==",
+      "repository": "https://github.com/PerryLink/dsh-hazchem-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-fmea-table-check",
+      "version": "0.2.13",
+      "integrity": "sha512-wH64t8DWn0MrTMHLXW5M11Bp3v63M2r6chkTzhxFJlRasMM+h+H6Aw9WJXIKnuWMt8UDoJ5DWcw6HCI/EcrcYg==",
+      "repository": "https://github.com/PerryLink/dsh-fmea-table-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-tender-matrix",
+      "version": "0.2.18",
+      "integrity": "sha512-an7YM9jt2te0aCwsZXDtGzVsomV/Pp90gtwISnJYVllyDiWaGMhLuBmBJ7SqTFme+q+GsKur4Y4xja5KdBJqRw==",
+      "repository": "https://github.com/PerryLink/dsh-tender-matrix",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-score",
+      "version": "0.2.31",
+      "integrity": "sha512-5BMbStTUh3MuSznkcHzNzZypqXLJTXqV0eOYU4HVMZ4evkqmirutG2C6Gflbt58J2TsMz67auhjyjuBgQm5dNw==",
+      "repository": "https://github.com/PerryLink/dsh-score",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-famling",
+      "version": "0.13.2",
+      "integrity": "sha512-vynmhkbGCsU2P/pKjnb0KmZxWM2f/1R231QzTI5a3sgejTNcLbUCovSuaeCaO3SGeur392i662psbtuedez5oQ==",
+      "repository": "https://github.com/PerryLink/dsh-famling",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-statcheck",
+      "version": "0.1.4",
+      "integrity": "sha512-knKQEk3/5juds0LvJZjzWFt8929m5FKEM6t6m/yiswfA9ZkB7e8RUy0F26Gm1z59Z4feiiLHSy9hbzNeWV6xeg==",
+      "repository": "https://github.com/PerryLink/dsh-statcheck",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-zotero-bridge",
+      "version": "0.1.2",
+      "integrity": "sha512-mTlmokEo0BGvGnxZnCs621WqKZHeBROUpHtR6O0DnDif3c1Ad4sYA0aCl8S4Sn1Lekg+ya8ARzWpQ9pU3x+OiA==",
+      "repository": "https://github.com/PerryLink/dsh-zotero-bridge",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@perrylink/dsh-research-core",
+      "version": "0.1.6",
+      "integrity": "sha512-NMpcvJvHNrPONizcpVPvTxjfhXEGkV1GKXEtpTwCt0VBbCQb9GnbaKs+SsDhMw14cxHeSHCjXtrFsT2DK+qFDQ==",
+      "repository": "https://github.com/PerryLink/dsh-research-core",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-research-skills",
+      "version": "0.1.2",
+      "integrity": "sha512-oPBTqSE4Jz1cnhhc/pbdPyb6SRj06CUW8Rl8DCxGihw9zmI0/ETipsXrFGLXqcE/3VP2DoLNJZKKygsItSg7Uw==",
+      "repository": "https://github.com/PerryLink/dsh-research-skills",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-retraction-watch",
+      "version": "0.1.4",
+      "integrity": "sha512-ZmpLehilf4Yt+LST67Go8doEfJdMFsVwU2VPxb2OEEXYUHk08cLftoJZynFb4oeKr0epglaximh7456vthJvGQ==",
+      "repository": "https://github.com/PerryLink/dsh-retraction-watch",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-sr-ledger",
+      "version": "0.2.3",
+      "integrity": "sha512-h61haMTbEq+ICoJzqmXR7pJpVAFBehVaH/CyXwVNLp4CKVRB5vTce0J1y4x7cUMjMBiE21gOastEZMXv0sX4Xw==",
+      "repository": "https://github.com/PerryLink/dsh-sr-ledger",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-clinic",
+      "version": "0.8.2",
+      "integrity": "sha512-F9UaXl9+sdmSDRDuCh6yiSTZQo5M4lMx1753s7TrjkwGos2Em3UzWpKq5asWt/yrdQa6Ru4QynTO2It/BrG04g==",
+      "repository": "https://github.com/PerryLink/dsh-clinic",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-codemod",
+      "version": "3.0.4",
+      "integrity": "sha512-Zv2GwlMeOx+AETEvWNYeIL4o08z0yabro3/IMnE8MFVYG14R+xJi/lh4gDXUMGDdmXSQzAx1rWvrULuBaR0SYw==",
+      "repository": "https://github.com/PerryLink/dsh-codemod",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ar-aging",
+      "version": "0.2.3",
+      "integrity": "sha512-h0ytgGQdBBNh+OB3t9iwsHEnxwRGYdcIyn5Ah/yZE/wqVbG33fm1ntRL0g/EhaF9vCEgBBnnswtbV/cKS21glg==",
+      "repository": "https://github.com/PerryLink/dsh-ar-aging",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-ar-collection",
+      "version": "0.2.3",
+      "integrity": "sha512-X+hw7Ccbzn4huBFd7MEsejkvSHwNQZoAgQVTBB8PYn+1di3ErexZfn6cRM8sfUIDq+4PtdT87o3XcFd5g4vpzA==",
+      "repository": "https://github.com/PerryLink/dsh-ar-collection",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-attendance-check",
+      "version": "0.2.2",
+      "integrity": "sha512-aMbMvfhsLQHHrOQUew8qphcAwebv77g0dpuhAmmuOnvfhVfKa6D9MUon0MsA/2bKM2xt5puTQlpIlPRf2M1e5g==",
+      "repository": "https://github.com/PerryLink/dsh-attendance-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-contract-renewal",
+      "version": "0.2.2",
+      "integrity": "sha512-ITmOizlEGheXxDc2ag8z4bVRT+6gkb1cLn1H+6I4YTbfaSHU/C+Ova8sYH347O9NdpbEkp+AgubI8/y/A2KRrQ==",
+      "repository": "https://github.com/PerryLink/dsh-contract-renewal",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-import-customs-check",
+      "version": "0.2.2",
+      "integrity": "sha512-7bOXYEpI22g7xUp5dL23o8bu25xsLN/FPtunT6AcTcuK2QhV6isDg+Lc2avnV0aPYWEK8ROzwt3YFrk7r5yc+g==",
+      "repository": "https://github.com/PerryLink/dsh-import-customs-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-labor-contract",
+      "version": "0.2.2",
+      "integrity": "sha512-OTeyDwlqphTQvGcqx9N0QZTzmy6PW62W7txqEYcHl1mFbVvZsyHRAzZ2o2IRT9JdnFVgmi9/76+TMLbbRuYFLg==",
+      "repository": "https://github.com/PerryLink/dsh-labor-contract",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-dataset-card",
+      "version": "0.1.4",
+      "integrity": "sha512-E7dJbZDOM7luUuU9pm6DV+faxhj0Vdvd7NBa1rsvgLZsdJ/cgpgy4s4KR5owOR1HsR8cj8hT297uq2Ar66tYrQ==",
+      "repository": "https://github.com/PerryLink/dsh-dataset-card",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-dmp",
+      "version": "0.1.4",
+      "integrity": "sha512-IceMVY2ujy9aHmMKe5Q0u1brkd2vxNYALmyF87YrjJEvqZqR56BeI/Z74jF/49qJCtxQs/olqhdO+yQty8nEvw==",
+      "repository": "https://github.com/PerryLink/dsh-dmp",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-doc-anchor",
+      "version": "0.2.9",
+      "integrity": "sha512-af4h1MWQvxPJvUX8o4Vm+mieDddBBOIpUsiANu6a/z5GEwR3mex/YZbg1zFFsbTXl713KMUsmDPVPqyjOzQYSQ==",
+      "repository": "https://github.com/PerryLink/dsh-doc-anchor",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-eval-pack",
+      "version": "0.2.2",
+      "integrity": "sha512-JWc/FHDtvcsOJ5ok5qvGrwZmJOqSSEZVUnBSPuFu0E+PHTPyzOYRAwIbuFFhfQXL5E1SjmafasDrfH9th0cIsg==",
+      "repository": "https://github.com/PerryLink/dsh-eval-pack",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-export-ctl-check",
+      "version": "0.2.16",
+      "integrity": "sha512-8ubQkR0x7ePAXsnqcvuAsi8VDIfR+8KelO2npDm8k8i5rWrHpFju0aUG4OUseh79ll/PZ+9hWPfjh58YMMG/bg==",
+      "repository": "https://github.com/PerryLink/dsh-export-ctl-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-gongwen-flow-check",
+      "version": "0.2.14",
+      "integrity": "sha512-4LtAY+94CeCqHumYGSWTG6aW3/AjPLyxOVYxF31ELEV5I3J7q0r16LPsa3PXMYFcO6YhmmJK+e1/+BNiLC5DUg==",
+      "repository": "https://github.com/PerryLink/dsh-gongwen-flow-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-guard-plan-qc",
+      "version": "0.2.13",
+      "integrity": "sha512-+PmcuIS9LOdpRBuI6vipFO73SJHQx+iSF5/ShNyENaDhtUIrm44S8t5A5ZIOcVvPK8yO7i4sHFSm6WJc9ogqGA==",
+      "repository": "https://github.com/PerryLink/dsh-guard-plan-qc",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-hidden-risk-map",
+      "version": "0.2.13",
+      "integrity": "sha512-9oJ4SRpPPklY0weBN/fDye5eRUQSugqaLDExBgDskncKjxUoi9b57OspZXtaJBQTAQiJR0GTfTEFtArom/g1uQ==",
+      "repository": "https://github.com/PerryLink/dsh-hidden-risk-map",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-image-integrity",
+      "version": "0.1.5",
+      "integrity": "sha512-ynQaw3tcwUaYq7phGh0B9vCKg8iH6sowRCpBC66iiBUlHBqtb4KEY956BSeJdGog2K5hWeag1c3pFZAVIV4+cA==",
+      "repository": "https://github.com/PerryLink/dsh-image-integrity",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-lit-harvest",
+      "version": "0.1.2",
+      "integrity": "sha512-AJ9H2g8kujY1g+u3rkMt4LaQXATrDPLHHfU9Taz/cpgVzo5Q1xWbD5kxQj70+fBAzOOc+8ZUa7m6Y1pTf9Wmdw==",
+      "repository": "https://github.com/PerryLink/dsh-lit-harvest",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-param-repair",
+      "version": "1.0.5",
+      "integrity": "sha512-M67/bgM/Hr4HAQZNFuB9l91iJRcCEVnYsjmzKfyf3nhn6fT1T4UDtq/p2a2cmKkbwr09pgmu+Fit+eN6MYfppQ==",
+      "repository": "https://github.com/PerryLink/dsh-param-repair",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-pdf-table",
+      "version": "0.2.2",
+      "integrity": "sha512-PQ4EkrLQx+KE1mFXiOykE7w/BIjEwZ+3ZI1/MnVDQaHvb5zAu0pyGSglD3xSfXvaJjHMF3mVis9ZLX21dcfh4Q==",
+      "repository": "https://github.com/PerryLink/dsh-pdf-table",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-primer",
+      "version": "0.4.7",
+      "integrity": "sha512-W7Nn/LZBWoWG4qLmZFPonL1O9CdR82xJAqQ1fMkG1GF8FAzXYILLgiU5TazZw5hM/NifLMDt/5Uiqowx+AEBWQ==",
+      "repository": "https://github.com/PerryLink/dsh-primer",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-progress-payment",
+      "version": "0.2.2",
+      "integrity": "sha512-UhyX1YRz7WvW8noiV+C4sMFpog6IJ4osa86PXZ/E8c+DQ1RDLYXuQ1kknTVq8IwQLiTlSxtMN2f2HMqWRkZ5Xw==",
+      "repository": "https://github.com/PerryLink/dsh-progress-payment",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-protest-deadline",
+      "version": "0.2.14",
+      "integrity": "sha512-tjjuNYUNdN6lvlGnQHQPgICFRc97fLj/3RgzUpwFCDSU0fKAZN9GjQJdYHPIAZ+FR/ZlH0W2H7jCZ+DoBu2+Yg==",
+      "repository": "https://github.com/PerryLink/dsh-protest-deadline",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-railway-window",
+      "version": "0.2.12",
+      "integrity": "sha512-15P3oWgwyk5JSgoCZJA9iOXyguDkpBVzJDyQhjI+/7hrf2eObSwZrfW3BB4MNsc9NAh9kdoUnEsRjRkO54Ig8Q==",
+      "repository": "https://github.com/PerryLink/dsh-railway-window",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-repro-audit",
+      "version": "0.1.6",
+      "integrity": "sha512-2a1VadeKqCnvKrBsp83lFHbigT5evq10FlAgFi0FZ2wZtS2cXmUdNWhpSmPdvbXfBXPh8PYV8IKJt+PBUYao4A==",
+      "repository": "https://github.com/PerryLink/dsh-repro-audit",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-response-letter",
+      "version": "0.1.4",
+      "integrity": "sha512-JWXCbAs1Cotoj1ZJHZqnIWhq2s89iodQCva9JIG0xJ9j5Kko+8CgSrhALZ3uowXuXVy8sSifO+nuSFN27mmS9Q==",
+      "repository": "https://github.com/PerryLink/dsh-response-letter",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-review-reply-check",
+      "version": "0.2.12",
+      "integrity": "sha512-pIauzk+p+jgDT4SBE1hdFs8kOak5k3C5fN7D12ndTXH8XlgFmpQ3IePWM4eh5WG8LjFJ6x/zLJe4/Cl2zRDdkg==",
+      "repository": "https://github.com/PerryLink/dsh-review-reply-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-rfq-compare",
+      "version": "0.2.2",
+      "integrity": "sha512-2f79zHGSZKMdGzTChUazlOMjvTGu2t6ubjExQgEpTIb53fpJzR/OJZJsn0E2Rja5k/DZU0bwE42JO7+zZim8kA==",
+      "repository": "https://github.com/PerryLink/dsh-rfq-compare",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-cite-verify",
+      "version": "0.2.3",
+      "integrity": "sha512-4WM21Ht92VoV1+aGqmOJm6pob6X8HJgsTxdeVfGoe3rCgxe4cXT0y/HRrQARps+kwfIOKUB9gvMulW6m7llbwQ==",
+      "repository": "https://github.com/PerryLink/dsh-cite-verify",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-drill-script-check",
+      "version": "0.2.13",
+      "integrity": "sha512-7kMypeGe1xFTTazXINy+eK4903iRWK1TziyJ/iQs9waTGWW2u5QUTDmm8AcIszZXFQwuGHw+NgfsvddW+kjQCA==",
+      "repository": "https://github.com/PerryLink/dsh-drill-script-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-emergency-plan",
+      "version": "0.2.13",
+      "integrity": "sha512-w9bwi2kYpt5I0BXB14rb1RKjZ/MjMIkpWyHhyNxE3N15apywRlnRe2frtkfG8LHhAVTRsxT6l1oU0X6z9uW3WQ==",
+      "repository": "https://github.com/PerryLink/dsh-emergency-plan",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-research-suite-plugin",
+      "version": "0.1.8",
+      "integrity": "sha512-+G1lhFxQXnblpyWesjzudqrxy++IRzPoPOaJhF1bcOenzyTDkPs6zP/E+PI7E51fSoOVPv+FI82Az/mBbWHFLQ==",
+      "repository": "https://github.com/PerryLink/dsh-research-suite",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-rulefile-check",
+      "version": "0.2.12",
+      "integrity": "sha512-fpQd1NnUtTaeEAr5ZgWHHjr9vxiC3Y3ExQEiYiFMaEslH3fqw2kY6uA7w9RmGitD36nmq4e/S01q5m/B+GWzYA==",
+      "repository": "https://github.com/PerryLink/dsh-rulefile-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-safety-brief-check",
+      "version": "0.2.13",
+      "integrity": "sha512-ClGC/njEzduNRab63LaNB65BQ+MjqJtpA82Pf1cGrA6fz5G2AkV2yHKRClsT30Fp5hWS3lMAeDhNE+pUMPOgng==",
+      "repository": "https://github.com/PerryLink/dsh-safety-brief-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-settlement-docs",
+      "version": "0.2.2",
+      "integrity": "sha512-Jp5wSmPpEeP3sFBSRA65qVYMy1jPpR2k1Qb8wt1jmzeWPsv3AaZp86tIMDP8BGLMSvviqGlCrFlJ1FcfceUS/w==",
+      "repository": "https://github.com/PerryLink/dsh-settlement-docs",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-soilwater-check",
+      "version": "0.2.12",
+      "integrity": "sha512-/R3iuOcgC07sMlo7/CL7pBrolTVyiAp/NFo0HoHJ+8QDdJA27bRxR6LrGWXsBZVSQNUYWkO7YW/z2+WySIcNJg==",
+      "repository": "https://github.com/PerryLink/dsh-soilwater-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-sop-sync-check",
+      "version": "0.2.12",
+      "integrity": "sha512-1piZFRcpUFuyuvm+/HeiHHKBsZofZxbsYgG9ZJBnvwKb1h6Xaxxg2m1BXO5k3XoFumVINr3FEzT5PpPvOvqXWw==",
+      "repository": "https://github.com/PerryLink/dsh-sop-sync-check",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-source-cnki",
+      "version": "0.1.4",
+      "integrity": "sha512-b/Sc+arlL2uwAXVTHVL1hqU9W6Rv+NK6xoDijzSDL6b/yHWGMQ7EaTRA6lxJREGbNXoinslJ1DPUmfdicTyBZg==",
+      "repository": "https://github.com/PerryLink/dsh-source-cnki",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-store-replenish",
+      "version": "0.2.2",
+      "integrity": "sha512-PIVapaHG+I2JnvzzQkLYOPHU4ghGwN0WV5d4q4YRtLHoUEPxoeEKZ4uAKZizc3ntEPzODG2xgCRvbO0fjgThqQ==",
+      "repository": "https://github.com/PerryLink/dsh-store-replenish",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-warranty-calc",
+      "version": "0.2.14",
+      "integrity": "sha512-KOtFDbRaeQj9Kpi9wk+kipOGGUE8F8XXseAI3hkadKdfvJCszg4Vv9nlzl581VOXw7gGtGQKxutcb7CTbRN5lA==",
+      "repository": "https://github.com/PerryLink/dsh-warranty-calc",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-provider-params",
+      "version": "0.2.2",
+      "integrity": "sha512-esDwewGYOsLm6EBAnvWykaOgwiLkf9tLkM877XGImdVUkVR4zIQwhNoBolClU7UmKiPjUpyK7UKUA+EL7y6kqg==",
+      "repository": "https://github.com/PerryLink/dsh-provider-params",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-security-pack",
+      "version": "3.0.3",
+      "integrity": "sha512-lFxWln5w1qFTReZyvz0nH75fpsb1Me0+HMp0QSV0+IWI9UM5v6iP5uJohFx8fbe1NmShIYnvYA+b2VTdF12K5Q==",
+      "repository": "https://github.com/PerryLink/dsh-security-pack",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-orchestrator-kit",
+      "version": "0.2.0",
+      "integrity": "sha512-DR77UbO2dkEPZaxVmDPom0YMKhOnuI7+H4HIzLx4haa/4l7VmhG6jfrMJq1yp9UQqRhZB8GrV9cAXIw7q/DOOA==",
+      "repository": "https://github.com/klaus-2/dsh-orchestrator-kit",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@gulagala001/dsh-theme-plugin",
+      "version": "0.3.10-dsh.0.2.2-rc.3",
+      "integrity": "sha512-0IyV0xO5ORU60yrfk3EnoxYuADVlCq2V8+osvsKQaU/h9ZUEp/cNfIALeFFkHUdEY7xOLIQHQBuhy00AmSD+kw==",
+      "repository": "https://github.com/gulagala001/dsh-theme-plugin",
+      "source": {
+        "type": "git",
+        "commit": "80fc537df63b7b249b85a9c39706b7f09e57e6df"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-aupdate",
+      "version": "0.4.2",
+      "integrity": "sha512-LSJcU/3W8sIQkoq2s1TDIo0grbdibvjte0H2Q9qj57FWPv2RGTs9fwtFf88ZkDv6Izr+/g9SX6iXr3Cfj8kt4A==",
+      "repository": "https://github.com/CalmSun/dsh-aupdate",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-stock-panel",
+      "version": "0.1.0",
+      "integrity": "sha512-D1lGEExIE31C0z3xpClNFhjzvYqVqMeD8HOllH3UcHijML3zIBxuxflSBXMh/ocAz0wS1QeLdbffH8G3t3PaAw==",
+      "repository": "https://github.com/paulwang123/dsh-stock-panel",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-23T03:16:05.346Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

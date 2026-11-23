@@ -9502,21 +9502,21 @@
     },
     {
       "name": "@gulagala001/dsh-theme-plugin",
-      "version": "0.2.1-dsh.0.2.1-rc.2",
+      "version": "0.3.10-dsh.0.2.2-rc.3",
       "source": {
         "type": "git",
         "url": "https://github.com/gulagala001/dsh-theme-plugin",
-        "commit": "d0abfd142dff121cf75f5a823eff36d7da182eda",
-        "integrity": "sha512-bAl5wHpbKpxkgyTdonZ2o6IgTkUuCBbQntJ/1WNY8OE3ZESTVwE39t77/7O5emQ4ledTtX1pTtYiqzoSYVX60A==",
-        "publishedAt": "2026-10-22T12:36:24Z"
+        "commit": "80fc537df63b7b249b85a9c39706b7f09e57e6df",
+        "integrity": "sha512-0IyV0xO5ORU60yrfk3EnoxYuADVlCq2V8+osvsKQaU/h9ZUEp/cNfIALeFFkHUdEY7xOLIQHQBuhy00AmSD+kw==",
+        "publishedAt": "2026-11-22T15:08:36Z"
       },
       "title": {
         "en": "DSH Themes and Appearance",
         "zh": "DSH 主题与外观"
       },
       "description": {
-        "en": "Manage appearance and themes, browse a visual community market, and check themes before applying them. Requires DSH 0.2.1-rc.2; some checks need a Chromium download.",
-        "zh": "管理外观与主题，浏览带预览图的社区市场，安装检查通过后应用主题。仅适配 DSH 0.2.1-rc.2，部分检查需要下载 Chromium。"
+        "en": "Manage DSH appearance and browse compatible themes. Dynamic themes may run browser or Host code during validation and use. Requires DSH 0.2.2-rc.3 and Node 24.9+. Some validation uses a separate Chromium download.",
+        "zh": "管理 DSH 外观并浏览兼容主题。动态主题可能在验证和使用时运行浏览器或 Host 代码。需 DSH 0.2.2-rc.3 和 Node 24.9+，部分验证需另行下载 Chromium。"
       },
       "category": "appearance"
     },
@@ -12751,13 +12751,18 @@
       "name": "dsh-agent-compare",
       "title": {
         "en": "AgentCompare",
-        "zh": "AgentCompare"
+        "zh": "鲸挑细选 AgentCompare"
       },
       "description": {
-        "en": "Compare 2–4 answers, files or web previews in DSH, then review and adopt a choice. Requires Git, a host process sandbox and configured models; web previews need Chrome/Edge. Model requests may incur charges. Node support follows the package declaration.",
-        "zh": "在 DSH 中比较 2–4 版回答、文件或网页预览，再审阅并采用结果。需 Git、宿主进程沙箱和模型配置，网页预览需 Chrome/Edge；模型请求可能收费，Node 版本以包内声明为准。"
+        "en": "Compare 2–4 answers, files or live pages in DSH Desktop or Web. Review a choice before adoption and keep the result in the conversation. Requires Git, a host process sandbox and configured models. Live previews need Chrome or Edge. Model calls may incur charges.",
+        "zh": "在 DSH 桌面端或 Web 主对话中比较 2–4 版回答、文件或网页，审阅后采用，结果保留在对话中。需 Git、宿主进程沙箱和模型配置，网页预览需 Chrome 或 Edge，模型调用可能收费。"
       },
-      "category": "development"
+      "category": "development",
+      "iconReview": {
+        "commit": "c3dc500ac8d45afca5263160b28b545220a0e384",
+        "path": "assets/icon.png",
+        "sha256": "46883cb15349c2324821a59266911348fa9a7c8bb973dddd81cecf59f12319b9"
+      }
     },
     {
       "name": "dsh-plugin-2048",
@@ -14108,19 +14113,19 @@
     },
     {
       "name": "dsh-pets-multiworkers",
-      "version": "1.5.0",
+      "version": "1.5.1",
       "title": {
         "en": "DSH Pets Multiworkers",
         "zh": "DSH Pets Multiworkers（一池多宠）"
       },
       "description": {
-        "en": "Display a companion for each active conversation, with work-state animations, model colors and shared care. Download is about 184 MB. Native desktop companions require Windows DSH Desktop. Host routes use local Host/Origin or paired-device checks rather than Connection authentication; use in a trusted environment.",
-        "zh": "为每个活跃会话显示一只宠物，用动作和配色区分工作状态与模型，共享喂食、好感度和命名。下载约 184 MB，原生桌宠需 Windows DSH 桌面版；宿主接口采用本机 Host/Origin 或设备配对检查，仅建议在可信环境使用。"
+        "en": "Display a companion for each active conversation, with working animations, model colors and shared care. The board can keep a companion with a conversation. Download is about 184 MB. Native companions require Windows DSH Desktop. Local Host/Origin or paired-device checks apply on a trusted host.",
+        "zh": "为活跃会话显示不同的宠物，按工作状态和模型展示动作及配色，共享照料。看板可保持对话专宠。下载约 184 MB，原生桌宠需 Windows DSH 桌面版。宿主接口依赖本机 Host/Origin 或设备配对检查，宜在可信环境使用。"
       },
       "category": "appearance",
       "archiveReview": {
-        "version": "1.5.0",
-        "integrity": "sha512-jdqpwmk0Kn5LD80aovaghu96yFFQhbNEE+ny3AzNqdCHcMB7gQN5GWSMlQAM0ohC0cPnskA0G/errHfwIl6zwQ==",
+        "version": "1.5.1",
+        "integrity": "sha512-pIEMxj4TRSXgir7UMVK+o/zLZzab6Z/F4PYK5kYQFqP4m/2h4BONL1IBYuYlui0wA4RtfET/kWE3RcF7aGa9kQ==",
         "maxDownloadBytes": 209715200,
         "maxUnpackedBytes": 234881024,
         "timeoutMs": 120000
@@ -16422,13 +16427,13 @@
         "zh": "对侧栏网页或文档预览进行区域截图或选中文字批注，将位置与说明加入当前对话草稿。网页截图需要桌面 webview；作者在 Windows 的 DSH 0.2.2-rc.3 上验证。"
       },
       "category": "workflow",
-      "version": "0.14.4",
+      "version": "0.15.1",
       "source": {
         "type": "git",
         "url": "https://github.com/wuwen1994/dsh-annotate",
-        "commit": "44c8272aecf414b32d97b67694cf1958a63f5663",
-        "integrity": "sha512-u6fIOQDlPE+1O3ruhsquM/Vxb+lE7llBRQVGw2RQbvczoHKbMfed4qf6MPv8AX0lTiEXDrwo1ndqinDpQGVz8g==",
-        "publishedAt": "2026-11-21T13:00:13Z"
+        "commit": "8ce3ce79b3a74bee160ab2cd1d285b830da0e82c",
+        "integrity": "sha512-91Zz3QrERcYAsctxUAEdGhrZ7Ji35jtf3CtTXU9r4e8QcsE7KhS2WgnwcHyBH+51GA0ZuJHZEuyKkVV24CUdTQ==",
+        "publishedAt": "2026-11-22T04:04:46Z"
       }
     },
     {
@@ -17063,13 +17068,13 @@
         "en": "Manage database connections and let DSH query SQLite, MySQL, PostgreSQL-compatible or DM databases. Queries use read-only connections. Writes require a configured writable source and follow the plugin's approval flow. Requires the corresponding database access and Node's SQLite support for SQLite.",
         "zh": "配置数据库连接，在 DSH 查询 SQLite、MySQL、兼容 PostgreSQL 的数据库或达梦数据库。查询使用只读连接，写入需配置可写数据源并走插件审批。需相应数据库访问权限，SQLite 依赖 Node 内置支持。"
       },
-      "version": "0.2.3",
+      "version": "0.2.4",
       "source": {
         "type": "git",
         "url": "https://github.com/skyrocks/dsh-db",
-        "commit": "abb7f7260c4a0846228d5dc2c0cce6ca1d51a520",
-        "integrity": "sha512-ctfBApH3sKBDuDPFRGE4g81mncz5/TicGuT27SY3ixi3/iEz3aaQyi/OtsicPIZDXKTmXdG7qzmiYWhC8kzQng==",
-        "publishedAt": "2026-11-19T08:07:57Z"
+        "commit": "a1d04e5ad29f6e39d421fb90046112d61a4a560f",
+        "integrity": "sha512-roJkI2h/ucyauFRjSBV6j53VUpdAuu58TjIkdYz3oBOztEkHj3ZeK+SzmUtt8ntMrrV1FUvr4S5P6qftN0lkmA==",
+        "publishedAt": "2026-11-23T02:06:59Z"
       }
     },
     {
@@ -17093,15 +17098,15 @@
       }
     },
     {
-      "name": "dsh-peak-window",
+      "name": "@ltw2522/dsh-peak-window",
       "title": {
         "en": "Peak Window",
         "zh": "峰时守卫"
       },
       "category": "workflow",
       "description": {
-        "en": "Confirm before sending during peak hours and show an optional off-peak reminder. An explicit choice can defer a draft until off-peak hours. Optional holiday updates fetch public calendar JSON. Tested by the author on DSH Desktop 0.2.2-rc.3 on Windows.",
-        "zh": "峰时发送前弹出确认，谷时可提示即将进入峰时。用户可选择延后草稿到谷时发送，放假安排可选从公开日历更新。作者在 Windows DSH Desktop 0.2.2-rc.3 验证。"
+        "en": "Confirm before sending during peak hours and choose whether to defer a draft to off-peak hours. Optional holiday updates fetch public calendar data. The author tested DSH Desktop 0.2.2-rc.3 on Windows.",
+        "zh": "峰时发送前弹出确认，可选择把草稿延后到谷时。可选节假日更新会下载公开日历数据。作者在 Windows 的 DSH Desktop 0.2.2-rc.3 上验证。"
       }
     },
     {
@@ -17364,13 +17369,13 @@
         "en": "Fetch and summarize mail from a configured IMAP account. Passwords use the DSH credential store. Optional scheduled digests require scheduling support and may send selected email content to the configured model.",
         "zh": "从配置的 IMAP 邮箱获取邮件并生成摘要，密码存放在 DSH 凭据库。定时整理需要计划任务支持，所选邮件内容可能交给已配置的模型。"
       },
-      "version": "0.4.3",
+      "version": "0.4.4",
       "source": {
         "type": "git",
         "url": "https://github.com/skyrocks/dsh-mail-digest",
-        "commit": "c3098f56dcb7006c0722ed39fda77feb121a508b",
-        "integrity": "sha512-XQsD/N/reCIvAlF/OWRyWaLyY0qqXWrqLiciuRUu7+/aV6GlihKG15CxveQvd9zJQcNsBkl1FHL4KNHcRBJc5g==",
-        "publishedAt": "2026-11-19T02:39:56Z"
+        "commit": "b261a270455c670ca9de8b4010424011af1a184f",
+        "integrity": "sha512-5IW1t8FHRdDHKiEqLbYgOLLQPVQFvZwEew8mFA94neIlsHgmcUAwKSlMUxDv3UXACikpxUdglqLo64vjM4y/9w==",
+        "publishedAt": "2026-11-19T08:08:30Z"
       }
     },
     {
@@ -17449,25 +17454,25 @@
       "name": "dsh-fish-pay-counter",
       "title": {
         "en": "Fish Pay Counter",
-        "zh": "摸鱼时薪 · 小鱼工资计数器"
+        "zh": "摸鱼发薪局"
       },
       "category": "interface",
       "description": {
-        "en": "Keep a draggable fish on the DSH workbench while the AI runs. It swims, blows bubbles, and estimates today’s pay each second from your schedule. It drops a coin at each whole yuan and pauses for lunch. Salary settings stay in the browser.",
-        "zh": "等 AI 干活时养条会吐泡的小鱼。拖到工作台顺手的位置，按班表每秒估算今日工资，满一元弹金币，午休自动暂停。薪资设置只保存在本机浏览器。"
+        "en": "A draggable workbench goldfish for DSH. Click for a firework quip, feed it, or play a 15-second bubble game. Optional pay estimates use your schedule and stay in the browser.",
+        "zh": "拖动工作台上的小金鱼，点它放烟花、喂鱼，或玩一局 15 秒的戳泡泡。可按班表估算当天工资，薪资设置保存在本机浏览器。"
       },
-      "version": "1.2.0",
+      "version": "1.5.1",
       "source": {
         "type": "git",
         "url": "https://github.com/egg2023001-cmd/dsh-fish-pay-counter",
-        "commit": "faf7d109a03e8fc665f6b4861f62e56c2d4b6bbf",
-        "integrity": "sha512-C83KQPZgJ5+cx/axVxmeqn2JamagcEafM1Zi4zXmNRbh6uzAy5ZCxxitmbE1zaKelKkeazIdhmPd9BVBB+lYxA==",
-        "publishedAt": "2026-11-19T15:13:41Z"
+        "commit": "e2998aecaf94e81d98292d33fa01051c9c9e6252",
+        "integrity": "sha512-Y45I3db1OlNsI4E9RngO+Wi5e4bzplS2jtrxIRhwDESrSJAsXpDbyX4J3YLMlV3VXkplSoqZW6hBS3P80tzMqg==",
+        "publishedAt": "2026-11-22T12:17:38Z"
       },
       "iconReview": {
-        "version": "1.2.0",
-        "integrity": "sha512-C83KQPZgJ5+cx/axVxmeqn2JamagcEafM1Zi4zXmNRbh6uzAy5ZCxxitmbE1zaKelKkeazIdhmPd9BVBB+lYxA==",
-        "commit": "e6e2329ddba5ee0abe160a43395bab863f471cde",
+        "version": "1.5.1",
+        "integrity": "sha512-Y45I3db1OlNsI4E9RngO+Wi5e4bzplS2jtrxIRhwDESrSJAsXpDbyX4J3YLMlV3VXkplSoqZW6hBS3P80tzMqg==",
+        "commit": "e2998aecaf94e81d98292d33fa01051c9c9e6252",
         "path": "market-assets/fish-pay-icon.png",
         "sha256": "775af11b9f23af4c5b33b845b0dac3216fd01afd5dc84509b82d7bbb82cc5425"
       }
@@ -17777,17 +17782,17 @@
       },
       "category": "integrations",
       "description": {
-        "en": "Discover and delegate jobs to a configured Open Agent API gateway, then check progress and results from DSH. Requires a trusted gateway, a local key file and DSH 0.2.2-rc.5.",
-        "zh": "从 DSH 查看配置网关提供的智能体、委派任务并读取进度和结果。需可信的 Open Agent API 网关、本地密钥文件和 DSH 0.2.2-rc.5。"
+        "en": "Discover and delegate jobs to a configured Open Agent API gateway, then check progress and results in DSH. Requires a trusted gateway, a local key file and DSH 0.2.2-rc.5 or 0.2.3-alpha.2.",
+        "zh": "在 DSH 查看配置网关提供的智能体、委派任务并读取进度和结果。需可信的 Open Agent API 网关、本地密钥文件，以及 DSH 0.2.2-rc.5 或 0.2.3-alpha.2。"
       },
-      "version": "0.1.0",
+      "version": "0.1.1",
       "source": {
         "type": "git",
         "url": "https://github.com/jiangxingfan1-coder/Open-Agent-API",
-        "commit": "7208881d8ce75fce8b88e9f7c076840f8c3cf3ed",
+        "commit": "987e942fe8bfc2ec1c6fea806dff5faaae58d2b3",
         "path": "integrations/deepseek-harness",
-        "integrity": "sha512-5TniSq9SCuHNFgJb0w7gsjLOZm7dIWC76DeM/1l0f8bZBWgyYCn3b3yheCtnSQPlGEvDBbHeMJ6OmHmHEzYBCA==",
-        "publishedAt": "2026-11-21T07:32:20Z"
+        "integrity": "sha512-IsIrcTuNmRODRlKRvP1/R+1k8QMWPnCNq/TerdF25JIvtmqYcoPneUhp0lRmB8RFjIv1/nz+/IYjcJrJ69uztw==",
+        "publishedAt": "2026-11-22T14:14:41Z"
       }
     },
     {
@@ -17840,6 +17845,1543 @@
         "en": "Clip text or screenshots from web pages and PDFs into DSH drafts, accept suggested questions, and save replies as editable notes. Requires DSH Desktop on Windows.",
         "zh": "从网页和 PDF 摘录文字或截图到 DSH 草稿，接受建议追问，再把回答保存为可编辑笔记。需 Windows 上的 DSH Desktop。"
       }
+    },
+    {
+      "name": "dsh-composer-lists",
+      "title": {
+        "en": "Composer Lists",
+        "zh": "Composer Lists（输入框清单）"
+      },
+      "description": {
+        "en": "Organize DSH composer drafts as editable lists. Optional AI-assisted list suggestions send the submitted text to the configured model and may incur charges.",
+        "zh": "在 DSH 输入框里整理和编辑清单。可选的 AI 清单建议会把提交的文本发给已配置的模型，可能产生费用。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-zhihu-mini",
+      "title": {
+        "en": "Zhihu Mini",
+        "zh": "Zhihu Mini（知乎）"
+      },
+      "description": {
+        "en": "Read Zhihu trends, feeds and answers inside DSH. Signed-in features require a Zhihu login and a Host with Connection session verification.",
+        "zh": "在 DSH 浏览知乎热榜、推荐和回答。使用登录态的功能需登录知乎，并要求宿主提供 Connection 会话校验。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-plugin-notch-balance",
+      "title": {
+        "en": "DSH Notch Balance",
+        "zh": "DSH Notch Balance（刘海余额）"
+      },
+      "description": {
+        "en": "Show DeepSeek balance, usage, and session estimates in DSH. The notch overlay requires Apple Silicon and macOS 14+. Macs without a notch use the menu bar, and Windows has a tray mode. Optional input prediction uses a configured model.",
+        "zh": "在 DSH 显示 DeepSeek 余额、用量和会话估算。刘海窗需 Apple Silicon 和 macOS 14+，无刘海 Mac 使用菜单栏，Windows 有托盘模式。可选的输入预测会用到已配置的模型。"
+      },
+      "category": "usage",
+      "version": "1.8.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/hennysky/dsh-notch",
+        "commit": "f1f2fa27b7f1d8bbeffc20038420ee0b1bf44a88",
+        "path": "plugin",
+        "integrity": "sha512-ZjNtn2HMp4/6KfoSt9rBGzdQNX/ovmd9UGqgsZ7U+58B1RoKqO8vwLm18toUa5wWocLZTkcZH+uVIvSufRReEQ==",
+        "publishedAt": "2026-11-22T15:39:31Z"
+      }
+    },
+    {
+      "name": "dsh-plugin-mcp-mvp-mes",
+      "title": {
+        "en": "MOM MES MCP Connector",
+        "zh": "MOM MES MCP 连接器"
+      },
+      "description": {
+        "en": "Connect DSH to the MOM MES MCP service. Requires a service API key stored in the DSH credential store. The connector sends the key to the configured MOM MES service.",
+        "zh": "把 DSH 接入 MOM MES MCP 服务。需在 DSH 凭据库配置服务 API Key，连接器会把该密钥发给 MOM MES 服务。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-password-login",
+      "title": {
+        "en": "DSH Password Login",
+        "zh": "DSH 密码登录"
+      },
+      "description": {
+        "en": "Add a password login to self-hosted DSH Web. Set the password with the included CLI before use. The author tested Debian with DSH 0.2.2-rc.1. Newer host admission APIs may need a compatibility update.",
+        "zh": "为自托管 DSH Web 增加密码登录。使用前需在宿主用随包命令设置密码。作者在 Debian 的 DSH 0.2.2-rc.1 上验证。使用新准入 API 的宿主可能需要兼容更新。"
+      },
+      "category": "tools",
+      "version": "1.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/shorekeeper-blackshore/dsh-password-login",
+        "commit": "86b3c2c13bfe54cf28793075491e4bed23474573",
+        "integrity": "sha512-8KJU7LhldQ5QuDAB5igeNuE5U43tu+Flua28DIcFlgmzybUDc8yH5kPb2G1ZhsyK4afxU5HmcPj6xu+NuSN6cw==",
+        "publishedAt": "2026-11-22T14:59:40Z"
+      }
+    },
+    {
+      "name": "dsh-rust-anything",
+      "title": {
+        "en": "rust-anything for DSH",
+        "zh": "rust-anything for DSH"
+      },
+      "description": {
+        "en": "Record a program’s behavior, migrate it to Rust, and replay the recordings to check the result. Bundles the Windows x64 rust-anything runtime and requires DSH 0.2.2-rc.5.",
+        "zh": "录制原程序行为，迁移到 Rust 后回放验证。随包包含 Windows x64 的 rust-anything 运行程序，要求 DSH 0.2.2-rc.5。"
+      },
+      "category": "development",
+      "version": "3.3.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/lonyness/dsh-rust-anything",
+        "commit": "f0534dab23e36e39db81bd41952a0ffadacbc454",
+        "integrity": "sha512-P214aq65ket2aFfMHERurlT1fvvrleTDxQ7JYhrpqSsiQCTPpanWCsEs6bXxWgQgV5sP6zT75MvwkfFDrQexgw==",
+        "publishedAt": "2026-11-22T13:46:03Z"
+      }
+    },
+    {
+      "name": "dsh-fast",
+      "title": {
+        "en": "DSH Fast",
+        "zh": "DSH Fast"
+      },
+      "description": {
+        "en": "Report session load times, compaction, context size and model cache hits through /fast. Collects diagnostics while DSH runs.",
+        "zh": "通过 /fast 查看会话加载时长、压缩、上下文占用和模型缓存命中率。插件运行期间会收集诊断数据。"
+      },
+      "category": "usage"
+    },
+    {
+      "name": "dsh-autotier",
+      "title": {
+        "en": "DSH Autotier",
+        "zh": "DSH Autotier"
+      },
+      "description": {
+        "en": "Route requests between configured model tiers, with planning handoffs and fallback escalation. This can affect model usage costs.",
+        "zh": "按请求切换已配置的模型档位，支持规划交接和失败升级，可能改变使用成本。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-draw",
+      "title": {
+        "en": "DSH Draw",
+        "zh": "DSH Draw"
+      },
+      "description": {
+        "en": "Generate workspace images through providers such as OpenAI Images or Zhipu CogView. Requires provider credentials. Prompts go to the selected provider and generation may incur charges.",
+        "zh": "通过 OpenAI Images、智谱 CogView 等服务生成工作区图片。需服务凭据，提示词会发给所选服务，生成可能收费。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-budget",
+      "title": {
+        "en": "DSH Budget",
+        "zh": "DSH Budget"
+      },
+      "description": {
+        "en": "Track tokens and estimated costs by model, session and day. Configure budget warnings or stop later requests at a limit.",
+        "zh": "按模型、会话和日期统计 token 与估算费用，可配置预算提醒或在超限后拦截后续请求。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-observe",
+      "title": {
+        "en": "DSH Observe",
+        "zh": "DSH Observe"
+      },
+      "description": {
+        "en": "Export DSH traces and metrics to a configured OTLP or Langfuse endpoint. Disabled by default. Prompt and response collection depends on the privacy settings.",
+        "zh": "将 DSH 的跟踪与指标发送到已配置的 OTLP 或 Langfuse 端点。默认关闭，提示和回复的采集由隐私设置控制。"
+      },
+      "category": "usage"
+    },
+    {
+      "name": "@leonchan2840/dsh-quick-model-panel",
+      "title": {
+        "en": "DSH Quick Model Panel",
+        "zh": "DSH 模型快捷面板"
+      },
+      "description": {
+        "en": "Switch models, change reasoning effort, and toggle agent teams from one DSH panel. Includes model search and reorderable favorites. The author tested DSH 0.2.2-rc.3.",
+        "zh": "在 DSH 的同一面板切换模型、调整思考深度和开关智能体团队，支持模型搜索和常用模型排序。作者验证了 DSH 0.2.2-rc.3。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-talk",
+      "title": {
+        "en": "DSH Talk",
+        "zh": "DSH Talk"
+      },
+      "description": {
+        "en": "Dictate prompts and hear replies. Supports browser speech services and separately installed local speech engines. Audio handling depends on the selected engine.",
+        "zh": "在 DSH 里用麦克风输入并朗读回复。可选浏览器语音服务，或另行安装的本地语音引擎，音频处理取决于所选引擎。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-composer-history",
+      "title": {
+        "en": "DSH Composer History",
+        "zh": "DSH Composer History"
+      },
+      "description": {
+        "en": "Recall and search earlier DSH drafts, restore the cursor and reuse snippets across conversations. Input history is persisted in the browser.",
+        "zh": "回找和搜索 DSH 的输入历史，恢复光标位置，并跨会话复用片段。输入历史会保存在浏览器。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-mask",
+      "title": {
+        "en": "DSH Mask",
+        "zh": "DSH Mask"
+      },
+      "description": {
+        "en": "Mask configured sensitive patterns before model requests. Set masking rules for the providers you use.",
+        "zh": "在模型请求发出前遮蔽符合规则的敏感文本，可为使用的服务商配置遮蔽规则。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-output-styles",
+      "title": {
+        "en": "DSH Output Styles",
+        "zh": "DSH Output Styles"
+      },
+      "description": {
+        "en": "Choose a response style for the current DSH session. Supports built-in styles and locally configured styles.",
+        "zh": "为当前 DSH 会话选择回复风格，支持内置风格与本地配置。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-laya",
+      "title": {
+        "en": "Laya",
+        "zh": "Laya"
+      },
+      "description": {
+        "en": "Connect DSH to a separately running Laya service for yes/no decisions, choices and scores. Configure the service endpoint before use.",
+        "zh": "把 DSH 接到单独运行的 Laya 服务，获得是非、选项和评分等结构化决策。使用前需配置服务地址。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-github-bot",
+      "title": {
+        "en": "DSH GitHub Bot",
+        "zh": "DSH GitHub Bot"
+      },
+      "description": {
+        "en": "Review GitHub changes, draft issues and run repository workflows. Requires GitHub credentials and a model for AI review. GitHub writes use the plugin’s approval or configured CI policy.",
+        "zh": "审阅 GitHub 改动、拟写 Issue 并处理仓库工作流。需 GitHub 凭据，AI 审阅还需模型。写入 GitHub 使用插件审批或配置的 CI 策略。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-contract-stance",
+      "title": {
+        "en": "DSH Contract Stance",
+        "zh": "DSH Contract Stance"
+      },
+      "description": {
+        "en": "Host-side checker for in-house counsel and contract managers: reads a contract clause-stance register (header plus one row per clause) and lists what is missing and where against a rule pack whose citations are quoted verbatim. it never edits the material and never pronounces on compliance.",
+        "zh": "合同条款立场核对：读取「合同表头 + 每条款一行」的立场台账，按逐字引用的规则库列出哪一行、哪一栏、差什么。不改原件、不判定合规。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-eia-guide-check",
+      "title": {
+        "en": "DSH EIA Guide Check",
+        "zh": "DSH EIA Guide Check"
+      },
+      "description": {
+        "en": "EIA technical guideline applicability and execution-standard check: checks whether the EIA elements, guideline names and applicable execution standards match, with a traceable difference list. it reads the sheet only and never rules on compliance.",
+        "zh": "环评导则适用性核对：核对环评（EIA）的要素、导则名称与执行标准是否匹配，输出可追溯的差异清单。只对照材料自身，不判合规。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-grant-cn",
+      "title": {
+        "en": "DSH Grant Cn",
+        "zh": "DSH Grant Cn"
+      },
+      "description": {
+        "en": "A starter checklist for Chinese grant applications (NSFC and similar): 19 structure/attribute/declaration checks, budget arithmetic and structure validation, and an application-materials pack scan, with JSON/Markdown and REP evidence output. a keyword checklist, not a review verdict. Activate the REP core package alongside it.",
+        "zh": "中文基金申请书检查：19 项起步清单（项目名称/摘要/科学问题属性 A-D/立项依据/目标/内容/方案/技术路线/创新/可行性/基础/条件/团队/预算/预算说明/伦理/数据共享/限项/参考文献）、预算算术与结构校验、申请材料包扫描，输出 JSON/Markdown 与 REP 证据。关键词清单，不是评审结论。 需同时启用 REP 核心包。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-lit-watch",
+      "title": {
+        "en": "DSH Lit Watch",
+        "zh": "DSH Lit Watch"
+      },
+      "description": {
+        "en": "Save date-bounded Crossref searches and report new DOIs on demand. Exports Markdown and SARIF. Activate the REP core package alongside it.",
+        "zh": "保存指定时段的 Crossref 检索，按需运行并仅报告新 DOI，支持 Markdown 和 SARIF 导出。 需同时启用 REP 核心包。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-phocinae",
+      "title": {
+        "en": "Phocinae",
+        "zh": "Phocinae"
+      },
+      "description": {
+        "en": "Use a local decision model for typed judgments and a tool approval gate. Requires phocinae-server and the Phocinae-Largha-150M-v1 model.",
+        "zh": "用本地决策模型返回结构化判断，并可接入工具审批。需单独运行 phocinae-server 和 Phocinae-Largha-150M-v1 模型。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-spc-gbt-adapter",
+      "title": {
+        "en": "DSH SPC Gbt Adapter",
+        "zh": "DSH SPC Gbt Adapter"
+      },
+      "description": {
+        "en": "SPC control-chart and Cpk check against the current GB/T 17989.2-2020 control-chart constants: checks a control-chart register for control limits, centre line and Cp/Cpk arithmetic and constant-table self-consistency, lists differences only and does not judge whether the process is in control.",
+        "zh": "按现行 GB/T 17989.2—2020 控制图常数表核对 SPC 控制图台账：控制限、中心线、Cp/Cpk 的算术与常数表自洽性，只列差异，不判过程是否受控。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-translate",
+      "title": {
+        "en": "DSH Translate",
+        "zh": "DSH Translate"
+      },
+      "description": {
+        "en": "Full-page translation for DeepSeek Harness: translate the rendered web GUI with your own model route, preserving code, paths, commands, identifiers and product names. Display-only. the session log is never modified.",
+        "zh": "整页翻译：浏览器把代码块、路径、命令、URL、标识符与产品名遮成占位符，宿主用你当前会话的模型路由翻译，丢了占位符的段落保留原文。只改展示，不修改会话日志。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-bid-ca-precheck",
+      "title": {
+        "en": "DSH Bid CA Precheck",
+        "zh": "DSH Bid CA Precheck"
+      },
+      "description": {
+        "en": "Check a bid compliance response register for completeness and internal consistency: a versioned bundled rule pack (BC-001..BC-006) produces a list of what is inconsistent, where, and what to fix. the verdict stays with the evaluation committee.",
+        "zh": "投标符合性响应台账核对：读取台账（招标要求与投标响应，中英文列名均可），套用随包的版本化规则包（BC-001..BC-006）逐条核对，只列材料内部能指认的差异，不判合规、不认定责任。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-bid-qual-check",
+      "title": {
+        "en": "DSH Bid Qual Check",
+        "zh": "DSH Bid Qual Check"
+      },
+      "description": {
+        "en": "Walk a bidder qualification condition register row by row and point at exactly which row and column do not close the loop. it does not edit the material, does not judge compliance and leaves the verdict to the reviewer.",
+        "zh": "投标人资格条件核对表：读入 JSON/YAML 核对表，逐行指认哪一行、哪一栏没有闭环。不改原件、不判合规、不下结论。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "@perrylink/dsh-claim-check",
+      "title": {
+        "en": "DSH Claim Check",
+        "zh": "DSH Claim Check"
+      },
+      "description": {
+        "en": "Deterministic claim support checking for DeepSeek Harness: verbatim quote spans, number matching, labelled-value contradiction, negation and hedging polarity against the cited sentence, REP v1 evidence/claim/verdict records and SARIF output. a paraphrase is reported as insufficient, never as supported. Activate the REP core package alongside it.",
+        "zh": "确定性论断支撑检查：逐字引文跨度、数字匹配、标签值矛盾、否定与对冲极性对照被引句子，输出 REP v1 证据/论断/裁决记录与 SARIF。改写转述会被报为 insufficient，绝不报为 supported。 需同时启用 REP 核心包。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-customs-doc-check",
+      "title": {
+        "en": "DSH Customs Doc Check",
+        "zh": "DSH Customs Doc Check"
+      },
+      "description": {
+        "en": "Check a customs declaration register row by row: a list of which row, which column, and what to fix, with field-level findings tagged by rule ID. the verdict stays with the reviewer.",
+        "zh": "报关单证核对：读入一份报关单台账（中英文列名均可），按规则逐行指认哪一行、哪一列需要改，输出带规则 ID 的字段级发现。只核对台账自身，不判合规。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-dida",
+      "title": {
+        "en": "DSH Dida",
+        "zh": "DSH Dida（滴答清单）"
+      },
+      "description": {
+        "en": "Manage TickTick or Dida365 tasks in DSH and let the agent act on them. Requires an account token. Task data goes through the official MCP endpoint.",
+        "zh": "在 DSH 查看、添加、完成和改期滴答清单任务，也可由智能体调用。需账号令牌，任务数据会经过官方 MCP 端点。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-docx-redline",
+      "title": {
+        "en": "DSH DOCX Redline",
+        "zh": "DSH DOCX Redline"
+      },
+      "description": {
+        "en": "Local DOCX inspection and text-level diff for DeepSeek Harness: reads the OOXML package, reports per-part SHA-256 and structure counts, and supports roundtrip verification, revision counts, relationship checks and exact single-run text replacement. fully local, no network.",
+        "zh": "本地 DOCX 结构检查与文本级比对：读取 .docx 的 OOXML 包，输出逐部件 SHA-256 与结构计数，并支持往返校验、修订统计、关系检查与单 run 文本替换。全程本地、不联网。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-evidence-check",
+      "title": {
+        "en": "DSH Evidence Check",
+        "zh": "DSH Evidence Check"
+      },
+      "description": {
+        "en": "Evidence-list check for DeepSeek Harness: checks each row of an evidence list for completeness, source, date and numbering against a quoted rule pack and reports row/column-level gaps. read-only, no verdicts.",
+        "zh": "逐行核对证据清单的齐备、来源、日期与编号，输出「哪一行、哪一栏、差什么」的清单。套用逐条引文的规则包，只列材料内部可指认的差异，不改原件、不下结论。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-forecast-penalty",
+      "title": {
+        "en": "DSH Forecast Penalty",
+        "zh": "DSH Forecast Penalty"
+      },
+      "description": {
+        "en": "Forecast-accuracy penalty ledger check for DeepSeek Harness: verifies row completeness and penalty-fee arithmetic against a versioned rule pack and reports row/column-level differences. no compliance verdicts.",
+        "zh": "预测准确率考核台账核对：读取一份考核台账，按随包的版本化规则包核对齐备性与考核费用算术，输出「哪一行、哪一栏、差什么」的清单。不判合规、不认定责任。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-freight-audit",
+      "title": {
+        "en": "DSH Freight Audit",
+        "zh": "DSH Freight Audit"
+      },
+      "description": {
+        "en": "Local freight reconciliation for DeepSeek Harness: versioned rate cards, per-shipment accruals from base rate + per-kg rate × weight plus fuel percentage, cent-level variance, and xlsx workpaper + disputed-shipment CSV export. no network, no model calls, no uploads.",
+        "zh": "本地运费对账：费率卡版本化，按「基础价 + 每公斤价 × 重量」再叠加燃油百分比逐票算应计金额，以分为单位记差额，导出 xlsx 底稿与争议 CSV。不联网、不调用模型、不上传。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-ghg",
+      "title": {
+        "en": "DSH GHG",
+        "zh": "DSH GHG"
+      },
+      "description": {
+        "en": "Local GHG accounting for DeepSeek Harness: reads CSV or text-layer PDF electricity bills, computes Scope 2 emissions (tCO2e) with public grid factors, verifies row by row and exports a workpaper plus a partial ESRS E1 pack. fully local, no network.",
+        "zh": "本地温室气体核算：读取 CSV 或文本型 PDF 电费单，用公开电网因子算范围二排放（tCO2e），逐行复算并导出底稿与部分 ESRS E1 包。全程本地、不联网。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-hs-candidate",
+      "title": {
+        "en": "DSH HS Candidate",
+        "zh": "DSH HS Candidate"
+      },
+      "description": {
+        "en": "Local HS classification helper for DeepSeek Harness: proposes Top-3 candidate codes from a public tariff table with GIR references, validates code structure, computes RVC under three methods and lists the missing items of the 12-element classification record. no network, no model calls, no customs ruling.",
+        "zh": "纯本地 HS 归类助手：按公开税则表给出 Top-3 候选编码与 GIR 依据，校验编码结构、按三种口径算 RVC，并一次列出 12 项归类要素的缺项。不联网、不调用模型，也不替海关做裁定。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-irb",
+      "title": {
+        "en": "DSH IRB",
+        "zh": "DSH IRB"
+      },
+      "description": {
+        "en": "Check an ethics application against a starter checklist. Exports findings and suggested safeguards for human review. Activate the REP core package alongside it.",
+        "zh": "按清单检查伦理申请的材料和声明，导出缺项与建议保障措施供人工复核。 需同时启用 REP 核心包。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-learning-gap-check",
+      "title": {
+        "en": "DSH Learning Gap Check",
+        "zh": "DSH Learning Gap Check"
+      },
+      "description": {
+        "en": "Capability-gap and development-plan ledger check for DeepSeek Harness: reads a JSON/YAML ledger, checks level gaps, development actions, owners and deadlines against a replaceable rule pack and reports row/column-level differences. differences only, no verdicts.",
+        "zh": "能力差距与培养计划台账核对：读取 JSON/YAML 台账（员工表头加每项能力一行），按可替换的规则包核对等级差、培养措施、责任人与期限，返回「第几行、哪一栏、差什么」。只列差异，不下结论。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-manuscript-check",
+      "title": {
+        "en": "DSH Manuscript Check",
+        "zh": "DSH Manuscript Check"
+      },
+      "description": {
+        "en": "Check manuscript sections, disclosures, figures and submission files against a starter reporting checklist. Activate the REP core package alongside it.",
+        "zh": "投稿前核对稿件结构、声明、图表和投稿附件，列出有待补齐的内容。 需同时启用 REP 核心包。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-meta-analysis",
+      "title": {
+        "en": "DSH Meta Analysis",
+        "zh": "DSH Meta Analysis"
+      },
+      "description": {
+        "en": "Convert effect sizes, pool results, and calculate heterogeneity locally. Exports forest-plot data and evidence. Activate the REP core package alongside it.",
+        "zh": "在本机换算效应量，做固定或随机效应合并，计算异质性并导出森林图数据。 需同时启用 REP 核心包。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-notebook-capture",
+      "title": {
+        "en": "DSH Notebook Capture",
+        "zh": "DSH Notebook Capture"
+      },
+      "description": {
+        "en": "Inspect a notebook file for dependencies, cell execution order, seeds and outputs. Records hashes without running notebook cells. Activate the REP core package alongside it.",
+        "zh": "读取 Notebook 文件中的依赖、单元执行顺序、随机种子和输出。只静态检查文件并记录哈希。 需同时启用 REP 核心包。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-origin-rvc-check",
+      "title": {
+        "en": "DSH Origin RVC Check",
+        "zh": "DSH Origin RVC Check"
+      },
+      "description": {
+        "en": "Origin RVC ledger check for DeepSeek Harness: verifies the regional-value-content arithmetic and declaration basis row by row and reports row/column-level differences. the rule pack quotes no invented sources, no compliance verdicts, read-only.",
+        "zh": "原产地判定台账核对：逐行核对区域价值成分算术与申报口径，输出「哪一行、哪一栏、差什么」的清单。规则包不伪造引文，只列台账自身可机械判定的差异，不下合规结论、不修改原件。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-paper-doc-adapter",
+      "title": {
+        "en": "DSH Paper Doc Adapter",
+        "zh": "DSH Paper Doc Adapter"
+      },
+      "description": {
+        "en": "Exam-paper structure check for DeepSeek Harness: takes parsed exam material (header plus one row per question), checks question types, answers, scores and identifiers for internal consistency with eight rules and reports itemized differences. read-only, no verdicts.",
+        "zh": "试卷解析结果核对：把「表头 + 每题一行」的试卷解析材料交给它，按 8 条规则核对题型、答案、分值与标识的结构自洽，输出可逐条指认的差异。不改原件、不下结论。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-permit-report-check",
+      "title": {
+        "en": "DSH Permit Report Check",
+        "zh": "DSH Permit Report Check"
+      },
+      "description": {
+        "en": "Administrative-permit processing ledger check for DeepSeek Harness: verifies the ledger's own closure and consistency against a versioned rule pack and reports only itemized differences. no compliance verdicts, no liability determinations.",
+        "zh": "行政许可办理台账核对：读取申请人表头加每行一条申请的台账，按随包的版本化规则包核对台账自身的闭环与自洽，只列逐条可指认的差异。不判合规、不认定责任。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-phone-inbox",
+      "title": {
+        "en": "DSH Phone Inbox",
+        "zh": "DSH Phone Inbox"
+      },
+      "description": {
+        "en": "Inbound attachment inbox for DeepSeek Harness: lists the attachments the current session actually received through the phone/WeChat bridge, adopts a selected one into the workspace on demand and restores filenames mangled by the bridge. no new transport channel, dsh-wechat optional.",
+        "zh": "会话入站附件收件箱：列出当前会话通过手机（微信桥）实际收到的附件，按需把选中一份采纳进工作区，并恢复被桥压坏的文件名。不新开传输通道，dsh-wechat 为可选依赖。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-pim-lint",
+      "title": {
+        "en": "DSH PIM Lint",
+        "zh": "DSH PIM Lint"
+      },
+      "description": {
+        "en": "Local PIM catalog lint for DeepSeek Harness: reads a UTF-8 CSV, checks required fields, duplicate SKUs, GTIN check digits and price precision, and reports each issue as SKU / field / error code. no network, no model calls, no file changes.",
+        "zh": "本地 PIM 商品目录 lint：读 UTF-8 CSV，校验必填字段、重复 SKU、GTIN 校验位与价格精度，把每条问题写成「SKU / 字段 / 错误码」。不联网、不调用模型、不改原文件。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-pleading-draft",
+      "title": {
+        "en": "DSH Pleading Draft",
+        "zh": "DSH Pleading Draft"
+      },
+      "description": {
+        "en": "Pleading element check for DeepSeek Harness: verifies element completeness and consistency per claim against a versioned rule pack and reports row/column-level gaps with remediation hints. differences only, verdicts left to the reviewer.",
+        "zh": "起诉状要素核对：读取起诉状（或申请书）要素核对表，按随包的版本化规则包核对各项诉请的要素齐备与自洽，输出「哪一行、哪一栏、差什么、怎么补」的清单。只列差异，结论留给复核人。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-policy-brief-draft",
+      "title": {
+        "en": "DSH Policy Brief Draft",
+        "zh": "DSH Policy Brief Draft"
+      },
+      "description": {
+        "en": "Policy-brief element check for DeepSeek Harness: verifies element completeness and data freshness against a quoted rule pack and reports row/column-level differences. read-only, no network, no model calls.",
+        "zh": "政策专报要素核对：读入专报要素核对表，按逐条引文的规则包核对要素齐备与数据新鲜度，输出「哪一行、哪一栏、差什么」的清单。不改原件、不联网、不调用模型。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-policy-ledger",
+      "title": {
+        "en": "DSH Policy Ledger",
+        "zh": "DSH Policy Ledger"
+      },
+      "description": {
+        "en": "Read-only install doctor for DeepSeek Harness: extracts declared capabilities from a local npm tarball and derives an R0–R3 risk level, asserts tarball-vs-snapshot consistency, and attributes install-log failures to a stage (resolve/fetch/extract/link/build/activate) with root cause and next actions. no environment changes, no package code execution.",
+        "zh": "只读安装体检：从本地 npm tarball 抽取包声明的能力并按固定规则折算 R0–R3 风险，逐条断言 tarball 与快照是否一致，并把安装日志归因到 resolve/fetch/extract/link/build/activate 中的某一阶段、给出根因与下一步动作。不改环境、不执行包内代码。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-ap-three-way",
+      "title": {
+        "en": "DSH AP Three Way",
+        "zh": "DSH AP Three Way"
+      },
+      "description": {
+        "en": "Accounts-payable three-way match: import invoices, purchase orders and goods receipts, apply the tolerance policy and export the exception workpaper — 4 ap.* tools.",
+        "zh": "应付三单匹配：导入发票、采购订单与收货单，按容差策略匹配并导出异常底稿——4 个 ap.* 工具。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-bankrec",
+      "title": {
+        "en": "DSH Bankrec",
+        "zh": "DSH Bankrec"
+      },
+      "description": {
+        "en": "Bank statement reconciliation: ingest CAMT.053 and MT940, match them against ledger entries and export the workpaper — 6 bankrec.* tools.",
+        "zh": "银行对账单核对：导入 CAMT.053 与 MT940，与账簿条目匹配并导出工作底稿——6 个 bankrec.* 工具。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-einvoice",
+      "title": {
+        "en": "DSH Einvoice",
+        "zh": "DSH Einvoice"
+      },
+      "description": {
+        "en": "Chinese e-invoice (OFD/XML) inbox: ingest, parse, deduplicate, queue for review, record receipts and archive locally — 10 invoice.* tools, nothing uploaded.",
+        "zh": "中文电子发票（OFD/XML）收件箱：导入、解析、去重、进入复核队列、登记回执并本地归档——10 个 invoice.* 工具，数据不出本机。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-legal-intake",
+      "title": {
+        "en": "DSH Legal Intake",
+        "zh": "DSH Legal Intake"
+      },
+      "description": {
+        "en": "Legal request intake: read requests out of EML, deduplicate threads and export the intake ledger — 2 legal.* tools.",
+        "zh": "法务需求收件：从 EML 读取需求、按线程去重并导出收件台账——2 个 legal.* 工具。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-legal-clause",
+      "title": {
+        "en": "DSH Legal Clause",
+        "zh": "DSH Legal Clause"
+      },
+      "description": {
+        "en": "Contract clause work: build the clause tree, map it against a 12-key playbook, register the playbook and export the unresolved report — 5 legal.* tools.",
+        "zh": "合同条款处理：构建条款树、按 12 项 playbook 映射、登记 playbook 并导出未决清单——5 个 legal.* 工具。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-locator",
+      "title": {
+        "en": "DSH Locator",
+        "zh": "DSH Locator"
+      },
+      "description": {
+        "en": "Search and reveal files using a local index and DSH tools. Home-folder indexing is enabled by default. Ships a native indexer for supported platforms.",
+        "zh": "用本地索引在 DSH 搜索、查看和定位文件。默认索引用户主目录，支持的平台使用随包原生索引器。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-sherlock",
+      "title": {
+        "en": "DSH Sherlock",
+        "zh": "DSH Sherlock"
+      },
+      "description": {
+        "en": "Check a public username against supported websites. Queries are sent to those sites and results may need manual confirmation.",
+        "zh": "检查用户名在支持的公开网站上是否存在。查询会发送到对应网站，结果可能需要人工确认。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-travel-recon",
+      "title": {
+        "en": "DSH Travel Recon",
+        "zh": "DSH Travel Recon"
+      },
+      "description": {
+        "en": "Travel expense reconciliation: ingest orders, invoices and card lines, deduplicate, run the three-way match and a read-only policy check, then export — 5 travel.* tools.",
+        "zh": "差旅费用核对：导入订单、发票与卡流水，去重、三单匹配与只读政策校验后导出——5 个 travel.* 工具。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-ota-review-check",
+      "title": {
+        "en": "DSH OTA Review Check",
+        "zh": "DSH OTA Review Check"
+      },
+      "description": {
+        "en": "OTA guest-review reply ledger check: content and score, reply deadlines, responder, issue category and duplicate review ids.",
+        "zh": "OTA 点评回复台账核对：点评内容与评分、回复时限、回复人、问题分类与编号重复。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-pipeline-check",
+      "title": {
+        "en": "DSH Pipeline Check",
+        "zh": "DSH Pipeline Check"
+      },
+      "description": {
+        "en": "Project document chain integrity check: stage order, completeness and amount parseability.",
+        "zh": "项目全流程文件链条核对：环节顺序、文件齐备与金额可解析。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-power-ticket-check",
+      "title": {
+        "en": "DSH Power Ticket Check",
+        "zh": "DSH Power Ticket Check"
+      },
+      "description": {
+        "en": "Checks an electrical work permit for the elements it must carry and for the issue and permission sequence the current electrical safety regulations require. Reports the differences it finds. it does not judge whether the work was safe or whether the permit was validly authorised.",
+        "zh": "依据现行电力安全工作规程，核对电力工作票应载明的要素，以及签发与许可的先后顺序。只报告发现的差异，不判定作业是否安全、许可是否有效。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-ppap-check",
+      "title": {
+        "en": "DSH PPAP Check",
+        "zh": "DSH PPAP Check"
+      },
+      "description": {
+        "en": "PPAP submission level and element completeness check.",
+        "zh": "PPAP 提交等级与资料要素核对。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-qms-capa",
+      "title": {
+        "en": "DSH QMS Capa",
+        "zh": "DSH QMS Capa"
+      },
+      "description": {
+        "en": "QMS NCR, CAPA and 8D tracking with batch and impact assessment.",
+        "zh": "QMS 不合格品、CAPA 与 8D 闭环跟踪。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-medrec-qc",
+      "title": {
+        "en": "DSH Medrec Qc",
+        "zh": "DSH Medrec Qc"
+      },
+      "description": {
+        "en": "Checks a medical-record front sheet for field completeness and for internal logical contradictions between its fields, against 国卫办医发〔2016〕24号 and other published documents. Lists what is missing or inconsistent for a human to review。it does not assess clinical correctness.",
+        "zh": "依据国卫办医发〔2016〕24号等公开文件，核对病案首页各字段的齐备性与字段间的逻辑矛盾。列出缺失或不一致之处供人复核，不评价临床正确性。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-icd-rule-check",
+      "title": {
+        "en": "DSH ICD Rule Check",
+        "zh": "DSH ICD Rule Check"
+      },
+      "description": {
+        "en": "Flags ICD coding pairs that need a coder's attention - dagger and asterisk combinations, combination codes - against GB/T 14396-2016 and published ICD usage notes. Reports the pairs it finds rather than resolving them. the coding decision stays with the coder.",
+        "zh": "依据 GB/T 14396-2016 与公开的 ICD 使用说明，提示需要编码员关注的 ICD 编码配对——剑号与星号组合、合并编码。只报告发现的配对，不代为判定，编码结论仍由编码员作出。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-ifc-qto",
+      "title": {
+        "en": "DSH IFC Qto",
+        "zh": "DSH IFC Qto"
+      },
+      "description": {
+        "en": "IFC model quantity take-off with CSV export for quantity checking.",
+        "zh": "IFC 模型工程量提取与 CSV 导出核对。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-lawcite-adapter",
+      "title": {
+        "en": "DSH Lawcite Adapter",
+        "zh": "DSH Lawcite Adapter"
+      },
+      "description": {
+        "en": "Legal citation check: statute name, article number, text and validity status.",
+        "zh": "法条引用名称、条号、原文与效力状态核对。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-lc-doc-check",
+      "title": {
+        "en": "DSH LC Doc Check",
+        "zh": "DSH LC Doc Check"
+      },
+      "description": {
+        "en": "Letter of credit document check against UCP600: documents, periods and discrepancies.",
+        "zh": "信用证单据与 UCP600 不符点核对。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-nurse-record-check",
+      "title": {
+        "en": "DSH Nurse Record Check",
+        "zh": "DSH Nurse Record Check"
+      },
+      "description": {
+        "en": "Checks nursing records for entry timing, signatures and assessment-form completeness, against 《病历书写基本规范》 and other published documents. Reports what is missing or out of sequence for a human to review.",
+        "zh": "依据《病历书写基本规范》等公开文件，核对护理记录的书写时限、签名，以及评估表的完整性。列出缺失或次序不符之处供人复核。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-site-log-check",
+      "title": {
+        "en": "DSH Site Log Check",
+        "zh": "DSH Site Log Check"
+      },
+      "description": {
+        "en": "Checks supervision logs for cross-day continuity and for on-site supervision coverage, against GB/T 50319-2013 and other published documents. Reports gaps and coverage differences for a human to review.",
+        "zh": "依据 GB/T 50319-2013 等公开文件，核对监理日志的跨日连续性，以及旁站监理的覆盖情况。列出缺漏与覆盖差异供人复核。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-gongwen-word-check",
+      "title": {
+        "en": "DSH Gongwen Word Check",
+        "zh": "DSH Gongwen Word Check"
+      },
+      "description": {
+        "en": "Checks an official document's type and reference number against the published GB/T 9704 format. reports mismatches only, not content.",
+        "zh": "依据 GB/T 9704 核对党政机关公文的文种与发文字号（含年份括号与编号格式）。只报告格式不符，不评价内容。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-hazchem-check",
+      "title": {
+        "en": "DSH Hazchem Check",
+        "zh": "DSH Hazchem Check"
+      },
+      "description": {
+        "en": "Hazardous-chemical register internal consistency: hazard class, stored quantity vs threshold, major-hazard verdict, SDS and CAS checks.",
+        "zh": "核对危险化学品台账内部自洽性：危险性类别、储存量与临界量、重大危险源判定、SDS 编号与 CAS 是否重复。只列差异供人复核。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-fmea-table-check",
+      "title": {
+        "en": "DSH FMEA Table Check",
+        "zh": "DSH FMEA Table Check"
+      },
+      "description": {
+        "en": "Checks an FMEA worksheet for element completeness and for the arithmetic that follows from it - severity, occurrence and detection against the resulting risk priority number - following published FMEA method standards. Reports inconsistencies. it does not judge whether the ratings themselves are appropriate.",
+        "zh": "参照公开的 FMEA 方法标准，核对 FMEA 分析表的要素齐备性，以及严重度、发生度、探测度与风险顺序数之间的算术一致性。只报告不一致之处，不评价各项评分数值是否恰当。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-tender-matrix",
+      "title": {
+        "en": "DSH Tender Matrix",
+        "zh": "DSH Tender Matrix"
+      },
+      "description": {
+        "en": "Checks a bid evaluation scoring matrix for internal arithmetic consistency: that each factor's maximum, the scores recorded and the total agree with each other. Reports the differences it finds. it does not judge whether the evaluation itself was correct or fair.",
+        "zh": "核对评标因素评分矩阵的内部算术自洽性：各因素分值上限、所记分值与合计之间是否互相一致。只报告发现的差异，不评价评标本身是否正确或公正。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-score",
+      "title": {
+        "en": "DSH Score",
+        "zh": "DSH Score"
+      },
+      "description": {
+        "en": "Evaluate plugins using installation, package, repository and maintenance evidence. Some probes call the local DSH, gh and npm CLIs.",
+        "zh": "按安装、包结构、仓库和维护信号评估 DSH 插件。部分探测会使用本机 DSH、gh 和 npm 命令。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-famling",
+      "title": {
+        "en": "Famling",
+        "zh": "Famling"
+      },
+      "description": {
+        "en": "Keep a pixel companion in the DSH sidebar footer, with quiet hours, embedded animations and local content packs. The package declares a noncommercial license.",
+        "zh": "在 DSH 侧栏底部显示像素桌宠，支持安静时段、内置动画和本地内容包。软件包声明非商业许可。"
+      },
+      "category": "appearance"
+    },
+    {
+      "name": "dsh-statcheck",
+      "title": {
+        "en": "DSH Statcheck",
+        "zh": "DSH Statcheck"
+      },
+      "description": {
+        "en": "Recompute the statistics reported in a manuscript and flag self-inconsistent p values for DeepSeek Harness: APA-style t/F/chi-square/r/z parsing, two-tailed and upper-tail p values, CI-versus-p checks and exact character locators.",
+        "zh": "为 DeepSeek Harness 重算论文中报告的统计量并标记自相矛盾的 p 值：解析 APA 风格 t/F/卡方/r/z，计算双尾与上尾 p 值，检查 CI 与 p 值一致性并给出精确字符定位。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-zotero-bridge",
+      "title": {
+        "en": "DSH Zotero Bridge",
+        "zh": "DSH Zotero Bridge"
+      },
+      "description": {
+        "en": "Read-only Zotero bridge for DeepSeek Harness (Local API and sqlite copy).",
+        "zh": "面向 DeepSeek Harness 的只读 Zotero 桥接（本地 API 与 sqlite 副本）。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "@perrylink/dsh-research-core",
+      "title": {
+        "en": "REP Research Core",
+        "zh": "REP Research Core"
+      },
+      "description": {
+        "en": "Provide shared evidence schemas, a content-addressed store, SARIF output and a verification CLI for REP-compatible research plugins.",
+        "zh": "为兼容 REP 的科研插件提供共享证据结构、内容寻址存储、SARIF 导出和校验命令。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-research-skills",
+      "title": {
+        "en": "DSH Research Skills",
+        "zh": "DSH Research Skills"
+      },
+      "description": {
+        "en": "Add seven skills for literature review, citation and evidence checks, manuscript review, reviewer replies, reproducibility and data planning.",
+        "zh": "增加七项科研技能，覆盖文献综述、引文和证据核对、稿件检查、审稿回复、可复现性和数据管理规划。"
+      },
+      "category": "skills"
+    },
+    {
+      "name": "dsh-retraction-watch",
+      "title": {
+        "en": "DSH Retraction Watch",
+        "zh": "DSH Retraction Watch"
+      },
+      "description": {
+        "en": "Retraction and correction monitoring for DeepSeek Harness: Crossref work records plus the verified filter=updates query, per-DOI status (retracted/concern/corrected/notice/clear/unknown), an append-only timeline with change detection, REP v1 evidence snapshots and SARIF output. clear means no registered notice, never proof of validity.",
+        "zh": "面向 DeepSeek Harness 的撤稿与更正监测：Crossref 作品记录与经核验的 filter=updates 查询、逐 DOI 状态（retracted/concern/corrected/notice/clear/unknown）、带变更检测的仅追加时间线、REP v1 证据快照与 SARIF 输出。clear 仅表示无登记通告，不证明有效性。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-sr-ledger",
+      "title": {
+        "en": "DSH SR Ledger",
+        "zh": "DSH SR Ledger"
+      },
+      "description": {
+        "en": "Systematic-review ledger for DeepSeek Harness: PRISMA 2020 protocol revisions, imported records, dual screening with explicit conflict adjudication, RoB 2 / ROBINS-I / GRADE assessments, derived PRISMA counts with integrity issues, and an export bundle backed by a hash-chained append-only journal.",
+        "zh": "面向 DeepSeek Harness 的系统综述台账：PRISMA 2020 方案修订、导入记录、双人筛选中显式冲突裁决、RoB 2/ROBINS-I/GRADE 评估、带完整性问题的 PRISMA 计数，以及由哈希链仅追加日志支撑的导出包。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-clinic",
+      "title": {
+        "en": "DSH Clinic",
+        "zh": "DSH Clinic"
+      },
+      "description": {
+        "en": "Diagnose plugin problems and check whether a DSH setup is ready. Includes recovery guidance.",
+        "zh": "诊断 DSH 插件问题并检查运行条件，提供故障恢复指引。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-codemod",
+      "title": {
+        "en": "DSH Codemod",
+        "zh": "DSH Codemod"
+      },
+      "description": {
+        "en": "Add migration skills and codemods for changes to the DSH plugin APIs.",
+        "zh": "为 DSH 插件 API 变更提供迁移技能和代码转换工具。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-ar-aging",
+      "title": {
+        "en": "DSH AR Aging",
+        "zh": "DSH AR Aging"
+      },
+      "description": {
+        "en": "Turn accounts-receivable detail CSV into an aging table: buckets, per-customer totals, overdue ratio, top overdue customers and CSV export.",
+        "zh": "把应收明细 CSV 变成账龄表：分桶、客户汇总、逾期占比、Top 逾期客户，再导出 CSV。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-ar-collection",
+      "title": {
+        "en": "DSH AR Collection",
+        "zh": "DSH AR Collection"
+      },
+      "description": {
+        "en": "Turn accounts-receivable detail into a prioritized collection plan, reminder-letter drafts and a collection CSV, computed locally.",
+        "zh": "把应收明细变成按优先级排好的催收计划、催收函草稿和催收清单 CSV，全程本地计算。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-attendance-check",
+      "title": {
+        "en": "DSH Attendance Check",
+        "zh": "DSH Attendance Check"
+      },
+      "description": {
+        "en": "Reconcile a punch-in CSV into per-person daily hours, overtime, over-limit days, missing punches and rest shortfalls, with a monthly summary and CSV export.",
+        "zh": "把打卡明细 CSV 核对成每人的日工时、加班、超限日、缺卡与休息不足，按月汇总并导出核对表。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-contract-renewal",
+      "title": {
+        "en": "DSH Contract Renewal",
+        "zh": "DSH Contract Renewal"
+      },
+      "description": {
+        "en": "Register contracts and group them by expired, in renewal window or due within N days as of a given date, with CSV export.",
+        "zh": "登记合同并按指定日期分组查看已过期、落在续签窗口与 N 天内到期，导出 CSV。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-import-customs-check",
+      "title": {
+        "en": "DSH Import Customs Check",
+        "zh": "DSH Import Customs Check"
+      },
+      "description": {
+        "en": "Cross-check invoice, packing list, bill of lading and customs declaration field by field, and list missing items among the declaration's 12 header elements.",
+        "zh": "把发票、装箱单、提单、报关单四份进口单证逐字段对照，并列出报关单 12 项表头要素的缺项。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-labor-contract",
+      "title": {
+        "en": "DSH Labor Contract",
+        "zh": "DSH Labor Contract"
+      },
+      "description": {
+        "en": "Check a labor-contract text and an employee-contract CSV for nine required clauses, probation limits, the 80% probation-wage floor and batch expiry, then export a review CSV.",
+        "zh": "把劳动合同正文与员工合同 CSV 核对成问题清单：九项必备条款、试用期上限、试用期工资 80% 下限、批量到期与竞业限制，导出带 sha256 的复核 CSV。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-dataset-card",
+      "title": {
+        "en": "DSH Dataset Card",
+        "zh": "DSH Dataset Card"
+      },
+      "description": {
+        "en": "Dataset documentation for DeepSeek Harness: bounded CSV/TSV/JSON/JSONL profiling, redacted PII detection, a Datasheet-style card, and Markdown/JSON/SARIF output with REP evidence that stores the analysis but never the raw data.",
+        "zh": "面向 DeepSeek Harness 的数据集文档：有界 CSV/TSV/JSON/JSONL 画像、脱敏 PII 检测、Datasheet 式卡片，以及 Markdown/JSON/SARIF 输出与只存分析不存原始数据的 REP 证据。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-dmp",
+      "title": {
+        "en": "DSH DMP",
+        "zh": "DSH DMP"
+      },
+      "description": {
+        "en": "Data-management-plan tooling for DeepSeek Harness: a ten-section scaffold with prompts and completeness/consistency checks (datasets, personal data, sharing, retention, backup, repository/license/DOI, contact), plus Markdown/JSON/SARIF export. Checks are internal consistency checks, not funder-template certification.",
+        "zh": "面向 DeepSeek Harness 的数据管理计划（DMP）工具：十节脚手架与提示、完整性与一致性检查（数据集、个人数据、共享冲突、保存期限、备份、仓库/许可/DOI、联系人），输出 Markdown/JSON/SARIF。检查是内部一致性检查，不是资助方模板认证。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-doc-anchor",
+      "title": {
+        "en": "DSH Doc Anchor",
+        "zh": "DSH Doc Anchor"
+      },
+      "description": {
+        "en": "Turn PDF/HTML/LaTeX/Markdown documents into locatable evidence surfaces for DeepSeek Harness: content-addressed snapshots of the original bytes plus extracted text, page/section/paragraph/char anchors, table grids and a REP v1 evidence record.",
+        "zh": "把 PDF/HTML/LaTeX/Markdown 文档变成可定位证据面：内容寻址快照、页/节/段/字符锚点、表格网格与 REP v1 证据记录。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-eval-pack",
+      "title": {
+        "en": "DSH Eval Pack",
+        "zh": "DSH Eval Pack"
+      },
+      "description": {
+        "en": "Public/synthetic eval-pack lint and deterministic JSON grader. not a validated benchmark.",
+        "zh": "公开/合成评测包的 lint 与确定性 JSON 评分器。不是经过验证的基准。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-export-ctl-check",
+      "title": {
+        "en": "DSH Export Ctl Check",
+        "zh": "DSH Export Ctl Check"
+      },
+      "description": {
+        "en": "Export-control item ledger check for DeepSeek Harness: check export-control item ledgers against the Export Control Law of the PRC. Flags discrepancies only and makes no legal conclusion.",
+        "zh": "出口管制物项台账核对：依据《中华人民共和国出口管制法》。仅提示差异，不作出定性结论。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-gongwen-flow-check",
+      "title": {
+        "en": "DSH Gongwen Flow Check",
+        "zh": "DSH Gongwen Flow Check"
+      },
+      "description": {
+        "en": "Official-document routing record check for DeepSeek Harness: check routing records against the Regulations on the Handling of Official Documents of Party and Government Organs (Zhongbanfa [2012] No. 14). Flags discrepancies only and makes no legal conclusion.",
+        "zh": "公文流转记录核对：依据《党政机关公文处理工作条例》（中办发〔2012〕14号）。仅提示差异，不作出定性结论。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-guard-plan-qc",
+      "title": {
+        "en": "DSH Guard Plan Qc",
+        "zh": "DSH Guard Plan Qc"
+      },
+      "description": {
+        "en": "Labor-protection equipment allocation check: check item names, specifications and allocated quantities against published allocation standards. flags discrepancies only and makes no legal conclusion.",
+        "zh": "劳保用品配置核对：按公开配备标准核对品名规格与配置数量，仅提示差异，不作出定性结论。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-hidden-risk-map",
+      "title": {
+        "en": "DSH Hidden Risk Map",
+        "zh": "DSH Hidden Risk Map"
+      },
+      "description": {
+        "en": "Hazard and risk map check for DeepSeek Harness: check hazard/risk maps against the Criteria for Identifying Major Accident Hazards in Industrial and Trade Enterprises (Order No. 10 of the Ministry of Emergency Management). Flags discrepancies only and makes no legal conclusion.",
+        "zh": "隐患风险图谱核对：依据《工贸企业重大事故隐患判定标准》（应急管理部令第10号）。仅提示差异，不作出定性结论。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-image-integrity",
+      "title": {
+        "en": "DSH Image Integrity",
+        "zh": "DSH Image Integrity"
+      },
+      "description": {
+        "en": "Image integrity checks for DeepSeek Harness: zero-dependency 8-bit PNG decoding with block fingerprints and NCC confirmation to find duplicated or mirrored regions within or across figures, plus REP evidence and Markdown/SARIF reports.",
+        "zh": "面向 DeepSeek Harness 的图像完整性检查：零依赖 8-bit PNG 解码，用块指纹与 NCC 确认查找同一图内或两图之间重复/镜像的区域，并输出 REP 证据与 Markdown/SARIF 报告。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-lit-harvest",
+      "title": {
+        "en": "DSH Lit Harvest",
+        "zh": "DSH Lit Harvest"
+      },
+      "description": {
+        "en": "Deterministic multi-source literature harvesting for DeepSeek Harness.",
+        "zh": "面向 DeepSeek Harness 的确定性多源文献采集。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-param-repair",
+      "title": {
+        "en": "DSH Param Repair",
+        "zh": "DSH Param Repair"
+      },
+      "description": {
+        "en": "Vendor parameter mapping and deterministic JSON repair for DeepSeek Harness: map temperature/top_p/max_tokens/stop/system across 11 vendors and repair broken JSON tool output with auditable rules.",
+        "zh": "面向 DeepSeek Harness 的厂商参数映射与确定性 JSON 修复：在 11 家服务商之间映射 temperature/top_p/max_tokens/stop/system，并按可审计规则修复损坏的 JSON 工具输出。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-pdf-table",
+      "title": {
+        "en": "DSH PDF Table",
+        "zh": "DSH PDF Table"
+      },
+      "description": {
+        "en": "Extract tables from text-layer PDFs into CSV.",
+        "zh": "把带文字层的 PDF 表格提取成 CSV。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-primer",
+      "title": {
+        "en": "DSH Primer",
+        "zh": "DSH Primer"
+      },
+      "description": {
+        "en": "Add local guides and examples for developing DeepSeek Harness plugins.",
+        "zh": "添加 DeepSeek Harness 插件开发指南和运行示例。"
+      },
+      "category": "skills"
+    },
+    {
+      "name": "dsh-progress-payment",
+      "title": {
+        "en": "DSH Progress Payment",
+        "zh": "DSH Progress Payment"
+      },
+      "description": {
+        "en": "Verify a progress-payment claim against contract baselines: integer-cent amounts, cumulative ratio, over-quantity/unit-price/duplicate issues and an audit CSV.",
+        "zh": "按合同基准确认本期进度款：整数分金额、累计比例、超量/单价/重复项问题清单，导出审核底稿 CSV。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-protest-deadline",
+      "title": {
+        "en": "DSH Protest Deadline",
+        "zh": "DSH Protest Deadline"
+      },
+      "description": {
+        "en": "Challenge and complaint deadline ledger check for DeepSeek Harness: check deadline ledgers against the Measures for Handling Challenges and Complaints in Government Procurement (Ministry of Finance Order No. 94). Flags discrepancies only and makes no conclusive judgment.",
+        "zh": "质疑与投诉期限台账核对：依据《政府采购质疑和投诉办法》（财政部令第94号）。仅提示差异，不作出定性结论。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-railway-window",
+      "title": {
+        "en": "DSH Railway Window",
+        "zh": "DSH Railway Window"
+      },
+      "description": {
+        "en": "Railway waybill and time-window check for DeepSeek Harness: check waybills and time windows against the Measures for Safety Management of Construction on Railway Operating Lines. Flags discrepancies only and makes no conclusive judgment.",
+        "zh": "铁路运单与时效核对：依据《铁路营业线施工安全管理办法》。仅提示差异，不作出定性结论。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-repro-audit",
+      "title": {
+        "en": "DSH Repro Audit",
+        "zh": "DSH Repro Audit"
+      },
+      "description": {
+        "en": "Collect reproducibility evidence from a local project, including Git state, dependencies and input hashes. Compares the record with the current tree.",
+        "zh": "从本地项目收集 Git 状态、依赖和输入哈希等可复现性证据，并与当前文件对照。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-response-letter",
+      "title": {
+        "en": "DSH Response Letter",
+        "zh": "DSH Response Letter"
+      },
+      "description": {
+        "en": "Reviewer-response workflow for DeepSeek Harness: parse reviewer comments with locators, check point-by-point coverage by response number, and export a Markdown response letter with a coverage table. parsed reviews become REP evidence.",
+        "zh": "面向 DeepSeek Harness 的审稿回复工作流：解析审稿意见并定位，按回复编号检查逐条覆盖（缺失、过短、多余、重复），导出带覆盖表的 Markdown 回复信。解析后的意见成为 REP 证据。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-review-reply-check",
+      "title": {
+        "en": "DSH Review Reply Check",
+        "zh": "DSH Review Reply Check"
+      },
+      "description": {
+        "en": "Review-comment response check for DeepSeek Harness: check responses to reviewer comments against the Chinese University Science and Technology Journal Editing Standard. Flags discrepancies only and makes no conclusive judgment.",
+        "zh": "评审意见回复核对：依据《中国高校科技期刊编排规范》。仅提示差异，不作出定性结论。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-rfq-compare",
+      "title": {
+        "en": "DSH RFQ Compare",
+        "zh": "DSH RFQ Compare"
+      },
+      "description": {
+        "en": "Compare supplier quotes for the same materials: lowest and next-lowest price, price gap and lead time, flagging below-cost, over-budget or expired quotes, then export a CSV.",
+        "zh": "把多家供应商对同一批物料的报价压进一张表：最低价、次低价、价差与交期，标出低于成本线、超预算或已过期的报价，导出 CSV。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-cite-verify",
+      "title": {
+        "en": "DSH Cite Verify",
+        "zh": "DSH Cite Verify"
+      },
+      "description": {
+        "en": "Verify that a citation exists and that its metadata is right for DeepSeek Harness: DOI/PMID/arXiv/BibTeX resolution through Crossref, PubMed and arXiv, field-by-field metadata comparison, and a REP v1 evidence record. Activate the REP core package alongside it.",
+        "zh": "为 DeepSeek Harness 核对引文是否存在、元数据是否正确：经 Crossref、PubMed、arXiv 解析 DOI、PMID、arXiv 与 BibTeX，逐字段比较元数据，并生成 REP v1 证据记录。 需同时启用 REP 核心包。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-drill-script-check",
+      "title": {
+        "en": "DSH Drill Script Check",
+        "zh": "DSH Drill Script Check"
+      },
+      "description": {
+        "en": "Emergency drill script check for DeepSeek Harness: check drill scripts against the Basic Specification for Emergency Drills of Production Safety Accidents. Flags discrepancies only and makes no legal conclusion.",
+        "zh": "应急演练脚本核对：依据《生产安全事故应急演练基本规范》。仅提示差异，不作出定性结论。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-emergency-plan",
+      "title": {
+        "en": "DSH Emergency Plan",
+        "zh": "DSH Emergency Plan"
+      },
+      "description": {
+        "en": "Check emergency-plan documents against referenced requirements and report missing or inconsistent fields for human review.",
+        "zh": "按引用条文核对应急预案材料，列出缺项和前后不一致之处供人工复核。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-research-suite-plugin",
+      "title": {
+        "en": "DSH Research Suite",
+        "zh": "DSH Research Suite"
+      },
+      "description": {
+        "en": "Install and activate a set of research plugins for citation checks, evidence, systematic reviews and reports. A doctor tool checks the installed components.",
+        "zh": "组合安装并启用引文核对、证据、系统综述和报告等科研插件，内含检查组件状态的工具。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-rulefile-check",
+      "title": {
+        "en": "DSH Rulefile Check",
+        "zh": "DSH Rulefile Check"
+      },
+      "description": {
+        "en": "Self-check of the rule library for DeepSeek Harness: check rule files against this plugin family's clause-citation discipline and check-engine contract (both self-defined, not national standards). Flags discrepancies only and makes no conclusive judgment.",
+        "zh": "规则库自身核对：依据本插件家族的条款引用纪律（自定纪律，非国家标准）、本插件家族的检查引擎契约（自定纪律，非国家标准）。仅提示差异，不作出定性结论。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-safety-brief-check",
+      "title": {
+        "en": "DSH Safety Brief Check",
+        "zh": "DSH Safety Brief Check"
+      },
+      "description": {
+        "en": "Safety-briefing record check for DeepSeek Harness: check safety briefing records against the Unified Safety Technical Code for Construction (GB 50870-2013) and the Regulations on the Administration of Work Safety in Construction Projects (JGJ 59-2011). Flags discrepancies only and makes no conclusive judgment.",
+        "zh": "安全交底记录核对：依据《建筑施工安全技术统一规范》《建设工程安全生产管理条例》（GB 50870-2013、JGJ 59-2011）。仅提示差异，不作出定性结论。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-settlement-docs",
+      "title": {
+        "en": "DSH Settlement Docs",
+        "zh": "DSH Settlement Docs"
+      },
+      "description": {
+        "en": "Check completion-settlement document completeness against a checklist: missing files, insufficient copies, unsigned or unstamped items, then export a review table CSV.",
+        "zh": "按资料清单核对竣工结算资料齐套性：缺件、份数不足、未签字或未盖章项，导出核对表 CSV。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-soilwater-check",
+      "title": {
+        "en": "DSH Soilwater Check",
+        "zh": "DSH Soilwater Check"
+      },
+      "description": {
+        "en": "Soil and groundwater investigation record check for DeepSeek Harness: check investigation records against the Technical Guidelines for Soil Pollution Investigation of Construction Land and the Technical Specifications for Groundwater Environmental Monitoring. Flags discrepancies only and makes no conclusive judgment.",
+        "zh": "土壤与地下水调查记录核对：依据《建设用地土壤污染状况调查技术导则》《地下水环境监测技术规范》。仅提示差异，不作出定性结论。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-sop-sync-check",
+      "title": {
+        "en": "DSH SOP Sync Check",
+        "zh": "DSH SOP Sync Check"
+      },
+      "description": {
+        "en": "Standard operating procedure (SOP) check for DeepSeek Harness: check SOPs against IATF 16949 and the automotive core-tools manuals. Flags discrepancies only and makes no conclusive judgment.",
+        "zh": "作业规程（SOP）核对：依据 IATF 16949／汽车行业核心工具手册。仅提示差异，不作出定性结论。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-source-cnki",
+      "title": {
+        "en": "DSH Source CNKI",
+        "zh": "DSH Source CNKI"
+      },
+      "description": {
+        "en": "Import locally exported Chinese citations from RIS, EndNote or tagged text. Supports GB/T 7714-2015 and APA 7 citation styles. Activate the REP core package alongside it.",
+        "zh": "从本地 RIS、EndNote 或带标签文本导入中文文献，并按 GB/T 7714-2015 或 APA 7 生成引用。 需同时启用 REP 核心包。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-store-replenish",
+      "title": {
+        "en": "DSH Store Replenish",
+        "zh": "DSH Store Replenish"
+      },
+      "description": {
+        "en": "Turn store-SKU sales and inventory data into per-SKU replenishment suggestions and per-store replenishment orders, rounding up to the minimum order quantity. pure local computation.",
+        "zh": "把门店-商品销售库存表变成按 SKU 的补货建议与按门店汇总的补货单，按起订量向上取整。纯本地计算。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-warranty-calc",
+      "title": {
+        "en": "DSH Warranty Calc",
+        "zh": "DSH Warranty Calc"
+      },
+      "description": {
+        "en": "Vehicle warranty ledger check for DeepSeek Harness: check warranty ledgers against the Provisions on the Responsibility for Repair, Replacement and Return of Household Automotive Products (SAMR Order No. 43). Flags discrepancies only and makes no conclusive judgment.",
+        "zh": "家用汽车三包台账核对：依据《家用汽车产品修理更换退货责任规定》（市场监管总局令第43号）。仅提示差异，不作出定性结论。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-provider-params",
+      "title": {
+        "en": "DSH Provider Params",
+        "zh": "DSH Provider Params"
+      },
+      "description": {
+        "en": "Map common model parameters across 11 providers and repair malformed JSON through deterministic rules. Runs locally.",
+        "zh": "在 11 家模型服务商之间映射常用参数，按确定性规则修复损坏的 JSON，在本机运行。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-security-pack",
+      "title": {
+        "en": "DSH Security Pack",
+        "zh": "DSH Security Pack"
+      },
+      "description": {
+        "en": "Add eight security-review skills and an optional package-vetting tool for license, provenance and dependency checks. Supports Chinese and English editions.",
+        "zh": "提供八项安全审查技能和可选的插件包核查工具，用于检查许可、来源和依赖。支持中英文版本。"
+      },
+      "category": "skills"
+    },
+    {
+      "name": "dsh-orchestrator-kit",
+      "title": {
+        "en": "DSH Orchestrator Kit",
+        "zh": "DSH Orchestrator Kit"
+      },
+      "description": {
+        "en": "Choose providers, models, reasoning effort and fallback routes for the 20-role dev-flow. Activation adds the bundled preset, role cards and skill if absent. Requires Node 22+ and configured models, which may charge.",
+        "zh": "为 20 个 dev-flow 角色配置模型、推理力度和备用路由。启用时会补入缺少的预设、角色卡和技能。需 Node 22+ 和已配置的模型，模型调用可能收费。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-aupdate",
+      "title": {
+        "en": "DSH Auto Update",
+        "zh": "DSH 插件自动更新"
+      },
+      "description": {
+        "en": "Check installed npm plugins on a schedule and apply updates with hot reload where supported. Auto-install and major-version updates are enabled by default. Settings include exclusions, logs and rollback.",
+        "zh": "定时检查已安装的 npm 插件，支持就地更新、日志和回滚。默认启用自动安装和跨大版本更新，可在设置里排除指定插件。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "dsh-stock-panel",
+      "title": {
+        "en": "DSH Stock Panel",
+        "zh": "DSH A 股行情面板"
+      },
+      "description": {
+        "en": "View A-share indices and a watchlist, search by ticker or pinyin, and browse charts, trades, filings and related news. East Money receives ticker and search queries.",
+        "zh": "在 DSH 查看 A 股指数、自选股、分时和日线图、成交、公告及相关新闻。支持代码和拼音搜索，代码及搜索词会发给东方财富。"
+      },
+      "category": "tools"
     }
   ]
 }
