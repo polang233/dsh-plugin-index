@@ -1,10 +1,11 @@
 import { parseMarketIndex } from '@deepseek-ai/dsh-plugin-market-index';
-import { githubRepository } from './github-repository.mjs';
+import { githubRepository, safeWebUrl } from './github-repository.mjs';
 
 const DAY = 24 * 60 * 60 * 1000;
 const MAX_CACHE_AGE = 7 * DAY;
 const HISTORY_DAYS = 35;
 const SORT_KEY = 'github-stars';
+const REPOSITORY_BATCH = 50;
 
 function validStars(value) {
   return Number.isSafeInteger(value) && value >= 0;
@@ -15,8 +16,12 @@ function cachedEntry(value, repo, now) {
   const fetchedAt = Date.parse(value.fetchedAt);
   if (!Number.isFinite(fetchedAt) || fetchedAt > now || now - fetchedAt > MAX_CACHE_AGE) return undefined;
   if (githubRepository(value.url)?.key !== repo.key) return undefined;
+  const homepage = safeWebUrl(value.homepage);
+  const canonicalUrl = githubRepository(value.canonicalUrl)?.url;
   return {
     url: value.url, stars: value.stars, fetchedAt: value.fetchedAt,
+    ...(canonicalUrl ? { canonicalUrl } : {}),
+    ...(homepage ? { homepage } : {}),
     ...(typeof value.pushedAt === 'string' ? { pushedAt: value.pushedAt } : {}),
     ...(typeof value.archived === 'boolean' ? { archived: value.archived } : {})
   };
@@ -28,9 +33,20 @@ async function fetchRepository(repo, { fetchImpl, token, timestamp }) {
     'user-agent': 'dsh-plugin-index (+https://github.com/polang233/dsh-plugin-index)'
   };
   if (token) headers.authorization = `Bearer ${token}`;
-  const response = await fetchImpl(`https://api.github.com/repos/${repo.key}`, {
-    headers, redirect: 'error', signal: AbortSignal.timeout(15_000)
-  });
+  const address = `https://api.github.com/repos/${repo.key}`;
+  const options = {headers, redirect: 'error', signal: AbortSignal.timeout(15_000)};
+  let response = await fetchImpl(address, {...options, redirect: 'manual'});
+  let renamed = false;
+  if (response.status === 301) {
+    const location = response.headers.get('location');
+    await response.body?.cancel();
+    if (!location || !URL.canParse(location, address)) return {error: 'Invalid repository redirect'};
+    const target = new URL(location, address);
+    if (target.origin !== 'https://api.github.com' || target.username || target.password || target.search || target.hash
+      || !/^\/(?:repositories\/\d+|repos\/[\w.-]+\/[\w.-]+)$/.test(target.pathname)) return {error: 'Invalid repository redirect'};
+    response = await fetchImpl(target.href, options);
+    renamed = true;
+  }
   if (!response.ok) {
     await response.body?.cancel();
     return { error: `HTTP ${response.status}` };
@@ -41,16 +57,49 @@ async function fetchRepository(repo, { fetchImpl, token, timestamp }) {
     body += Buffer.from(chunk).toString('utf8');
     if (body.length > 512 * 1024) return { error: 'Response too large' };
   }
-  const data = JSON.parse(body);
+  return repositorySnapshot(repo, JSON.parse(body), timestamp, renamed) ?? {error: 'Invalid repository metadata'};
+}
+
+function repositorySnapshot(repo, data, timestamp, renamed = false) {
   const actual = githubRepository(data.html_url);
-  if (actual?.key !== repo.key || typeof data.full_name !== 'string' || data.full_name.toLowerCase() !== repo.key || !validStars(data.stargazers_count)) {
-    return { error: 'Invalid repository metadata' };
+  if (!actual || (!renamed && actual.key !== repo.key) || (renamed && data.private !== false)
+    || typeof data.full_name !== 'string' || data.full_name.toLowerCase() !== actual.key || !validStars(data.stargazers_count)) {
+    return undefined;
   }
+  const homepage = safeWebUrl(data.homepage);
   return {
-    url: actual.url, status: 'ok', stars: data.stargazers_count, fetchedAt: timestamp,
+    url: renamed ? repo.url : actual.url, status: 'ok', stars: data.stargazers_count, fetchedAt: timestamp,
+    ...(renamed && actual.key !== repo.key ? { canonicalUrl: actual.url } : {}),
+    ...(homepage ? { homepage } : {}),
     ...(typeof data.pushed_at === 'string' && Number.isFinite(Date.parse(data.pushed_at)) ? { pushedAt: data.pushed_at } : {}),
     archived: data.archived === true
   };
+}
+
+async function fetchRepositoryBatch(entries, {fetchImpl, token, timestamp}) {
+  const selections = entries.map(({key}, i) => {
+    const [owner, name] = key.split('/');
+    return `r${i}: repository(owner: ${JSON.stringify(owner)}, name: ${JSON.stringify(name)}) { nameWithOwner url stargazerCount pushedAt isArchived homepageUrl }`;
+  });
+  const response = await fetchImpl('https://api.github.com/graphql', {
+    method: 'POST', redirect: 'error', signal: AbortSignal.timeout(15_000),
+    headers: {authorization: `Bearer ${token}`, 'content-type': 'application/json', 'user-agent': 'dsh-plugin-index (+https://github.com/polang233/dsh-plugin-index)'},
+    body: JSON.stringify({query: `query CatalogRepositories { ${selections.join('\n')} }`})
+  });
+  if (!response.ok) {
+    await response.body?.cancel();
+    return [];
+  }
+  const {data} = await response.json();
+  return entries.flatMap((repo, i) => {
+    const result = data?.[`r${i}`];
+    if (!result) return [];
+    const record = repositorySnapshot(repo, {
+      html_url: result.url, full_name: result.nameWithOwner, stargazers_count: result.stargazerCount,
+      pushed_at: result.pushedAt, archived: result.isArchived, homepage: result.homepageUrl
+    }, timestamp);
+    return record ? [[repo.key, record]] : [];
+  });
 }
 
 /** Read each unique GitHub repository once; failures never become a fabricated zero. */
@@ -68,10 +117,21 @@ export async function collectGitHub(index, {
   const entries = [...repos.values()].sort((a, b) => a.key.localeCompare(b.key));
   const timestamp = new Date(now).toISOString();
   const repositories = {};
+  // One REST request per repository exceeds the Actions token quota for the full catalog.
+  if (token && entries.length > REPOSITORY_BATCH) {
+    for (let start = 0; start < entries.length; start += REPOSITORY_BATCH) {
+      try {
+        const records = await fetchRepositoryBatch(entries.slice(start, start + REPOSITORY_BATCH), {fetchImpl, token, timestamp});
+        Object.assign(repositories, Object.fromEntries(records));
+      } catch { /* The remaining repositories can still use REST and the previous snapshot. */ }
+    }
+  }
+  const age = repo => Date.parse(previous.repositories?.[repo.key]?.fetchedAt) || 0;
+  const pending = entries.filter(repo => !repositories[repo.key]).sort((a, b) => age(a) - age(b));
   let next = 0;
-  await Promise.all(Array.from({ length: Math.min(concurrency, entries.length) }, async () => {
-    while (next < entries.length) {
-      const repo = entries[next++];
+  await Promise.all(Array.from({ length: Math.min(concurrency, pending.length) }, async () => {
+    while (next < pending.length) {
+      const repo = pending[next++];
       let result;
       try { result = await fetchRepository(repo, { fetchImpl, token, timestamp }); }
       catch { result = { error: 'GitHub request failed' }; }

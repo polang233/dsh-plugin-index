@@ -28,7 +28,7 @@ test('one API request per repository; only the GitHub API receives the token', a
     calls++;
     assert.equal(url, 'https://api.github.com/repos/owner/plugin');
     assert.equal(options.headers.authorization, 'Bearer test-token');
-    assert.equal(options.redirect, 'error');
+    assert.equal(options.redirect, 'manual');
     return response();
   } });
   assert.equal(calls, 1);
@@ -44,6 +44,31 @@ test('zero stars remains a measured zero in the official sort key', async () => 
   assert.equal(result.plugins[1].metadata.sortKeys['github-stars'], undefined);
   assert.equal(result.metadata.sortKeys['github-stars'].order, 'desc');
 });
+test('large catalogs batch GitHub repository metadata and retry missing GraphQL records through REST', async () => {
+  const plugins = Array.from({length: 51}, (_, i) => {
+    const name = 'plugin-' + String(i).padStart(2, '0');
+    return {name, repository: {url: 'https://github.com/owner/' + name}};
+  });
+  const calls = [];
+  const snapshot = await collectGitHub({...index, plugins}, {token: 'test-token', now: NOW, fetchImpl: async (url, options) => {
+    calls.push(url);
+    assert.equal(options.headers.authorization, 'Bearer test-token');
+    if (url.endsWith('/graphql')) {
+      const {query} = JSON.parse(options.body);
+      const rows = [...query.matchAll(/r(\d+): repository\(owner: "owner", name: "([^"]+)"\)/g)];
+      return Response.json({data: Object.fromEntries(rows.map(([, i, name]) => [
+        'r' + i, name === 'plugin-50' ? null : {
+          nameWithOwner: 'owner/' + name, url: 'https://github.com/owner/' + name, stargazerCount: 3, homepageUrl: 'https://' + name + '.example/'
+        }
+      ]))});
+    }
+    return Response.json({full_name: 'owner/plugin-50', html_url: 'https://github.com/owner/plugin-50', stargazers_count: 7, homepage: 'https://rest.example/'});
+  }});
+  assert.deepEqual(calls, ['https://api.github.com/graphql', 'https://api.github.com/graphql', 'https://api.github.com/repos/owner/plugin-50']);
+  assert.equal(Object.keys(snapshot.repositories).length, 51);
+  assert.equal(snapshot.repositories['owner/plugin-49'].homepage, 'https://plugin-49.example/');
+  assert.equal(snapshot.repositories['owner/plugin-50'].homepage, 'https://rest.example/');
+});
 test('rate limits preserve a dated cached value without refreshing its date', async () => {
   const fetchedAt = '2026-10-17T00:00:00.000Z';
   const snapshot = await collectGitHub(index, { now: NOW, previous: cached(fetchedAt), fetchImpl: async () => new Response('limited', { status: 403 }) });
@@ -52,6 +77,33 @@ test('rate limits preserve a dated cached value without refreshing its date', as
   assert.equal(repo.stars, 123);
   assert.equal(repo.fetchedAt, fetchedAt);
   assert.equal(repo.attemptedAt, new Date(NOW).toISOString());
+});
+test('GitHub About homepages survive a stale snapshot and invalid URLs are ignored', async () => {
+  const homepage = 'https://plugin.example/docs';
+  const data = await response().json();
+  const saved = await collectGitHub(index, {now: NOW, fetchImpl: async () => Response.json({...data, homepage})});
+  assert.equal(saved.repositories['owner/plugin'].homepage, homepage);
+  const stale = await collectGitHub(index, {now: NOW + 60_000, previous: saved, fetchImpl: async () => new Response(null, {status: 429})});
+  assert.equal(stale.repositories['owner/plugin'].homepage, homepage);
+  const updated = await collectGitHub(index, {now: NOW + 60_000, previous: saved, fetchImpl: async () => Response.json({...data, homepage: 'https://user:secret@plugin.example/'})});
+  assert.equal(updated.repositories['owner/plugin'].homepage, undefined);
+});
+test('a verified public GitHub repository rename retains its homepage under the catalog key', async () => {
+  const urls = [];
+  const snapshot = await collectGitHub(index, {now: NOW, token: 'test-token', fetchImpl: async (url, options) => {
+    urls.push(url);
+    if (urls.length === 1) return new Response(null, {status: 301, headers: {location: 'https://api.github.com/repositories/123'}});
+    assert.equal(options.redirect, 'error');
+    return Response.json({full_name: 'Owner/New', html_url: 'https://github.com/Owner/New', stargazers_count: 2, private: false, homepage: 'https://new.example/'});
+  }});
+  assert.deepEqual(urls, ['https://api.github.com/repos/owner/plugin', 'https://api.github.com/repositories/123']);
+  assert.equal(snapshot.repositories['owner/plugin'].homepage, 'https://new.example/');
+  assert.equal(snapshot.repositories['owner/plugin'].canonicalUrl, 'https://github.com/Owner/New');
+  const refused = await collectGitHub(index, {now: NOW, token: 'test-token', fetchImpl: async url => {
+    assert.equal(url, urls[0]);
+    return new Response(null, {status: 301, headers: {location: 'https://elsewhere.example/repositories/123'}});
+  }});
+  assert.equal(refused.repositories['owner/plugin'].status, 'unavailable');
 });
 test('expired or future cache entries become unavailable, never zero', async () => {
   for (const fetchedAt of ['2026-10-01T00:00:00Z', '2027-01-01T00:00:00Z']) {

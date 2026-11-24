@@ -10,6 +10,7 @@ import { parseMarketIndex } from '@deepseek-ai/dsh-plugin-market-index';
 import { archiveBudget, DEFAULT_ARCHIVE_BYTES, MAX_ARCHIVE_BYTES, DEFAULT_DOWNLOAD_TIMEOUT, MAX_DOWNLOAD_TIMEOUT } from './limits.mjs';
 import { displayFiles, packageDisplay, MAX_DISPLAY_FILE_BYTES } from './package-display.mjs';
 import { reviewedIcon } from './reviewed-icon.mjs';
+import { PACKAGE_SCREENSHOTS, packagePreviews } from './screenshots.mjs';
 import { validPackageDirectory } from './github-repository.mjs';
 import { cleanDescription } from './descriptions.mjs';
 
@@ -304,9 +305,11 @@ export async function collectPackage(input, { fetchImpl = fetch, now = Date.now(
   const patch = checkBundle(manifest, files, input.name, version);
   const clientEntries = clientEntryFiles(manifest, files);
   const resolved = displayFiles(manifest, files);
-  const readFiles = [resolved.icon, ...Object.values(resolved.locales)].filter(path => path && files.has(path));
+  const readme = ['package/README.md', 'package/readme.md'].find(path => files.has(path));
+  const readFiles = [resolved.icon, ...Object.values(resolved.locales), PACKAGE_SCREENSHOTS, readme].filter(path => path && files.has(path));
   const contents = readFiles.length ? (await inspectArchive(bytes, {...budget, readFiles})).contents : new Map();
   const display = packageDisplay(manifest, resolved, contents);
+  Object.assign(display.evidence, packagePreviews(contents, files, input.name, version, source, readme));
   const repositoryInfo = resolveRepository(manifest, input, version, published.dist.integrity);
   let repository = repositoryInfo.repository;
   if (source.type === 'git' && repository?.url !== source.url) throw new Error('Git source differs from declared repository');
