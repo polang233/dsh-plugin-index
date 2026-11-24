@@ -115,6 +115,7 @@ test('plugin pages show distinct project links and only registered screenshots',
   const index = { format: 1, metadata: { categories: { tools: { title: { en: 'Tools', zh: '工具' } } } }, plugins: [
     { name: 'with-preview', repository, homepage: 'https://github.com/owner/plugin/wiki', metadata: { category: 'tools' } },
     { name: 'duplicate', repository, homepage: 'https://github.com/Owner/Plugin.git/#readme' },
+    { name: 'deep-blend', repository: { url: 'https://github.com/pearjelly/deep-blend' }, homepage: 'https://github.com/pearjelly/deep-blend#quick-start' },
     { name: 'invalid', repository, homepage: 'https://user:pass@example.com/' },
     { name: 'website-only', homepage: 'https://example.com/' },
     { name: 'single-preview' }
@@ -126,12 +127,13 @@ test('plugin pages show distinct project links and only registered screenshots',
   } };
   await writeSite(index, {}, {}, {}, display, { output });
   const read = path => readFile(new URL(path, output), 'utf8');
-  const [detail, duplicate, invalid, websiteOnly, single, home, chinese, traditional] = await Promise.all([
-    'plugins/with-preview/index.html', 'plugins/duplicate/index.html', 'plugins/invalid/index.html', 'plugins/website-only/index.html',
+  const [detail, duplicate, deepBlend, invalid, websiteOnly, single, home, chinese, traditional] = await Promise.all([
+    'plugins/with-preview/index.html', 'plugins/duplicate/index.html', 'plugins/deep-blend/index.html', 'plugins/invalid/index.html', 'plugins/website-only/index.html',
     'plugins/single-preview/index.html', 'index.html', 'zh/plugins/with-preview/index.html', 'zh-tw/plugins/with-preview/index.html'
   ].map(read));
   assert.match(detail, /class="link-source" href="https:\/\/github\.com\/owner\/plugin"[^\n]+View source/);
   assert.match(detail, /class="link-website" href="https:\/\/github\.com\/owner\/plugin\/wiki"[^\n]+Visit website/);
+  assert.ok(deepBlend.includes('class="link-website" href="https://github.com/pearjelly/deep-blend#quick-start"'), 'DeepBlend’s quick-start link is available beside its source');
   assert.match(detail, /data-zoom href="https:\/\/raw\.githubusercontent\.com\/owner\/plugin\/abc\/preview\.png"/);
   assert.match(detail, /<img[^>]+alt="Compare charts &lt; A &amp; B"/);
   assert.doesNotMatch(detail, /<figcaption>/);

@@ -332,7 +332,10 @@ function safeUrl(value) {
 function linkDestination(href) {
   const url = new URL(href);
   const repository = url.search ? undefined : githubRepository(href);
-  return repository?.url.toLowerCase() ?? `${url.origin}${url.pathname.replace(/\/$/, '')}${url.search}`;
+  const page = repository?.url.toLowerCase() ?? `${url.origin}${url.pathname.replace(/\/$/, '')}${url.search}`;
+  // The GitHub README anchor is an alias for the repository landing page.
+  const fragment = repository && url.hash.toLowerCase() === '#readme' ? '' : url.hash;
+  return page + fragment;
 }
 
 function pluginLinks({ sourceUrl, homepage, npmUrl }, text, detail = false) {
