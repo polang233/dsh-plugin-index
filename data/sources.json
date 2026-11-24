@@ -10903,8 +10903,8 @@
         "zh": "文溯"
       },
       "description": {
-        "en": "Connect the wensu stdio MCP server for read-only CNKI and Web of Science bibliographic search, details, export and status, without full-text downloads. Requires Windows, Python 3.11+, wensu on PATH, and a separately configured Edge or Chrome extension and native host. Requires DSH >=0.2.2-rc.1 <0.3.0.",
-        "zh": "接入文溯 stdio MCP，提供知网与 Web of Science 只读题录检索、详情、导出与状态查询，不下载全文。需要 Windows、Python 3.11+、PATH 中的 wensu 命令，并另行配置 Edge/Chrome 扩展和原生宿主。需 DSH >=0.2.2-rc.1 <0.3.0。"
+        "en": "Search CNKI and Web of Science, then read available papers in a signed-in browser for section highlights and quoted evidence. Read-only, with manual verification when prompted. Requires Windows, Python 3.11+, wensu on PATH, and its browser extension and native host.",
+        "zh": "检索知网和 Web of Science，并在已登录的浏览器里读取账号有权访问的论文，提取分节要点与原文出处。只读，遇到验证需人工处理。需要 Windows、Python 3.11+、PATH 中的 wensu，以及浏览器扩展和原生宿主。"
       },
       "category": "knowledge"
     },
@@ -13843,8 +13843,8 @@
         "zh": "提供商诊断"
       },
       "description": {
-        "en": "Inspect WorkBuddy, WorkBuddy AI and ZCode CLI provider setup with observed, inferred and unavailable evidence. Basic checks are offline; optional connection checks can start provider diagnostic processes. Requires DSH 0.2.2-rc.1.",
-        "zh": "只读检查 WorkBuddy、WorkBuddy AI、ZCode CLI 的连接配置，区分观测、推断与未知。基础检查离线，可选连接检查会启动提供商诊断进程；需 DSH 0.2.2-rc.1。"
+        "en": "Inspect WorkBuddy, WorkBuddy AI and ZCode CLI provider setup with observed, inferred and unavailable evidence. Basic checks are offline. Optional connection checks can run provider diagnostic processes.",
+        "zh": "只读检查 WorkBuddy、WorkBuddy AI 和 ZCode CLI 的连接配置，区分观测、推断与未知。基础检查离线，可选连接检查会启动提供商诊断进程。"
       },
       "category": "development"
     },
@@ -17930,17 +17930,17 @@
         "zh": "rust-anything for DSH"
       },
       "description": {
-        "en": "Record a program’s behavior, migrate it to Rust, and replay the recordings to check the result. Bundles the Windows x64 rust-anything runtime and requires DSH 0.2.2-rc.5.",
-        "zh": "录制原程序行为，迁移到 Rust 后回放验证。随包包含 Windows x64 的 rust-anything 运行程序，要求 DSH 0.2.2-rc.5。"
+        "en": "Record a program’s behavior, migrate it to Rust, and replay the recordings to check the result. Includes the Windows x64 runtime. Requires a compatible DSH release and host approval for mutating tools.",
+        "zh": "录制原程序行为，迁移到 Rust 后回放验证。随包包含 Windows x64 运行程序，需兼容的 DSH 版本，写操作遵循宿主审批。"
       },
       "category": "development",
-      "version": "3.3.0",
+      "version": "3.3.4",
       "source": {
         "type": "git",
         "url": "https://github.com/lonyness/dsh-rust-anything",
-        "commit": "f0534dab23e36e39db81bd41952a0ffadacbc454",
-        "integrity": "sha512-P214aq65ket2aFfMHERurlT1fvvrleTDxQ7JYhrpqSsiQCTPpanWCsEs6bXxWgQgV5sP6zT75MvwkfFDrQexgw==",
-        "publishedAt": "2026-11-22T13:46:03Z"
+        "commit": "34df3861cc4ead4d0cacc4ed398721df2e4d6583",
+        "integrity": "sha512-TpsZDDYJGa9OilmtLW1fLcpFNdNfcFzE1fhcIGa9iOuFmfzMSPP9p28OnIOuJ6BbbLzN6Ei2Q4rr5O2mVqYPFA==",
+        "publishedAt": "2026-11-23T05:54:59Z"
       }
     },
     {
@@ -19507,21 +19507,13 @@
       "name": "dsh-english-gym",
       "title": {
         "en": "English Gym",
-        "zh": "English Gym（英语练习）"
+        "zh": "英语健身房"
       },
       "description": {
-        "en": "Practice translation and spelling in a DSH widget. Translation feedback and optional reading reports use a configured model and may incur charges. Requires DSH 0.2.3-alpha.2 or later as declared by the package.",
-        "zh": "在 DSH 挂件里练习中译英和单词拼写。短语批改和可选阅读报告会用已配置的模型，可能收费。包声明需 DSH 0.2.3-alpha.2 或以上。"
+        "en": "Practice Chinese-to-English translation and spelling in DSH, and track progress on a dashboard. Translation feedback and optional reading reports use a configured model and may incur charges.",
+        "zh": "在 DSH 里练习中译英和单词拼写，并在看板上查看学习进度。短语批改和可选阅读报告会调用已配置的模型，可能产生费用。"
       },
-      "category": "tools",
-      "version": "0.4.4",
-      "source": {
-        "type": "git",
-        "commit": "b991b9974f2c8dfa23306a425d39fd2557060253",
-        "url": "https://github.com/KYCOMING/dsh-english-gym",
-        "integrity": "sha512-fS9QNfIkzGDKJ/BHdqWwBWPTfXU51QXYkDVdhTEXp/ZSbRvePUpnlVFPoBtAc2/1nqvsy7l7CYYVInUrPwIYVg==",
-        "publishedAt": "2026-11-24T05:33:33Z"
-      }
+      "category": "tools"
     },
     {
       "name": "claraconverts",
@@ -19534,6 +19526,78 @@
         "zh": "通过 ClaraConverts 远程 MCP 为网站设置语音和文字聊天助手。服务可创建试用账号、读取站点内容并修改聊天助手配置。"
       },
       "category": "integrations"
+    },
+    {
+      "name": "@auteo/dsh-plugin",
+      "title": {
+        "en": "Auteo",
+        "zh": "Auteo"
+      },
+      "description": {
+        "en": "Connect Auteo’s remote MCP server to generate music, lyrics, images, video and audio in DSH. Requires an Auteo API key and sends generation requests to Auteo.",
+        "zh": "通过 Auteo 的远程 MCP 在 DSH 中生成音乐、歌词、图像、视频和音频。需要 Auteo API Key，生成请求会发送给 Auteo。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "@nanobananana/dsh-plugin",
+      "title": {
+        "en": "Nanobananana",
+        "zh": "Nanobananana"
+      },
+      "description": {
+        "en": "Connect Nanobananana’s remote MCP server for image generation, image editing and video generation. Requires a Nanobananana API key and sends requests to that service.",
+        "zh": "连接 Nanobananana 的远程 MCP，支持生成和编辑图像及生成视频。需要 Nanobananana API Key，请求会发送给该服务。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-rea-gate",
+      "title": {
+        "en": "REA Gate",
+        "zh": "REA 工具开关"
+      },
+      "description": {
+        "en": "Control whether REA tools are visible to each DSH session, with new sessions closed by default. Use the REA panel to install or update the separate REA runtime.",
+        "zh": "按会话控制 REA 工具是否对模型可见，新会话默认关闭。REA 运行时需另行安装，可在 REA 面板中管理。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-whale-tts",
+      "title": {
+        "en": "Whale TTS",
+        "zh": "Whale TTS 语音合成"
+      },
+      "description": {
+        "en": "Synthesize text and read DSH replies aloud through configured TTS providers. Cloud providers receive the text and may charge for requests. Windows can fall back to local SAPI.",
+        "zh": "通过选定的语音服务合成文本或朗读 DSH 回复。云服务会收到待朗读文本，可能收费。Windows 可回退到本地 SAPI。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-backstage",
+      "title": {
+        "en": "Backstage",
+        "zh": "Backstage 隔离桌面"
+      },
+      "description": {
+        "en": "Run PowerShell commands on a private Windows desktop so their windows do not steal focus. Includes a native launcher and uses DSH’s existing command approval and sandbox policy.",
+        "zh": "在 Windows 私有桌面运行 PowerShell，让命令窗口不抢焦点。随包提供本机启动器，命令继续使用 DSH 的审批和沙箱策略。"
+      },
+      "category": "tools"
+    },
+    {
+      "name": "dsh-claude-slider",
+      "title": {
+        "en": "Claude Slider",
+        "zh": "Claude 推理强度滑块"
+      },
+      "description": {
+        "en": "Replace DSH’s reasoning effort dropdown with an animated slider and customize the composer’s appearance. Preferences are saved in the browser.",
+        "zh": "把 DSH 的推理强度下拉框替换成带动效的滑块，并可调整输入区外观。设置保存在浏览器。"
+      },
+      "category": "appearance"
     }
   ]
 }
