@@ -270,15 +270,131 @@ if (controls && search && chips.length && moreWrap) {
   ensureRows(readyAhead()).then(() => filter(true)).catch(() => {});
 }
 
-// Step screenshots open full size in a dialog; Escape, the close button or a click outside closes it.
+// Touch uses native scrolling. Mouse dragging and arrows move the same track.
+const screenshotControls = document.querySelector('[data-screenshot-controls]');
+if (screenshotControls) {
+  const track = document.querySelector('#plugin-screenshot-track');
+  const slides = Array.from(track.children);
+  const previous = screenshotControls.querySelector('[data-screenshot-previous]');
+  const next = screenshotControls.querySelector('[data-screenshot-next]');
+  const range = document.querySelector('[data-screenshot-range]');
+  const status = document.querySelector('[data-screenshot-status]');
+  const position = slide => slide.offsetLeft - slides[0].offsetLeft;
+  let drag;
+  let suppressClick = false;
+  function sync(announce = false) {
+    if (drag?.active) return;
+    const end = track.scrollWidth - track.clientWidth;
+    const at = track.scrollLeft;
+    const gutter = slides[0].offsetLeft;
+    const visible = slides.filter(slide => slide.offsetLeft >= at + gutter - 2 &&
+      slide.offsetLeft + slide.offsetWidth <= at + track.clientWidth - gutter + 2);
+    if (visible.length) {
+      const first = slides.indexOf(visible[0]) + 1;
+      const last = slides.indexOf(visible.at(-1)) + 1;
+      const label = first === last ? `${first} / ${slides.length}` : `${first}–${last} / ${slides.length}`;
+      if (range.textContent !== label) {
+        range.textContent = label;
+        if (announce) status.textContent = first === last
+          ? text.screenshotPosition.replace('{at}', first).replace('{total}', slides.length)
+          : status.dataset.screenshotStatus.replace('{first}', first).replace('{last}', last).replace('{total}', slides.length);
+      }
+    }
+    previous.setAttribute('aria-disabled', String(at <= 1));
+    next.setAttribute('aria-disabled', String(at >= end - 1));
+    screenshotControls.hidden = end <= 1;
+    range.hidden = screenshotControls.hidden;
+    track.classList.toggle('is-draggable', !screenshotControls.hidden);
+  }
+  function move(button, forward) {
+    if (button.getAttribute('aria-disabled') === 'true') return;
+    const at = track.scrollLeft;
+    const offsets = slides.map(position);
+    const destination = forward ? offsets.find(left => left > at + 1) : offsets.findLast(left => left < at - 1);
+    track.scrollTo({ left: destination ?? (forward ? track.scrollWidth : 0) });
+    sync(true);
+  }
+  previous.addEventListener('click', () => move(previous, false));
+  next.addEventListener('click', () => move(next, true));
+  track.addEventListener('keydown', event => {
+    if (event.target !== track || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    const button = event.key === 'ArrowLeft' ? previous : next;
+    if (button.getAttribute('aria-disabled') === 'true') return;
+    event.preventDefault();
+    move(button, event.key === 'ArrowRight');
+  });
+  track.addEventListener('pointerdown', event => {
+    suppressClick = false;
+    if (event.pointerType !== 'mouse' || event.button !== 0 || !track.classList.contains('is-draggable')) return;
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    // Capture on the original target so a press without a drag can still click the image.
+    event.target.setPointerCapture(event.pointerId);
+    drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: track.scrollLeft, active: false };
+  });
+  track.addEventListener('pointermove', event => {
+    if (event.pointerId !== drag?.id) return;
+    const distance = event.clientX - drag.x;
+    if (!drag.active) {
+      if (Math.abs(distance) < 6 || Math.abs(distance) < Math.abs(event.clientY - drag.y)) return;
+      drag.active = true;
+      track.classList.add('is-dragging');
+    }
+    track.scrollLeft = drag.left - distance;
+  });
+  function finishDrag(event) {
+    if (event.pointerId !== drag?.id) return;
+    const wasDragging = drag.active;
+    drag = undefined;
+    if (!wasDragging) return;
+    suppressClick = true;
+    const at = track.scrollLeft;
+    const end = track.scrollWidth - track.clientWidth;
+    const offsets = slides.map(slide => Math.min(position(slide), end));
+    const nearest = offsets.reduce((best, offset) => Math.abs(offset - at) < Math.abs(best - at) ? offset : best, 0);
+    track.classList.remove('is-dragging');
+    track.scrollTo({ left: nearest });
+    sync(true);
+  }
+  track.addEventListener('pointerup', finishDrag);
+  track.addEventListener('pointercancel', finishDrag);
+  track.addEventListener('lostpointercapture', finishDrag);
+  track.addEventListener('dragstart', event => { if (drag) event.preventDefault(); });
+  track.addEventListener('click', event => {
+    if (!suppressClick || event.detail === 0) return;
+    suppressClick = false;
+    event.preventDefault();
+    event.stopPropagation();
+  }, true);
+  if ('onscrollend' in track) track.addEventListener('scrollend', () => sync(true));
+  else {
+    let settled;
+    track.addEventListener('scroll', () => {
+      clearTimeout(settled);
+      settled = setTimeout(() => sync(true), 120);
+    }, { passive: true });
+  }
+  new ResizeObserver(() => sync()).observe(track);
+  sync();
+}
+
+// Installation and plugin screenshots share the same viewer.
 const viewer = document.querySelector('[data-viewer]');
 if (viewer && viewer.showModal) {
   const full = viewer.querySelector('img');
   const open = img => { full.src = img.currentSrc || img.src; full.alt = img.alt; viewer.showModal(); };
-  document.querySelectorAll('[data-zoom]').forEach(button => button.addEventListener('click', event => { event.stopPropagation(); open(button.querySelector('img')); }));
+  document.querySelectorAll('[data-zoom]').forEach(trigger => trigger.addEventListener('click', event => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    event.stopPropagation();
+    open(trigger.querySelector('img'));
+  }));
   // A click anywhere on a step card opens its screenshot too.
   document.querySelectorAll('[data-zoom-card]').forEach(card => card.addEventListener('click', () => open(card.querySelector('img'))));
-  viewer.addEventListener('click', event => { if (event.target === viewer || event.target.closest('[data-viewer-close]')) viewer.close(); });
+  if (!('closedBy' in viewer)) {
+    let pressedOutside = false;
+    viewer.addEventListener('pointerdown', event => { pressedOutside = event.target === viewer; });
+    viewer.addEventListener('click', event => { if (pressedOutside && event.target === viewer) viewer.close(); });
+  }
 }
 
 // Today's readers of the index, from the Worker; the line keeps its height while loading and stays blank if the stats are unavailable.

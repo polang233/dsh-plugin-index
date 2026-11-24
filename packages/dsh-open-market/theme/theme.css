@@ -235,6 +235,12 @@ body[data-opm-theme] {
   --dsw-menu-backdrop-filter: none;
   --dsw-mask-blur: none;
 }
+/* Keep card surfaces paired with the selected theme's text, even when DSH uses the opposite appearance. */
+body[data-opm-theme][data-opm-appearance] {
+  --dsw-alias-card-fill: var(--opm-paper);
+  --dsw-alias-card-fill-hover: var(--opm-sky-soft);
+  --dsw-alias-card-tile-fill: var(--opm-sky);
+}
 body[data-opm-theme] ::selection { background: var(--opm-sky); color: var(--opm-ink); }
 body[data-opm-theme][data-opm-appearance="dark"] ::selection { background: #34548f; color: #fff; }
 
@@ -250,6 +256,12 @@ body[data-opm-theme] :is([class$="_centerCol"], [class*="_centerCol "]) {
   background-color: var(--opm-cream);
   background-image: radial-gradient(circle at 1px 1px, var(--opm-dot) 1.3px, transparent 1.6px);
   background-size: 26px 26px;
+}
+/* The Windows title bar overlays anything painted outside the conversation column. */
+body[data-opm-theme]:is(html[data-windows-titlebar] > body) :is([class$="_centerCol"], [class*="_centerCol "]) {
+  border-top: 2px solid var(--opm-line);
+  border-left: 2px solid var(--opm-line);
+  box-shadow: none;
 }
 body[data-opm-theme] :is([class$="_newSession"], [class*="_newSession "]) {
   background: var(--opm-paper);
