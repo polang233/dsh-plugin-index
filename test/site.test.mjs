@@ -107,6 +107,58 @@ test('site reports issues, offers ranking limits and cleans historical descripti
   assert.match(display.plugins['demo-plugin'].description.en, /^★/);
 });
 
+test('plugin pages show distinct project links and only registered screenshots', async t => {
+  const dir = await mkdtemp(join(tmpdir(), 'site-'));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const output = pathToFileURL(dir + '/');
+  const repository = { url: 'https://github.com/owner/plugin' };
+  const index = { format: 1, metadata: { categories: { tools: { title: { en: 'Tools', zh: '工具' } } } }, plugins: [
+    { name: 'with-preview', repository, homepage: 'https://github.com/owner/plugin/wiki', metadata: { category: 'tools' } },
+    { name: 'duplicate', repository, homepage: 'https://github.com/Owner/Plugin.git/#readme' },
+    { name: 'deep-blend', repository: { url: 'https://github.com/pearjelly/deep-blend' }, homepage: 'https://github.com/pearjelly/deep-blend#quick-start' },
+    { name: 'invalid', repository, homepage: 'https://user:pass@example.com/' },
+    { name: 'website-only', homepage: 'https://example.com/' },
+    { name: 'single-preview' }
+  ] };
+  const screenshots = [{ url: 'https://raw.githubusercontent.com/owner/plugin/abc/preview.png', alt: 'Compare charts < A & B' }];
+  const display = { plugins: {
+    'with-preview': { screenshots: [...screenshots, { url: 'https://raw.githubusercontent.com/owner/plugin/abc/another.png', alt: 'Second view' }] },
+    'single-preview': { screenshots }, duplicate: { screenshots: [] }
+  } };
+  await writeSite(index, {}, {}, {}, display, { output });
+  const read = path => readFile(new URL(path, output), 'utf8');
+  const [detail, duplicate, deepBlend, invalid, websiteOnly, single, home, chinese, traditional] = await Promise.all([
+    'plugins/with-preview/index.html', 'plugins/duplicate/index.html', 'plugins/deep-blend/index.html', 'plugins/invalid/index.html', 'plugins/website-only/index.html',
+    'plugins/single-preview/index.html', 'index.html', 'zh/plugins/with-preview/index.html', 'zh-tw/plugins/with-preview/index.html'
+  ].map(read));
+  assert.match(detail, /class="link-source" href="https:\/\/github\.com\/owner\/plugin"[^\n]+View source/);
+  assert.match(detail, /class="link-website" href="https:\/\/github\.com\/owner\/plugin\/wiki"[^\n]+Visit website/);
+  assert.ok(deepBlend.includes('class="link-website" href="https://github.com/pearjelly/deep-blend#quick-start"'), 'DeepBlend’s quick-start link is available beside its source');
+  assert.match(detail, /data-zoom href="https:\/\/raw\.githubusercontent\.com\/owner\/plugin\/abc\/preview\.png"/);
+  assert.match(detail, /<img[^>]+alt="Compare charts &lt; A &amp; B"/);
+  assert.doesNotMatch(detail, /<figcaption>/);
+  assert.match(detail, /class="detail-grid detail-grid-with-screenshots"/);
+  assert.match(detail, /class="plugin-screenshot-slide" role="group" aria-roledescription="slide" aria-label="Screenshot 1 of 2"/);
+  assert.match(detail, /id="plugin-screenshot-track" role="group" aria-label="Screenshots" tabindex="0"/);
+  assert.match(detail, /data-screenshot-previous aria-label="Previous screenshot"/);
+  assert.match(detail, /data-screenshot-next aria-label="Next screenshot"/);
+  assert.match(detail, /class="plugin-screenshot-viewport">\s*<div class="plugin-screenshot-controls"/);
+  assert.match(detail, /id="plugin-screenshot-track"[^>]*><div class="plugin-screenshot-slide".*><div class="plugin-screenshot-slide"/);
+  assert.match(detail, /<p class="detail-lead">.*<\/p>\s*<div class="detail-meta">[\s\S]*class="plugin-tag plugin-category"/);
+  assert.match(detail, /<dialog[^>]+data-viewer/);
+  assert.match(single, /id="plugin-screenshot-track"/);
+  assert.match(single, /class="detail-grid detail-grid-with-screenshots detail-grid-single-screenshot"/);
+  assert.doesNotMatch(single, /data-screenshot-controls/);
+  for (const html of [duplicate, invalid]) {
+    assert.doesNotMatch(html, /class="link-website"|id="plugin-screenshot-track"|data-viewer/);
+  }
+  assert.match(websiteOnly, /class="link-website" href="https:\/\/example\.com\/"/);
+  assert.doesNotMatch(websiteOnly, /class="link-source"/);
+  assert.doesNotMatch(home, /owner\/plugin\/wiki|id="plugin-screenshot-track"/);
+  assert.match(chinese, /界面预览|查看源码/);
+  assert.match(traditional, /介面預覽|檢視原始碼/);
+});
+
 test('page titles are sized per page and the 404 page has its own layout', async t => {
   const css = await readFile(new URL('../site/site.css', import.meta.url), 'utf8');
   // A language selector outranks .detail-head h1 and .stats-intro h1, so it must never carry a size of its own.

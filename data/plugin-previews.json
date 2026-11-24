@@ -104,6 +104,54 @@
           "alt": "模型分组与模型搜索"
         }
       ]
+    },
+    "dsh-english-gym": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/c2cee9e68875f8304f0fc62420fbd7689bf921eb/docs/screenshots/phrase-training.webp",
+          "alt": "短语训练和中译英练习"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/c2cee9e68875f8304f0fc62420fbd7689bf921eb/docs/screenshots/word-training.webp",
+          "alt": "内置词库的单词拼写练习"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/c2cee9e68875f8304f0fc62420fbd7689bf921eb/docs/screenshots/settings.webp",
+          "alt": "练习内容方向设置"
+        }
+      ]
+    },
+    "dsh-whale-tts": {
+      "screenshots": [
+        {
+          "url": "https://github.com/user-attachments/assets/026c93c8-6a30-4ba5-952e-42eb1c971240",
+          "alt": "音色、朗读和语音合成设置"
+        },
+        {
+          "url": "https://github.com/user-attachments/assets/9b268586-8ff6-44a6-898e-70c61bcba333",
+          "alt": "合成音频的试听与播放"
+        }
+      ]
+    },
+    "dsh-backstage": {
+      "screenshots": [
+        {
+          "url": "https://github.com/user-attachments/assets/f9de9f1e-7328-4437-a3f0-55dc8d93cc67",
+          "alt": "Windows 私有桌面的模式设置"
+        }
+      ]
+    },
+    "dsh-claude-slider": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/yicun0316/dsh-claude-slider/10817881fb23e0d4cd1d4ea8f46c2360ba23b937/assets/effects_gallery.png",
+          "alt": "九款推理强度滑块动效"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/yicun0316/dsh-claude-slider/10817881fb23e0d4cd1d4ea8f46c2360ba23b937/assets/pets_showcase.png",
+          "alt": "输入框像素萌宠预览"
+        }
+      ]
     }
   }
 }

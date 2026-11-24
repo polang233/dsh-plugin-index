@@ -99,6 +99,8 @@ export const COPY = {
     raw: 'JSON index', status: 'Build details', stats: 'Usage stats', footerTagline: 'A community plugin market for DeepSeek Harness. Fast-growing, actively shipped plugins first, so small developers get seen.', starCta: 'Star us on GitHub', starNote: 'If this market helps you, a star keeps it going. Do the same for the plugins you use: the next star might be someone starring yours.', footerLinks: 'Links', refresh: 'Rebuilt every 6 hours',
     starsUnavailable: 'GitHub stars unavailable', fetched: 'Fetched',
     // Plugin pages.
+    viewSource: 'View source', visitWebsite: 'Visit website', screenshots: 'Screenshots',
+    previousScreenshot: 'Previous screenshot', nextScreenshot: 'Next screenshot', screenshotPosition: 'Screenshot {at} of {total}', screenshotRange: 'Screenshots {first}–{last} of {total}',
     pluginTitle: title => `${title} — DeepSeek Harness (DSH) plugin · Open Plugin Market`,
     pluginDescription: (title, description) => `${title}: ${description} A community plugin for DeepSeek Harness (DSH), listed on Open Plugin Market.`,
     installPluginTitle: 'Easier: install the Open Market plugin', installPluginNote: 'It adds this index for you and an Open Market tab to the Plugins page: search for {name} there to install it, and update it there when a new version comes out.', install: 'Install in DSH', installSteps: ['Add Open Plugin Market as an index source once: Plugins → Experimental → Custom plugin markets, then Discover → Add index source, and paste this URL.', 'Copy the plugin name, open DSH and paste it into Discover search to install.'],
@@ -161,6 +163,8 @@ export const COPY = {
     scope: '发布包检查不等于安装测试或代码审计。安装时，DSH 会检查版本兼容性。',
     raw: 'JSON 索引', status: '构建详情', stats: '使用统计', footerTagline: 'DeepSeek Harness 的社区插件市场。增长快、更新勤的插件优先展示，让小开发者也被看到。', starCta: '给项目点个 Star', starNote: '觉得好用就给我们点个 star 吧。用到的插件也别忘了给作者一个，没准下一个 star 就是别人点给你的。', footerLinks: '相关链接', refresh: '每 6 小时更新',
     starsUnavailable: 'GitHub star 暂不可用', fetched: '获取于',
+    viewSource: '查看源码', visitWebsite: '访问网站', screenshots: '界面预览',
+    previousScreenshot: '上一张截图', nextScreenshot: '下一张截图', screenshotPosition: '第 {at} 张截图，共 {total} 张', screenshotRange: '第 {first} 至 {last} 张截图，共 {total} 张',
     pluginTitle: title => `${title} — DeepSeek Harness（DSH）插件 · 开放插件市场`,
     // Search engines want about 120 characters; Chinese descriptions are short, so add the category, version and how to install.
     pluginDescription: (title, description, { category, version } = {}) => `${title}：${description}${category ? `分类：${category}。` : ''}DeepSeek Harness（DSH）社区插件${version ? `，最新版本 ${version}` : ''}，收录于开放插件市场。可在 DSH「${ui('发现')}」里搜索安装，也可用开放市场插件一键更新。`,
@@ -224,6 +228,8 @@ export const COPY = {
     scope: '公開パッケージの検査は、インストールテストやコード監査の代わりにはなりません。バージョンの互換性はインストール時に DSH が確認します。',
     raw: 'JSON インデックス', status: 'ビルドの詳細', stats: '利用統計', footerTagline: 'DeepSeek Harness のためのコミュニティプラグインマーケット。伸びが速く活発に更新されるプラグインを先に表示し、小さな開発者の作品も目に留まるようにしています。', starCta: 'GitHub でスターを付ける', starNote: 'このマーケットが役に立ったら、スターで応援してください。使っているプラグインにもぜひ。次のスターは、誰かがあなたのプラグインに付けるものかもしれません。', footerLinks: 'リンク', refresh: '6 時間ごとに再構築',
     starsUnavailable: 'GitHub スター数を取得できません', fetched: '取得日時',
+    viewSource: 'ソースを見る', visitWebsite: 'ウェブサイトを開く', screenshots: 'スクリーンショット',
+    previousScreenshot: '前のスクリーンショット', nextScreenshot: '次のスクリーンショット', screenshotPosition: '{total} 枚中 {at} 枚目のスクリーンショット', screenshotRange: '{total} 枚中 {first}〜{last} 枚目',
     pluginTitle: title => `${title} — DeepSeek Harness（DSH）プラグイン · Open Plugin Market`,
     pluginDescription: (title, description, { category } = {}) => `${title}：${description}${category ? ` カテゴリ：${category}。` : ' '}DeepSeek Harness（DSH）向けのコミュニティプラグインで、Open Plugin Market に掲載されています。`,
     installPluginTitle: 'もっと簡単に：Open Market プラグインを入れる', installPluginNote: 'このインデックスを自動で追加し、Plugins ページに Open Market タブを加えます。そこで {name} を検索してインストールでき、新しいバージョンが出たらそこで更新できます。', install: 'DSH にインストール', installSteps: ['最初に一度だけ Open Plugin Market をインデックスソースとして追加します：Plugins → Experimental → Custom plugin markets をオンにし、Discover → Add index source でこの URL を貼り付けます。', 'プラグイン名をコピーし、DSH を開いて Discover の検索欄に貼り付け、インストールします。'],
@@ -285,6 +291,8 @@ export const COPY = {
     scope: '배포된 패키지 검사는 설치 테스트나 코드 감사를 대신하지 않습니다. 버전 호환성은 설치할 때 DSH가 확인합니다.',
     raw: 'JSON 인덱스', status: '빌드 정보', stats: '사용 통계', footerTagline: 'DeepSeek Harness를 위한 커뮤니티 플러그인 마켓. 빠르게 성장하고 꾸준히 업데이트되는 플러그인을 먼저 보여 주어 작은 개발자도 눈에 띌 수 있게 합니다.', starCta: 'GitHub에서 스타 주기', starNote: '이 마켓이 도움이 됐다면 스타로 응원해 주세요. 사용하는 플러그인에도 스타를 남겨 주세요. 다음 스타는 누군가 여러분의 플러그인에 주는 것일지도 모릅니다.', footerLinks: '링크', refresh: '6시간마다 다시 빌드',
     starsUnavailable: 'GitHub 스타 수를 가져올 수 없음', fetched: '가져온 시각',
+    viewSource: '소스 보기', visitWebsite: '웹사이트 방문', screenshots: '스크린샷',
+    previousScreenshot: '이전 스크린샷', nextScreenshot: '다음 스크린샷', screenshotPosition: '{total}장 중 {at}번째 스크린샷', screenshotRange: '{total}장 중 {first}–{last}번째 스크린샷',
     pluginTitle: title => `${title} — DeepSeek Harness(DSH) 플러그인 · Open Plugin Market`,
     pluginDescription: (title, description, { category } = {}) => `${title}: ${description}${category ? ` 카테고리: ${category}.` : ''} Open Plugin Market에 등록된 DeepSeek Harness(DSH) 커뮤니티 플러그인입니다.`,
     installPluginTitle: '더 쉽게: Open Market 플러그인 설치', installPluginNote: '이 인덱스를 자동으로 추가하고 Plugins 페이지에 Open Market 탭을 만들어 줍니다. 그곳에서 {name}을(를) 검색해 설치하고, 새 버전이 나오면 그곳에서 업데이트할 수 있습니다.', install: 'DSH에 설치', installSteps: ['처음 한 번만 Open Plugin Market을 인덱스 소스로 추가합니다: Plugins → Experimental → Custom plugin markets를 켠 다음, Discover → Add index source에 이 URL을 붙여 넣으세요.', '플러그인 이름을 복사하고 DSH를 열어 Discover 검색창에 붙여 넣은 뒤 설치하세요.'],
@@ -320,6 +328,22 @@ const docsFor = language => ['zh', 'tw'].includes(language) ? `${REPOSITORY}/blo
 function safeUrl(value) {
   if (typeof value !== 'string') return undefined;
   try { const url = new URL(value); return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password ? url.href : undefined; } catch { return undefined; }
+}
+function linkDestination(href) {
+  const url = new URL(href);
+  const repository = url.search ? undefined : githubRepository(href);
+  const page = repository?.url.toLowerCase() ?? `${url.origin}${url.pathname.replace(/\/$/, '')}${url.search}`;
+  // The GitHub README anchor is an alias for the repository landing page.
+  const fragment = repository && url.hash.toLowerCase() === '#readme' ? '' : url.hash;
+  return page + fragment;
+}
+
+function pluginLinks({ sourceUrl, homepage, npmUrl }, text, detail = false) {
+  const source = sourceUrl ? `<a class="link-source" href="${esc(sourceUrl)}" rel="noopener noreferrer">${githubRepository(sourceUrl) ? ICONS.github : ICONS.code}<span>${esc(detail ? text.viewSource : text.source)}</span></a>` : '';
+  const npm = npmUrl ? `<a class="link-npm" href="${esc(npmUrl)}" rel="noopener noreferrer">${ICONS.npm}<span>${esc(text.npm)}</span></a>` : '';
+  const showWebsite = homepage && (!sourceUrl || (detail && linkDestination(homepage) !== linkDestination(sourceUrl)));
+  const website = showWebsite ? `<a class="link-website" href="${esc(homepage)}" rel="noopener noreferrer">${detail ? ICONS.external : ''}<span>${esc(detail ? text.visitWebsite : text.website)}</span></a>` : '';
+  return detail ? source + website + npm : source + npm + website;
 }
 function dateLabel(value, language) {
   const date = new Date(value);
@@ -382,11 +406,6 @@ function describe(plugin, language, context) {
   const sourceUrl = safeUrl(plugin.repository?.url) ?? safeUrl(version?.source?.type === 'git' ? version.source.url : undefined);
   const homepage = safeUrl(plugin.homepage);
   const npmUrl = version?.source?.type === 'npm' ? `https://www.npmjs.com/package/${packageName.split('/').map(encodeURIComponent).join('/')}` : undefined;
-  const links = [];
-  // GitHub and npm links carry their marks; other source hosts get a plain code mark.
-  if (sourceUrl) links.push(`<a class="link-source" href="${esc(sourceUrl)}" rel="noopener noreferrer">${githubRepository(sourceUrl) ? ICONS.github : ICONS.code}<span>${esc(text.source)}</span></a>`);
-  if (npmUrl) links.push(`<a class="link-npm" href="${esc(npmUrl)}" rel="noopener noreferrer">${ICONS.npm}<span>${esc(text.npm)}</span></a>`);
-  if (!sourceUrl && homepage) links.push(`<a href="${esc(homepage)}" rel="noopener noreferrer">${esc(text.website)}</a>`);
   // Stable pastel tone per category so cards read as grouped without extra data.
   const tone = Array.from(categoryId).reduce((sum, char) => (sum * 31 + char.codePointAt(0)) % 997, 7) % 6;
   const date = version?.publishTimestamp != null ? releaseAge(version.publishTimestamp, Date.parse(display.generatedAt), words) : undefined;
@@ -408,7 +427,7 @@ function describe(plugin, language, context) {
   const reviewUrl = review && safeUrl(review.record);
   const facts = `<dt>${esc(text.pluginName)}</dt><dd class="get-name">${esc(packageName)}</dd><dt>${esc(text.version)}</dt><dd class="version">${version ? esc(version.version) : esc(text.noVersion)}</dd>${version?.engines?.dsh ? `<dt>${esc(text.compatibility)}</dt><dd>${esc(version.engines.dsh)}</dd>` : ''}${version?.publishTimestamp ? `<dt>${esc(text.released)}</dt><dd>${esc(dateLabel(version.publishTimestamp * 1000, words))}</dd>` : ''}${own.includes('verified') && reviewText ? `<dt>${esc(text.review)}</dt><dd>${esc(reviewText)}${reviewUrl ? ` · <a href="${esc(reviewUrl)}">${esc(text.reviewRecord)}</a>` : ''}</dd>` : ''}`;
   const getButton = `<button type="button" class="get-copy" data-get="${esc(packageName)}" title="${esc(text.getHint)}" hidden><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>${esc(text.copyOpen)}</span></button>`;
-  return { name, packageName, title, namedTitle: title && title !== name, description, version, categoryId, categoryTitle, links, tone, npm: npmMeasured ? npm : undefined, badges, icon, detail, facts, getButton, sourceUrl, homepage, npmUrl };
+  return { name, packageName, title, namedTitle: title && title !== name, description, version, categoryId, categoryTitle, tone, npm: npmMeasured ? npm : undefined, badges, icon, detail, facts, getButton, sourceUrl, homepage, npmUrl };
 }
 
 function avatar(info, root, position = 0) {
@@ -436,7 +455,7 @@ function pluginRow(plugin, language, context, position = 0, added = {}) {
       ${info.detail}
       <div class="plugin-actions"><a class="page-link" href="${esc(href)}"><span>${esc(text.pageLink)}</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
     </div>
-    <div class="plugin-more" id="more-${position}" data-more-panel><div class="plugin-more-inner"><dl>${info.facts}</dl><p class="facts-links">${info.links.join('')}${info.getButton}</p></div></div>
+    <div class="plugin-more" id="more-${position}" data-more-panel><div class="plugin-more-inner"><dl>${info.facts}</dl><p class="facts-links">${pluginLinks(info, text)}${info.getButton}</p></div></div>
     </article>
   </li>`;
 }
@@ -448,7 +467,9 @@ const ICONS = {
   github: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8a10.2 10.2 0 0 0-3.2 19.9c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.3-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .9-.3 2.8 1a9.6 9.6 0 0 1 5.1 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10.2 10.2 0 0 0 12 1.8z"/></svg>',
   copy: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>',
   npm: '<svg aria-hidden="true" viewBox="0 0 24 24"><path fill="#cb3837" d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z"/></svg>',
-  code: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5m8-10 5 5-5 5"/></svg>'
+  code: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5m8-10 5 5-5 5"/></svg>',
+  chevron: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>',
+  external: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4h7v7m0-7-9 9m6 0v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5"/></svg>'
 };
 
 // The index URL with its copy button, shared by the home page and every plugin page.
@@ -463,7 +484,7 @@ const addressBar = text => `<label class="address-label visually-hidden" for="in
  * The shell every page shares: head tags with alternates in every language, header, footer and messages.
  * `path` is the page's address under the language folder; `site` carries the catalog numbers for the footer.
  */
-function layout({ language, path, title, description, body, site, structured = [], type = 'website', image }) {
+function layout({ language, path, title, description, body, site, structured = [], type = 'website', image, hasScreenshots = false }) {
   const text = COPY[language];
   const from = LANGUAGES[language].dir + path;
   const root = '../'.repeat(depth(from));
@@ -480,7 +501,7 @@ function layout({ language, path, title, description, body, site, structured = [
     ? `<span lang="${entry.tag}" aria-current="page" title="${entry.name}">${entry.label}</span>`
     : `<a href="${esc(target(id))}" lang="${entry.tag}" hreflang="${entry.tag}" data-lang="${id}" title="${entry.name}">${entry.label}</a>`).join('');
   const messages = { usage: text.usage, copy: text.copy, copied: text.copied, copySuccess: text.copySuccess, copyFailure: text.copyFailure, nameCopied: text.nameCopied, dshOpened: text.dshOpened, dshMissed: text.dshMissed, getFailure: text.getFailure, results: text.results, more: text.more, moreLoading: text.moreLoading, moreFailed: text.moreFailed, shown: text.shown,
-    like: text.like, liked: text.liked, likeTitle: text.likeTitle, likeFailed: text.likeFailed, likeLimit: text.likeLimit, copyCommand: text.copyCommand, copiedShort: text.copiedShort,
+    like: text.like, liked: text.liked, likeTitle: text.likeTitle, likeFailed: text.likeFailed, likeLimit: text.likeLimit, copyCommand: text.copyCommand, copiedShort: text.copiedShort, screenshotPosition: text.screenshotPosition,
     statsUrl: STATS_URL, likesUrl: `${ORIGIN}likes.json`, likeApi: `${ORIGIN}api/like`, starsApi: `${ORIGIN}api/stars` };
   // The English home page is the x-default: send visitors on to their remembered or browser language.
   const redirect = language === 'en' && onHome ? `<script>try{var l=localStorage.getItem('opm-lang'),n=navigator.language||'';if(!l)l=/^zh-(tw|hk|mo|hant)/i.test(n)?'tw':/^zh/i.test(n)?'zh':/^ja/i.test(n)?'ja':/^ko/i.test(n)?'ko':'';var d={zh:'zh/',tw:'zh-tw/',ja:'ja/',ko:'ko/'}[l];if(d)location.replace(d+location.search+location.hash)}catch(e){}</script>` : '';
@@ -542,7 +563,7 @@ ${body}
     </div>
     <div class="footer-bottom shell"><p>${esc(text.independent)} ${esc(text.scope)}</p><p class="footer-meta"><span class="footer-languages">${Object.entries(LANGUAGES).map(([id, entry]) => id === language ? `<span lang="${entry.tag}">${entry.name}</span>` : `<a href="${esc(target(id))}" lang="${entry.tag}" hreflang="${entry.tag}">${entry.name}</a>`).join('')}</span></p></div>
   </footer>
-  ${onHome ? `<dialog class="shot-viewer" data-viewer><button type="button" class="viewer-close" data-viewer-close aria-label="${esc(text.close)}">×</button><img alt=""></dialog>` : ''}
+  ${onHome || hasScreenshots ? `<dialog class="shot-viewer" data-viewer closedby="any" aria-label="${esc(text.zoom)}"><form method="dialog"><button class="viewer-close" data-viewer-close aria-label="${esc(text.close)}" autofocus>×</button></form><img alt="" referrerpolicy="no-referrer"></dialog>` : ''}
   <script id="site-messages" type="application/json">${json(messages)}</script>
 </body>
 </html>\n`, language);
@@ -633,6 +654,14 @@ function readmeBadge(name, language, label) {
 function pluginPage(plugin, index, language, context, related) {
   const { text, site, root, from } = context;
   const info = describe(plugin, language, context);
+  const links = pluginLinks(info, text, true);
+  const screenshots = context.display.plugins?.[plugin.name]?.screenshots ?? [];
+  const gallery = screenshots.map(({ url, alt }, at) => {
+    const src = esc(url);
+    const description = esc(alt);
+    const slideLabel = esc(text.screenshotPosition.replace('{at}', at + 1).replace('{total}', screenshots.length));
+    return `<div class="plugin-screenshot-slide" role="group" aria-roledescription="slide" aria-label="${slideLabel}"><a class="plugin-screenshot" data-zoom href="${src}" rel="noreferrer" aria-label="${esc(text.zoom)}: ${description}"><img src="${src}" alt="${description}" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a></div>`;
+  }).join('');
   const heading = info.namedTitle ? info.title : info.packageName;
   const home = link(from, language);
   const categoryLink = info.categoryId ? `${home}#plugins` : undefined;
@@ -647,11 +676,36 @@ function pluginPage(plugin, index, language, context, related) {
       <nav class="crumbs" aria-label="Breadcrumb"><a href="${esc(home)}">${esc(text.home)}</a><span aria-hidden="true">/</span><a href="${esc(home)}#plugins">${esc(text.plugins)}</a>${info.categoryId ? `<span aria-hidden="true">/</span><span>${esc(info.categoryTitle)}</span>` : ''}</nav>
       <article class="detail-card" data-get-scope data-tone="${info.tone}">
         <div class="detail-head"><span class="plugin-avatar detail-avatar" aria-hidden="true">${avatar(info, root)}</span><div><h1 id="page-title">${esc(heading)}</h1>${info.namedTitle ? `<p class="package-name">${esc(info.packageName)}</p>` : ''}</div></div>
-        ${info.categoryId || info.badges ? `<div class="plugin-tags">${info.categoryId ? `<span class="plugin-tag">${esc(info.categoryTitle)}</span>` : ''}${info.badges}</div>` : ''}
         <p class="detail-lead">${esc(info.description)}</p>
-        <div class="plugin-detail">${info.detail}</div>
+        <div class="detail-meta">
+          ${info.categoryId || info.badges ? `<div class="plugin-tags">${info.categoryId ? `<span class="plugin-tag plugin-category">${esc(info.categoryTitle)}</span>` : ''}${info.badges}</div>` : ''}
+          <div class="plugin-detail">${info.detail}</div>
+        </div>
       </article>
-      <div class="detail-grid">
+      <div class="detail-grid${gallery ? ' detail-grid-with-screenshots' : ''}${screenshots.length === 1 ? ' detail-grid-single-screenshot' : ''}">
+        ${gallery ? `<section class="detail-panel plugin-screenshots" aria-labelledby="screenshots-title" aria-roledescription="carousel">
+            <div class="plugin-screenshot-heading"><h2 id="screenshots-title">${esc(text.screenshots)}</h2>
+              ${screenshots.length > 1 ? '<span data-screenshot-range aria-hidden="true" hidden></span>' : ''}
+            </div>
+            <div class="plugin-screenshot-viewport">
+              ${screenshots.length > 1 ? `<div class="plugin-screenshot-controls" data-screenshot-controls hidden>
+                <button type="button" data-screenshot-previous aria-label="${esc(text.previousScreenshot)}" aria-controls="plugin-screenshot-track">${ICONS.chevron}</button>
+                <button type="button" data-screenshot-next aria-label="${esc(text.nextScreenshot)}" aria-controls="plugin-screenshot-track">${ICONS.chevron}</button>
+              </div>` : ''}
+              <div class="plugin-screenshot-track" id="plugin-screenshot-track" role="group" aria-label="${esc(text.screenshots)}"${screenshots.length > 1 ? ' tabindex="0"' : ''}>${gallery}</div>
+            </div>
+            ${screenshots.length > 1 ? `<p class="visually-hidden" role="status" data-screenshot-status="${esc(text.screenshotRange)}"></p>` : ''}
+          </section>` : ''}
+        <section class="detail-panel" aria-labelledby="facts-title">
+          <h2 id="facts-title">${esc(text.facts)}</h2>
+          <dl class="facts">${info.facts}${author ? `<dt>${esc(text.author)}</dt><dd>${esc(author)}</dd>` : ''}${info.categoryId ? `<dt>${esc(text.category)}</dt><dd><a href="${esc(categoryLink)}">${esc(info.categoryTitle)}</a></dd>` : ''}${info.npm ? `<dt>${esc(text.npmMonth)}</dt><dd>${esc(numberFormat(wording(language)).format(info.npm.downloads))}</dd>` : ''}</dl>
+          ${links ? `<p class="facts-links">${links}</p>` : ''}
+          ${keywords.length ? `<h3>${esc(text.keywords)}</h3><ul class="keyword-list">${keywords.map(word => `<li>${esc(word)}</li>`).join('')}</ul>` : ''}
+          <h3>${esc(text.badgeTitle)}</h3>
+          <p class="badge-note">${esc(text.badgeText)}</p>
+          <p class="badge-preview"><img src="${esc(badge.image)}" alt="${esc(text.brand)}" height="20" decoding="async"></p>
+          <div class="snippet snippet-line" title="${esc(badge.markdown)}"><code>${esc(badge.markdown)}</code><button type="button" class="copy-chip" data-copy-text="${esc(badge.markdown)}" hidden>${ICONS.copy}<span>${esc(text.copyBadge)}</span></button></div>
+        </section>
         <section class="detail-panel" aria-labelledby="install-title" data-get-scope>
           <h2 id="install-title">${esc(text.install)}</h2>
           <ol class="install-steps">
@@ -659,16 +713,6 @@ function pluginPage(plugin, index, language, context, related) {
             <li><p>${esc(text.installSteps[1])}</p><p class="install-name"><code class="get-name">${esc(info.packageName)}</code>${info.getButton}</p></li>
           </ol>
           <div class="install-plugin"><p class="install-plugin-title">${esc(text.installPluginTitle)}</p><div class="snippet snippet-line"><code>${PLUGIN_COMMAND}</code><button type="button" class="copy-chip" data-copy-text="${PLUGIN_COMMAND}" hidden>${ICONS.copy}<span>${esc(text.copyCommand)}</span></button></div><p class="install-plugin-note">${esc(text.installPluginNote.replace('{name}', heading))}</p></div>
-        </section>
-        <section class="detail-panel" aria-labelledby="facts-title">
-          <h2 id="facts-title">${esc(text.facts)}</h2>
-          <dl class="facts">${info.facts}${author ? `<dt>${esc(text.author)}</dt><dd>${esc(author)}</dd>` : ''}${info.categoryId ? `<dt>${esc(text.category)}</dt><dd><a href="${esc(categoryLink)}">${esc(info.categoryTitle)}</a></dd>` : ''}${info.npm ? `<dt>${esc(text.npmMonth)}</dt><dd>${esc(numberFormat(wording(language)).format(info.npm.downloads))}</dd>` : ''}</dl>
-          ${info.links.length ? `<p class="facts-links">${info.links.join('')}</p>` : ''}
-          ${keywords.length ? `<h3>${esc(text.keywords)}</h3><ul class="keyword-list">${keywords.map(word => `<li>${esc(word)}</li>`).join('')}</ul>` : ''}
-          <h3>${esc(text.badgeTitle)}</h3>
-          <p class="badge-note">${esc(text.badgeText)}</p>
-          <p class="badge-preview"><img src="${esc(badge.image)}" alt="${esc(text.brand)}" height="20" decoding="async"></p>
-          <div class="snippet snippet-line" title="${esc(badge.markdown)}"><code>${esc(badge.markdown)}</code><button type="button" class="copy-chip" data-copy-text="${esc(badge.markdown)}" hidden>${ICONS.copy}<span>${esc(text.copyBadge)}</span></button></div>
         </section>
       </div>
       ${relatedItems ? `<section class="related" aria-labelledby="related-title"><h2 class="section-title" id="related-title">${esc(text.related.replace('{category}', info.categoryTitle))}</h2><ul class="related-list">${relatedItems}</ul><p class="related-more"><a class="text-button" href="${esc(home)}#plugins">${esc(text.browseAll)}</a></p></section>` : ''}
@@ -679,7 +723,7 @@ function pluginPage(plugin, index, language, context, related) {
     { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: heading, alternateName: info.namedTitle ? info.packageName : undefined, description: info.description, url, applicationCategory: 'DeveloperApplication', applicationSubCategory: info.categoryId ? info.categoryTitle : undefined, operatingSystem: 'DeepSeek Harness', softwareVersion: version?.version, datePublished: version?.publishTimestamp ? new Date(version.publishTimestamp * 1000).toISOString().slice(0, 10) : undefined, author: author ? { '@type': 'Person', name: author } : undefined, codeRepository: info.sourceUrl, downloadUrl: info.npmUrl, keywords: keywords.join(', ') || undefined, inLanguage: LANGUAGES[language].tag, offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' } },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ name: text.home, item: absolute(language) }, { name: text.plugins, item: `${absolute(language)}#plugins` }, { name: heading, item: url }].map((entry, at) => ({ '@type': 'ListItem', position: at + 1, ...entry })) }
   ];
-  return layout({ language, path: pluginPath(plugin.name), title: text.pluginTitle(heading), description: text.pluginDescription(heading, info.description.replace(/[。.]?$/, LANGUAGES[language].data === 'en' ? '.' : '。'), { category: info.categoryId ? info.categoryTitle : undefined, version: version?.version }), body, site, structured, type: 'article' });
+  return layout({ language, path: pluginPath(plugin.name), title: text.pluginTitle(heading), description: text.pluginDescription(heading, info.description.replace(/[。.]?$/, LANGUAGES[language].data === 'en' ? '.' : '。'), { category: info.categoryId ? info.categoryTitle : undefined, version: version?.version }), body, site, structured, type: 'article', hasScreenshots: !!gallery });
 }
 
 function statsPage(language, context) {
@@ -817,6 +861,8 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
       await write(LANGUAGES[language].dir + pluginPath(plugin.name), pluginPage(plugin, index, language, pageContext, relatedPlugins(plugins, at)), output);
       const info = describe(plugin, language, pageContext);
       const fingerprint = [info.title, info.packageName, info.description, info.version?.version, info.categoryId, info.sourceUrl, info.homepage, plugin.author, plugin.metadata?.keywords];
+      const screenshots = display.plugins?.[plugin.name]?.screenshots;
+      if (screenshots?.length) fingerprint.push(screenshots);
       pageVersions[absolute(language, pluginPath(plugin.name))] = createHash('sha256').update(JSON.stringify(fingerprint)).digest('hex').slice(0, 16);
     }
   }
