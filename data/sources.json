@@ -11681,14 +11681,14 @@
       "category": "tools"
     },
     {
-      "name": "dsh-continue-button",
+      "name": "dsh-editable-send",
       "title": {
-        "en": "Continue Button",
-        "zh": "继续按钮"
+        "en": "Editable Send",
+        "zh": "可编辑发送按钮"
       },
       "description": {
-        "en": "Add an editable one-click send button beside the composer. Requires DSH >=0.2.1-rc.2 <0.3.0.",
-        "zh": "在输入框旁添加可编辑文字的一键发送按钮。需 DSH >=0.2.1-rc.2 <0.3.0。"
+        "en": "Add a button beside the DSH composer that sends a text snippet in one click. Edit the text in the composer to reuse prompts such as “continue.”",
+        "zh": "在 DSH 输入框旁加一个发送按钮，一键发送预设文本。可编辑为常用短句，例如「继续」。"
       },
       "category": "interface"
     },
@@ -12666,8 +12666,8 @@
         "zh": "MarkPilot · Markdown × AI 工作台"
       },
       "description": {
-        "en": "Edit Markdown beside your files and DSH conversation, with @mp references, math, tables, footnotes, guarded saves and draft recovery. PDF export uses an installed Edge/Chrome and the native save dialog. Requires Host Connection and built-in SQLite; printing runs a separate browser process.",
-        "zh": "将 Markdown、文件树和 DSH 对话并排，支持 @mp 引用、公式、表格、脚注、版本守卫保存与草稿恢复。PDF 导出调用已安装的 Edge/Chrome 和原生保存对话框；需宿主 Connection 与内置 SQLite，打印会启动独立浏览器进程。"
+        "en": "Edit Markdown alongside files and DSH chat, with section-scoped edits, cross-cell selection, guarded saves and draft recovery. Requires Host Connection and built-in SQLite. PDF export needs Edge or Chrome.",
+        "zh": "在文件树和 DSH 对话旁编辑 Markdown，支持限定章节编辑、跨单元格选择、带版本校验的保存与草稿恢复。需宿主 Connection 和内置 SQLite，导出 PDF 需 Edge 或 Chrome。"
       },
       "category": "interface"
     },
@@ -17105,8 +17105,8 @@
       },
       "category": "workflow",
       "description": {
-        "en": "Confirm before sending during peak hours and choose whether to defer a draft to off-peak hours. Optional holiday updates fetch public calendar data. The author tested DSH Desktop 0.2.2-rc.3 on Windows.",
-        "zh": "峰时发送前弹出确认，可选择把草稿延后到谷时。可选节假日更新会下载公开日历数据。作者在 Windows 的 DSH Desktop 0.2.2-rc.3 上验证。"
+        "en": "Confirm before sending during peak hours, or defer a draft until off-peak hours. Optional holiday refresh fetches public calendar data. The author verified the scoped package on DSH 0.2.2-rc.5.",
+        "zh": "峰时发送前弹出确认，可选择把草稿延后到谷时。可选节假日更新会下载公开日历数据。作者在 DSH 0.2.2-rc.5 验证了改名后的包。"
       }
     },
     {
@@ -17290,16 +17290,16 @@
       },
       "category": "tools",
       "description": {
-        "en": "Search files and text within registered DSH workspaces and jump to matching lines. Uses a local search tool when available.",
-        "zh": "搜索 DSH 已登记工作区的文件与文本，并跳转到命中行。可使用本机可用的搜索程序。"
+        "en": "Search registered workspaces, session titles, and text from the current session. Insert a matching file as a DSH reference or copy its path. Text search can use a local search program. The session search routes need Host Connection admission.",
+        "zh": "搜索已登记工作区、会话标题和当前会话文本，可把命中文件插入为 DSH 引用，或复制路径。文本搜索可使用本机搜索程序。 会话搜索接口需要宿主 Connection 准入。"
       },
-      "version": "1.2.1",
+      "version": "1.4.0",
       "source": {
         "type": "git",
+        "commit": "e59be6efecde6b35083edb428a836735555813a5",
         "url": "https://github.com/LoseAustyn/dsh-simple-search",
-        "commit": "2b5066a50b8ce795d3470aa9b20d89c9dda11a9e",
-        "integrity": "sha512-Kbkk5uk0ZjYYo0poYDD2tZEvojPu0vs6gSjtf10eFrkNdrUimPIZbt6jK7KBbP7yBRkWEPRE8za/93kM+LfxQg==",
-        "publishedAt": "2026-11-19T03:05:40Z"
+        "integrity": "sha512-vTuHaHY2VehD2Gjoruf//rT5Iwk5QpuHq5HP1f33L/4GWYtYo2evjVOJaZJogDmMg9dLDY1MKa8uQPhtSuZd5g==",
+        "publishedAt": "2026-11-23T02:42:53Z"
       }
     },
     {
@@ -17369,13 +17369,13 @@
         "en": "Fetch and summarize mail from a configured IMAP account. Passwords use the DSH credential store. Optional scheduled digests require scheduling support and may send selected email content to the configured model.",
         "zh": "从配置的 IMAP 邮箱获取邮件并生成摘要，密码存放在 DSH 凭据库。定时整理需要计划任务支持，所选邮件内容可能交给已配置的模型。"
       },
-      "version": "0.4.4",
+      "version": "0.4.5",
       "source": {
         "type": "git",
+        "commit": "adca63ea90a557b09fe84b119013476c640bf3a2",
         "url": "https://github.com/skyrocks/dsh-mail-digest",
-        "commit": "b261a270455c670ca9de8b4010424011af1a184f",
-        "integrity": "sha512-5IW1t8FHRdDHKiEqLbYgOLLQPVQFvZwEew8mFA94neIlsHgmcUAwKSlMUxDv3UXACikpxUdglqLo64vjM4y/9w==",
-        "publishedAt": "2026-11-19T08:08:30Z"
+        "integrity": "sha512-dxDAoO5aOIg7i62mo7h753b/xv58G+HAfYSI4wT8OpoFQw/Fs8KVi7XoLkVn0I2+xhHTVE1zM4NTEnLOVQgwmg==",
+        "publishedAt": "2026-11-24T02:31:20Z"
       }
     },
     {
@@ -17509,8 +17509,8 @@
       },
       "category": "interface",
       "description": {
-        "en": "Add a separate, optional Condensed View below completed replies. It sends the current reply to a DSH-configured model. Generation is manual by default, with per-session or all-session automatic options, and may incur model charges.",
-        "zh": "在已完成的回答下方提供独立速览，生成时仅将当前回答交给所选 DSH 模型。默认点按生成，也可设为本会话或全部自动生成，可能产生模型费用。"
+        "en": "Add an optional Condensed View beneath completed replies. The current reply goes to a selected DSH model and may incur charges. Manual generation is the default. After upgrading from 0.1.x, reselect the model if prompted.",
+        "zh": "在已完成的回答下方提供可选速览，生成时将当前回答发给所选 DSH 模型，可能收费。默认手动生成。由 0.1.x 升级后，如有提示可重新选择模型。"
       }
     },
     {
@@ -19382,6 +19382,158 @@
         "zh": "在 DSH 查看 A 股指数、自选股、分时和日线图、成交、公告及相关新闻。支持代码和拼音搜索，代码及搜索词会发给东方财富。"
       },
       "category": "tools"
+    },
+    {
+      "name": "dsh-panel-updater",
+      "title": {
+        "en": "DSH Panel Updater",
+        "zh": "DSH 侧边栏更新器"
+      },
+      "description": {
+        "en": "Inspect installed plugins, apply selected updates, and move plugin configuration between DSH profiles. Host Connection admission is required for the panel and its install actions.",
+        "zh": "在 DSH 侧栏检查已装插件、应用所选更新，并在配置间迁移插件设置。面板及安装操作需要宿主 Connection 准入。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "@ltw2522/dsh-503-guard",
+      "title": {
+        "en": "503 Guard",
+        "zh": "503 守卫"
+      },
+      "description": {
+        "en": "Probe a configured gateway after retryable server errors, then resume the interrupted DSH request if the gateway recovers. The recovery probe uses the configured URL.",
+        "zh": "遇到可重试的服务端错误时探测已配置的网关，恢复后续跑中断的 DSH 请求。恢复探测使用配置中的地址。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "@zhengrenwritecode/dsh-session-forging",
+      "title": {
+        "en": "Session Forging",
+        "zh": "会话锻造"
+      },
+      "description": {
+        "en": "Create DSH sessions from reusable templates with role instructions, memory, and usage limits. Authorized sessions can share workspace documents and send assignments to selected peers.",
+        "zh": "用可复用模板创建带角色指令、独立记忆和用量上限的 DSH 会话。授权后可共享工作区文档，并向指定会话派工。"
+      },
+      "category": "workflow",
+      "version": "0.3.0",
+      "source": {
+        "type": "git",
+        "commit": "333b86a16641a790b6938c66afc4f08c1a307434",
+        "url": "https://github.com/sonbringer/dsh-plugin-session-forging",
+        "integrity": "sha512-JppMvlhd+EGxIQkl5SqCPxKLvZydL7xJjlVaxW4ax/dJw2qKvjtD5pP/PNa50z+wpqOUxL5reC+jBB9L/20xSA==",
+        "publishedAt": "2026-11-23T02:37:21Z"
+      }
+    },
+    {
+      "name": "@local/lumina-kitchen",
+      "title": {
+        "en": "LUMINA",
+        "zh": "LUMINA 创作台"
+      },
+      "description": {
+        "en": "Browse photography references and camera moves and turn an idea into images or video. Generating media requires a configured provider and may incur charges. Optional motion demos download about 308 MB.",
+        "zh": "浏览摄影参考和运镜演示，把画面想法变成图片或视频。生成时需配置媒体服务，可能收费。可选运镜演示约需下载 308 MB。"
+      },
+      "category": "tools",
+      "version": "3.2.2",
+      "source": {
+        "type": "git",
+        "commit": "4006eb5df7d3dd80d03a43ebe65b55b85bf48510",
+        "url": "https://github.com/shenzhongchao/lumina-kitchen",
+        "integrity": "sha512-Uo+Xmoq4fGMby60VWFtv1l9G8zuCLFSNYDbevaf708jokg6/WXnLrIXMDXsOzax1+FD13N28kTCuNCqy2XQf8g==",
+        "publishedAt": "2026-11-23T06:07:34Z"
+      }
+    },
+    {
+      "name": "dsh-niuma-broker",
+      "title": {
+        "en": "Niuma Broker",
+        "zh": "牛马经纪人"
+      },
+      "description": {
+        "en": "Track jobs and applications, compare skill requirements, and maintain role-specific résumés in DSH. Optional analysis uses a configured model and can send selected career or résumé data to it.",
+        "zh": "在 DSH 跟进岗位与申请、比较技能要求，为不同职位维护简历。使用可选模型分析时，选中的求职和简历资料可能发给所配置的模型。"
+      },
+      "category": "workflow"
+    },
+    {
+      "name": "@dshj/dsh-oauth",
+      "title": {
+        "en": "DSH OAuth",
+        "zh": "DSH OAuth 登录"
+      },
+      "description": {
+        "en": "Add OAuth and OIDC sign-in to DSH Web. Configure a supported identity provider, callback URL, and an account allowlist. Requires DSH 0.2.3-alpha.2-compatible Host authentication.",
+        "zh": "给 DSH Web 加 OAuth/OIDC 登录。需配置支持的身份提供商、回调地址和账号白名单，并使用兼容 DSH 0.2.3-alpha.2 宿主准入的版本。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-t3-inbox",
+      "title": {
+        "en": "DSH T3 Inbox",
+        "zh": "DSH T3 Inbox"
+      },
+      "description": {
+        "en": "Separate running DSH sessions from those needing attention. Settle or snooze items and filter by project and Git branch. Tested by the author with DSH Desktop and Web on macOS.",
+        "zh": "把运行中的会话与待处理会话分开，支持收尾、暂缓，以及按项目和 Git 分支筛选。作者在 macOS 的 DSH Desktop 和 Web 验证。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "agentrouter-dsh",
+      "title": {
+        "en": "AgentRouter",
+        "zh": "AgentRouter"
+      },
+      "description": {
+        "en": "Discover research providers and preview prices. Paid calls send the request to AgentRouter after one-time approval with a USD ceiling, and return a receipt. Requires an AgentRouter wallet key.",
+        "zh": "搜索可用研究服务并预览价格。付费请求经单次确认后发送给 AgentRouter，带美元费用上限并返回收据。需 AgentRouter 钱包密钥。"
+      },
+      "category": "integrations",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "commit": "055e639108d5a79837914daae0c7986106512a77",
+        "url": "https://github.com/pageonelab/agentrouter-dsh",
+        "integrity": "sha512-zFEZwZhXk+viG6exrtERVPZvpdNBFhdwZeqpYZyasYMz9HZnfrh8zXpjvv6g2AQc3KGjfnz/2Pb3NAkf1NO+9Q==",
+        "publishedAt": "2026-11-23T13:55:04Z"
+      }
+    },
+    {
+      "name": "dsh-english-gym",
+      "title": {
+        "en": "English Gym",
+        "zh": "English Gym（英语练习）"
+      },
+      "description": {
+        "en": "Practice translation and spelling in a DSH widget. Translation feedback and optional reading reports use a configured model and may incur charges. Requires DSH 0.2.3-alpha.2 or later as declared by the package.",
+        "zh": "在 DSH 挂件里练习中译英和单词拼写。短语批改和可选阅读报告会用已配置的模型，可能收费。包声明需 DSH 0.2.3-alpha.2 或以上。"
+      },
+      "category": "tools",
+      "version": "0.4.4",
+      "source": {
+        "type": "git",
+        "commit": "b991b9974f2c8dfa23306a425d39fd2557060253",
+        "url": "https://github.com/KYCOMING/dsh-english-gym",
+        "integrity": "sha512-fS9QNfIkzGDKJ/BHdqWwBWPTfXU51QXYkDVdhTEXp/ZSbRvePUpnlVFPoBtAc2/1nqvsy7l7CYYVInUrPwIYVg==",
+        "publishedAt": "2026-11-24T05:33:33Z"
+      }
+    },
+    {
+      "name": "claraconverts",
+      "title": {
+        "en": "ClaraConverts",
+        "zh": "ClaraConverts"
+      },
+      "description": {
+        "en": "Set up a ClaraConverts voice and text chat agent for a website through its remote MCP service. The service can create a trial account, load site content, and change chatbot settings.",
+        "zh": "通过 ClaraConverts 远程 MCP 为网站设置语音和文字聊天助手。服务可创建试用账号、读取站点内容并修改聊天助手配置。"
+      },
+      "category": "integrations"
     }
   ]
 }

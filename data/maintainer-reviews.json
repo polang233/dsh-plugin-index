@@ -10078,6 +10078,204 @@
       "reviewedAt": "2026-11-23T03:16:05.346Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-simple-search",
+      "version": "1.4.0",
+      "integrity": "sha512-vTuHaHY2VehD2Gjoruf//rT5Iwk5QpuHq5HP1f33L/4GWYtYo2evjVOJaZJogDmMg9dLDY1MKa8uQPhtSuZd5g==",
+      "repository": "https://github.com/LoseAustyn/dsh-simple-search",
+      "source": {
+        "type": "git",
+        "commit": "e59be6efecde6b35083edb428a836735555813a5"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@skyrocks/dsh-mail-digest",
+      "version": "0.4.5",
+      "integrity": "sha512-dxDAoO5aOIg7i62mo7h753b/xv58G+HAfYSI4wT8OpoFQw/Fs8KVi7XoLkVn0I2+xhHTVE1zM4NTEnLOVQgwmg==",
+      "repository": "https://github.com/skyrocks/dsh-mail-digest",
+      "source": {
+        "type": "git",
+        "commit": "adca63ea90a557b09fe84b119013476c640bf3a2"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-interpreter",
+      "version": "0.2.1",
+      "integrity": "sha512-DNQt7vO3TOSHY+UjBo0TRcZorWRat/SsvUN9F6D+aJzX1VdeHmV2r5ZLLHR5JMc3HoowP1wSg2+lhBwQbMjXpQ==",
+      "repository": "https://github.com/Gaaaamu/dsh-interpreter",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-panel-updater",
+      "version": "1.0.4",
+      "integrity": "sha512-4ACi0vj1PI8fac9oa45Tvk8ezR9uJKxSO16bM9Mw4fz2eUM9fSSsyIzIomimspAD6MwH0gnGrfYAUs5O/7Qvkg==",
+      "repository": "https://github.com/setoya/dsh-panel-updater",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@ltw2522/dsh-503-guard",
+      "version": "1.0.3",
+      "integrity": "sha512-xUmbuKs+hTxQJvQM1E4cDLXupITG+EeFvuTKUY+IAYbfugfRgfAwYz2PAe4WJkwpvE1SXBUa1pRuK2JFjNKnBw==",
+      "repository": "https://github.com/ltw2522/dsh-503-guard",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@ltw2522/dsh-peak-window",
+      "version": "1.3.1",
+      "integrity": "sha512-DhlqsdXbZ4Wyi/8VsnnezY/1c5+lf2P29sBm1zZ8xi7H6ggHozI44a2KRhYxRurap/ObEhFDrYA6+7UxLC6pbg==",
+      "repository": "https://github.com/ltw2522/dsh-peak-window",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@zhengrenwritecode/dsh-session-forging",
+      "version": "0.3.0",
+      "integrity": "sha512-JppMvlhd+EGxIQkl5SqCPxKLvZydL7xJjlVaxW4ax/dJw2qKvjtD5pP/PNa50z+wpqOUxL5reC+jBB9L/20xSA==",
+      "repository": "https://github.com/sonbringer/dsh-plugin-session-forging",
+      "source": {
+        "type": "git",
+        "commit": "333b86a16641a790b6938c66afc4f08c1a307434"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@local/lumina-kitchen",
+      "version": "3.2.2",
+      "integrity": "sha512-Uo+Xmoq4fGMby60VWFtv1l9G8zuCLFSNYDbevaf708jokg6/WXnLrIXMDXsOzax1+FD13N28kTCuNCqy2XQf8g==",
+      "repository": "https://github.com/shenzhongchao/lumina-kitchen",
+      "source": {
+        "type": "git",
+        "commit": "4006eb5df7d3dd80d03a43ebe65b55b85bf48510"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-niuma-broker",
+      "version": "0.1.3",
+      "integrity": "sha512-C/OwSSgkDKqL3h95fix0dBxsgttK11GSqyXrt0YnEzBXIeq341rwZQ6dRRDkeJZEA9D6bWd8k1Q5Nxu+s0lKvQ==",
+      "repository": "https://github.com/Nimbus318/dsh-niuma-broker",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-markdown-editor-typora",
+      "version": "2.1.7",
+      "integrity": "sha512-YY6y41KCxmaCsH+IWq8hnX2+NTSRIcrTWf5WdYyqS5kJDxdohjqOVy8y8aM3SSceA4yQLdWSojzGEO1hkpjHUg==",
+      "repository": "https://github.com/ltmroberthk915/markpilot",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@dshj/dsh-oauth",
+      "version": "0.1.2",
+      "integrity": "sha512-m3StCwNahghe+VQ+qy7wpm66nscpxqgRePzn22XMqUYzfhUsIKjS8FvE/W4ujfxnM3BYUj3V5+wdr9HR6rWD1w==",
+      "repository": "https://github.com/DSHJJJ/dsh-oauth",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-t3-inbox",
+      "version": "0.2.4",
+      "integrity": "sha512-BrUxBD2sllW2Z+LhscKmDpjxuotDkq5fp1s0vk9OrOCpGs6KD5IxUTMjwvTKMuG9dVMXj4mhYqqOaDCTzZ86Iw==",
+      "repository": "https://github.com/tungloong/dsh-t3-inbox",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "agentrouter-dsh",
+      "version": "0.1.0",
+      "integrity": "sha512-zFEZwZhXk+viG6exrtERVPZvpdNBFhdwZeqpYZyasYMz9HZnfrh8zXpjvv6g2AQc3KGjfnz/2Pb3NAkf1NO+9Q==",
+      "repository": "https://github.com/pageonelab/agentrouter-dsh",
+      "source": {
+        "type": "git",
+        "commit": "055e639108d5a79837914daae0c7986106512a77"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-english-gym",
+      "version": "0.4.4",
+      "integrity": "sha512-fS9QNfIkzGDKJ/BHdqWwBWPTfXU51QXYkDVdhTEXp/ZSbRvePUpnlVFPoBtAc2/1nqvsy7l7CYYVInUrPwIYVg==",
+      "repository": "https://github.com/KYCOMING/dsh-english-gym",
+      "source": {
+        "type": "git",
+        "commit": "b991b9974f2c8dfa23306a425d39fd2557060253"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "claraconverts",
+      "version": "1.1.0",
+      "integrity": "sha512-3ousKarZbr6pnxcKbdkxrzoYcUNvw4vz0vte8aIHxH8GECNfrvGyyQ41OY2Q506iMkiOYdOC+haX6+ap7f7MrA==",
+      "repository": "https://github.com/cognicores/claraconverts-agents",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-editable-send",
+      "version": "1.0.0",
+      "integrity": "sha512-BL8NO3j1FsfC/QNa04gi3ToeSLXvGtCBChhy/sZcgPfskiXAFk4oI9g8CiNIojsmqsZRZNtWhOii57bS6LoTkw==",
+      "repository": "https://github.com/CHENJIAMIAN/dsh-editable-send",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-24T06:03:55.393Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
