@@ -10398,6 +10398,18 @@
       "reviewedAt": "2026-11-24T10:03:24.819Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-claude-slider",
+      "version": "2.20.1",
+      "integrity": "sha512-QZE0827poEE5acx7usG6t/CGb6h/E1tdpDn4cXYaz+Ws6Q/MltRAnhggmFWk+WQ/fyDpgrAGLYhyUv/f3utd6g==",
+      "repository": "https://github.com/yicun0316/dsh-claude-slider",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-24T10:57:07.950Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }

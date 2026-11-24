@@ -140,6 +140,18 @@
           "alt": "Windows 私有桌面的模式设置"
         }
       ]
+    },
+    "dsh-claude-slider": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/yicun0316/dsh-claude-slider/10817881fb23e0d4cd1d4ea8f46c2360ba23b937/assets/effects_gallery.png",
+          "alt": "九款推理强度滑块动效"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/yicun0316/dsh-claude-slider/10817881fb23e0d4cd1d4ea8f46c2360ba23b937/assets/pets_showcase.png",
+          "alt": "输入框像素萌宠预览"
+        }
+      ]
     }
   }
 }
