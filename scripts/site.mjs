@@ -1,12 +1,13 @@
 import { mkdir, readFile, writeFile, copyFile, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { Converter } from 'opencc-js';
-import { githubRepository } from './github-repository.mjs';
+import { githubRepository, safeWebUrl } from './github-repository.mjs';
 import { releaseAge } from './market-display.mjs';
 import { addedTimestamp } from './added.mjs';
 import { SOURCES } from './endorsements.mjs';
 import { INDEXNOW_KEY } from './indexnow.mjs';
 import { stripStarPrefix } from './descriptions.mjs';
+import { websiteScreenshots } from './screenshots.mjs';
 
 const ORIGIN = 'https://dshopen.org/';
 const INDEX_URL = `${ORIGIN}index.json`;
@@ -325,26 +326,25 @@ const numberFormat = language => new Intl.NumberFormat(INTL[language] ?? 'en-US'
 const categoryName = (categories, id, data, text, fallback) => text.categories?.[id] ?? localize(categories[id]?.title, data, fallback);
 // The README is Chinese, README.en.md English; Japanese and Korean readers get the English one.
 const docsFor = language => ['zh', 'tw'].includes(language) ? `${REPOSITORY}/blob/main/README.md` : DOCS;
-function safeUrl(value) {
-  if (typeof value !== 'string') return undefined;
-  try { const url = new URL(value); return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password ? url.href : undefined; } catch { return undefined; }
-}
 function linkDestination(href) {
   const url = new URL(href);
   const repository = url.search ? undefined : githubRepository(href);
   const page = repository?.url.toLowerCase() ?? `${url.origin}${url.pathname.replace(/\/$/, '')}${url.search}`;
-  // The GitHub README anchor is an alias for the repository landing page.
-  const fragment = repository && url.hash.toLowerCase() === '#readme' ? '' : url.hash;
+  // A default README anchor is an alias for the repository landing page.
+  const fragment = url.hash.toLowerCase() === '#readme' ? '' : url.hash;
   return page + fragment;
 }
 
-function pluginLinks({ sourceUrl, homepage, npmUrl }, text, detail = false) {
+function pluginLinks({ sourceUrl, homepage, documentation, npmUrl }, text, detail = false) {
   const source = sourceUrl ? `<a class="link-source" href="${esc(sourceUrl)}" rel="noopener noreferrer">${githubRepository(sourceUrl) ? ICONS.github : ICONS.code}<span>${esc(detail ? text.viewSource : text.source)}</span></a>` : '';
   const npm = npmUrl ? `<a class="link-npm" href="${esc(npmUrl)}" rel="noopener noreferrer">${ICONS.npm}<span>${esc(text.npm)}</span></a>` : '';
-  const showWebsite = homepage && (!sourceUrl || (detail && linkDestination(homepage) !== linkDestination(sourceUrl)));
+  const showWebsite = homepage && (!sourceUrl || detail);
   const website = showWebsite ? `<a class="link-website" href="${esc(homepage)}" rel="noopener noreferrer">${detail ? ICONS.external : ''}<span>${esc(detail ? text.visitWebsite : text.website)}</span></a>` : '';
-  return detail ? source + website + npm : source + npm + website;
+  const docs = detail && documentation ? `<a class="link-docs" href="${esc(documentation)}" rel="noopener noreferrer">${ICONS.docs}<span>${esc(text.docs)}</span></a>` : '';
+  return detail ? source + website + docs + npm : source + npm + website;
 }
+
+const isGitHubPage = url => url && ['github.com', 'www.github.com'].includes(new URL(url).hostname);
 function dateLabel(value, language) {
   const date = new Date(value);
   return Number.isFinite(date.getTime()) ? new Intl.DateTimeFormat(language === 'en' ? 'en-GB' : INTL[language] ?? 'en-GB', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(date) : undefined;
@@ -403,8 +403,18 @@ function describe(plugin, language, context) {
   const version = newestVersion(plugin.versions);
   const categoryId = plugin.metadata?.category ?? '';
   const categoryTitle = categoryName(categories, categoryId, data, text, text.other);
-  const sourceUrl = safeUrl(plugin.repository?.url) ?? safeUrl(version?.source?.type === 'git' ? version.source.url : undefined);
-  const homepage = safeUrl(plugin.homepage);
+  const sourceUrl = safeWebUrl(plugin.repository?.url) ?? safeWebUrl(version?.source?.type === 'git' ? version.source.url : undefined);
+  const repo = githubRepository(sourceUrl);
+  const project = repo && snapshot.repositories?.[repo.key];
+  const equivalentSources = [sourceUrl, safeWebUrl(project?.canonicalUrl)].filter(Boolean).map(linkDestination);
+  const distinct = candidate => {
+    const url = safeWebUrl(candidate);
+    return url && !equivalentSources.includes(linkDestination(url)) ? url : undefined;
+  };
+  const publishedHomepage = distinct(plugin.homepage);
+  const repositoryHomepage = distinct(project?.homepage);
+  const documentation = repositoryHomepage && !isGitHubPage(repositoryHomepage) && isGitHubPage(publishedHomepage) ? publishedHomepage : undefined;
+  const homepage = documentation ? repositoryHomepage : publishedHomepage ?? repositoryHomepage;
   const npmUrl = version?.source?.type === 'npm' ? `https://www.npmjs.com/package/${packageName.split('/').map(encodeURIComponent).join('/')}` : undefined;
   // Stable pastel tone per category so cards read as grouped without extra data.
   const tone = Array.from(categoryId).reduce((sum, char) => (sum * 31 + char.codePointAt(0)) % 997, 7) % 6;
@@ -424,10 +434,10 @@ function describe(plugin, language, context) {
   const detail = `${likeButton}${renderStars(plugin, snapshot, words)}
       ${npmMeasured ? `<a class="npm-downloads" data-downloads="${npm.downloads}" href="${esc(npm.source)}" title="${esc(npmTitle)}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>${esc(numberFormat(words).format(npm.downloads))}</a>` : ''}
       ${date ? `<time datetime="${esc(new Date(version.publishTimestamp * 1000).toISOString())}" title="${esc(dateLabel(version.publishTimestamp * 1000, words))}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>${esc(date)}</time>` : ''}`;
-  const reviewUrl = review && safeUrl(review.record);
+  const reviewUrl = review && safeWebUrl(review.record);
   const facts = `<dt>${esc(text.pluginName)}</dt><dd class="get-name">${esc(packageName)}</dd><dt>${esc(text.version)}</dt><dd class="version">${version ? esc(version.version) : esc(text.noVersion)}</dd>${version?.engines?.dsh ? `<dt>${esc(text.compatibility)}</dt><dd>${esc(version.engines.dsh)}</dd>` : ''}${version?.publishTimestamp ? `<dt>${esc(text.released)}</dt><dd>${esc(dateLabel(version.publishTimestamp * 1000, words))}</dd>` : ''}${own.includes('verified') && reviewText ? `<dt>${esc(text.review)}</dt><dd>${esc(reviewText)}${reviewUrl ? ` · <a href="${esc(reviewUrl)}">${esc(text.reviewRecord)}</a>` : ''}</dd>` : ''}`;
   const getButton = `<button type="button" class="get-copy" data-get="${esc(packageName)}" title="${esc(text.getHint)}" hidden><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>${esc(text.copyOpen)}</span></button>`;
-  return { name, packageName, title, namedTitle: title && title !== name, description, version, categoryId, categoryTitle, tone, npm: npmMeasured ? npm : undefined, badges, icon, detail, facts, getButton, sourceUrl, homepage, npmUrl };
+  return { name, packageName, title, namedTitle: title && title !== name, description, version, categoryId, categoryTitle, tone, npm: npmMeasured ? npm : undefined, badges, icon, detail, facts, getButton, sourceUrl, homepage, documentation, npmUrl };
 }
 
 function avatar(info, root, position = 0) {
@@ -655,11 +665,11 @@ function pluginPage(plugin, index, language, context, related) {
   const { text, site, root, from } = context;
   const info = describe(plugin, language, context);
   const links = pluginLinks(info, text, true);
-  const screenshots = context.display.plugins?.[plugin.name]?.screenshots ?? [];
+  const screenshots = context.screenshots(plugin.name);
   const gallery = screenshots.map(({ url, alt }, at) => {
     const src = esc(url);
-    const description = esc(alt);
     const slideLabel = esc(text.screenshotPosition.replace('{at}', at + 1).replace('{total}', screenshots.length));
+    const description = alt ? esc(alt) : slideLabel;
     return `<div class="plugin-screenshot-slide" role="group" aria-roledescription="slide" aria-label="${slideLabel}"><a class="plugin-screenshot" data-zoom href="${src}" rel="noreferrer" aria-label="${esc(text.zoom)}: ${description}"><img src="${src}" alt="${description}" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a></div>`;
   }).join('');
   const heading = info.namedTitle ? info.title : info.packageName;
@@ -824,7 +834,7 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
   for (const language of Object.keys(LANGUAGES)) await rm(new URL(LANGUAGES[language].dir + 'plugins/', output), { recursive: true, force: true });
   // What each page says, for IndexNow: after a release only pages whose fingerprint changed are submitted. Home and stats change every build (null).
   const pageVersions = {};
-  const shared = { categories: index.metadata?.categories ?? {}, snapshot, downloads, display, labels: index.metadata?.labels ?? {}, site, added };
+  const shared = { categories: index.metadata?.categories ?? {}, snapshot, downloads, display, screenshots: websiteScreenshots(evidence, display), labels: index.metadata?.labels ?? {}, site, added };
   for (const language of Object.keys(LANGUAGES)) {
     const context = path => ({ ...shared, text: COPY[language], from: LANGUAGES[language].dir + path, root: '../'.repeat(depth(LANGUAGES[language].dir + path)) });
     const home = context('');
@@ -861,8 +871,9 @@ export async function writeSite(index, evidence, snapshot = {}, downloads = {}, 
       await write(LANGUAGES[language].dir + pluginPath(plugin.name), pluginPage(plugin, index, language, pageContext, relatedPlugins(plugins, at)), output);
       const info = describe(plugin, language, pageContext);
       const fingerprint = [info.title, info.packageName, info.description, info.version?.version, info.categoryId, info.sourceUrl, info.homepage, plugin.author, plugin.metadata?.keywords];
-      const screenshots = display.plugins?.[plugin.name]?.screenshots;
-      if (screenshots?.length) fingerprint.push(screenshots);
+      if (info.documentation) fingerprint.push(info.documentation);
+      const screenshots = shared.screenshots(plugin.name);
+      if (screenshots.length) fingerprint.push(screenshots);
       pageVersions[absolute(language, pluginPath(plugin.name))] = createHash('sha256').update(JSON.stringify(fingerprint)).digest('hex').slice(0, 16);
     }
   }

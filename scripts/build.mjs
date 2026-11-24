@@ -8,7 +8,7 @@ import { buildIndex, releasesOf } from './lib.mjs';
 import { collectEndorsements } from './endorsements.mjs';
 import { assertNotWithdrawn, readWithdrawn } from './withdrawn.mjs';
 import { trackAdded } from './added.mjs';
-import { applyPluginPreviews } from './screenshots.mjs';
+import { applyPluginPreviews, collectRepositoryPreviews } from './screenshots.mjs';
 
 async function readJson(url) {
   try { return JSON.parse(await readFile(url, 'utf8')); } catch { return undefined; }
@@ -31,12 +31,15 @@ const PUBLISHED = 'https://polang233.github.io/dsh-plugin-index/';
 const previousIndex = await publishedSnapshot('index.json', { base: PUBLISHED }) ?? await readJson(new URL('index.json', output));
 const previousEvidence = await publishedSnapshot('status.json', { base: PUBLISHED }) ?? await readJson(new URL('status.json', output));
 const built = await buildIndex(config, { previous: { index: previousIndex, evidence: previousEvidence, base: PUBLISHED } });
+const previews = JSON.parse(await readFile(new URL('../data/plugin-previews.json', import.meta.url), 'utf8'));
 for (const failure of built.evidence.failures) {
   console.warn(`::warning title=Package check failed::${failure.name} ${failure.retained ? `kept at ${failure.version}` : 'left out'} since ${failure.since}: ${failure.error}`);
 }
 const cache = new URL('../.cache/', import.meta.url);
 const previous = await readSnapshot(new URL('github.json', cache)) ?? await publishedSnapshot('github.json') ?? await readSnapshot(new URL('github.json', output));
 const github = await collectGitHub(built.index, { previous });
+const repositoryPreviews = await collectRepositoryPreviews(built.index, built.evidence, previews, previousEvidence?.repositoryPreviews, {github});
+if (repositoryPreviews.failed) console.warn(`::warning title=Project preview sources unavailable::${repositoryPreviews.failed} repository directories could not be checked for screenshots.`);
 let previousDownloads;
 for (const root of [cache, output]) {
   try { previousDownloads = JSON.parse(await readFile(new URL('downloads.json', root), 'utf8')); break; } catch { /* Next source. */ }
@@ -48,10 +51,11 @@ const maintainerReviews = JSON.parse(await readFile(new URL('../data/maintainer-
 const previousRecommendations = await publishedSnapshot('recommendations.json') ?? await readJson(new URL('recommendations.json', output));
 const added = trackAdded(built.index.plugins.map(plugin => plugin.name), await publishedSnapshot('added.json') ?? await readJson(new URL('added.json', output)));
 const { index, display: marketDisplay, recommendations } = applyMarketDisplay(built.index, { github, downloads, releases: releasesOf(built.evidence), endorsements, publishers, maintainerReviews, packageEvidence: built.evidence, previousRecommendations, added, now: Date.parse(downloads.generatedAt) });
-const display = applyPluginPreviews(marketDisplay, JSON.parse(await readFile(new URL('../data/plugin-previews.json', import.meta.url), 'utf8')));
+const display = applyPluginPreviews(marketDisplay, previews);
 const states = Object.values(github.repositories);
 const evidence = {
   ...built.evidence,
+  repositoryPreviews: repositoryPreviews.previews,
   market: { generatedAt: display.generatedAt, downloads: 'downloads.json', display: 'display.json', recommendations: 'recommendations.json', publisherEvidence: 'https://github.com/polang233/dsh-plugin-index/blob/main/data/publishers.json', reviewEvidence: 'https://github.com/polang233/dsh-plugin-index/blob/main/data/maintainer-reviews.json' },
   github: {
     snapshot: 'github.json',

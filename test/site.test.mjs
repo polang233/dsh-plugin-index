@@ -107,7 +107,7 @@ test('site reports issues, offers ranking limits and cleans historical descripti
   assert.match(display.plugins['demo-plugin'].description.en, /^★/);
 });
 
-test('plugin pages show distinct project links and only registered screenshots', async t => {
+test('plugin pages show distinct project links and screenshots from catalog sources', async t => {
   const dir = await mkdtemp(join(tmpdir(), 'site-'));
   t.after(() => rm(dir, { recursive: true, force: true }));
   const output = pathToFileURL(dir + '/');
@@ -118,14 +118,32 @@ test('plugin pages show distinct project links and only registered screenshots',
     { name: 'deep-blend', repository: { url: 'https://github.com/pearjelly/deep-blend' }, homepage: 'https://github.com/pearjelly/deep-blend#quick-start' },
     { name: 'invalid', repository, homepage: 'https://user:pass@example.com/' },
     { name: 'website-only', homepage: 'https://example.com/' },
-    { name: 'single-preview' }
+    { name: 'single-preview' },
+    { name: 'discovered-preview', repository: { url: 'https://github.com/owner/another' }, homepage: 'https://github.com/owner/another#readme' },
+    { name: 'package-preview' },
+    { name: 'docs-and-website', repository: {url: 'https://github.com/owner/docs-and-website'}, homepage: 'https://github.com/owner/docs-and-website/tree/main/docs' }
   ] };
   const screenshots = [{ url: 'https://raw.githubusercontent.com/owner/plugin/abc/preview.png', alt: 'Compare charts < A & B' }];
   const display = { plugins: {
     'with-preview': { screenshots: [...screenshots, { url: 'https://raw.githubusercontent.com/owner/plugin/abc/another.png', alt: 'Second view' }] },
     'single-preview': { screenshots }, duplicate: { screenshots: [] }
   } };
-  await writeSite(index, {}, {}, {}, display, { output });
+  const packageScreenshot = {url: 'https://cdn.jsdelivr.net/npm/package-preview@1.0.0/docs/demo.png', alt: ''};
+  const readmeScreenshot = {url: 'https://raw.githubusercontent.com/owner/another/HEAD/demo.png', alt: 'Detected preview'};
+  const evidence = {
+    packages: [{name: 'package-preview', display: {screenshots: [packageScreenshot]}}],
+    repositoryPreviews: {
+      'with-preview': { screenshots: [readmeScreenshot] },
+      'discovered-preview': { screenshots: [readmeScreenshot] },
+      'package-preview': { screenshots: [readmeScreenshot] },
+      duplicate: { screenshots: [readmeScreenshot] }
+    }
+  };
+  const snapshot = {repositories: {
+    'owner/another': {homepage: 'https://another.example/'},
+    'owner/docs-and-website': {homepage: 'https://docs-and-website.example/'}
+  }};
+  await writeSite(index, evidence, snapshot, {}, display, { output });
   const read = path => readFile(new URL(path, output), 'utf8');
   const [detail, duplicate, deepBlend, invalid, websiteOnly, single, home, chinese, traditional] = await Promise.all([
     'plugins/with-preview/index.html', 'plugins/duplicate/index.html', 'plugins/deep-blend/index.html', 'plugins/invalid/index.html', 'plugins/website-only/index.html',
@@ -157,6 +175,17 @@ test('plugin pages show distinct project links and only registered screenshots',
   assert.doesNotMatch(home, /owner\/plugin\/wiki|id="plugin-screenshot-track"/);
   assert.match(chinese, /界面预览|查看源码/);
   assert.match(traditional, /介面預覽|檢視原始碼/);
+  const [discovered, packagePreview, docsAndWebsite] = await Promise.all([
+    'plugins/discovered-preview/index.html', 'zh/plugins/package-preview/index.html', 'plugins/docs-and-website/index.html'
+  ].map(read));
+  assert.ok(discovered.includes('class="link-source" href="https://github.com/owner/another"'));
+  assert.ok(discovered.includes('class="link-website" href="https://another.example/"'));
+  assert.ok(discovered.includes(`data-zoom href="${readmeScreenshot.url}"`));
+  assert.ok(packagePreview.includes(`data-zoom href="${packageScreenshot.url}"`));
+  assert.ok(!packagePreview.includes(readmeScreenshot.url));
+  assert.ok(!detail.includes(readmeScreenshot.url));
+  assert.ok(docsAndWebsite.includes('class="link-website" href="https://docs-and-website.example/"'));
+  assert.ok(docsAndWebsite.includes('class="link-docs" href="https://github.com/owner/docs-and-website/tree/main/docs"'));
 });
 
 test('page titles are sized per page and the 404 page has its own layout', async t => {

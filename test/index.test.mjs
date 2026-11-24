@@ -54,6 +54,17 @@ test('rejects a tampered tarball', async () => {
   await assert.rejects(collectPackage(config.packages[0], fixture({ integrity: false })), /integrity/);
   assert.throws(() => verifyIntegrity(Buffer.from('x'), undefined), /integrity/);
 });
+test('a verified archive contributes declared screenshots without changing the install index', async () => {
+  const result = await collectPackage(config.packages[0], fixture({extraFiles: [
+    ['screenshots.json', JSON.stringify(['./docs/a.png', 'docs/missing.png', {url: 'https://github.com/owner/repo/blob/main/b.webp', alt: 'Second view'}])],
+    ['docs/a.png', 'fixture image']
+  ]}));
+  assert.equal(result.entry.screenshots, undefined);
+  assert.deepEqual(result.evidence.display.screenshots, [
+    {url: 'https://cdn.jsdelivr.net/npm/@example/dsh-plugin@1.2.3/docs/a.png', alt: ''},
+    {url: 'https://raw.githubusercontent.com/owner/repo/main/b.webp', alt: 'Second view'}
+  ]);
+});
 test('missing bundle patch prevents publication', async () => {
   await assert.rejects(buildIndex(config, fixture({ patch: false })), /Cannot publish index.*missing/);
 });
