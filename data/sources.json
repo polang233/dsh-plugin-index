@@ -19490,17 +19490,17 @@
         "zh": "AgentRouter"
       },
       "description": {
-        "en": "Discover research providers and preview prices. Paid calls send the request to AgentRouter after one-time approval with a USD ceiling, and return a receipt. Requires an AgentRouter wallet key.",
-        "zh": "搜索可用研究服务并预览价格。付费请求经单次确认后发送给 AgentRouter，带美元费用上限并返回收据。需 AgentRouter 钱包密钥。"
+        "en": "Discover research providers and preview prices for free. Paid calls use an AgentRouter wallet key and one-time approval, with an optional USD spending ceiling.",
+        "zh": "免费发现研究服务并查看报价。付费调用需 AgentRouter 钱包密钥和单次确认，可选填美元费用上限。"
       },
       "category": "integrations",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "git",
-        "commit": "055e639108d5a79837914daae0c7986106512a77",
         "url": "https://github.com/pageonelab/agentrouter-dsh",
-        "integrity": "sha512-zFEZwZhXk+viG6exrtERVPZvpdNBFhdwZeqpYZyasYMz9HZnfrh8zXpjvv6g2AQc3KGjfnz/2Pb3NAkf1NO+9Q==",
-        "publishedAt": "2026-11-23T13:55:04Z"
+        "commit": "10cdc48f503995920513fa4b2f8471b0ba013b0b",
+        "integrity": "sha512-R2PiWXij1OY7ipQW9IKTeMqhsMOH0lgT8ApF2k0sZJ5NZ90eTj3JUczr7G1MR3PHSQgzztQDsrdOw1BmajCNEA==",
+        "publishedAt": "2026-11-25T03:19:43Z"
       }
     },
     {
@@ -19598,6 +19598,140 @@
         "zh": "把 DSH 的推理强度下拉框替换成带动效的滑块，并可调整输入区外观。设置保存在浏览器。"
       },
       "category": "appearance"
+    },
+    {
+      "name": "dsh-checklist-mode",
+      "category": "workflow",
+      "title": {
+        "en": "Checklist Mode",
+        "zh": "清单模式"
+      },
+      "description": {
+        "en": "Use /checklist to add a step-by-step task plan and ask before open decisions. The mode applies to the current session.",
+        "zh": "用 /checklist 在当前会话按步骤执行任务，遇到选项时询问用户。"
+      }
+    },
+    {
+      "name": "dsh-dameng",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Xcpyk/dsh-dameng",
+        "commit": "56f8d8aaaea133f90c26efe487f82e435a12a86f",
+        "integrity": "sha512-2hb8FhB7J0IJaQMfpk+rlYQGioIRMs/JaJW2m8+04iwEnjKlGKOtalm9l1R5jNRqbper4qeViY1SJndcc6Fuhg==",
+        "publishedAt": "2026-11-24T13:27:57Z"
+      },
+      "category": "memory",
+      "title": {
+        "en": "Dameng",
+        "zh": "大梦"
+      },
+      "description": {
+        "en": "Turn a 140-question life interview into a local Markdown dossier. Answers and exports stay in the plugin data directory.",
+        "zh": "通过 140 题访谈整理本地 Markdown 人生档案。回答及导出保存在插件数据目录。"
+      }
+    },
+    {
+      "name": "dsh-lark-studio",
+      "category": "integrations",
+      "title": {
+        "en": "Lark Studio",
+        "zh": "飞书智能工作台"
+      },
+      "description": {
+        "en": "Build and update Lark Base tables, preview records, and use the Lark workbench from DSH. Requires an installed lark-cli and an authorized Lark account.",
+        "zh": "在 DSH 的飞书工作台建表、调整多维表格和预览记录。需先安装 lark-cli 并授权飞书账号。"
+      },
+      "version": "1.2.0"
+    },
+    {
+      "name": "dsh-aemeath",
+      "category": "appearance",
+      "title": {
+        "en": "Wuthering Waves · Aemeath Companion",
+        "zh": "鸣潮 · 爱弥斯桌宠"
+      },
+      "description": {
+        "en": "A Windows x64 desktop companion with task reactions, voiced lines and sticker presets. The full runtime downloads when you choose Install in DSH.",
+        "zh": "Windows x64 桌宠，支持任务表情、语音和表情包。需本机 DSH，从设置页主动下载完整版。"
+      }
+    },
+    {
+      "name": "dsh-persona-continuity",
+      "version": "0.2.0-preview.17",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/shinji00222/dsh-persona-continuity-bot",
+        "commit": "03c0670b426d224f3b86392945dce73ca36057ec",
+        "integrity": "sha512-uqF/3tt0MhIhSlBpVyJPVOkLR8y3m8Jkeb0Yhd1t3/Rzk1owafaWJih1XQIwnUr8M0QBsmc5F9xaf0tZqe+VLg==",
+        "publishedAt": "2026-11-24T12:35:13Z"
+      },
+      "repositoryReview": {
+        "version": "0.2.0-preview.17",
+        "integrity": "sha512-uqF/3tt0MhIhSlBpVyJPVOkLR8y3m8Jkeb0Yhd1t3/Rzk1owafaWJih1XQIwnUr8M0QBsmc5F9xaf0tZqe+VLg==",
+        "commit": "03c0670b426d224f3b86392945dce73ca36057ec",
+        "url": "https://github.com/shinji00222/dsh-persona-continuity-bot"
+      },
+      "category": "memory",
+      "title": {
+        "en": "Persona Continuity",
+        "zh": "人格连续性"
+      },
+      "description": {
+        "en": "Keep separate local Markdown memories for each persona and reuse selected session history. Automated summaries use your configured DSH model.",
+        "zh": "按人格分开保存本地 Markdown 记忆，支持导入会话历史。自动摘要使用 DSH 配置的模型。"
+      }
+    },
+    {
+      "name": "dsh-sanming-pet",
+      "version": "1.9.20",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/lin7397100/dsh-sanming-pet",
+        "commit": "6ae4af25a72e0f121385d3e4050137f22cb36789",
+        "integrity": "sha512-vZ4p+semnD/XiuoJG2Hz9KMYBgSjDSRrtyO/7bVMnhc3px7IC4fz952sHcveWZTWS/oAO5NarnTYHztog34c9Q==",
+        "publishedAt": "2026-11-24T06:47:24Z"
+      },
+      "archiveReview": {
+        "version": "1.9.20",
+        "integrity": "sha512-vZ4p+semnD/XiuoJG2Hz9KMYBgSjDSRrtyO/7bVMnhc3px7IC4fz952sHcveWZTWS/oAO5NarnTYHztog34c9Q==",
+        "maxUnpackedBytes": 104857600,
+        "maxDownloadBytes": 78643200,
+        "timeoutMs": 30000
+      },
+      "category": "appearance",
+      "title": {
+        "en": "Sanming Travel Park",
+        "zh": "三明文旅乐园"
+      },
+      "description": {
+        "en": "Explore Sanming with desktop pets, a tourist map, check-ins and a travel Q&A. The Q&A may use web search and your configured model. Artwork has separate reuse terms.",
+        "zh": "在三明文旅乐园用桌宠巡游、看地图和打卡，支持文旅问答。问答可联网检索并调用所选模型，素材另有授权条款。"
+      }
+    },
+    {
+      "name": "@officesdk/officesdk-plugin-dsh",
+      "category": "tools",
+      "title": {
+        "en": "OfficeSDK",
+        "zh": "OfficeSDK"
+      },
+      "description": {
+        "en": "Open, review and save Word, Excel and PowerPoint edits in the DSH side panel. The plugin downloads a verified office-kit runtime into its data directory. Tested by the author on Apple Silicon macOS.",
+        "zh": "在 DSH 侧栏打开、核对并保存 Word、Excel 和 PowerPoint 文档。启用后会预下载校验过的 office-kit 运行组件，作者已在 Apple Silicon macOS 验证。"
+      }
+    },
+    {
+      "name": "@liuhange/dsh-underground-pipeline-inspector",
+      "title": {
+        "en": "Underground Pipeline Inspector",
+        "zh": "地下管线数据质量检查"
+      },
+      "description": {
+        "en": "Check coverage, topology, coordinates, and attributes in local pipeline JSON. Writes JSON and Markdown reports, replacing files with the same names in the selected output folder.",
+        "zh": "检查本地地下管线 JSON 数据的覆盖率、拓扑、坐标和属性。将 JSON 和 Markdown 报告写入指定目录，覆盖同名报告。"
+      },
+      "category": "tools"
     }
   ]
 }

@@ -152,6 +152,74 @@
           "alt": "输入框像素萌宠预览"
         }
       ]
+    },
+    "dsh-checklist-mode": {
+      "screenshots": [
+        {
+          "url": "https://github.com/user-attachments/assets/8c06c34f-1bda-4d1c-b1b9-59617aefffea",
+          "alt": "Checklist command in the slash menu"
+        },
+        {
+          "url": "https://github.com/user-attachments/assets/cafd84a5-c637-43d9-a9c9-8aa060b160f4",
+          "alt": "Numbered task plan in a session"
+        },
+        {
+          "url": "https://github.com/user-attachments/assets/100624f3-17f0-4dbc-94b3-75175ab9ea31",
+          "alt": "Completed checklist and step results"
+        }
+      ]
+    },
+    "dsh-lark-studio": {
+      "screenshots": [
+        {
+          "url": "https://github.com/user-attachments/assets/94138c17-b64a-4dce-9253-17073f8aa893",
+          "alt": "飞书工作台侧栏"
+        }
+      ]
+    },
+    "dsh-aemeath": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/Doya16/dsh-aemeath/v1.0.0/desktop/docs/images/preset-switch.png",
+          "alt": "爱弥斯桌宠切换表情预设"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Doya16/dsh-aemeath/v1.0.0/desktop/docs/images/studio-imported.png",
+          "alt": "爱弥斯桌宠表情包导入和分组"
+        }
+      ]
+    },
+    "dsh-persona-continuity": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/shinji00222/dsh-persona-continuity-bot/03c0670b426d224f3b86392945dce73ca36057ec/docs/screenshots/standard-persona-picker.png",
+          "alt": "会话输入区选择人格"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/shinji00222/dsh-persona-continuity-bot/03c0670b426d224f3b86392945dce73ca36057ec/docs/screenshots/memory-workbench.png",
+          "alt": "人格工作台与 Markdown 记忆"
+        }
+      ]
+    },
+    "dsh-sanming-pet": {
+      "screenshots": [
+        {
+          "url": "https://github.com/user-attachments/assets/19ba4284-489a-4998-b362-a107d7812977",
+          "alt": "三明文旅乐园桌宠形态"
+        },
+        {
+          "url": "https://github.com/user-attachments/assets/ee841cfd-46a0-42eb-ad62-264831e5b836",
+          "alt": "三明文旅乐园桌宠外观"
+        },
+        {
+          "url": "https://github.com/user-attachments/assets/e21a9d31-1f8d-4884-9a6c-e6f9f84e1d83",
+          "alt": "三明文旅乐园巡游界面"
+        },
+        {
+          "url": "https://github.com/user-attachments/assets/6be274f4-ac48-40b4-bdd9-0bcd07053618",
+          "alt": "三明文旅乐园的应用界面"
+        }
+      ]
     }
   }
 }

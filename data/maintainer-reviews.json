@@ -10434,6 +10434,122 @@
       "reviewedAt": "2026-11-25T03:26:25.931Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-checklist-mode",
+      "version": "0.1.1",
+      "integrity": "sha512-iF+bjmvTz5RiOa7lu6GHKSDPjTFGZTTcxVS5lGaoFDqsGxhWOJPaNjDgEdKRj1cn4Z4JDz0R/WNqUxcyBGdz5Q==",
+      "repository": "https://github.com/kotovich-ux/dsh-checklist-mode",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-25T03:36:43.349Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-dameng",
+      "version": "0.1.0",
+      "integrity": "sha512-2hb8FhB7J0IJaQMfpk+rlYQGioIRMs/JaJW2m8+04iwEnjKlGKOtalm9l1R5jNRqbper4qeViY1SJndcc6Fuhg==",
+      "repository": "https://github.com/Xcpyk/dsh-dameng",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Xcpyk/dsh-dameng",
+        "commit": "56f8d8aaaea133f90c26efe487f82e435a12a86f"
+      },
+      "reviewedAt": "2026-11-25T03:36:43.349Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-lark-studio",
+      "version": "1.2.0",
+      "integrity": "sha512-Vjk8d+D94+FwPBZMrfe8N1ujzEFsGjp2/9aDvYcTUts5/zPDJ9qRb/1tOxQ5G6rI8co0T4NUnV8jtOj9TfLzBA==",
+      "repository": "https://github.com/DeepLifeStudio/dsh-lark-studio",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-25T03:36:43.349Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-aemeath",
+      "version": "1.0.1",
+      "integrity": "sha512-H7RHtma0DLJ+6YiglEmdWOk94BwU+c4oao96n4L/UPz9MAvsYV66bDMiljfxnubYIaHv4AywIUBAfciasz0KMw==",
+      "repository": "https://github.com/Doya16/dsh-aemeath",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-25T03:36:43.349Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-persona-continuity",
+      "version": "0.2.0-preview.17",
+      "integrity": "sha512-uqF/3tt0MhIhSlBpVyJPVOkLR8y3m8Jkeb0Yhd1t3/Rzk1owafaWJih1XQIwnUr8M0QBsmc5F9xaf0tZqe+VLg==",
+      "repository": "https://github.com/shinji00222/dsh-persona-continuity-bot",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/shinji00222/dsh-persona-continuity-bot",
+        "commit": "03c0670b426d224f3b86392945dce73ca36057ec"
+      },
+      "reviewedAt": "2026-11-25T03:36:43.349Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-sanming-pet",
+      "version": "1.9.20",
+      "integrity": "sha512-vZ4p+semnD/XiuoJG2Hz9KMYBgSjDSRrtyO/7bVMnhc3px7IC4fz952sHcveWZTWS/oAO5NarnTYHztog34c9Q==",
+      "repository": "https://github.com/lin7397100/dsh-sanming-pet",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/lin7397100/dsh-sanming-pet",
+        "commit": "6ae4af25a72e0f121385d3e4050137f22cb36789"
+      },
+      "reviewedAt": "2026-11-25T03:36:43.349Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "agentrouter-dsh",
+      "version": "0.2.0",
+      "integrity": "sha512-R2PiWXij1OY7ipQW9IKTeMqhsMOH0lgT8ApF2k0sZJ5NZ90eTj3JUczr7G1MR3PHSQgzztQDsrdOw1BmajCNEA==",
+      "repository": "https://github.com/pageonelab/agentrouter-dsh",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/pageonelab/agentrouter-dsh",
+        "commit": "10cdc48f503995920513fa4b2f8471b0ba013b0b"
+      },
+      "reviewedAt": "2026-11-25T03:36:43.349Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@officesdk/officesdk-plugin-dsh",
+      "version": "0.0.2",
+      "integrity": "sha512-Jhsa5/i9lHelxOOH0fPvGdpAuYfbWt76nR2SMZKaLRd4TArNqZCXWPzLRLwJ0wo5Kxn6O/aqmDJTXi8gYY7aww==",
+      "repository": "https://github.com/officesdk/officesdk-plugin-dsh",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-25T03:36:43.349Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@liuhange/dsh-underground-pipeline-inspector",
+      "version": "1.0.8",
+      "integrity": "sha512-ttRZAnUY4xBxQklx8pCkihPxSX6g4+rh2Ecc1byThrYwuHA4LAwXoCPoEDrGgpnqozFDqlQ+5gNh8oBGuB4TQw==",
+      "repository": "https://github.com/liuhange789/data-asset-inspector",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-25T04:28:17.261Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
