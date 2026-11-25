@@ -10410,6 +10410,30 @@
       "reviewedAt": "2026-11-24T10:57:07.950Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-rea-gate",
+      "version": "0.5.0",
+      "integrity": "sha512-YVyE2f1Y2z9I+RudjRp/XPvVAYjqdH89UvkLsVWLbms2iOwYLpZchV4t0hQIxadSszMSP107UQsJrPXITR65UQ==",
+      "repository": "https://github.com/MistRipple/dsh-rea-gate",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-25T03:26:25.931Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@hui-xu-ai/dsh-wensu",
+      "version": "0.14.4",
+      "integrity": "sha512-gU2OioHrQwzgkpX/tMXnbe1nG/Z1ysipf/31tXW2TItYZpCtdkHjdL6dvVeZoQCHr8eTbJO/kFppfV773IyYcw==",
+      "repository": "https://github.com/hui-xu-ai/wensu",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-25T03:26:25.931Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
