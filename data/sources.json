@@ -12661,8 +12661,8 @@
         "zh": "桌面电脑操控"
       },
       "description": {
-        "en": "Windows Computer Use 2.3.4 for DeepSeek Harness. Discover available actions per control, scroll either axis to an exact percentage, switch views, and place the caret before or after matching text. Includes screenshot and OCR tools, verified control targeting, batch actions and human handoff. Windows x64, Node 22+.",
-        "zh": "Windows 桌面操控 2.3.4。先查看控件能做什么，再按百分比精确滚动、切换视图或显示离屏条目。可将光标放在匹配文字前后，并回读验证位置。支持截图、OCR、批量操作与人工接管。适用于 Windows x64、Node 22 及以上。"
+        "en": "Windows Computer Use 2.3.5 for DeepSeek Harness. Discover available actions per control, scroll either axis to an exact percentage, switch views, and place the caret before or after matching text. The debug settings show permissions for the selected conversation. Includes screenshot and OCR tools, verified control targeting, batch actions and human handoff. Windows x64, Node 22+.",
+        "zh": "Windows 桌面操控 2.3.5。先查看控件能做什么，再按百分比精确滚动、切换视图或显示离屏条目。可将光标放在匹配文字前后，并回读验证位置。调试设置现可显示当前对话的权限。支持截图、OCR、批量操作与人工接管。适用于 Windows x64、Node 22 及以上。"
       },
       "category": "tools"
     },
