@@ -12497,17 +12497,17 @@
         "zh": "归档回收站与存储概览"
       },
       "description": {
-        "en": "Move archived conversations and dedicated subagents to recoverable trash, restore or permanently delete selected logs, and inspect storage usage. Requires macOS or Windows, JSONL storage, Node >=24 and DSH Desktop 0.2.1-rc.3, 0.2.1-rc.5 or 0.2.2-rc.3. Shared attachments and project files remain.",
-        "zh": "将归档会话与专属子代理移入回收站，按需恢复或永久清除所选日志，并查看存储占用。支持 macOS 和 Windows 上的 DSH Desktop 0.2.1-rc.3、0.2.1-rc.5 或 0.2.2-rc.3，需 JSONL 存储和 Node >=24。保留共享附件和项目文件。"
+        "en": "Move archived conversations and dedicated subagents to trash, restore or permanently delete selected logs, and inspect storage usage. Requires JSONL, Node 24+ and a supported macOS or Windows DSH Desktop release.",
+        "zh": "将归档会话与专属子代理移入回收站，按需恢复或永久清除所选日志，并查看存储占用。需 macOS 或 Windows、JSONL 存储和 Node 24 以上。支持的 DSH Desktop 版本见兼容范围。"
       },
       "category": "tools",
-      "version": "0.0.6",
+      "version": "0.0.7",
       "source": {
         "type": "git",
         "url": "https://github.com/QwQBiG/dsh-archive-delete",
-        "commit": "b64123585c4be6120372e474d96f1081af25b8f1",
-        "integrity": "sha512-/2h6EAQ7bduXnSF0kyba0XJvuJEPIw+Lg9CfTmrlEz0flwTJWgv4ZH0Jsy3x8zaw7T1KJ5AMwlOWhm7bO+/kGA==",
-        "publishedAt": "2026-11-20T07:20:28Z"
+        "commit": "4a6304921c61c0ab450a331061eab83836b0406c",
+        "integrity": "sha512-q5YrByTFgdJraFI8FnUtHDnAf9FM+5OrZZgl6ZjSMQrZLj0v6IO2Yf4Lb8UetsNFsLz0mDdtReDaXyd3VwYk9w==",
+        "publishedAt": "2026-11-25T08:50:24Z"
       }
     },
     {
@@ -13622,8 +13622,8 @@
       },
       "category": "tools",
       "description": {
-        "en": "Let the Agent read, click, type, scroll, capture and batch actions in the built-in sidebar browser. Requires DSH Desktop with its Electron webview; supports local file pages and page JavaScript, and uses the browser’s signed-in sessions.",
-        "zh": "让 Agent 在内置侧栏浏览器读取页面、点击、输入、滚动、截图并批量操作。需带 Electron webview 的 DSH 桌面版，支持本机文件页面和页面 JavaScript，会使用浏览器已有登录状态。"
+        "en": "Let the agent read, click, type and capture pages in the calling session’s sidebar browser. Requires DSH Desktop with Electron webview and uses the browser’s signed-in sessions.",
+        "zh": "让 Agent 在调用会话的内置侧栏浏览器读取、点击、输入和截图。需带 Electron webview 的 DSH 桌面版，会使用浏览器已有登录状态。"
       }
     },
     {
@@ -13669,13 +13669,13 @@
         "en": "Show Windows desktop popups when a session finishes or needs an answer or approval, with optional sound and click-to-return. Uses a bundled PowerShell/WPF helper and includes local conversation previews.",
         "zh": "会话完成或等待回答、审批时弹出 Windows 桌面提醒，可选声音并点击返回会话。通过随包 PowerShell/WPF 辅助程序显示，会包含本机会话摘要。"
       },
-      "version": "0.2.0",
+      "version": "0.2.3",
       "source": {
         "type": "git",
         "url": "https://github.com/little-bird-vodka/dsh-session-done-notifier",
-        "commit": "76852daa700cee547e0b4e6e34b9d3747751e107",
-        "integrity": "sha512-2XUg1N2sNuHNspWDP7gMMW6aj6N12DDQVY90CXEw1kGUP7jhy7Ldwy8GA8MInXQpnHBn79cbAFg/g8jWXn1IRQ==",
-        "publishedAt": "2026-11-06T15:20:38.000Z"
+        "commit": "4bb44bb7fbbe6abf20265aa88989300aac70dcc8",
+        "integrity": "sha512-QJ3eADpmXR9m838eSwREafzOkcIj2bLej6mb3LLLffzFW33Mm2ce2Su0sPVWWOiVlJ7sCEQyCFxd4kec+1uUBw==",
+        "publishedAt": "2026-11-25T06:09:53Z"
       }
     },
     {
@@ -16968,8 +16968,8 @@
         "zh": "钉钉消息自动化"
       },
       "description": {
-        "en": "Read DingTalk private messages and group mentions with a signed-in dws CLI and Host Connection. Suggestions and optional automatic replies send recent conversation messages to the configured model and may incur charges. Empty suggestions stay for manual handling.",
-        "zh": "借助已登录的钉钉 dws CLI 和宿主 Connection 接收私信和群 @。生成建议或开启自动回复时，会把近期会话消息交给配置的模型，可能收费。空建议留待人工处理。"
+        "en": "Receive DingTalk private messages and group mentions with a signed-in dws CLI. Suggestions and optional automatic replies send recent messages to your configured model. DWS installation or update is available from the settings panel.",
+        "zh": "借助已登录的 dws CLI 接收钉钉私信和群 @。生成建议或开启自动回复时，会把近期消息交给配置的模型。可在设置页安装或更新 dws。"
       },
       "category": "integrations"
     },
@@ -19378,8 +19378,8 @@
         "zh": "DSH A 股行情面板"
       },
       "description": {
-        "en": "View A-share indices and a watchlist, search by ticker or pinyin, and browse charts, trades, filings and related news. East Money receives ticker and search queries.",
-        "zh": "在 DSH 查看 A 股指数、自选股、分时和日线图、成交、公告及相关新闻。支持代码和拼音搜索，代码及搜索词会发给东方财富。"
+        "en": "Track A-share indices and stocks, charts, flow, estimated cost distributions and valuation percentiles. Tickers and search terms go to East Money or the valuation data provider.",
+        "zh": "在 DSH 查看 A 股行情、自选股、资金流、估算筹码分布和估值分位。证券代码和搜索词会发给东方财富或估值数据服务商。"
       },
       "category": "tools"
     },
@@ -19510,8 +19510,8 @@
         "zh": "英语健身房"
       },
       "description": {
-        "en": "Practice Chinese-to-English translation and spelling in DSH, and track progress on a dashboard. Translation feedback and optional reading reports use a configured model and may incur charges.",
-        "zh": "在 DSH 里练习中译英和单词拼写，并在看板上查看学习进度。短语批改和可选阅读报告会调用已配置的模型，可能产生费用。"
+        "en": "Practice Chinese-to-English translation and spelling below the DSH composer. Includes CET-4, CET-6, IELTS and TOEFL vocabulary and a progress dashboard. Optional session-based questions send a short, redacted conversation excerpt to your configured model.",
+        "zh": "在 DSH 对话输入框下方常驻的英语练习挂件，支持中译英、单词拼写，内置 CET4/6、雅思、托福词库，看板记录学习进度。开启会话关联后，会将脱敏后的近期对话片段交给配置的模型出题。"
       },
       "category": "tools"
     },
@@ -19613,13 +19613,13 @@
     },
     {
       "name": "dsh-dameng",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "source": {
         "type": "git",
         "url": "https://github.com/Xcpyk/dsh-dameng",
-        "commit": "56f8d8aaaea133f90c26efe487f82e435a12a86f",
-        "integrity": "sha512-2hb8FhB7J0IJaQMfpk+rlYQGioIRMs/JaJW2m8+04iwEnjKlGKOtalm9l1R5jNRqbper4qeViY1SJndcc6Fuhg==",
-        "publishedAt": "2026-11-24T13:27:57Z"
+        "commit": "17ccf51f3dd619df24205b89951897e59f1d9da9",
+        "integrity": "sha512-4wKy8QexQagUs3hZT05dP00e2DMHbrLWHKnvpSJoTHO6kF81Wu5SXSAcrOmMxR0+iSVcUU0NhYWHqmV/PkGAJw==",
+        "publishedAt": "2026-11-25T13:52:54Z"
       },
       "category": "memory",
       "title": {
@@ -19627,8 +19627,8 @@
         "zh": "大梦"
       },
       "description": {
-        "en": "Turn a 140-question life interview into a local Markdown dossier. Answers and exports stay in the plugin data directory.",
-        "zh": "通过 140 题访谈整理本地 Markdown 人生档案。回答及导出保存在插件数据目录。"
+        "en": "Turn a 140-question life interview into a local Markdown dossier. Import backups without replacing existing answers. Exports omit private answers by default.",
+        "zh": "通过 140 题访谈整理本地 Markdown 人生档案。可合并导入备份，保留已有回答。导出默认省略私密回答。"
       }
     },
     {
@@ -19717,8 +19717,8 @@
         "zh": "OfficeSDK"
       },
       "description": {
-        "en": "Open, review and save Word, Excel and PowerPoint edits in the DSH side panel. The plugin downloads a verified office-kit runtime into its data directory. Tested by the author on Apple Silicon macOS.",
-        "zh": "在 DSH 侧栏打开、核对并保存 Word、Excel 和 PowerPoint 文档。启用后会预下载校验过的 office-kit 运行组件，作者已在 Apple Silicon macOS 验证。"
+        "en": "The plugin adds native editors for Word documents, Excel workbooks, and PowerPoint slide decks to DeepSeek Harness. You and your AI agent can edit the same file and review each change in place. It downloads a verified office-kit runtime into its data directory.",
+        "zh": "这款插件给 DeepSeek Harness 装上原生 Office 编辑器。你可以直接编辑 Word 文稿、Excel 表格和 PowerPoint 幻灯片，与 AI 在同一份文件里分工，并在原位置核对修改。插件会下载经校验的 office-kit 运行组件。"
       }
     },
     {
@@ -19732,6 +19732,178 @@
         "zh": "检查本地地下管线 JSON 数据的覆盖率、拓扑、坐标和属性。将 JSON 和 Markdown 报告写入指定目录，覆盖同名报告。"
       },
       "category": "tools"
+    },
+    {
+      "name": "dsh-gensokyo-status",
+      "title": {
+        "en": "Gensokyo Status",
+        "zh": "幻想乡运行状态"
+      },
+      "category": "appearance",
+      "description": {
+        "en": "Replace native DSH and DS Bot running captions with Gensokyo phrases. Choose a fixed caption or randomize it per turn.",
+        "zh": "把 DSH 和 DS Bot 的运行字幕换成幻想乡文案，支持固定字幕或每轮随机。"
+      },
+      "version": "0.1.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/mirakyux/dsh-gensokyo-status",
+        "commit": "fdb21933ae98fa3c3e1d501556bc87fa558e839a",
+        "integrity": "sha512-leWpupEO6fpd6Eypb5x50ifPD1i+NnH4F+SgeU05Sdb3wQkUJ510H27cEW0VTBMvoR+QS1f9t9uYaiPV1aeljA==",
+        "publishedAt": "2026-11-25T08:34:49Z"
+      }
+    },
+    {
+      "name": "dsh-powertools",
+      "title": {
+        "en": "PowerTools",
+        "zh": "PowerTools 工具箱"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Manage sessions, MCP servers and Skills in the sidebar, and rewrite drafts with the selected model. Recoverable session cleanup requires JSONL storage. MCP tests and Skill imports contact the servers and repositories you configure.",
+        "zh": "在侧栏管理会话、MCP 和 Skill，可用当前模型改写草稿。可恢复的会话清理需要 JSONL 存储，MCP 测试和 Skill 导入会连接你配置的服务与仓库。"
+      }
+    },
+    {
+      "name": "dsh-tps-splitter",
+      "title": {
+        "en": "TPS Splitter",
+        "zh": "计速拆分"
+      },
+      "category": "usage",
+      "description": {
+        "en": "Show token generation speed for the active provider and model using its own session samples.",
+        "zh": "按供应商和模型分别统计生成速度，在输入框旁显示当前模型的 tok/s。"
+      }
+    },
+    {
+      "name": "dsh-deep-notebook",
+      "title": {
+        "en": "Deep Notebook",
+        "zh": "Deep Notebook"
+      },
+      "category": "knowledge",
+      "description": {
+        "en": "Organize lessons, quizzes, plans and study chats in DSH notebook workspaces. Uses your configured model and can import session history or webpages. Office document import needs MarkItDown.",
+        "zh": "按工作区整理课程、小测、学习计划和对话。可用配置的模型学习，并导入会话历史和网页。导入 Office 文档需安装 MarkItDown。"
+      },
+      "version": "2.1.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/MicroCapCap/dsh-deep-notebook",
+        "commit": "6db9bf705829eeb7bcbce25d1340801801deb2c0",
+        "integrity": "sha512-TDYiKKoS6cJDa4ZCUB3VxpIaR0yMyHbW/blrJ/5z7xleoBPK4Uz7MMVh3dUKhpKEjYmVjCNu2Q05OmwrVwxx2g==",
+        "publishedAt": "2026-11-23T19:08:05Z"
+      }
+    },
+    {
+      "name": "@local/intelligent-inspiration",
+      "title": {
+        "en": "Intelligent Inspiration",
+        "zh": "智能灵感"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Render eight interactive Markdown blocks in DSH replies, including cards, quizzes, sorting and charts. Resource cards load images from their sites and may send the card hostname to DuckDuckGo for an icon.",
+        "zh": "在 DSH 回复里渲染资源卡片、测验、排序、图表等八类交互块。资源卡片会加载站点图片，查找图标时可能将卡片域名发给 DuckDuckGo。"
+      },
+      "version": "2.1.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/MicroCapCap/intelligent-inspiration",
+        "commit": "399d2c8ba20f89c145c18e7632949ab25bc96a99",
+        "integrity": "sha512-Ri3abcpRRGkoT5OouYyw0ThdWzXmxwcSpha5ThhrIgKR6mBvInatMcUvHtoheojtZZpo5TvuRr/k0A8bPZlxLA==",
+        "publishedAt": "2026-11-25T14:05:59Z"
+      }
+    },
+    {
+      "name": "@benz-ai-x/dsh-research-graph",
+      "title": {
+        "en": "Research Graph",
+        "zh": "研究图谱"
+      },
+      "category": "knowledge",
+      "description": {
+        "en": "Map workspace sessions, branch from completed turns, merge selected sessions and save knowledge cards with sources. This build targets DSH 0.2.2-rc.5 and replaces the Web sidebar while enabled.",
+        "zh": "把工作区会话放到图谱中，从已完成的轮次分支、合并会话，或保存带来源的知识卡片。此构建面向 DSH 0.2.2-rc.5，启用时替换 Web 侧栏。"
+      }
+    },
+    {
+      "name": "dsh-submodel",
+      "title": {
+        "en": "Submodel",
+        "zh": "子代理模型路由"
+      },
+      "category": "workflow",
+      "description": {
+        "en": "Route routine tasks and specialist decisions to different provider and model pairs through DSH’s native subagent tool. Requires configured models and native cross-model delegation.",
+        "zh": "把常规任务和专家判断交给不同的供应商与模型组合。需配置模型，并启用宿主原生跨模型子代理能力。"
+      }
+    },
+    {
+      "name": "dsh-guard-native",
+      "title": {
+        "en": "DSH Guard Native",
+        "zh": "DSH Guard 安全闸门"
+      },
+      "category": "development",
+      "description": {
+        "en": "Add approval checks for risky PowerShell and file operations on Windows. The local audit log can include command excerpts and paths. Requires the DSH PowerShell executor.",
+        "zh": "在 Windows 上给高风险 PowerShell 和文件操作增加审批。本地审计台账可能包含命令片段和路径，需启用 DSH PowerShell 执行器。"
+      },
+      "version": "0.7.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/demoAlitalia/dsh-guard",
+        "commit": "61e9e7d65ebdbd35fffc46fdaed9385fe85b9f85",
+        "integrity": "sha512-7N8A3xPCi/mb9mE2+fQ+FQWVVI/HvA16JdusWvkwXGor7kfPYdeojt5Q8wulEsrKNdIFsDmSbMDHAMd9lUiFUQ==",
+        "publishedAt": "2026-11-25T16:22:59Z"
+      }
+    },
+    {
+      "name": "@kirkchinese/dsh-citeciter",
+      "title": {
+        "en": "Citer",
+        "zh": "Citer"
+      },
+      "category": "knowledge",
+      "description": {
+        "en": "Select a passage to ask follow-up questions in a separate Topic that keeps the source. Includes a blackboard for illustrations and an optional teacher mode. Topics are read-only by default and use your configured model.",
+        "zh": "选中一段内容，在保留来源的独立 Topic 中追问。包含绘图和动画小黑板及可选教师模式。Topic 默认只读，使用已配置的模型。"
+      }
+    },
+    {
+      "name": "dsh-nexus-grid",
+      "title": {
+        "en": "Nexus Grid",
+        "zh": "会话雷达"
+      },
+      "category": "interface",
+      "description": {
+        "en": "Automatically tile running DSH sessions and those awaiting input in one view. Finished sessions remain visible, and you can pick recent sessions when idle.",
+        "zh": "在一个页面自动分屏显示运行中或等待操作的 DSH 会话。会话结束后保留分屏，空闲时可选最近会话。"
+      },
+      "version": "0.1.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/cq-dong/dsh-nexus-grid",
+        "commit": "1c1df41c857ad41b4cfbd2513f6f6bdb5f1b34fa",
+        "integrity": "sha512-ROol4ZsweULemLJZ7eazsA+rzIwVLFHz5dHu3nCKkFfQ9jn4qTiDTVzKM7E8HbFF5xaww6pKs0v1lXXv0JLNRA==",
+        "publishedAt": "2026-11-25T17:14:12Z"
+      }
+    },
+    {
+      "name": "dsh-qa-mode",
+      "title": {
+        "en": "Q&A Mode",
+        "zh": "问答模式"
+      },
+      "category": "tools",
+      "description": {
+        "en": "Add a Q&A agent preset with web search, page retrieval and read-only file tools. Searches use the provider configured in DSH.",
+        "zh": "增加可选的问答模式，提供网页搜索、网页抓取和只读文件工具。检索使用 DSH 已配置的供应商。"
+      }
     }
   ]
 }

@@ -108,16 +108,20 @@
     "dsh-english-gym": {
       "screenshots": [
         {
-          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/c2cee9e68875f8304f0fc62420fbd7689bf921eb/docs/screenshots/phrase-training.webp",
-          "alt": "短语训练和中译英练习"
+          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/5616df430afbba510a44df7f1d54476a235e57bd/docs/screenshots/phrase-training.webp",
+          "alt": "中译英短语练习"
         },
         {
-          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/c2cee9e68875f8304f0fc62420fbd7689bf921eb/docs/screenshots/word-training.webp",
-          "alt": "内置词库的单词拼写练习"
+          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/5616df430afbba510a44df7f1d54476a235e57bd/docs/screenshots/word-training.webp",
+          "alt": "词库单词拼写"
         },
         {
-          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/c2cee9e68875f8304f0fc62420fbd7689bf921eb/docs/screenshots/settings.webp",
-          "alt": "练习内容方向设置"
+          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/5616df430afbba510a44df7f1d54476a235e57bd/docs/screenshots/report.webp",
+          "alt": "英语练习报告"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/5616df430afbba510a44df7f1d54476a235e57bd/docs/screenshots/settings.webp",
+          "alt": "练习内容设置"
         }
       ]
     },
@@ -218,6 +222,30 @@
         {
           "url": "https://github.com/user-attachments/assets/6be274f4-ac48-40b4-bdd9-0bcd07053618",
           "alt": "三明文旅乐园的应用界面"
+        }
+      ]
+    },
+    "@benz-ai-x/dsh-research-graph": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/benz-ai-x/dsh-research-graph/d66e9f725f7e174840b1e159321bff2eac1ee991/docs/assets/readme/research-workbench.png",
+          "alt": "工作区会话图谱与侧栏文件夹"
+        }
+      ]
+    },
+    "@kirkchinese/dsh-citeciter": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/kirkchinese/CiteCiter/da89463de6b634de5aae0430c55fc748e034a781/assets/docs/select.zh.webp",
+          "alt": "选中文字后出现的 Citer 工具栏"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/kirkchinese/CiteCiter/da89463de6b634de5aae0430c55fc748e034a781/assets/docs/topic.zh.webp",
+          "alt": "在 Topic 中追问并查看小黑板动画"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/kirkchinese/CiteCiter/da89463de6b634de5aae0430c55fc748e034a781/assets/docs/teacher.zh.webp",
+          "alt": "教师模式提示可继续学习的知识点"
         }
       ]
     }
