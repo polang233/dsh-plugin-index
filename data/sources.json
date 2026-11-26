@@ -17934,13 +17934,13 @@
         "zh": "录制原程序行为，迁移到 Rust 后回放验证。随包包含 Windows x64 运行程序，需兼容的 DSH 版本，写操作遵循宿主审批。"
       },
       "category": "development",
-      "version": "3.3.4",
+      "version": "3.3.5",
       "source": {
         "type": "git",
         "url": "https://github.com/lonyness/dsh-rust-anything",
-        "commit": "34df3861cc4ead4d0cacc4ed398721df2e4d6583",
-        "integrity": "sha512-TpsZDDYJGa9OilmtLW1fLcpFNdNfcFzE1fhcIGa9iOuFmfzMSPP9p28OnIOuJ6BbbLzN6Ei2Q4rr5O2mVqYPFA==",
-        "publishedAt": "2026-11-23T05:54:59Z"
+        "commit": "2101d843c9d6cf0bbffcc57c9e0855c4d9fee2cb",
+        "integrity": "sha512-kwOSKfcQR9kAACheSrRPOij4bXoLdDtATMxLDEWkxHmd12tO19OkGuMwvzx9fLCpq2mVhsGzhFgFFPUsS9hg4g==",
+        "publishedAt": "2026-11-26T13:28:08Z"
       }
     },
     {
