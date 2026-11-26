@@ -17927,11 +17927,11 @@
       "name": "dsh-rust-anything",
       "title": {
         "en": "rust-anything for DSH",
-        "zh": "rust-anything for DSH"
+        "zh": "rust-anything for DSH（Rust 代码迁移）"
       },
       "description": {
         "en": "Record a program’s behavior, migrate it to Rust, and replay the recordings to check the result. Includes the Windows x64 runtime. Requires a compatible DSH release and host approval for mutating tools.",
-        "zh": "录制原程序行为，迁移到 Rust 后回放验证。随包包含 Windows x64 运行程序，需兼容的 DSH 版本，写操作遵循宿主审批。"
+        "zh": "录制原程序行为，逐单元迁移或重写为 Rust 并回放验证。对 TypeScript、Python、C、Go、Ruby、Java、Kotlin、PHP、C# 做分析与单元桥接（构建与回放已在 TS、Python、C 上实测）。随包包含 Windows x64 运行程序，需兼容的 DSH 版本，写操作遵循宿主审批。"
       },
       "category": "development",
       "version": "3.3.5",
