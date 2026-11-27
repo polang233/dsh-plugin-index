@@ -489,7 +489,10 @@ body[data-opm-theme] .opm-button {
   font-weight: 700;
   transition: transform .12s ease-out, box-shadow .12s ease-out, background-color .15s;
 }
-body[data-opm-theme] .opm-button:not(.opm-button-primary) { background: var(--opm-paper); box-shadow: var(--opm-ring-2); }
+body[data-opm-theme] .opm-button:not(.opm-button-primary) {
+  background: var(--opm-cream);
+  box-shadow: var(--opm-ring-2), var(--opm-pop-sm);
+}
 body[data-opm-theme] .opm-button:not(.opm-button-primary):hover:not(:disabled) {
   background: var(--opm-sky);
   transform: translate(-1px, -1px);
@@ -539,17 +542,55 @@ body[data-opm-theme] .opm-manage-controls select {
   font-weight: 700;
   box-shadow: var(--opm-ring-2);
 }
-body[data-opm-theme] :is(.opm-chip, .opm-manage-tabs .opm-button) {
+body[data-opm-theme] .opm-root select.opm-category::picker-icon { color: var(--opm-ink); }
+body[data-opm-theme] .opm-root select.opm-category::picker(select) {
+  max-height: min(320px, 50vh);
+  padding: 8px;
+  overflow: auto;
   border: 0;
+  border-radius: 14px;
   background: var(--opm-paper);
   color: var(--opm-ink);
+  box-shadow: var(--opm-ring-2), var(--opm-pop-sm);
+  font-weight: 700;
+}
+body[data-opm-theme] .opm-root select.opm-category option {
+  margin: 2px 0;
+  padding: 7px 30px 7px 10px;
+  border-radius: 10px;
+  background: var(--opm-paper);
+  color: var(--opm-ink);
+  font-weight: 700;
+}
+body[data-opm-theme] .opm-root select.opm-category option:hover,
+body[data-opm-theme] .opm-root select.opm-category option:focus,
+body[data-opm-theme] .opm-root select.opm-category option:focus-visible {
+  background: var(--opm-sky);
+  color: var(--opm-ink);
+  outline: 2px solid var(--opm-blue);
+  outline-offset: -2px;
+}
+body[data-opm-theme] .opm-root select.opm-category option:checked {
+  background: var(--opm-sun);
+  color: #14284b;
+  font-weight: 900;
+}
+body[data-opm-theme] .opm-root select.opm-category option::checkmark { color: #14284b; }
+body[data-opm-theme] :is(.opm-chip, .opm-manage-tabs .opm-button) {
+  border: 0;
+  background: var(--opm-cream);
+  color: var(--opm-ink);
   font-weight: 800;
-  box-shadow: var(--opm-ring-2);
+  box-shadow: var(--opm-ring-2), var(--opm-pop-sm);
 }
 body[data-opm-theme] :is(.opm-chip, .opm-manage-tabs .opm-button):hover:not(:disabled) {
   background: var(--opm-sky);
   transform: translateY(-1px) rotate(-1deg);
-  box-shadow: var(--opm-ring-2);
+  box-shadow: var(--opm-ring-2), var(--opm-pop-sm);
+}
+body[data-opm-theme] :is(.opm-chip, .opm-manage-tabs .opm-button):focus-visible {
+  outline: 3px solid var(--opm-blue);
+  outline-offset: 3px;
 }
 body[data-opm-theme] :is(.opm-chip, .opm-manage-tabs .opm-button)[aria-pressed="true"],
 body[data-opm-theme] :is(.opm-chip, .opm-manage-tabs .opm-button)[aria-pressed="true"]:hover:not(:disabled) {

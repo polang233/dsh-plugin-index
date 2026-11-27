@@ -1,5 +1,21 @@
 # dsh-open-market 更新记录
 
+## 0.5.0
+
+### English
+
+- Both leaderboards now cycle through five places at a time, from ranks 1–5 through 16–20 and back every ten seconds. Expanded lists remain complete, rotation pauses on focus, and every row still opens its plugin.
+- Recommended, Fastest growing and Newly published now glide continuously at a slow reading pace. Interacting with a rail stops only that rail for the current mount, with visibility, resizing, scroll bounds and reduced-motion handling.
+- Branded the category picker, options and states in DSH's native appearance and Whale Maid light or dark themes, retaining native fallback and a single chevron. Sorting chips and related market utilities now read clearly as controls beside white cards and badge labels.
+- Includes the enlarged screenshot viewport, new-conversation Auto review, and Whale Maid attachment color and Windows border fixes.
+
+### 中文
+
+- 两个排行榜现在每 10 秒按 5 名循环，从第 1–5 名依次显示到第 16–20 名后回到顶部。展开后仍显示完整列表，聚焦时暂停轮换，每行也继续可点击打开插件。
+- 「智能推荐」「增长最快」「最新发布」现在以适合阅读的慢速连续横向移动。用户与某一条横排交互后，仅该横排在本次挂载期间停止，并处理可见性、窗口尺寸、滚动边界和减少动态效果。
+- 分类选择器的下拉列表、选项和各项状态在 DSH 原生外观及鲸鱼女仆浅色、深色主题中统一；不支持时回退到原生界面，并且只显示一个箭头。排序胶囊和相关市场工具按钮现在能与白色卡片、标签明确区分。
+- 包含截图放大视口、新对话默认「自动审查」，以及鲸鱼女仆主题附件配色和 Windows 边框修复。
+
 ## 0.4.1
 
 ### English

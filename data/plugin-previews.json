@@ -1,6 +1,18 @@
 {
   "schema": 1,
   "plugins": {
+    "dsh-open-market": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/polang233/dsh-plugin-index/177d73483ed5facc0529b88d789d34067909634d/docs/images/open-market-zh.webp",
+          "alt": "DSH 开放市场标签中的插件推荐、搜索和分类"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/polang233/dsh-plugin-index/177d73483ed5facc0529b88d789d34067909634d/docs/images/theme-market-zh.webp",
+          "alt": "启用鲸鱼女仆主题后的开放市场"
+        }
+      ]
+    },
     "dsh-goal-budget": {
       "screenshots": [
         {

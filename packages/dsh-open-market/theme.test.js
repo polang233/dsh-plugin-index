@@ -216,6 +216,10 @@ test('every theme rule is scoped to the theme attribute and its artwork ships wi
   for (const selector of selectors) assert.match(selector, /^body\[data-opm-theme\]/, selector);
   assert.doesNotMatch(css, /!important/, 'The theme never overrides user or DSH accessibility styles by force');
   assert.doesNotMatch(css, /@import|https?:\/\//, 'The theme loads nothing from the network');
+  assert.match(css, /select\.opm-category::picker\(select\)[\s\S]*option:checked[\s\S]*option::checkmark/,
+    'The Whale Maid picker styles its list, selected row and checkmark');
+  assert.match(css, /html\[data-windows-titlebar\][\s\S]*_centerCol[\s\S]*border-top: 2px solid var\(--opm-line\)/,
+    'The Windows title-bar border remains covered');
 
   const urls = [...css.matchAll(/url\("([^"]+)"\)/g)].map(match => match[1]);
   assert.ok(urls.length >= 3);

@@ -204,18 +204,36 @@ test('Auto review is switched on only when it is shipped and off', async () => {
 
 test('a new conversation switches to Auto review; others keep their preset', async () => {
   const { apply } = await import('./auto-review/index.js');
-  const listeners = [];
+  const listeners = new Map();
   const sets = [];
+  const warnings = [];
   const ctx = {
-    logger: () => ({ warn() {}, info() {} }),
+    logger: () => ({ warn: (...args) => warnings.push(args), info() {} }),
     inject(names, callback) {
-      if (names[0] === 'permissionPresets') callback({ ...ctx, permissionPresets: { set: (session, name) => sets.push([session.header.id, name]) } });
+      if (names[0] === 'permissionPresets') callback({ ...ctx, permissionPresets: { set(session, name) {
+        assert.equal(session.writable, true);
+        if (session.header.id === 'unavailable') throw new Error('Auto review is unavailable');
+        sets.push([session.header.id, name]);
+      } } });
     },
-    on(event, listener) { if (event === 'session/created') listeners.push(listener); }
+    on(event, listener) { listeners.set(event, listener); }
   };
   apply(ctx);
-  listeners[0]({ header: { id: 'new', isSeeded: false }, firstLiveSeq: 0 });
-  listeners[0]({ header: { id: 'old', isSeeded: false }, firstLiveSeq: 5 });
-  listeners[0]({ header: { id: 'child', isSeeded: false, origin: 'subagent' }, firstLiveSeq: 0 });
+  const session = (id, header = {}, firstLiveSeq = 0) => ({header: {id, isSeeded: false, ...header}, firstLiveSeq, writable: false});
+  const start = (session, source = 'startup') => {
+    listeners.get('session/created')?.(session);
+    session.writable = true;
+    listeners.get('agent/created')?.({agent: {session}, source});
+  };
+  start(session('new'));
+  start(session('old', {}, 5), 'resume');
+  start(session('empty-resume'), 'resume');
+  start(session('cleared'), 'clear');
+  start(session('compacted'), 'compact');
+  start(session('fork', {isSeeded: true}));
+  start(session('child', {origin: 'subagent', parentSession: 'p'}));
+  start(session('unavailable'));
   assert.deepEqual(sets, [['new', 'auto']]);
+  assert.equal(warnings.length, 1);
+  assert.equal(warnings[0].at(-1), 'Auto review is unavailable');
 });

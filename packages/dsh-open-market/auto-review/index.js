@@ -50,8 +50,11 @@ export function apply(ctx) {
   });
 
   ctx.inject(['permissionPresets'], ctx => {
-    ctx.on('session/created', session => {
-      if (!isNewConversation(session)) return;
+    // DSH can keep the Session read-only during session/created. Its permission
+    // service pins the default in a prepended agent/created listener, before this one.
+    ctx.on('agent/created', ({agent, source}) => {
+      const session = agent.session;
+      if (source !== 'startup' || !isNewConversation(session)) return;
       try {
         ctx.permissionPresets.set(session, AUTO_PRESET);
       } catch (error) {

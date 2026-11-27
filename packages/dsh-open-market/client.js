@@ -1124,6 +1124,7 @@ window.__ModuleLoader__.load({
       profileSaved: '收藏和设置已保存在当前 DSH 配置中', profileSaving: '正在保存收藏和设置…',
       profileFailed: '收藏和设置暂存本机，尚未保存到当前 DSH 配置。',
       screenshots: '界面预览', screenshotsEmpty: '作者暂无可展示的截图', detailLoading: '正在加载…',
+      screenshotPreview: '截图预览', enlargeScreenshot: '放大截图',
       detailFailed: '项目内容读取失败，可重试或打开原文。', detailRateLimited: 'GitHub 请求额度已用完，请稍后重试或打开原文。', releaseNotes: '更新说明',
       screenshotsAuthor: '作者提供的实际效果', screenshotsReadme: '从项目 README 识别的预览', screenshotsUnavailable: '预览图片无法显示，请打开项目页面查看。',
       releaseEmpty: '未找到这个版本的更新说明', releaseSource: '查看原始说明',
@@ -1138,7 +1139,7 @@ window.__ModuleLoader__.load({
       today: '今日推荐', recommended: '智能推荐', popular: '最受欢迎', trending: '增长最快',
       newest: '最新发布', health: '插件管理',
       todayHint: '每天更新，按点赞和推荐加权', recommendedHint: '近期活跃，也留位置给新收录的插件', popularHint: '按近期点赞',
-      rankings: '排行榜', rankingsHint: '点赞和星数，各看前几名', rankingsMore: '展开前 {count} 名', rankingsLess: '收起', starred: '星数最多', starredHint: 'GitHub star 总数',
+      rankings: '排行榜', rankingsHint: '点赞和星数，各看前几名', rankingsRange: '第 {start}–{end} 名', rankingsMore: '展开前 {count} 名', rankingsLess: '收起', starred: '星数最多', starredHint: 'GitHub star 总数',
       trendingHint: '近 7 天下载增长', newestHint: '按发布时间', stars: 'GitHub star {count}',
       close: '关闭', homepage: '主页', sourceCode: '源码', marketPage: '在开放插件市场网站查看',
       copy: '复制', copied: '已复制', installCommand: '安装命令', likeCount: '点赞 {count}',
@@ -1199,6 +1200,7 @@ window.__ModuleLoader__.load({
       profileSaved: 'Favorites and settings are saved in this DSH profile', profileSaving: 'Saving favorites and settings…',
       profileFailed: 'Favorites and settings are cached here, but have not been saved to this DSH profile.',
       screenshots: 'Screenshots', screenshotsEmpty: 'No screenshots provided yet', detailLoading: 'Loading…',
+      screenshotPreview: 'Screenshot preview', enlargeScreenshot: 'Enlarge screenshot',
       detailFailed: 'Could not read project content. Retry or open the source.', detailRateLimited: 'GitHub request limit reached. Retry later or open the source.', releaseNotes: 'Release notes',
       screenshotsAuthor: 'Previews provided by the author', screenshotsReadme: 'Previews identified in the project README', screenshotsUnavailable: 'Preview images could not be displayed. Open the project page to view them.',
       releaseEmpty: 'No release notes found for this version', releaseSource: 'View original notes',
@@ -1213,7 +1215,7 @@ window.__ModuleLoader__.load({
       today: 'Today’s picks', recommended: 'Recommended', popular: 'Most popular', trending: 'Fastest growing',
       newest: 'Newly published', health: 'Manage plugins',
       todayHint: 'Daily, weighted by likes and recommendations', recommendedHint: 'Active plugins, with room for new listings', popularHint: 'By recent likes',
-      rankings: 'Leaderboards', rankingsHint: 'The leaders by likes and stars', rankingsMore: 'Show top {count}', rankingsLess: 'Show fewer', starred: 'Most stars', starredHint: 'Total GitHub stars',
+      rankings: 'Leaderboards', rankingsHint: 'The leaders by likes and stars', rankingsRange: 'Ranks {start}–{end}', rankingsMore: 'Show top {count}', rankingsLess: 'Show fewer', starred: 'Most stars', starredHint: 'Total GitHub stars',
       trendingHint: '7-day download growth', newestHint: 'By publication date', stars: '{count} GitHub stars',
       close: 'Close', homepage: 'Homepage', sourceCode: 'Source code', marketPage: 'View on Open Plugin Market',
       copy: 'Copy', copied: 'Copied', installCommand: 'Install command', likeCount: '{count} likes',
@@ -1296,8 +1298,9 @@ window.__ModuleLoader__.load({
         min-height: 32px; padding: 6px 12px; border: 0; border-radius: var(--dsw-radius-sm);
         background: var(--dsw-alias-button-elevated-fill); color: var(--dsw-alias-label-primary);
         cursor: pointer; font-size: 13px; font-weight: 500; line-height: 1.4; }
-      /* In the light theme buttons and cards are both white, so outline the plain buttons. */
-      .opm-button:not(.opm-button-primary) { box-shadow: inset 0 0 0 1px var(--dsw-alias-border-l2); }
+      /* Plain controls carry a tinted surface as well as an outline, so they do not read as cards or badges. */
+      .opm-button:not(.opm-button-primary) { background: color-mix(in srgb, var(--dsw-alias-button-info-fill, #4f7cff) 7%, var(--dsw-alias-button-elevated-fill));
+        box-shadow: inset 0 0 0 1px var(--dsw-alias-border-l3), 0 1px 2px color-mix(in srgb, #000 8%, transparent); }
       .opm-button:hover:not(:disabled) { background: var(--dsw-alias-interactive-bg-hover); }
       .opm-button:active:not(:disabled) { background: var(--dsw-alias-interactive-bg-active); }
       .opm-button-primary { background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground); }
@@ -1339,6 +1342,8 @@ window.__ModuleLoader__.load({
       .opm-arrow:active:not(:disabled) { transform: translateY(-50%) scale(.96) !important; }
       .opm-rail, .opm-carousel-viewport { display: flex; align-items: stretch; gap: 10px; overflow-x: auto; overscroll-behavior-x: contain;
         scrollbar-width: none; padding: 24px var(--opm-bleed); margin: -24px calc(-1 * var(--opm-bleed)); scroll-padding-inline: var(--opm-bleed); }
+      /* Lower rails move by pixels, so they never enter a snap animation behind the pointer. */
+      .opm-rail { scroll-snap-type: none; scroll-behavior: auto; }
       /* Today's picks snap card by card; each rests on the content edge, clear of the gutter fade. */
       .opm-carousel-viewport { scroll-snap-type: x proximity; }
       .opm-rail::-webkit-scrollbar, .opm-carousel-viewport::-webkit-scrollbar { display: none; }
@@ -1439,7 +1444,18 @@ window.__ModuleLoader__.load({
       .opm-board-list { list-style: none; margin: 0; padding: 0; }
       .opm-board-row { font: inherit; display: flex; align-items: center; gap: 8px; width: 100%; min-width: 0; padding: 5px 6px; border: 0;
         border-radius: var(--dsw-radius-sm); background: transparent; color: inherit; text-align: left; cursor: pointer;
-        transition: background-color 150ms ease-out; }
+        transition: background-color 150ms ease-out, opacity 180ms ease-out, transform 180ms ease-out; }
+      @keyframes opm-board-page-in {
+        from { opacity: 0; transform: translateY(5px); }
+        to { opacity: 1; transform: none; }
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .opm-board-list[data-rotating="true"] > li:nth-child(1) { animation: opm-board-page-in 220ms ease-out both; }
+        .opm-board-list[data-rotating="true"] > li:nth-child(2) { animation: opm-board-page-in 220ms 20ms ease-out both; }
+        .opm-board-list[data-rotating="true"] > li:nth-child(3) { animation: opm-board-page-in 220ms 40ms ease-out both; }
+        .opm-board-list[data-rotating="true"] > li:nth-child(4) { animation: opm-board-page-in 220ms 60ms ease-out both; }
+        .opm-board-list[data-rotating="true"] > li:nth-child(5) { animation: opm-board-page-in 220ms 80ms ease-out both; }
+      }
       .opm-board-row:hover { background: var(--dsw-alias-interactive-bg-hover); }
       .opm-board-row .opm-icon { width: 30px; height: 30px; font-size: 16px; border-radius: var(--dsw-radius-sm);
         background: color-mix(in srgb, hsl(var(--opm-hue, 220) 72% 58%) 14%, var(--dsw-alias-bg-layer-1)); }
@@ -1549,10 +1565,62 @@ window.__ModuleLoader__.load({
       .opm-category option { background: var(--dsw-alias-bg-layer-1, Canvas); color: var(--dsw-alias-label-primary, CanvasText); }
       .opm-category-wrap > svg { position: absolute; right: 10px; top: 10px; width: 12px; height: 12px;
         color: var(--dsw-alias-label-secondary, CanvasText); pointer-events: none; }
+      /* Chrome's customizable select keeps the native keyboard and top-layer behavior while exposing the picker. */
+      @supports (appearance: base-select) {
+        .opm-root select.opm-category,
+        .opm-root select.opm-category::picker(select) { appearance: base-select; }
+        .opm-root select.opm-category { -webkit-appearance: base-select; padding-right: 34px; }
+        .opm-category-wrap > svg { display: none; }
+        .opm-root select.opm-category::picker-icon { color: var(--dsw-alias-label-secondary, CanvasText);
+          transition: transform 160ms ease-out; }
+        .opm-root select.opm-category:open::picker-icon { transform: rotate(180deg); }
+        .opm-root select.opm-category::picker(select) {
+          max-height: min(320px, 50vh);
+          margin-block: 6px;
+          padding: 6px;
+          overflow: auto;
+          border: 1px solid var(--dsw-alias-border-l3, #8b8f98);
+          border-radius: var(--dsw-radius-md, 10px);
+          background: var(--dsw-alias-bg-layer-1, Canvas);
+          color: var(--dsw-alias-label-primary, CanvasText);
+          box-shadow: var(--dsw-elevation-prominent, 0 8px 24px rgb(0 0 0 / 18%));
+          font: inherit;
+          font-size: 13px;
+        }
+        .opm-root select.opm-category option {
+          margin: 2px 0;
+          padding: 6px 30px 6px 10px;
+          border-radius: var(--dsw-radius-sm, 8px);
+          background: transparent;
+          color: var(--dsw-alias-label-primary, CanvasText);
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+        }
+        .opm-root select.opm-category option:hover,
+        .opm-root select.opm-category option:focus,
+        .opm-root select.opm-category option:focus-visible {
+          background: var(--dsw-alias-interactive-bg-hover, color-mix(in srgb, CanvasText 9%, Canvas));
+          color: var(--dsw-alias-label-primary, CanvasText);
+          outline: none;
+        }
+        .opm-root select.opm-category option:checked {
+          background: color-mix(in srgb, var(--dsw-alias-button-info-fill, #4f7cff) 13%, var(--dsw-alias-bg-layer-1, Canvas));
+          color: var(--dsw-alias-label-primary, CanvasText);
+          font-weight: 600;
+        }
+        .opm-root select.opm-category option::checkmark { color: var(--dsw-alias-button-info-fill, #4f7cff); }
+      }
       .opm-screenshots { display: flex; gap: 10px; overflow-x: auto; padding: 4px 0 10px; scroll-snap-type: x proximity; }
-      .opm-screenshots a { flex: 0 0 auto; max-width: 100%; scroll-snap-align: start; }
+      .opm-screenshots button { flex: 0 0 auto; max-width: 100%; scroll-snap-align: start;
+        padding: 0; border: 0; border-radius: var(--dsw-radius-md); background: transparent; cursor: zoom-in; }
       .opm-screenshots img { display: block; max-width: 100%; width: auto; height: 190px; object-fit: contain;
         border: 1px solid var(--dsw-alias-border-l2); border-radius: var(--dsw-radius-md); }
+      .opm-screenshot-viewer { max-width: calc(100vw - 32px); max-height: calc(100dvh - 48px); padding: 0; border: 0;
+        border-radius: var(--dsw-radius-md); background: var(--dsw-alias-bg-layer-2, Canvas); }
+      .opm-screenshot-viewer:modal { overscroll-behavior: contain; }
+      .opm-screenshot-viewer::backdrop { background: rgb(0 0 0 / 75%); overflow: hidden; overscroll-behavior: contain; }
+      .opm-screenshot-viewer img { display: block; max-width: calc(100vw - 32px); max-height: calc(100dvh - 48px); object-fit: contain; }
       .opm-detail-section { margin: 16px 0; }
       .opm-detail-section > a, .opm-release > a { display: inline-block; margin-top: 6px; color: var(--dsw-alias-label-secondary); font-size: 13px; text-underline-offset: 3px; }
       .opm-detail-section > a:hover, .opm-release > a:hover { color: var(--dsw-alias-label-primary); }
@@ -1741,11 +1809,18 @@ window.__ModuleLoader__.load({
       .opm-favorites-head { display: flex; align-items: center; gap: 6px; padding-right: 32px; margin-bottom: 12px; }
       .opm-favorites-head h2 { flex: 1; font-size: 18px; }
       .opm-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-      .opm-chip { display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border: 1px solid var(--dsw-alias-border-l2);
-        border-radius: 999px; background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-secondary); font: inherit; font-size: 12px; cursor: pointer; }
+      .opm-chip { display: inline-flex; align-items: center; gap: 5px; height: 28px; padding: 0 11px;
+        border: 1px solid var(--dsw-alias-border-l3); border-radius: 999px;
+        background: color-mix(in srgb, var(--dsw-alias-button-info-fill, #4f7cff) 7%, var(--dsw-alias-bg-layer-1));
+        color: var(--dsw-alias-label-primary); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+        box-shadow: 0 1px 2px color-mix(in srgb, #000 8%, transparent);
+        transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out, box-shadow 150ms ease-out; }
       .opm-chip small { color: var(--dsw-alias-label-tertiary); font-size: 11px; font-variant-numeric: tabular-nums; }
-      .opm-chip:hover { color: var(--dsw-alias-label-primary); background: var(--dsw-alias-interactive-bg-hover); }
-      .opm-chip[aria-pressed="true"] { border-color: transparent; background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground); }
+      .opm-chip:hover:not(:disabled) { border-color: var(--dsw-alias-border-l4);
+        background: color-mix(in srgb, var(--dsw-alias-button-info-fill, #4f7cff) 13%, var(--dsw-alias-bg-layer-1)); }
+      .opm-chip:focus-visible { outline-color: var(--dsw-alias-button-info-fill, #4f7cff); }
+      .opm-chip[aria-pressed="true"] { border-color: var(--dsw-alias-button-primary-fill); background: var(--dsw-alias-button-primary-fill);
+        color: var(--dsw-alias-label-primary-foreground); box-shadow: 0 1px 0 color-mix(in srgb, #000 22%, transparent); }
       .opm-chip[aria-pressed="true"] small { color: inherit; opacity: .7; }
       .opm-group-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 14px; }
       .opm-group-title { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
@@ -2132,6 +2207,8 @@ window.__ModuleLoader__.load({
         document.body.style.overflow = 'hidden';
         node.focus({ preventScroll: true });
         function keydown(event) {
+          // A native modal above this panel handles its own Escape and Tab.
+          if (event.target.closest?.('.opm-screenshot-viewer[open]')) return;
           // The group menu and inline name fields close themselves first.
           if (event.key === 'Escape' && event.target.closest?.('[data-opm-escape], .opm-menu')) return;
           if (event.key === 'Escape') {
@@ -2290,6 +2367,8 @@ window.__ModuleLoader__.load({
       const [state, setState] = React.useState({status: 'loading'});
       const [attempt, setAttempt] = React.useState(0);
       const [broken, setBroken] = React.useState(() => new Set());
+      const [preview, setPreview] = React.useState(null);
+      const viewer = React.useRef(null);
       const source = defaultVersionOf(entry)?.source ?? entry.versions?.[0]?.source;
       React.useEffect(() => {
         let live = true;
@@ -2306,14 +2385,26 @@ window.__ModuleLoader__.load({
           : state.status === 'error' ? h('div', null, h('p', {className: 'opm-muted'}, t([403, 429].includes(state.error?.status) ? 'detailRateLimited' : 'detailFailed')),
             h('button', {type: 'button', className: 'opm-button opm-button-small', onClick: () => setAttempt(value => value + 1)}, t('retry')))
             : images.length ? h('div', null, h('p', {className: 'opm-muted'}, t(images[0].origin === 'author' ? 'screenshotsAuthor' : 'screenshotsReadme')),
-              h('div', {className: 'opm-screenshots'}, images.map((image, index) =>
-              h('a', {key: image.url, href: image.url, target: '_blank', rel: 'noopener noreferrer', 'aria-label': (image.alt || t('screenshots') + ' ' + (index + 1)) + ' · ' + t('newWindow')},
-                h('img', {src: image.url, alt: image.alt || t('screenshots') + ' ' + (index + 1), loading: 'lazy', referrerPolicy: 'no-referrer',
-                  onError: () => rejectImage(image.url), onLoad: event => {
-                    const node = event.currentTarget;
-                    if (image.origin !== 'author' && (node.naturalWidth < 180 || node.naturalHeight < 100 || node.naturalWidth / node.naturalHeight > 5)) rejectImage(image.url);
-                  }})))))
+              h('div', {className: 'opm-screenshots'}, images.map((image, index) => {
+                const alt = image.alt || t('screenshots') + ' ' + (index + 1);
+                return h('button', {key: image.url, type: 'button', 'aria-haspopup': 'dialog', 'aria-label': t('enlargeScreenshot') + ' · ' + alt,
+                  onClick: event => {
+                    event.currentTarget.focus({preventScroll: true});
+                    setPreview({url: image.url, alt});
+                    viewer.current.showModal();
+                  }},
+                  h('img', {src: image.url, alt, loading: 'lazy', referrerPolicy: 'no-referrer',
+                    onError: () => rejectImage(image.url), onLoad: event => {
+                      const node = event.currentTarget;
+                      if (image.origin !== 'author' && (node.naturalWidth < 180 || node.naturalHeight < 100 || node.naturalWidth / node.naturalHeight > 5)) rejectImage(image.url);
+                    }}));
+              })))
               : h('p', {className: 'opm-muted'}, t(broken.size ? 'screenshotsUnavailable' : 'screenshotsEmpty')),
+        h('dialog', {className: 'opm-screenshot-viewer', ref: viewer, closedby: 'any', 'aria-label': t('screenshotPreview'),
+          onClose: event => { if (!event.currentTarget.open) setPreview(null); }},
+          preview && h('img', {src: preview.url, alt: preview.alt, referrerPolicy: 'no-referrer'}),
+          h('form', {method: 'dialog'},
+            h('button', {type: 'submit', className: 'opm-button opm-button-small opm-panel-close', 'aria-label': t('close')}, '×'))),
         project && h('a', {href: 'https://github.com/' + project, target: '_blank', rel: 'noopener noreferrer'}, t('releaseSource')));
     }
     function ReleaseNotes({entry, version, t}) {
@@ -2603,10 +2694,28 @@ window.__ModuleLoader__.load({
       return Math.min(room, offset);
     }
 
+    const RAIL_SPEED = 12;
+    function advanceRailScroll(position, maximum, direction, elapsed) {
+      const limit = Math.max(0, Number(maximum) || 0);
+      const current = Math.min(limit, Math.max(0, Number(position) || 0));
+      if (!limit) return {scrollLeft: 0, direction: 1, moving: false};
+      const distance = Math.max(0, Number(elapsed) || 0) * RAIL_SPEED / 1000;
+      const next = current + (direction < 0 ? -distance : distance);
+      if (next >= limit) return {scrollLeft: limit, direction: -1, moving: true};
+      if (next <= 0) return {scrollLeft: 0, direction: 1, moving: true};
+      return {scrollLeft: next, direction: direction < 0 ? -1 : 1, moving: true};
+    }
+
     function PluginRail({ section, entries, ...props }) {
       const rail = React.useRef(null);
       const placed = React.useRef(false);
+      const direction = React.useRef(1);
+      const position = React.useRef(0);
+      const stoppedRef = React.useRef(false);
       const [edges, setEdges] = React.useState({ start: true, end: true });
+      const [visible, setVisible] = React.useState(false);
+      const [overflowing, setOverflowing] = React.useState(false);
+      const [stopped, setStopped] = React.useState(false);
       const reduced = useReducedMotion();
       React.useLayoutEffect(() => {
         const node = rail.current;
@@ -2617,19 +2726,75 @@ window.__ModuleLoader__.load({
         const padding = parseFloat(window.getComputedStyle(node).paddingLeft) * 2;
         const visible = Math.max(1, Math.floor((node.clientWidth - padding + 10) / step));
         node.scrollLeft = railOffset(section, entries.length, visible) * step;
+        direction.current = node.scrollLeft >= (node.scrollWidth - node.clientWidth) / 2 ? -1 : 1;
       }, [entries, section]);
-      function measure() {
+      function measure(resync = false) {
         const node = rail.current;
-        if (node) setEdges(sameEdges(edgesOf(node)));
+        if (!node) return;
+        setEdges(sameEdges(edgesOf(node)));
+        const maximum = Math.max(0, node.scrollWidth - node.clientWidth);
+        position.current = resync
+          ? Math.min(maximum, Math.max(0, node.scrollLeft))
+          : Math.min(maximum, Math.max(0, position.current));
+        setOverflowing(maximum > 1);
+      }
+      function stopMotion() {
+        if (stoppedRef.current) return;
+        stoppedRef.current = true;
+        setStopped(true);
       }
       React.useEffect(() => {
-        measure();
-        const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
+        const remeasure = () => measure(true);
+        remeasure();
+        const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(remeasure) : null;
         if (rail.current) observer?.observe(rail.current);
-        window.addEventListener('resize', measure);
-        return () => { observer?.disconnect(); window.removeEventListener('resize', measure); };
+        window.addEventListener('resize', remeasure);
+        return () => { observer?.disconnect(); window.removeEventListener('resize', remeasure); };
       }, [entries]);
+      React.useEffect(() => {
+        const node = rail.current;
+        if (!node) return;
+        let intersecting = true;
+        function syncVisibility() {
+          setVisible(document.visibilityState !== 'hidden' && intersecting);
+        }
+        const observer = typeof IntersectionObserver === 'function'
+          ? new IntersectionObserver(records => {
+            intersecting = records.some(record => record.isIntersecting);
+            syncVisibility();
+          }, {rootMargin: '80px'})
+          : null;
+        observer?.observe(node);
+        document.addEventListener('visibilitychange', syncVisibility);
+        syncVisibility();
+        return () => {
+          observer?.disconnect();
+          document.removeEventListener('visibilitychange', syncVisibility);
+        };
+      }, [entries.length]);
+      React.useEffect(() => {
+        const node = rail.current;
+        if (!node || reduced || stopped || !visible || !overflowing || typeof window.requestAnimationFrame !== 'function') return;
+        let frame = 0;
+        let previous;
+        position.current = Math.min(Math.max(0, node.scrollLeft), Math.max(0, node.scrollWidth - node.clientWidth));
+        function step(timestamp) {
+          if (stoppedRef.current) return;
+          if (previous === undefined) previous = timestamp;
+          const elapsed = Math.min(64, Math.max(0, timestamp - previous));
+          previous = timestamp;
+          // Keep the sub-pixel position here: Chromium may round scrollLeft itself, which would swallow a ~0.2px frame.
+          const result = advanceRailScroll(position.current, node.scrollWidth - node.clientWidth, direction.current, elapsed);
+          direction.current = result.direction;
+          position.current = result.scrollLeft;
+          if (result.moving) node.scrollLeft = result.scrollLeft;
+          frame = window.requestAnimationFrame(step);
+        }
+        frame = window.requestAnimationFrame(step);
+        return () => window.cancelAnimationFrame(frame);
+      }, [entries.length, overflowing, reduced, stopped, visible]);
       function scroll(direction) {
+        stopMotion();
         const node = rail.current;
         const card = node?.firstElementChild;
         if (!card) return;
@@ -2642,10 +2807,12 @@ window.__ModuleLoader__.load({
         node.scrollTo({ left: (start + direction * page) * step, behavior: reduced ? 'auto' : 'smooth' });
       }
       const title = props.t(section);
-      return h('section', { className: 'opm-section', 'aria-label': title },
+      return h('section', { className: 'opm-section', 'aria-label': title,
+        onClickCapture: stopMotion, onPointerDownCapture: stopMotion, onWheelCapture: stopMotion,
+        onFocusCapture: stopMotion, onKeyDownCapture: stopMotion },
         h(SectionHeading, { section, t: props.t }),
         h('div', { className: 'opm-list opm-list-fade', 'data-fade-start': edges.start ? undefined : '', 'data-fade-end': edges.end ? undefined : '' },
-          entries.length ? h('div', { className: 'opm-rail', ref: rail, tabIndex: 0, role: 'region', 'aria-label': title, onScroll: measure },
+          entries.length ? h('div', { className: 'opm-rail', ref: rail, tabIndex: 0, role: 'region', 'aria-label': title, onScroll: () => measure(false) },
             entries.map(entry => h(PluginCard, { ...props, key: entry.name, entry })))
             : h('p', { className: 'opm-muted' }, props.t('sectionEmpty')),
           h(FloatingArrows, { title, t: props.t, start: edges.start, end: edges.end, move: scroll })));
@@ -2654,6 +2821,7 @@ window.__ModuleLoader__.load({
     // Leaderboards: most liked and most starred, each a ranked list read top to bottom, five rows at first and twenty on request.
     const BOARD_ROWS = 5;
     const BOARD_LIMIT = 20;
+    const BOARD_ROTATE_MS = 10000;
     const BOARD_HINTS = { popular: 'popularHint', starred: 'starredHint' };
     const compactNumber = (value, locale) => new Intl.NumberFormat(locale, { notation: 'compact', maximumFractionDigits: 1 }).format(value);
     // What each board shows beside a plugin: its likes or its stars.
@@ -2661,31 +2829,62 @@ window.__ModuleLoader__.load({
       return compactNumber(id === 'popular' ? likeCount(counts, entry.name) : entry.metadata?.sortKeys?.['github-stars'], t('dateLocale'));
     }
 
-    function Leaderboards({ boards, t, resolve, metadata, counts, onOpen }) {
+    function boardWindow(entries, expanded, page) {
+      const limited = entries.slice(0, BOARD_LIMIT);
+      if (expanded) return {entries: limited, start: 0};
+      const pages = Math.max(1, Math.ceil(limited.length / BOARD_ROWS));
+      const current = ((Number(page) || 0) % pages + pages) % pages;
+      const start = current * BOARD_ROWS;
+      return {entries: limited.slice(start, start + BOARD_ROWS), start};
+    }
+
+    function LeaderboardBoard({ id, entries, expanded, paused, t, resolve, metadata, counts, onOpen }) {
+      const [page, setPage] = React.useState(0);
+      const [focused, setFocused] = React.useState(false);
+      const reduced = useReducedMotion();
+      const pages = Math.max(1, Math.ceil(Math.min(entries.length, BOARD_LIMIT) / BOARD_ROWS));
+      React.useEffect(() => {
+        if (expanded || paused || reduced || focused || pages <= 1) return;
+        const timer = window.setInterval(() => setPage(value => (value + 1) % pages), BOARD_ROTATE_MS);
+        return () => window.clearInterval(timer);
+      }, [expanded, focused, pages, paused, reduced]);
+      const current = boardWindow(entries, expanded, page);
+      const rotating = !expanded && pages > 1 && !reduced;
+      const range = current.entries.length
+        ? t('rankingsRange').replace('{start}', current.start + 1).replace('{end}', current.start + current.entries.length)
+        : t(id);
+      return h('div', { className: 'opm-board opm-board-' + id,
+        onFocusCapture: () => setFocused(true),
+        onBlurCapture: event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); } },
+        h('h3', { className: 'opm-board-title' }, h('span', { className: 'opm-glyph opm-glyph-' + id, 'aria-hidden': true }, h(Glyph, { name: id })),
+          t(id), h('small', { title: t(BOARD_HINTS[id]) }, t(BOARD_HINTS[id]))),
+        h('ol', { key: expanded ? 'expanded' : page, className: 'opm-board-list', 'aria-label': range,
+          'data-rotating': rotating ? 'true' : undefined, 'data-page': expanded ? 'expanded' : page },
+          current.entries.map((entry, at) => {
+            const title = titleOf(entry, resolve);
+            const value = boardValue(id, entry, { counts, metadata, resolve, t });
+            const rank = current.start + at + 1;
+            return h('li', { key: entry.name },
+              h('button', { type: 'button', className: 'opm-board-row', 'aria-haspopup': 'dialog', 'data-plugin-name': entry.name,
+                style: { '--opm-hue': hueOf(entry.name) }, 'aria-label': rank + ' · ' + title + (value ? ' · ' + value : ''),
+                onClick: event => onOpen(entry, event.currentTarget) },
+                h('span', { className: 'opm-rank', 'data-rank': rank, 'aria-hidden': true }, rank),
+                h(PluginIcon, { entry, title }),
+                h('span', { className: 'opm-board-copy' }, h('strong', { title }, title), entry.author ? h('small', null, entry.author) : null),
+                value ? h('span', { className: 'opm-board-value' }, value) : null));
+          })));
+    }
+
+    function Leaderboards({ boards, paused = false, t, resolve, metadata, counts, onOpen }) {
       const [expanded, setExpanded] = React.useState(false);
       if (!boards.length) return null;
       const longest = Math.max(...boards.map(([, entries]) => entries.length));
-      const rows = expanded ? BOARD_LIMIT : BOARD_ROWS;
       return h('section', { className: 'opm-section opm-boards-section', 'aria-label': t('rankings') },
         h(SectionHeading, { section: 'rankings', t },
           longest > BOARD_ROWS && h('button', { type: 'button', className: 'opm-button opm-button-small', 'aria-expanded': expanded,
             onClick: () => setExpanded(value => !value) }, expanded ? t('rankingsLess') : t('rankingsMore').replace('{count}', Math.min(longest, BOARD_LIMIT)))),
         h('div', { className: 'opm-boards' }, boards.map(([id, entries]) =>
-          h('div', { key: id, className: 'opm-board opm-board-' + id },
-            h('h3', { className: 'opm-board-title' }, h('span', { className: 'opm-glyph opm-glyph-' + id, 'aria-hidden': true }, h(Glyph, { name: id })),
-              t(id), h('small', { title: t(BOARD_HINTS[id]) }, t(BOARD_HINTS[id]))),
-            h('ol', { className: 'opm-board-list' }, entries.slice(0, rows).map((entry, at) => {
-              const title = titleOf(entry, resolve);
-              const value = boardValue(id, entry, { counts, metadata, resolve, t });
-              return h('li', { key: entry.name },
-                h('button', { type: 'button', className: 'opm-board-row', 'aria-haspopup': 'dialog', 'data-plugin-name': entry.name,
-                  style: { '--opm-hue': hueOf(entry.name) }, 'aria-label': (at + 1) + ' · ' + title + (value ? ' · ' + value : ''),
-                  onClick: event => onOpen(entry, event.currentTarget) },
-                  h('span', { className: 'opm-rank', 'data-rank': at + 1, 'aria-hidden': true }, at + 1),
-                  h(PluginIcon, { entry, title }),
-                  h('span', { className: 'opm-board-copy' }, h('strong', { title }, title), entry.author ? h('small', null, entry.author) : null),
-                  value ? h('span', { className: 'opm-board-value' }, value) : null));
-            }))))));
+          h(LeaderboardBoard, { key: id, id, entries, expanded, paused, t, resolve, metadata, counts, onOpen }))));
     }
 
     async function openNativePackage(name, {get, select, wait = () => new Promise(resolve => window.setTimeout(resolve, 50))}) {
@@ -3146,8 +3345,8 @@ window.__ModuleLoader__.load({
             h('span', { className: 'opm-heading-hint' }, '· ' + t('allHint').replace('{count}', entries.length))),
           h('div', { className: 'opm-all-controls' },
             h('div', { className: 'opm-chips', role: 'group', 'aria-label': t('sortBy') }, sorts.map((id, number) =>
-              h('button', { type: 'button', key: id, className: 'opm-chip', 'aria-pressed': number === at, onClick: () => turnTo(number) }, t(CATALOG_SORTS[id])))),
-            h('button', { type: 'button', className: 'opm-button opm-button-small', 'aria-expanded': true, onClick: () => setOpen(false) }, t('collapse')))),
+              h('button', { type: 'button', key: id, className: 'opm-chip opm-chip-sort', 'aria-pressed': number === at, onClick: () => turnTo(number) }, t(CATALOG_SORTS[id])))),
+            h('button', { type: 'button', className: 'opm-chip opm-chip-utility', 'aria-expanded': true, onClick: () => setOpen(false) }, t('collapse')))),
         h('div', { className: 'opm-all-body', ref: body },
           h('div', { className: 'opm-all-arrows' }, h(FloatingArrows, { title: t('allPlugins'), t, start: at === 0, end: at === sorts.length - 1,
             move: direction => turnTo(at + direction) })),
@@ -3183,7 +3382,7 @@ window.__ModuleLoader__.load({
       const { groups } = useFavorites();
       const count = new Set(groups.flatMap(group => group.names)).size;
       return h('div', { className: 'opm-toolbar' }, h(SearchBar, { t, query, setQuery }),
-        h('span', {className: 'opm-category-wrap'}, h('select', {className: 'opm-category', value: category, 'aria-label': t('category'), onChange: event => setCategory(event.target.value)},
+        h('span', {className: 'opm-category-wrap'}, h('select', {className: 'opm-category', name: 'category', value: category, 'aria-label': t('category'), onChange: event => setCategory(event.target.value)},
           h('option', {value: ''}, t('allCategories')),
           Object.entries(categories).map(([id, info]) => h('option', {key: id, value: id}, resolve(info.title ?? '') || id))),
           h('svg', {viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, 'aria-hidden': true}, h('path', {d: 'm4 6 4 4 4-4'}))),
@@ -3713,7 +3912,7 @@ window.__ModuleLoader__.load({
             onPanel: (kind, event) => setPanel({ kind, from: event.currentTarget }) }),
           results ? h(SearchResults, { ...props, entries: results }) : h(React.Fragment, null,
             h(FeaturedCarousel, { ...props, entries: sections.daily, autoRotate: preferences.autoRotate && !selected && !panel }),
-            h(Leaderboards, { ...props, boards: sections.boards, counts }),
+            h(Leaderboards, { ...props, boards: sections.boards, counts, paused: !!selected || !!panel }),
             sections.rails.map(([section, entries]) => h(PluginRail, { ...props, key: section, section, entries })),
             h(AllPlugins, { ...props, entries: sections.all, counts })),
           actionNotice && h('p', { className: 'opm-note opm-action-error', role: 'status' }, actionNotice),
@@ -3908,7 +4107,8 @@ window.__ModuleLoader__.load({
       npmVersionRegistry, declaredDshRanges, npmVersions, loadNpmVersions, versionChoices, versionInstall, versionCommand, installVersion, requestSelfUpdate, VERSION_CACHE_TTL,
       PluginDetails, OtherVersions, countSelfInstall, supportMarket, updateSettings, getLikes, FooterInvite,
       InstalledPanel, ManagementLauncher, Toolbar, managementRows, filterManaged, requestManagement, managementMessage, openNativePackage,
-      attachHorizontalDrag, RuntimeOverview, PluginDiagnostics, Tags, FeaturedCarousel, ICON_PATHS, featuredPool, railOffset, dailyRandom, Leaderboards, AllPlugins, boardValue,
+      attachHorizontalDrag, advanceRailScroll, RAIL_SPEED, PluginRail, RuntimeOverview, PluginDiagnostics, Tags, FeaturedCarousel, ICON_PATHS, featuredPool,
+      railOffset, dailyRandom, Leaderboards, LeaderboardBoard, AllPlugins, boardValue, boardWindow, BOARD_ROTATE_MS,
       hydrateProfile, getProfileStatus, getSettings, getFavorites, writeFavorites, filterCatalog, requestBundleUpdate,
       extractScreenshots, extractVersionNotes, loadScreenshots, loadReleaseNotes, ReleaseNotes, Screenshots, zh, en, styles: STYLES,
       syncTheme, THEME_ATTRIBUTE, THEME_LINK_ID };

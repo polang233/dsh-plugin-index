@@ -916,6 +916,39 @@ function managementView() {
 const nodes = tree => Array.isArray(tree) ? tree.flatMap(nodes) : tree && typeof tree === 'object' ? [tree, ...nodes(tree.children)] : [];
 const nodeText = tree => Array.isArray(tree) ? tree.map(nodeText).join(' ') : tree && typeof tree === 'object' ? nodeText(tree.children) : String(tree ?? '');
 
+test('market screenshots open the selected image in a native dialog', async t => {
+  const view = managementView(); t.after(() => view.close());
+  const name = 'demo';
+  const url = 'https://raw.githubusercontent.com/a/b/main/screen.png';
+  const {internals} = await client({react: view.react, fetchImpl: async () =>
+    Response.json({schema: 1, plugins: {[name]: {screenshots: [
+      {url: 'https://raw.githubusercontent.com/a/b/main/another.png', alt: 'Overview'}, {url, alt: 'Settings'},
+    ]}}})});
+  const props = {entry: entry(name), t: key => internals.en[key]};
+  const render = () => nodes(view.render(internals.Screenshots, props));
+  render(); await tick();
+  const tree = render();
+  const thumbnail = tree.find(node => node.props['aria-label'] === 'Enlarge screenshot · Settings');
+  const viewer = tree.find(node => node.type === 'dialog');
+  const surface = {open: false, showModal() {this.open = true;}};
+  let focused = false;
+  viewer.props.ref.current = surface;
+  assert.equal(thumbnail.type, 'button');
+  assert.equal(thumbnail.props.href, undefined);
+  thumbnail.props.onClick({currentTarget: {focus() {focused = true;}}});
+  assert.equal(surface.open, true);
+  assert.equal(focused, true);
+  const open = render().find(node => node.type === 'dialog');
+  const image = nodes(open).find(node => node.type === 'img');
+  assert.equal(image.props.src, url);
+  assert.equal(image.props.alt, 'Settings');
+  assert.equal(image.props.referrerPolicy, 'no-referrer');
+  assert.equal(nodes(open).find(node => node.type === 'form').props.method, 'dialog');
+  surface.open = false;
+  open.props.onClose({currentTarget: surface});
+  assert.equal(nodes(render().find(node => node.type === 'dialog')).some(node => node.type === 'img'), false);
+});
+
 test('management details separate settings, protected changes and typed uninstall confirmation', async t => {
   const view = managementView(); t.after(() => view.close());
   const requests = [], opened = []; let closed = 0, eventListener;
@@ -1058,35 +1091,68 @@ test('leaderboards rank each board top to bottom, show five rows until expanded 
   let cursor = 0;
   const react = {
     createElement: (type, props, ...children) => ({type, props, children}),
-    useState(initial) {const id = cursor++; if (!(id in states)) states[id] = initial; return [states[id], value => {states[id] = typeof value === 'function' ? value(states[id]) : value;}];}
+    useState(initial) {const id = cursor++; if (!(id in states)) states[id] = initial; return [states[id], value => {states[id] = typeof value === 'function' ? value(states[id]) : value;}];},
+    useRef(initial) { return {current: initial}; },
+    useEffect() {}
   };
-  const {internals: {Leaderboards, boardValue}} = await client({react});
+  const {internals: {Leaderboards, boardValue, boardWindow}} = await client({react});
   const entry = (name, sortKeys = {}, labels = []) => ({name, author: 'author-' + name, versions: [], metadata: {sortKeys, labels}});
   const liked = Array.from({length: 8}, (_, at) => entry('liked-' + at));
   const counts = Object.fromEntries(liked.map((item, at) => [item.name, 80 - at]));
   const starred = [entry('starry', {'github-stars': 42000}), entry('modest', {'github-stars': 12})];
   const metadata = {labels: {'downloads-1k': {title: '1000+'}}};
-  const context = {counts, metadata, resolve: value => value, t: key => key === 'dateLocale' ? 'en' : key};
+  const context = {counts, metadata, resolve: value => value,
+    t: key => key === 'dateLocale' ? 'en' : key === 'rankingsRange' ? 'Ranks {start}–{end}' : key};
   assert.equal(boardValue('popular', liked[0], context), '80');
   assert.equal(boardValue('starred', starred[0], context), '42K');
+  assert.deepEqual(boardWindow(liked, false, 0).entries.map(item => item.name).slice(0, 2), ['liked-0', 'liked-1']);
+  assert.deepEqual(plain(boardWindow(liked, false, 1)), {entries: liked.slice(5, 8), start: 5});
+  assert.deepEqual(plain(boardWindow(liked, true, 2)), {entries: liked, start: 0});
 
   const opened = [];
   const props = {...context, boards: [['popular', liked], ['starred', starred]], onOpen: (item, from) => opened.push([item.name, from])};
   const render = () => { cursor = 0; return Leaderboards(props); };
-  // PluginIcon is a component of its own; the fake renderer leaves it unexpanded, which keeps the rows readable here.
-  const rows = tree => nodes(tree).filter(node => node.props?.className === 'opm-board-row');
+  const boards = tree => nodes(tree).filter(node => node.type?.name === 'LeaderboardBoard');
   let tree = render();
-  assert.deepEqual(rows(tree).map(row => row.props['data-plugin-name']),
-    ['liked-0', 'liked-1', 'liked-2', 'liked-3', 'liked-4', 'starry', 'modest']);
-  assert.match(rows(tree)[0].props['aria-label'], /^1 · liked-0 · 80$/);
+  assert.deepEqual(boards(tree).map(node => [node.props.id, node.props.expanded]), [['popular', false], ['starred', false]]);
+  cursor = 0;
+  const pausedTree = Leaderboards({...props, paused: true});
+  assert.deepEqual(boards(pausedTree).map(node => node.props.paused), [true, true]);
   const toggle = nodes(tree).find(node => node.type === 'button' && node.props['aria-expanded'] === false);
   assert.equal(nodeText(toggle), 'rankingsMore');
   toggle.props.onClick();
   tree = render();
-  assert.equal(rows(tree).length, 10);
+  assert.deepEqual(boards(tree).map(node => node.props.expanded), [true, true]);
   assert.equal(nodes(tree).find(node => node.type === 'button' && node.props['aria-expanded'] === true) !== undefined, true);
+
+  const boardStates = [];
+  let boardCursor = 0;
+  const boardReact = {
+    createElement: (type, elementProps, ...children) => ({type, props: elementProps, children}),
+    useState(initial) {
+      const id = boardCursor++;
+      if (!(id in boardStates)) boardStates[id] = initial;
+      return [boardStates[id], value => {boardStates[id] = typeof value === 'function' ? value(boardStates[id]) : value;}];
+    },
+    useRef(initial) { return {current: initial}; },
+    useEffect() {}
+  };
+  const {internals: {LeaderboardBoard, BOARD_ROTATE_MS}} = await client({react: boardReact});
+  assert.equal(BOARD_ROTATE_MS, 10000);
+  assert.match(String(LeaderboardBoard), /expanded \|\| paused \|\| reduced \|\| focused/);
+  const renderBoard = (id, entries, expanded = false) => {
+    boardCursor = 0;
+    return LeaderboardBoard({id, entries, expanded, ...props});
+  };
+  const rows = tree => nodes(tree).filter(node => node.props?.className === 'opm-board-row');
+  const firstPage = renderBoard('popular', liked);
+  assert.deepEqual(rows(firstPage).map(row => row.props['data-plugin-name']), ['liked-0', 'liked-1', 'liked-2', 'liked-3', 'liked-4']);
+  assert.match(rows(firstPage)[0].props['aria-label'], /^1 · liked-0 · 80$/);
+  assert.equal(nodes(firstPage).find(node => node.type === 'ol').props['aria-label'], 'Ranks 1–5');
+  const allLiked = renderBoard('popular', liked, true);
+  assert.equal(rows(allLiked).length, 8);
   const target = {};
-  rows(tree)[1].props.onClick({currentTarget: target});
+  rows(allLiked)[1].props.onClick({currentTarget: target});
   assert.deepEqual(opened, [['liked-1', target]]);
 
   cursor = 0;
@@ -1101,16 +1167,52 @@ test('every section has a drawn icon, both languages name every board, and the r
   const {internals: {zh, en, styles, ICON_PATHS}} = await client();
   for (const section of ['today', 'rankings', 'popular', 'starred', 'recommended', 'trending', 'newest', 'all']) assert.match(ICON_PATHS[section], /^[Mm][\d\s.,a-zA-Z-]+$/, section);
   for (const words of [zh, en]) {
-    for (const key of ['rankings', 'rankingsHint', 'rankingsMore', 'rankingsLess', 'popular', 'popularHint', 'starred', 'starredHint', 'recommended', 'recommendedHint', 'trending', 'trendingHint', 'newest', 'newestHint', 'browseAll', 'collapse', 'allPlugins']) {
+    for (const key of ['rankings', 'rankingsHint', 'rankingsRange', 'rankingsMore', 'rankingsLess', 'popular', 'popularHint', 'starred', 'starredHint', 'recommended', 'recommendedHint', 'trending', 'trendingHint', 'newest', 'newestHint', 'browseAll', 'collapse', 'allPlugins']) {
       assert.equal(typeof words[key], 'string', key);
     }
   }
   assert.match(styles, /\.opm-svg \{[^}]*stroke: currentColor/);
   // The first of today's picks rests on the content edge: no fade reaches into a card.
   assert.doesNotMatch(styles, /--opm-fade-(start|end): calc\(var\(--opm-bleed\) \+/);
+  assert.match(styles, /\.opm-screenshot-viewer img \{[^}]*max-height: calc\(100dvh - 48px\)/);
   // Card tags hide whole tags past a fixed number of rows, never slicing one or stretching the card.
   assert.match(styles, /\.opm-card \.opm-tags \{[^}]*flex-wrap: wrap; overflow: hidden; max-height:/);
   assert.match(styles, /\.opm-card-footer \.opm-tags \{ --opm-tag-rows: 2;/);
+});
+
+test('later rails move by pixels, bounce at both bounds, and stop on every interaction path', async () => {
+  const {internals: {advanceRailScroll, RAIL_SPEED, PluginRail, styles}} = await client();
+  assert.equal(RAIL_SPEED, 12);
+  const first = advanceRailScroll(10, 100, 1, 250);
+  assert.equal(first.scrollLeft, 13);
+  assert.equal(first.direction, 1);
+  assert.equal(first.moving, true);
+  const frame = advanceRailScroll(10, 100, 1, 16);
+  assert.ok(frame.scrollLeft > 10 && frame.scrollLeft < 11, 'A 60fps frame retains a fractional logical position');
+  assert.deepEqual(plain(advanceRailScroll(99, 100, 1, 1000)), {scrollLeft: 100, direction: -1, moving: true});
+  assert.deepEqual(plain(advanceRailScroll(1, 100, -1, 1000)), {scrollLeft: 0, direction: 1, moving: true});
+  assert.deepEqual(plain(advanceRailScroll(0, 0, 1, 1000)), {scrollLeft: 0, direction: 1, moving: false});
+  const source = String(PluginRail);
+  assert.match(source, /setEdges\(sameEdges\(edgesOf\(node\)\)\);/,
+    'sameEdges stays the functional React updater instead of becoming edge state');
+  for (const pattern of ['onPointerDownCapture: stopMotion', 'onWheelCapture: stopMotion', 'onFocusCapture: stopMotion',
+    'onKeyDownCapture: stopMotion', 'onClickCapture: stopMotion', 'window.requestAnimationFrame', 'IntersectionObserver',
+    'document.visibilityState', 'position.current = result.scrollLeft']) assert.match(source, new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.match(styles, /\.opm-rail \{ scroll-snap-type: none; scroll-behavior: auto; \}/);
+  assert.match(styles, /@media \(prefers-reduced-motion: no-preference\)[\s\S]*opm-board-page-in/);
+});
+
+test('customizable category picker and market controls keep a native fallback with one chevron', async () => {
+  const {internals: {AllPlugins, Toolbar, styles}} = await client();
+  assert.match(styles, /@supports \(appearance: base-select\)/);
+  assert.match(styles, /select\.opm-category,\s*\.opm-root select\.opm-category::picker\(select\) \{ appearance: base-select; \}/);
+  assert.match(styles, /::picker\(select\) \{[\s\S]*background: var\(--dsw-alias-bg-layer-1/);
+  assert.match(styles, /option:checked \{[\s\S]*font-weight: 600/);
+  assert.match(styles, /option::checkmark \{ color: var\(--dsw-alias-button-info-fill/);
+  assert.match(styles, /\.opm-category-wrap > svg \{ display: none; \}/);
+  assert.match(String(Toolbar), /name: 'category'/);
+  assert.match(String(AllPlugins), /opm-chip opm-chip-sort/);
+  assert.match(String(AllPlugins), /opm-chip opm-chip-utility/);
 });
 
 test('plugin markets, this one included, get no recommendation place in the tab but keep every other order', async () => {
