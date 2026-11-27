@@ -7,6 +7,13 @@
       "requestedBy": "zhiqiangme",
       "requestedAt": "2026-10-21",
       "request": "https://github.com/polang233/dsh-plugin-index/pull/22"
+    },
+    {
+      "name": "dsh-plugin-mcp-mvp-mes",
+      "repository": "https://github.com/OsunO/dsh-plugin-mcp-mvp-mes",
+      "requestedBy": "OsunO",
+      "requestedAt": "2026-11-26",
+      "request": "https://github.com/polang233/dsh-plugin-index/issues/807"
     }
   ]
 }

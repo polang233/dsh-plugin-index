@@ -12666,8 +12666,8 @@
         "zh": "MarkPilot · Markdown × AI 工作台"
       },
       "description": {
-        "en": "Edit Markdown alongside files and DSH chat, with section-scoped edits, cross-cell selection, guarded saves and draft recovery. Requires Host Connection and built-in SQLite. PDF export needs Edge or Chrome.",
-        "zh": "在文件树和 DSH 对话旁编辑 Markdown，支持限定章节编辑、跨单元格选择、带版本校验的保存与草稿恢复。需宿主 Connection 和内置 SQLite，导出 PDF 需 Edge 或 Chrome。"
+        "en": "Edit Markdown alongside files and DSH chat, with section-scoped edits, draft recovery and independent light or dark themes for the editor and report. Requires Host Connection and built-in SQLite. PDF export needs Edge or Chrome.",
+        "zh": "在文件树和 DSH 对话旁编辑 Markdown，支持章节限定编辑、草稿恢复，书页与研报可分别设置明暗。需宿主 Connection 和内置 SQLite，导出 PDF 需 Edge 或 Chrome。"
       },
       "category": "interface"
     },
@@ -17068,13 +17068,13 @@
         "en": "Manage database connections and let DSH query SQLite, MySQL, PostgreSQL-compatible or DM databases. Queries use read-only connections. Writes require a configured writable source and follow the plugin's approval flow. Requires the corresponding database access and Node's SQLite support for SQLite.",
         "zh": "配置数据库连接，在 DSH 查询 SQLite、MySQL、兼容 PostgreSQL 的数据库或达梦数据库。查询使用只读连接，写入需配置可写数据源并走插件审批。需相应数据库访问权限，SQLite 依赖 Node 内置支持。"
       },
-      "version": "0.2.4",
+      "version": "0.2.5",
       "source": {
         "type": "git",
         "url": "https://github.com/skyrocks/dsh-db",
-        "commit": "a1d04e5ad29f6e39d421fb90046112d61a4a560f",
-        "integrity": "sha512-roJkI2h/ucyauFRjSBV6j53VUpdAuu58TjIkdYz3oBOztEkHj3ZeK+SzmUtt8ntMrrV1FUvr4S5P6qftN0lkmA==",
-        "publishedAt": "2026-11-23T02:06:59Z"
+        "commit": "0a16381ad173f293df58c8a5002a1cd72ab6dae3",
+        "integrity": "sha512-CPN3xGFPsDh5M+PWIM88yY08LV9hfzzfTIDpvvTDNqH+CdW4mWoK9h/RXLG21PzIEEuPKeWq8ngumOHKtwRRmA==",
+        "publishedAt": "2026-11-27T06:39:26Z"
       }
     },
     {
@@ -17892,18 +17892,6 @@
       }
     },
     {
-      "name": "dsh-plugin-mcp-mvp-mes",
-      "title": {
-        "en": "MOM MES MCP Connector",
-        "zh": "MOM MES MCP 连接器"
-      },
-      "description": {
-        "en": "Connect DSH to the MOM MES MCP service. Requires a service API key stored in the DSH credential store. The connector sends the key to the configured MOM MES service.",
-        "zh": "把 DSH 接入 MOM MES MCP 服务。需在 DSH 凭据库配置服务 API Key，连接器会把该密钥发给 MOM MES 服务。"
-      },
-      "category": "integrations"
-    },
-    {
       "name": "dsh-password-login",
       "title": {
         "en": "DSH Password Login",
@@ -18010,10 +17998,15 @@
         "zh": "DSH 模型快捷面板"
       },
       "description": {
-        "en": "Switch models, change reasoning effort, and toggle agent teams from one DSH panel. Includes model search and reorderable favorites. The author tested DSH 0.2.2-rc.3.",
-        "zh": "在 DSH 的同一面板切换模型、调整思考深度和开关智能体团队，支持模型搜索和常用模型排序。作者验证了 DSH 0.2.2-rc.3。"
+        "en": "Switch models, change reasoning effort, and toggle agent teams from one DSH panel. Search, reorder favorites, or set defaults for new sessions. Requires DSH 0.2.2-rc.3.",
+        "zh": "在 DSH 的同一面板切换模型、调整思考深度和开关智能体团队。支持模型搜索、常用模型排序和设置新会话默认值。要求 DSH 0.2.2-rc.3。"
       },
-      "category": "interface"
+      "category": "interface",
+      "iconReview": {
+        "commit": "752070b857ac8a7b0a06ee70d949aad8b8f860e2",
+        "path": "icon.svg",
+        "sha256": "3c4924b8f1cd6b9c87be0b9f14489e7d866d85539f681dabdc1425b5c2b226cb"
+      }
     },
     {
       "name": "dsh-talk",
@@ -19390,8 +19383,8 @@
         "zh": "DSH 侧边栏更新器"
       },
       "description": {
-        "en": "Inspect installed plugins, apply selected updates, and move plugin configuration between DSH profiles. Host Connection admission is required for the panel and its install actions.",
-        "zh": "在 DSH 侧栏检查已装插件、应用所选更新，并在配置间迁移插件设置。面板及安装操作需要宿主 Connection 准入。"
+        "en": "Inspect plugins, update installed packages in the background, and move selected plugin configuration between DSH profiles. Automatic updates are enabled by default and can be turned off. Management requires Host Connection admission.",
+        "zh": "在 DSH 侧栏检查插件、后台更新已安装的包，并在配置间迁移选中的插件设置。默认开启自动更新，可在设置关闭。管理操作需宿主 Connection 准入。"
       },
       "category": "workflow"
     },
@@ -19510,8 +19503,8 @@
         "zh": "英语健身房"
       },
       "description": {
-        "en": "Practice Chinese-to-English translation and spelling below the DSH composer. Includes CET-4, CET-6, IELTS and TOEFL vocabulary and a progress dashboard. Optional session-based questions send a short, redacted conversation excerpt to your configured model.",
-        "zh": "在 DSH 对话输入框下方常驻的英语练习挂件，支持中译英、单词拼写，内置 CET4/6、雅思、托福词库，看板记录学习进度。开启会话关联后，会将脱敏后的近期对话片段交给配置的模型出题。"
+        "en": "Practice Chinese-to-English translation and spelling below the DSH composer. Includes CET-4, CET-6, IELTS and TOEFL vocabulary, a progress dashboard, and sentence-by-sentence translation and grammar explanations for daily reading. Optional session-based exercises send a redacted excerpt to your configured model.",
+        "zh": "在 DSH 对话输入框下方常驻的英语练习挂件，支持中译英、单词拼写，内置 CET4/6、雅思、托福词库，看板记录学习进度。今日文章支持逐句翻译与语法讲解。开启会话关联后，会将脱敏后的近期对话片段交给配置的模型出题。"
       },
       "category": "tools"
     },
@@ -19639,10 +19632,9 @@
         "zh": "飞书智能工作台"
       },
       "description": {
-        "en": "Build and update Lark Base tables, preview records, and use the Lark workbench from DSH. Requires an installed lark-cli and an authorized Lark account.",
-        "zh": "在 DSH 的飞书工作台建表、调整多维表格和预览记录。需先安装 lark-cli 并授权飞书账号。"
-      },
-      "version": "1.2.0"
+        "en": "Build and update Lark Base tables and use Lark workbench features from DSH. Includes the Feishu CLI dependency and requires an authorized Lark account.",
+        "zh": "在 DSH 的飞书工作台建表、调整多维表格和预览记录。随包依赖飞书 CLI，需授权飞书账号。"
+      }
     },
     {
       "name": "dsh-aemeath",
@@ -19805,16 +19797,16 @@
       },
       "category": "interface",
       "description": {
-        "en": "Render eight interactive Markdown blocks in DSH replies, including cards, quizzes, sorting and charts. Resource cards load images from their sites and may send the card hostname to DuckDuckGo for an icon.",
-        "zh": "在 DSH 回复里渲染资源卡片、测验、排序、图表等八类交互块。资源卡片会加载站点图片，查找图标时可能将卡片域名发给 DuckDuckGo。"
+        "en": "Render eight interactive Markdown blocks in DSH replies, including cards, quizzes, sorting and charts. External card images and icons can be disabled in settings.",
+        "zh": "在 DSH 回复里渲染资源卡片、测验、排序、图表等八类交互块。设置页可关闭外部卡片图片和图标。"
       },
-      "version": "2.1.2",
+      "version": "2.2.1",
       "source": {
         "type": "git",
         "url": "https://github.com/MicroCapCap/intelligent-inspiration",
-        "commit": "399d2c8ba20f89c145c18e7632949ab25bc96a99",
-        "integrity": "sha512-Ri3abcpRRGkoT5OouYyw0ThdWzXmxwcSpha5ThhrIgKR6mBvInatMcUvHtoheojtZZpo5TvuRr/k0A8bPZlxLA==",
-        "publishedAt": "2026-11-25T14:05:59Z"
+        "commit": "a032caec8d3b889c55ff2031bbd3f079abd4d623",
+        "integrity": "sha512-L1fx888WJuAdJF1PeipzYpqeJx5IhAuMpBSK3Y81yDr/cXiKrY5KwiSaC1LK61AdRXto4LpUnP2+GGFodtZQ3g==",
+        "publishedAt": "2026-11-26T12:51:52Z"
       }
     },
     {
@@ -19903,6 +19895,232 @@
       "description": {
         "en": "Add a Q&A agent preset with web search, page retrieval and read-only file tools. Searches use the provider configured in DSH.",
         "zh": "增加可选的问答模式，提供网页搜索、网页抓取和只读文件工具。检索使用 DSH 已配置的供应商。"
+      }
+    },
+    {
+      "name": "false-completion-bundle",
+      "title": {
+        "en": "False Completion Bundle",
+        "zh": "任务完成证据闸门"
+      },
+      "description": {
+        "en": "Require tool evidence before an agent can claim a task is complete. The default profile uses a pinned read-only filesystem MCP verifier via npx, and other verifiers can be enabled separately.",
+        "zh": "要求 Agent 提供工具证据才可声明任务完成。默认通过 npx 使用固定版本的只读文件系统 MCP 校验器，可单独开启其他校验器。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-dbhub-live",
+      "title": {
+        "en": "DBHub Live",
+        "zh": "DBHub Live 数据库"
+      },
+      "description": {
+        "en": "Connect DSH to MySQL, PostgreSQL, MariaDB, SQLite or SQL Server. Install the pinned DBHub 2.1.0 runtime from settings or through a one-time approval. Credentials are configured in the interface.",
+        "zh": "把 MySQL、PostgreSQL、MariaDB、SQLite 或 SQL Server 接入 DSH。可从设置页或经宿主单次审批安装固定的 DBHub 2.1.0。连接凭据在界面中配置。"
+      },
+      "category": "development"
+    },
+    {
+      "name": "dsh-tencent-meeting",
+      "title": {
+        "en": "Tencent Meeting",
+        "zh": "腾讯会议"
+      },
+      "description": {
+        "en": "Manage Tencent Meeting from DSH, read transcripts and minutes, and generate follow-up documents using your configured model. The settings panel can install the meeting CLI after confirmation.",
+        "zh": "在 DSH 管理腾讯会议、查看转写和纪要，并用配置的模型生成会后文档。会议 CLI 可在设置页确认后安装。"
+      },
+      "category": "integrations"
+    },
+    {
+      "name": "dsh-knowledge-vault",
+      "title": {
+        "en": "Knowledge Vault",
+        "zh": "知识库"
+      },
+      "description": {
+        "en": "Save selected discussion notes as local Markdown and browse or search them from the sidebar. Set the knowledge folder in DSH. Repeated titles append an update to the existing entry.",
+        "zh": "把选定的讨论要点整理成 Markdown，并在侧栏浏览和搜索。可自选知识库目录，同名条目再次整理时追加更新。"
+      },
+      "category": "knowledge"
+    },
+    {
+      "name": "dsh-taskbar-lamp",
+      "title": {
+        "en": "Taskbar Lamp",
+        "zh": "任务栏灯"
+      },
+      "description": {
+        "en": "Show active DSH sessions and pending prompts as a pixel whale and counter on the Windows taskbar. Requires Python 3.10+ with Pillow, pystray and zstandard.",
+        "zh": "在 Windows 任务栏用像素鲸鱼和数字显示活跃会话及待确认提醒。需 Python 3.10+、Pillow、pystray 和 zstandard。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@local/periodic-model-picker",
+      "title": {
+        "en": "Periodic Model Picker",
+        "zh": "周期表模型选择器"
+      },
+      "description": {
+        "en": "Pick DSH models from a periodic table and customize their tiles. Missing descriptions use the configured model provider and are cached locally.",
+        "zh": "用元素周期表选择 DSH 模型，可自定义模型的显示名、图标和颜色。缺少的描述会由配置的模型生成并在本地缓存。"
+      },
+      "category": "providers",
+      "version": "0.2.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/MicroCapCap/periodic-model-picker",
+        "commit": "4b11277dd3a6eb877825cb123aa7df57069d2d12",
+        "integrity": "sha512-+7LS5ZUd8d+jo89LcVnGbCIYEgY/gXm3dlrZL0r7M0PtCKByaa16NvhlOI7DKee352BAsxo7dBwvlzOks5KXig==",
+        "publishedAt": "2026-11-26T10:15:34Z"
+      }
+    },
+    {
+      "name": "@k99k5/dsh-suggest-card",
+      "title": {
+        "en": "Next Step Suggestions",
+        "zh": "下一步建议"
+      },
+      "description": {
+        "en": "Show clickable answers and next-step suggestions in the current DSH session. Optional model review sends the recent exchange to the model you select.",
+        "zh": "在当前 DSH 会话显示可点击的回答和下一步建议。开启模型复核后，会把最新一轮对话交给你选的模型。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-deepseek-share-import",
+      "title": {
+        "en": "DeepSeek Share Import",
+        "zh": "DeepSeek 分享导入"
+      },
+      "description": {
+        "en": "Import a public DeepSeek share link as a DSH conversation, including messages, source cards and images. Uses the current DeepSeek web share endpoints, which may change.",
+        "zh": "把公开的 DeepSeek 分享链接导入为 DSH 会话，保留消息、来源卡片和图片。依赖可能变更的 DeepSeek 网页分享接口。"
+      },
+      "category": "integrations",
+      "version": "1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/g2315244097-cpu/dsh-deepseek-share-import",
+        "commit": "37767780d5bccc1aafbeb5d2f7853ee8c35294fb",
+        "integrity": "sha512-3jlBg436nY+lDwgr6OIX3CH5lmi1Et09WMD0Ml+K51P5PpWC6igTtQafz8r3FQDAykS4phi/5ik2G1hbl0QnOw==",
+        "publishedAt": "2026-11-26T14:36:40Z"
+      }
+    },
+    {
+      "name": "@ltw2522/dsh-task-alert",
+      "title": {
+        "en": "Task Alert",
+        "zh": "桌面提示卡"
+      },
+      "description": {
+        "en": "Show a Windows desktop card when a DSH session finishes, asks a question or needs approval. Requires PowerShell 7. Notification style, sound and shortcut are configurable.",
+        "zh": "DSH 会话结束、等待回答或需要审批时，在 Windows 桌面弹出提示卡。需 PowerShell 7，可设置样式、声音和快捷键。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "@ltw2522/dsh-plugin-groups",
+      "title": {
+        "en": "Plugin Groups",
+        "zh": "插件分类"
+      },
+      "description": {
+        "en": "Group installed DSH plugins by status or custom category, with controls to toggle eligible bundles in place.",
+        "zh": "把 DSH 已安装插件按状态或自定义类别整理，在分类页可开关允许切换的插件。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-fish-reader",
+      "title": {
+        "en": "DSH Fish Reader",
+        "zh": "摸鱼阅读器"
+      },
+      "description": {
+        "en": "Read local TXT and EPUB books in the DSH composer placeholder, with progress, search and shortcuts. Books and settings stay in the browser’s local storage.",
+        "zh": "在 DSH 输入框占位区阅读本地 TXT 和 EPUB，支持续读、搜索和快捷键。书籍及设置保存在本机浏览器存储。"
+      },
+      "category": "interface"
+    },
+    {
+      "name": "dsh-agent-hints",
+      "title": {
+        "en": "Agent Hints",
+        "zh": "Agent Hints"
+      },
+      "description": {
+        "en": "Send structured per-request hints to a compatible DeepSeek provider and expose bounded session controls. Supports Chat Completions and Messages on DSH 0.2.2-rc.1.",
+        "zh": "向兼容的 DeepSeek 模型接口发送逐请求的结构化提示，并支持会话暂停、恢复、停止和压缩。支持 Chat Completions 与 Messages，要求 DSH 0.2.2-rc.1。"
+      },
+      "category": "providers"
+    },
+    {
+      "name": "dsh-tool-picker",
+      "title": {
+        "en": "Tool Picker",
+        "zh": "工具选择器"
+      },
+      "description": {
+        "en": "Give the model a tool catalog and load only the scoped tools it picks for the next step, reducing repeated tool descriptions. The author tested DSH 0.2.2-rc.5 on Windows.",
+        "zh": "先给模型工具目录，再按需加载下一步要用的工具定义。作者在 Windows 上验证了 DSH 0.2.2-rc.5。"
+      },
+      "category": "tools",
+      "version": "0.1.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/liujing9178/dsh-tool-picker",
+        "commit": "e6feab29a3dec8c615c793944ea7f54f62aebe98",
+        "integrity": "sha512-Uif+NMMSg+Yt/BjkYGUBsbzQHrGviNuYV1+JjMjbvcrqSZQ8WNsfed6wFQ0vp3rBKSbLteXkK+NpSKvGlMgBCA==",
+        "publishedAt": "2026-11-22T11:01:34Z"
+      },
+      "repositoryReview": {
+        "version": "0.1.0",
+        "integrity": "sha512-Uif+NMMSg+Yt/BjkYGUBsbzQHrGviNuYV1+JjMjbvcrqSZQ8WNsfed6wFQ0vp3rBKSbLteXkK+NpSKvGlMgBCA==",
+        "commit": "e6feab29a3dec8c615c793944ea7f54f62aebe98",
+        "url": "https://github.com/liujing9178/dsh-tool-picker"
+      }
+    },
+    {
+      "name": "@skyrocks/dsh-session-handoff",
+      "title": {
+        "en": "Session Handoff",
+        "zh": "会话交接"
+      },
+      "description": {
+        "en": "Send recent discussion and a summary to another DSH session, including across workspaces. Longer histories can be summarized by the configured model. The handoff asks the receiving agent to confirm before starting work.",
+        "zh": "把近期对话和交接摘要发到另一个 DSH 会话，可跨工作区。较长历史会交给配置的模型摘要，交接提示会要求目标会话先确认再开始。"
+      },
+      "category": "workflow",
+      "version": "0.1.10",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/skyrocks/dsh-session-handoff",
+        "commit": "641905bfdbaac3e708cd97eff4e86ca5f9bd3c8b",
+        "integrity": "sha512-AqonbAf40TH4r26aeGcut0/CN8Kozpk21ISmFBtb1/YqA51XUMh3xT9PPJKMkNDvLbntYqN+0aAF0qMWVqqJzw==",
+        "publishedAt": "2026-11-27T06:35:08Z"
+      }
+    },
+    {
+      "name": "@skyrocks/dsh-news-digest",
+      "title": {
+        "en": "News Digest",
+        "zh": "新闻日报"
+      },
+      "description": {
+        "en": "Search selected news topics on a daily schedule and save browsable reports locally. Uses configured search and model providers, and can open saved reports in the browser.",
+        "zh": "按所选主题每日搜索新闻并保存本地日报。使用已配置的搜索和模型服务，可在浏览器回看。"
+      },
+      "category": "tools",
+      "version": "0.1.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/skyrocks/dsh-news-digest",
+        "commit": "f69c8a742343667a85cf1c498c60c9879eb05912",
+        "integrity": "sha512-c7izV4hv//V1JnwurdyoI0TrAIS/f6jpkymy/4r5KTRcd3UqZ2S60EcmcPTSonTiUlTeCcikgh39ws3oCDpLHA==",
+        "publishedAt": "2026-11-26T08:01:17Z"
       }
     }
   ]

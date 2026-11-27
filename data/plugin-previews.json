@@ -96,31 +96,35 @@
     "@leonchan2840/dsh-quick-model-panel": {
       "screenshots": [
         {
-          "url": "https://github.com/user-attachments/assets/68c5d6fe-2f80-4a90-8976-f915dc2e5c8e",
-          "alt": "快捷面板中的常用模型、思考深度和团队开关"
+          "url": "https://raw.githubusercontent.com/leonchan2840/dsh-quick-model-panel/83ea5090a3fd06a519d4786dc3fc0e19b3ce1f2e/docs/images/panel-overview-1.3.jpg",
+          "alt": "模型快捷面板"
         },
         {
-          "url": "https://github.com/user-attachments/assets/c7b74840-36f0-4ba7-813d-78245302603c",
-          "alt": "模型分组与模型搜索"
+          "url": "https://raw.githubusercontent.com/leonchan2840/dsh-quick-model-panel/83ea5090a3fd06a519d4786dc3fc0e19b3ce1f2e/docs/images/all-models-1.3.jpg",
+          "alt": "查找和选择模型"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/leonchan2840/dsh-quick-model-panel/83ea5090a3fd06a519d4786dc3fc0e19b3ce1f2e/docs/images/settings-1.3.jpg",
+          "alt": "设置新会话默认值"
         }
       ]
     },
     "dsh-english-gym": {
       "screenshots": [
         {
-          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/5616df430afbba510a44df7f1d54476a235e57bd/docs/screenshots/phrase-training.webp",
+          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/7babfe018f56554b2a3dc8a073b62f6105636cd4/docs/screenshots/phrase-training.webp",
           "alt": "中译英短语练习"
         },
         {
-          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/5616df430afbba510a44df7f1d54476a235e57bd/docs/screenshots/word-training.webp",
+          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/7babfe018f56554b2a3dc8a073b62f6105636cd4/docs/screenshots/word-training.webp",
           "alt": "词库单词拼写"
         },
         {
-          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/5616df430afbba510a44df7f1d54476a235e57bd/docs/screenshots/report.webp",
+          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/7babfe018f56554b2a3dc8a073b62f6105636cd4/docs/screenshots/report.webp",
           "alt": "英语练习报告"
         },
         {
-          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/5616df430afbba510a44df7f1d54476a235e57bd/docs/screenshots/settings.webp",
+          "url": "https://raw.githubusercontent.com/KYCOMING/dsh-english-gym/7babfe018f56554b2a3dc8a073b62f6105636cd4/docs/screenshots/settings.webp",
           "alt": "练习内容设置"
         }
       ]
@@ -176,7 +180,7 @@
     "dsh-lark-studio": {
       "screenshots": [
         {
-          "url": "https://github.com/user-attachments/assets/94138c17-b64a-4dce-9253-17073f8aa893",
+          "url": "https://raw.githubusercontent.com/DeepLifeStudio/dsh-lark-studio/34ce3348b715b4a11f69ba287ebf74fa7563f6fb/assets/workbench-zh.png",
           "alt": "飞书工作台侧栏"
         }
       ]
@@ -246,6 +250,126 @@
         {
           "url": "https://raw.githubusercontent.com/kirkchinese/CiteCiter/da89463de6b634de5aae0430c55fc748e034a781/assets/docs/teacher.zh.webp",
           "alt": "教师模式提示可继续学习的知识点"
+        }
+      ]
+    },
+    "dsh-panel-updater": {
+      "screenshots": [
+        {
+          "url": "https://github.com/user-attachments/assets/4f5d9e7d-2301-4ef5-b084-092466116dfa",
+          "alt": "插件来源与更新面板"
+        },
+        {
+          "url": "https://github.com/user-attachments/assets/e1f1c802-0505-43d2-bcf7-03b3833ead95",
+          "alt": "选择并导入同步项"
+        }
+      ]
+    },
+    "dsh-dbhub-live": {
+      "screenshots": [
+        {
+          "url": "https://github.com/user-attachments/assets/23a23363-6b22-48a0-ac45-3adfb7520ebc",
+          "alt": "在会话中查询数据库"
+        },
+        {
+          "url": "https://github.com/user-attachments/assets/5ef2f6b3-3900-43d5-bed9-177a827bc1f7",
+          "alt": "在对话中选择数据源"
+        },
+        {
+          "url": "https://github.com/user-attachments/assets/27143863-d1cc-4ed7-9dd3-6c9cffff86e1",
+          "alt": "数据源概览"
+        }
+      ]
+    },
+    "dsh-tencent-meeting": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/ikevss/dsh-tencent-meeting/eaa68bbc2cd2a311eb58a8866738edca751e20aa/docs/screenshots/home.png",
+          "alt": "腾讯会议列表和详情"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ikevss/dsh-tencent-meeting/eaa68bbc2cd2a311eb58a8866738edca751e20aa/docs/screenshots/outputs.png",
+          "alt": "会议转写和会后产出"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ikevss/dsh-tencent-meeting/eaa68bbc2cd2a311eb58a8866738edca751e20aa/docs/screenshots/create.png",
+          "alt": "新建会议"
+        }
+      ]
+    },
+    "dsh-taskbar-lamp": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/kasdjg/dsh-taskbar-lamp/a87b7dbee013287f549ee68570467f221f945aea/docs/images/taskbar.png",
+          "alt": "Windows 任务栏中的像素鲸鱼和会话数量"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/kasdjg/dsh-taskbar-lamp/a87b7dbee013287f549ee68570467f221f945aea/docs/images/taskbar-zoom.png",
+          "alt": "任务栏提示灯特写"
+        }
+      ]
+    },
+    "@k99k5/dsh-suggest-card": {
+      "screenshots": [
+        {
+          "url": "https://github.com/user-attachments/assets/fe361e51-6e49-443a-9281-8443948fea62",
+          "alt": "会话中的建议按钮"
+        },
+        {
+          "url": "https://github.com/user-attachments/assets/ac8a9e42-44a2-4bbf-adfa-6fffb103cef7",
+          "alt": "会话追问和可点击回答"
+        }
+      ]
+    },
+    "dsh-deepseek-share-import": {
+      "screenshots": [
+        {
+          "url": "https://github.com/user-attachments/assets/73e46518-638a-4b2e-9afd-89c4835982c4",
+          "alt": "导入 DeepSeek 分享"
+        },
+        {
+          "url": "https://github.com/user-attachments/assets/30d952a4-8acc-4c6b-81e6-09af0e91c5fe",
+          "alt": "导入后可继续的会话"
+        }
+      ]
+    },
+    "dsh-markdown-editor-typora": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/ltmroberthk915/markpilot/26025dde86e57ec70621ab5d7a41dee3f3bd35c3/dsh-markdown-editor-typora/assets/screenshots/01-transparent-workbench.jpg",
+          "alt": "MarkPilot 三栏工作台及透明壁纸"
+        }
+      ]
+    },
+    "@ltw2522/dsh-task-alert": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/ltw2522/dsh-task-alert/76da53fe82abf65d2d13cc5bb25fe93319554973/docs/preview-card.png",
+          "alt": "桌面任务完成提示卡"
+        }
+      ]
+    },
+    "@ltw2522/dsh-plugin-groups": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/ltw2522/dsh-plugin-groups/6dc3d7efe830ba2a9dfe0a34f27acbe78538c1a8/docs/preview-sections.png",
+          "alt": "已安装插件分区"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ltw2522/dsh-plugin-groups/6dc3d7efe830ba2a9dfe0a34f27acbe78538c1a8/docs/preview-collapse.png",
+          "alt": "折叠分区后的视图"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ltw2522/dsh-plugin-groups/6dc3d7efe830ba2a9dfe0a34f27acbe78538c1a8/docs/preview-cats-manage.png",
+          "alt": "管理自定义分类"
+        }
+      ]
+    },
+    "dsh-fish-reader": {
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/coyomii/dsh-fish-reader/16c544a070f6f2a5cca4044f63c7714326ec61a0/docs/images/reader-example.png",
+          "alt": "在 DSH 输入框占位区阅读"
         }
       ]
     }

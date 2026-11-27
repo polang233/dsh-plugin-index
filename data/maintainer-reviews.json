@@ -10774,6 +10774,277 @@
       "reviewedAt": "2026-11-26T04:32:26.247Z",
       "scope": "static-security",
       "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@skyrocks/dsh-db",
+      "version": "0.2.5",
+      "integrity": "sha512-CPN3xGFPsDh5M+PWIM88yY08LV9hfzzfTIDpvvTDNqH+CdW4mWoK9h/RXLG21PzIEEuPKeWq8ngumOHKtwRRmA==",
+      "repository": "https://github.com/skyrocks/dsh-db",
+      "source": {
+        "type": "git",
+        "commit": "0a16381ad173f293df58c8a5002a1cd72ab6dae3"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-lark-studio",
+      "version": "1.4.1",
+      "integrity": "sha512-gcvKwXg6FMj7UoDOXpJ75pEvwrMRfBRuEwReDfH4Jn/dIGkQNJMPcSffyV7MKVgHhqAG8UWLthdjwPgsLf44QA==",
+      "repository": "https://github.com/DeepLifeStudio/dsh-lark-studio",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-panel-updater",
+      "version": "1.0.7",
+      "integrity": "sha512-lHtEphq1Nzg/fkyspFTpkM6R5Z3vPnGiycFn8zQIKeQjmzs+26Wz3Z7XJkVde/UlBRIfVfa1FnV9cjkDjVDlpA==",
+      "repository": "https://github.com/setoya/dsh-panel-updater",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@leonchan2840/dsh-quick-model-panel",
+      "version": "1.3.0",
+      "integrity": "sha512-iJnmIrq6S3BXfKRj6Gpn415hKTu9dO2oXi8vKmgyyFyuPBiXOfj8D39os69fK8eTe1h5EM+9AVi4y1dpMFeEcQ==",
+      "repository": "https://github.com/leonchan2840/dsh-quick-model-panel",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "false-completion-bundle",
+      "version": "0.2.0",
+      "integrity": "sha512-+zw1epYag9dfU8170UrUzbHTf74f2nkv4v6+LAXZ2Vz9C2vwcrk+5Q+CkDVd9KoQRUiWdWd5aDX7wrUfQtukng==",
+      "repository": "https://github.com/os1249399459/false-completion-bundle",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-dbhub-live",
+      "version": "6.2.0",
+      "integrity": "sha512-bkjO6ZP+OuPEQ+cpBME8WVMIjvuUCufGobmIgEHsSqSZmwI3WkIJqEO3zafaDDrhuArJyl0t5BkaWHVlhnqc1Q==",
+      "repository": "https://github.com/mr-mihu/dsh-dbhub-live",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-tencent-meeting",
+      "version": "1.4.10",
+      "integrity": "sha512-7MRmskhGFQv86LZOsbb0Sfx7wF65f/MOjvDtMW8mH5h6IW3hLYsbKYuu/wEbUm9uJwiYC3I+c/ERViKkVFPr1A==",
+      "repository": "https://github.com/ikevss/dsh-tencent-meeting",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-knowledge-vault",
+      "version": "0.4.0",
+      "integrity": "sha512-L6yFGlGbvzOxnwubTx8RXnlxB0A+16QB7vmDKNQ1/Pm/R0fSQdhUyWI3GsMcxXdOVjqLzPlDOKit5Z/MdnPXAA==",
+      "repository": "https://github.com/HHHHK1/dsh-knowledge-vault",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-taskbar-lamp",
+      "version": "0.1.7",
+      "integrity": "sha512-2SWoeD5wz5AoI0jN2HnI3/1P5uc4dglXUZp42oJP49PmVHXYBMRAlAvVTtQFe5BvVEUt5JtLOTcNGgGh2CrLuA==",
+      "repository": "https://github.com/kasdjg/dsh-taskbar-lamp",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@local/intelligent-inspiration",
+      "version": "2.2.1",
+      "integrity": "sha512-L1fx888WJuAdJF1PeipzYpqeJx5IhAuMpBSK3Y81yDr/cXiKrY5KwiSaC1LK61AdRXto4LpUnP2+GGFodtZQ3g==",
+      "repository": "https://github.com/MicroCapCap/intelligent-inspiration",
+      "source": {
+        "type": "git",
+        "commit": "a032caec8d3b889c55ff2031bbd3f079abd4d623"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@local/periodic-model-picker",
+      "version": "0.2.3",
+      "integrity": "sha512-+7LS5ZUd8d+jo89LcVnGbCIYEgY/gXm3dlrZL0r7M0PtCKByaa16NvhlOI7DKee352BAsxo7dBwvlzOks5KXig==",
+      "repository": "https://github.com/MicroCapCap/periodic-model-picker",
+      "source": {
+        "type": "git",
+        "commit": "4b11277dd3a6eb877825cb123aa7df57069d2d12"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-english-gym",
+      "version": "0.8.3",
+      "integrity": "sha512-yzbhtOEmB+jRoOzbSOVZOZiEZYYPa+QnPcNE82zA5WgMeKikiKk9FBaWvHym2dBH4PDfko5lM7nN+KH1I6Orrg==",
+      "repository": "https://github.com/KYCOMING/dsh-english-gym",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@k99k5/dsh-suggest-card",
+      "version": "0.0.5",
+      "integrity": "sha512-rxOOoejJbLuO+D+ddFHsMfoT9kS9bsWogTmtYg3VHT8nOgsrZP0I0VoiJTF0yHtC2ikCek9+J5azKaJbN4a/PQ==",
+      "repository": "https://github.com/k99k5/dsh-suggest-card",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-deepseek-share-import",
+      "version": "1.0.0",
+      "integrity": "sha512-3jlBg436nY+lDwgr6OIX3CH5lmi1Et09WMD0Ml+K51P5PpWC6igTtQafz8r3FQDAykS4phi/5ik2G1hbl0QnOw==",
+      "repository": "https://github.com/g2315244097-cpu/dsh-deepseek-share-import",
+      "source": {
+        "type": "git",
+        "commit": "37767780d5bccc1aafbeb5d2f7853ee8c35294fb"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-markdown-editor-typora",
+      "version": "2.1.11",
+      "integrity": "sha512-XGbwMC3YsCAsVnPdLqm/BgL08YWNrJDiQXaylkl1wLK6mCTKAgySZIQnpcnCmYqses0RmEmSyINVL4ME8Kp1vA==",
+      "repository": "https://github.com/ltmroberthk915/markpilot",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@ltw2522/dsh-task-alert",
+      "version": "1.0.1",
+      "integrity": "sha512-cNnrZmW+2qkGrwVuJAiWk3QmjeqC1Uu6pt4fzp9ERxU/AbkckukmLkjSHVukxN+w20NT4V3GmjGQwzXgCyF+LQ==",
+      "repository": "https://github.com/ltw2522/dsh-task-alert",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@ltw2522/dsh-plugin-groups",
+      "version": "1.0.0",
+      "integrity": "sha512-UkICud9aQe2QX+VUEnrjRlfVujrL/VeI2JRIAwc6XqZSK2V8r80PX8uiJ9CWTwxuy3uOB3B4jnzjEl7oefaF4A==",
+      "repository": "https://github.com/ltw2522/dsh-plugin-groups",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-fish-reader",
+      "version": "1.2.3",
+      "integrity": "sha512-Fg0dQtxeOdg8Jh2ox8t4ueG0ghA729v2DQzOOJD2lidjo223AwS1AomKm4EswdfVv/ZjBVM3pbwmE6bk/kaaIg==",
+      "repository": "https://github.com/coyomii/dsh-fish-reader",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-agent-hints",
+      "version": "0.4.0",
+      "integrity": "sha512-Je2cPUltu4kVg2BjYVTUQ5vqvfBR0QsG7wN0JhZU12gunGOuRu8g2s1pUcgOlM/N0QVV5qsfAUiCr+HnuKsfeQ==",
+      "repository": "https://github.com/evan7ang/dsh-agent-hints",
+      "source": {
+        "type": "npm"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "dsh-tool-picker",
+      "version": "0.1.0",
+      "integrity": "sha512-Uif+NMMSg+Yt/BjkYGUBsbzQHrGviNuYV1+JjMjbvcrqSZQ8WNsfed6wFQ0vp3rBKSbLteXkK+NpSKvGlMgBCA==",
+      "repository": "https://github.com/liujing9178/dsh-tool-picker",
+      "source": {
+        "type": "git",
+        "commit": "e6feab29a3dec8c615c793944ea7f54f62aebe98"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@skyrocks/dsh-session-handoff",
+      "version": "0.1.10",
+      "integrity": "sha512-AqonbAf40TH4r26aeGcut0/CN8Kozpk21ISmFBtb1/YqA51XUMh3xT9PPJKMkNDvLbntYqN+0aAF0qMWVqqJzw==",
+      "repository": "https://github.com/skyrocks/dsh-session-handoff",
+      "source": {
+        "type": "git",
+        "commit": "641905bfdbaac3e708cd97eff4e86ca5f9bd3c8b"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
+    },
+    {
+      "name": "@skyrocks/dsh-news-digest",
+      "version": "0.1.2",
+      "integrity": "sha512-c7izV4hv//V1JnwurdyoI0TrAIS/f6jpkymy/4r5KTRcd3UqZ2S60EcmcPTSonTiUlTeCcikgh39ws3oCDpLHA==",
+      "repository": "https://github.com/skyrocks/dsh-news-digest",
+      "source": {
+        "type": "git",
+        "commit": "f69c8a742343667a85cf1c498c60c9879eb05912"
+      },
+      "reviewedAt": "2026-11-27T07:31:11.387Z",
+      "scope": "static-security",
+      "record": "docs/reviews/review-policy.md"
     }
   ]
 }
